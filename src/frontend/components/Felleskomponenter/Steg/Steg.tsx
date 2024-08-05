@@ -15,7 +15,7 @@ import useFørsteRender from '../../../hooks/useFørsteRender';
 import { device } from '../../../Theme';
 import { RouteEnum } from '../../../typer/routes';
 import { ISteg as IRoutesSteg } from '../../../typer/routes';
-import { LocaleRecordBlock } from '../../../typer/sanity/sanity';
+import { FlettefeltVerdier, LocaleRecordBlock } from '../../../typer/sanity/sanity';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
 import {
     logKlikkGåVidere,
@@ -180,46 +180,55 @@ const Steg: React.FC<ISteg> = ({
     };
 
     interface IRoutesStegMedTittel extends IRoutesSteg {
-        tittel: LocaleRecordBlock;
+        tittel: string;
     }
 
+    const { barnInkludertISøknaden } = søknad;
+
     const formProgressSteps = (): IRoutesStegMedTittel[] => {
+        let antallBarnCounter = 0;
+
         const stegMedTittel = steg.map(steg => {
-            let tittel: LocaleRecordBlock;
+            let tittelBlock: LocaleRecordBlock;
+            let tittelFlettefeltVerider: FlettefeltVerdier | undefined = undefined;
 
             switch (steg.route) {
                 case RouteEnum.Forside:
-                    tittel = FORSIDE.soeknadstittelBarnetrygd;
+                    tittelBlock = FORSIDE.soeknadstittelBarnetrygd;
                     break;
                 case RouteEnum.OmDeg:
-                    tittel = OM_DEG.omDegTittel;
+                    tittelBlock = OM_DEG.omDegTittel;
                     break;
                 case RouteEnum.DinLivssituasjon:
-                    tittel = DIN_LIVSSITUASJON.dinLivssituasjonTittel;
+                    tittelBlock = DIN_LIVSSITUASJON.dinLivssituasjonTittel;
                     break;
                 case RouteEnum.VelgBarn:
-                    tittel = VELG_BARN.velgBarnTittel;
+                    tittelBlock = VELG_BARN.velgBarnTittel;
                     break;
                 case RouteEnum.OmBarna:
-                    tittel = OM_BARNA.omBarnaTittel;
+                    tittelBlock = OM_BARNA.omBarnaTittel;
                     break;
                 case RouteEnum.OmBarnet:
-                    tittel = OM_BARNET.omBarnetTittel;
+                    tittelBlock = OM_BARNET.omBarnetTittel;
+                    tittelFlettefeltVerider = {
+                        barnetsNavn: barnInkludertISøknaden[antallBarnCounter].navn,
+                    };
+                    antallBarnCounter++;
                     break;
                 case RouteEnum.EøsForSøker:
-                    tittel = EØS_FOR_SØKER.eoesForSokerTittel;
+                    tittelBlock = EØS_FOR_SØKER.eoesForSokerTittel;
                     break;
                 case RouteEnum.EøsForBarn:
-                    tittel = EØS_FOR_BARN.eoesForBarnTittel;
+                    tittelBlock = EØS_FOR_BARN.eoesForBarnTittel;
                     break;
                 case RouteEnum.Oppsummering:
-                    tittel = OPPSUMMERING.oppsummeringTittel;
+                    tittelBlock = OPPSUMMERING.oppsummeringTittel;
                     break;
                 case RouteEnum.Dokumentasjon:
-                    tittel = DOKUMENTASJON.dokumentasjonTittel;
+                    tittelBlock = DOKUMENTASJON.dokumentasjonTittel;
                     break;
                 case RouteEnum.Kvittering:
-                    tittel = KVITTERING.kvitteringTittel;
+                    tittelBlock = KVITTERING.kvitteringTittel;
                     break;
                 default:
                     // Alle routes i RouteEnum må gis en tittel fra Sanity ellers feiler denne
@@ -229,7 +238,7 @@ const Steg: React.FC<ISteg> = ({
 
             return {
                 ...steg,
-                tittel: tittel,
+                tittel: plainTekst(tittelBlock, tittelFlettefeltVerider),
             };
         });
 
@@ -279,7 +288,7 @@ const Steg: React.FC<ISteg> = ({
                                     completed={index + 1 < hentNåværendeStegIndex()}
                                     interactive={index + 1 < hentNåværendeStegIndex()}
                                 >
-                                    {plainTekst(value.tittel)}
+                                    {value.tittel}
                                 </FormProgress.Step>
                             ))}
                         </FormProgress>
