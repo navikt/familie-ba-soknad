@@ -222,6 +222,7 @@ const Steg: React.FC<ISteg> = ({
                     tittel = KVITTERING.kvitteringTittel;
                     break;
                 default:
+                    // Alle routes i RouteEnum må gis en tittel fra Sanity ellers feiler denne
                     const _exhaustiveCheck: never = steg.route;
                     return _exhaustiveCheck;
             }
@@ -278,7 +279,7 @@ const Steg: React.FC<ISteg> = ({
                                     completed={index + 1 < hentNåværendeStegIndex()}
                                     interactive={index + 1 < hentNåværendeStegIndex()}
                                 >
-                                    {value.label}
+                                    {plainTekst(value.tittel)}
                                 </FormProgress.Step>
                             ))}
                         </FormProgress>
