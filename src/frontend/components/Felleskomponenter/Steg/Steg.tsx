@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -184,8 +184,9 @@ const Steg: React.FC<ISteg> = ({
     }
 
     const { barnInkludertISøknaden } = søknad;
+    const [formProgressSteps, setFormProgressSteps] = useState<IRoutesStegMedTittel[]>([]);
 
-    const formProgressSteps = (): IRoutesStegMedTittel[] => {
+    useEffect(() => {
         let antallBarnCounter = 0;
 
         const stegMedTittel = steg.map(steg => {
@@ -209,11 +210,15 @@ const Steg: React.FC<ISteg> = ({
                     tittelBlock = OM_BARNA.omBarnaTittel;
                     break;
                 case RouteEnum.OmBarnet:
-                    tittelBlock = OM_BARNET.omBarnetTittel;
-                    tittelFlettefeltVerider = {
-                        barnetsNavn: barnInkludertISøknaden[antallBarnCounter].navn,
-                    };
-                    antallBarnCounter++;
+                    if (barnInkludertISøknaden.length === 0) {
+                        tittelBlock = OM_BARNA.omBarnaTittel; // TODO: Dette er en placeholder. Bytt til annen tittel som er generisk og brukes før barn er valgt.
+                    } else {
+                        tittelBlock = OM_BARNET.omBarnetTittel;
+                        tittelFlettefeltVerider = {
+                            barnetsNavn: barnInkludertISøknaden[antallBarnCounter].navn,
+                        };
+                        antallBarnCounter++;
+                    }
                     break;
                 case RouteEnum.EøsForSøker:
                     tittelBlock = EØS_FOR_SØKER.eoesForSokerTittel;
@@ -246,11 +251,11 @@ const Steg: React.FC<ISteg> = ({
             steg => steg.route !== RouteEnum.Forside && steg.route !== RouteEnum.Kvittering
         );
 
-        return filtrerteSteg;
-    };
+        setFormProgressSteps(filtrerteSteg);
+    }, [barnInkludertISøknaden]);
 
     const håndterGåTilSteg = (stegIndex: number) => {
-        const steg = formProgressSteps()[stegIndex];
+        const steg = formProgressSteps[stegIndex];
         navigate(steg.path);
     };
 
@@ -263,7 +268,7 @@ const Steg: React.FC<ISteg> = ({
         ' ' +
         plainTekst(frittståendeOrdTekster.av) +
         ' ' +
-        formProgressSteps().length;
+        formProgressSteps.length;
 
     return (
         <>
@@ -278,11 +283,11 @@ const Steg: React.FC<ISteg> = ({
                                 showAllSteps: plainTekst(frittståendeOrdTekster.visAlleSteg),
                                 hideAllSteps: plainTekst(frittståendeOrdTekster.skjulAlleSteg),
                             }}
-                            totalSteps={formProgressSteps().length}
+                            totalSteps={formProgressSteps.length}
                             activeStep={hentNåværendeStegIndex()}
                             onStepChange={stegIndex => håndterGåTilSteg(stegIndex - 1)}
                         >
-                            {formProgressSteps().map((value, index) => (
+                            {formProgressSteps.map((value, index) => (
                                 <FormProgress.Step
                                     key={index}
                                     completed={index + 1 < hentNåværendeStegIndex()}
