@@ -14,7 +14,7 @@ import { useSteg } from '../../../context/StegContext';
 import useFørsteRender from '../../../hooks/useFørsteRender';
 import { device } from '../../../Theme';
 import { RouteEnum } from '../../../typer/routes';
-import { ISteg as RoutesISteg } from '../../../typer/routes';
+import { ISteg as IRoutesSteg } from '../../../typer/routes';
 import { LocaleRecordBlock } from '../../../typer/sanity/sanity';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
 import {
@@ -104,6 +104,20 @@ const Steg: React.FC<ISteg> = ({
     const { komFra, settKomFra } = useAppNavigation();
     const { toggles } = useFeatureToggles();
 
+    const {
+        FORSIDE,
+        OM_DEG,
+        DIN_LIVSSITUASJON,
+        VELG_BARN,
+        OM_BARNA,
+        OM_BARNET,
+        OPPSUMMERING,
+        DOKUMENTASJON,
+        EØS_FOR_BARN,
+        EØS_FOR_SØKER,
+        KVITTERING,
+    } = tekster();
+
     const nesteRoute = hentNesteSteg();
     const forrigeRoute = hentForrigeSteg();
     const nåværendeStegIndex = hentNåværendeStegIndex();
@@ -165,10 +179,64 @@ const Steg: React.FC<ISteg> = ({
         navigate(forrigeRoute.path);
     };
 
-    const formProgressSteps = (): RoutesISteg[] => {
-        return steg.filter(
+    interface IRoutesStegMedTittel extends IRoutesSteg {
+        tittel: LocaleRecordBlock;
+    }
+
+    const formProgressSteps = (): IRoutesStegMedTittel[] => {
+        const stegMedTittel = steg.map(steg => {
+            let tittel: LocaleRecordBlock;
+
+            switch (steg.route) {
+                case RouteEnum.Forside:
+                    tittel = FORSIDE.soeknadstittelBarnetrygd;
+                    break;
+                case RouteEnum.OmDeg:
+                    tittel = OM_DEG.omDegTittel;
+                    break;
+                case RouteEnum.DinLivssituasjon:
+                    tittel = DIN_LIVSSITUASJON.dinLivssituasjonTittel;
+                    break;
+                case RouteEnum.VelgBarn:
+                    tittel = VELG_BARN.velgBarnTittel;
+                    break;
+                case RouteEnum.OmBarna:
+                    tittel = OM_BARNA.omBarnaTittel;
+                    break;
+                case RouteEnum.OmBarnet:
+                    tittel = OM_BARNET.omBarnetTittel;
+                    break;
+                case RouteEnum.EøsForSøker:
+                    tittel = EØS_FOR_SØKER.eoesForSokerTittel;
+                    break;
+                case RouteEnum.EøsForBarn:
+                    tittel = EØS_FOR_BARN.eoesForBarnTittel;
+                    break;
+                case RouteEnum.Oppsummering:
+                    tittel = OPPSUMMERING.oppsummeringTittel;
+                    break;
+                case RouteEnum.Dokumentasjon:
+                    tittel = DOKUMENTASJON.dokumentasjonTittel;
+                    break;
+                case RouteEnum.Kvittering:
+                    tittel = KVITTERING.kvitteringTittel;
+                    break;
+                default:
+                    const _exhaustiveCheck: never = steg.route;
+                    return _exhaustiveCheck;
+            }
+
+            return {
+                ...steg,
+                tittel: tittel,
+            };
+        });
+
+        const filtrerteSteg = stegMedTittel.filter(
             steg => steg.route !== RouteEnum.Forside && steg.route !== RouteEnum.Kvittering
         );
+
+        return filtrerteSteg;
     };
 
     const håndterGåTilSteg = (stegIndex: number) => {
