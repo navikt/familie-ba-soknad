@@ -118,6 +118,7 @@ const [StegProvider, useSteg] = createUseContext(() => {
 
     return {
         steg,
+        barnForSteg,
         hentStegNummer,
         hentStegObjektForBarn,
         hentNesteSteg,

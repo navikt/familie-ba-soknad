@@ -95,6 +95,7 @@ const Steg: React.FC<ISteg> = ({
     } = useApp();
     const {
         steg,
+        barnForSteg,
         hentNesteSteg,
         hentForrigeSteg,
         hentNåværendeSteg,
@@ -179,8 +180,6 @@ const Steg: React.FC<ISteg> = ({
         navigate(forrigeRoute.path);
     };
 
-    const { barnInkludertISøknaden } = søknad;
-
     interface IRoutesStegMedTittel extends IRoutesSteg {
         tittel: string;
     }
@@ -207,12 +206,12 @@ const Steg: React.FC<ISteg> = ({
                 tittelBlock = OM_BARNA.omBarnaTittel;
                 break;
             case RouteEnum.OmBarnet:
-                if (barnInkludertISøknaden.length === 0) {
+                if (barnForSteg.length === 0) {
                     tittelBlock = OM_BARNA.omBarnaTittel; // TODO: Dette er en placeholder. Bytt til annen tittel som er generisk og brukes før barn er valgt.
                 } else {
                     tittelBlock = OM_BARNET.omBarnetTittel;
                     tittelFlettefeltVerider = {
-                        barnetsNavn: barnInkludertISøknaden[antallBarnCounter].navn,
+                        barnetsNavn: barnForSteg[antallBarnCounter].navn,
                     };
                     antallBarnCounter++;
                 }
