@@ -14,8 +14,7 @@ import { useSteg } from '../../../context/StegContext';
 import useFørsteRender from '../../../hooks/useFørsteRender';
 import { device } from '../../../Theme';
 import { RouteEnum } from '../../../typer/routes';
-import { ISteg as IRoutesSteg } from '../../../typer/routes';
-import { FlettefeltVerdier, LocaleRecordBlock } from '../../../typer/sanity/sanity';
+import { LocaleRecordBlock } from '../../../typer/sanity/sanity';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
 import {
     logKlikkGåVidere,
@@ -32,6 +31,7 @@ import useModal from '../SkjemaModal/useModal';
 import ModellVersjonModal from './ModellVersjonModal';
 import Navigeringspanel from './Navigeringspanel';
 import { ScrollHandler } from './ScrollHandler';
+import { useFormProgressSteps } from './useFormProgressSteps';
 
 interface ISteg {
     tittel: ReactNode;
@@ -94,8 +94,6 @@ const Steg: React.FC<ISteg> = ({
         plainTekst,
     } = useApp();
     const {
-        steg,
-        barnForSteg,
         hentNesteSteg,
         hentForrigeSteg,
         hentNåværendeSteg,
@@ -108,6 +106,7 @@ const Steg: React.FC<ISteg> = ({
     const nesteRoute = hentNesteSteg();
     const forrigeRoute = hentForrigeSteg();
     const nåværendeStegIndex = hentNåværendeStegIndex();
+    const formProgressSteps = useFormProgressSteps();
 
     const nyesteNåværendeRoute: RouteEnum = hentNåværendeSteg().route;
     useFørsteRender(() => logSidevisningBarnetrygd(nyesteNåværendeRoute, søknad.søknadstype));
@@ -165,87 +164,6 @@ const Steg: React.FC<ISteg> = ({
     const håndterTilbake = () => {
         navigate(forrigeRoute.path);
     };
-
-    const {
-        FORSIDE,
-        OM_DEG,
-        DIN_LIVSSITUASJON,
-        VELG_BARN,
-        OM_BARNA,
-        OM_BARNET,
-        OPPSUMMERING,
-        DOKUMENTASJON,
-        EØS_FOR_BARN,
-        EØS_FOR_SØKER,
-        KVITTERING,
-    } = tekster();
-
-    interface IRoutesStegMedTittel extends IRoutesSteg {
-        tittel: string;
-    }
-
-    let antallBarnCounter = 0;
-    const stegMedTittel: IRoutesStegMedTittel[] = steg.map(steg => {
-        let tittelBlock: LocaleRecordBlock;
-        let tittelFlettefeltVerider: FlettefeltVerdier | undefined = undefined;
-
-        switch (steg.route) {
-            case RouteEnum.Forside:
-                tittelBlock = FORSIDE.soeknadstittelBarnetrygd;
-                break;
-            case RouteEnum.OmDeg:
-                tittelBlock = OM_DEG.omDegTittel;
-                break;
-            case RouteEnum.DinLivssituasjon:
-                tittelBlock = DIN_LIVSSITUASJON.dinLivssituasjonTittel;
-                break;
-            case RouteEnum.VelgBarn:
-                tittelBlock = VELG_BARN.velgBarnTittel;
-                break;
-            case RouteEnum.OmBarna:
-                tittelBlock = OM_BARNA.omBarnaTittel;
-                break;
-            case RouteEnum.OmBarnet:
-                if (barnForSteg.length === 0) {
-                    tittelBlock = OM_BARNET.omBarnetTittelUtenFlettefelt;
-                } else {
-                    tittelBlock = OM_BARNET.omBarnetTittel;
-                    tittelFlettefeltVerider = {
-                        barnetsNavn: barnForSteg[antallBarnCounter].navn,
-                    };
-                    antallBarnCounter++;
-                }
-                break;
-            case RouteEnum.EøsForSøker:
-                tittelBlock = EØS_FOR_SØKER.eoesForSokerTittel;
-                break;
-            case RouteEnum.EøsForBarn:
-                tittelBlock = EØS_FOR_BARN.eoesForBarnTittel;
-                break;
-            case RouteEnum.Oppsummering:
-                tittelBlock = OPPSUMMERING.oppsummeringTittel;
-                break;
-            case RouteEnum.Dokumentasjon:
-                tittelBlock = DOKUMENTASJON.dokumentasjonTittel;
-                break;
-            case RouteEnum.Kvittering:
-                tittelBlock = KVITTERING.kvitteringTittel;
-                break;
-            default:
-                // Alle routes i RouteEnum må gjennomgås i switch(), ellers feiler _exhaustiveCheck
-                const _exhaustiveCheck: never = steg.route;
-                return _exhaustiveCheck;
-        }
-
-        return {
-            ...steg,
-            tittel: plainTekst(tittelBlock, tittelFlettefeltVerider),
-        };
-    });
-
-    const formProgressSteps = stegMedTittel.filter(
-        steg => steg.route !== RouteEnum.Forside && steg.route !== RouteEnum.Kvittering
-    );
 
     const håndterGåTilSteg = (stegIndex: number) => {
         const steg = formProgressSteps[stegIndex];
