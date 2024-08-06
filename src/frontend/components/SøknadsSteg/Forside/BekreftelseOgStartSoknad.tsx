@@ -1,7 +1,5 @@
 import React from 'react';
 
-import styled from 'styled-components';
-
 import { ArrowRightIcon } from '@navikt/aksel-icons';
 import { Button, ConfirmationPanel, Heading, Radio, RadioGroup, VStack } from '@navikt/ds-react';
 import { AGreen500, ANavRed, AOrange500 } from '@navikt/ds-tokens/dist/tokens';
@@ -13,12 +11,6 @@ import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 import { BekreftelseStatus, useBekreftelseOgStartSoknad } from './useBekreftelseOgStartSoknad';
-
-const StyledButton = styled(Button)`
-    && {
-        margin: 0 auto;
-    }
-`;
 
 export const bekreftelseBoksBorderFarge = (status: BekreftelseStatus) => {
     switch (status) {
@@ -88,16 +80,20 @@ const BekreftelseOgStartSoknad: React.FC = () => {
                     />
                 </ConfirmationPanel>
 
-                <StyledButton
-                    variant={
-                        bekreftelseStatus === BekreftelseStatus.BEKREFTET ? 'primary' : 'secondary'
-                    }
-                    type={'submit'}
-                    icon={<ArrowRightIcon aria-hidden />}
-                    iconPosition="right"
-                >
-                    <SpråkTekst id="forside.start-soknad.knapp" />
-                </StyledButton>
+                <div>
+                    <Button
+                        variant={
+                            bekreftelseStatus === BekreftelseStatus.BEKREFTET
+                                ? 'primary'
+                                : 'secondary'
+                        }
+                        type={'submit'}
+                        icon={<ArrowRightIcon aria-hidden />}
+                        iconPosition="right"
+                    >
+                        <SpråkTekst id="forside.start-soknad.knapp" />
+                    </Button>
+                </div>
             </VStack>
         </form>
     );

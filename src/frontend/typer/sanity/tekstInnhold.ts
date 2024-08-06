@@ -13,6 +13,7 @@ import { IAndreUtbetalingerTekstinnhold } from './modaler/andreUtbetalinger';
 import { IArbeidsperiodeTekstinnhold } from './modaler/arbeidsperiode';
 import { IBarnetrygdsperiodeTekstinnhold } from './modaler/barnetrygdperiode';
 import { IPensjonsperiodeTekstinnhold } from './modaler/pensjonsperiode';
+import { IStartPåNyttModal } from './modaler/startPåNytt';
 import { ITidligereSamoboereTekstinnhold } from './modaler/tidligereSamboere';
 import { IUtenlandsoppholdTekstinnhold } from './modaler/utenlandsopphold';
 import {
@@ -36,6 +37,7 @@ export enum SanityModalPrefix {
     ANDRE_UTBETALINGER = 'MODAL_ANDRE_UTBETALINGER',
     TIDLIGERE_SAMBOERE = 'MODAL_TIDLIGERE_SAMBOERE',
     UTENLANDSOPPHOLD = 'MODAL_UTENLANDSOPPHOLD',
+    START_PAA_NYTT = 'MODAL_START_PAA_NYTT',
 }
 
 export interface ITekstinnhold {
@@ -56,6 +58,7 @@ export interface ITekstinnhold {
 export interface IFellesTekstInnhold {
     frittståendeOrd: IFrittståendeOrdTekstinnhold;
     modaler: IModalerTekstinnhold;
+    navigasjon: INavigasjonTekstinnhold;
 }
 
 export interface IFrittståendeOrdTekstinnhold {
@@ -73,6 +76,19 @@ export interface IFrittståendeOrdTekstinnhold {
     steg: LocaleRecordString;
     visAlleSteg: LocaleRecordString;
     skjulAlleSteg: LocaleRecordString;
+}
+
+export interface INavigasjonTekstinnhold {
+    startKnapp: LocaleRecordString;
+    fortsettKnapp: LocaleRecordString;
+    startPaaNyttKnapp: LocaleRecordString;
+    duMaaRetteOppFoelgende: LocaleRecordString;
+    avbrytSoeknad: LocaleRecordString;
+    tilbakeKnapp: LocaleRecordString;
+    gaaVidereKnapp: LocaleRecordString;
+    sendSoeknadKnapp: LocaleRecordString;
+    slettSoeknadKnapp: LocaleRecordString;
+    fortsettSenereKnapp: LocaleRecordString;
 }
 
 export interface IModalerTekstinnhold {
@@ -104,6 +120,7 @@ export interface IModalerTekstinnhold {
         barn: IUtenlandsoppholdTekstinnhold;
         andreForelder: IUtenlandsoppholdTekstinnhold;
     };
+    startPåNytt: IStartPåNyttModal;
 }
 
 export interface IForsideTekstinnhold {
@@ -124,4 +141,5 @@ export interface IForsideTekstinnhold {
     informasjonOmLagringAvSvarTittel: LocaleRecordBlock;
     utvidetBarnetrygdAlert: LocaleRecordBlock;
     soekerDuUtvidet: ISanitySpørsmålDokument;
+    mellomlagretAlert: LocaleRecordBlock;
 }

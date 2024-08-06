@@ -12,6 +12,7 @@ import { IAndreUtbetalingerTekstinnhold } from '../typer/sanity/modaler/andreUtb
 import { IArbeidsperiodeTekstinnhold } from '../typer/sanity/modaler/arbeidsperiode';
 import { IBarnetrygdsperiodeTekstinnhold } from '../typer/sanity/modaler/barnetrygdperiode';
 import { IPensjonsperiodeTekstinnhold } from '../typer/sanity/modaler/pensjonsperiode';
+import { IStartPåNyttModal } from '../typer/sanity/modaler/startPåNytt';
 import { ITidligereSamoboereTekstinnhold } from '../typer/sanity/modaler/tidligereSamboere';
 import { IUtenlandsoppholdTekstinnhold } from '../typer/sanity/modaler/utenlandsopphold';
 import {
@@ -22,12 +23,14 @@ import {
     LocaleRecordBlock,
     LocaleRecordString,
     modalPrefix,
+    navigasjonPrefix,
     SanityDokument,
 } from '../typer/sanity/sanity';
 import {
     IFellesTekstInnhold,
     IFrittståendeOrdTekstinnhold,
     IModalerTekstinnhold,
+    INavigasjonTekstinnhold,
     ITekstinnhold,
     SanityModalPrefix,
     SanityPersonType,
@@ -125,6 +128,9 @@ const strukturertInnholdForModaler = (dokumenter: SanityDokument[]): IModalerTek
             barn: utenlandsopphold(SanityPersonType.BARN),
             andreForelder: utenlandsopphold(SanityPersonType.ANDRE_FORELDER),
         },
+        startPåNytt: strukturerInnholdForModal(
+            SanityModalPrefix.START_PAA_NYTT
+        ) as IStartPåNyttModal,
     };
 };
 
@@ -150,6 +156,9 @@ export const transformerTilTekstinnhold = (alleDokumenter: SanityDokument[]): IT
         frittståendeOrd: struktrerInnholdForFelles(
             dokumenterFiltrertPåPrefix(fellesDokumenter, frittståendeOrdPrefix)
         ) as IFrittståendeOrdTekstinnhold,
+        navigasjon: struktrerInnholdForFelles(
+            dokumenterFiltrertPåPrefix(fellesDokumenter, navigasjonPrefix)
+        ) as INavigasjonTekstinnhold,
     };
     return tekstInnhold as ITekstinnhold;
 };

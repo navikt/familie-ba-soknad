@@ -1,52 +1,21 @@
 import React from 'react';
 
-import styled from 'styled-components';
-
-import { Button } from '@navikt/ds-react';
+import {
+    ArrowLeftIcon,
+    ArrowRightIcon,
+    FloppydiskIcon,
+    PaperplaneIcon,
+    TrashIcon,
+} from '@navikt/aksel-icons';
+import { Box, Button, HGrid, VStack } from '@navikt/ds-react';
 import { RessursStatus } from '@navikt/familie-typer';
 
 import { useApp } from '../../../context/AppContext';
 import { useSteg } from '../../../context/StegContext';
-import { device } from '../../../Theme';
 import { RouteEnum } from '../../../typer/routes';
-import SpråkTekst from '../SpråkTekst/SpråkTekst';
+import { useBekreftelseOgStartSoknad } from '../../SøknadsSteg/Forside/useBekreftelseOgStartSoknad';
 
-const Container = styled.nav`
-    padding: 2rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-areas:
-        ' tilbake gåVidere '
-        ' avbryt avbryt';
-    grid-template-rows: auto;
-    gap: 0.5rem;
-    justify-content: center;
-
-    @media all and ${device.mobile} {
-        grid-template-columns: 1fr;
-        grid-template-areas:
-            ' gåVidere '
-            ' tilbake '
-            ' avbryt';
-        padding: 2rem 0;
-    }
-`;
-
-const StyledButton = styled(Button)<{
-    $placeself: 'end' | 'center' | 'start';
-    $gridarea: 'tilbake' | 'gåVidere' | 'avbryt';
-}>`
-    && {
-        grid-area: ${props => props.$gridarea};
-        min-width: 12.5rem;
-        place-self: ${props => props.$placeself};
-        @media all and ${device.mobile} {
-            place-self: center;
-        }
-    }
-`;
-
-type Knappetype = 'primary' | 'secondary';
+import { SlettSøknadenModal } from './SlettSøknadenModal';
 
 const Navigeringspanel: React.FC<{
     onAvbrytCallback: () => void;
@@ -55,54 +24,92 @@ const Navigeringspanel: React.FC<{
 }> = ({ onAvbrytCallback, onTilbakeCallback, valideringErOk }) => {
     const { hentNesteSteg } = useSteg();
     const nesteSteg = hentNesteSteg();
-    const { innsendingStatus } = useApp();
+    const { innsendingStatus, tekster, plainTekst } = useApp();
+    const { visStartPåNyttModal, settVisStartPåNyttModal, startPåNytt } =
+        useBekreftelseOgStartSoknad();
 
-    const hentKnappetype = (): Knappetype => {
-        if (valideringErOk) {
-            return valideringErOk() ? 'primary' : 'secondary';
-        } else {
-            return 'primary';
-        }
-    };
+    const {
+        sendSoeknadKnapp,
+        gaaVidereKnapp,
+        tilbakeKnapp,
+        fortsettSenereKnapp,
+        slettSoeknadKnapp,
+    } = tekster().FELLES.navigasjon;
 
     return (
-        <Container>
-            <StyledButton
-                variant={'secondary'}
-                type={'button'}
-                onClick={onTilbakeCallback}
-                $placeself={'end'}
-                $gridarea={'tilbake'}
-            >
-                <SpråkTekst id={'felles.navigasjon.tilbake'} />
-            </StyledButton>
-            <StyledButton
-                type={'submit'}
-                variant={hentKnappetype()}
-                $placeself={'start'}
-                $gridarea={'gåVidere'}
-                loading={innsendingStatus.status === RessursStatus.HENTER}
-            >
-                <SpråkTekst
-                    id={
-                        nesteSteg.route === RouteEnum.Kvittering
-                            ? 'dokumentasjon.send-søknad.knapp'
-                            : 'felles.navigasjon.gå-videre'
-                    }
-                />
-            </StyledButton>
+        <>
+            <Box marginBlock="12 0">
+                <VStack gap="4">
+                    <HGrid
+                        gap={{ xs: '4', sm: '8 4' }}
+                        columns={{ xs: 1, sm: 2 }}
+                        width={{ sm: 'fit-content' }}
+                    >
+                        <Button
+                            type={'button'}
+                            variant="secondary"
+                            onClick={onTilbakeCallback}
+                            icon={<ArrowLeftIcon aria-hidden />}
+                            iconPosition="left"
+                        >
+                            {plainTekst(tilbakeKnapp)}
+                        </Button>
+                        <Button
+                            type={'submit'}
+                            variant={
+                                valideringErOk
+                                    ? valideringErOk()
+                                        ? 'primary'
+                                        : 'secondary'
+                                    : 'primary'
+                            }
+                            icon={
+                                nesteSteg.route === RouteEnum.Kvittering ? (
+                                    <PaperplaneIcon aria-hidden />
+                                ) : (
+                                    <ArrowRightIcon aria-hidden />
+                                )
+                            }
+                            iconPosition="right"
+                            loading={innsendingStatus.status === RessursStatus.HENTER}
+                            data-testid="neste-steg"
+                        >
+                            {plainTekst(
+                                nesteSteg.route === RouteEnum.Kvittering
+                                    ? sendSoeknadKnapp
+                                    : gaaVidereKnapp
+                            )}
+                        </Button>
 
-            <StyledButton
-                variant={'tertiary'}
-                type={'button'}
-                onClick={onAvbrytCallback}
-                $gridarea={'avbryt'}
-                $placeself={'center'}
-                margintop={'0'}
-            >
-                <SpråkTekst id={'felles.navigasjon.avbryt'} />
-            </StyledButton>
-        </Container>
+                        <Box asChild marginBlock={{ xs: '4 0', sm: '0' }}>
+                            <Button
+                                variant="tertiary"
+                                type={'button'}
+                                onClick={onAvbrytCallback}
+                                icon={<FloppydiskIcon aria-hidden />}
+                                iconPosition="left"
+                            >
+                                {plainTekst(fortsettSenereKnapp)}
+                            </Button>
+                        </Box>
+                        <Button
+                            variant="tertiary"
+                            type={'button'}
+                            icon={<TrashIcon aria-hidden />}
+                            iconPosition="left"
+                            onClick={() => settVisStartPåNyttModal(true)}
+                        >
+                            {plainTekst(slettSoeknadKnapp)}
+                        </Button>
+                    </HGrid>
+                </VStack>
+            </Box>
+            <SlettSøknadenModal
+                open={visStartPåNyttModal}
+                avbryt={() => settVisStartPåNyttModal(false)}
+                startPåNytt={() => startPåNytt()}
+            />
+        </>
     );
 };
 

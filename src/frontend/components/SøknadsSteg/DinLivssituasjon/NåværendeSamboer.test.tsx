@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { act, getAllByText, getByText, render } from '@testing-library/react';
+import { act, getAllByText, getByTestId, render } from '@testing-library/react';
 import { mockDeep } from 'jest-mock-extended';
 
 import { ESvar } from '@navikt/familie-form-elements';
@@ -115,7 +115,7 @@ describe('Test av nåværende samboer skjema', () => {
 
         const [navn, fnr, fnrUkjent, fødselsdato, fødselsdatoUkjent, samboerFraDato] =
             getAllNåværendeSamboerFields(container);
-        const gåVidere = getByText(container, 'Gå videre');
+        const gåVidere = getByTestId(container, 'neste-steg');
 
         expect(navn.value).toBe('Initial verdi for samboer sitt navn');
         expect(fnr.value).toBe('');

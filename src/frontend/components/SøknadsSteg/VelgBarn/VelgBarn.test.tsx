@@ -88,7 +88,7 @@ describe('VelgBarn', () => {
             søknad.barnInkludertISøknaden = nySøknad.barnInkludertISøknaden;
         });
 
-        const { getByText } = render(
+        const { getByText, getByTestId } = render(
             <TestProvidere mocketNettleserHistorikk={['/velg-barn']}>
                 <VelgBarn />
             </TestProvidere>
@@ -98,7 +98,7 @@ describe('VelgBarn', () => {
 
         act(() => fjernBarnKnapp.click());
 
-        const gåVidere = getByText(/felles.navigasjon.gå-videre/);
+        const gåVidere = getByTestId('neste-steg');
         act(() => gåVidere.click());
 
         // Først blir barnet fjernet fra manuelt registrerte barn

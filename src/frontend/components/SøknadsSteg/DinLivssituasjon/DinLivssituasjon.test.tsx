@@ -82,13 +82,12 @@ describe('DinLivssituasjon', () => {
     it('Stopper fra å gå videre hvis årsak ikke er valgt', async () => {
         spyOnUseApp(søknad);
 
-        const { findByText, queryAllByText, getByText } = render(
+        const { queryAllByText, getByText, findByTestId } = render(
             <TestProvidereMedEkteTekster>
                 <DinLivssituasjon />
             </TestProvidereMedEkteTekster>
         );
-        const gåVidere = await findByText('Gå videre');
-
+        const gåVidere = await findByTestId('neste-steg');
         act(() => gåVidere.click());
 
         const feiloppsummeringstittel = getByText(
@@ -131,12 +130,12 @@ describe('DinLivssituasjon', () => {
     it('Viser feilmelding med spørsmål tittel når ikke utfylt', async () => {
         spyOnUseApp(søknad);
 
-        const { findByText, getByText, getAllByText } = render(
+        const { findByTestId, getByText, getAllByText } = render(
             <TestProvidereMedEkteTekster>
                 <DinLivssituasjon />
             </TestProvidereMedEkteTekster>
         );
-        const gåVidere = await findByText('Gå videre');
+        const gåVidere = await findByTestId('neste-steg');
         act(() => gåVidere.click());
         const feiloppsummeringstittel = getByText(
             'Du må rette opp eller svare på følgende spørsmål for å gå videre'
@@ -149,7 +148,7 @@ describe('DinLivssituasjon', () => {
     it('Viser riktige feilmeldinger ved ingen utfylte felt av nåværende samboer', async () => {
         spyOnUseApp(søknad);
 
-        const { findByText, findByRole, getAllByText, getByText } = render(
+        const { findByTestId, findByRole, getAllByText, getByText } = render(
             <TestProvidereMedEkteTekster>
                 <DinLivssituasjon />
             </TestProvidereMedEkteTekster>
@@ -160,7 +159,7 @@ describe('DinLivssituasjon', () => {
         const jaKnapp: HTMLElement = within(harSamboerNåSpmFieldset).getByText('Ja');
         act(() => jaKnapp.click());
 
-        const gåVidereKnapp = await findByText('Gå videre');
+        const gåVidereKnapp = await findByTestId('neste-steg');
         act(() => gåVidereKnapp.click());
 
         const feiloppsummeringstittel = getByText(

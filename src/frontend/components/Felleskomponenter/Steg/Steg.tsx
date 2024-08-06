@@ -3,7 +3,8 @@ import React, { ReactNode, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { Box, FormProgress, GuidePanel, Heading } from '@navikt/ds-react';
+import { ArrowLeftIcon } from '@navikt/aksel-icons';
+import { Box, FormProgress, GuidePanel, Heading, Link, VStack } from '@navikt/ds-react';
 import { ISkjema } from '@navikt/familie-skjema';
 import { setAvailableLanguages } from '@navikt/nav-dekoratoren-moduler';
 
@@ -46,7 +47,7 @@ interface ISteg {
     children?: ReactNode;
 }
 
-const FormProgressContainer = styled.div`
+const TopNavigasjonContainer = styled.div`
     max-width: var(--innhold-bredde);
     margin: 0 auto;
 
@@ -170,6 +171,8 @@ const Steg: React.FC<ISteg> = ({
         navigate(steg.path);
     };
 
+    const { tilbakeKnapp } = tekster().FELLES.navigasjon;
+
     const frittståendeOrdTekster = tekster().FELLES.frittståendeOrd;
 
     const formProgressStegTekst =
@@ -187,32 +190,47 @@ const Steg: React.FC<ISteg> = ({
             <header>
                 <Banner />
                 {nyesteNåværendeRoute !== RouteEnum.Kvittering && (
-                    <FormProgressContainer>
-                        <FormProgress
-                            translations={{
-                                step: formProgressStegTekst,
-                                showAllSteps: plainTekst(frittståendeOrdTekster.visAlleSteg),
-                                hideAllSteps: plainTekst(frittståendeOrdTekster.skjulAlleSteg),
-                            }}
-                            totalSteps={formProgressSteps.length}
-                            activeStep={hentNåværendeStegIndex()}
-                            onStepChange={stegIndex => håndterGåTilSteg(stegIndex - 1)}
-                        >
-                            {formProgressSteps.map((value, index) => (
-                                <FormProgress.Step
-                                    key={index}
-                                    completed={index + 1 < hentNåværendeStegIndex()}
-                                    interactive={index + 1 < hentNåværendeStegIndex()}
+                    <TopNavigasjonContainer>
+                        <VStack gap="4">
+                            <div>
+                                <Link
+                                    href={forrigeRoute.path}
+                                    variant="action"
+                                    onClick={event => {
+                                        event.preventDefault();
+                                        håndterTilbake();
+                                    }}
                                 >
-                                    {value.tittel}
-                                </FormProgress.Step>
-                            ))}
-                        </FormProgress>
-                    </FormProgressContainer>
+                                    <ArrowLeftIcon aria-hidden />
+                                    {plainTekst(tilbakeKnapp)}
+                                </Link>
+                            </div>
+                            <FormProgress
+                                translations={{
+                                    step: formProgressStegTekst,
+                                    showAllSteps: plainTekst(frittståendeOrdTekster.visAlleSteg),
+                                    hideAllSteps: plainTekst(frittståendeOrdTekster.skjulAlleSteg),
+                                }}
+                                totalSteps={formProgressSteps.length}
+                                activeStep={hentNåværendeStegIndex()}
+                                onStepChange={stegIndex => håndterGåTilSteg(stegIndex - 1)}
+                            >
+                                {formProgressSteps.map((value, index) => (
+                                    <FormProgress.Step
+                                        key={index}
+                                        completed={index + 1 < hentNåværendeStegIndex()}
+                                        interactive={index + 1 < hentNåværendeStegIndex()}
+                                    >
+                                        {value.tittel}
+                                    </FormProgress.Step>
+                                ))}
+                            </FormProgress>
+                        </VStack>
+                    </TopNavigasjonContainer>
                 )}
             </header>
             <InnholdContainer>
-                <TittelContainer id={'stegHovedtittel'} tabIndex={-1}>
+                <TittelContainer>
                     <Heading level={'2'} size={'large'}>
                         {tittel}
                     </Heading>

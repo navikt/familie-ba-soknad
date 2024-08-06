@@ -329,7 +329,7 @@ describe('OmBarnet', () => {
         const jensTittel = await findByText('Om Jens');
         expect(jensTittel).toBeInTheDocument();
 
-        const gåVidere = await findByText(/felles.navigasjon.gå-videre/);
+        const gåVidere = await findByTestId('neste-steg');
         await act(() => gåVidere.click());
 
         const location2 = await findByTestId('location');
@@ -359,7 +359,7 @@ describe('OmBarnet', () => {
         const jensTittel = await findByText('Om Jens');
         expect(jensTittel).toBeInTheDocument();
 
-        const gåVidere = await findByText(/felles.navigasjon.gå-videre/);
+        const gåVidere = await findByTestId('neste-steg');
         await act(() => gåVidere.click());
 
         const nyLocation = await findByTestId('location');
@@ -425,20 +425,17 @@ describe('OmBarnet', () => {
         const { erStegUtfyltFrafør } = spyOnUseApp(oppdatertSøknad);
         erStegUtfyltFrafør.mockReturnValue(false);
 
-        const { queryByText, findAllByText } = render(
+        const { queryByText, findAllByText, findByTestId } = render(
             <TestProvidere mocketNettleserHistorikk={['/om-barnet/barn/1']}>
                 <OmBarnet barnetsId={endretBarn.id} />
             </TestProvidere>
         );
 
-        const gåVidereKnapper = queryByText(/felles.navigasjon.gå-videre/);
+        const gåVidere = await findByTestId('neste-steg');
         expect(
             queryByText(/ombarnet.institusjon.postnummer.format.feilmelding/)
         ).not.toBeInTheDocument();
-
-        act(() => {
-            gåVidereKnapper && gåVidereKnapper.click();
-        });
+        act(() => gåVidere.click());
         const feilmelding = await findAllByText(
             /ombarnet.institusjon.postnummer.format.feilmelding/
         );
