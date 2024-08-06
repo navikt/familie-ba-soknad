@@ -187,6 +187,9 @@ const Steg: React.FC<ISteg> = ({
     const [formProgressSteps, setFormProgressSteps] = useState<IRoutesStegMedTittel[]>([]);
 
     useEffect(() => {
+        console.log('Start');
+        console.log('steg', steg);
+        console.log('barnInkludertISøknaden', barnInkludertISøknaden);
         let antallBarnCounter = 0;
 
         const stegMedTittel = steg.map(steg => {
@@ -210,6 +213,11 @@ const Steg: React.FC<ISteg> = ({
                     tittelBlock = OM_BARNA.omBarnaTittel;
                     break;
                 case RouteEnum.OmBarnet:
+                    console.log('antallBarnCounter', antallBarnCounter);
+                    console.log(
+                        `barn ${antallBarnCounter}`,
+                        barnInkludertISøknaden[antallBarnCounter]
+                    );
                     if (barnInkludertISøknaden.length === 0) {
                         tittelBlock = OM_BARNA.omBarnaTittel; // TODO: Dette er en placeholder. Bytt til annen tittel som er generisk og brukes før barn er valgt.
                     } else {
@@ -252,7 +260,7 @@ const Steg: React.FC<ISteg> = ({
         );
 
         setFormProgressSteps(filtrerteSteg);
-    }, [barnInkludertISøknaden]);
+    }, [steg, barnInkludertISøknaden]);
 
     const håndterGåTilSteg = (stegIndex: number) => {
         const steg = formProgressSteps[stegIndex];
