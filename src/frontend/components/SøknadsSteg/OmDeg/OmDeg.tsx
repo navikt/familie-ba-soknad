@@ -1,10 +1,8 @@
 import React from 'react';
 
-import { Label } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
-import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { IUtenlandsoppholdTekstinnhold } from '../../../typer/sanity/modaler/utenlandsopphold';
 import { ESanitySteg } from '../../../typer/sanity/sanity';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
@@ -24,8 +22,6 @@ import { useOmdeg } from './useOmdeg';
 
 const OmDeg: React.FC = () => {
     const { tekster, plainTekst } = useApp();
-
-    const { toggles } = useFeatureToggles();
 
     const {
         erÅpen: utenlandsoppholdmodalErÅpen,
@@ -92,18 +88,11 @@ const OmDeg: React.FC = () => {
                                     fjernPeriodeCallback={fjernUtenlandsperiode}
                                 />
                             ))}
-                            {!toggles.NYE_MODAL_TEKSTER && utenlandsperioder.length > 0 && (
-                                <Label as="p" spacing>
-                                    <SpråkTekst id={'omdeg.flereopphold.spm'} />
-                                </Label>
-                            )}
                             <LeggTilKnapp
                                 onClick={åpneUtenlandsoppholdmodal}
                                 språkTekst={'felles.leggtilutenlands.knapp'}
                                 leggTilFlereTekst={
-                                    toggles.NYE_MODAL_TEKSTER &&
-                                    utenlandsperioder.length > 0 &&
-                                    plainTekst(flerePerioder)
+                                    utenlandsperioder.length > 0 && plainTekst(flerePerioder)
                                 }
                                 id={UtenlandsoppholdSpørsmålId.utenlandsopphold}
                                 feilmelding={

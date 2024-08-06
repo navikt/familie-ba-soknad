@@ -6,7 +6,6 @@ import { PlusCircleIcon } from '@navikt/aksel-icons';
 import { BodyShort, Button, ErrorMessage } from '@navikt/ds-react';
 import { ARed500 } from '@navikt/ds-tokens/dist/tokens';
 
-import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
 interface Props {
@@ -30,13 +29,9 @@ export const LeggTilKnapp: React.FC<Props> = ({
     feilmelding,
     id,
 }) => {
-    const { toggles } = useFeatureToggles();
-
     return (
         <>
-            {toggles.NYE_MODAL_TEKSTER && leggTilFlereTekst && (
-                <BodyShort spacing>{leggTilFlereTekst}</BodyShort>
-            )}
+            {leggTilFlereTekst && <BodyShort spacing>{leggTilFlereTekst}</BodyShort>}
             <StyledButton
                 id={id}
                 variant={'tertiary'}

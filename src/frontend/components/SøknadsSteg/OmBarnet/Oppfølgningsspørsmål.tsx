@@ -1,11 +1,9 @@
 import React from 'react';
 
-import { Label } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
-import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../typer/barn';
 import { IEøsBarnetrygdsperiode, IUtenlandsperiode } from '../../../typer/perioder';
 import { PersonType } from '../../../typer/personType';
@@ -58,7 +56,6 @@ const Oppfølgningsspørsmål: React.FC<{
     registrerteEøsBarnetrygdsperioder,
 }) => {
     const { tekster, plainTekst } = useApp();
-    const { toggles } = useFeatureToggles();
     const {
         erÅpen: utenlandsmodalErÅpen,
         lukkModal: lukkUtenlandsmodal,
@@ -201,19 +198,10 @@ const Oppfølgningsspørsmål: React.FC<{
                                 barn={barn}
                             />
                         ))}
-                        {!toggles.NYE_MODAL_TEKSTER && utenlandsperioder.length > 0 && (
-                            <Label as="p" spacing>
-                                <SpråkTekst
-                                    id={'ombarnet.flereopphold.spm'}
-                                    values={{ barn: barn.navn }}
-                                />
-                            </Label>
-                        )}
                         <LeggTilKnapp
                             id={UtenlandsoppholdSpørsmålId.utenlandsopphold}
                             språkTekst={'felles.leggtilutenlands.knapp'}
                             leggTilFlereTekst={
-                                toggles.NYE_MODAL_TEKSTER &&
                                 registrerteUtenlandsperioder.verdi.length > 0 &&
                                 plainTekst(flerePerioder)
                             }
