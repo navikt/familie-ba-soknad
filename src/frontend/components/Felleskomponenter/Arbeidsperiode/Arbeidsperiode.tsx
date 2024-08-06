@@ -1,9 +1,11 @@
 import React from 'react';
 
+import { Label } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { IArbeidsperiode } from '../../../typer/perioder';
 import { PeriodePersonTypeMedBarnProps, PersonType } from '../../../typer/personType';
 import { IArbeidsperiodeTekstinnhold } from '../../../typer/sanity/modaler/arbeidsperiode';
@@ -24,6 +26,7 @@ import { ArbeidsperiodeModal } from './ArbeidsperiodeModal';
 import { ArbeidsperiodeOppsummering } from './ArbeidsperiodeOppsummering';
 import {
     arbeidsperiodeFeilmelding,
+    arbeidsperiodeFlereSpørsmål,
     arbeidsperiodeLeggTilFlereKnapp,
     arbeidsperiodeSpørsmålSpråkId,
 } from './arbeidsperiodeSpråkUtils';
@@ -57,6 +60,7 @@ export const Arbeidsperiode: React.FC<Props> = ({
     erDød,
     barn,
 }) => {
+    const { toggles } = useFeatureToggles();
     const {
         erÅpen: arbeidsmodalErÅpen,
         lukkModal: lukkArbeidsmodal,
@@ -101,11 +105,23 @@ export const Arbeidsperiode: React.FC<Props> = ({
                             barn={personType !== PersonType.Søker ? barn : undefined}
                         />
                     ))}
+                    {!toggles.NYE_MODAL_TEKSTER && registrerteArbeidsperioder.verdi.length > 0 && (
+                        <Label as="p" spacing>
+                            <SpråkTekst
+                                id={arbeidsperiodeFlereSpørsmål(gjelderUtlandet, personType)}
+                                values={{
+                                    ...(barnetsNavn && { barn: barnetsNavn }),
+                                }}
+                            />
+                        </Label>
+                    )}
                     <LeggTilKnapp
                         onClick={åpneArbeidsmodal}
                         språkTekst={arbeidsperiodeLeggTilFlereKnapp(gjelderUtlandet)}
                         leggTilFlereTekst={
-                            registrerteArbeidsperioder.verdi.length > 0 && plainTekst(flerePerioder)
+                            toggles.NYE_MODAL_TEKSTER &&
+                            registrerteArbeidsperioder.verdi.length > 0 &&
+                            plainTekst(flerePerioder)
                         }
                         id={genererPeriodeId({
                             personType,

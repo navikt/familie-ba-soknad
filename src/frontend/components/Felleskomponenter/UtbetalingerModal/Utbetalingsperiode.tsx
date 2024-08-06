@@ -1,9 +1,11 @@
 import React from 'react';
 
+import { Label } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { IUtbetalingsperiode } from '../../../typer/perioder';
 import { PeriodePersonTypeMedBarnProps, PersonType } from '../../../typer/personType';
 import { IAndreUtbetalingerTekstinnhold } from '../../../typer/sanity/modaler/andreUtbetalinger';
@@ -13,8 +15,12 @@ import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
 import PerioderContainer from '../PerioderContainer';
 import useModal from '../SkjemaModal/useModal';
+import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
-import { mottarEllerMottattUtbetalingSpråkId } from './språkUtils';
+import {
+    mottarEllerMottattUtbetalingSpråkId,
+    utbetalingerFlerePerioderSpmSpråkId,
+} from './språkUtils';
 import { UtbetalingerSpørsmålId } from './spørsmål';
 import { UtbetalingerModal } from './UtbetalingerModal';
 import { UtbetalingsperiodeOppsummering } from './UtbetalingsperiodeOppsummering';
@@ -40,6 +46,7 @@ export const Utbetalingsperiode: React.FC<Props> = ({
     erDød,
     barn,
 }) => {
+    const { toggles } = useFeatureToggles();
     const {
         erÅpen: erUtbetalingerModalÅpen,
         lukkModal: lukkUtbetalingerModal,
@@ -80,10 +87,22 @@ export const Utbetalingsperiode: React.FC<Props> = ({
                             barn={barn}
                         />
                     ))}
+                    {!toggles.NYE_MODAL_TEKSTER &&
+                        registrerteUtbetalingsperioder.verdi.length > 0 && (
+                            <Label as="p" spacing>
+                                <SpråkTekst
+                                    id={utbetalingerFlerePerioderSpmSpråkId(personType)}
+                                    values={{
+                                        ...(barn && { barn: barnetsNavn }),
+                                    }}
+                                />
+                            </Label>
+                        )}
                     <LeggTilKnapp
                         onClick={åpneUtbetalingerModal}
                         språkTekst={'felles.flereytelser.knapp'}
                         leggTilFlereTekst={
+                            toggles.NYE_MODAL_TEKSTER &&
                             registrerteUtbetalingsperioder.verdi.length > 0 &&
                             plainTekst(flerePerioder)
                         }

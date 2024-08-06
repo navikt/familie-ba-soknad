@@ -155,6 +155,7 @@ export const mockFeatureToggle = () => {
             jest.fn().mockReturnValue({
                 // toggles: { [EFeatureToggle.EXAMPLE]: false },
                 toggles: {
+                    [EFeatureToggle.NYE_MODAL_TEKSTER]: false,
                     [EFeatureToggle.VIS_GUIDE_I_STEG]: false,
                     [EFeatureToggle.NYE_VEDLEGGSTEKSTER]: false,
                 },

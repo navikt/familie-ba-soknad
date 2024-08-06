@@ -1,9 +1,11 @@
 import React from 'react';
 
+import { Label } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { IPensjonsperiode } from '../../../typer/perioder';
 import { PeriodePersonTypeMedBarnProps, PersonType } from '../../../typer/personType';
 import { IPensjonsperiodeTekstinnhold } from '../../../typer/sanity/modaler/pensjonsperiode';
@@ -24,6 +26,7 @@ import { PensjonModal } from './Pensjonsmodal';
 import { PensjonsperiodeOppsummering } from './PensjonsperiodeOppsummering';
 import {
     mottarEllerMottattPensjonSpråkId,
+    pensjonFlerePerioderSpmSpråkId,
     pensjonsperiodeFeilmelding,
     pensjonsperiodeKnappSpråkId,
 } from './språkUtils';
@@ -57,6 +60,8 @@ export const Pensjonsperiode: React.FC<Props> = ({
     erDød,
     barn,
 }) => {
+    const { toggles } = useFeatureToggles();
+
     const {
         erÅpen: pensjonsmodalErÅpen,
         lukkModal: lukkPensjonsmodal,
@@ -104,10 +109,21 @@ export const Pensjonsperiode: React.FC<Props> = ({
                             barn={personType !== PersonType.Søker ? barn : undefined}
                         />
                     ))}
+                    {!toggles.NYE_MODAL_TEKSTER && registrertePensjonsperioder.verdi.length > 0 && (
+                        <Label as="p" spacing>
+                            <SpråkTekst
+                                id={pensjonFlerePerioderSpmSpråkId(gjelderUtlandet, personType)}
+                                values={{
+                                    ...(barn && { barn: barn.navn }),
+                                }}
+                            />
+                        </Label>
+                    )}
                     <LeggTilKnapp
                         onClick={åpnePensjonsmodal}
                         språkTekst={pensjonsperiodeKnappSpråkId(gjelderUtlandet)}
                         leggTilFlereTekst={
+                            toggles.NYE_MODAL_TEKSTER &&
                             registrertePensjonsperioder.verdi.length > 0 &&
                             plainTekst(flerePerioder)
                         }

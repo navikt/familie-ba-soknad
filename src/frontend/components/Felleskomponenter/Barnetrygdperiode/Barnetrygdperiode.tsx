@@ -1,9 +1,11 @@
 import React from 'react';
 
+import { Label } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { HeadingLevel } from '../../../typer/common';
 import { IEøsBarnetrygdsperiode } from '../../../typer/perioder';
@@ -19,7 +21,10 @@ import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
 import { BarnetrygdperiodeModal } from './BarnetrygdperiodeModal';
 import { BarnetrygdsperiodeOppsummering } from './BarnetrygdperiodeOppsummering';
-import { barnetrygdSpørsmålSpråkId } from './barnetrygdperiodeSpråkUtils';
+import {
+    barnetrygdSpørsmålSpråkId,
+    barnetrygdperiodeFlereSpørsmål,
+} from './barnetrygdperiodeSpråkUtils';
 import { BarnetrygdperiodeSpørsmålId } from './spørsmål';
 
 interface Props {
@@ -45,6 +50,7 @@ export const Barnetrygdperiode: React.FC<BarnetrygdperiodeProps> = ({
     tilhørendeJaNeiSpmFelt,
     headingLevel = '3',
 }) => {
+    const { toggles } = useFeatureToggles();
     const {
         erÅpen: barnetrygdsmodalErÅpen,
         lukkModal: lukkBarnetrygdsmodal,
@@ -83,10 +89,22 @@ export const Barnetrygdperiode: React.FC<BarnetrygdperiodeProps> = ({
                             headingLevel={headingLevel}
                         />
                     ))}
+
+                    {!toggles.NYE_MODAL_TEKSTER &&
+                        registrerteEøsBarnetrygdsperioder.verdi.length > 0 && (
+                            <Label as="p" spacing>
+                                <SpråkTekst
+                                    id={barnetrygdperiodeFlereSpørsmål(personType)}
+                                    values={{ barn: barn.navn }}
+                                />
+                            </Label>
+                        )}
+
                     <LeggTilKnapp
                         onClick={åpneBarnetrygdsmodal}
                         språkTekst={'ombarnet.trygdandreperioder.knapp'}
                         leggTilFlereTekst={
+                            toggles.NYE_MODAL_TEKSTER &&
                             registrerteEøsBarnetrygdsperioder.verdi.length > 0 &&
                             plainTekst(flerePerioder)
                         }

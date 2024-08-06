@@ -4,6 +4,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { ITidligereSamboer } from '../../../typer/person';
 import { PersonType } from '../../../typer/personType';
 import { ITidligereSamoboereTekstinnhold } from '../../../typer/sanity/modaler/tidligereSamboere';
@@ -34,6 +35,7 @@ const TidligereSamboere: React.FC<Props> = ({
     hattAnnenSamboerForSøktPeriodeFelt,
     tidligereSamboere,
 }) => {
+    const { toggles } = useFeatureToggles();
     const {
         lukkModal: lukkLeggTilSamboerModal,
         åpneModal: åpneLeggTilSamboerModal,
@@ -68,7 +70,9 @@ const TidligereSamboere: React.FC<Props> = ({
                     <LeggTilKnapp
                         språkTekst="omdeg.leggtilfleresamboere.leggtil"
                         leggTilFlereTekst={
-                            tidligereSamboere.verdi.length > 0 && plainTekst(flerePerioder)
+                            toggles.NYE_MODAL_TEKSTER &&
+                            tidligereSamboere.verdi.length > 0 &&
+                            plainTekst(flerePerioder)
                         }
                         onClick={åpneLeggTilSamboerModal}
                         id={genererPeriodeId({
