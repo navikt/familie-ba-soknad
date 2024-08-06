@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useState } from 'react';
+import React, { ReactNode, useEffect } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -179,88 +179,74 @@ const Steg: React.FC<ISteg> = ({
         navigate(forrigeRoute.path);
     };
 
+    const { barnInkludertISøknaden } = søknad;
+
     interface IRoutesStegMedTittel extends IRoutesSteg {
         tittel: string;
     }
 
-    const { barnInkludertISøknaden } = søknad;
-    const [formProgressSteps, setFormProgressSteps] = useState<IRoutesStegMedTittel[]>([]);
+    let antallBarnCounter = 0;
+    const stegMedTittel: IRoutesStegMedTittel[] = steg.map(steg => {
+        let tittelBlock: LocaleRecordBlock;
+        let tittelFlettefeltVerider: FlettefeltVerdier | undefined = undefined;
 
-    useEffect(() => {
-        console.log('Start');
-        console.log('steg', steg);
-        console.log('barnInkludertISøknaden', barnInkludertISøknaden);
-        let antallBarnCounter = 0;
+        switch (steg.route) {
+            case RouteEnum.Forside:
+                tittelBlock = FORSIDE.soeknadstittelBarnetrygd;
+                break;
+            case RouteEnum.OmDeg:
+                tittelBlock = OM_DEG.omDegTittel;
+                break;
+            case RouteEnum.DinLivssituasjon:
+                tittelBlock = DIN_LIVSSITUASJON.dinLivssituasjonTittel;
+                break;
+            case RouteEnum.VelgBarn:
+                tittelBlock = VELG_BARN.velgBarnTittel;
+                break;
+            case RouteEnum.OmBarna:
+                tittelBlock = OM_BARNA.omBarnaTittel;
+                break;
+            case RouteEnum.OmBarnet:
+                if (barnInkludertISøknaden.length === 0) {
+                    tittelBlock = OM_BARNA.omBarnaTittel; // TODO: Dette er en placeholder. Bytt til annen tittel som er generisk og brukes før barn er valgt.
+                } else {
+                    tittelBlock = OM_BARNET.omBarnetTittel;
+                    tittelFlettefeltVerider = {
+                        barnetsNavn: barnInkludertISøknaden[antallBarnCounter].navn,
+                    };
+                    antallBarnCounter++;
+                }
+                break;
+            case RouteEnum.EøsForSøker:
+                tittelBlock = EØS_FOR_SØKER.eoesForSokerTittel;
+                break;
+            case RouteEnum.EøsForBarn:
+                tittelBlock = EØS_FOR_BARN.eoesForBarnTittel;
+                break;
+            case RouteEnum.Oppsummering:
+                tittelBlock = OPPSUMMERING.oppsummeringTittel;
+                break;
+            case RouteEnum.Dokumentasjon:
+                tittelBlock = DOKUMENTASJON.dokumentasjonTittel;
+                break;
+            case RouteEnum.Kvittering:
+                tittelBlock = KVITTERING.kvitteringTittel;
+                break;
+            default:
+                // Alle routes i RouteEnum må gis en tittel fra Sanity ellers feiler denne
+                const _exhaustiveCheck: never = steg.route;
+                return _exhaustiveCheck;
+        }
 
-        const stegMedTittel = steg.map(steg => {
-            let tittelBlock: LocaleRecordBlock;
-            let tittelFlettefeltVerider: FlettefeltVerdier | undefined = undefined;
+        return {
+            ...steg,
+            tittel: plainTekst(tittelBlock, tittelFlettefeltVerider),
+        };
+    });
 
-            switch (steg.route) {
-                case RouteEnum.Forside:
-                    tittelBlock = FORSIDE.soeknadstittelBarnetrygd;
-                    break;
-                case RouteEnum.OmDeg:
-                    tittelBlock = OM_DEG.omDegTittel;
-                    break;
-                case RouteEnum.DinLivssituasjon:
-                    tittelBlock = DIN_LIVSSITUASJON.dinLivssituasjonTittel;
-                    break;
-                case RouteEnum.VelgBarn:
-                    tittelBlock = VELG_BARN.velgBarnTittel;
-                    break;
-                case RouteEnum.OmBarna:
-                    tittelBlock = OM_BARNA.omBarnaTittel;
-                    break;
-                case RouteEnum.OmBarnet:
-                    console.log('antallBarnCounter', antallBarnCounter);
-                    console.log(
-                        `barn ${antallBarnCounter}`,
-                        barnInkludertISøknaden[antallBarnCounter]
-                    );
-                    if (barnInkludertISøknaden.length === 0) {
-                        tittelBlock = OM_BARNA.omBarnaTittel; // TODO: Dette er en placeholder. Bytt til annen tittel som er generisk og brukes før barn er valgt.
-                    } else {
-                        tittelBlock = OM_BARNET.omBarnetTittel;
-                        tittelFlettefeltVerider = {
-                            barnetsNavn: barnInkludertISøknaden[antallBarnCounter].navn,
-                        };
-                        antallBarnCounter++;
-                    }
-                    break;
-                case RouteEnum.EøsForSøker:
-                    tittelBlock = EØS_FOR_SØKER.eoesForSokerTittel;
-                    break;
-                case RouteEnum.EøsForBarn:
-                    tittelBlock = EØS_FOR_BARN.eoesForBarnTittel;
-                    break;
-                case RouteEnum.Oppsummering:
-                    tittelBlock = OPPSUMMERING.oppsummeringTittel;
-                    break;
-                case RouteEnum.Dokumentasjon:
-                    tittelBlock = DOKUMENTASJON.dokumentasjonTittel;
-                    break;
-                case RouteEnum.Kvittering:
-                    tittelBlock = KVITTERING.kvitteringTittel;
-                    break;
-                default:
-                    // Alle routes i RouteEnum må gis en tittel fra Sanity ellers feiler denne
-                    const _exhaustiveCheck: never = steg.route;
-                    return _exhaustiveCheck;
-            }
-
-            return {
-                ...steg,
-                tittel: plainTekst(tittelBlock, tittelFlettefeltVerider),
-            };
-        });
-
-        const filtrerteSteg = stegMedTittel.filter(
-            steg => steg.route !== RouteEnum.Forside && steg.route !== RouteEnum.Kvittering
-        );
-
-        setFormProgressSteps(filtrerteSteg);
-    }, [steg, barnInkludertISøknaden]);
+    const formProgressSteps = stegMedTittel.filter(
+        steg => steg.route !== RouteEnum.Forside && steg.route !== RouteEnum.Kvittering
+    );
 
     const håndterGåTilSteg = (stegIndex: number) => {
         const steg = formProgressSteps[stegIndex];
