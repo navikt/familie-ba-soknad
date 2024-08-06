@@ -105,20 +105,6 @@ const Steg: React.FC<ISteg> = ({
     const { komFra, settKomFra } = useAppNavigation();
     const { toggles } = useFeatureToggles();
 
-    const {
-        FORSIDE,
-        OM_DEG,
-        DIN_LIVSSITUASJON,
-        VELG_BARN,
-        OM_BARNA,
-        OM_BARNET,
-        OPPSUMMERING,
-        DOKUMENTASJON,
-        EØS_FOR_BARN,
-        EØS_FOR_SØKER,
-        KVITTERING,
-    } = tekster();
-
     const nesteRoute = hentNesteSteg();
     const forrigeRoute = hentForrigeSteg();
     const nåværendeStegIndex = hentNåværendeStegIndex();
@@ -180,6 +166,20 @@ const Steg: React.FC<ISteg> = ({
         navigate(forrigeRoute.path);
     };
 
+    const {
+        FORSIDE,
+        OM_DEG,
+        DIN_LIVSSITUASJON,
+        VELG_BARN,
+        OM_BARNA,
+        OM_BARNET,
+        OPPSUMMERING,
+        DOKUMENTASJON,
+        EØS_FOR_BARN,
+        EØS_FOR_SØKER,
+        KVITTERING,
+    } = tekster();
+
     interface IRoutesStegMedTittel extends IRoutesSteg {
         tittel: string;
     }
@@ -207,7 +207,7 @@ const Steg: React.FC<ISteg> = ({
                 break;
             case RouteEnum.OmBarnet:
                 if (barnForSteg.length === 0) {
-                    tittelBlock = OM_BARNA.omBarnaTittel; // TODO: Dette er en placeholder. Bytt til annen tittel som er generisk og brukes før barn er valgt.
+                    tittelBlock = OM_BARNET.omBarnetTittelUtenFlettefelt;
                 } else {
                     tittelBlock = OM_BARNET.omBarnetTittel;
                     tittelFlettefeltVerider = {
@@ -232,7 +232,7 @@ const Steg: React.FC<ISteg> = ({
                 tittelBlock = KVITTERING.kvitteringTittel;
                 break;
             default:
-                // Alle routes i RouteEnum må gis en tittel fra Sanity ellers feiler denne
+                // Alle routes i RouteEnum må gjennomgås i switch(), ellers feiler _exhaustiveCheck
                 const _exhaustiveCheck: never = steg.route;
                 return _exhaustiveCheck;
         }
