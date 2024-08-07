@@ -1,6 +1,6 @@
 import { LocaleRecordBlock } from '../../../../typer/sanity/sanity';
 
 export interface IEøsForSøkerTekstinnhold {
-    eoesForSokerTittel: LocaleRecordBlock;
+    eoesForSoekerTittel: LocaleRecordBlock;
     eosForSokerGuide: LocaleRecordBlock;
 }
