@@ -67,6 +67,10 @@ const [StegProvider, useSteg] = createUseContext(() => {
         })
         .flat();
 
+    const formProgressSteps: ISteg[] = steg.filter(
+        steg => steg.route !== RouteEnum.Forside && steg.route !== RouteEnum.Kvittering
+    );
+
     const hentSteg = (pathname: string): ISteg => {
         const index = steg.findIndex(steg => matchPath(steg.path, decodeURIComponent(pathname)));
         return steg[index] ?? steg[0];
@@ -118,7 +122,7 @@ const [StegProvider, useSteg] = createUseContext(() => {
 
     return {
         steg,
-        barnForSteg,
+        formProgressSteps,
         hentStegNummer,
         hentStegObjektForBarn,
         hentNesteSteg,

@@ -2,7 +2,6 @@ import { BeskrivelseSanityApiNavn } from '../../../typer/dokumentasjon';
 import { LocaleRecordBlock } from '../../../typer/sanity/sanity';
 
 export type IDokumentasjonTekstinnhold = {
-    dokumentasjonTittel: LocaleRecordBlock;
     dokumentasjonGuide: LocaleRecordBlock;
 } & {
     [BeskrivelseSanityApiNavn.dokumentasjonPaaSeparasjonSkilsmisseEllerDoedsfall]: LocaleRecordBlock;
