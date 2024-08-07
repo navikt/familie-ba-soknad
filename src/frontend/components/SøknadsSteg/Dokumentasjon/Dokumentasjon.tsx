@@ -2,11 +2,10 @@ import React, { useState } from 'react';
 
 import { add, isBefore } from 'date-fns';
 
-import { Alert, BodyLong, BodyShort } from '@navikt/ds-react';
+import { Alert, BodyShort } from '@navikt/ds-react';
 import { RessursStatus } from '@navikt/familie-typer';
 
 import { useApp } from '../../../context/AppContext';
-import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import useFørsteRender from '../../../hooks/useFørsteRender';
 import { useSendInnSkjema } from '../../../hooks/useSendInnSkjema';
 import { IDokumentasjon, IVedlegg } from '../../../typer/dokumentasjon';
@@ -30,7 +29,6 @@ export const erVedleggstidspunktGyldig = (vedleggTidspunkt: string): boolean => 
 const Dokumentasjon: React.FC = () => {
     const { søknad, settSøknad, innsendingStatus, tekster } = useApp();
     const { sendInnSkjemaV8 } = useSendInnSkjema();
-    const { toggles } = useFeatureToggles();
     const [slettaVedlegg, settSlettaVedlegg] = useState<IVedlegg[]>([]);
 
     const oppdaterDokumentasjon = (
@@ -70,8 +68,6 @@ const Dokumentasjon: React.FC = () => {
     const stegTekster = tekster()[ESanitySteg.DOKUMENTASJON];
     const { dokumentasjonGuide } = stegTekster;
 
-    const visNyGuide = toggles.VIS_GUIDE_I_STEG && dokumentasjonGuide;
-
     return (
         <Steg
             tittel={<SpråkTekst id={'dokumentasjon.sidetittel'} />}
@@ -97,23 +93,9 @@ const Dokumentasjon: React.FC = () => {
                     </Alert>
                 </KomponentGruppe>
             )}
-            {visNyGuide ? (
-                <KomponentGruppe>
-                    <PictureScanningGuide />
-                </KomponentGruppe>
-            ) : (
-                <KomponentGruppe>
-                    <Alert variant={'info'}>
-                        <SpråkTekst id={'dokumentasjon.nudge'} />
-                    </Alert>
-
-                    <BodyLong>
-                        <SpråkTekst id={'dokumentasjon.info'} />
-                    </BodyLong>
-
-                    <PictureScanningGuide />
-                </KomponentGruppe>
-            )}
+            <KomponentGruppe>
+                <PictureScanningGuide />
+            </KomponentGruppe>
             {søknad.dokumentasjon
                 .filter(dokumentasjon => erDokumentasjonRelevant(dokumentasjon))
                 .map((dokumentasjon, index) => (

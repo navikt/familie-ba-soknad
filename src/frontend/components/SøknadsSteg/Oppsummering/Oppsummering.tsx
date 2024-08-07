@@ -1,13 +1,9 @@
 import React, { useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
-
-import { BodyLong } from '@navikt/ds-react';
 
 import { useApp } from '../../../context/AppContext';
 import { useEøs } from '../../../context/EøsContext';
-import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { useSteg } from '../../../context/StegContext';
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { RouteEnum } from '../../../typer/routes';
@@ -23,15 +19,10 @@ import OmBarnetOppsummering from './OppsummeringSteg/OmBarnet/OmBarnetOppsummeri
 import OmDegOppsummering from './OppsummeringSteg/OmDegOppsummering';
 import VelgBarnOppsummering from './OppsummeringSteg/VelgBarnOppsummering';
 
-const StyledBodyLong = styled(BodyLong)`
-    padding-bottom: 4rem;
-`;
-
 const Oppsummering: React.FC = () => {
     const { søknad, tekster } = useApp();
     const { hentStegNummer } = useSteg();
     const navigate = useNavigate();
-    const { toggles } = useFeatureToggles();
     const [feilAnchors, settFeilAnchors] = useState<string[]>([]);
     const { barnSomTriggerEøs, søkerTriggerEøs } = useEøs();
     const søkerHarEøsSteg = søkerTriggerEøs || !!barnSomTriggerEøs.length;
@@ -54,20 +45,12 @@ const Oppsummering: React.FC = () => {
     const stegTekster = tekster()[ESanitySteg.OPPSUMMERING];
     const { oppsummeringGuide } = stegTekster;
 
-    const visGammelInfo = !toggles.VIS_GUIDE_I_STEG || !oppsummeringGuide;
-
     return (
         <Steg
             tittel={<SpråkTekst id={'oppsummering.sidetittel'} />}
             guide={oppsummeringGuide}
             gåVidereCallback={gåVidereCallback}
         >
-            {visGammelInfo && (
-                <StyledBodyLong>
-                    <SpråkTekst id={'oppsummering.info'} />
-                </StyledBodyLong>
-            )}
-
             <OmDegOppsummering settFeilAnchors={settFeilAnchors} />
             <DinLivssituasjonOppsummering settFeilAnchors={settFeilAnchors} />
             <VelgBarnOppsummering settFeilAnchors={settFeilAnchors} />

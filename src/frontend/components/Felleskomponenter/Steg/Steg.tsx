@@ -10,7 +10,6 @@ import { setAvailableLanguages } from '@navikt/nav-dekoratoren-moduler';
 
 import { useApp } from '../../../context/AppContext';
 import { useAppNavigation } from '../../../context/AppNavigationContext';
-import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { useSteg } from '../../../context/StegContext';
 import useFørsteRender from '../../../hooks/useFørsteRender';
 import { device } from '../../../Theme';
@@ -75,13 +74,7 @@ const Form = styled.form`
     width: 100%;
 `;
 
-const Steg: React.FC<ISteg> = ({
-    tittel,
-    guide = undefined,
-    skjema,
-    gåVidereCallback,
-    children,
-}) => {
+const Steg: React.FC<ISteg> = ({ tittel, guide, skjema, gåVidereCallback, children }) => {
     const navigate = useNavigate();
     const { erÅpen: erModellVersjonModalÅpen, åpneModal: åpneModellVersjonModal } = useModal();
     const {
@@ -102,7 +95,6 @@ const Steg: React.FC<ISteg> = ({
         erPåKvitteringsside,
     } = useSteg();
     const { komFra, settKomFra } = useAppNavigation();
-    const { toggles } = useFeatureToggles();
 
     const nesteRoute = hentNesteSteg();
     const forrigeRoute = hentForrigeSteg();
@@ -235,7 +227,7 @@ const Steg: React.FC<ISteg> = ({
                         {tittel}
                     </Heading>
                 </TittelContainer>
-                {toggles.VIS_GUIDE_I_STEG && guide && (
+                {guide && (
                     <Box marginBlock="0 12">
                         <GuidePanel poster>
                             <TekstBlock block={guide} />
