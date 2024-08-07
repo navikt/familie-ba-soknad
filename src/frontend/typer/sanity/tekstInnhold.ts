@@ -2,7 +2,6 @@ import { IDinLivssituasjonTekstinnhold } from '../../components/SøknadsSteg/Din
 import { IDokumentasjonTekstinnhold } from '../../components/SøknadsSteg/Dokumentasjon/innholdTyper';
 import { IEøsForBarnTekstinnhold } from '../../components/SøknadsSteg/EøsSteg/Barn/innholdTyper';
 import { IEøsForSøkerTekstinnhold } from '../../components/SøknadsSteg/EøsSteg/Søker/innholdTyper';
-import { IKvitteringTekstinnhold } from '../../components/SøknadsSteg/Kvittering/innholdTyper';
 import { IOmBarnaTekstinnhold } from '../../components/SøknadsSteg/OmBarnaDine/innholdTyper';
 import { IOmBarnetTekstinnhold } from '../../components/SøknadsSteg/OmBarnet/innholdTyper';
 import { IOmDegTekstinnhold } from '../../components/SøknadsSteg/OmDeg/innholdTyper';
@@ -51,7 +50,6 @@ export interface ITekstinnhold {
     [ESanitySteg.EØS_FOR_BARN]: IEøsForBarnTekstinnhold;
     [ESanitySteg.OPPSUMMERING]: IOppsummeringTekstinnhold;
     [ESanitySteg.DOKUMENTASJON]: IDokumentasjonTekstinnhold;
-    [ESanitySteg.KVITTERING]: IKvitteringTekstinnhold;
     [ESanitySteg.FELLES]: IFellesTekstInnhold;
 }
 
@@ -72,10 +70,6 @@ export interface IFrittståendeOrdTekstinnhold {
     nei: LocaleRecordString;
     barnetrygd: LocaleRecordString;
     skjult: LocaleRecordString;
-    av: LocaleRecordString;
-    steg: LocaleRecordString;
-    visAlleSteg: LocaleRecordString;
-    skjulAlleSteg: LocaleRecordString;
 }
 
 export interface INavigasjonTekstinnhold {

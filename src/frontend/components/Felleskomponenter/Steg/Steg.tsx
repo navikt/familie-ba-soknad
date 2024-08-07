@@ -31,7 +31,6 @@ import useModal from '../SkjemaModal/useModal';
 import ModellVersjonModal from './ModellVersjonModal';
 import Navigeringspanel from './Navigeringspanel';
 import { ScrollHandler } from './ScrollHandler';
-import { useFormProgressSteg } from './useFormProgressSteg';
 
 interface ISteg {
     tittel: ReactNode;
@@ -88,6 +87,7 @@ const Steg: React.FC<ISteg> = ({ tittel, guide, skjema, gåVidereCallback, child
         plainTekst,
     } = useApp();
     const {
+        formProgressSteps,
         hentNesteSteg,
         hentForrigeSteg,
         hentNåværendeSteg,
@@ -99,7 +99,6 @@ const Steg: React.FC<ISteg> = ({ tittel, guide, skjema, gåVidereCallback, child
     const nesteRoute = hentNesteSteg();
     const forrigeRoute = hentForrigeSteg();
     const nåværendeStegIndex = hentNåværendeStegIndex();
-    const formProgressSteg = useFormProgressSteg();
 
     const nyesteNåværendeRoute: RouteEnum = hentNåværendeSteg().route;
     useFørsteRender(() => logSidevisningBarnetrygd(nyesteNåværendeRoute, søknad.søknadstype));
@@ -159,22 +158,11 @@ const Steg: React.FC<ISteg> = ({ tittel, guide, skjema, gåVidereCallback, child
     };
 
     const håndterGåTilSteg = (stegIndex: number) => {
-        const steg = formProgressSteg[stegIndex];
+        const steg = formProgressSteps[stegIndex];
         navigate(steg.path);
     };
 
     const { tilbakeKnapp } = tekster().FELLES.navigasjon;
-
-    const frittståendeOrdTekster = tekster().FELLES.frittståendeOrd;
-
-    const formProgressStegTekst =
-        plainTekst(frittståendeOrdTekster.steg) +
-        ' ' +
-        hentNåværendeStegIndex() +
-        ' ' +
-        plainTekst(frittståendeOrdTekster.av) +
-        ' ' +
-        formProgressSteg.length;
 
     return (
         <>
@@ -198,22 +186,17 @@ const Steg: React.FC<ISteg> = ({ tittel, guide, skjema, gåVidereCallback, child
                                 </Link>
                             </div>
                             <FormProgress
-                                translations={{
-                                    step: formProgressStegTekst,
-                                    showAllSteps: plainTekst(frittståendeOrdTekster.visAlleSteg),
-                                    hideAllSteps: plainTekst(frittståendeOrdTekster.skjulAlleSteg),
-                                }}
-                                totalSteps={formProgressSteg.length}
+                                totalSteps={formProgressSteps.length}
                                 activeStep={hentNåværendeStegIndex()}
                                 onStepChange={stegIndex => håndterGåTilSteg(stegIndex - 1)}
                             >
-                                {formProgressSteg.map((value, index) => (
+                                {formProgressSteps.map((value, index) => (
                                     <FormProgress.Step
                                         key={index}
                                         completed={index + 1 < hentNåværendeStegIndex()}
                                         interactive={index + 1 < hentNåværendeStegIndex()}
                                     >
-                                        {value.tittel}
+                                        {value.label}
                                     </FormProgress.Step>
                                 ))}
                             </FormProgress>
