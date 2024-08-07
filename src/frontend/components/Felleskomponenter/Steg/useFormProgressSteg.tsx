@@ -7,7 +7,7 @@ interface IStegMedTittel extends ISteg {
     tittel: string;
 }
 
-export function useFormProgressSteps(): IStegMedTittel[] {
+export const useFormProgressSteg = (): IStegMedTittel[] => {
     const { tekster, plainTekst } = useApp();
     const { steg, barnForSteg } = useSteg();
 
@@ -85,4 +85,4 @@ export function useFormProgressSteps(): IStegMedTittel[] {
             };
         })
         .filter(steg => steg.route !== RouteEnum.Forside && steg.route !== RouteEnum.Kvittering);
-}
+};
