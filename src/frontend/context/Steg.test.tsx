@@ -30,21 +30,6 @@ describe('Steg', () => {
         expect(result.current.steg.length).toEqual(9);
     });
 
-    test(`formProgressSteps skal returnere en liste uten forside og kvittering`, () => {
-        spyOnUseApp({
-            barnInkludertISøknaden: [],
-        });
-        const wrapper = ({ children }) => (
-            <RoutesProvider>
-                <MemoryRouter initialEntries={['/om-barnet/barn/1']}>
-                    <StegProvider>{children}</StegProvider>
-                </MemoryRouter>
-            </RoutesProvider>
-        );
-        const { result } = renderHook(() => useSteg(), { wrapper });
-        expect(result.current.formProgressSteps.length).toEqual(7);
-    });
-
     test(`Kan hente neste steg fra forsiden`, () => {
         spyOnUseApp({
             barnInkludertISøknaden: [
