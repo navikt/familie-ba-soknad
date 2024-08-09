@@ -167,14 +167,7 @@ const Steg: React.FC<ISteg> = ({ tittel, guide, skjema, gåVidereCallback, child
 
     const frittståendeOrdTekster = tekster().FELLES.frittståendeOrd;
 
-    const formProgressStegTekst =
-        plainTekst(frittståendeOrdTekster.steg) +
-        ' ' +
-        hentNåværendeStegIndex() +
-        ' ' +
-        plainTekst(frittståendeOrdTekster.av) +
-        ' ' +
-        formProgressSteg.length;
+    const formProgressStegOppsummeringTekst = `${plainTekst(frittståendeOrdTekster.steg)} ${hentNåværendeStegIndex()} ${plainTekst(frittståendeOrdTekster.av)} ${formProgressSteg.length}`;
 
     return (
         <>
@@ -199,7 +192,7 @@ const Steg: React.FC<ISteg> = ({ tittel, guide, skjema, gåVidereCallback, child
                             </div>
                             <FormProgress
                                 translations={{
-                                    step: formProgressStegTekst,
+                                    step: formProgressStegOppsummeringTekst,
                                     showAllSteps: plainTekst(frittståendeOrdTekster.visAlleSteg),
                                     hideAllSteps: plainTekst(frittståendeOrdTekster.skjulAlleSteg),
                                 }}
