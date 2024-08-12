@@ -98,7 +98,7 @@
     "@navikt/nav-dekoratoren-moduler": "^2.1.6",
     "@portabletext/react": "^3.0.7",
     "@portabletext/toolkit": "^2.0.8",
-    "@sanity/client": "^6.18.2",
+    "@sanity/client": "^6.21.2",
     "@sentry/react": "^7.113.0",
     "amplitude-js": "^8.21.9",
     "axios": "^1.7.2",
