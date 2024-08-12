@@ -6,6 +6,7 @@ import { Alert, BodyLong } from '@navikt/ds-react';
 import { RessursStatus } from '@navikt/familie-typer';
 
 import { useApp } from '../../../context/AppContext';
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { useSteg } from '../../../context/StegContext';
 import { RouteEnum } from '../../../typer/routes';
 import { setUserProperty, UserProperty } from '../../../utils/amplitude';
@@ -15,6 +16,7 @@ import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasj
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
+import Kontoinformasjon from '../../Kontoinformasjon/Kontoinformasjon';
 
 import { KontonummerInfo } from './KontonummerInfo';
 
@@ -28,6 +30,7 @@ const Kvittering: React.FC = () => {
     } = useApp();
     const { barnInkludertISøknaden, erEøs } = søknad;
     const { hentStegNummer } = useSteg();
+    const { toggles } = useFeatureToggles();
 
     const innsendtDato: Date =
         innsendingStatus.status === RessursStatus.SUKSESS
@@ -84,7 +87,9 @@ const Kvittering: React.FC = () => {
                 </BodyLong>
             </KomponentGruppe>
 
-            {varEøsSøknad && (
+            {toggles.VIS_KONTONUMMER && <Kontoinformasjon />}
+
+            {!toggles.VIS_KONTONUMMER && varEøsSøknad && (
                 <KomponentGruppe>
                     <KontonummerInfo />
                 </KomponentGruppe>
