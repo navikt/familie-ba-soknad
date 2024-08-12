@@ -16,7 +16,7 @@ const Kontoinformasjon: React.FC = () => {
         <VStack gap="4">
             {kontoinformasjon.status === RessursStatus.SUKSESS && (
                 <>
-                    <Heading level="3" size="small">
+                    <Heading level="3" size="xsmall">
                         {plainTekst(kvitteringstekster.kontonummerTittel)}
                     </Heading>
                     <Label as="p">{kontoinformasjon.data.kontonummer}</Label>
@@ -38,7 +38,7 @@ const Kontoinformasjon: React.FC = () => {
                     <Alert variant="warning">
                         <TekstBlock block={kvitteringstekster.finnerIngenKontonummerAdvarsel} />
                     </Alert>
-                    <Heading level="3" size="small">
+                    <Heading level="3" size="xsmall">
                         {plainTekst(kvitteringstekster.manglerKontonummerTittel)}
                     </Heading>
                     <TekstBlock block={kvitteringstekster.finnerIngenKontonummerBeskrivelse} />
