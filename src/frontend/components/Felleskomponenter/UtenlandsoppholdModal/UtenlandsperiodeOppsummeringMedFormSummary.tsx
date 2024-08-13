@@ -10,7 +10,7 @@ import { IUtenlandsperiode } from '../../../typer/perioder';
 import { formaterDato } from '../../../utils/dato';
 import { landkodeTilSpråk } from '../../../utils/språk';
 import { formaterDatoMedUkjent } from '../../../utils/visning';
-import PeriodeOppsummeringMedFormSummary from '../PeriodeOppsummering/PeriodeOppsummeringMedFormSummary';
+import PeriodeOppsummering from '../PeriodeOppsummering/PeriodeOppsummering';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
 import { tilDatoUkjentLabelSpråkId } from './spørsmål';
@@ -36,7 +36,7 @@ export const UtenlandsperiodeOppsummeringMedFormSummary: React.FC<{
     const årsak = utenlandsoppholdÅrsak.svar;
 
     return (
-        <PeriodeOppsummeringMedFormSummary
+        <PeriodeOppsummering
             nummer={nummer}
             tittelSpråkId={'felles.leggtilutenlands.opphold'}
             fjernKnappSpråkId={'felles.fjernutenlandsopphold.knapp'}
@@ -97,6 +97,6 @@ export const UtenlandsperiodeOppsummeringMedFormSummary: React.FC<{
                     </FormSummary.Value>
                 </FormSummary.Answer>
             )}
-        </PeriodeOppsummeringMedFormSummary>
+        </PeriodeOppsummering>
     );
 };
