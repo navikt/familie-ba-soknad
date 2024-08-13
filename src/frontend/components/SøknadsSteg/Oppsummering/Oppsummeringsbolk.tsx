@@ -1,8 +1,6 @@
 import React, { ReactNode, useEffect, useState } from 'react';
 
-import styled from 'styled-components';
-
-import { Accordion } from '@navikt/ds-react';
+import { FormSummary } from '@navikt/ds-react';
 import { ISkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
@@ -18,10 +16,6 @@ interface IHookReturn {
     validerAlleSynligeFelter: () => void;
     skjema: ISkjema<SkjemaFeltTyper, string>;
 }
-
-const StyledAccordionContent = styled(Accordion.Content)`
-    width: 100%;
-`;
 
 interface Props {
     tittel: string;
@@ -67,29 +61,29 @@ const Oppsummeringsbolk: React.FC<Props> = ({
     }, [visFeil]);
 
     return (
-        <Accordion>
-            <Accordion.Item defaultOpen={true}>
-                <Accordion.Header type="button">
+        <FormSummary>
+            <FormSummary.Header>
+                <FormSummary.Heading level="2">
                     {steg?.route !== RouteEnum.OmBarnet &&
                         steg?.route !== RouteEnum.EøsForBarn &&
                         `${hentStegNummer(steg?.route ?? RouteEnum.OmDeg)}. `}
                     <SpråkTekst id={tittel} values={språkValues} />
-                </Accordion.Header>
-                <StyledAccordionContent>
-                    {children}
-                    {visFeil && (
-                        <SkjemaFeiloppsummering
-                            skjema={skjema}
-                            routeForFeilmeldinger={steg}
-                            id={feilOppsummeringId}
-                        />
-                    )}
-                    {steg && !visFeil && (
-                        <AppLenke steg={steg} språkTekstId={'oppsummering.endresvar.lenketekst'} />
-                    )}
-                </StyledAccordionContent>
-            </Accordion.Item>
-        </Accordion>
+                </FormSummary.Heading>
+                {steg && !visFeil && (
+                    <AppLenke steg={steg} språkTekstId={'oppsummering.endresvar.lenketekst'} />
+                )}
+            </FormSummary.Header>
+            <FormSummary.Answers>
+                {children}
+                {visFeil && (
+                    <SkjemaFeiloppsummering
+                        skjema={skjema}
+                        routeForFeilmeldinger={steg}
+                        id={feilOppsummeringId}
+                    />
+                )}
+            </FormSummary.Answers>
+        </FormSummary>
     );
 };
 

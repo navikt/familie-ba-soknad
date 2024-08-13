@@ -23,7 +23,7 @@ import {
     omDegSpørsmålSpråkId,
 } from '../../OmDeg/spørsmål';
 import { useOmdeg } from '../../OmDeg/useOmdeg';
-import OppsummeringsbolkMedFormSummary from '../OppsummeringsbolkMedFormSummary';
+import Oppsummeringsbolk from '../Oppsummeringsbolk';
 
 interface Props {
     settFeilAnchors: React.Dispatch<React.SetStateAction<string[]>>;
@@ -38,7 +38,7 @@ const OmDegOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
     const forsidetekster = tekster()[ESanitySteg.FORSIDE];
 
     return (
-        <OppsummeringsbolkMedFormSummary
+        <Oppsummeringsbolk
             steg={hentRouteObjektForRouteEnum(RouteEnum.OmDeg)}
             tittel={'omdeg.sidetittel'}
             skjemaHook={omDegHook}
@@ -144,7 +144,7 @@ const OmDegOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                     </FormSummary.Value>
                 </FormSummary.Answer>
             )}
-        </OppsummeringsbolkMedFormSummary>
+        </Oppsummeringsbolk>
     );
 };
 
