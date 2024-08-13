@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
-import { Box } from '@navikt/ds-react';
-
 import { useApp } from '../../../context/AppContext';
 import { useEøs } from '../../../context/EøsContext';
 import { useSteg } from '../../../context/StegContext';
@@ -19,7 +17,6 @@ import EøsSøkerOppsummering from './OppsummeringSteg/Eøs/EøsSøkerOppsummeri
 import OmBarnaOppsummering from './OppsummeringSteg/OmBarnaOppsummering';
 import OmBarnetOppsummering from './OppsummeringSteg/OmBarnet/OmBarnetOppsummering';
 import OmDegOppsummering from './OppsummeringSteg/OmDegOppsummering';
-import OmDegOppsummeringMedFormSummary from './OppsummeringSteg/OmDegOppsummeringMedFormSummary';
 import VelgBarnOppsummering from './OppsummeringSteg/VelgBarnOppsummering';
 
 const Oppsummering: React.FC = () => {
@@ -54,12 +51,6 @@ const Oppsummering: React.FC = () => {
             guide={oppsummeringGuide}
             gåVidereCallback={gåVidereCallback}
         >
-            <OmDegOppsummeringMedFormSummary
-                settFeilAnchors={settFeilAnchors}
-            ></OmDegOppsummeringMedFormSummary>
-
-            <Box marginBlock="12"></Box>
-
             <OmDegOppsummering settFeilAnchors={settFeilAnchors} />
             <DinLivssituasjonOppsummering settFeilAnchors={settFeilAnchors} />
             <VelgBarnOppsummering settFeilAnchors={settFeilAnchors} />
