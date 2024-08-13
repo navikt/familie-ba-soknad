@@ -1,29 +1,17 @@
 import React, { ReactNode } from 'react';
 
-import styled from 'styled-components';
-
-import { BodyShort, Label } from '@navikt/ds-react';
+import { FormSummary } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { ESivilstand } from '../../../typer/kontrakt/generelle';
 import { jaNeiSvarTilSpråkId } from '../../../utils/spørsmål';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
-const StyledOppsummeringsFelt = styled.div`
-    margin-bottom: 1rem;
-`;
-
 interface IOppsummeringsFeltProps {
     tittel?: ReactNode;
     søknadsvar?: string | null;
     children?: ReactNode;
 }
-
-const StyledLabel = styled(Label)`
-    && {
-        margin-bottom: 0.3rem;
-    }
-`;
 
 export const OppsummeringFelt: React.FC<IOppsummeringsFeltProps> = ({
     tittel,
@@ -38,15 +26,15 @@ export const OppsummeringFelt: React.FC<IOppsummeringsFeltProps> = ({
     }
 
     return (
-        <StyledOppsummeringsFelt>
-            {tittel && <StyledLabel forwardedAs="p">{tittel}</StyledLabel>}
+        <FormSummary.Answer>
+            {tittel && <FormSummary.Label>{tittel}</FormSummary.Label>}
             {søknadsvar ? (
-                <BodyShort>
+                <FormSummary.Value>
                     {språktekstid ? <SpråkTekst id={språktekstid} /> : søknadsvar}
-                </BodyShort>
+                </FormSummary.Value>
             ) : (
                 children
             )}
-        </StyledOppsummeringsFelt>
+        </FormSummary.Answer>
     );
 };
