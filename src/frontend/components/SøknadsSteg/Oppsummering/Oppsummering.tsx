@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
-import { Box, FormSummary } from '@navikt/ds-react';
+import { Box } from '@navikt/ds-react';
 
 import { useApp } from '../../../context/AppContext';
 import { useEøs } from '../../../context/EøsContext';
@@ -54,11 +54,9 @@ const Oppsummering: React.FC = () => {
             guide={oppsummeringGuide}
             gåVidereCallback={gåVidereCallback}
         >
-            <FormSummary>
-                <OmDegOppsummeringMedFormSummary
-                    settFeilAnchors={settFeilAnchors}
-                ></OmDegOppsummeringMedFormSummary>
-            </FormSummary>
+            <OmDegOppsummeringMedFormSummary
+                settFeilAnchors={settFeilAnchors}
+            ></OmDegOppsummeringMedFormSummary>
 
             <Box marginBlock="12"></Box>
 

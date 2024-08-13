@@ -24,7 +24,7 @@ import {
 } from '../../OmDeg/spørsmål';
 import { useOmdeg } from '../../OmDeg/useOmdeg';
 import { OppsummeringFelt } from '../OppsummeringFelt';
-import Oppsummeringsbolk from '../Oppsummeringsbolk';
+import OppsummeringsbolkMedFormSummary from '../OppsummeringsbolkMedFormSummary';
 import { StyledOppsummeringsFeltGruppe } from '../OppsummeringsFeltGruppe';
 
 const StyledUtenlandsperiodeOppsummering = styled(UtenlandsperiodeOppsummering)`
@@ -44,7 +44,7 @@ const OmDegOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
     const forsidetekster = tekster()[ESanitySteg.FORSIDE];
 
     return (
-        <Oppsummeringsbolk
+        <OppsummeringsbolkMedFormSummary
             steg={hentRouteObjektForRouteEnum(RouteEnum.OmDeg)}
             tittel={'omdeg.sidetittel'}
             skjemaHook={omDegHook}
@@ -128,7 +128,7 @@ const OmDegOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                     />
                 )}
             </StyledOppsummeringsFeltGruppe>
-        </Oppsummeringsbolk>
+        </OppsummeringsbolkMedFormSummary>
     );
 };
 
