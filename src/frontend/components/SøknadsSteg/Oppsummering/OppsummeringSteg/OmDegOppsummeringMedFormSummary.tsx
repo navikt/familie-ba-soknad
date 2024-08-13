@@ -2,7 +2,6 @@ import React from 'react';
 
 import { Alpha3Code } from 'i18n-iso-countries';
 import { useIntl } from 'react-intl';
-import styled from 'styled-components';
 
 import { FormSummary } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
@@ -17,26 +16,20 @@ import { landkodeTilSpråk } from '../../../../utils/språk';
 import { jaNeiSvarTilSpråkId } from '../../../../utils/spørsmål';
 import TekstBlock from '../../../Felleskomponenter/Sanity/TekstBlock';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
-import { UtenlandsperiodeOppsummering } from '../../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsperiodeOppsummering';
+import { UtenlandsperiodeOppsummeringMedFormSummary } from '../../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsperiodeOppsummeringMedFormSummary';
 import {
     omDegPersonopplysningerSpråkId,
     OmDegSpørsmålId,
     omDegSpørsmålSpråkId,
 } from '../../OmDeg/spørsmål';
 import { useOmdeg } from '../../OmDeg/useOmdeg';
-import { OppsummeringFelt } from '../OppsummeringFelt';
 import OppsummeringsbolkMedFormSummary from '../OppsummeringsbolkMedFormSummary';
-import { StyledOppsummeringsFeltGruppe } from '../OppsummeringsFeltGruppe';
-
-const StyledUtenlandsperiodeOppsummering = styled(UtenlandsperiodeOppsummering)`
-    border-bottom: none;
-`;
 
 interface Props {
     settFeilAnchors: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-const OmDegOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
+const OmDegOppsummeringMedFormSummary: React.FC<Props> = ({ settFeilAnchors }) => {
     const { søknad, tekster, plainTekst } = useApp();
     const { valgtLocale } = useSpråk();
     const { formatMessage } = useIntl();
@@ -99,50 +92,60 @@ const OmDegOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                 <FormSummary.Value>{genererAdresseVisning(søknad.søker)}</FormSummary.Value>
             </FormSummary.Answer>
 
-            <StyledOppsummeringsFeltGruppe>
-                {søknad.søker.borPåRegistrertAdresse.svar && (
-                    <OppsummeringFelt
-                        tittel={
-                            <SpråkTekst
-                                id={omDegSpørsmålSpråkId[OmDegSpørsmålId.borPåRegistrertAdresse]}
-                            />
-                        }
-                        søknadsvar={søknad.søker.borPåRegistrertAdresse.svar}
-                    />
-                )}
-            </StyledOppsummeringsFeltGruppe>
+            {søknad.søker.borPåRegistrertAdresse.svar && (
+                <FormSummary.Answer>
+                    <FormSummary.Label>
+                        <SpråkTekst
+                            id={omDegSpørsmålSpråkId[OmDegSpørsmålId.borPåRegistrertAdresse]}
+                        />
+                    </FormSummary.Label>
+                    <FormSummary.Value>
+                        <SpråkTekst
+                            id={jaNeiSvarTilSpråkId(søknad.søker.borPåRegistrertAdresse.svar)}
+                        />
+                    </FormSummary.Value>
+                </FormSummary.Answer>
+            )}
 
-            <StyledOppsummeringsFeltGruppe>
-                <OppsummeringFelt
-                    tittel={
+            {søknad.søker.værtINorgeITolvMåneder.svar && (
+                <FormSummary.Answer>
+                    <FormSummary.Label>
                         <SpråkTekst
                             id={omDegSpørsmålSpråkId[OmDegSpørsmålId.værtINorgeITolvMåneder]}
                         />
-                    }
-                    søknadsvar={søknad.søker.værtINorgeITolvMåneder.svar}
+                    </FormSummary.Label>
+                    <FormSummary.Value>
+                        <SpråkTekst
+                            id={jaNeiSvarTilSpråkId(søknad.søker.værtINorgeITolvMåneder.svar)}
+                        />
+                    </FormSummary.Value>
+                </FormSummary.Answer>
+            )}
+
+            {søknad.søker.utenlandsperioder.map((periode, index) => (
+                <UtenlandsperiodeOppsummeringMedFormSummary
+                    key={index}
+                    periode={periode}
+                    nummer={index + 1}
                 />
-                {søknad.søker.utenlandsperioder.map((periode, index) => (
-                    <StyledUtenlandsperiodeOppsummering
-                        key={index}
-                        periode={periode}
-                        nummer={index + 1}
-                    />
-                ))}
-                {søknad.søker.planleggerÅBoINorgeTolvMnd.svar && (
-                    <OppsummeringFelt
-                        tittel={
-                            <SpråkTekst
-                                id={
-                                    omDegSpørsmålSpråkId[OmDegSpørsmålId.planleggerÅBoINorgeTolvMnd]
-                                }
-                            />
-                        }
-                        søknadsvar={søknad.søker.planleggerÅBoINorgeTolvMnd.svar}
-                    />
-                )}
-            </StyledOppsummeringsFeltGruppe>
+            ))}
+
+            {søknad.søker.planleggerÅBoINorgeTolvMnd.svar && (
+                <FormSummary.Answer>
+                    <FormSummary.Label>
+                        <SpråkTekst
+                            id={omDegSpørsmålSpråkId[OmDegSpørsmålId.planleggerÅBoINorgeTolvMnd]}
+                        />
+                    </FormSummary.Label>
+                    <FormSummary.Value>
+                        <SpråkTekst
+                            id={jaNeiSvarTilSpråkId(søknad.søker.planleggerÅBoINorgeTolvMnd.svar)}
+                        />
+                    </FormSummary.Value>
+                </FormSummary.Answer>
+            )}
         </OppsummeringsbolkMedFormSummary>
     );
 };
 
-export default OmDegOppsummering;
+export default OmDegOppsummeringMedFormSummary;
