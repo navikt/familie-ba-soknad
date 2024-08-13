@@ -4,6 +4,7 @@ import { Alpha3Code } from 'i18n-iso-countries';
 import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 
+import { FormSummary } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../../context/AppContext';
@@ -50,43 +51,55 @@ const OmDegOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
             skjemaHook={omDegHook}
             settFeilAnchors={settFeilAnchors}
         >
-            <StyledOppsummeringsFeltGruppe>
-                <OppsummeringFelt
-                    tittel={
-                        <TekstBlock
-                            block={forsidetekster.bekreftelsesboksBroedtekst}
-                            brukTypografiWrapper={false}
-                        />
-                    }
-                    søknadsvar={
-                        søknad.lestOgForståttBekreftelse
-                            ? plainTekst(forsidetekster.bekreftelsesboksErklaering)
-                            : formatMessage({ id: jaNeiSvarTilSpråkId(ESvar.NEI) })
-                    }
-                />
-            </StyledOppsummeringsFeltGruppe>
-            <StyledOppsummeringsFeltGruppe>
-                <OppsummeringFelt
-                    tittel={<SpråkTekst id={'felles.fødsels-eller-dnummer.label'} />}
-                    søknadsvar={søknad.søker.ident}
-                />
-                <OppsummeringFelt
-                    tittel={<SpråkTekst id={omDegPersonopplysningerSpråkId.søkerStatsborgerskap} />}
-                    søknadsvar={søknad.søker.statsborgerskap
-                        .map((statsborgerskap: { landkode: Alpha3Code }) =>
-                            landkodeTilSpråk(statsborgerskap.landkode, valgtLocale)
-                        )
-                        .join(', ')}
-                />
-                <OppsummeringFelt
-                    tittel={<SpråkTekst id={omDegPersonopplysningerSpråkId.søkerSivilstatus} />}
-                    søknadsvar={søknad.søker.sivilstand.type}
-                />
+            <FormSummary.Answer>
+                <FormSummary.Label>
+                    <TekstBlock
+                        block={forsidetekster.bekreftelsesboksBroedtekst}
+                        brukTypografiWrapper={false}
+                    />
+                </FormSummary.Label>
+                <FormSummary.Value>
+                    {søknad.lestOgForståttBekreftelse
+                        ? plainTekst(forsidetekster.bekreftelsesboksErklaering)
+                        : formatMessage({ id: jaNeiSvarTilSpråkId(ESvar.NEI) })}
+                </FormSummary.Value>
+            </FormSummary.Answer>
 
-                <OppsummeringFelt
-                    tittel={<SpråkTekst id={omDegPersonopplysningerSpråkId.søkerAdresse} />}
-                    children={genererAdresseVisning(søknad.søker)}
-                />
+            <FormSummary.Answer>
+                <FormSummary.Label>
+                    <SpråkTekst id={'felles.fødsels-eller-dnummer.label'} />
+                </FormSummary.Label>
+                <FormSummary.Value>{søknad.søker.ident}</FormSummary.Value>
+            </FormSummary.Answer>
+
+            <FormSummary.Answer>
+                <FormSummary.Label>
+                    <SpråkTekst id={omDegPersonopplysningerSpråkId.søkerStatsborgerskap} />
+                </FormSummary.Label>
+                {søknad.søker.statsborgerskap.map((statsborgerskap: { landkode: Alpha3Code }) => (
+                    <FormSummary.Value>
+                        {landkodeTilSpråk(statsborgerskap.landkode, valgtLocale)}
+                    </FormSummary.Value>
+                ))}
+            </FormSummary.Answer>
+
+            <FormSummary.Answer>
+                <FormSummary.Label>
+                    <SpråkTekst id={omDegPersonopplysningerSpråkId.søkerSivilstatus} />
+                </FormSummary.Label>
+                <FormSummary.Value>
+                    <SpråkTekst id={'felles.sivilstatus.kode.' + søknad.søker.sivilstand.type} />
+                </FormSummary.Value>
+            </FormSummary.Answer>
+
+            <FormSummary.Answer>
+                <FormSummary.Label>
+                    <SpråkTekst id={omDegPersonopplysningerSpråkId.søkerAdresse} />
+                </FormSummary.Label>
+                <FormSummary.Value>{genererAdresseVisning(søknad.søker)}</FormSummary.Value>
+            </FormSummary.Answer>
+
+            <StyledOppsummeringsFeltGruppe>
                 {søknad.søker.borPåRegistrertAdresse.svar && (
                     <OppsummeringFelt
                         tittel={
