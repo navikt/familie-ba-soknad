@@ -13,7 +13,7 @@ const Kontoinformasjon: React.FC = () => {
     const kvitteringstekster = tekster()[ESanitySteg.KVITTERING];
 
     return (
-        <VStack gap="4">
+        <VStack gap="6">
             {kontoinformasjon.status === RessursStatus.SUKSESS && (
                 <>
                     <Heading level="3" size="xsmall">
@@ -42,7 +42,6 @@ const Kontoinformasjon: React.FC = () => {
                         {plainTekst(kvitteringstekster.manglerKontonummerTittel)}
                     </Heading>
                     <TekstBlock block={kvitteringstekster.finnerIngenKontonummerBeskrivelse} />
-                    <TekstBlock block={kvitteringstekster.registrerKontonummerLenke} />
                 </>
             )}
         </VStack>

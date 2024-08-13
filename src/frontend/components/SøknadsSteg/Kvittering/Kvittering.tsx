@@ -54,7 +54,7 @@ const Kvittering: React.FC = () => {
 
     return (
         <Steg tittel={<SpråkTekst id={'kvittering.sidetittel'} />}>
-            <KomponentGruppe>
+            <KomponentGruppe inline>
                 <Alert variant={'success'}>
                     <SpråkTekst
                         id={'kvittering.mottatt'}
