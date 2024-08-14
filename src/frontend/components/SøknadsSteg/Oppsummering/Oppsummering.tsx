@@ -11,12 +11,12 @@ import { ESanitySteg } from '../../../typer/sanity/sanity';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 
-import DinLivssituasjonOppsummering from './OppsummeringSteg/DinLivssituasjonOppsummering';
+// import DinLivssituasjonOppsummering from './OppsummeringSteg/DinLivssituasjonOppsummering';
 import EøsBarnOppsummering from './OppsummeringSteg/Eøs/EøsBarnOppsummering';
 import EøsSøkerOppsummering from './OppsummeringSteg/Eøs/EøsSøkerOppsummering';
 import OmBarnaOppsummering from './OppsummeringSteg/OmBarnaOppsummering';
 import OmBarnetOppsummering from './OppsummeringSteg/OmBarnet/OmBarnetOppsummering';
-import OmDegOppsummering from './OppsummeringSteg/OmDegOppsummering';
+// import OmDegOppsummering from './OppsummeringSteg/OmDegOppsummering';
 import VelgBarnOppsummering from './OppsummeringSteg/VelgBarnOppsummering';
 
 const Oppsummering: React.FC = () => {
@@ -51,8 +51,8 @@ const Oppsummering: React.FC = () => {
             guide={oppsummeringGuide}
             gåVidereCallback={gåVidereCallback}
         >
-            <OmDegOppsummering settFeilAnchors={settFeilAnchors} />
-            <DinLivssituasjonOppsummering settFeilAnchors={settFeilAnchors} />
+            {/* <OmDegOppsummering settFeilAnchors={settFeilAnchors} /> */}
+            {/* <DinLivssituasjonOppsummering settFeilAnchors={settFeilAnchors} /> */}
             <VelgBarnOppsummering settFeilAnchors={settFeilAnchors} />
             <OmBarnaOppsummering settFeilAnchors={settFeilAnchors} />
 
