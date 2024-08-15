@@ -14,7 +14,7 @@ import Steg from '../../Felleskomponenter/Steg/Steg';
 // import DinLivssituasjonOppsummering from './OppsummeringSteg/DinLivssituasjonOppsummering';
 import EøsBarnOppsummering from './OppsummeringSteg/Eøs/EøsBarnOppsummering';
 import EøsSøkerOppsummering from './OppsummeringSteg/Eøs/EøsSøkerOppsummering';
-import OmBarnaOppsummering from './OppsummeringSteg/OmBarnaOppsummering';
+// import OmBarnaOppsummering from './OppsummeringSteg/OmBarnaOppsummering';
 import OmBarnetOppsummering from './OppsummeringSteg/OmBarnet/OmBarnetOppsummering';
 // import OmDegOppsummering from './OppsummeringSteg/OmDegOppsummering';
 // import VelgBarnOppsummering from './OppsummeringSteg/VelgBarnOppsummering';
@@ -54,7 +54,7 @@ const Oppsummering: React.FC = () => {
             {/* <OmDegOppsummering settFeilAnchors={settFeilAnchors} /> */}
             {/* <DinLivssituasjonOppsummering settFeilAnchors={settFeilAnchors} /> */}
             {/* <VelgBarnOppsummering settFeilAnchors={settFeilAnchors} /> */}
-            <OmBarnaOppsummering settFeilAnchors={settFeilAnchors} />
+            {/* <OmBarnaOppsummering settFeilAnchors={settFeilAnchors} /> */}
 
             {søknad.barnInkludertISøknaden.map((barn, index) => {
                 const enIndeksert = index + 1;

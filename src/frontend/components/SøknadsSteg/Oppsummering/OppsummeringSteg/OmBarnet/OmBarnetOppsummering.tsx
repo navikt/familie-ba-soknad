@@ -22,7 +22,6 @@ import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../../../OmBa
 import { useOmBarnet } from '../../../OmBarnet/useOmBarnet';
 import { OppsummeringFelt } from '../../OppsummeringFelt';
 import Oppsummeringsbolk from '../../Oppsummeringsbolk';
-import { StyledOppsummeringsFeltGruppe } from '../../OppsummeringsFeltGruppe';
 
 import AndreForelderOppsummering from './AndreForelderOppsummering';
 
@@ -55,13 +54,12 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                 />
             )}
             {barn[barnDataKeySpørsmål.oppholderSegIInstitusjon].svar === ESvar.JA && (
-                <StyledOppsummeringsFeltGruppe>
+                <>
                     <OppsummeringFelt
                         tittel={
                             <SpråkTekst id={'ombarnet.institusjon'} values={{ navn: barn.navn }} />
                         }
                     />
-
                     {barn[barnDataKeySpørsmål.institusjonIUtland].svar === ESvar.JA ? (
                         <OppsummeringFelt
                             tittel={
@@ -88,7 +86,6 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                                 }
                                 søknadsvar={barn[barnDataKeySpørsmål.institusjonsnavn].svar}
                             />
-
                             <OppsummeringFelt
                                 tittel={
                                     <SpråkTekst
@@ -101,7 +98,6 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                                 }
                                 søknadsvar={barn[barnDataKeySpørsmål.institusjonsadresse].svar}
                             />
-
                             <OppsummeringFelt
                                 tittel={
                                     <SpråkTekst
@@ -116,7 +112,6 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                             />
                         </>
                     )}
-
                     <OppsummeringFelt
                         tittel={
                             <SpråkTekst
@@ -131,7 +126,6 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                             barn[barnDataKeySpørsmål.institusjonOppholdStartdato].svar
                         )}
                     />
-
                     <OppsummeringFelt
                         tittel={
                             <SpråkTekst
@@ -151,10 +145,10 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                             })
                         )}
                     />
-                </StyledOppsummeringsFeltGruppe>
+                </>
             )}
             {barn[barnDataKeySpørsmål.boddMindreEnn12MndINorge].svar === ESvar.JA && (
-                <StyledOppsummeringsFeltGruppe>
+                <>
                     <OppsummeringFelt
                         tittel={
                             <SpråkTekst
@@ -186,11 +180,10 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                             søknadsvar={barn[barnDataKeySpørsmål.planleggerÅBoINorge12Mnd].svar}
                         />
                     )}
-                </StyledOppsummeringsFeltGruppe>
+                </>
             )}
-
             {barn[barnDataKeySpørsmål.barnetrygdFraAnnetEøsland].svar === ESvar.JA && (
-                <StyledOppsummeringsFeltGruppe>
+                <>
                     <OppsummeringFelt
                         tittel={
                             <SpråkTekst
@@ -199,7 +192,6 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                             />
                         }
                     />
-
                     {barn[barnDataKeySpørsmål.pågåendeSøknadFraAnnetEøsLand].svar && (
                         <OppsummeringFelt
                             tittel={
@@ -233,7 +225,6 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                             )}
                         />
                     )}
-
                     {barn[barnDataKeySpørsmål.mottarEllerMottokEøsBarnetrygd].svar && (
                         <OppsummeringFelt
                             tittel={
@@ -259,18 +250,18 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                             personType={PersonType.Søker}
                         />
                     ))}
-                </StyledOppsummeringsFeltGruppe>
+                </>
             )}
 
             {barn.andreForelder && (
                 <>
-                    <OppsummeringFelt tittel={<SpråkTekst id={'ombarnet.andre-forelder'} />} />
-                    <AndreForelderOppsummering andreForelder={barn.andreForelder} barn={barn} />
+                    <OppsummeringFelt tittel={<SpråkTekst id={'ombarnet.andre-forelder'} />}>
+                        <AndreForelderOppsummering andreForelder={barn.andreForelder} barn={barn} />
+                    </OppsummeringFelt>
                 </>
             )}
-            <StyledOppsummeringsFeltGruppe>
+            <>
                 <OppsummeringFelt tittel={<SpråkTekst id={'ombarnet.bosted'} />} />
-
                 <OppsummeringFelt
                     tittel={
                         <SpråkTekst
@@ -300,7 +291,7 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                         }
                     />
                 )}
-            </StyledOppsummeringsFeltGruppe>
+            </>
         </Oppsummeringsbolk>
     );
 };
