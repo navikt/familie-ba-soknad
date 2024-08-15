@@ -28,13 +28,13 @@ export const OppsummeringFelt: React.FC<IOppsummeringsFeltProps> = ({
     return (
         <FormSummary.Answer>
             {tittel && <FormSummary.Label>{tittel}</FormSummary.Label>}
-            {søknadsvar ? (
-                <FormSummary.Value>
-                    {språktekstid ? <SpråkTekst id={språktekstid} /> : søknadsvar}
-                </FormSummary.Value>
-            ) : (
-                children
-            )}
+            <FormSummary.Value>
+                {søknadsvar ? (
+                    <>{språktekstid ? <SpråkTekst id={språktekstid} /> : søknadsvar}</>
+                ) : (
+                    children
+                )}
+            </FormSummary.Value>
         </FormSummary.Answer>
     );
 };
