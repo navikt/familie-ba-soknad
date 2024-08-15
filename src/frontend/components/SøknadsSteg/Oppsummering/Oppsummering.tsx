@@ -15,7 +15,7 @@ import Steg from '../../Felleskomponenter/Steg/Steg';
 import EøsBarnOppsummering from './OppsummeringSteg/Eøs/EøsBarnOppsummering';
 import EøsSøkerOppsummering from './OppsummeringSteg/Eøs/EøsSøkerOppsummering';
 // import OmBarnaOppsummering from './OppsummeringSteg/OmBarnaOppsummering';
-import OmBarnetOppsummering from './OppsummeringSteg/OmBarnet/OmBarnetOppsummering';
+// import OmBarnetOppsummering from './OppsummeringSteg/OmBarnet/OmBarnetOppsummering';
 // import OmDegOppsummering from './OppsummeringSteg/OmDegOppsummering';
 // import VelgBarnOppsummering from './OppsummeringSteg/VelgBarnOppsummering';
 
@@ -56,7 +56,7 @@ const Oppsummering: React.FC = () => {
             {/* <VelgBarnOppsummering settFeilAnchors={settFeilAnchors} /> */}
             {/* <OmBarnaOppsummering settFeilAnchors={settFeilAnchors} /> */}
 
-            {søknad.barnInkludertISøknaden.map((barn, index) => {
+            {/* {søknad.barnInkludertISøknaden.map((barn, index) => {
                 const enIndeksert = index + 1;
                 const nummer = (hentStegNummer(RouteEnum.OmBarna) + enIndeksert).toString();
                 return (
@@ -68,7 +68,7 @@ const Oppsummering: React.FC = () => {
                         index={index}
                     />
                 );
-            })}
+            })} */}
 
             <>
                 {søkerHarEøsSteg && <EøsSøkerOppsummering settFeilAnchors={settFeilAnchors} />}
