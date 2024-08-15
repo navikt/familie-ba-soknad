@@ -1,5 +1,7 @@
 import React, { ReactNode, useEffect, useState } from 'react';
 
+import styled from 'styled-components';
+
 import { FormSummary } from '@navikt/ds-react';
 import { ISkjema } from '@navikt/familie-skjema';
 
@@ -25,6 +27,12 @@ interface Props {
     settFeilAnchors?: React.Dispatch<React.SetStateAction<string[]>>;
     children?: ReactNode;
 }
+
+const StyledAppLenkeTekst = styled.span`
+    && {
+        white-space: nowrap;
+    }
+`;
 
 const Oppsummeringsbolk: React.FC<Props> = ({
     children,
@@ -70,7 +78,11 @@ const Oppsummeringsbolk: React.FC<Props> = ({
                     <SpråkTekst id={tittel} values={språkValues} />
                 </FormSummary.Heading>
                 {steg && !visFeil && (
-                    <AppLenke steg={steg} språkTekstId={'oppsummering.endresvar.lenketekst'} />
+                    <AppLenke steg={steg}>
+                        <StyledAppLenkeTekst>
+                            <SpråkTekst id="oppsummering.endresvar.lenketekst" />
+                        </StyledAppLenkeTekst>
+                    </AppLenke>
                 )}
             </FormSummary.Header>
             <FormSummary.Answers>
