@@ -4,7 +4,7 @@ import { Alert, Heading, Label, Loader, VStack } from '@navikt/ds-react';
 import { RessursStatus } from '@navikt/familie-typer';
 
 import { useApp } from '../../context/AppContext';
-import { ESanitySteg } from '../../typer/sanity/sanity';
+import { ESanitySteg, Typografi } from '../../typer/sanity/sanity';
 import TekstBlock from '../Felleskomponenter/Sanity/TekstBlock';
 
 const Kontoinformasjon: React.FC = () => {
@@ -20,7 +20,10 @@ const Kontoinformasjon: React.FC = () => {
                         {plainTekst(kvitteringstekster.kontonummerTittel)}
                     </Heading>
                     <Label as="p">{kontoinformasjon.data.kontonummer}</Label>
-                    <TekstBlock block={kvitteringstekster.redigerKontonummerLenke} />
+                    <TekstBlock
+                        typografi={Typografi.BodyLong}
+                        block={kvitteringstekster.redigerKontonummerLenke}
+                    />
                 </>
             )}
 
@@ -41,7 +44,10 @@ const Kontoinformasjon: React.FC = () => {
                     <Heading level="3" size="xsmall">
                         {plainTekst(kvitteringstekster.manglerKontonummerTittel)}
                     </Heading>
-                    <TekstBlock block={kvitteringstekster.finnerIngenKontonummerBeskrivelse} />
+                    <TekstBlock
+                        typografi={Typografi.BodyLong}
+                        block={kvitteringstekster.finnerIngenKontonummerBeskrivelse}
+                    />
                 </>
             )}
         </VStack>
