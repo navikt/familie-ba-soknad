@@ -11,24 +11,21 @@ import { ESanitySteg } from '../../../typer/sanity/sanity';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 
-// import DinLivssituasjonOppsummering from './OppsummeringSteg/DinLivssituasjonOppsummering';
+import DinLivssituasjonOppsummering from './OppsummeringSteg/DinLivssituasjonOppsummering';
 import EøsBarnOppsummering from './OppsummeringSteg/Eøs/EøsBarnOppsummering';
-// import EøsSøkerOppsummering from './OppsummeringSteg/Eøs/EøsSøkerOppsummering';
-// import OmBarnaOppsummering from './OppsummeringSteg/OmBarnaOppsummering';
-// import OmBarnetOppsummering from './OppsummeringSteg/OmBarnet/OmBarnetOppsummering';
-// import OmDegOppsummering from './OppsummeringSteg/OmDegOppsummering';
-// import VelgBarnOppsummering from './OppsummeringSteg/VelgBarnOppsummering';
+import EøsSøkerOppsummering from './OppsummeringSteg/Eøs/EøsSøkerOppsummering';
+import OmBarnaOppsummering from './OppsummeringSteg/OmBarnaOppsummering';
+import OmBarnetOppsummering from './OppsummeringSteg/OmBarnet/OmBarnetOppsummering';
+import OmDegOppsummering from './OppsummeringSteg/OmDegOppsummering';
+import VelgBarnOppsummering from './OppsummeringSteg/VelgBarnOppsummering';
 
 const Oppsummering: React.FC = () => {
     const { søknad, tekster } = useApp();
     const { hentStegNummer } = useSteg();
     const navigate = useNavigate();
     const [feilAnchors, settFeilAnchors] = useState<string[]>([]);
-    const {
-        // barnSomTriggerEøs,
-        søkerTriggerEøs,
-    } = useEøs();
-    // const søkerHarEøsSteg = søkerTriggerEøs || !!barnSomTriggerEøs.length;
+    const { barnSomTriggerEøs, søkerTriggerEøs } = useEøs();
+    const søkerHarEøsSteg = søkerTriggerEøs || !!barnSomTriggerEøs.length;
     const barnSomHarEøsSteg: IBarnMedISøknad[] = søkerTriggerEøs
         ? søknad.barnInkludertISøknaden
         : søknad.barnInkludertISøknaden.filter(barn => barn.triggetEøs);
@@ -54,12 +51,12 @@ const Oppsummering: React.FC = () => {
             guide={oppsummeringGuide}
             gåVidereCallback={gåVidereCallback}
         >
-            {/* <OmDegOppsummering settFeilAnchors={settFeilAnchors} /> */}
-            {/* <DinLivssituasjonOppsummering settFeilAnchors={settFeilAnchors} /> */}
-            {/* <VelgBarnOppsummering settFeilAnchors={settFeilAnchors} /> */}
-            {/* <OmBarnaOppsummering settFeilAnchors={settFeilAnchors} /> */}
+            <OmDegOppsummering settFeilAnchors={settFeilAnchors} />
+            <DinLivssituasjonOppsummering settFeilAnchors={settFeilAnchors} />
+            <VelgBarnOppsummering settFeilAnchors={settFeilAnchors} />
+            <OmBarnaOppsummering settFeilAnchors={settFeilAnchors} />
 
-            {/* {søknad.barnInkludertISøknaden.map((barn, index) => {
+            {søknad.barnInkludertISøknaden.map((barn, index) => {
                 const enIndeksert = index + 1;
                 const nummer = (hentStegNummer(RouteEnum.OmBarna) + enIndeksert).toString();
                 return (
@@ -71,10 +68,10 @@ const Oppsummering: React.FC = () => {
                         index={index}
                     />
                 );
-            })} */}
+            })}
 
             <>
-                {/* {søkerHarEøsSteg && <EøsSøkerOppsummering settFeilAnchors={settFeilAnchors} />} */}
+                {søkerHarEøsSteg && <EøsSøkerOppsummering settFeilAnchors={settFeilAnchors} />}
                 {barnSomHarEøsSteg.map((barn, index) => {
                     const enIndeksert = index + 1;
                     const nummer = (hentStegNummer(RouteEnum.EøsForSøker) + enIndeksert).toString();
