@@ -17,7 +17,7 @@ import EøsSøkerOppsummering from './OppsummeringSteg/Eøs/EøsSøkerOppsummeri
 import OmBarnaOppsummering from './OppsummeringSteg/OmBarnaOppsummering';
 import OmBarnetOppsummering from './OppsummeringSteg/OmBarnet/OmBarnetOppsummering';
 // import OmDegOppsummering from './OppsummeringSteg/OmDegOppsummering';
-import VelgBarnOppsummering from './OppsummeringSteg/VelgBarnOppsummering';
+// import VelgBarnOppsummering from './OppsummeringSteg/VelgBarnOppsummering';
 
 const Oppsummering: React.FC = () => {
     const { søknad, tekster } = useApp();
@@ -53,7 +53,7 @@ const Oppsummering: React.FC = () => {
         >
             {/* <OmDegOppsummering settFeilAnchors={settFeilAnchors} /> */}
             {/* <DinLivssituasjonOppsummering settFeilAnchors={settFeilAnchors} /> */}
-            <VelgBarnOppsummering settFeilAnchors={settFeilAnchors} />
+            {/* <VelgBarnOppsummering settFeilAnchors={settFeilAnchors} /> */}
             <OmBarnaOppsummering settFeilAnchors={settFeilAnchors} />
 
             {søknad.barnInkludertISøknaden.map((barn, index) => {
