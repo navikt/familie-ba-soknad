@@ -5,7 +5,6 @@ export type IKvitteringTekstinnhold = {
     manglerKontonummerTittel: LocaleRecordBlock;
     kontonummerTittel: LocaleRecordBlock;
     redigerKontonummerLenke: LocaleRecordBlock;
-    registrerKontonummerLenke: LocaleRecordBlock;
     henterKontonummer: LocaleRecordBlock;
     finnerIngenKontonummerAdvarsel: LocaleRecordBlock;
     finnerIngenKontonummerBeskrivelse: LocaleRecordBlock;
