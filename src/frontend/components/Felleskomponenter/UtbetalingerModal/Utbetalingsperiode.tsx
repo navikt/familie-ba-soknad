@@ -111,7 +111,9 @@ export const Utbetalingsperiode: React.FC<Props> = ({
                         leggTilFlereTekst={
                             toggles.NYE_MODAL_TEKSTER &&
                             registrerteUtbetalingsperioder.verdi.length > 0 &&
-                            plainTekst(flerePerioder)
+                            plainTekst(flerePerioder, {
+                                ...(barnetsNavn && { barnetsNavn: barnetsNavn }),
+                            })
                         }
                         id={genererPeriodeId({
                             personType: personType,

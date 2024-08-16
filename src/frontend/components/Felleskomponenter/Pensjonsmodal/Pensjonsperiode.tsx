@@ -133,7 +133,10 @@ export const Pensjonsperiode: React.FC<Props> = ({
                         leggTilFlereTekst={
                             toggles.NYE_MODAL_TEKSTER &&
                             registrertePensjonsperioder.verdi.length > 0 &&
-                            plainTekst(flerePerioder, { gjelderUtland: gjelderUtlandet })
+                            plainTekst(flerePerioder, {
+                                gjelderUtland: gjelderUtlandet,
+                                barnetsNavn: barn?.navn,
+                            })
                         }
                         id={genererPeriodeId({
                             personType,

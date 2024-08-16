@@ -129,7 +129,10 @@ export const Arbeidsperiode: React.FC<Props> = ({
                         leggTilFlereTekst={
                             toggles.NYE_MODAL_TEKSTER &&
                             registrerteArbeidsperioder.verdi.length > 0 &&
-                            plainTekst(flerePerioder, { gjelderUtland: gjelderUtlandet })
+                            plainTekst(flerePerioder, {
+                                gjelderUtland: gjelderUtlandet,
+                                ...(barnetsNavn && { barnetsNavn: barnetsNavn }),
+                            })
                         }
                         id={genererPeriodeId({
                             personType,
