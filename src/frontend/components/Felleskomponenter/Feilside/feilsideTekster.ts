@@ -14,9 +14,10 @@ export const feilsideTekster: IFeilsideTekster = {
         gåTilbakeTilForrigeSide: 'gå tilbake til forrige side',
         hvisProblemetVedvarer: {
             vanligTekst: 'Hvis problemet vedvarer, kan du ',
-            lenkeTekst: 'kan du kontakte oss (åpnes i ny fane)',
+            lenkeTekst: 'kontakte oss (åpnes i ny fane)',
         },
     },
+    // TODO: Oversett tekster til nynorsk
     nn: {
         statuskode: 'Statuskode',
         tittel: 'Beklager, noe gikk galt',
@@ -30,9 +31,10 @@ export const feilsideTekster: IFeilsideTekster = {
         gåTilbakeTilForrigeSide: 'gå tilbake til forrige side',
         hvisProblemetVedvarer: {
             vanligTekst: 'Hvis problemet vedvarer, kan du ',
-            lenkeTekst: 'kan du kontakte oss (åpnes i ny fane)',
+            lenkeTekst: 'kontakte oss (åpnes i ny fane)',
         },
     },
+    // TODO: Oversett tekster til engelsk
     en: {
         statuskode: 'Statuskode',
         tittel: 'Sorry, something went wrong',
@@ -45,7 +47,7 @@ export const feilsideTekster: IFeilsideTekster = {
         },
         gåTilbakeTilForrigeSide: 'go back to the previous page',
         hvisProblemetVedvarer: {
-            vanligTekst: 'If the problem persists, you can ',
+            vanligTekst: 'If the problem persists, you can',
             lenkeTekst: 'contact us (opens in a new tab)',
         },
     },
