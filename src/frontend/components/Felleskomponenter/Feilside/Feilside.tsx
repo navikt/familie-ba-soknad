@@ -4,91 +4,17 @@ import { useNavigate } from 'react-router-dom';
 
 import { BodyShort, Heading, Link, List } from '@navikt/ds-react';
 
-import { useSpråk } from '../../../context/SpråkContext';
 import { useSteg } from '../../../context/StegContext';
-import { LocaleType } from '../../../typer/common';
 import InnholdContainer from '../InnholdContainer/InnholdContainer';
 
-interface FeilsideTekst {
-    statuskode: string;
-    tittel: string;
-    beskrivelse: string;
-    duKanPrøveÅ: string;
-    venteNoenMinutter: {
-        vanligTekst: string;
-        lenkeTekst: string;
-    };
-    gåTilbakeTilForrigeSide: string;
-    hvisProblemetVedvarer: {
-        vanligTekst: string;
-        lenkeTekst: string;
-    };
-}
-
-type FeilsideTekster = Record<LocaleType, FeilsideTekst>;
-
-const feilsideTekster: FeilsideTekster = {
-    nb: {
-        statuskode: 'Statuskode',
-        tittel: 'Beklager, noe gikk galt',
-        beskrivelse:
-            'En teknisk feil på våre servere gjør at siden er utilgjengelig. Dette skyldes ikke noe du gjorde.',
-        duKanPrøveÅ: 'Du kan prøve å',
-        venteNoenMinutter: {
-            vanligTekst: 'vente noen minutter og ',
-            lenkeTekst: 'laste siden på nytt',
-        },
-        gåTilbakeTilForrigeSide: 'gå tilbake til forrige side',
-        hvisProblemetVedvarer: {
-            vanligTekst: 'Hvis problemet vedvarer, kan du ',
-            lenkeTekst: 'kan du kontakte oss (åpnes i ny fane)',
-        },
-    },
-    nn: {
-        statuskode: 'Statuskode',
-        tittel: 'Beklager, noe gikk galt',
-        beskrivelse:
-            'En teknisk feil på våre servere gjør at siden er utilgjengelig. Dette skyldes ikke noe du gjorde.',
-        duKanPrøveÅ: 'Du kan prøve å',
-        venteNoenMinutter: {
-            vanligTekst: 'vente noen minutter og',
-            lenkeTekst: 'laste siden på nytt',
-        },
-        gåTilbakeTilForrigeSide: 'gå tilbake til forrige side',
-        hvisProblemetVedvarer: {
-            vanligTekst: 'Hvis problemet vedvarer, kan du ',
-            lenkeTekst: 'kan du kontakte oss (åpnes i ny fane)',
-        },
-    },
-    en: {
-        statuskode: 'Statuskode',
-        tittel: 'Beklager, noe gikk galt',
-        beskrivelse:
-            'En teknisk feil på våre servere gjør at siden er utilgjengelig. Dette skyldes ikke noe du gjorde.',
-        duKanPrøveÅ: 'Du kan prøve å',
-        venteNoenMinutter: {
-            vanligTekst: 'vente noen minutter og',
-            lenkeTekst: 'laste siden på nytt',
-        },
-        gåTilbakeTilForrigeSide: 'gå tilbake til forrige side',
-        hvisProblemetVedvarer: {
-            vanligTekst: 'Hvis problemet vedvarer, kan du ',
-            lenkeTekst: 'kan du kontakte oss (åpnes i ny fane).',
-        },
-    },
-};
-
-const useFeilsideTekst = (): FeilsideTekst => {
-    const { valgtLocale } = useSpråk();
-    return feilsideTekster[valgtLocale];
-};
+import useFeilsideTekster from './useFeilsideTekster';
 
 export const Feilside: React.FC = () => {
     const navigate = useNavigate();
     const { hentNåværendeSteg, hentForrigeSteg } = useSteg();
     const nåværendeSteg = hentNåværendeSteg();
     const forrigeRoute = hentForrigeSteg();
-    const feilsidetekst = useFeilsideTekst();
+    const feilsidetekster = useFeilsideTekster();
 
     const håndterLastSidenPåNytt = () => {
         location.reload();
@@ -103,16 +29,16 @@ export const Feilside: React.FC = () => {
     return (
         <InnholdContainer>
             <BodyShort textColor="subtle" size="small">
-                {feilsidetekst.statuskode} {statuskode}
+                {feilsidetekster.statuskode} {statuskode}
             </BodyShort>
             <Heading level="1" size="large" spacing>
-                {feilsidetekst.tittel}
+                {feilsidetekster.tittel}
             </Heading>
-            <BodyShort spacing>{feilsidetekst.beskrivelse}</BodyShort>
-            <BodyShort>{feilsidetekst.duKanPrøveÅ}</BodyShort>
+            <BodyShort spacing>{feilsidetekster.beskrivelse}</BodyShort>
+            <BodyShort>{feilsidetekster.duKanPrøveÅ}</BodyShort>
             <List>
                 <List.Item>
-                    {feilsidetekst.venteNoenMinutter.vanligTekst}{' '}
+                    {feilsidetekster.venteNoenMinutter.vanligTekst}{' '}
                     <Link
                         href={nåværendeSteg.path}
                         variant="action"
@@ -121,7 +47,7 @@ export const Feilside: React.FC = () => {
                             håndterLastSidenPåNytt();
                         }}
                     >
-                        {feilsidetekst.venteNoenMinutter.lenkeTekst}
+                        {feilsidetekster.venteNoenMinutter.lenkeTekst}
                     </Link>
                 </List.Item>
                 <List.Item>
@@ -133,14 +59,14 @@ export const Feilside: React.FC = () => {
                             håndterTilbake();
                         }}
                     >
-                        {feilsidetekst.gåTilbakeTilForrigeSide}
+                        {feilsidetekster.gåTilbakeTilForrigeSide}
                     </Link>
                 </List.Item>
             </List>
             <BodyShort>
-                {feilsidetekst.hvisProblemetVedvarer.vanligTekst}
+                {feilsidetekster.hvisProblemetVedvarer.vanligTekst}
                 <Link href="https://nav.no/kontaktoss" target="_blank">
-                    {feilsidetekst.hvisProblemetVedvarer.lenkeTekst}
+                    {feilsidetekster.hvisProblemetVedvarer.lenkeTekst}
                 </Link>
             </BodyShort>
         </InnholdContainer>
