@@ -261,7 +261,6 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                 </>
             )}
             <>
-                <OppsummeringFelt tittel={<SpråkTekst id={'ombarnet.bosted'} />} />
                 <OppsummeringFelt
                     tittel={
                         <SpråkTekst
