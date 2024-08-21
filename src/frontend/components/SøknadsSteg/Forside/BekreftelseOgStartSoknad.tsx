@@ -80,7 +80,7 @@ const BekreftelseOgStartSoknad: React.FC = () => {
                     />
                 </ConfirmationPanel>
 
-                <div>
+                <VStack gap="8" width={{ sm: 'fit-content' }} marginInline={{ sm: 'auto' }}>
                     <Button
                         variant={
                             bekreftelseStatus === BekreftelseStatus.BEKREFTET
@@ -93,7 +93,7 @@ const BekreftelseOgStartSoknad: React.FC = () => {
                     >
                         <SpråkTekst id="forside.start-soknad.knapp" />
                     </Button>
-                </div>
+                </VStack>
             </VStack>
         </form>
     );
