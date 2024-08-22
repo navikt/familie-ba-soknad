@@ -4,7 +4,11 @@ import { Link } from '@navikt/ds-react';
 
 import { useSteg } from '../../../context/StegContext';
 
-export const LastInnSidenPåNyttLenke: FC<{ children: ReactNode }> = ({ children }) => {
+interface ILastInnSidenPåNyttLenkeProps {
+    children: ReactNode;
+}
+
+export const LastInnSidenPåNyttLenke: FC<ILastInnSidenPåNyttLenkeProps> = ({ children }) => {
     const { hentNåværendeSteg } = useSteg();
     const nåværendeSteg = hentNåværendeSteg();
 

@@ -6,7 +6,13 @@ import { Link } from '@navikt/ds-react';
 
 import { useSteg } from '../../../context/StegContext';
 
-export const GåTilBakeTilForrigeSideLenke: FC<{ children: ReactNode }> = ({ children }) => {
+interface IGåTilBakeTilForrigeSideLenkeProps {
+    children: ReactNode;
+}
+
+export const GåTilBakeTilForrigeSideLenke: FC<IGåTilBakeTilForrigeSideLenkeProps> = ({
+    children,
+}) => {
     const navigate = useNavigate();
     const { hentForrigeSteg } = useSteg();
     const forrigeSteg = hentForrigeSteg();
