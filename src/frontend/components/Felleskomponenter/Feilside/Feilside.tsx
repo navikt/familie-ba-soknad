@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
 import { BodyShort, Box, Heading, Link, List } from '@navikt/ds-react';
+import { setAvailableLanguages } from '@navikt/nav-dekoratoren-moduler';
 
 import { useSteg } from '../../../context/StegContext';
 import InnholdContainer from '../InnholdContainer/InnholdContainer';
@@ -15,6 +16,18 @@ export const Feilside: React.FC = () => {
     const nåværendeSteg = hentNåværendeSteg();
     const forrigeRoute = hentForrigeSteg();
     const feilsidetekster = useFeilsideTekster();
+
+    useEffect(() => {
+        visSpråkvelger();
+    }, []);
+
+    const visSpråkvelger = () => {
+        setAvailableLanguages([
+            { locale: 'nb', handleInApp: true },
+            { locale: 'nn', handleInApp: true },
+            { locale: 'en', handleInApp: true },
+        ]).then();
+    };
 
     const håndterLastSidenPåNytt = () => {
         location.reload();
