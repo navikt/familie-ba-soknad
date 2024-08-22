@@ -1,8 +1,6 @@
 import { LocaleType } from '../../../typer/common';
 
-export interface IFeilsideTekster {
-    locale: LocaleType;
-    språktekst: string;
+export interface IFeilsideTekst {
     statuskode: string;
     tittel: string;
     beskrivelse: string;
@@ -17,3 +15,5 @@ export interface IFeilsideTekster {
         lenkeTekst: string;
     };
 }
+
+export type IFeilsideTekster = Record<LocaleType, IFeilsideTekst>;
