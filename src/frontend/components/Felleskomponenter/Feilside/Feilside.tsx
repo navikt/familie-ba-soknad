@@ -40,7 +40,7 @@ export const Feilside: React.FC = () => {
                 <BodyShort>{feilsidetekster.duKanPrøveÅ}</BodyShort>
                 <List>
                     <List.Item>
-                        {feilsidetekster.venteNoenMinutter.vanligTekst}{' '}
+                        {feilsidetekster.venteNoenMinutter.vanligTekst}
                         <Link
                             href={nåværendeSteg.path}
                             variant="action"
