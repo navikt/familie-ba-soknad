@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 
 import { BodyShort } from '@navikt/ds-react';
 
@@ -9,7 +9,7 @@ interface IFeilsideStatuskodeProps {
     statuskode: string;
 }
 
-export const FeilsideStatuskode: React.FC<IFeilsideStatuskodeProps> = ({ statuskode }) => {
+export const FeilsideStatuskode: FC<IFeilsideStatuskodeProps> = ({ statuskode }) => {
     const { valgtLocale } = useSpråk();
 
     const statuskodeTekstMap: Record<LocaleType, string> = {

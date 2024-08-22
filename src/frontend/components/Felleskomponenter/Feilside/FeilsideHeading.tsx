@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { FC } from 'react';
 
 import { Heading } from '@navikt/ds-react';
 
 import { useSpråk } from '../../../context/SpråkContext';
 import { LocaleType } from '../../../typer/common';
 
-export const FeilsideHeading: React.FC = () => {
+export const FeilsideHeading: FC = () => {
     const { valgtLocale } = useSpråk();
 
     const tekstMap: Record<LocaleType, string> = {

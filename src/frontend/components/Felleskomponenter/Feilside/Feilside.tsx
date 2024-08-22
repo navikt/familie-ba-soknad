@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 
 import { Box } from '@navikt/ds-react';
 import { setAvailableLanguages } from '@navikt/nav-dekoratoren-moduler';
@@ -9,7 +9,7 @@ import { FeilsideHeading } from './FeilsideHeading';
 import { FeilsideInnhold } from './FeilsideInnhold';
 import { FeilsideStatuskode } from './FeilsideStatuskode';
 
-export const Feilside: React.FC = () => {
+export const Feilside: FC = () => {
     useEffect(() => {
         visSpråkvelger();
     }, []);
