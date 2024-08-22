@@ -1,7 +1,11 @@
+import { LocaleType } from '../../../typer/common';
+
 import { IFeilsideTekster } from './feilsideTyper';
 
-export const feilsideTekster: IFeilsideTekster = {
-    nb: {
+export const feilsideTekster: IFeilsideTekster[] = [
+    {
+        locale: LocaleType.nb,
+        språktekst: 'Norsk bokmål / Norwegian',
         statuskode: 'Statuskode',
         tittel: 'Beklager, noe gikk galt',
         beskrivelse:
@@ -18,7 +22,9 @@ export const feilsideTekster: IFeilsideTekster = {
         },
     },
     // TODO: Oversett tekster til nynorsk
-    nn: {
+    {
+        locale: LocaleType.nn,
+        språktekst: 'Norsk nynorsk / Norwegian',
         statuskode: 'Statuskode',
         tittel: 'Beklager, noe gikk galt',
         beskrivelse:
@@ -35,7 +41,9 @@ export const feilsideTekster: IFeilsideTekster = {
         },
     },
     // TODO: Oversett tekster til engelsk
-    en: {
+    {
+        locale: LocaleType.en,
+        språktekst: 'English / Engelsk',
         statuskode: 'Statuskode',
         tittel: 'Sorry, something went wrong',
         beskrivelse:
@@ -51,4 +59,4 @@ export const feilsideTekster: IFeilsideTekster = {
             lenkeTekst: 'contact us (opens in a new tab)',
         },
     },
-};
+];
