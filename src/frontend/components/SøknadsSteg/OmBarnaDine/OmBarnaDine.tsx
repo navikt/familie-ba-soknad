@@ -6,12 +6,14 @@ import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
 import { barnDataKeySpørsmål } from '../../../typer/barn';
+import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
 import { ESanitySteg } from '../../../typer/sanity/sanity';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
+import { VedleggOppsummering } from '../../Felleskomponenter/VedleggOppsummering';
 
 import HvilkeBarnCheckboxGruppe from './HvilkeBarnCheckboxGruppe';
 import { OmBarnaDineSpørsmålId, omBarnaDineSpørsmålSpråkId } from './spørsmål';
@@ -219,6 +221,19 @@ const OmBarnaDine: React.FC = () => {
                     />
                 </KomponentGruppe>
             )}
+
+            <VedleggOppsummering
+                vedlegg={[
+                    {
+                        skalVises: skjema.felter.erBarnAdoptertFraUtland.verdi === ESvar.JA,
+                        dokumentasjonsbehov: Dokumentasjonsbehov.ADOPSJON_DATO,
+                    },
+                    {
+                        skalVises: skjema.felter.søktAsylForBarn.verdi === ESvar.JA,
+                        dokumentasjonsbehov: Dokumentasjonsbehov.VEDTAK_OPPHOLDSTILLATELSE,
+                    },
+                ]}
+            />
         </Steg>
     );
 };

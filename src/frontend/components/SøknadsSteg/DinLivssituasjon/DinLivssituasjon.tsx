@@ -5,6 +5,7 @@ import { useIntl } from 'react-intl';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
+import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
 import { PersonType } from '../../../typer/personType';
 import { ESanitySteg } from '../../../typer/sanity/sanity';
 import { Arbeidsperiode } from '../../Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
@@ -16,6 +17,7 @@ import { Pensjonsperiode } from '../../Felleskomponenter/Pensjonsmodal/Pensjonsp
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
+import { VedleggOppsummering } from '../../Felleskomponenter/VedleggOppsummering';
 
 import SamboerSkjema from './SamboerSkjema';
 import { DinLivssituasjonSpørsmålId, dinLivssituasjonSpørsmålSpråkId } from './spørsmål';
@@ -198,6 +200,19 @@ const DinLivssituasjon: React.FC = () => {
                     personType={PersonType.Søker}
                 />
             </KomponentGruppe>
+
+            <VedleggOppsummering
+                vedlegg={[
+                    {
+                        skalVises: skjema.felter.separertEnkeSkilt.verdi === ESvar.JA,
+                        dokumentasjonsbehov: Dokumentasjonsbehov.SEPARERT_SKILT_ENKE,
+                    },
+                    {
+                        skalVises: skjema.felter.erAsylsøker.verdi === ESvar.JA,
+                        dokumentasjonsbehov: Dokumentasjonsbehov.VEDTAK_OPPHOLDSTILLATELSE,
+                    },
+                ]}
+            />
         </Steg>
     );
 };
