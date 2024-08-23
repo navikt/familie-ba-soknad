@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 
 import { Alert, List } from '@navikt/ds-react';
-import { ESvar } from '@navikt/familie-form-elements';
 
 import { dokumentasjonsbehovTilSpråkId } from '../../typer/dokumentasjon';
 import { Dokumentasjonsbehov } from '../../typer/kontrakt/dokumentasjon';
@@ -9,36 +8,32 @@ import { Dokumentasjonsbehov } from '../../typer/kontrakt/dokumentasjon';
 import SpråkTekst from './SpråkTekst/SpråkTekst';
 
 interface IVedleggOppsummeringProps {
-    vedleggSvarOgDokumentasjonsbehov: {
-        svar: ESvar | null;
+    vedlegg: {
+        skalVises: boolean;
         dokumentasjonsbehov: Dokumentasjonsbehov;
     }[];
 }
 
-export const VedleggOppsummering: FC<IVedleggOppsummeringProps> = ({
-    vedleggSvarOgDokumentasjonsbehov,
-}) => {
+export const VedleggOppsummering: FC<IVedleggOppsummeringProps> = ({ vedlegg }) => {
+    const vedleggSomSkalVises = vedlegg.filter(vedlegg => vedlegg.skalVises);
+
     return (
-        <Alert variant="info">
-            Du må legge ved:
-            <List>
-                {vedleggSvarOgDokumentasjonsbehov
-                    .filter(
-                        vedleggSvarOgDokumentasjonsbehov =>
-                            vedleggSvarOgDokumentasjonsbehov &&
-                            vedleggSvarOgDokumentasjonsbehov.svar === ESvar.JA
-                    )
-                    .map((vedleggSvarOgDokumentasjon, index) => (
-                        <List.Item key={index}>
-                            <SpråkTekst
-                                id={dokumentasjonsbehovTilSpråkId(
-                                    vedleggSvarOgDokumentasjon.dokumentasjonsbehov
-                                )}
-                            />
-                        </List.Item>
-                    ))}
-            </List>
-            Dette laster du opp senere i søknaden.
-        </Alert>
+        <>
+            {vedleggSomSkalVises.length > 0 && (
+                <Alert variant="info">
+                    Du må legge ved:
+                    <List>
+                        {vedleggSomSkalVises.map((vedlegg, index) => (
+                            <List.Item key={index}>
+                                <SpråkTekst
+                                    id={dokumentasjonsbehovTilSpråkId(vedlegg.dokumentasjonsbehov)}
+                                />
+                            </List.Item>
+                        ))}
+                    </List>
+                    Dette laster du opp senere i søknaden.
+                </Alert>
+            )}
+        </>
     );
 };
