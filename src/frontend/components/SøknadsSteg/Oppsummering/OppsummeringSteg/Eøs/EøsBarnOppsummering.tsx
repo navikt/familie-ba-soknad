@@ -11,7 +11,6 @@ import { EøsBarnSpørsmålId, eøsBarnSpørsmålSpråkId } from '../../../EøsS
 import { useEøsForBarn } from '../../../EøsSteg/Barn/useEøsForBarn';
 import { OppsummeringFelt } from '../../OppsummeringFelt';
 import Oppsummeringsbolk from '../../Oppsummeringsbolk';
-import { StyledOppsummeringsFeltGruppe } from '../../OppsummeringsFeltGruppe';
 
 import EøsAndreForelderOppsummering from './EøsAndreForelderOppsummering';
 import EøsOmsorgspersonOppsummering from './EøsOmsorgspersonOppsummering';
@@ -45,7 +44,7 @@ const EøsBarnOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn }
                 lesevisning={true}
             />
             {barn.søkersSlektsforhold.svar && (
-                <StyledOppsummeringsFeltGruppe>
+                <>
                     <OppsummeringFelt
                         tittel={tittelSpmEøsBarnOppsummering(
                             barn.søkersSlektsforhold.id,
@@ -64,7 +63,7 @@ const EøsBarnOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn }
                             søknadsvar={barn.søkersSlektsforholdSpesifisering.svar}
                         />
                     )}
-                </StyledOppsummeringsFeltGruppe>
+                </>
             )}
 
             {barn.borMedAndreForelder.svar && (

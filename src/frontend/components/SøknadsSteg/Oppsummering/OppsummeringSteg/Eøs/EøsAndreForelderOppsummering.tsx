@@ -24,7 +24,6 @@ import { UtbetalingsperiodeOppsummering } from '../../../../Felleskomponenter/Ut
 import IdNummerForAndreForelder from '../../../EøsSteg/Barn/IdNummerForAndreForelder';
 import { EøsBarnSpørsmålId, eøsBarnSpørsmålSpråkId } from '../../../EøsSteg/Barn/spørsmål';
 import { OppsummeringFelt } from '../../OppsummeringFelt';
-import { StyledOppsummeringsFeltGruppe } from '../../OppsummeringsFeltGruppe';
 
 const EøsAndreForelderOppsummering: React.FC<{
     barn: IBarnMedISøknad;
@@ -60,95 +59,85 @@ const EøsAndreForelderOppsummering: React.FC<{
                 lesevisning={true}
             />
             {andreForelder.adresse.svar && (
-                <StyledOppsummeringsFeltGruppe>
-                    <OppsummeringFelt
-                        tittel={
-                            <SpråkTekst
-                                id={eøsBarnSpørsmålSpråkId[andreForelder.adresse.id]}
-                                values={{ barn: barn.navn }}
-                            />
-                        }
-                        søknadsvar={
-                            andreForelder.adresse.svar === AlternativtSvarForInput.UKJENT
-                                ? formatMessage({
-                                      id: eøsBarnSpørsmålSpråkId[
-                                          EøsBarnSpørsmålId.andreForelderAdresseVetIkke
-                                      ],
-                                  })
-                                : andreForelder.adresse.svar
-                        }
-                    />
-                </StyledOppsummeringsFeltGruppe>
+                <OppsummeringFelt
+                    tittel={
+                        <SpråkTekst
+                            id={eøsBarnSpørsmålSpråkId[andreForelder.adresse.id]}
+                            values={{ barn: barn.navn }}
+                        />
+                    }
+                    søknadsvar={
+                        andreForelder.adresse.svar === AlternativtSvarForInput.UKJENT
+                            ? formatMessage({
+                                  id: eøsBarnSpørsmålSpråkId[
+                                      EøsBarnSpørsmålId.andreForelderAdresseVetIkke
+                                  ],
+                              })
+                            : andreForelder.adresse.svar
+                    }
+                />
             )}
-            <StyledOppsummeringsFeltGruppe>
-                {jaNeiSpmOppsummering(andreForelderDataKeySpørsmål.arbeidNorge)}
-                {andreForelder.arbeidsperioderNorge.map((arbeidsperiode, index) => (
-                    <ArbeidsperiodeOppsummering
-                        key={`arbeidsperiode-andre-forelder-norge-${index}`}
-                        arbeidsperiode={arbeidsperiode}
-                        nummer={index + 1}
-                        personType={PersonType.AndreForelder}
-                        erDød={andreForelderErDød}
-                        gjelderUtlandet={false}
-                        barn={barn}
-                    />
-                ))}
-                {jaNeiSpmOppsummering(andreForelderDataKeySpørsmål.pensjonNorge)}
-                {andreForelder.pensjonsperioderNorge.map((pensjonsperiode, index) => (
-                    <PensjonsperiodeOppsummering
-                        key={`pensjonsperiode-andre-forelder-norge-${index}`}
-                        pensjonsperiode={pensjonsperiode}
-                        nummer={index + 1}
-                        personType={PersonType.AndreForelder}
-                        erDød={andreForelderErDød}
-                        barn={barn}
-                        gjelderUtlandet={false}
-                    />
-                ))}
-                {jaNeiSpmOppsummering(andreForelderDataKeySpørsmål.andreUtbetalinger)}
-                {andreForelder.andreUtbetalingsperioder.map((utbetalingsperiode, index) => (
-                    <UtbetalingsperiodeOppsummering
-                        key={`utbetalingsperiode-andre-forelder-${index}`}
-                        utbetalingsperiode={utbetalingsperiode}
-                        nummer={index + 1}
-                        personType={PersonType.AndreForelder}
-                        erDød={andreForelderErDød}
-                        barn={barn}
-                    />
-                ))}
-
-                {jaNeiSpmOppsummering(andreForelderDataKeySpørsmål.pågåendeSøknadFraAnnetEøsLand)}
-                {andreForelder.pågåendeSøknadHvilketLand.svar && (
-                    <OppsummeringFelt
-                        tittel={
-                            <SpråkTekst
-                                id={
-                                    eøsBarnSpørsmålSpråkId[
-                                        andreForelder.pågåendeSøknadHvilketLand.id
-                                    ]
-                                }
-                                values={{ barn: barn.navn }}
-                            />
-                        }
-                        søknadsvar={landkodeTilSpråk(
-                            andreForelder.pågåendeSøknadHvilketLand.svar,
-                            valgtLocale
-                        )}
-                    />
-                )}
-
-                {jaNeiSpmOppsummering(andreForelderDataKeySpørsmål.barnetrygdFraEøs)}
-                {andreForelder.eøsBarnetrygdsperioder.map((periode, index) => (
-                    <BarnetrygdsperiodeOppsummering
-                        key={`barnetrygdperiode-andre-forelder-${index}`}
-                        nummer={index + 1}
-                        barnetrygdsperiode={periode}
-                        barnetsNavn={barn.navn}
-                        personType={PersonType.AndreForelder}
-                        erDød={andreForelderErDød}
-                    />
-                ))}
-            </StyledOppsummeringsFeltGruppe>
+            {jaNeiSpmOppsummering(andreForelderDataKeySpørsmål.arbeidNorge)}
+            {andreForelder.arbeidsperioderNorge.map((arbeidsperiode, index) => (
+                <ArbeidsperiodeOppsummering
+                    key={`arbeidsperiode-andre-forelder-norge-${index}`}
+                    arbeidsperiode={arbeidsperiode}
+                    nummer={index + 1}
+                    personType={PersonType.AndreForelder}
+                    erDød={andreForelderErDød}
+                    gjelderUtlandet={false}
+                    barn={barn}
+                />
+            ))}
+            {jaNeiSpmOppsummering(andreForelderDataKeySpørsmål.pensjonNorge)}
+            {andreForelder.pensjonsperioderNorge.map((pensjonsperiode, index) => (
+                <PensjonsperiodeOppsummering
+                    key={`pensjonsperiode-andre-forelder-norge-${index}`}
+                    pensjonsperiode={pensjonsperiode}
+                    nummer={index + 1}
+                    personType={PersonType.AndreForelder}
+                    erDød={andreForelderErDød}
+                    barn={barn}
+                    gjelderUtlandet={false}
+                />
+            ))}
+            {jaNeiSpmOppsummering(andreForelderDataKeySpørsmål.andreUtbetalinger)}
+            {andreForelder.andreUtbetalingsperioder.map((utbetalingsperiode, index) => (
+                <UtbetalingsperiodeOppsummering
+                    key={`utbetalingsperiode-andre-forelder-${index}`}
+                    utbetalingsperiode={utbetalingsperiode}
+                    nummer={index + 1}
+                    personType={PersonType.AndreForelder}
+                    erDød={andreForelderErDød}
+                    barn={barn}
+                />
+            ))}
+            {jaNeiSpmOppsummering(andreForelderDataKeySpørsmål.pågåendeSøknadFraAnnetEøsLand)}
+            {andreForelder.pågåendeSøknadHvilketLand.svar && (
+                <OppsummeringFelt
+                    tittel={
+                        <SpråkTekst
+                            id={eøsBarnSpørsmålSpråkId[andreForelder.pågåendeSøknadHvilketLand.id]}
+                            values={{ barn: barn.navn }}
+                        />
+                    }
+                    søknadsvar={landkodeTilSpråk(
+                        andreForelder.pågåendeSøknadHvilketLand.svar,
+                        valgtLocale
+                    )}
+                />
+            )}
+            {jaNeiSpmOppsummering(andreForelderDataKeySpørsmål.barnetrygdFraEøs)}
+            {andreForelder.eøsBarnetrygdsperioder.map((periode, index) => (
+                <BarnetrygdsperiodeOppsummering
+                    key={`barnetrygdperiode-andre-forelder-${index}`}
+                    nummer={index + 1}
+                    barnetrygdsperiode={periode}
+                    barnetsNavn={barn.navn}
+                    personType={PersonType.AndreForelder}
+                    erDød={andreForelderErDød}
+                />
+            ))}
         </>
     );
 };

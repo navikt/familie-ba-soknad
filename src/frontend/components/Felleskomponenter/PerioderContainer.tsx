@@ -1,20 +1,20 @@
 import React, { ReactNode } from 'react';
 
-import styled from 'styled-components';
+import { Box, FormSummary } from '@navikt/ds-react';
 
-import { Box } from '@navikt/ds-react';
+interface IPerioderContainer {
+    tittel: ReactNode;
+    children?: ReactNode;
+}
 
-const StyledBox = styled(Box)`
-    && {
-        margin-top: var(--a-spacing-2);
-    }
-`;
-
-const PerioderContainer: React.FC<{ children?: ReactNode }> = ({ children }) => {
+const PerioderContainer: React.FC<IPerioderContainer> = ({ tittel, children }) => {
     return (
-        <StyledBox padding="4" background="surface-subtle" borderRadius="medium">
-            {children}
-        </StyledBox>
+        <Box marginBlock="4 0">
+            <FormSummary>
+                <FormSummary.Header>{tittel}</FormSummary.Header>
+                <FormSummary.Answers>{children}</FormSummary.Answers>
+            </FormSummary>
+        </Box>
     );
 };
 
