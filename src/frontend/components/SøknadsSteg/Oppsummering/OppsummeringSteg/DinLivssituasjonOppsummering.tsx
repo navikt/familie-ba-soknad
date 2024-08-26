@@ -194,8 +194,8 @@ const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                             søknad.søker.utvidet.spørsmål.hattAnnenSamboerForSøktPeriode.svar
                         }
                     />
-                    {tidligereSamboere.map(tidligereSamboer => (
-                        <SamboerOppsummering samboer={tidligereSamboer} />
+                    {tidligereSamboere.map((tidligereSamboer, index) => (
+                        <SamboerOppsummering key={index} samboer={tidligereSamboer} />
                     ))}
                 </>
             )}

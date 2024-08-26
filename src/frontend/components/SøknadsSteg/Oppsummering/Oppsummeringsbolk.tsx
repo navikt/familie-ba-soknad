@@ -71,7 +71,7 @@ const Oppsummeringsbolk: React.FC<Props> = ({
     return (
         <FormSummary>
             <FormSummary.Header>
-                <FormSummary.Heading level="2">
+                <FormSummary.Heading level="3">
                     {steg?.route !== RouteEnum.OmBarnet &&
                         steg?.route !== RouteEnum.EøsForBarn &&
                         `${hentStegNummer(steg?.route ?? RouteEnum.OmDeg)}. `}
