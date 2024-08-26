@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 
 import { Alert, List } from '@navikt/ds-react';
 
+import { useApp } from '../../context/AppContext';
 import { dokumentasjonsbehovTilSpråkId } from '../../typer/dokumentasjon';
 import { Dokumentasjonsbehov } from '../../typer/kontrakt/dokumentasjon';
 
@@ -15,13 +16,15 @@ interface IVedleggOppsummeringProps {
 }
 
 export const VedleggOppsummering: FC<IVedleggOppsummeringProps> = ({ vedlegg }) => {
+    const { tekster, plainTekst } = useApp();
     const vedleggSomSkalVises = vedlegg.filter(vedlegg => vedlegg.skalVises);
+    const frittståendeOrdTekster = tekster().FELLES.frittståendeOrd;
 
     return (
         <>
             {vedleggSomSkalVises.length > 0 && (
                 <Alert variant="info">
-                    Du må legge ved:
+                    {plainTekst(frittståendeOrdTekster.duMaaLeggeVed)}
                     <List>
                         {vedleggSomSkalVises.map((vedlegg, index) => (
                             <List.Item key={index}>
@@ -31,7 +34,7 @@ export const VedleggOppsummering: FC<IVedleggOppsummeringProps> = ({ vedlegg }) 
                             </List.Item>
                         ))}
                     </List>
-                    Dette laster du opp senere i søknaden.
+                    {plainTekst(frittståendeOrdTekster.lastOppSenere)}
                 </Alert>
             )}
         </>

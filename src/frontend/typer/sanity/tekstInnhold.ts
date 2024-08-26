@@ -76,6 +76,8 @@ export interface IFrittståendeOrdTekstinnhold {
     steg: LocaleRecordString;
     visAlleSteg: LocaleRecordString;
     skjulAlleSteg: LocaleRecordString;
+    duMaaLeggeVed: LocaleRecordString;
+    lastOppSenere: LocaleRecordString;
 }
 
 export interface INavigasjonTekstinnhold {
