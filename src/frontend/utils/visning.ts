@@ -14,5 +14,5 @@ export const formaterDatoMedUkjent = (datoMedUkjent: DatoMedUkjent, tekstForUkje
 
 export const uppercaseFørsteBokstav = text => {
     if (typeof text !== 'string') return '';
-    return text.charAt(0).toUpperCase() + text.toLowerCase().slice(1);
+    return text.charAt(0).toUpperCase() + text.slice(1);
 };

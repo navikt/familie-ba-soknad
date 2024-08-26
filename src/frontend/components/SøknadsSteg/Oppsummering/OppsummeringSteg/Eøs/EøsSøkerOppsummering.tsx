@@ -16,7 +16,6 @@ import { EøsSøkerSpørsmålId, eøsSøkerSpørsmålSpråkId } from '../../../E
 import { useEøsForSøker } from '../../../EøsSteg/Søker/useEøsForSøker';
 import { OppsummeringFelt } from '../../OppsummeringFelt';
 import Oppsummeringsbolk from '../../Oppsummeringsbolk';
-import { StyledOppsummeringsFeltGruppe } from '../../OppsummeringsFeltGruppe';
 
 interface Props {
     settFeilAnchors: React.Dispatch<React.SetStateAction<string[]>>;
@@ -48,50 +47,44 @@ const EøsSøkerOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                 lesevisning={true}
             />
             {søker.adresseISøkeperiode.svar && (
-                <StyledOppsummeringsFeltGruppe>
-                    <OppsummeringFelt
-                        tittel={
-                            <SpråkTekst
-                                id={eøsSøkerSpørsmålSpråkId[EøsSøkerSpørsmålId.adresseISøkeperiode]}
-                            />
-                        }
-                        søknadsvar={søker.adresseISøkeperiode.svar}
-                    />
-                </StyledOppsummeringsFeltGruppe>
+                <OppsummeringFelt
+                    tittel={
+                        <SpråkTekst
+                            id={eøsSøkerSpørsmålSpråkId[EøsSøkerSpørsmålId.adresseISøkeperiode]}
+                        />
+                    }
+                    søknadsvar={søker.adresseISøkeperiode.svar}
+                />
             )}
-            <StyledOppsummeringsFeltGruppe>
-                {jaNeiSpmOppsummering(søker.arbeidINorge)}
-                {søker.arbeidsperioderNorge.map((arbeidsperiode, index) => (
-                    <ArbeidsperiodeOppsummering
-                        key={`arbeidsperiode-søker-norge-${index}`}
-                        arbeidsperiode={arbeidsperiode}
-                        nummer={index + 1}
-                        personType={PersonType.Søker}
-                        gjelderUtlandet={false}
-                    />
-                ))}
-
-                {jaNeiSpmOppsummering(søker.pensjonNorge)}
-                {søker.pensjonsperioderNorge.map((pensjonsperiode, index) => (
-                    <PensjonsperiodeOppsummering
-                        key={`pensjonsperiode-søker-norge-${index}`}
-                        pensjonsperiode={pensjonsperiode}
-                        nummer={index + 1}
-                        gjelderUtlandet={false}
-                        personType={PersonType.Søker}
-                    />
-                ))}
-
-                {jaNeiSpmOppsummering(søker.andreUtbetalinger)}
-                {søker.andreUtbetalingsperioder.map((utbetalingsperiode, index) => (
-                    <UtbetalingsperiodeOppsummering
-                        key={`utbetalingsperiode-søker-norge-${index}`}
-                        utbetalingsperiode={utbetalingsperiode}
-                        nummer={index + 1}
-                        personType={PersonType.Søker}
-                    />
-                ))}
-            </StyledOppsummeringsFeltGruppe>
+            {jaNeiSpmOppsummering(søker.arbeidINorge)}
+            {søker.arbeidsperioderNorge.map((arbeidsperiode, index) => (
+                <ArbeidsperiodeOppsummering
+                    key={`arbeidsperiode-søker-norge-${index}`}
+                    arbeidsperiode={arbeidsperiode}
+                    nummer={index + 1}
+                    personType={PersonType.Søker}
+                    gjelderUtlandet={false}
+                />
+            ))}
+            {jaNeiSpmOppsummering(søker.pensjonNorge)}
+            {søker.pensjonsperioderNorge.map((pensjonsperiode, index) => (
+                <PensjonsperiodeOppsummering
+                    key={`pensjonsperiode-søker-norge-${index}`}
+                    pensjonsperiode={pensjonsperiode}
+                    nummer={index + 1}
+                    gjelderUtlandet={false}
+                    personType={PersonType.Søker}
+                />
+            ))}
+            {jaNeiSpmOppsummering(søker.andreUtbetalinger)}
+            {søker.andreUtbetalingsperioder.map((utbetalingsperiode, index) => (
+                <UtbetalingsperiodeOppsummering
+                    key={`utbetalingsperiode-søker-norge-${index}`}
+                    utbetalingsperiode={utbetalingsperiode}
+                    nummer={index + 1}
+                    personType={PersonType.Søker}
+                />
+            ))}
         </Oppsummeringsbolk>
     );
 };

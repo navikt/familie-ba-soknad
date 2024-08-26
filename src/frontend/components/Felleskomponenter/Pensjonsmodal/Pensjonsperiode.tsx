@@ -16,6 +16,7 @@ import {
     IOmBarnetFeltTyper,
 } from '../../../typer/skjema';
 import { genererPeriodeId } from '../../../utils/perioder';
+import { uppercaseFørsteBokstav } from '../../../utils/visning';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
 import PerioderContainer from '../PerioderContainer';
@@ -77,6 +78,13 @@ export const Pensjonsperiode: React.FC<Props> = ({
         tekster().FELLES.modaler.pensjonsperiode[personType];
     const { flerePerioder, leggTilPeriodeForklaring } = teksterForModal;
 
+    const frittståendeOrdTekster = tekster().FELLES.frittståendeOrd;
+    const { pensjonsperioder, fra, utlandet, norge } = frittståendeOrdTekster;
+
+    const perioderContainerTittel = uppercaseFørsteBokstav(
+        `${plainTekst(pensjonsperioder)} ${plainTekst(fra)} ${plainTekst(gjelderUtlandet ? utlandet : norge)}`
+    );
+
     return (
         <>
             <JaNeiSpm
@@ -96,7 +104,7 @@ export const Pensjonsperiode: React.FC<Props> = ({
                 }}
             />
             {mottarEllerMottattPensjonFelt.verdi === ESvar.JA && (
-                <PerioderContainer>
+                <PerioderContainer tittel={perioderContainerTittel}>
                     {registrertePensjonsperioder.verdi.map((pensjonsperiode, index) => (
                         <PensjonsperiodeOppsummering
                             key={`pensjonsperiode-${index}`}
@@ -125,7 +133,10 @@ export const Pensjonsperiode: React.FC<Props> = ({
                         leggTilFlereTekst={
                             toggles.NYE_MODAL_TEKSTER &&
                             registrertePensjonsperioder.verdi.length > 0 &&
-                            plainTekst(flerePerioder)
+                            plainTekst(flerePerioder, {
+                                gjelderUtland: gjelderUtlandet,
+                                barnetsNavn: barn?.navn,
+                            })
                         }
                         id={genererPeriodeId({
                             personType,

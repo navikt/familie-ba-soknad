@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
+import { VStack } from '@navikt/ds-react';
+
 import { useApp } from '../../../context/AppContext';
 import { useEøs } from '../../../context/EøsContext';
 import { useSteg } from '../../../context/StegContext';
@@ -51,40 +53,44 @@ const Oppsummering: React.FC = () => {
             guide={oppsummeringGuide}
             gåVidereCallback={gåVidereCallback}
         >
-            <OmDegOppsummering settFeilAnchors={settFeilAnchors} />
-            <DinLivssituasjonOppsummering settFeilAnchors={settFeilAnchors} />
-            <VelgBarnOppsummering settFeilAnchors={settFeilAnchors} />
-            <OmBarnaOppsummering settFeilAnchors={settFeilAnchors} />
+            <VStack gap="12">
+                <OmDegOppsummering settFeilAnchors={settFeilAnchors} />
+                <DinLivssituasjonOppsummering settFeilAnchors={settFeilAnchors} />
+                <VelgBarnOppsummering settFeilAnchors={settFeilAnchors} />
+                <OmBarnaOppsummering settFeilAnchors={settFeilAnchors} />
 
-            {søknad.barnInkludertISøknaden.map((barn, index) => {
-                const enIndeksert = index + 1;
-                const nummer = (hentStegNummer(RouteEnum.OmBarna) + enIndeksert).toString();
-                return (
-                    <OmBarnetOppsummering
-                        key={`om-barnet-${index}`}
-                        barn={barn}
-                        nummer={nummer}
-                        settFeilAnchors={settFeilAnchors}
-                        index={index}
-                    />
-                );
-            })}
-
-            <>
-                {søkerHarEøsSteg && <EøsSøkerOppsummering settFeilAnchors={settFeilAnchors} />}
-                {barnSomHarEøsSteg.map((barn, index) => {
+                {søknad.barnInkludertISøknaden.map((barn, index) => {
                     const enIndeksert = index + 1;
-                    const nummer = (hentStegNummer(RouteEnum.EøsForSøker) + enIndeksert).toString();
+                    const nummer = (hentStegNummer(RouteEnum.OmBarna) + enIndeksert).toString();
                     return (
-                        <EøsBarnOppsummering
-                            key={`om-barnet-eøs-${index}`}
+                        <OmBarnetOppsummering
+                            key={`om-barnet-${index}`}
+                            barn={barn}
                             nummer={nummer}
                             settFeilAnchors={settFeilAnchors}
-                            barn={barn}
+                            index={index}
                         />
                     );
                 })}
-            </>
+
+                <>
+                    {søkerHarEøsSteg && <EøsSøkerOppsummering settFeilAnchors={settFeilAnchors} />}
+                    {barnSomHarEøsSteg.map((barn, index) => {
+                        const enIndeksert = index + 1;
+                        const nummer = (
+                            hentStegNummer(RouteEnum.EøsForSøker) + enIndeksert
+                        ).toString();
+                        return (
+                            <EøsBarnOppsummering
+                                key={`om-barnet-eøs-${index}`}
+                                nummer={nummer}
+                                settFeilAnchors={settFeilAnchors}
+                                barn={barn}
+                            />
+                        );
+                    })}
+                </>
+            </VStack>
         </Steg>
     );
 };

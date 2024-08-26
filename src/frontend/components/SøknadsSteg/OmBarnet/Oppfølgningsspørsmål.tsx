@@ -17,6 +17,7 @@ import {
     morgendagensDato,
     stringTilDate,
 } from '../../../utils/dato';
+import { uppercaseFørsteBokstav } from '../../../utils/visning';
 import { Barnetrygdperiode } from '../../Felleskomponenter/Barnetrygdperiode/Barnetrygdperiode';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import { LandDropdown } from '../../Felleskomponenter/Dropdowns/LandDropdown';
@@ -81,6 +82,8 @@ const Oppfølgningsspørsmål: React.FC<{
     const teksterForModal: IUtenlandsoppholdTekstinnhold =
         tekster().FELLES.modaler.utenlandsopphold.barn;
     const { flerePerioder, leggTilPeriodeForklaring } = teksterForModal;
+
+    const frittståendeOrdTekster = tekster().FELLES.frittståendeOrd;
 
     return (
         <>
@@ -179,7 +182,11 @@ const Oppfølgningsspørsmål: React.FC<{
                     legendSpråkId={'ombarnet.opplystatbarnutlandopphold.info'}
                     språkValues={{ navn: barn.navn }}
                 >
-                    <PerioderContainer>
+                    <PerioderContainer
+                        tittel={uppercaseFørsteBokstav(
+                            plainTekst(frittståendeOrdTekster.utenlandsopphold)
+                        )}
+                    >
                         {utenlandsperioder.map((periode, index) => (
                             <UtenlandsperiodeOppsummering
                                 key={index}
