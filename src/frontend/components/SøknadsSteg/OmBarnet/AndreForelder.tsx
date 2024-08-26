@@ -1,8 +1,10 @@
 import React from 'react';
 
+import { FormSummary } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { ISkjema } from '@navikt/familie-skjema';
 
+import { useApp } from '../../../context/AppContext';
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { AlternativtSvarForInput } from '../../../typer/common';
 import { IArbeidsperiode, IPensjonsperiode } from '../../../typer/perioder';
@@ -39,9 +41,13 @@ const AndreForelder: React.FC<{
     leggTilPensjonsperiode,
     fjernPensjonsperiode,
 }) => {
+    const { tekster, plainTekst } = useApp();
+
     const barnMedSammeForelder: IBarnMedISøknad | undefined = andreBarnSomErFyltUt.find(
         annetBarn => annetBarn.id === skjema.felter.sammeForelderSomAnnetBarn.verdi
     );
+
+    const { barnetsAndreForelder } = tekster().OM_BARNET;
 
     return (
         <SkjemaFieldset legendSpråkId={'ombarnet.andre-forelder'}>
@@ -182,10 +188,15 @@ const AndreForelder: React.FC<{
                     </>
                 ) : (
                     barnMedSammeForelder?.andreForelder && (
-                        <AndreForelderOppsummering
-                            barn={barn}
-                            andreForelder={barnMedSammeForelder.andreForelder}
-                        />
+                        <FormSummary>
+                            <FormSummary.Header>
+                                {plainTekst(barnetsAndreForelder)}
+                            </FormSummary.Header>
+                            <AndreForelderOppsummering
+                                barn={barn}
+                                andreForelder={barnMedSammeForelder.andreForelder}
+                            />
+                        </FormSummary>
                     )
                 )}
             </KomponentGruppe>

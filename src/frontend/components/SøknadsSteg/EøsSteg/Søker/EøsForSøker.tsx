@@ -46,7 +46,10 @@ const EøsForSøker: React.FC = () => {
                 settSøknadsdataCallback: oppdaterSøknad,
             }}
         >
-            <IdNummerForSøker skjema={skjema} settIdNummerFelter={settIdNummerFelter} />
+            <KomponentGruppe>
+                <IdNummerForSøker skjema={skjema} settIdNummerFelter={settIdNummerFelter} />
+            </KomponentGruppe>
+
             {skjema.felter.adresseISøkeperiode.erSynlig && (
                 <KomponentGruppe>
                     <SkjemaFeltInput

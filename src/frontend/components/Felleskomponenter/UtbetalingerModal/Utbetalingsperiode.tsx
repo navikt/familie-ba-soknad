@@ -11,6 +11,7 @@ import { PeriodePersonTypeMedBarnProps, PersonType } from '../../../typer/person
 import { IAndreUtbetalingerTekstinnhold } from '../../../typer/sanity/modaler/andreUtbetalinger';
 import { IEøsForBarnFeltTyper, IEøsForSøkerFeltTyper } from '../../../typer/skjema';
 import { genererPeriodeId } from '../../../utils/perioder';
+import { uppercaseFørsteBokstav } from '../../../utils/visning';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
 import PerioderContainer from '../PerioderContainer';
@@ -60,6 +61,8 @@ export const Utbetalingsperiode: React.FC<Props> = ({
         tekster().FELLES.modaler.andreUtbetalinger[personType];
     const { flerePerioder, leggTilPeriodeForklaring } = teksterForModal;
 
+    const frittståendeOrdTekster = tekster().FELLES.frittståendeOrd;
+
     return (
         <>
             <JaNeiSpm
@@ -75,7 +78,11 @@ export const Utbetalingsperiode: React.FC<Props> = ({
                 }}
             />
             {tilhørendeJaNeiSpmFelt.verdi === ESvar.JA && (
-                <PerioderContainer>
+                <PerioderContainer
+                    tittel={uppercaseFørsteBokstav(
+                        plainTekst(frittståendeOrdTekster.utbetalingsperioder)
+                    )}
+                >
                     {registrerteUtbetalingsperioder.verdi.map((utbetalingsperiode, index) => (
                         <UtbetalingsperiodeOppsummering
                             key={`utbetalingsperiode-${index}`}
@@ -104,7 +111,9 @@ export const Utbetalingsperiode: React.FC<Props> = ({
                         leggTilFlereTekst={
                             toggles.NYE_MODAL_TEKSTER &&
                             registrerteUtbetalingsperioder.verdi.length > 0 &&
-                            plainTekst(flerePerioder)
+                            plainTekst(flerePerioder, {
+                                ...(barnetsNavn && { barnetsNavn: barnetsNavn }),
+                            })
                         }
                         id={genererPeriodeId({
                             personType: personType,
