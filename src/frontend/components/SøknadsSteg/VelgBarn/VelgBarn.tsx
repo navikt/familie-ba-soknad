@@ -1,10 +1,9 @@
 import React from 'react';
 
-import { Alert, VStack } from '@navikt/ds-react';
+import { VStack } from '@navikt/ds-react';
 
 import { useApp } from '../../../context/AppContext';
 import { ESanitySteg } from '../../../typer/sanity/sanity';
-import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
@@ -33,7 +32,7 @@ const VelgBarn: React.FC = () => {
     const barn = barnFraRespons.concat(barnManueltLagtTil);
 
     const stegTekster = tekster()[ESanitySteg.VELG_BARN];
-    const { velgBarnGuide, finnerIngenBarnAlert } = stegTekster;
+    const { velgBarnGuide } = stegTekster;
 
     return (
         <>
@@ -55,11 +54,6 @@ const VelgBarn: React.FC = () => {
                     marginBlock="12"
                     gap="12"
                 >
-                    {barn.length === 0 && (
-                        <Alert variant="info">
-                            <TekstBlock block={finnerIngenBarnAlert} />
-                        </Alert>
-                    )}
                     {barn.map(barnet => (
                         <Barnekort
                             key={barnet.id}
