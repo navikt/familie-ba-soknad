@@ -2,7 +2,6 @@ import React from 'react';
 
 import { Alpha3Code } from 'i18n-iso-countries';
 import { useIntl } from 'react-intl';
-import styled from 'styled-components';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
@@ -25,10 +24,6 @@ import {
 import { useOmdeg } from '../../OmDeg/useOmdeg';
 import { OppsummeringFelt } from '../OppsummeringFelt';
 import Oppsummeringsbolk from '../Oppsummeringsbolk';
-
-const StyledUtenlandsperiodeOppsummering = styled(UtenlandsperiodeOppsummering)`
-    border-bottom: none;
-`;
 
 interface Props {
     settFeilAnchors: React.Dispatch<React.SetStateAction<string[]>>;
@@ -99,11 +94,7 @@ const OmDegOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                 søknadsvar={søknad.søker.værtINorgeITolvMåneder.svar}
             />
             {søknad.søker.utenlandsperioder.map((periode, index) => (
-                <StyledUtenlandsperiodeOppsummering
-                    key={index}
-                    periode={periode}
-                    nummer={index + 1}
-                />
+                <UtenlandsperiodeOppsummering key={index} periode={periode} nummer={index + 1} />
             ))}
             {søknad.søker.planleggerÅBoINorgeTolvMnd.svar && (
                 <OppsummeringFelt
