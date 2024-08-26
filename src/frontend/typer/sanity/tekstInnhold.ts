@@ -76,6 +76,13 @@ export interface IFrittståendeOrdTekstinnhold {
     steg: LocaleRecordString;
     visAlleSteg: LocaleRecordString;
     skjulAlleSteg: LocaleRecordString;
+    fra: LocaleRecordString;
+    utenlandsopphold: LocaleRecordString;
+    arbeidsperioder: LocaleRecordString;
+    pensjonsperioder: LocaleRecordString;
+    tidligereSamboere: LocaleRecordString;
+    barnetrygdperioder: LocaleRecordString;
+    utbetalingsperioder: LocaleRecordString;
 }
 
 export interface INavigasjonTekstinnhold {

@@ -37,66 +37,64 @@ export const UtenlandsperiodeOppsummering: React.FC<{
     const årsak = utenlandsoppholdÅrsak.svar;
 
     return (
-        <>
-            <PeriodeOppsummering
-                nummer={nummer}
-                tittelSpråkId={'felles.leggtilutenlands.opphold'}
-                fjernKnappSpråkId={'felles.fjernutenlandsopphold.knapp'}
-                fjernPeriodeCallback={fjernPeriodeCallback && (() => fjernPeriodeCallback(periode))}
+        <PeriodeOppsummering
+            nummer={nummer}
+            tittelSpråkId={'felles.leggtilutenlands.opphold'}
+            fjernKnappSpråkId={'felles.fjernutenlandsopphold.knapp'}
+            fjernPeriodeCallback={fjernPeriodeCallback && (() => fjernPeriodeCallback(periode))}
+        >
+            <OppsummeringFelt
+                tittel={
+                    <SpråkTekst
+                        id={årsakLabelSpråkId(barn)}
+                        values={{ barn: barn ? barn.navn : undefined }}
+                    />
+                }
             >
-                <OppsummeringFelt
-                    tittel={
-                        <SpråkTekst
-                            id={årsakLabelSpråkId(barn)}
-                            values={{ barn: barn ? barn.navn : undefined }}
-                        />
-                    }
-                >
-                    <BodyShort>
-                        <SpråkTekst
-                            id={årsakSpråkId(årsak, barn)}
-                            values={{ barn: barn ? barn.navn : undefined }}
-                        />
-                    </BodyShort>
-                </OppsummeringFelt>
+                <BodyShort>
+                    <SpråkTekst
+                        id={årsakSpråkId(årsak, barn)}
+                        values={{ barn: barn ? barn.navn : undefined }}
+                    />
+                </BodyShort>
+            </OppsummeringFelt>
 
+            <OppsummeringFelt
+                tittel={
+                    <SpråkTekst
+                        id={landLabelSpråkId(årsak, barn)}
+                        values={{ barn: barn ? barn.navn : undefined }}
+                    />
+                }
+                søknadsvar={landkodeTilSpråk(oppholdsland.svar, valgtLocale)}
+            />
+
+            {oppholdslandFraDato && (
                 <OppsummeringFelt
                     tittel={
                         <SpråkTekst
-                            id={landLabelSpråkId(årsak, barn)}
+                            id={fraDatoLabelSpråkId(årsak, barn)}
                             values={{ barn: barn ? barn.navn : undefined }}
                         />
                     }
-                    søknadsvar={landkodeTilSpråk(oppholdsland.svar, valgtLocale)}
+                    søknadsvar={formaterDato(oppholdslandFraDato.svar)}
                 />
+            )}
 
-                {oppholdslandFraDato && (
-                    <OppsummeringFelt
-                        tittel={
-                            <SpråkTekst
-                                id={fraDatoLabelSpråkId(årsak, barn)}
-                                values={{ barn: barn ? barn.navn : undefined }}
-                            />
-                        }
-                        søknadsvar={formaterDato(oppholdslandFraDato.svar)}
-                    />
-                )}
-
-                {oppholdslandTilDato && (
-                    <OppsummeringFelt
-                        tittel={
-                            <SpråkTekst
-                                id={tilDatoLabelSpråkId(årsak, barn)}
-                                values={{ barn: barn ? barn.navn : undefined }}
-                            />
-                        }
-                        søknadsvar={formaterDatoMedUkjent(
-                            oppholdslandTilDato.svar,
-                            formatMessage({ id: tilDatoUkjentLabelSpråkId })
-                        )}
-                    />
-                )}
-            </PeriodeOppsummering>
-        </>
+            {oppholdslandTilDato && (
+                <OppsummeringFelt
+                    tittel={
+                        <SpråkTekst
+                            id={tilDatoLabelSpråkId(årsak, barn)}
+                            values={{ barn: barn ? barn.navn : undefined }}
+                        />
+                    }
+                    søknadsvar={formaterDatoMedUkjent(
+                        oppholdslandTilDato.svar,
+                        formatMessage({ id: tilDatoUkjentLabelSpråkId })
+                    )}
+                />
+            )}
+        </PeriodeOppsummering>
     );
 };

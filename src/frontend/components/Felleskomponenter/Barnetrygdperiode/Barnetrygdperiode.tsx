@@ -13,6 +13,7 @@ import { PeriodePersonTypeProps, PersonType } from '../../../typer/personType';
 import { IBarnetrygdsperiodeTekstinnhold } from '../../../typer/sanity/modaler/barnetrygdperiode';
 import { IEøsForBarnFeltTyper, IOmBarnetFeltTyper } from '../../../typer/skjema';
 import { genererPeriodeId } from '../../../utils/perioder';
+import { uppercaseFørsteBokstav } from '../../../utils/visning';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
 import PerioderContainer from '../PerioderContainer';
@@ -62,6 +63,8 @@ export const Barnetrygdperiode: React.FC<BarnetrygdperiodeProps> = ({
         tekster().FELLES.modaler.barnetrygdsperiode[personType];
     const { flerePerioder, leggTilPeriodeForklaring } = teksterForModal;
 
+    const frittståendeOrdTekster = tekster().FELLES.frittståendeOrd;
+
     return (
         <>
             <JaNeiSpm
@@ -76,7 +79,11 @@ export const Barnetrygdperiode: React.FC<BarnetrygdperiodeProps> = ({
                 }}
             />
             {tilhørendeJaNeiSpmFelt.verdi === ESvar.JA && (
-                <PerioderContainer>
+                <PerioderContainer
+                    tittel={uppercaseFørsteBokstav(
+                        plainTekst(frittståendeOrdTekster.barnetrygdperioder)
+                    )}
+                >
                     {registrerteEøsBarnetrygdsperioder.verdi.map((periode, index) => (
                         <BarnetrygdsperiodeOppsummering
                             key={`eøs-barnetrygdsperiode-${index}`}

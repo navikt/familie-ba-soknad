@@ -15,7 +15,6 @@ import SpråkTekst from '../../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { UtbetalingsperiodeOppsummering } from '../../../../Felleskomponenter/UtbetalingerModal/UtbetalingsperiodeOppsummering';
 import { EøsBarnSpørsmålId, eøsBarnSpørsmålSpråkId } from '../../../EøsSteg/Barn/spørsmål';
 import { OppsummeringFelt } from '../../OppsummeringFelt';
-import { StyledOppsummeringsFeltGruppe } from '../../OppsummeringsFeltGruppe';
 
 import { tittelSpmEøsBarnOppsummering } from './utils';
 
@@ -27,7 +26,7 @@ const EøsOmsorgspersonOppsummering: React.FC<{
     const { valgtLocale } = useSpråk();
 
     return (
-        <StyledOppsummeringsFeltGruppe>
+        <>
             {omsorgsperson.navn.svar && (
                 <OppsummeringFelt
                     tittel={tittelSpmEøsBarnOppsummering(omsorgsperson.navn.id, barn.navn)}
@@ -181,7 +180,7 @@ const EøsOmsorgspersonOppsummering: React.FC<{
                 />
             ))}
             {omsorgsperson.pågåendeSøknadFraAnnetEøsLand.svar && (
-                <StyledOppsummeringsFeltGruppe>
+                <>
                     <OppsummeringFelt
                         tittel={
                             <SpråkTekst
@@ -213,7 +212,7 @@ const EøsOmsorgspersonOppsummering: React.FC<{
                             )}
                         />
                     )}
-                </StyledOppsummeringsFeltGruppe>
+                </>
             )}
             {omsorgsperson.barnetrygdFraEøs.svar && (
                 <OppsummeringFelt
@@ -235,7 +234,7 @@ const EøsOmsorgspersonOppsummering: React.FC<{
                     personType={PersonType.Omsorgsperson}
                 />
             ))}
-        </StyledOppsummeringsFeltGruppe>
+        </>
     );
 };
 

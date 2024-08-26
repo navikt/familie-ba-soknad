@@ -10,6 +10,7 @@ import { PersonType } from '../../../typer/personType';
 import { ITidligereSamoboereTekstinnhold } from '../../../typer/sanity/modaler/tidligereSamboere';
 import { IDinLivssituasjonFeltTyper } from '../../../typer/skjema';
 import { genererPeriodeId } from '../../../utils/perioder';
+import { uppercaseFørsteBokstav } from '../../../utils/visning';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
 import PerioderContainer from '../../Felleskomponenter/PerioderContainer';
@@ -47,6 +48,8 @@ const TidligereSamboere: React.FC<Props> = ({
         tekster().FELLES.modaler.tidligereSamboere.søker;
     const { flerePerioder, leggTilPeriodeForklaring } = teksterForModal;
 
+    const frittståendeOrdTekster = tekster().FELLES.frittståendeOrd;
+
     return (
         <>
             <JaNeiSpm
@@ -59,7 +62,11 @@ const TidligereSamboere: React.FC<Props> = ({
                 }
             />
             {hattAnnenSamboerForSøktPeriodeFelt.verdi === ESvar.JA && (
-                <PerioderContainer>
+                <PerioderContainer
+                    tittel={uppercaseFørsteBokstav(
+                        plainTekst(frittståendeOrdTekster.tidligereSamboere)
+                    )}
+                >
                     {tidligereSamboere.verdi.map((samboer: ITidligereSamboer, index: number) => (
                         <SamboerOpplysninger
                             key={index}

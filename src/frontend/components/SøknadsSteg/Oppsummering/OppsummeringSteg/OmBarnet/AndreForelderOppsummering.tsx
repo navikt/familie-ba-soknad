@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useIntl } from 'react-intl';
 
-import { BodyShort } from '@navikt/ds-react';
+import { BodyShort, FormSummary } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import {
@@ -20,7 +20,6 @@ import { PensjonsperiodeOppsummering } from '../../../../Felleskomponenter/Pensj
 import SpråkTekst from '../../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../../../OmBarnet/spørsmål';
 import { OppsummeringFelt } from '../../OppsummeringFelt';
-import { StyledOppsummeringsFeltGruppe } from '../../OppsummeringsFeltGruppe';
 
 const AndreForelderOppsummering: React.FC<{
     barn: IBarnMedISøknad;
@@ -30,10 +29,10 @@ const AndreForelderOppsummering: React.FC<{
     const { formatMessage } = intl;
 
     return (
-        <>
+        <FormSummary.Answers>
             {andreForelder[andreForelderDataKeySpørsmål.kanIkkeGiOpplysninger].svar ===
             ESvar.NEI ? (
-                <StyledOppsummeringsFeltGruppe>
+                <>
                     {andreForelder[andreForelderDataKeySpørsmål.navn].svar && (
                         <OppsummeringFelt
                             tittel={
@@ -215,9 +214,9 @@ const AndreForelderOppsummering: React.FC<{
                             })()}
                         />
                     )}
-                </StyledOppsummeringsFeltGruppe>
+                </>
             ) : (
-                <StyledOppsummeringsFeltGruppe>
+                <>
                     <BodyShort>
                         <SpråkTekst
                             id={
@@ -227,9 +226,9 @@ const AndreForelderOppsummering: React.FC<{
                             }
                         />
                     </BodyShort>
-                </StyledOppsummeringsFeltGruppe>
+                </>
             )}
-        </>
+        </FormSummary.Answers>
     );
 };
 
