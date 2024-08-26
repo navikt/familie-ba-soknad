@@ -16,7 +16,6 @@ import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGr
 import { Pensjonsperiode } from '../../Felleskomponenter/Pensjonsmodal/Pensjonsperiode';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
-import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
 import { VedleggOppsummering } from '../../Felleskomponenter/VedleggOppsummering';
 
 import SamboerSkjema from './SamboerSkjema';
@@ -43,10 +42,6 @@ const DinLivssituasjon: React.FC = () => {
 
     const stegTekster = tekster()[ESanitySteg.DIN_LIVSSITUASJON];
     const { dinLivssituasjonGuide } = stegTekster;
-
-    const dokumentasjonstekster = tekster()[ESanitySteg.DOKUMENTASJON];
-    const { dokumentasjonPaaSeparasjonSkilsmisseEllerDoedsfall, vedtakOmOppholdstillatelse } =
-        dokumentasjonstekster;
 
     return (
         <Steg
@@ -88,13 +83,6 @@ const DinLivssituasjon: React.FC = () => {
                                 ]
                             }
                         />
-                        {skjema.felter.separertEnkeSkilt.verdi === ESvar.JA && (
-                            <VedleggNotis
-                                block={dokumentasjonPaaSeparasjonSkilsmisseEllerDoedsfall}
-                                språkTekstId="omdeg.separertellerskilt.info"
-                                dynamisk
-                            />
-                        )}
                         {skjema.felter.separertEnkeSkiltUtland.erSynlig && (
                             <KomponentGruppe inline dynamisk>
                                 <JaNeiSpm
@@ -172,13 +160,6 @@ const DinLivssituasjon: React.FC = () => {
                         dinLivssituasjonSpørsmålSpråkId[DinLivssituasjonSpørsmålId.erAsylsøker]
                     }
                 />
-                {skjema.felter.erAsylsøker.verdi === ESvar.JA && (
-                    <VedleggNotis
-                        block={vedtakOmOppholdstillatelse}
-                        språkTekstId="omdeg.asylsøker.alert"
-                        dynamisk
-                    />
-                )}
 
                 <Arbeidsperiode
                     skjema={skjema}
