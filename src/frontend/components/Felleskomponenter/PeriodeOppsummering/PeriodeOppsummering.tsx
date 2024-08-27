@@ -11,17 +11,9 @@ const PeriodeOppsummering: React.FC<{
     fjernPeriodeCallback?: () => void;
     fjernKnappSpråkId?: string;
     tittelSpråkId: string;
-    vedleggNotis?: ReactNode;
     children?: ReactNode;
     headingLevel?: HeadingLevel;
-}> = ({
-    nummer,
-    fjernPeriodeCallback = undefined,
-    fjernKnappSpråkId,
-    tittelSpråkId,
-    vedleggNotis,
-    children,
-}) => {
+}> = ({ nummer, fjernPeriodeCallback = undefined, fjernKnappSpråkId, tittelSpråkId, children }) => {
     return (
         <FormSummary.Answer>
             <FormSummary.Label>
@@ -42,7 +34,6 @@ const PeriodeOppsummering: React.FC<{
                     )}
                 </FormSummary.Answers>
             </FormSummary.Value>
-            {vedleggNotis}
         </FormSummary.Answer>
     );
 };
