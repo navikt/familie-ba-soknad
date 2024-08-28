@@ -93,7 +93,7 @@ const Oppfølgningsspørsmål: React.FC<{
                         tittelId={'ombarnet.fosterbarn'}
                         språkValues={{ navn: barn.navn }}
                         headingLevel="4"
-                    ></Informasjonsbolk>
+                    />
                 </KomponentGruppe>
             )}
 
