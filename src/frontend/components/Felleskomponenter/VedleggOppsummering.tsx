@@ -13,7 +13,7 @@ interface IVedleggOppsummeringProps {
     vedlegg: {
         skalVises: boolean;
         dokumentasjonsbehov: Dokumentasjonsbehov;
-        flettefeltVerider?: FlettefeltVerdier;
+        flettefeltVerdier?: FlettefeltVerdier;
     }[];
 }
 
@@ -34,7 +34,7 @@ export const VedleggOppsummering: FC<IVedleggOppsummeringProps> = ({ vedlegg }) 
                             <List.Item key={index}>
                                 <SpråkTekst
                                     id={dokumentasjonsbehovTilSpråkId(vedlegg.dokumentasjonsbehov)}
-                                    values={{ barn: vedlegg.flettefeltVerider?.barnetsNavn }}
+                                    values={{ barn: vedlegg.flettefeltVerdier?.barnetsNavn }}
                                 />
                             </List.Item>
                         ))}

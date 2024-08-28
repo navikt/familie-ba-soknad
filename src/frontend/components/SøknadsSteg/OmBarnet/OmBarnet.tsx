@@ -192,12 +192,12 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                             skjema.felter.borFastMedSøker.verdi === ESvar.JA &&
                             barn.borMedSøker === true,
                         dokumentasjonsbehov: Dokumentasjonsbehov.BOR_FAST_MED_SØKER,
-                        flettefeltVerider: { barnetsNavn: barn.navn },
+                        flettefeltVerdier: { barnetsNavn: barn.navn },
                     },
                     {
                         skalVises: skjema.felter.skriftligAvtaleOmDeltBosted.verdi === ESvar.JA,
                         dokumentasjonsbehov: Dokumentasjonsbehov.AVTALE_DELT_BOSTED,
-                        flettefeltVerider: { barnetsNavn: barn.navn },
+                        flettefeltVerdier: { barnetsNavn: barn.navn },
                     },
                     {
                         skalVises: skjema.felter.borMedAndreForelderCheckbox.erSynlig,
