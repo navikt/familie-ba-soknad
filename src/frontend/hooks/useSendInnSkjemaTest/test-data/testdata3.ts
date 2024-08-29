@@ -4,7 +4,7 @@ export const testdata3: TilKontraktTestData = {
     input: {
         søknadstype: 'ORDINÆR',
         erEøs: true,
-        kontraktVersjon: '8',
+        kontraktVersjon: '9',
         antallEøsSteg: 0,
         barnInkludertISøknaden: [
             {
