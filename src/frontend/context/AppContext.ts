@@ -17,7 +17,7 @@ import Miljø, { basePath } from '../../shared-utils/Miljø';
 import { DinLivssituasjonSpørsmålId } from '../components/SøknadsSteg/DinLivssituasjon/spørsmål';
 import { LocaleType } from '../typer/common';
 import { IKontoinformasjon } from '../typer/kontoinformasjon';
-import { ESivilstand, ESøknadstype } from '../typer/kontrakt/generelle';
+import { ESivilstand, ESøknadstype, TilRestLocaleRecord } from '../typer/kontrakt/generelle';
 import { IKvittering } from '../typer/kvittering';
 import { IMellomlagretBarnetrygd } from '../typer/mellomlager';
 import { ISøkerRespons } from '../typer/person';
@@ -350,6 +350,17 @@ const [AppProvider, useApp] = createUseContext(() => {
 
     const plainTekst = plainTekstHof(flettefeltTilTekst, valgtLocale);
 
+    const tilRestLocaleRecord: TilRestLocaleRecord = (
+        sanityTekst,
+        flettefelter
+    ): Record<LocaleType, string> => {
+        return {
+            [LocaleType.en]: plainTekst(sanityTekst, flettefelter, LocaleType.en),
+            [LocaleType.nn]: plainTekst(sanityTekst, flettefelter, LocaleType.nn),
+            [LocaleType.nb]: plainTekst(sanityTekst, flettefelter, LocaleType.nb),
+        };
+    };
+
     return {
         axiosRequest,
         sluttbruker,
@@ -381,6 +392,7 @@ const [AppProvider, useApp] = createUseContext(() => {
         plainTekst,
         flettefeltTilTekst,
         kontoinformasjon,
+        tilRestLocaleRecord,
     };
 });
 

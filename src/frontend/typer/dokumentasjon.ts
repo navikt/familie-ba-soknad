@@ -13,8 +13,6 @@ export interface IDokumentasjon {
     gjelderForSøker: boolean;
     harSendtInn: boolean;
     opplastedeVedlegg: IVedlegg[];
-    tittelSpråkId: string;
-    beskrivelseSpråkId: string | null;
 }
 
 export enum EFiltyper {

@@ -8,7 +8,7 @@ import { genererInitiellDokumentasjon } from '../utils/dokumentasjon';
 
 import { IBarnMedISøknad } from './barn';
 import { INøkkelPar } from './common';
-import { dokumentasjonsbehovTilSpråkId, IDokumentasjon } from './dokumentasjon';
+import { IDokumentasjon } from './dokumentasjon';
 import { Dokumentasjonsbehov } from './kontrakt/dokumentasjon';
 import { ESivilstand, ESøknadstype } from './kontrakt/generelle';
 import { IBarn, ISøker } from './person';
@@ -50,48 +50,9 @@ export const initialStateSøknad = (): ISøknad => {
         barnInkludertISøknaden: [],
         lestOgForståttBekreftelse: false,
         barnRegistrertManuelt: [],
-        dokumentasjon: [
-            genererInitiellDokumentasjon(
-                Dokumentasjonsbehov.AVTALE_DELT_BOSTED,
-                dokumentasjonsbehovTilSpråkId(Dokumentasjonsbehov.AVTALE_DELT_BOSTED),
-                'dokumentasjon.deltbosted.informasjon'
-            ),
-            genererInitiellDokumentasjon(
-                Dokumentasjonsbehov.VEDTAK_OPPHOLDSTILLATELSE,
-                dokumentasjonsbehovTilSpråkId(Dokumentasjonsbehov.VEDTAK_OPPHOLDSTILLATELSE),
-                'dokumentasjon.oppholdstillatelse.informasjon'
-            ),
-            genererInitiellDokumentasjon(
-                Dokumentasjonsbehov.ADOPSJON_DATO,
-                dokumentasjonsbehovTilSpråkId(Dokumentasjonsbehov.ADOPSJON_DATO),
-                'dokumentasjon.adopsjon.informasjon'
-            ),
-            genererInitiellDokumentasjon(
-                Dokumentasjonsbehov.BEKREFTELSE_FRA_BARNEVERN,
-                dokumentasjonsbehovTilSpråkId(Dokumentasjonsbehov.BEKREFTELSE_FRA_BARNEVERN),
-                'dokumentasjon.bekreftelsebarnevernet.informasjon'
-            ),
-            genererInitiellDokumentasjon(
-                Dokumentasjonsbehov.BOR_FAST_MED_SØKER,
-                dokumentasjonsbehovTilSpråkId(Dokumentasjonsbehov.BOR_FAST_MED_SØKER),
-                'dokumentasjon.bekreftelseborsammen.informasjon'
-            ),
-            genererInitiellDokumentasjon(
-                Dokumentasjonsbehov.SEPARERT_SKILT_ENKE,
-                dokumentasjonsbehovTilSpråkId(Dokumentasjonsbehov.SEPARERT_SKILT_ENKE),
-                'dokumentasjon.separasjonskilsmissedødsfall.informasjon'
-            ),
-            genererInitiellDokumentasjon(
-                Dokumentasjonsbehov.MEKLINGSATTEST,
-                dokumentasjonsbehovTilSpråkId(Dokumentasjonsbehov.MEKLINGSATTEST),
-                'dokumentasjon.meklingsattest.informasjon'
-            ),
-            genererInitiellDokumentasjon(
-                Dokumentasjonsbehov.ANNEN_DOKUMENTASJON,
-                dokumentasjonsbehovTilSpråkId(Dokumentasjonsbehov.ANNEN_DOKUMENTASJON),
-                'dokumentasjon.annendokumentasjon.utvidet.informasjon'
-            ),
-        ],
+        dokumentasjon: Object.keys(Dokumentasjonsbehov).map((dok: string) =>
+            genererInitiellDokumentasjon(dok as Dokumentasjonsbehov)
+        ),
         søker: {
             navn: '',
             barn: [],

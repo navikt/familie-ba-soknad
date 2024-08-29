@@ -13,13 +13,25 @@ import { sendInn } from '../utils/sendInnSkjema';
 export const useSendInnSkjema = (): {
     sendInnSkjemaV8: () => Promise<[boolean, ISøknadKontraktV8]>;
 } => {
-    const { axiosRequest, søknad, settInnsendingStatus, settSisteModellVersjon } = useApp();
+    const {
+        axiosRequest,
+        søknad,
+        settInnsendingStatus,
+        settSisteModellVersjon,
+        tekster,
+        tilRestLocaleRecord,
+    } = useApp();
     const { soknadApiProxyUrl } = Miljø();
     const { valgtLocale } = useSpråk();
     const sendInnSkjemaV8 = async (): Promise<[boolean, ISøknadKontraktV8]> => {
         settInnsendingStatus({ status: RessursStatus.HENTER });
 
-        const formatert: ISøknadKontraktV8 = dataISøknadKontraktFormatV8(valgtLocale, søknad);
+        const formatert: ISøknadKontraktV8 = dataISøknadKontraktFormatV8(
+            valgtLocale,
+            søknad,
+            tekster(),
+            tilRestLocaleRecord
+        );
 
         const res = await sendInn<ISøknadKontraktV8>(
             formatert,

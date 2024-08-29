@@ -4,6 +4,8 @@ import { LocaleRecordBlock } from '../../../typer/sanity/sanity';
 export type IDokumentasjonTekstinnhold = {
     dokumentasjonTittel: LocaleRecordBlock;
     dokumentasjonGuide: LocaleRecordBlock;
+    sendtInnTidligere: LocaleRecordBlock;
+    vedleggXavY: LocaleRecordBlock;
 } & {
     [TittelSanityApiNavn.bekreftelsePaaAdopsjonTittel]: LocaleRecordBlock;
     [TittelSanityApiNavn.annenDokumentasjon]: LocaleRecordBlock;

@@ -1,4 +1,5 @@
 import { ISODateString, LocaleType } from '../common';
+import { FlettefeltVerdier, LocaleRecordBlock, LocaleRecordString } from '../sanity/sanity';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export type SpørsmålMap = Record<string, ISøknadsfelt<any>>;
@@ -12,6 +13,11 @@ export interface ISøknadsfelt<T> {
     label: Record<LocaleType, string>;
     verdi: Record<LocaleType, T>;
 }
+
+export type TilRestLocaleRecord = (
+    sanityTekst: LocaleRecordString | LocaleRecordBlock,
+    flettefelter?: FlettefeltVerdier
+) => Record<LocaleType, string>;
 
 export interface IKontraktTidligereSamboer extends IKontraktNåværendeSamboer {
     samboerTilDato: ISøknadsfelt<ISODateString>;

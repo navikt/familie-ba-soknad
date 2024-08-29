@@ -7,10 +7,11 @@ import {
 import { OmBarnaDineSpørsmålId } from '../../components/SøknadsSteg/OmBarnaDine/spørsmål';
 import { IBarnMedISøknad } from '../../typer/barn';
 import { LocaleType } from '../../typer/common';
-import { ESivilstand } from '../../typer/kontrakt/generelle';
+import { ESivilstand, TilRestLocaleRecord } from '../../typer/kontrakt/generelle';
 import { ISøknadKontraktV8 } from '../../typer/kontrakt/v8';
 import { ISøker } from '../../typer/person';
 import { PersonType } from '../../typer/personType';
+import { ITekstinnhold } from '../../typer/sanity/tekstInnhold';
 import { ISøknadSpørsmålMap } from '../../typer/spørsmål';
 import { ISøknad } from '../../typer/søknad';
 import { erDokumentasjonRelevant } from '../dokumentasjon';
@@ -52,7 +53,9 @@ const antallEøsSteg = (søker: ISøker, barnInkludertISøknaden: IBarnMedISøkn
 
 export const dataISøknadKontraktFormatV8 = (
     valgtSpråk: LocaleType,
-    søknad: ISøknad
+    søknad: ISøknad,
+    tekster: ITekstinnhold,
+    tilRestLocaleRecord: TilRestLocaleRecord
 ): ISøknadKontraktV8 => {
     const { søker } = søknad;
     // Raskeste måte å få tak i alle spørsmål minus de andre feltene på søker
@@ -206,7 +209,7 @@ export const dataISøknadKontraktFormatV8 = (
         },
         dokumentasjon: søknad.dokumentasjon
             .filter(dok => erDokumentasjonRelevant(dok))
-            .map(dok => dokumentasjonISøknadFormat(dok)),
+            .map(dok => dokumentasjonISøknadFormat(dok, tekster, tilRestLocaleRecord, søknad)),
         teksterUtenomSpørsmål: [
             'hvilkebarn.barn.bosted.adressesperre',
             'ombarnet.fosterbarn',
