@@ -189,8 +189,7 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                     },
                     {
                         skalVises:
-                            skjema.felter.borFastMedSøker.verdi === ESvar.JA &&
-                            barn.borMedSøker === true,
+                            skjema.felter.borFastMedSøker.verdi === ESvar.JA && !barn.borMedSøker,
                         dokumentasjonsbehov: Dokumentasjonsbehov.BOR_FAST_MED_SØKER,
                         flettefeltVerdier: { barnetsNavn: barn.navn },
                     },
