@@ -2,7 +2,6 @@ import React from 'react';
 
 import { Alpha3Code } from 'i18n-iso-countries';
 import { useIntl } from 'react-intl';
-import styled from 'styled-components';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
@@ -25,11 +24,6 @@ import {
 import { useOmdeg } from '../../OmDeg/useOmdeg';
 import { OppsummeringFelt } from '../OppsummeringFelt';
 import Oppsummeringsbolk from '../Oppsummeringsbolk';
-import { StyledOppsummeringsFeltGruppe } from '../OppsummeringsFeltGruppe';
-
-const StyledUtenlandsperiodeOppsummering = styled(UtenlandsperiodeOppsummering)`
-    border-bottom: none;
-`;
 
 interface Props {
     settFeilAnchors: React.Dispatch<React.SetStateAction<string[]>>;
@@ -50,84 +44,68 @@ const OmDegOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
             skjemaHook={omDegHook}
             settFeilAnchors={settFeilAnchors}
         >
-            <StyledOppsummeringsFeltGruppe>
-                <OppsummeringFelt
-                    tittel={
-                        <TekstBlock
-                            block={forsidetekster.bekreftelsesboksBroedtekst}
-                            brukTypografiWrapper={false}
-                        />
-                    }
-                    søknadsvar={
-                        søknad.lestOgForståttBekreftelse
-                            ? plainTekst(forsidetekster.bekreftelsesboksErklaering)
-                            : formatMessage({ id: jaNeiSvarTilSpråkId(ESvar.NEI) })
-                    }
-                />
-            </StyledOppsummeringsFeltGruppe>
-            <StyledOppsummeringsFeltGruppe>
-                <OppsummeringFelt
-                    tittel={<SpråkTekst id={'felles.fødsels-eller-dnummer.label'} />}
-                    søknadsvar={søknad.søker.ident}
-                />
-                <OppsummeringFelt
-                    tittel={<SpråkTekst id={omDegPersonopplysningerSpråkId.søkerStatsborgerskap} />}
-                    søknadsvar={søknad.søker.statsborgerskap
-                        .map((statsborgerskap: { landkode: Alpha3Code }) =>
-                            landkodeTilSpråk(statsborgerskap.landkode, valgtLocale)
-                        )
-                        .join(', ')}
-                />
-                <OppsummeringFelt
-                    tittel={<SpråkTekst id={omDegPersonopplysningerSpråkId.søkerSivilstatus} />}
-                    søknadsvar={søknad.søker.sivilstand.type}
-                />
-
-                <OppsummeringFelt
-                    tittel={<SpråkTekst id={omDegPersonopplysningerSpråkId.søkerAdresse} />}
-                    children={genererAdresseVisning(søknad.søker)}
-                />
-                {søknad.søker.borPåRegistrertAdresse.svar && (
-                    <OppsummeringFelt
-                        tittel={
-                            <SpråkTekst
-                                id={omDegSpørsmålSpråkId[OmDegSpørsmålId.borPåRegistrertAdresse]}
-                            />
-                        }
-                        søknadsvar={søknad.søker.borPåRegistrertAdresse.svar}
+            <OppsummeringFelt
+                tittel={
+                    <TekstBlock
+                        block={forsidetekster.bekreftelsesboksBroedtekst}
+                        brukTypografiWrapper={false}
                     />
-                )}
-            </StyledOppsummeringsFeltGruppe>
-
-            <StyledOppsummeringsFeltGruppe>
+                }
+                søknadsvar={
+                    søknad.lestOgForståttBekreftelse
+                        ? plainTekst(forsidetekster.bekreftelsesboksErklaering)
+                        : formatMessage({ id: jaNeiSvarTilSpråkId(ESvar.NEI) })
+                }
+            />
+            <OppsummeringFelt
+                tittel={<SpråkTekst id={'felles.fødsels-eller-dnummer.label'} />}
+                søknadsvar={søknad.søker.ident}
+            />
+            <OppsummeringFelt
+                tittel={<SpråkTekst id={omDegPersonopplysningerSpråkId.søkerStatsborgerskap} />}
+                søknadsvar={søknad.søker.statsborgerskap
+                    .map((statsborgerskap: { landkode: Alpha3Code }) =>
+                        landkodeTilSpråk(statsborgerskap.landkode, valgtLocale)
+                    )
+                    .join(', ')}
+            />
+            <OppsummeringFelt
+                tittel={<SpråkTekst id={omDegPersonopplysningerSpråkId.søkerSivilstatus} />}
+                søknadsvar={søknad.søker.sivilstand.type}
+            />
+            <OppsummeringFelt
+                tittel={<SpråkTekst id={omDegPersonopplysningerSpråkId.søkerAdresse} />}
+                children={genererAdresseVisning(søknad.søker)}
+            />
+            {søknad.søker.borPåRegistrertAdresse.svar && (
                 <OppsummeringFelt
                     tittel={
                         <SpråkTekst
-                            id={omDegSpørsmålSpråkId[OmDegSpørsmålId.værtINorgeITolvMåneder]}
+                            id={omDegSpørsmålSpråkId[OmDegSpørsmålId.borPåRegistrertAdresse]}
                         />
                     }
-                    søknadsvar={søknad.søker.værtINorgeITolvMåneder.svar}
+                    søknadsvar={søknad.søker.borPåRegistrertAdresse.svar}
                 />
-                {søknad.søker.utenlandsperioder.map((periode, index) => (
-                    <StyledUtenlandsperiodeOppsummering
-                        key={index}
-                        periode={periode}
-                        nummer={index + 1}
-                    />
-                ))}
-                {søknad.søker.planleggerÅBoINorgeTolvMnd.svar && (
-                    <OppsummeringFelt
-                        tittel={
-                            <SpråkTekst
-                                id={
-                                    omDegSpørsmålSpråkId[OmDegSpørsmålId.planleggerÅBoINorgeTolvMnd]
-                                }
-                            />
-                        }
-                        søknadsvar={søknad.søker.planleggerÅBoINorgeTolvMnd.svar}
-                    />
-                )}
-            </StyledOppsummeringsFeltGruppe>
+            )}
+            <OppsummeringFelt
+                tittel={
+                    <SpråkTekst id={omDegSpørsmålSpråkId[OmDegSpørsmålId.værtINorgeITolvMåneder]} />
+                }
+                søknadsvar={søknad.søker.værtINorgeITolvMåneder.svar}
+            />
+            {søknad.søker.utenlandsperioder.map((periode, index) => (
+                <UtenlandsperiodeOppsummering key={index} periode={periode} nummer={index + 1} />
+            ))}
+            {søknad.søker.planleggerÅBoINorgeTolvMnd.svar && (
+                <OppsummeringFelt
+                    tittel={
+                        <SpråkTekst
+                            id={omDegSpørsmålSpråkId[OmDegSpørsmålId.planleggerÅBoINorgeTolvMnd]}
+                        />
+                    }
+                    søknadsvar={søknad.søker.planleggerÅBoINorgeTolvMnd.svar}
+                />
+            )}
         </Oppsummeringsbolk>
     );
 };
