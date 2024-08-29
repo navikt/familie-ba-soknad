@@ -217,46 +217,54 @@ export const dataISøknadKontraktFormat = (
             .filter(dok => erDokumentasjonRelevant(dok))
             .map(dok => dokumentasjonISøknadFormat(dok)),
         teksterUtenomSpørsmål: {
-            ...[
-                'hvilkebarn.barn.bosted.adressesperre',
-                'ombarnet.fosterbarn',
-                'ombarnet.institusjon',
-                'ombarnet.opplystatbarnutlandopphold.info',
-                'ombarnet.barnetrygd-eøs',
-                'omdeg.annensamboer.spm',
-                'omdeg.personopplysninger.adressesperre.alert',
-                'omdeg.personopplysninger.ikke-registrert.alert',
-                'pdf.andreforelder.seksjonstittel',
-                'pdf.hvilkebarn.seksjonstittel',
-                'pdf.hvilkebarn.registrert-på-adresse',
-                'pdf.hvilkebarn.ikke-registrert-på-adresse',
-                'pdf.ombarnet.seksjonstittel',
-                'pdf.omdeg.seksjonstittel',
-                'pdf.bosted.seksjonstittel',
-                'pdf.ombarna.seksjonstittel',
-                'pdf.søker.seksjonstittel',
-                'pdf.vedlegg.seksjonstittel',
-                'pdf.vedlegg.lastet-opp-antall',
-                'pdf.vedlegg.nummerering',
-                'dokumentasjon.har-sendt-inn.spm',
-                'dinlivssituasjon.sidetittel',
-                'pdf.dinlivssituasjon.tidligeresamboer.seksjonstittel',
-                'eøs-om-deg.sidetittel',
-                'eøs-om-barn.sidetittel',
-                ...Object.values(ESivilstand).map(hentSivilstatusSpråkId),
-                ...Object.values(ESvar).map(jaNeiSvarTilSpråkId),
-            ].reduce(
-                (map, tekstId) => ({ ...map, [tekstId]: hentUformaterteTekster(tekstId) }),
-                {}
-            ),
-            ...[tekster.OM_DEG.skjermetAdresse].reduce(
-                (map, sanityDok: LocaleRecordBlock | LocaleRecordString) => ({
-                    ...map,
-                    [sanityDok.api_navn]: tilRestLocaleRecord(sanityDok, {}),
-                }),
-                {}
-            ),
+            ...lokaleTekster(),
+            ...teksterFraSanity(tekster, tilRestLocaleRecord),
         },
         originalSpråk: valgtSpråk,
     };
+};
+
+const lokaleTekster = (): Record<string, Record<LocaleType, string>> => {
+    return [
+        'hvilkebarn.barn.bosted.adressesperre',
+        'ombarnet.fosterbarn',
+        'ombarnet.institusjon',
+        'ombarnet.opplystatbarnutlandopphold.info',
+        'ombarnet.barnetrygd-eøs',
+        'omdeg.annensamboer.spm',
+        'omdeg.personopplysninger.adressesperre.alert',
+        'omdeg.personopplysninger.ikke-registrert.alert',
+        'pdf.andreforelder.seksjonstittel',
+        'pdf.hvilkebarn.seksjonstittel',
+        'pdf.hvilkebarn.registrert-på-adresse',
+        'pdf.hvilkebarn.ikke-registrert-på-adresse',
+        'pdf.ombarnet.seksjonstittel',
+        'pdf.omdeg.seksjonstittel',
+        'pdf.bosted.seksjonstittel',
+        'pdf.ombarna.seksjonstittel',
+        'pdf.søker.seksjonstittel',
+        'pdf.vedlegg.seksjonstittel',
+        'pdf.vedlegg.lastet-opp-antall',
+        'pdf.vedlegg.nummerering',
+        'dokumentasjon.har-sendt-inn.spm',
+        'dinlivssituasjon.sidetittel',
+        'pdf.dinlivssituasjon.tidligeresamboer.seksjonstittel',
+        'eøs-om-deg.sidetittel',
+        'eøs-om-barn.sidetittel',
+        ...Object.values(ESivilstand).map(hentSivilstatusSpråkId),
+        ...Object.values(ESvar).map(jaNeiSvarTilSpråkId),
+    ].reduce((map, tekstId) => ({ ...map, [tekstId]: hentUformaterteTekster(tekstId) }), {});
+};
+
+const teksterFraSanity = (
+    tekster: ITekstinnhold,
+    tilRestLocaleRecord: TilRestLocaleRecord
+): Record<string, Record<LocaleType, string>> => {
+    return [tekster.OM_DEG.skjermetAdresse].reduce(
+        (map, sanityDok: LocaleRecordBlock | LocaleRecordString) => ({
+            ...map,
+            [sanityDok.api_navn]: tilRestLocaleRecord(sanityDok, {}),
+        }),
+        {}
+    );
 };
