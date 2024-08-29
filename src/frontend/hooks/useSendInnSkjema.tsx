@@ -30,7 +30,7 @@ export const useSendInnSkjema = (): {
         const res = await sendInn<ISøknadKontrakt>(
             formatert,
             axiosRequest,
-            `${soknadApiProxyUrl}/soknad/v9`,
+            `${soknadApiProxyUrl}/soknad/v8`,
             (res: AxiosError) => {
                 const responseData = res.response?.data;
                 if (responseData && erModellMismatchResponsRessurs(responseData)) {
