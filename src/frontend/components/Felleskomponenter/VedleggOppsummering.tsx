@@ -3,11 +3,9 @@ import React, { FC } from 'react';
 import { Alert, List } from '@navikt/ds-react';
 
 import { useApp } from '../../context/AppContext';
-import { dokumentasjonsbehovTilSpråkId } from '../../typer/dokumentasjon';
+import { dokumentasjonsbehovTilTittelSanityApiNavn } from '../../typer/dokumentasjon';
 import { Dokumentasjonsbehov } from '../../typer/kontrakt/dokumentasjon';
 import { FlettefeltVerdier } from '../../typer/sanity/sanity';
-
-import SpråkTekst from './SpråkTekst/SpråkTekst';
 
 interface IVedleggOppsummeringProps {
     vedlegg: {
@@ -32,10 +30,14 @@ export const VedleggOppsummering: FC<IVedleggOppsummeringProps> = ({ vedlegg }) 
                     <List>
                         {vedleggSomSkalVises.map((vedlegg, index) => (
                             <List.Item key={index}>
-                                <SpråkTekst
-                                    id={dokumentasjonsbehovTilSpråkId(vedlegg.dokumentasjonsbehov)}
-                                    values={{ barn: vedlegg.flettefeltVerdier?.barnetsNavn }}
-                                />
+                                {plainTekst(
+                                    dokumentasjonTekster[
+                                        dokumentasjonsbehovTilTittelSanityApiNavn(
+                                            vedlegg.dokumentasjonsbehov
+                                        )
+                                    ],
+                                    vedlegg.flettefeltVerdier
+                                )}
                             </List.Item>
                         ))}
                     </List>
