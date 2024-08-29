@@ -10,7 +10,6 @@ import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../typer/barn';
 import { IEøsBarnetrygdsperiode, IUtenlandsperiode } from '../../../typer/perioder';
 import { PersonType } from '../../../typer/personType';
 import { IUtenlandsoppholdTekstinnhold } from '../../../typer/sanity/modaler/utenlandsopphold';
-import { ESanitySteg } from '../../../typer/sanity/sanity';
 import { IOmBarnetFeltTyper } from '../../../typer/skjema';
 import {
     dagensDato,
@@ -35,7 +34,6 @@ import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { UtenlandsoppholdSpørsmålId } from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 import { UtenlandsoppholdModal } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsoppholdModal';
 import { UtenlandsperiodeOppsummering } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsperiodeOppsummering';
-import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
 
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from './spørsmål';
 
@@ -85,9 +83,6 @@ const Oppfølgningsspørsmål: React.FC<{
         tekster().FELLES.modaler.utenlandsopphold.barn;
     const { flerePerioder, leggTilPeriodeForklaring } = teksterForModal;
 
-    const dokumentasjonstekster = tekster()[ESanitySteg.DOKUMENTASJON];
-    const { bekreftelseFraBarnevernetBarnetrygd } = dokumentasjonstekster;
-
     const frittståendeOrdTekster = tekster().FELLES.frittståendeOrd;
 
     return (
@@ -98,14 +93,7 @@ const Oppfølgningsspørsmål: React.FC<{
                         tittelId={'ombarnet.fosterbarn'}
                         språkValues={{ navn: barn.navn }}
                         headingLevel="4"
-                    >
-                        <VedleggNotis
-                            block={bekreftelseFraBarnevernetBarnetrygd}
-                            flettefelter={{ barnetsNavn: barn.navn }}
-                            språkTekstId="ombarnet.fosterbarn.vedleggsinfo"
-                            dynamisk
-                        />
-                    </Informasjonsbolk>
+                    />
                 </KomponentGruppe>
             )}
 

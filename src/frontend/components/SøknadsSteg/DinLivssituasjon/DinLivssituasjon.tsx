@@ -5,6 +5,7 @@ import { useIntl } from 'react-intl';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
+import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
 import { PersonType } from '../../../typer/personType';
 import { ESanitySteg } from '../../../typer/sanity/sanity';
 import { Arbeidsperiode } from '../../Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
@@ -15,7 +16,7 @@ import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGr
 import { Pensjonsperiode } from '../../Felleskomponenter/Pensjonsmodal/Pensjonsperiode';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
-import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
+import { VedleggOppsummering } from '../../Felleskomponenter/VedleggOppsummering';
 
 import SamboerSkjema from './SamboerSkjema';
 import { DinLivssituasjonSpørsmålId, dinLivssituasjonSpørsmålSpråkId } from './spørsmål';
@@ -41,10 +42,6 @@ const DinLivssituasjon: React.FC = () => {
 
     const stegTekster = tekster()[ESanitySteg.DIN_LIVSSITUASJON];
     const { dinLivssituasjonGuide } = stegTekster;
-
-    const dokumentasjonstekster = tekster()[ESanitySteg.DOKUMENTASJON];
-    const { dokumentasjonPaaSeparasjonSkilsmisseEllerDoedsfall, vedtakOmOppholdstillatelse } =
-        dokumentasjonstekster;
 
     return (
         <Steg
@@ -86,13 +83,6 @@ const DinLivssituasjon: React.FC = () => {
                                 ]
                             }
                         />
-                        {skjema.felter.separertEnkeSkilt.verdi === ESvar.JA && (
-                            <VedleggNotis
-                                block={dokumentasjonPaaSeparasjonSkilsmisseEllerDoedsfall}
-                                språkTekstId="omdeg.separertellerskilt.info"
-                                dynamisk
-                            />
-                        )}
                         {skjema.felter.separertEnkeSkiltUtland.erSynlig && (
                             <KomponentGruppe inline dynamisk>
                                 <JaNeiSpm
@@ -170,13 +160,6 @@ const DinLivssituasjon: React.FC = () => {
                         dinLivssituasjonSpørsmålSpråkId[DinLivssituasjonSpørsmålId.erAsylsøker]
                     }
                 />
-                {skjema.felter.erAsylsøker.verdi === ESvar.JA && (
-                    <VedleggNotis
-                        block={vedtakOmOppholdstillatelse}
-                        språkTekstId="omdeg.asylsøker.alert"
-                        dynamisk
-                    />
-                )}
 
                 <Arbeidsperiode
                     skjema={skjema}
@@ -198,6 +181,19 @@ const DinLivssituasjon: React.FC = () => {
                     personType={PersonType.Søker}
                 />
             </KomponentGruppe>
+
+            <VedleggOppsummering
+                vedlegg={[
+                    {
+                        skalVises: skjema.felter.separertEnkeSkilt.verdi === ESvar.JA,
+                        dokumentasjonsbehov: Dokumentasjonsbehov.SEPARERT_SKILT_ENKE,
+                    },
+                    {
+                        skalVises: skjema.felter.erAsylsøker.verdi === ESvar.JA,
+                        dokumentasjonsbehov: Dokumentasjonsbehov.VEDTAK_OPPHOLDSTILLATELSE,
+                    },
+                ]}
+            />
         </Steg>
     );
 };
