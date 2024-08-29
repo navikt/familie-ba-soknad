@@ -2,17 +2,27 @@ import React from 'react';
 
 import { BodyShort, Button } from '@navikt/ds-react';
 
-import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import { useApp } from '../../../../context/AppContext';
+import { ILeggTilBarnTekstinnhold } from '../../../../typer/sanity/modaler/leggTilBarn';
+import { ESanitySteg } from '../../../../typer/sanity/sanity';
+import TekstBlock from '../../../Felleskomponenter/Sanity/TekstBlock';
 import { BarnekortContainer } from '../Barnekort/BarnekortContainer';
+import { IVelgBarnTekstinnhold } from '../innholdTyper';
 
 export const NyttBarnKort: React.FC<{ onLeggTilBarn: () => void }> = ({ onLeggTilBarn }) => {
+    const { tekster } = useApp();
+    const teksterForSteg: IVelgBarnTekstinnhold = tekster()[ESanitySteg.VELG_BARN];
+    const teksterForLeggTilBarnModal: ILeggTilBarnTekstinnhold =
+        tekster()[ESanitySteg.FELLES].modaler.leggTilBarn;
+    const { soekeForUregistrerteBarn } = teksterForSteg;
+
     return (
         <BarnekortContainer>
             <BodyShort spacing>
-                <SpråkTekst id="hvilkebarn.leggtilbarn.kort" />
+                <TekstBlock block={soekeForUregistrerteBarn} />
             </BodyShort>
             <Button type="button" variant="secondary" onClick={() => onLeggTilBarn()}>
-                <SpråkTekst id="hvilkebarn.leggtilbarn.kort.knapp" />
+                <TekstBlock block={teksterForLeggTilBarnModal.leggTilKnapp} />
             </Button>
         </BarnekortContainer>
     );
