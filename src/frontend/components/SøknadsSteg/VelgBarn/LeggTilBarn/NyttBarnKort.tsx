@@ -21,7 +21,12 @@ export const NyttBarnKort: React.FC<{ onLeggTilBarn: () => void }> = ({ onLeggTi
             <BodyShort spacing>
                 <TekstBlock block={soekeForUregistrerteBarn} />
             </BodyShort>
-            <Button type="button" variant="secondary" onClick={() => onLeggTilBarn()}>
+            <Button
+                type="button"
+                variant="secondary"
+                data-testid="leggTilBarnKnapp"
+                onClick={() => onLeggTilBarn()}
+            >
                 <TekstBlock block={teksterForLeggTilBarnModal.leggTilKnapp} />
             </Button>
         </BarnekortContainer>
