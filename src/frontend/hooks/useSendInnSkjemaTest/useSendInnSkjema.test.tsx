@@ -2,7 +2,7 @@ import { renderHook } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
 
 import { ESivilstand } from '../../typer/kontrakt/generelle';
-import { ISøknadKontraktV8 } from '../../typer/kontrakt/v8';
+import { ISøknadKontrakt } from '../../typer/kontrakt/kontrakt';
 import { hentSivilstatusSpråkId } from '../../utils/språk';
 import {
     mekkGyldigUtvidetSøknad,
@@ -26,7 +26,7 @@ describe('useSendInnSkjema', () => {
         const { result } = renderHook(() => useSendInnSkjema(), {
             wrapper: TestProvidereMedEkteTekster,
         });
-        const [_, formatert]: [boolean, ISøknadKontraktV8] = await result.current.sendInnSkjemaV8();
+        const [_, formatert]: [boolean, ISøknadKontrakt] = await result.current.sendInnSkjema();
         expect(erGyldigISøknadKontrakt(formatert)).toBeTruthy();
         await act(async () => {
             jest.advanceTimersByTime(500);

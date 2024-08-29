@@ -383,7 +383,7 @@ export const testdata1: TilKontraktTestData = {
     },
     output: {
         søknadstype: 'ORDINÆR',
-        kontraktVersjon: 8,
+        kontraktVersjon: 9,
         antallEøsSteg: 0,
         søker: {
             harEøsSteg: false,
