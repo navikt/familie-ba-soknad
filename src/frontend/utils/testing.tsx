@@ -53,6 +53,7 @@ export const spyOnUseApp = søknad => {
         status: RessursStatus.SUKSESS,
         data: mockDeep<ISøkerRespons>({ sivilstand: { type: ESivilstand.UGIFT }, ...søknad.søker }),
     }));
+    const tilRestLocaleRecord = jest.fn();
     const settSøknad = jest.fn();
     const erPåKvitteringsside = jest.fn().mockImplementation(() => false);
     const erStegUtfyltFrafør = jest.fn().mockImplementation(() => true);
@@ -106,6 +107,7 @@ export const spyOnUseApp = søknad => {
         fåttGyldigKvittering: søknad.fåttGyldigKvittering === true,
         tekster: jest.fn().mockImplementation(() => mockDeep<ITekstinnhold>()),
         plainTekst: jest.fn().mockReturnValue('tekst fra sanity'),
+        tilRestLocaleRecord,
     });
 
     jest.spyOn(appContext, 'useApp').mockImplementation(useAppMock);
