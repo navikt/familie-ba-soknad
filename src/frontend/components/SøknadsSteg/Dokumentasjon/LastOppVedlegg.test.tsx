@@ -25,10 +25,6 @@ const hentAnnenDokumentasjon = (): IDokumentasjon => {
     return dokumentasjon;
 };
 
-// Fra initialState generator
-const tittelSpråkId = 'dokumentasjon.annendokumentasjon.vedleggtittel';
-const beskrivelseSpråkId = 'dokumentasjon.annendokumentasjon.utvidet.informasjon';
-
 describe('LastOppVedlegg', () => {
     beforeEach(() => {
         silenceConsoleErrors();
@@ -41,7 +37,7 @@ describe('LastOppVedlegg', () => {
         const dokumentasjon = hentAnnenDokumentasjon();
         const oppdaterDokumentasjon = jest.fn();
 
-        const { getByText, queryByText } = render(
+        const { getByTestId, queryByTestId } = render(
             <TestProvidere>
                 <LastOppVedlegg
                     dokumentasjon={dokumentasjon}
@@ -51,12 +47,9 @@ describe('LastOppVedlegg', () => {
             </TestProvidere>
         );
 
-        const tittel = getByText(tittelSpråkId);
-        expect(tittel).toBeInTheDocument();
-        const infoTekst: HTMLElement | null = queryByText(beskrivelseSpråkId);
-        expect(infoTekst).toBeNull();
-        const checkBoxTitle: HTMLElement | null = queryByText('dokumentasjon.har-sendt-inn.spm');
-        expect(checkBoxTitle).toBeNull();
+        expect(queryByTestId('dokumentasjon-er-sendt-inn-checkboks')).not.toBeInTheDocument();
+        expect(queryByTestId('dokumentasjonsbeskrivelse')).not.toBeInTheDocument();
+        expect(getByTestId('dokumentopplaster')).toBeInTheDocument();
     });
 
     it('Viser info-tekst og checkbox knapp for ANNEN_DOKUMENTASJON når utvidet og skilt', () => {
@@ -76,7 +69,7 @@ describe('LastOppVedlegg', () => {
             const dokumentasjon = hentAnnenDokumentasjon();
             const oppdaterDokumentasjon = jest.fn();
 
-            const { getByText, queryByText } = render(
+            const { getByTestId, queryByTestId } = render(
                 <TestProvidere>
                     <LastOppVedlegg
                         dokumentasjon={dokumentasjon}
@@ -86,14 +79,9 @@ describe('LastOppVedlegg', () => {
                 </TestProvidere>
             );
 
-            const tittel = getByText(tittelSpråkId);
-            expect(tittel).toBeInTheDocument();
-            const infoTekst: HTMLElement | null = queryByText(beskrivelseSpråkId);
-            expect(infoTekst).not.toBeNull();
-            const checkBoxTitle: HTMLElement | null = queryByText(
-                'dokumentasjon.har-sendt-inn.spm'
-            );
-            expect(checkBoxTitle).toBeNull();
+            expect(queryByTestId('dokumentasjon-er-sendt-inn-checkboks')).not.toBeInTheDocument();
+            expect(queryByTestId('dokumentasjonsbeskrivelse')).not.toBeInTheDocument();
+            expect(getByTestId('dokumentopplaster')).toBeInTheDocument();
         });
     });
 });

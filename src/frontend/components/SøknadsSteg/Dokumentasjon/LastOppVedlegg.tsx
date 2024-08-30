@@ -110,25 +110,29 @@ const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr, oppdaterDok
             </Heading>
             {dokumentasjonsbeskrivelse && skalViseDokumentasjonsBeskrivelse() && (
                 <TekstBlock
+                    data-testid={'dokumentasjonsbeskrivelse'}
                     block={dokumentasjonstekster[dokumentasjonsbeskrivelse]}
                     flettefelter={{ barnetsNavn: barnasNavn }}
                     typografi={Typografi.BodyLong}
                 />
             )}
             {!dokumentasjon.harSendtInn && (
-                <Filopplaster
-                    oppdaterDokumentasjon={oppdaterDokumentasjon}
-                    dokumentasjon={dokumentasjon}
-                    maxFilstørrelse={1024 * 1024 * 10}
-                    tillatteFiltyper={{
-                        'image/*': [EFiltyper.PNG, EFiltyper.JPG, EFiltyper.JPEG],
-                        'application/pdf': [EFiltyper.PDF],
-                    }}
-                />
+                <div data-testid={'dokumentopplaster'}>
+                    <Filopplaster
+                        oppdaterDokumentasjon={oppdaterDokumentasjon}
+                        dokumentasjon={dokumentasjon}
+                        maxFilstørrelse={1024 * 1024 * 10}
+                        tillatteFiltyper={{
+                            'image/*': [EFiltyper.PNG, EFiltyper.JPG, EFiltyper.JPEG],
+                            'application/pdf': [EFiltyper.PDF],
+                        }}
+                    />
+                </div>
             )}
             <br />
             {dokumentasjon.dokumentasjonsbehov !== Dokumentasjonsbehov.ANNEN_DOKUMENTASJON && (
                 <Checkbox
+                    data-testid={'dokumentasjon-er-sendt-inn-checkboks'}
                     aria-label={`${plainTekst(
                         dokumentasjonstekster.sendtInnTidligere
                     )} (${plainTekst(tittelBlock, { barnetsNavn: barnasNavn })})`}
