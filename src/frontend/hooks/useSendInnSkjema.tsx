@@ -18,10 +18,10 @@ export const useSendInnSkjema = (): {
     const { soknadApiProxyUrl } = Miljø();
     const { valgtLocale } = useSpråk();
     const { tekster, tilRestLocaleRecord } = useApp();
+    const { toggles } = useFeatureToggles();
+
     const sendInnSkjema = async (): Promise<[boolean, ISøknadKontrakt]> => {
         settInnsendingStatus({ status: RessursStatus.HENTER });
-
-        const { toggles } = useFeatureToggles();
 
         const kontraktVersjon = toggles.BRUK_NYTT_ENDEPUNKT_FOR_INNSENDING_AV_SOKNAD ? 9 : 8;
 
