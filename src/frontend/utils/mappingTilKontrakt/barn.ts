@@ -9,13 +9,13 @@ import {
 import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../typer/barn';
 import { LocaleType } from '../../typer/common';
 import { ERegistrertBostedType } from '../../typer/kontrakt/generelle';
-import { ISøknadIKontraktBarnV8 } from '../../typer/kontrakt/v8';
+import { ISøknadIKontraktBarn } from '../../typer/kontrakt/kontrakt';
 import { ISøker } from '../../typer/person';
 import { PersonType } from '../../typer/personType';
 import { ISøknadSpørsmålMap } from '../../typer/spørsmål';
 import { hentTekster } from '../språk';
 
-import { andreForelderTilISøknadsfeltV8 } from './andreForelderV8';
+import { andreForelderTilISøknadsfelt } from './andreForelder';
 import { tilIEøsBarnetrygsperiodeIKontraktFormat } from './eøsBarnetrygdsperiode';
 import {
     sammeVerdiAlleSpråk,
@@ -25,14 +25,14 @@ import {
     søknadsfeltBarn,
 } from './hjelpefunksjoner';
 import { idNummerTilISøknadsfelt } from './idNummer';
-import { omsorgspersonTilISøknadsfeltV8 } from './omsorgspersonV8';
+import { omsorgspersonTilISøknadsfelt } from './omsorgsperson';
 import { utenlandsperiodeTilISøknadsfelt } from './utenlandsperiode';
 
-export const barnISøknadsFormatV8 = (
+export const barnISøknadsFormat = (
     barn: IBarnMedISøknad,
     søker: ISøker,
     valgtSpråk: LocaleType
-): ISøknadIKontraktBarnV8 => {
+): ISøknadIKontraktBarn => {
     /* eslint-disable @typescript-eslint/no-unused-vars */
     const {
         id,
@@ -118,10 +118,10 @@ export const barnISøknadsFormatV8 = (
             )
         ),
         andreForelder: andreForelder
-            ? andreForelderTilISøknadsfeltV8(andreForelder, barn, valgtSpråk)
+            ? andreForelderTilISøknadsfelt(andreForelder, barn, valgtSpråk)
             : null,
 
-        omsorgsperson: omsorgsperson ? omsorgspersonTilISøknadsfeltV8(omsorgsperson, barn) : null,
+        omsorgsperson: omsorgsperson ? omsorgspersonTilISøknadsfelt(omsorgsperson, barn) : null,
         spørsmål: {
             ...spørmålISøknadsFormat(typetBarnSpørsmål, {
                 navn: navn,
