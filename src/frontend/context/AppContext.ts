@@ -22,12 +22,7 @@ import { IKvittering } from '../typer/kvittering';
 import { IMellomlagretBarnetrygd } from '../typer/mellomlager';
 import { ISøkerRespons } from '../typer/person';
 import { RouteEnum } from '../typer/routes';
-import {
-    ESanityFlettefeltverdi,
-    ESanitySteg,
-    FlettefeltVerdier,
-    TilRestLocaleRecord,
-} from '../typer/sanity/sanity';
+import { ESanityFlettefeltverdi, ESanitySteg, FlettefeltVerdier } from '../typer/sanity/sanity';
 import { ITekstinnhold } from '../typer/sanity/tekstInnhold';
 import { initialStateSøknad, ISøknad } from '../typer/søknad';
 import { InnloggetStatus } from '../utils/autentisering';
@@ -355,17 +350,6 @@ const [AppProvider, useApp] = createUseContext(() => {
 
     const plainTekst = plainTekstHof(flettefeltTilTekst, valgtLocale);
 
-    const tilRestLocaleRecord: TilRestLocaleRecord = (
-        sanityTekst,
-        flettefelter
-    ): Record<LocaleType, string> => {
-        return {
-            [LocaleType.en]: plainTekst(sanityTekst, flettefelter, LocaleType.en),
-            [LocaleType.nn]: plainTekst(sanityTekst, flettefelter, LocaleType.nn),
-            [LocaleType.nb]: plainTekst(sanityTekst, flettefelter, LocaleType.nb),
-        };
-    };
-
     return {
         axiosRequest,
         sluttbruker,
@@ -395,7 +379,6 @@ const [AppProvider, useApp] = createUseContext(() => {
         settEøsLand,
         tekster,
         plainTekst,
-        tilRestLocaleRecord,
         flettefeltTilTekst,
         kontoinformasjon,
     };

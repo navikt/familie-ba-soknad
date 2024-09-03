@@ -4,7 +4,7 @@ import { barnetrygdperiodeModalSpørsmålSpråkId } from '../../components/Felle
 import { BarnetrygdperiodeSpørsmålId } from '../../components/Felleskomponenter/Barnetrygdperiode/spørsmål';
 import { IBarnMedISøknad } from '../../typer/barn';
 import { ISøknadsfelt } from '../../typer/kontrakt/generelle';
-import { IEøsBarnetrygdsperiodeIKontraktFormat } from '../../typer/kontrakt/kontrakt';
+import { IEøsBarnetrygdsperiodeIKontraktFormatV8 } from '../../typer/kontrakt/v8';
 import { IEøsBarnetrygdsperiode } from '../../typer/perioder';
 import { PeriodePersonTypeProps, PersonType } from '../../typer/personType';
 import { hentTekster, landkodeTilSpråk } from '../språk';
@@ -24,7 +24,7 @@ export const tilIEøsBarnetrygsperiodeIKontraktFormat = ({
     personType,
     erDød,
 }: PensjonperiodeIKontraktFormatParams &
-    PeriodePersonTypeProps): ISøknadsfelt<IEøsBarnetrygdsperiodeIKontraktFormat> => {
+    PeriodePersonTypeProps): ISøknadsfelt<IEøsBarnetrygdsperiodeIKontraktFormatV8> => {
     const {
         mottarEøsBarnetrygdNå,
         barnetrygdsland,
