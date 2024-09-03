@@ -29,6 +29,11 @@ export enum ESanitySteg {
     FELLES = 'FELLES',
 }
 
+export type TilRestLocaleRecord = (
+    sanityTekst: LocaleRecordString | LocaleRecordBlock,
+    flettefelter?: FlettefeltVerdier
+) => Record<LocaleType, string>;
+
 export type LocaleRecordBlock = Record<LocaleType, PortableTextBlock[]> & {
     api_navn: string;
     [key: string]: unknown;
