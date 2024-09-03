@@ -60,7 +60,8 @@ export const dataISøknadKontraktFormat = (
     valgtSpråk: LocaleType,
     søknad: ISøknad,
     tekster: ITekstinnhold,
-    tilRestLocaleRecord: TilRestLocaleRecord
+    tilRestLocaleRecord: TilRestLocaleRecord,
+    kontraktVersjon: number
 ): ISøknadKontrakt => {
     const { søker } = søknad;
 
@@ -94,7 +95,7 @@ export const dataISøknadKontraktFormat = (
 
     return {
         søknadstype: søknad.søknadstype,
-        kontraktVersjon: 9,
+        kontraktVersjon: kontraktVersjon,
         antallEøsSteg: antallEøsSteg(søker, barnInkludertISøknaden),
         søker: {
             harEøsSteg:
