@@ -6,7 +6,7 @@ import {
 } from '../../components/Felleskomponenter/Pensjonsmodal/språkUtils';
 import { PensjonsperiodeSpørsmålId } from '../../components/Felleskomponenter/Pensjonsmodal/spørsmål';
 import { ISøknadsfelt } from '../../typer/kontrakt/generelle';
-import { IPensjonsperiodeIKontraktFormatV8 } from '../../typer/kontrakt/v8';
+import { IPensjonsperiodeIKontraktFormat } from '../../typer/kontrakt/kontrakt';
 import { IPensjonsperiode } from '../../typer/perioder';
 import { PeriodePersonTypeMedBarnProps, PersonType } from '../../typer/personType';
 import { hentTekster, landkodeTilSpråk } from '../språk';
@@ -27,7 +27,7 @@ export const tilIPensjonsperiodeIKontraktFormat = ({
     erDød,
     barn,
 }: PensjonsperiodeIKontraktFormatParams &
-    PeriodePersonTypeMedBarnProps): ISøknadsfelt<IPensjonsperiodeIKontraktFormatV8> => {
+    PeriodePersonTypeMedBarnProps): ISøknadsfelt<IPensjonsperiodeIKontraktFormat> => {
     const { mottarPensjonNå, pensjonsland, pensjonFra, pensjonTil } = periode;
 
     const periodenErAvsluttet =

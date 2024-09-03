@@ -17,12 +17,12 @@ import {
     SpørsmålMap,
 } from './generelle';
 
-export interface ISøknadKontraktV8 {
+export interface ISøknadKontrakt {
     kontraktVersjon: number;
     antallEøsSteg: number;
     søknadstype: ESøknadstype;
     søker: ISøknadKontraktSøker;
-    barn: ISøknadIKontraktBarnV8[];
+    barn: ISøknadIKontraktBarn[];
     spørsmål: SpørsmålMap;
     dokumentasjon: ISøknadKontraktDokumentasjon[];
     teksterUtenomSpørsmål: Record<string, Record<LocaleType, string>>;
@@ -43,14 +43,14 @@ export interface ISøknadKontraktSøker {
     utenlandsperioder: ISøknadsfelt<IUtenlandsperiodeIKontraktFormat>[];
     // eøs
     arbeidsperioderUtland: ISøknadsfelt<IArbeidsperiodeIKontraktFormat>[];
-    pensjonsperioderUtland: ISøknadsfelt<IPensjonsperiodeIKontraktFormatV8>[];
+    pensjonsperioderUtland: ISøknadsfelt<IPensjonsperiodeIKontraktFormat>[];
     arbeidsperioderNorge: ISøknadsfelt<IArbeidsperiodeIKontraktFormat>[];
-    pensjonsperioderNorge: ISøknadsfelt<IPensjonsperiodeIKontraktFormatV8>[];
-    andreUtbetalingsperioder: ISøknadsfelt<IUtbetalingsperiodeIKontraktFormatV8>[];
+    pensjonsperioderNorge: ISøknadsfelt<IPensjonsperiodeIKontraktFormat>[];
+    andreUtbetalingsperioder: ISøknadsfelt<IUtbetalingsperiodeIKontraktFormat>[];
     idNummer: ISøknadsfelt<IIdNummerIKontraktFormat>[];
 }
 
-export interface ISøknadIKontraktBarnV8 {
+export interface ISøknadIKontraktBarn {
     harEøsSteg: boolean;
     ident: ISøknadsfelt<string>;
     navn: ISøknadsfelt<string>;
@@ -58,13 +58,13 @@ export interface ISøknadIKontraktBarnV8 {
     alder: ISøknadsfelt<string> | null;
     spørsmål: SpørsmålMap;
     utenlandsperioder: ISøknadsfelt<IUtenlandsperiodeIKontraktFormat>[];
-    omsorgsperson: IOmsorgspersonIKontraktFormatV8 | null;
-    andreForelder: IAndreForelderIKontraktFormatV8 | null;
-    eøsBarnetrygdsperioder: ISøknadsfelt<IEøsBarnetrygdsperiodeIKontraktFormatV8>[];
+    omsorgsperson: IOmsorgspersonIKontraktFormat | null;
+    andreForelder: IAndreForelderIKontraktFormat | null;
+    eøsBarnetrygdsperioder: ISøknadsfelt<IEøsBarnetrygdsperiodeIKontraktFormat>[];
     idNummer: ISøknadsfelt<IIdNummerIKontraktFormat>[];
 }
 
-export interface IOmsorgspersonIKontraktFormatV8 {
+export interface IOmsorgspersonIKontraktFormat {
     navn: ISøknadsfelt<string>;
     slektsforhold: ISøknadsfelt<string>;
     slektsforholdSpesifisering: ISøknadsfelt<string> | null;
@@ -75,15 +75,15 @@ export interface IOmsorgspersonIKontraktFormatV8 {
     arbeidNorge: ISøknadsfelt<ESvar>;
     arbeidsperioderNorge: ISøknadsfelt<IArbeidsperiodeIKontraktFormat>[];
     pensjonUtland: ISøknadsfelt<ESvar>;
-    pensjonsperioderUtland: ISøknadsfelt<IPensjonsperiodeIKontraktFormatV8>[];
+    pensjonsperioderUtland: ISøknadsfelt<IPensjonsperiodeIKontraktFormat>[];
     pensjonNorge: ISøknadsfelt<ESvar>;
-    pensjonsperioderNorge: ISøknadsfelt<IPensjonsperiodeIKontraktFormatV8>[];
+    pensjonsperioderNorge: ISøknadsfelt<IPensjonsperiodeIKontraktFormat>[];
     andreUtbetalinger: ISøknadsfelt<ESvar>;
-    andreUtbetalingsperioder: ISøknadsfelt<IUtbetalingsperiodeIKontraktFormatV8>[];
+    andreUtbetalingsperioder: ISøknadsfelt<IUtbetalingsperiodeIKontraktFormat>[];
     pågåendeSøknadFraAnnetEøsLand: ISøknadsfelt<ESvar>;
     pågåendeSøknadHvilketLand: ISøknadsfelt<string> | null;
     barnetrygdFraEøs: ISøknadsfelt<ESvar>;
-    eøsBarnetrygdsperioder: ISøknadsfelt<IEøsBarnetrygdsperiodeIKontraktFormatV8>[];
+    eøsBarnetrygdsperioder: ISøknadsfelt<IEøsBarnetrygdsperiodeIKontraktFormat>[];
 }
 
 export interface IAndreForelderUtvidetIKontraktFormat {
@@ -91,7 +91,7 @@ export interface IAndreForelderUtvidetIKontraktFormat {
     søkerFlyttetFraAndreForelderDato: ISøknadsfelt<string> | null;
 }
 
-export interface IAndreForelderIKontraktFormatV8 {
+export interface IAndreForelderIKontraktFormat {
     kanIkkeGiOpplysninger: ISøknadsfelt<ESvar>;
     navn: ISøknadsfelt<string> | null;
     fnr: ISøknadsfelt<string> | null;
@@ -107,13 +107,13 @@ export interface IAndreForelderIKontraktFormatV8 {
     andreUtbetalinger: ISøknadsfelt<ESvar> | null;
     barnetrygdFraEøs: ISøknadsfelt<ESvar> | null;
     arbeidsperioderUtland: ISøknadsfelt<IArbeidsperiodeIKontraktFormat>[];
-    pensjonsperioderUtland: ISøknadsfelt<IPensjonsperiodeIKontraktFormatV8>[];
+    pensjonsperioderUtland: ISøknadsfelt<IPensjonsperiodeIKontraktFormat>[];
     arbeidsperioderNorge: ISøknadsfelt<IArbeidsperiodeIKontraktFormat>[];
-    pensjonsperioderNorge: ISøknadsfelt<IPensjonsperiodeIKontraktFormatV8>[];
+    pensjonsperioderNorge: ISøknadsfelt<IPensjonsperiodeIKontraktFormat>[];
     pågåendeSøknadFraAnnetEøsLand: ISøknadsfelt<ESvar> | null;
     pågåendeSøknadHvilketLand: ISøknadsfelt<string> | null;
-    eøsBarnetrygdsperioder: ISøknadsfelt<IEøsBarnetrygdsperiodeIKontraktFormatV8>[];
-    andreUtbetalingsperioder: ISøknadsfelt<IUtbetalingsperiodeIKontraktFormatV8>[];
+    eøsBarnetrygdsperioder: ISøknadsfelt<IEøsBarnetrygdsperiodeIKontraktFormat>[];
+    andreUtbetalingsperioder: ISøknadsfelt<IUtbetalingsperiodeIKontraktFormat>[];
     idNummer: ISøknadsfelt<IIdNummerIKontraktFormat>[];
     adresse: ISøknadsfelt<string> | null;
 }
@@ -131,14 +131,14 @@ export interface IIdNummerIKontraktFormat {
     idNummer: ISøknadsfelt<string>;
 }
 
-export interface IPensjonsperiodeIKontraktFormatV8 {
+export interface IPensjonsperiodeIKontraktFormat {
     mottarPensjonNå: ISøknadsfelt<ESvar> | null;
     pensjonsland: ISøknadsfelt<string> | null;
     pensjonFra: ISøknadsfelt<ISODateString> | null;
     pensjonTil: ISøknadsfelt<ISODateString> | null;
 }
 
-export interface IEøsBarnetrygdsperiodeIKontraktFormatV8 {
+export interface IEøsBarnetrygdsperiodeIKontraktFormat {
     mottarEøsBarnetrygdNå: ISøknadsfelt<ESvar> | null;
     barnetrygdsland: ISøknadsfelt<string>;
     fraDatoBarnetrygdperiode: ISøknadsfelt<ISODateString>;
@@ -146,7 +146,7 @@ export interface IEøsBarnetrygdsperiodeIKontraktFormatV8 {
     månedligBeløp: ISøknadsfelt<string>;
 }
 
-export interface IUtbetalingsperiodeIKontraktFormatV8 {
+export interface IUtbetalingsperiodeIKontraktFormat {
     fårUtbetalingNå: ISøknadsfelt<ESvar> | null;
     utbetalingLand: ISøknadsfelt<string>;
     utbetalingFraDato: ISøknadsfelt<ISODateString>;
