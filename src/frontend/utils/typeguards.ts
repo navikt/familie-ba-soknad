@@ -7,13 +7,13 @@ import {
     ISøknadsfelt,
 } from '../typer/kontrakt/generelle';
 import {
-    IAndreForelderIKontraktFormat,
+    IAndreForelderIKontraktFormatV8,
     IAndreForelderUtvidetIKontraktFormat,
-    IOmsorgspersonIKontraktFormat,
-    ISøknadIKontraktBarn,
+    IOmsorgspersonIKontraktFormatV8,
+    ISøknadIKontraktBarnV8,
     ISøknadKontraktSøker,
-    ISøknadKontrakt,
-} from '../typer/kontrakt/kontrakt';
+    ISøknadKontraktV8,
+} from '../typer/kontrakt/v8';
 import { ISamboer, ITidligereSamboer } from '../typer/person';
 
 export const erGyldigIKontraktNåværendeSamboer = (input): input is IKontraktNåværendeSamboer =>
@@ -77,7 +77,7 @@ export const erGyldigISøknadKontraktSøker = (input): input is ISøknadKontrakt
 
 export const erGyldigISøknadKontraktOmsorgsperson = (
     input
-): input is IOmsorgspersonIKontraktFormat =>
+): input is IOmsorgspersonIKontraktFormatV8 =>
     input === null ||
     (input &&
         'navn' in input &&
@@ -102,7 +102,7 @@ export const erGyldigISøknadKontraktOmsorgsperson = (
 
 export const erGyldigISøknadKontraktAndreForelder = (
     input
-): input is IAndreForelderIKontraktFormat =>
+): input is IAndreForelderIKontraktFormatV8 =>
     input === null ||
     (input &&
         'kanIkkeGiOpplysninger' in input &&
@@ -133,7 +133,7 @@ export const erGyldigISøknadKontraktAndreForelderUtvidet = (
 ): input is IAndreForelderUtvidetIKontraktFormat =>
     input && 'søkerHarBoddMedAndreForelder' in input && 'søkerFlyttetFraAndreForelderDato' in input;
 
-export const erGyldigISøknadsKontraktBarn = (input): input is ISøknadIKontraktBarn =>
+export const erGyldigISøknadsKontraktBarn = (input): input is ISøknadIKontraktBarnV8 =>
     input &&
     'harEøsSteg' in input &&
     'ident' in input &&
@@ -149,7 +149,7 @@ export const erGyldigISøknadsKontraktBarn = (input): input is ISøknadIKontrakt
     erGyldigISøknadKontraktOmsorgsperson(input.omsorgsperson) &&
     erGyldigISøknadKontraktAndreForelder(input.andreForelder);
 
-export const erGyldigISøknadKontraktBarnListe = (input): input is ISøknadIKontraktBarn[] =>
+export const erGyldigISøknadKontraktBarnListe = (input): input is ISøknadIKontraktBarnV8[] =>
     input &&
     Array.isArray(input) &&
     input.map(erGyldigISøknadsKontraktBarn).reduce((prev, curr) => !!(prev && curr), true);
@@ -164,7 +164,7 @@ export const erGyldigDokumentasjon = (input): input is ISøknadKontraktDokumenta
     Array.isArray(input) &&
     input.map(erGyldigISøknadKontraktDokumentasjon).reduce((prev, curr) => !!(prev && curr), true);
 
-export const erGyldigISøknadKontrakt = (input): input is ISøknadKontrakt => {
+export const erGyldigISøknadKontrakt = (input): input is ISøknadKontraktV8 => {
     return !!(
         input &&
         'søknadstype' in input &&

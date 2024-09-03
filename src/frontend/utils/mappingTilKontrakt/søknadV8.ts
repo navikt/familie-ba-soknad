@@ -8,15 +8,9 @@ import { OmBarnaDineSpørsmålId } from '../../components/SøknadsSteg/OmBarnaDi
 import { IBarnMedISøknad } from '../../typer/barn';
 import { LocaleType } from '../../typer/common';
 import { ESivilstand } from '../../typer/kontrakt/generelle';
-import { ISøknadKontrakt } from '../../typer/kontrakt/kontrakt';
+import { ISøknadKontraktV8 } from '../../typer/kontrakt/v8';
 import { ISøker } from '../../typer/person';
 import { PersonType } from '../../typer/personType';
-import {
-    LocaleRecordBlock,
-    LocaleRecordString,
-    TilRestLocaleRecord,
-} from '../../typer/sanity/sanity';
-import { ITekstinnhold } from '../../typer/sanity/tekstInnhold';
 import { ISøknadSpørsmålMap } from '../../typer/spørsmål';
 import { ISøknad } from '../../typer/søknad';
 import { erDokumentasjonRelevant } from '../dokumentasjon';
@@ -30,7 +24,7 @@ import { jaNeiSvarTilSpråkId } from '../spørsmål';
 
 import { tilIAndreUtbetalingsperioderIKontraktFormat } from './andreUtbetalingsperioder';
 import { tilIArbeidsperiodeIKontraktFormat } from './arbeidsperioder';
-import { barnISøknadsFormat } from './barn';
+import { barnISøknadsFormatV8 } from './barnV8';
 import { dokumentasjonISøknadFormat } from './dokumentasjon';
 import {
     sammeVerdiAlleSpråk,
@@ -56,14 +50,11 @@ const antallEøsSteg = (søker: ISøker, barnInkludertISøknaden: IBarnMedISøkn
     }
 };
 
-export const dataISøknadKontraktFormat = (
+export const dataISøknadKontraktFormatV8 = (
     valgtSpråk: LocaleType,
-    søknad: ISøknad,
-    tekster: ITekstinnhold,
-    tilRestLocaleRecord: TilRestLocaleRecord
-): ISøknadKontrakt => {
+    søknad: ISøknad
+): ISøknadKontraktV8 => {
     const { søker } = søknad;
-
     // Raskeste måte å få tak i alle spørsmål minus de andre feltene på søker
     /* eslint-disable @typescript-eslint/no-unused-vars */
     const {
@@ -94,7 +85,7 @@ export const dataISøknadKontraktFormat = (
 
     return {
         søknadstype: søknad.søknadstype,
-        kontraktVersjon: 9,
+        kontraktVersjon: 8,
         antallEøsSteg: antallEøsSteg(søker, barnInkludertISøknaden),
         søker: {
             harEøsSteg:
@@ -172,7 +163,7 @@ export const dataISøknadKontraktFormat = (
                 })
             ),
         },
-        barn: barnInkludertISøknaden.map(barn => barnISøknadsFormat(barn, søker, valgtSpråk)),
+        barn: barnInkludertISøknaden.map(barn => barnISøknadsFormatV8(barn, søker, valgtSpråk)),
         spørsmål: {
             erNoenAvBarnaFosterbarn: søknadsfelt(
                 språktekstIdFraSpørsmålId(OmBarnaDineSpørsmålId.erNoenAvBarnaFosterbarn),
@@ -216,55 +207,35 @@ export const dataISøknadKontraktFormat = (
         dokumentasjon: søknad.dokumentasjon
             .filter(dok => erDokumentasjonRelevant(dok))
             .map(dok => dokumentasjonISøknadFormat(dok)),
-        teksterUtenomSpørsmål: {
-            ...lokaleTekster(),
-            ...teksterFraSanity(tekster, tilRestLocaleRecord),
-        },
+        teksterUtenomSpørsmål: [
+            'hvilkebarn.barn.bosted.adressesperre',
+            'ombarnet.fosterbarn',
+            'ombarnet.institusjon',
+            'ombarnet.opplystatbarnutlandopphold.info',
+            'ombarnet.barnetrygd-eøs',
+            'omdeg.annensamboer.spm',
+            'omdeg.personopplysninger.adressesperre.alert',
+            'omdeg.personopplysninger.ikke-registrert.alert',
+            'pdf.andreforelder.seksjonstittel',
+            'pdf.hvilkebarn.seksjonstittel',
+            'pdf.hvilkebarn.registrert-på-adresse',
+            'pdf.hvilkebarn.ikke-registrert-på-adresse',
+            'pdf.ombarnet.seksjonstittel',
+            'pdf.omdeg.seksjonstittel',
+            'pdf.bosted.seksjonstittel',
+            'pdf.ombarna.seksjonstittel',
+            'pdf.søker.seksjonstittel',
+            'pdf.vedlegg.seksjonstittel',
+            'pdf.vedlegg.lastet-opp-antall',
+            'pdf.vedlegg.nummerering',
+            'dokumentasjon.har-sendt-inn.spm',
+            'dinlivssituasjon.sidetittel',
+            'pdf.dinlivssituasjon.tidligeresamboer.seksjonstittel',
+            'eøs-om-deg.sidetittel',
+            'eøs-om-barn.sidetittel',
+            ...Object.values(ESivilstand).map(hentSivilstatusSpråkId),
+            ...Object.values(ESvar).map(jaNeiSvarTilSpråkId),
+        ].reduce((map, tekstId) => ({ ...map, [tekstId]: hentUformaterteTekster(tekstId) }), {}),
         originalSpråk: valgtSpråk,
     };
-};
-
-const lokaleTekster = (): Record<string, Record<LocaleType, string>> => {
-    return [
-        'hvilkebarn.barn.bosted.adressesperre',
-        'ombarnet.fosterbarn',
-        'ombarnet.institusjon',
-        'ombarnet.opplystatbarnutlandopphold.info',
-        'ombarnet.barnetrygd-eøs',
-        'omdeg.annensamboer.spm',
-        'omdeg.personopplysninger.adressesperre.alert',
-        'omdeg.personopplysninger.ikke-registrert.alert',
-        'pdf.andreforelder.seksjonstittel',
-        'pdf.hvilkebarn.seksjonstittel',
-        'pdf.hvilkebarn.registrert-på-adresse',
-        'pdf.hvilkebarn.ikke-registrert-på-adresse',
-        'pdf.ombarnet.seksjonstittel',
-        'pdf.omdeg.seksjonstittel',
-        'pdf.bosted.seksjonstittel',
-        'pdf.ombarna.seksjonstittel',
-        'pdf.søker.seksjonstittel',
-        'pdf.vedlegg.seksjonstittel',
-        'pdf.vedlegg.lastet-opp-antall',
-        'pdf.vedlegg.nummerering',
-        'dokumentasjon.har-sendt-inn.spm',
-        'dinlivssituasjon.sidetittel',
-        'pdf.dinlivssituasjon.tidligeresamboer.seksjonstittel',
-        'eøs-om-deg.sidetittel',
-        'eøs-om-barn.sidetittel',
-        ...Object.values(ESivilstand).map(hentSivilstatusSpråkId),
-        ...Object.values(ESvar).map(jaNeiSvarTilSpråkId),
-    ].reduce((map, tekstId) => ({ ...map, [tekstId]: hentUformaterteTekster(tekstId) }), {});
-};
-
-const teksterFraSanity = (
-    tekster: ITekstinnhold,
-    tilRestLocaleRecord: TilRestLocaleRecord
-): Record<string, Record<LocaleType, string>> => {
-    return [tekster.OM_DEG.skjermetAdresse].reduce(
-        (map, sanityDok: LocaleRecordBlock | LocaleRecordString) => ({
-            ...map,
-            [sanityDok.api_navn]: tilRestLocaleRecord(sanityDok, {}),
-        }),
-        {}
-    );
 };

@@ -6,31 +6,25 @@ import Miljø from '../../shared-utils/Miljø';
 import { erModellMismatchResponsRessurs } from '../../shared-utils/modellversjon';
 import { useApp } from '../context/AppContext';
 import { useSpråk } from '../context/SpråkContext';
-import { ISøknadKontrakt } from '../typer/kontrakt/kontrakt';
-import { dataISøknadKontraktFormat } from '../utils/mappingTilKontrakt/søknad';
+import { ISøknadKontraktV8 } from '../typer/kontrakt/v8';
+import { dataISøknadKontraktFormatV8 } from '../utils/mappingTilKontrakt/søknadV8';
 import { sendInn } from '../utils/sendInnSkjema';
 
 export const useSendInnSkjema = (): {
-    sendInnSkjema: () => Promise<[boolean, ISøknadKontrakt]>;
+    sendInnSkjemaV8: () => Promise<[boolean, ISøknadKontraktV8]>;
 } => {
     const { axiosRequest, søknad, settInnsendingStatus, settSisteModellVersjon } = useApp();
     const { soknadApiProxyUrl } = Miljø();
     const { valgtLocale } = useSpråk();
-    const { tekster, tilRestLocaleRecord } = useApp();
-    const sendInnSkjema = async (): Promise<[boolean, ISøknadKontrakt]> => {
+    const sendInnSkjemaV8 = async (): Promise<[boolean, ISøknadKontraktV8]> => {
         settInnsendingStatus({ status: RessursStatus.HENTER });
 
-        const formatert: ISøknadKontrakt = dataISøknadKontraktFormat(
-            valgtLocale,
-            søknad,
-            tekster(),
-            tilRestLocaleRecord
-        );
+        const formatert: ISøknadKontraktV8 = dataISøknadKontraktFormatV8(valgtLocale, søknad);
 
-        const res = await sendInn<ISøknadKontrakt>(
+        const res = await sendInn<ISøknadKontraktV8>(
             formatert,
             axiosRequest,
-            `${soknadApiProxyUrl}/soknad/v9`,
+            `${soknadApiProxyUrl}/soknad/v8`,
             (res: AxiosError) => {
                 const responseData = res.response?.data;
                 if (responseData && erModellMismatchResponsRessurs(responseData)) {
@@ -45,6 +39,6 @@ export const useSendInnSkjema = (): {
     };
 
     return {
-        sendInnSkjema: sendInnSkjema,
+        sendInnSkjemaV8,
     };
 };

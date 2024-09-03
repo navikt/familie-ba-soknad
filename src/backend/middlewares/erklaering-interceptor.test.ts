@@ -3,14 +3,14 @@ import { mockDeep } from 'jest-mock-extended';
 import { DeepPartial } from 'ts-essentials';
 
 import { LocaleType } from '../../frontend/typer/common';
-import { ISøknadKontrakt } from '../../frontend/typer/kontrakt/kontrakt';
+import { ISøknadKontraktV8 } from '../../frontend/typer/kontrakt/v8';
 
 import { erklaeringInterceptor, hentSpråkteksterAlleSpråk } from './erklaering-interceptor';
 
 describe('erklaering-interceptor', () => {
     const aksepterteSvarSpråkNøkkel = 'forside.bekreftelsesboks.erklæring.spm';
 
-    const request = (partialSøknad: DeepPartial<ISøknadKontrakt>) =>
+    const request = (partialSøknad: DeepPartial<ISøknadKontraktV8>) =>
         mockDeep<Request>({
             body: partialSøknad,
         });
@@ -30,7 +30,7 @@ describe('erklaering-interceptor', () => {
     });
 
     it('sender 400 hvis søknad ikke har korrekt format', () => {
-        const invalidRequests: DeepPartial<ISøknadKontrakt>[] = [
+        const invalidRequests: DeepPartial<ISøknadKontraktV8>[] = [
             {},
             { spørsmål: {} },
             { spørsmål: { lestOgForståttBekreftelse: {} } },

@@ -2,7 +2,7 @@ import { getName } from 'i18n-iso-countries';
 
 import { LocaleType } from '../../typer/common';
 import { ISøknadsfelt } from '../../typer/kontrakt/generelle';
-import { IIdNummerIKontraktFormat } from '../../typer/kontrakt/kontrakt';
+import { IIdNummerIKontraktFormat } from '../../typer/kontrakt/v8';
 import { IIdNummer } from '../../typer/person';
 import { hentTekster } from '../språk';
 
