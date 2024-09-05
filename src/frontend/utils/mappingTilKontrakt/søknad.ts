@@ -7,15 +7,11 @@ import {
 import { OmBarnaDineSpørsmålId } from '../../components/SøknadsSteg/OmBarnaDine/spørsmål';
 import { IBarnMedISøknad } from '../../typer/barn';
 import { LocaleType } from '../../typer/common';
-import { ESivilstand } from '../../typer/kontrakt/generelle';
+import { ESivilstand, TilRestLocaleRecord } from '../../typer/kontrakt/generelle';
 import { ISøknadKontrakt } from '../../typer/kontrakt/kontrakt';
 import { ISøker } from '../../typer/person';
 import { PersonType } from '../../typer/personType';
-import {
-    LocaleRecordBlock,
-    LocaleRecordString,
-    TilRestLocaleRecord,
-} from '../../typer/sanity/sanity';
+import { LocaleRecordBlock, LocaleRecordString } from '../../typer/sanity/sanity';
 import { ITekstinnhold } from '../../typer/sanity/tekstInnhold';
 import { ISøknadSpørsmålMap } from '../../typer/spørsmål';
 import { ISøknad } from '../../typer/søknad';
@@ -216,7 +212,7 @@ export const dataISøknadKontraktFormat = (
         },
         dokumentasjon: søknad.dokumentasjon
             .filter(dok => erDokumentasjonRelevant(dok))
-            .map(dok => dokumentasjonISøknadFormat(dok)),
+            .map(dok => dokumentasjonISøknadFormat(dok, tekster, tilRestLocaleRecord, søknad)),
         teksterUtenomSpørsmål: {
             ...lokaleTekster(),
             ...teksterFraSanity(tekster, tilRestLocaleRecord),

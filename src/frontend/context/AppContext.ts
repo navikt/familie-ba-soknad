@@ -17,17 +17,12 @@ import Miljø, { basePath } from '../../shared-utils/Miljø';
 import { DinLivssituasjonSpørsmålId } from '../components/SøknadsSteg/DinLivssituasjon/spørsmål';
 import { LocaleType } from '../typer/common';
 import { IKontoinformasjon } from '../typer/kontoinformasjon';
-import { ESivilstand, ESøknadstype } from '../typer/kontrakt/generelle';
+import { ESivilstand, ESøknadstype, TilRestLocaleRecord } from '../typer/kontrakt/generelle';
 import { IKvittering } from '../typer/kvittering';
 import { IMellomlagretBarnetrygd } from '../typer/mellomlager';
 import { ISøkerRespons } from '../typer/person';
 import { RouteEnum } from '../typer/routes';
-import {
-    ESanityFlettefeltverdi,
-    ESanitySteg,
-    FlettefeltVerdier,
-    TilRestLocaleRecord,
-} from '../typer/sanity/sanity';
+import { ESanityFlettefeltverdi, ESanitySteg, FlettefeltVerdier } from '../typer/sanity/sanity';
 import { ITekstinnhold } from '../typer/sanity/tekstInnhold';
 import { initialStateSøknad, ISøknad } from '../typer/søknad';
 import { InnloggetStatus } from '../utils/autentisering';

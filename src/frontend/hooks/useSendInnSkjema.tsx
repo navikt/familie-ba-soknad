@@ -14,10 +14,16 @@ import { sendInn } from '../utils/sendInnSkjema';
 export const useSendInnSkjema = (): {
     sendInnSkjema: () => Promise<[boolean, ISøknadKontrakt]>;
 } => {
-    const { axiosRequest, søknad, settInnsendingStatus, settSisteModellVersjon } = useApp();
+    const {
+        axiosRequest,
+        søknad,
+        settInnsendingStatus,
+        settSisteModellVersjon,
+        tekster,
+        tilRestLocaleRecord,
+    } = useApp();
     const { soknadApiProxyUrl } = Miljø();
     const { valgtLocale } = useSpråk();
-    const { tekster, tilRestLocaleRecord } = useApp();
     const { toggles } = useFeatureToggles();
 
     const sendInnSkjema = async (): Promise<[boolean, ISøknadKontrakt]> => {
