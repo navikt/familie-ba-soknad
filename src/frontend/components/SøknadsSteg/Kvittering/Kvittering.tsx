@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 import { format } from 'date-fns';
 
@@ -6,7 +6,6 @@ import { Alert, BodyLong } from '@navikt/ds-react';
 import { RessursStatus } from '@navikt/familie-typer';
 
 import { useApp } from '../../../context/AppContext';
-import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { useSteg } from '../../../context/StegContext';
 import { RouteEnum } from '../../../typer/routes';
 import { setUserProperty, UserProperty } from '../../../utils/amplitude';
@@ -18,8 +17,6 @@ import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import Kontoinformasjon from '../../Kontoinformasjon/Kontoinformasjon';
 
-import { KontonummerInfo } from './KontonummerInfo';
-
 const Kvittering: React.FC = () => {
     const {
         avbrytOgSlettSøknad,
@@ -28,9 +25,8 @@ const Kvittering: React.FC = () => {
         søknad,
         innsendingStatus,
     } = useApp();
-    const { barnInkludertISøknaden, erEøs } = søknad;
+    const { barnInkludertISøknaden } = søknad;
     const { hentStegNummer } = useSteg();
-    const { toggles } = useFeatureToggles();
 
     const innsendtDato: Date =
         innsendingStatus.status === RessursStatus.SUKSESS
@@ -39,7 +35,6 @@ const Kvittering: React.FC = () => {
 
     const klokkeslett = format(innsendtDato, 'HH:mm');
     const dato = format(innsendtDato, 'dd.MM.yy');
-    const [varEøsSøknad] = useState(erEøs);
 
     useEffect(() => {
         if (sisteUtfylteStegIndex === hentStegNummer(RouteEnum.Dokumentasjon)) {
@@ -87,13 +82,7 @@ const Kvittering: React.FC = () => {
                 </BodyLong>
             </KomponentGruppe>
 
-            {toggles.VIS_KONTONUMMER && <Kontoinformasjon />}
-
-            {!toggles.VIS_KONTONUMMER && varEøsSøknad && (
-                <KomponentGruppe>
-                    <KontonummerInfo />
-                </KomponentGruppe>
-            )}
+            <Kontoinformasjon />
 
             <Informasjonsbolk tittelId={'kvittering.ikke-lastet-opp'}>
                 <BodyLong>

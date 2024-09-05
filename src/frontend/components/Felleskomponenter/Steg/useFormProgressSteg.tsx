@@ -31,7 +31,7 @@ export const useFormProgressSteg = (): IStegMedTittel[] => {
     return steg
         .map(steg => {
             let tittelBlock: LocaleRecordBlock;
-            let tittelFlettefeltVerider: FlettefeltVerdier | undefined = undefined;
+            let tittelFlettefeltVerdier: FlettefeltVerdier | undefined = undefined;
 
             switch (steg.route) {
                 case RouteEnum.Forside:
@@ -54,7 +54,7 @@ export const useFormProgressSteg = (): IStegMedTittel[] => {
                         tittelBlock = OM_BARNET.omBarnetTittelUtenFlettefelt;
                     } else {
                         tittelBlock = OM_BARNET.omBarnetTittel;
-                        tittelFlettefeltVerider = {
+                        tittelFlettefeltVerdier = {
                             barnetsNavn: barnForSteg[antallBarnTellerOmBarnet].navn,
                         };
                         antallBarnTellerOmBarnet++;
@@ -68,7 +68,7 @@ export const useFormProgressSteg = (): IStegMedTittel[] => {
                         tittelBlock = EØS_FOR_BARN.eoesForBarnTittelUtenFlettefelt;
                     } else {
                         tittelBlock = EØS_FOR_BARN.eoesForBarnTittel;
-                        tittelFlettefeltVerider = {
+                        tittelFlettefeltVerdier = {
                             barnetsNavn: barnForSteg[antallBarnTellerEøsForBarnet].navn,
                         };
                         antallBarnTellerEøsForBarnet++;
@@ -96,7 +96,7 @@ export const useFormProgressSteg = (): IStegMedTittel[] => {
 
             return {
                 ...steg,
-                tittel: plainTekst(tittelBlock, tittelFlettefeltVerider),
+                tittel: plainTekst(tittelBlock, tittelFlettefeltVerdier),
             };
         })
         .filter(steg => steg.route !== RouteEnum.Forside && steg.route !== RouteEnum.Kvittering);

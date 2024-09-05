@@ -2,11 +2,13 @@ import React from 'react';
 
 import styled from 'styled-components';
 
-import { BodyLong, Box } from '@navikt/ds-react';
+import { BodyLong } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
+import { barnDataKeySpørsmål } from '../../../typer/barn';
 import { BarnetsId } from '../../../typer/common';
+import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
 import { ESanitySteg } from '../../../typer/sanity/sanity';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
@@ -16,7 +18,7 @@ import { SkjemaCheckbox } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaChe
 import SkjemaFieldset from '../../Felleskomponenter/SkjemaFieldset';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
-import { VedleggNotis } from '../../Felleskomponenter/VedleggNotis';
+import { VedleggOppsummering } from '../../Felleskomponenter/VedleggOppsummering';
 
 import AndreForelder from './AndreForelder';
 import { OmBarnetHeader } from './OmBarnetHeader';
@@ -51,10 +53,6 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
 
     const stegTekster = tekster()[ESanitySteg.OM_BARNET];
     const { omBarnetGuide } = stegTekster;
-
-    const dokumentasjonstekster = tekster()[ESanitySteg.DOKUMENTASJON];
-    const { bekreftelsePaaAtBarnBorSammenMedDeg, avtaleOmDeltBosted, meklingsattest } =
-        dokumentasjonstekster;
 
     return barn ? (
         <Steg
@@ -116,38 +114,18 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                         }
                         språkValues={{ navn: barn.navn }}
                     />
-                    {skjema.felter.borFastMedSøker.verdi === ESvar.JA && !barn.borMedSøker && (
-                        <VedleggNotis
-                            block={bekreftelsePaaAtBarnBorSammenMedDeg}
-                            flettefelter={{ barnetsNavn: barn.navn }}
-                            språkTekstId="ombarnet.bor-fast.vedleggsinfo"
-                            dynamisk
-                        />
-                    )}
 
                     {skjema.felter.skriftligAvtaleOmDeltBosted.erSynlig && (
-                        <>
-                            <JaNeiSpm
-                                skjema={skjema}
-                                felt={skjema.felter.skriftligAvtaleOmDeltBosted}
-                                spørsmålTekstId={
-                                    omBarnetSpørsmålSpråkId[
-                                        OmBarnetSpørsmålsId.skriftligAvtaleOmDeltBosted
-                                    ]
-                                }
-                                språkValues={{ navn: barn.navn }}
-                            />
-                            {skjema.felter.skriftligAvtaleOmDeltBosted.verdi === ESvar.JA && (
-                                <Box marginBlock="4 0">
-                                    <VedleggNotis
-                                        block={avtaleOmDeltBosted}
-                                        flettefelter={{ barnetsNavn: barn.navn }}
-                                        språkTekstId="ombarnet.delt-bosted.vedleggsinfo"
-                                        dynamisk
-                                    />
-                                </Box>
-                            )}
-                        </>
+                        <JaNeiSpm
+                            skjema={skjema}
+                            felt={skjema.felter.skriftligAvtaleOmDeltBosted}
+                            spørsmålTekstId={
+                                omBarnetSpørsmålSpråkId[
+                                    OmBarnetSpørsmålsId.skriftligAvtaleOmDeltBosted
+                                ]
+                            }
+                            språkValues={{ navn: barn.navn }}
+                        />
                     )}
                 </SkjemaFieldset>
             )}
@@ -195,12 +173,6 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                                                 ]
                                             }
                                         />
-                                        <VedleggNotis
-                                            block={meklingsattest}
-                                            flettefelter={{ barnetsNavn: barn.navn }}
-                                            språkTekstId="ombarnet.nårflyttetfra.info"
-                                            dynamisk
-                                        />
                                     </div>
                                 )}
                             </>
@@ -208,6 +180,30 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                     )}
                 </KomponentGruppe>
             )}
+
+            <VedleggOppsummering
+                vedlegg={[
+                    {
+                        skalVises: barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA,
+                        dokumentasjonsbehov: Dokumentasjonsbehov.BEKREFTELSE_FRA_BARNEVERN,
+                    },
+                    {
+                        skalVises:
+                            skjema.felter.borFastMedSøker.verdi === ESvar.JA && !barn.borMedSøker,
+                        dokumentasjonsbehov: Dokumentasjonsbehov.BOR_FAST_MED_SØKER,
+                        flettefeltVerdier: { barnetsNavn: barn.navn },
+                    },
+                    {
+                        skalVises: skjema.felter.skriftligAvtaleOmDeltBosted.verdi === ESvar.JA,
+                        dokumentasjonsbehov: Dokumentasjonsbehov.AVTALE_DELT_BOSTED,
+                        flettefeltVerdier: { barnetsNavn: barn.navn },
+                    },
+                    {
+                        skalVises: skjema.felter.borMedAndreForelderCheckbox.erSynlig,
+                        dokumentasjonsbehov: Dokumentasjonsbehov.MEKLINGSATTEST,
+                    },
+                ]}
+            />
         </Steg>
     ) : null;
 };
