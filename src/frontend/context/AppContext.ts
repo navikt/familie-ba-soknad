@@ -390,9 +390,9 @@ const [AppProvider, useApp] = createUseContext(() => {
         settEøsLand,
         tekster,
         plainTekst,
+        tilRestLocaleRecord,
         flettefeltTilTekst,
         kontoinformasjon,
-        tilRestLocaleRecord,
     };
 });
 

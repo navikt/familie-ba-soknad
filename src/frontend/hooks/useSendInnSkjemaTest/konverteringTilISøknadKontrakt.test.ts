@@ -1,7 +1,8 @@
 import { renderHook } from '@testing-library/react';
 
-import { ISøknadKontraktV8 } from '../../typer/kontrakt/v8';
+import { ISøknadKontrakt } from '../../typer/kontrakt/kontrakt';
 import {
+    mockFeatureToggle,
     silenceConsoleErrors,
     spyOnUseApp,
     TestProvidereMedEkteTekster,
@@ -18,6 +19,7 @@ import { testdata5 } from './test-data/testdata5';
 describe('test konvertering fra ISøknad til ISøknadKontrakt', () => {
     beforeEach(() => {
         silenceConsoleErrors();
+        mockFeatureToggle();
     });
     it('case 1', async () => {
         const { input: iSøknad } = testdata1;
@@ -26,7 +28,7 @@ describe('test konvertering fra ISøknad til ISøknadKontrakt', () => {
             wrapper: TestProvidereMedEkteTekster,
         });
 
-        const [_, formatert]: [boolean, ISøknadKontraktV8] = await result.current.sendInnSkjemaV8();
+        const [_, formatert]: [boolean, ISøknadKontrakt] = await result.current.sendInnSkjema();
         expect(erGyldigISøknadKontrakt(formatert)).toBeTruthy();
     });
     it('case 2', async () => {
@@ -36,7 +38,7 @@ describe('test konvertering fra ISøknad til ISøknadKontrakt', () => {
             wrapper: TestProvidereMedEkteTekster,
         });
 
-        const [_, formatert]: [boolean, ISøknadKontraktV8] = await result.current.sendInnSkjemaV8();
+        const [_, formatert]: [boolean, ISøknadKontrakt] = await result.current.sendInnSkjema();
         expect(erGyldigISøknadKontrakt(formatert)).toBeTruthy();
     });
     it('case 3', async () => {
@@ -46,7 +48,7 @@ describe('test konvertering fra ISøknad til ISøknadKontrakt', () => {
             wrapper: TestProvidereMedEkteTekster,
         });
 
-        const [_, formatert]: [boolean, ISøknadKontraktV8] = await result.current.sendInnSkjemaV8();
+        const [_, formatert]: [boolean, ISøknadKontrakt] = await result.current.sendInnSkjema();
         expect(erGyldigISøknadKontrakt(formatert)).toBeTruthy();
     });
     it('case 4', async () => {
@@ -56,7 +58,7 @@ describe('test konvertering fra ISøknad til ISøknadKontrakt', () => {
             wrapper: TestProvidereMedEkteTekster,
         });
 
-        const [_, formatert]: [boolean, ISøknadKontraktV8] = await result.current.sendInnSkjemaV8();
+        const [_, formatert]: [boolean, ISøknadKontrakt] = await result.current.sendInnSkjema();
         expect(erGyldigISøknadKontrakt(formatert)).toBeTruthy();
     });
     it('case 5', async () => {
@@ -66,7 +68,7 @@ describe('test konvertering fra ISøknad til ISøknadKontrakt', () => {
             wrapper: TestProvidereMedEkteTekster,
         });
 
-        const [_, formatert]: [boolean, ISøknadKontraktV8] = await result.current.sendInnSkjemaV8();
+        const [_, formatert]: [boolean, ISøknadKontrakt] = await result.current.sendInnSkjema();
         expect(erGyldigISøknadKontrakt(formatert)).toBeTruthy();
     });
 });
