@@ -181,7 +181,7 @@ describe('VelgBarn', () => {
         const fjernBarnKnapp = getByText(/hvilkebarn.fjern-barn.knapp/);
         act(() => fjernBarnKnapp.click());
 
-        const leggTilBarnKnapp = getByText(/hvilkebarn.leggtilbarn.kort.knapp/);
+        const leggTilBarnKnapp = getByTestId('leggTilBarnKnapp');
         act(() => leggTilBarnKnapp.click());
 
         const leggTilKnappIModal = getByTestId('hvilkebarn.leggtilbarn.kort.knapp');
