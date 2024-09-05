@@ -5,26 +5,38 @@ import { RessursStatus } from '@navikt/familie-typer';
 import Miljø from '../../shared-utils/Miljø';
 import { erModellMismatchResponsRessurs } from '../../shared-utils/modellversjon';
 import { useApp } from '../context/AppContext';
+import { useFeatureToggles } from '../context/FeatureToggleContext';
 import { useSpråk } from '../context/SpråkContext';
-import { ISøknadKontraktV8 } from '../typer/kontrakt/v8';
-import { dataISøknadKontraktFormatV8 } from '../utils/mappingTilKontrakt/søknadV8';
+import { ISøknadKontrakt } from '../typer/kontrakt/kontrakt';
+import { dataISøknadKontraktFormat } from '../utils/mappingTilKontrakt/søknad';
 import { sendInn } from '../utils/sendInnSkjema';
 
 export const useSendInnSkjema = (): {
-    sendInnSkjemaV8: () => Promise<[boolean, ISøknadKontraktV8]>;
+    sendInnSkjema: () => Promise<[boolean, ISøknadKontrakt]>;
 } => {
     const { axiosRequest, søknad, settInnsendingStatus, settSisteModellVersjon } = useApp();
     const { soknadApiProxyUrl } = Miljø();
     const { valgtLocale } = useSpråk();
-    const sendInnSkjemaV8 = async (): Promise<[boolean, ISøknadKontraktV8]> => {
+    const { tekster, tilRestLocaleRecord } = useApp();
+    const { toggles } = useFeatureToggles();
+
+    const sendInnSkjema = async (): Promise<[boolean, ISøknadKontrakt]> => {
         settInnsendingStatus({ status: RessursStatus.HENTER });
 
-        const formatert: ISøknadKontraktV8 = dataISøknadKontraktFormatV8(valgtLocale, søknad);
+        const kontraktVersjon = toggles.BRUK_NYTT_ENDEPUNKT_FOR_INNSENDING_AV_SOKNAD ? 9 : 8;
 
-        const res = await sendInn<ISøknadKontraktV8>(
+        const formatert: ISøknadKontrakt = dataISøknadKontraktFormat(
+            valgtLocale,
+            søknad,
+            tekster(),
+            tilRestLocaleRecord,
+            kontraktVersjon
+        );
+
+        const res = await sendInn<ISøknadKontrakt>(
             formatert,
             axiosRequest,
-            `${soknadApiProxyUrl}/soknad/v8`,
+            `${soknadApiProxyUrl}/soknad/v${kontraktVersjon}`,
             (res: AxiosError) => {
                 const responseData = res.response?.data;
                 if (responseData && erModellMismatchResponsRessurs(responseData)) {
@@ -39,6 +51,6 @@ export const useSendInnSkjema = (): {
     };
 
     return {
-        sendInnSkjemaV8,
+        sendInnSkjema: sendInnSkjema,
     };
 };
