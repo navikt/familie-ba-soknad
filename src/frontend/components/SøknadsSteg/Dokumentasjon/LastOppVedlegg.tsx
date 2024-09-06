@@ -117,14 +117,16 @@ const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr, oppdaterDok
                 />
             )}
             {!dokumentasjon.harSendtInn && (
-                <Filopplaster
-                    oppdaterDokumentasjon={oppdaterDokumentasjon}
-                    dokumentasjon={dokumentasjon}
-                    tillatteFiltyper={{
-                        'image/*': [EFiltyper.PNG, EFiltyper.JPG, EFiltyper.JPEG],
-                        'application/pdf': [EFiltyper.PDF],
-                    }}
-                />
+                <div data-testid={'dokumentopplaster'}>
+                    <Filopplaster
+                        oppdaterDokumentasjon={oppdaterDokumentasjon}
+                        dokumentasjon={dokumentasjon}
+                        tillatteFiltyper={{
+                            'image/*': [EFiltyper.PNG, EFiltyper.JPG, EFiltyper.JPEG],
+                            'application/pdf': [EFiltyper.PDF],
+                        }}
+                    />
+                </div>
             )}
             <br />
             {dokumentasjon.dokumentasjonsbehov !== Dokumentasjonsbehov.ANNEN_DOKUMENTASJON && (
