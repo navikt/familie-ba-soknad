@@ -1,19 +1,19 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import { format } from 'date-fns';
 
-import { Alert, BodyLong } from '@navikt/ds-react';
+import { Alert, VStack } from '@navikt/ds-react';
 import { RessursStatus } from '@navikt/familie-typer';
 
 import { useApp } from '../../../context/AppContext';
 import { useSteg } from '../../../context/StegContext';
+import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
 import { RouteEnum } from '../../../typer/routes';
+import { Typografi } from '../../../typer/sanity/sanity';
 import { setUserProperty, UserProperty } from '../../../utils/amplitude';
+import { erDokumentasjonRelevant } from '../../../utils/dokumentasjon';
 import BlokkerTilbakeKnappModal from '../../Felleskomponenter/BlokkerTilbakeKnappModal/BlokkerTilbakeKnappModal';
-import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
-import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
-import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
-import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import Kontoinformasjon from '../../Kontoinformasjon/Kontoinformasjon';
 
@@ -24,6 +24,8 @@ const Kvittering: React.FC = () => {
         settFåttGyldigKvittering,
         søknad,
         innsendingStatus,
+        tekster,
+        plainTekst,
     } = useApp();
     const { barnInkludertISøknaden } = søknad;
     const { hentStegNummer } = useSteg();
@@ -36,6 +38,15 @@ const Kvittering: React.FC = () => {
     const klokkeslett = format(innsendtDato, 'HH:mm');
     const dato = format(innsendtDato, 'dd.MM.yy');
 
+    const alleRelevanteVedleggErSendtInn = useRef(
+        søknad.dokumentasjon.filter(
+            dokumentasjon =>
+                dokumentasjon.dokumentasjonsbehov !== Dokumentasjonsbehov.ANNEN_DOKUMENTASJON &&
+                erDokumentasjonRelevant(dokumentasjon) &&
+                !dokumentasjon.harSendtInn
+        ).length === 0
+    );
+
     useEffect(() => {
         if (sisteUtfylteStegIndex === hentStegNummer(RouteEnum.Dokumentasjon)) {
             settFåttGyldigKvittering(true);
@@ -47,52 +58,38 @@ const Kvittering: React.FC = () => {
         }
     }, []);
 
+    const kvitteringTekster = tekster().KVITTERING;
+
     return (
-        <Steg tittel={<SpråkTekst id={'kvittering.sidetittel'} />}>
-            <KomponentGruppe inline>
+        <Steg tittel={plainTekst(kvitteringTekster.kvitteringTittel)}>
+            <VStack gap="12">
                 <Alert variant={'success'}>
-                    <SpråkTekst
-                        id={'kvittering.mottatt'}
-                        values={{
-                            tidspunkt: klokkeslett,
-                            dato: dato,
-                        }}
-                    />
+                    {plainTekst(kvitteringTekster.soeknadMottatt, {
+                        klokkeslett: klokkeslett,
+                        dato: dato,
+                    })}
                 </Alert>
-            </KomponentGruppe>
-            <KomponentGruppe>
-                <BodyLong>
-                    <SpråkTekst
-                        id={'kvittering.info'}
-                        values={{
-                            lenkeDineSaker: (
-                                <EksternLenke
-                                    lenkeSpråkId={'kvittering.dinesaker.lenke'}
-                                    lenkeTekstSpråkId={'kvittering.dinesaker.lenketekst'}
-                                />
-                            ),
-                            lenkeFinnSaksbehandlingstid: (
-                                <EksternLenke
-                                    lenkeTekstSpråkId={'kvittering.saksbehandlingstid.lenketekst'}
-                                    lenkeSpråkId={'kvittering.saksbehandlingstid.lenke'}
-                                />
-                            ),
-                        }}
+
+                <VStack gap="6">
+                    {alleRelevanteVedleggErSendtInn.current ? (
+                        <TekstBlock
+                            block={kvitteringTekster.trengerIkkeEttersendeVedlegg}
+                            typografi={Typografi.BodyLong}
+                        />
+                    ) : (
+                        <Alert variant="warning">
+                            <TekstBlock block={kvitteringTekster.maaEttersendeVedleggAlert} />
+                        </Alert>
+                    )}
+                    <TekstBlock
+                        block={kvitteringTekster.infoTilSoker}
+                        typografi={Typografi.BodyLong}
                     />
-                </BodyLong>
-            </KomponentGruppe>
+                </VStack>
 
-            <Kontoinformasjon />
+                <Kontoinformasjon />
+            </VStack>
 
-            <Informasjonsbolk tittelId={'kvittering.ikke-lastet-opp'}>
-                <BodyLong>
-                    <SpråkTekst id={'kvittering.ettersend-dokumentasjon.info'} />
-                </BodyLong>
-            </Informasjonsbolk>
-            <EksternLenke
-                lenkeTekstSpråkId={'kvittering.ettersend-dokumentasjon.lenketekst'}
-                lenkeSpråkId={'kvittering.ettersend-dokumentasjon.lenke'}
-            />
             <BlokkerTilbakeKnappModal />
         </Steg>
     );
