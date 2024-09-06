@@ -1,5 +1,5 @@
 import { BeskrivelseSanityApiNavn, TittelSanityApiNavn } from '../../../typer/dokumentasjon';
-import { LocaleRecordBlock } from '../../../typer/sanity/sanity';
+import { LocaleRecordBlock, LocaleRecordString } from '../../../typer/sanity/sanity';
 
 export type IDokumentasjonTekstinnhold = {
     dokumentasjonTittel: LocaleRecordBlock;
@@ -24,4 +24,10 @@ export type IDokumentasjonTekstinnhold = {
     [BeskrivelseSanityApiNavn.meklingsattest]: LocaleRecordBlock;
     [BeskrivelseSanityApiNavn.bekreftelseFraBarnevernetBarnetrygd]: LocaleRecordBlock;
     [BeskrivelseSanityApiNavn.lastOppSenereISoknad]: LocaleRecordBlock;
+} & {
+    forMange: LocaleRecordString;
+    feilFiltype: LocaleRecordString;
+    forStor: LocaleRecordString;
+    bildetForLite: LocaleRecordString;
+    noeGikkFeil: LocaleRecordString;
 };

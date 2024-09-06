@@ -4,9 +4,11 @@ import axios from 'axios';
 import { FileRejection } from 'react-dropzone';
 
 import Miljø from '../../../../../shared-utils/Miljø';
+import { useApp } from '../../../../context/AppContext';
 import { useLastRessurserContext } from '../../../../context/LastRessurserContext';
 import { IDokumentasjon, IVedlegg } from '../../../../typer/dokumentasjon';
 import { Dokumentasjonsbehov } from '../../../../typer/kontrakt/dokumentasjon';
+import { LocaleRecordString } from '../../../../typer/sanity/sanity';
 
 interface OpplastetVedlegg {
     dokumentId: string;
@@ -27,8 +29,10 @@ const badRequestCodeFraError = (error): BadRequestCode | undefined => {
     return;
 };
 
+const MAKS_FILSTØRRELSE = 1024 * 1024 * 10; // 10 MB
+const MAKS_ANTALL_FILER = 25;
+
 export const useFilopplaster = (
-    maxFilstørrelse: number,
     dokumentasjon: IDokumentasjon,
     oppdaterDokumentasjon: (
         dokumentasjonsBehov: Dokumentasjonsbehov,
@@ -37,8 +41,18 @@ export const useFilopplaster = (
     ) => void
 ) => {
     const { wrapMedSystemetLaster } = useLastRessurserContext();
-    const [feilmeldinger, settFeilmeldinger] = useState<Map<string, File[]>>(new Map());
+    const { tekster, søknad } = useApp();
+    const [feilmeldinger, settFeilmeldinger] = useState<Map<LocaleRecordString, File[]>>(new Map());
     const [harFeil, settHarFeil] = useState<boolean>(false);
+
+    const dokumentasjonTekster = tekster().DOKUMENTASJON;
+
+    const antallOpplastedeVedlegg = (): number =>
+        søknad.dokumentasjon.reduce(
+            (antallVedlegg: number, dokumentasjon: IDokumentasjon) =>
+                antallVedlegg + dokumentasjon.opplastedeVedlegg.length,
+            0
+        );
 
     const datoTilStreng = (date: Date): string => {
         return date.toISOString();
@@ -47,12 +61,20 @@ export const useFilopplaster = (
 
     const onDrop = useCallback(
         async (filer: File[], filRejections: FileRejection[]) => {
-            const feilmeldingMap: Map<string, File[]> = new Map();
+            if (
+                filer.length > MAKS_ANTALL_FILER ||
+                filer.length + antallOpplastedeVedlegg() > MAKS_ANTALL_FILER
+            ) {
+                settFeilmeldinger(new Map().set(dokumentasjonTekster.forMange, []));
+                settHarFeil(true);
+                return;
+            }
+            const feilmeldingMap: Map<LocaleRecordString, File[]> = new Map();
             const nyeVedlegg: IVedlegg[] = [];
             settFeilmeldinger(new Map());
             settHarFeil(false);
 
-            const pushFeilmelding = (tekstId: string, fil: File) => {
+            const pushFeilmelding = (tekstId: LocaleRecordString, fil: File) => {
                 if (!feilmeldingMap.has(tekstId)) {
                     feilmeldingMap.set(tekstId, []);
                 }
@@ -65,21 +87,15 @@ export const useFilopplaster = (
 
             if (filRejections.length > 0) {
                 filRejections.map(filRejection =>
-                    pushFeilmelding(
-                        'dokumentasjon.last-opp-dokumentasjon.feilmeldingtype',
-                        filRejection.file
-                    )
+                    pushFeilmelding(dokumentasjonTekster.feilFiltype, filRejection.file)
                 );
             }
 
             await Promise.all(
                 filer.map((fil: File) =>
                     wrapMedSystemetLaster(async () => {
-                        if (maxFilstørrelse && fil.size > maxFilstørrelse) {
-                            pushFeilmelding(
-                                'dokumentasjon.last-opp-dokumentasjon.feilmeldingstor',
-                                fil
-                            );
+                        if (fil.size > MAKS_FILSTØRRELSE) {
+                            pushFeilmelding(dokumentasjonTekster.forStor, fil);
                             return;
                         }
 
@@ -111,19 +127,13 @@ export const useFilopplaster = (
                                 const badRequestCode = badRequestCodeFraError(error);
                                 switch (badRequestCode) {
                                     case BadRequestCode.IMAGE_TOO_LARGE:
-                                        pushFeilmelding(
-                                            'dokumentasjon.last-opp-dokumentasjon.feilmeldingstor',
-                                            fil
-                                        );
+                                        pushFeilmelding(dokumentasjonTekster.forStor, fil);
                                         break;
                                     case BadRequestCode.IMAGE_DIMENSIONS_TOO_SMALL:
-                                        pushFeilmelding('dokumentasjon.forliten.feilmelding', fil);
+                                        pushFeilmelding(dokumentasjonTekster.bildetForLite, fil);
                                         break;
                                     default:
-                                        pushFeilmelding(
-                                            'dokumentasjon.last-opp-dokumentasjon.feilmeldinggenerisk',
-                                            fil
-                                        );
+                                        pushFeilmelding(dokumentasjonTekster.noeGikkFeil, fil);
                                 }
                             });
                     })
