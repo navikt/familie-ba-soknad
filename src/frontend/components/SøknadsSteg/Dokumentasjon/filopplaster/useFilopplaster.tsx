@@ -4,6 +4,7 @@ import axios from 'axios';
 import { FileRejection } from 'react-dropzone';
 
 import Miljø from '../../../../../shared-utils/Miljø';
+import { useApp } from '../../../../context/AppContext';
 import { useLastRessurserContext } from '../../../../context/LastRessurserContext';
 import { IDokumentasjon, IVedlegg } from '../../../../typer/dokumentasjon';
 import { Dokumentasjonsbehov } from '../../../../typer/kontrakt/dokumentasjon';
@@ -27,8 +28,10 @@ const badRequestCodeFraError = (error): BadRequestCode | undefined => {
     return;
 };
 
+const MAKS_FILSTØRRELSE = 1024 * 1024 * 10; // 10 MB
+const MAKS_ANTALL_FILER = 25;
+
 export const useFilopplaster = (
-    maxFilstørrelse: number,
     dokumentasjon: IDokumentasjon,
     oppdaterDokumentasjon: (
         dokumentasjonsBehov: Dokumentasjonsbehov,
@@ -37,8 +40,18 @@ export const useFilopplaster = (
     ) => void
 ) => {
     const { wrapMedSystemetLaster } = useLastRessurserContext();
+    const { tekster, søknad } = useApp();
     const [feilmeldinger, settFeilmeldinger] = useState<Map<string, File[]>>(new Map());
     const [harFeil, settHarFeil] = useState<boolean>(false);
+
+    const dokumentasjonTekster = tekster().DOKUMENTASJON;
+
+    const antallOpplastedeVedlegg = (): number =>
+        søknad.dokumentasjon.reduce(
+            (antallVedlegg: number, dokumentasjon: IDokumentasjon) =>
+                antallVedlegg + dokumentasjon.opplastedeVedlegg.length,
+            0
+        );
 
     const datoTilStreng = (date: Date): string => {
         return date.toISOString();
@@ -47,6 +60,14 @@ export const useFilopplaster = (
 
     const onDrop = useCallback(
         async (filer: File[], filRejections: FileRejection[]) => {
+            if (
+                filer.length > MAKS_ANTALL_FILER ||
+                filer.length + antallOpplastedeVedlegg() > MAKS_ANTALL_FILER
+            ) {
+                settFeilmeldinger(new Map().set(dokumentasjonTekster.forMange, []));
+                settHarFeil(true);
+                return;
+            }
             const feilmeldingMap: Map<string, File[]> = new Map();
             const nyeVedlegg: IVedlegg[] = [];
             settFeilmeldinger(new Map());
@@ -75,7 +96,7 @@ export const useFilopplaster = (
             await Promise.all(
                 filer.map((fil: File) =>
                     wrapMedSystemetLaster(async () => {
-                        if (maxFilstørrelse && fil.size > maxFilstørrelse) {
+                        if (fil.size > MAKS_FILSTØRRELSE) {
                             pushFeilmelding(
                                 'dokumentasjon.last-opp-dokumentasjon.feilmeldingstor',
                                 fil
