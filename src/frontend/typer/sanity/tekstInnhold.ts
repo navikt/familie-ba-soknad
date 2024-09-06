@@ -12,6 +12,7 @@ import { IVelgBarnTekstinnhold } from '../../components/SøknadsSteg/VelgBarn/in
 import { IAndreUtbetalingerTekstinnhold } from './modaler/andreUtbetalinger';
 import { IArbeidsperiodeTekstinnhold } from './modaler/arbeidsperiode';
 import { IBarnetrygdsperiodeTekstinnhold } from './modaler/barnetrygdperiode';
+import { ILeggTilBarnTekstinnhold } from './modaler/leggTilBarn';
 import { IPensjonsperiodeTekstinnhold } from './modaler/pensjonsperiode';
 import { IStartPåNyttModal } from './modaler/startPåNytt';
 import { ITidligereSamoboereTekstinnhold } from './modaler/tidligereSamboere';
@@ -38,6 +39,7 @@ export enum SanityModalPrefix {
     TIDLIGERE_SAMBOERE = 'MODAL_TIDLIGERE_SAMBOERE',
     UTENLANDSOPPHOLD = 'MODAL_UTENLANDSOPPHOLD',
     START_PAA_NYTT = 'MODAL_START_PAA_NYTT',
+    LEGG_TIL_BARN = 'MODAL_LEGG_TIL_BARN',
 }
 
 export interface ITekstinnhold {
@@ -128,6 +130,7 @@ export interface IModalerTekstinnhold {
         andreForelder: IUtenlandsoppholdTekstinnhold;
     };
     startPåNytt: IStartPåNyttModal;
+    leggTilBarn: ILeggTilBarnTekstinnhold;
 }
 
 export interface IForsideTekstinnhold {

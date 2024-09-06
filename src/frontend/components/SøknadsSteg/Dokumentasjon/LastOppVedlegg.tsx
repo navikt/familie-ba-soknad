@@ -1,16 +1,22 @@
 import React from 'react';
 
-import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 
 import { Checkbox, Heading } from '@navikt/ds-react';
 
 import { useApp } from '../../../context/AppContext';
-import { EFiltyper, IDokumentasjon, IVedlegg } from '../../../typer/dokumentasjon';
+import {
+    dokumentasjonsbehovTilBeskrivelseSanityApiNavn,
+    dokumentasjonsbehovTilTittelSanityApiNavn,
+    EFiltyper,
+    IDokumentasjon,
+    IVedlegg,
+} from '../../../typer/dokumentasjon';
 import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
 import { ESivilstand, ESøknadstype } from '../../../typer/kontrakt/generelle';
-import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
-import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import { Typografi } from '../../../typer/sanity/sanity';
+import { slåSammen } from '../../../utils/slåSammen';
+import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 
 import Filopplaster from './filopplaster/Filopplaster';
 
@@ -29,30 +35,18 @@ const Container = styled.div`
 `;
 
 const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr, oppdaterDokumentasjon }) => {
-    const { søknad } = useApp();
-    const intl = useIntl();
+    const { søknad, tekster, plainTekst } = useApp();
+    const dokumentasjonstekster = tekster().DOKUMENTASJON;
     const settHarSendtInnTidligere = (event: React.ChangeEvent<HTMLInputElement>) => {
         const huketAv = event.target.checked;
         const vedlegg = huketAv ? [] : dokumentasjon.opplastedeVedlegg;
         oppdaterDokumentasjon(dokumentasjon.dokumentasjonsbehov, vedlegg, huketAv);
     };
 
-    const formatertListeMedBarn = () => {
-        const barnDokGjelderFor = søknad.barnInkludertISøknaden.filter(barn =>
-            dokumentasjon.gjelderForBarnId.find(id => id === barn.id)
-        );
-
-        return barnDokGjelderFor.map((barn, index) => {
-            const visningsNavn = barn.navn;
-            if (index === 0) {
-                return visningsNavn;
-            } else {
-                return index === barnDokGjelderFor.length - 1
-                    ? ` ${intl.formatMessage({ id: 'felles.og' })} ${visningsNavn}`
-                    : `, ${visningsNavn}`;
-            }
-        });
-    };
+    const barnDokGjelderFor = søknad.barnInkludertISøknaden.filter(barn =>
+        dokumentasjon.gjelderForBarnId.find(id => id === barn.id)
+    );
+    const barnasNavn = slåSammen(barnDokGjelderFor.map(barn => barn.navn));
 
     const antallVedlegg = () => {
         const dokSomKrevesForBarn = søknad.dokumentasjon.filter(dok => dok.gjelderForBarnId.length);
@@ -81,9 +75,10 @@ const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr, oppdaterDok
         return antallVedlegg;
     };
 
-    const dokTittel = (
-        <SpråkTekst id={dokumentasjon.tittelSpråkId} values={{ barn: formatertListeMedBarn() }} />
-    );
+    const tittelBlock =
+        dokumentasjonstekster[
+            dokumentasjonsbehovTilTittelSanityApiNavn(dokumentasjon.dokumentasjonsbehov)
+        ];
 
     const skalViseDokumentasjonsBeskrivelse = () => {
         return (
@@ -93,61 +88,57 @@ const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr, oppdaterDok
         );
     };
 
+    const dokumentasjonsbeskrivelse = dokumentasjonsbehovTilBeskrivelseSanityApiNavn(
+        dokumentasjon.dokumentasjonsbehov
+    );
+
+    const vedleggXAvY = plainTekst(dokumentasjonstekster.vedleggXavY, {
+        antall: vedleggNr.toString(),
+        totalAntall: antallVedlegg().toString(),
+    });
+    const vedleggtittel =
+        (dokumentasjon.dokumentasjonsbehov !== Dokumentasjonsbehov.ANNEN_DOKUMENTASJON
+            ? vedleggXAvY
+            : '') +
+        ' ' +
+        plainTekst(tittelBlock, { barnetsNavn: barnasNavn });
+
     return (
         <Container>
             <Heading level={'3'} size={'small'}>
-                {dokumentasjon.dokumentasjonsbehov !== Dokumentasjonsbehov.ANNEN_DOKUMENTASJON && (
-                    <>
-                        <SpråkTekst
-                            id={'dokumentasjon.vedleggsnummer'}
-                            values={{
-                                vedleggsnummer: vedleggNr,
-                                antallvedlegg: antallVedlegg(),
-                            }}
-                        />
-                        &nbsp;
-                    </>
-                )}
-                {dokTittel}
+                {vedleggtittel}
             </Heading>
-            {dokumentasjon.beskrivelseSpråkId && skalViseDokumentasjonsBeskrivelse() && (
-                <>
-                    <SpråkTekst
-                        id={dokumentasjon.beskrivelseSpråkId}
-                        values={{
-                            barn: formatertListeMedBarn(),
-                            meklingsattestLenke: (
-                                <EksternLenke
-                                    lenkeSpråkId={'dokumentasjon.meklingsattest.lenke'}
-                                    lenkeTekstSpråkId={'dokumentasjon.meklingsattest.lenketekst'}
-                                    target="_blank"
-                                />
-                            ),
-                        }}
-                    />
-                </>
+            {dokumentasjonsbeskrivelse && skalViseDokumentasjonsBeskrivelse() && (
+                <TekstBlock
+                    data-testid={'dokumentasjonsbeskrivelse'}
+                    block={dokumentasjonstekster[dokumentasjonsbeskrivelse]}
+                    flettefelter={{ barnetsNavn: barnasNavn }}
+                    typografi={Typografi.BodyLong}
+                />
             )}
             {!dokumentasjon.harSendtInn && (
-                <Filopplaster
-                    oppdaterDokumentasjon={oppdaterDokumentasjon}
-                    dokumentasjon={dokumentasjon}
-                    maxFilstørrelse={1024 * 1024 * 10}
-                    tillatteFiltyper={{
-                        'image/*': [EFiltyper.PNG, EFiltyper.JPG, EFiltyper.JPEG],
-                        'application/pdf': [EFiltyper.PDF],
-                    }}
-                />
+                <div data-testid={'dokumentopplaster'}>
+                    <Filopplaster
+                        oppdaterDokumentasjon={oppdaterDokumentasjon}
+                        dokumentasjon={dokumentasjon}
+                        tillatteFiltyper={{
+                            'image/*': [EFiltyper.PNG, EFiltyper.JPG, EFiltyper.JPEG],
+                            'application/pdf': [EFiltyper.PDF],
+                        }}
+                    />
+                </div>
             )}
             <br />
             {dokumentasjon.dokumentasjonsbehov !== Dokumentasjonsbehov.ANNEN_DOKUMENTASJON && (
                 <Checkbox
-                    aria-label={`${intl.formatMessage({
-                        id: 'dokumentasjon.har-sendt-inn.spm',
-                    })} (${dokTittel})`}
+                    data-testid={'dokumentasjon-er-sendt-inn-checkboks'}
+                    aria-label={`${plainTekst(
+                        dokumentasjonstekster.sendtInnTidligere
+                    )} (${plainTekst(tittelBlock, { barnetsNavn: barnasNavn })})`}
                     checked={dokumentasjon.harSendtInn}
                     onChange={settHarSendtInnTidligere}
                 >
-                    <SpråkTekst id={'dokumentasjon.har-sendt-inn.spm'} />
+                    {plainTekst(dokumentasjonstekster.sendtInnTidligere)}
                 </Checkbox>
             )}
         </Container>

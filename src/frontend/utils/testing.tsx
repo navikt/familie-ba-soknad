@@ -53,6 +53,7 @@ export const spyOnUseApp = søknad => {
         status: RessursStatus.SUKSESS,
         data: mockDeep<ISøkerRespons>({ sivilstand: { type: ESivilstand.UGIFT }, ...søknad.søker }),
     }));
+    const tilRestLocaleRecord = jest.fn();
     const settSøknad = jest.fn();
     const erPåKvitteringsside = jest.fn().mockImplementation(() => false);
     const erStegUtfyltFrafør = jest.fn().mockImplementation(() => true);
@@ -70,9 +71,6 @@ export const spyOnUseApp = søknad => {
     const erUtvidet = søknad.søknadstype === 'UTVIDET';
     const settNåværendeRoute = jest.fn();
     const mellomlagre = jest.fn();
-    const tekster = jest.fn().mockImplementation(() => mockDeep<ITekstinnhold>());
-    const plainTekst = jest.fn().mockReturnValue('tekst fra sanity');
-    const tilRestLocaleRecord = jest.fn();
     const sluttbruker = { status: RessursStatus.SUKSESS, data: { navn: '' } };
 
     søknad.barnInkludertISøknaden = søknad.barnInkludertISøknaden ?? [];
@@ -107,8 +105,8 @@ export const spyOnUseApp = søknad => {
         systemetOK: () => jest.fn().mockReturnValue(true),
         systemetFeiler: jest.fn().mockReturnValue(false),
         fåttGyldigKvittering: søknad.fåttGyldigKvittering === true,
-        tekster,
-        plainTekst,
+        tekster: jest.fn().mockImplementation(() => mockDeep<ITekstinnhold>()),
+        plainTekst: jest.fn().mockReturnValue('tekst fra sanity'),
         tilRestLocaleRecord,
     });
 
