@@ -8,6 +8,7 @@ import { useApp } from '../../../../context/AppContext';
 import { useLastRessurserContext } from '../../../../context/LastRessurserContext';
 import { IDokumentasjon, IVedlegg } from '../../../../typer/dokumentasjon';
 import { Dokumentasjonsbehov } from '../../../../typer/kontrakt/dokumentasjon';
+import { LocaleRecordString } from '../../../../typer/sanity/sanity';
 
 interface OpplastetVedlegg {
     dokumentId: string;
@@ -41,7 +42,7 @@ export const useFilopplaster = (
 ) => {
     const { wrapMedSystemetLaster } = useLastRessurserContext();
     const { tekster, søknad } = useApp();
-    const [feilmeldinger, settFeilmeldinger] = useState<Map<string, File[]>>(new Map());
+    const [feilmeldinger, settFeilmeldinger] = useState<Map<LocaleRecordString, File[]>>(new Map());
     const [harFeil, settHarFeil] = useState<boolean>(false);
 
     const dokumentasjonTekster = tekster().DOKUMENTASJON;
@@ -68,12 +69,12 @@ export const useFilopplaster = (
                 settHarFeil(true);
                 return;
             }
-            const feilmeldingMap: Map<string, File[]> = new Map();
+            const feilmeldingMap: Map<LocaleRecordString, File[]> = new Map();
             const nyeVedlegg: IVedlegg[] = [];
             settFeilmeldinger(new Map());
             settHarFeil(false);
 
-            const pushFeilmelding = (tekstId: string, fil: File) => {
+            const pushFeilmelding = (tekstId: LocaleRecordString, fil: File) => {
                 if (!feilmeldingMap.has(tekstId)) {
                     feilmeldingMap.set(tekstId, []);
                 }
@@ -86,10 +87,7 @@ export const useFilopplaster = (
 
             if (filRejections.length > 0) {
                 filRejections.map(filRejection =>
-                    pushFeilmelding(
-                        'dokumentasjon.last-opp-dokumentasjon.feilmeldingtype',
-                        filRejection.file
-                    )
+                    pushFeilmelding(dokumentasjonTekster.feilFiltype, filRejection.file)
                 );
             }
 
@@ -97,10 +95,7 @@ export const useFilopplaster = (
                 filer.map((fil: File) =>
                     wrapMedSystemetLaster(async () => {
                         if (fil.size > MAKS_FILSTØRRELSE) {
-                            pushFeilmelding(
-                                'dokumentasjon.last-opp-dokumentasjon.feilmeldingstor',
-                                fil
-                            );
+                            pushFeilmelding(dokumentasjonTekster.forStor, fil);
                             return;
                         }
 
@@ -132,19 +127,13 @@ export const useFilopplaster = (
                                 const badRequestCode = badRequestCodeFraError(error);
                                 switch (badRequestCode) {
                                     case BadRequestCode.IMAGE_TOO_LARGE:
-                                        pushFeilmelding(
-                                            'dokumentasjon.last-opp-dokumentasjon.feilmeldingstor',
-                                            fil
-                                        );
+                                        pushFeilmelding(dokumentasjonTekster.forStor, fil);
                                         break;
                                     case BadRequestCode.IMAGE_DIMENSIONS_TOO_SMALL:
-                                        pushFeilmelding('dokumentasjon.forliten.feilmelding', fil);
+                                        pushFeilmelding(dokumentasjonTekster.bildetForLite, fil);
                                         break;
                                     default:
-                                        pushFeilmelding(
-                                            'dokumentasjon.last-opp-dokumentasjon.feilmeldinggenerisk',
-                                            fil
-                                        );
+                                        pushFeilmelding(dokumentasjonTekster.noeGikkFeil, fil);
                                 }
                             });
                     })

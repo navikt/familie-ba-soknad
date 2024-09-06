@@ -14,4 +14,8 @@ export type IDokumentasjonTekstinnhold = {
     bekreftelseFraBarnevernetBarnetrygd: LocaleRecordBlock;
     lastOppSenereISoknad: LocaleRecordBlock;
     forMange: LocaleRecordString;
+    feilFiltype: LocaleRecordString;
+    forStor: LocaleRecordString;
+    bildetForLite: LocaleRecordString;
+    noeGikkFeil: LocaleRecordString;
 };

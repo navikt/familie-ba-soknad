@@ -7,6 +7,7 @@ import { UploadIcon } from '@navikt/aksel-icons';
 import { BodyShort } from '@navikt/ds-react';
 import { ABlue500, ABorderDefault } from '@navikt/ds-tokens/dist/tokens';
 
+import { useApp } from '../../../../context/AppContext';
 import { IDokumentasjon, IVedlegg } from '../../../../typer/dokumentasjon';
 import { Dokumentasjonsbehov } from '../../../../typer/kontrakt/dokumentasjon';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -76,6 +77,8 @@ const Filopplaster: React.FC<Props> = ({
         accept: tillatteFiltyper,
     });
 
+    const { plainTekst } = useApp();
+
     return (
         <>
             <FilopplastningBoks type={'button'} {...getRootProps()} $harFeil={harFeil}>
@@ -99,7 +102,7 @@ const Filopplaster: React.FC<Props> = ({
                 <StyledFeilmeldingList>
                     {Array.from(feilmeldinger).map(([key, value], index) => (
                         <li key={index}>
-                            <SpråkTekst id={key} />
+                            {plainTekst(key)}
                             {
                                 <StyledFeilmeldingList>
                                     {value.map((fil, index) => (
