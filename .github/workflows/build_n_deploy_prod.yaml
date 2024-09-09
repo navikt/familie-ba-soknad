@@ -15,14 +15,21 @@ jobs:
   test:
     name: Kjør typecheck og tester
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
     steps:
       - uses: actions/checkout@v4
+      - uses: octo-sts/action@6177b4481c00308b3839969c3eca88c96a91775f # v1.0.0
+        id: octo-sts
+        with:
+          scope: ${{ github.repository_owner }}
+          identity: readerpkg
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
           registry-url: "https://npm.pkg.github.com"
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ steps.octo-sts.outputs.token }}
       - name: Installer node-pakker
         run: yarn --prefer-offline --frozen-lockfile
       - name: Kjør typecheck
@@ -43,9 +50,14 @@ jobs:
         with:
           node-version: "20"
           registry-url: "https://npm.pkg.github.com"
+      - uses: octo-sts/action@6177b4481c00308b3839969c3eca88c96a91775f # v1.0.0
+        id: octo-sts
+        with:
+          scope: ${{ github.repository_owner }}
+          identity: readertoken
       - name: Yarn install
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ steps.octo-sts.outputs.token }}
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           SENTRY_RELEASE: ${{ github.sha }}
           BASE_PATH: ${{ env.BASE_PATH }}
