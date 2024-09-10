@@ -12,14 +12,23 @@ jobs:
   test:
     name: Kjør typecheck og tester
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@v4
+      - name: Setup Octo Security Token Service
+        uses: octo-sts/action@v1.0.0
+        id: octo-sts
+        with:
+          scope: ${{ github.repository_owner }}
+          identity: readertoken
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
           registry-url: "https://npm.pkg.github.com"
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ steps.octo-sts.outputs.token  }}
       - name: Installer node-pakker
         run: yarn --prefer-offline --frozen-lockfile
       - name: Kjør typecheck
