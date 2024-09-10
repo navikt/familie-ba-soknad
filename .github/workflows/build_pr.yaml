@@ -26,6 +26,8 @@ jobs:
           node-version: '20'
           registry-url: "https://npm.pkg.github.com"
           token: ${{ steps.octo-sts.outputs.token }}
+        env:
+          NODE_AUTH_TOKEN: ${{ steps.octo-sts.outputs.token }}
       - name: Installer node-pakker
         run: yarn --prefer-offline --frozen-lockfile
       - name: Kjør typecheck
