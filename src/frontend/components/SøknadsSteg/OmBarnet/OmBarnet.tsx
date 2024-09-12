@@ -24,7 +24,7 @@ import AndreForelder from './AndreForelder';
 import { OmBarnetHeader } from './OmBarnetHeader';
 import Oppfølgningsspørsmål from './Oppfølgningsspørsmål';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from './spørsmål';
-import { useOmBarnet } from './useOmBarnet';
+import { barnErUnder16År, useOmBarnet } from './useOmBarnet';
 
 const EksternLenkeContainer = styled.div`
     margin-bottom: 4rem;
@@ -198,7 +198,9 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                         dokumentasjonsbehov: Dokumentasjonsbehov.AVTALE_DELT_BOSTED,
                     },
                     {
-                        skalVises: skjema.felter.borMedAndreForelderCheckbox.erSynlig,
+                        skalVises:
+                            skjema.felter.borMedAndreForelderCheckbox.erSynlig &&
+                            barnErUnder16År(barn),
                         dokumentasjonsbehov: Dokumentasjonsbehov.MEKLINGSATTEST,
                     },
                 ]}

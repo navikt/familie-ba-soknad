@@ -61,6 +61,8 @@ import { idNummerLand } from '../EøsSteg/idnummerUtils';
 
 import { OmBarnetSpørsmålsId } from './spørsmål';
 
+export const barnErUnder16År = (barnet: IBarnMedISøknad): boolean => Number(barnet.alder) < 16;
+
 export const useOmBarnet = (
     barnetsUuid: BarnetsId
 ): {
@@ -917,8 +919,9 @@ export const useOmBarnet = (
                     case Dokumentasjonsbehov.MEKLINGSATTEST:
                         return genererOppdatertDokumentasjon(
                             dok,
-                            gjeldendeBarn[barnDataKeySpørsmål.andreForelderErDød].svar ===
-                                ESvar.NEI &&
+                            barnErUnder16År(gjeldendeBarn) &&
+                                gjeldendeBarn[barnDataKeySpørsmål.andreForelderErDød].svar ===
+                                    ESvar.NEI &&
                                 søkerHarBoddMedAndreForelder.verdi === ESvar.JA &&
                                 borMedAndreForelderCheckbox.verdi === ESvar.NEI,
                             gjeldendeBarn.id
