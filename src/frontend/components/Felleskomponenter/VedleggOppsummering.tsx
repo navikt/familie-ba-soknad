@@ -7,7 +7,7 @@ import { dokumentasjonsbehovTilTittelSanityApiNavn } from '../../typer/dokumenta
 import { Dokumentasjonsbehov } from '../../typer/kontrakt/dokumentasjon';
 import { FlettefeltVerdier } from '../../typer/sanity/sanity';
 
-export interface IVedleggOppsummeringProps {
+interface IVedleggOppsummeringProps {
     vedlegg: {
         skalVises: boolean;
         dokumentasjonsbehov: Dokumentasjonsbehov;
