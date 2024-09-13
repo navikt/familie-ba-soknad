@@ -115,6 +115,16 @@ const Dokumentasjon: React.FC = () => {
 
                 <PictureScanningGuide />
 
+                <div>
+                    <Heading level="3" size="medium" spacing>
+                        {plainTekst(stegTekster.manglerDokumentasjonSpoersmaalTittel)}
+                    </Heading>
+                    <TekstBlock
+                        block={stegTekster.manglerDokumentasjonSpoersmaal}
+                        typografi={Typografi.BodyLong}
+                    />
+                </div>
+
                 {relevateDokumentasjoner.map((dokumentasjon, index) => (
                     <LastOppVedlegg
                         key={index}
