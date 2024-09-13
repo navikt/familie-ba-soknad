@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { add, isBefore } from 'date-fns';
 
-import { Alert, BodyShort } from '@navikt/ds-react';
+import { Alert, BodyShort, VStack } from '@navikt/ds-react';
 import { RessursStatus } from '@navikt/familie-typer';
 
 import { useApp } from '../../../context/AppContext';
@@ -13,7 +13,6 @@ import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
 import { ESanitySteg } from '../../../typer/sanity/sanity';
 import { erDokumentasjonRelevant } from '../../../utils/dokumentasjon';
 import { Feilside } from '../../Felleskomponenter/Feilside/Feilside';
-import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import PictureScanningGuide from '../../Felleskomponenter/PictureScanningGuide/PictureScanningGuide';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
@@ -77,8 +76,8 @@ const Dokumentasjon: React.FC = () => {
                 return success;
             }}
         >
-            {slettaVedlegg.length > 0 && (
-                <KomponentGruppe>
+            <VStack gap="12">
+                {slettaVedlegg.length > 0 && (
                     <Alert variant={'warning'}>
                         <BodyShort>
                             <SpråkTekst id={'dokumentasjon.forlangtid.info'} />
@@ -91,22 +90,22 @@ const Dokumentasjon: React.FC = () => {
                             ))}
                         </ul>
                     </Alert>
-                </KomponentGruppe>
-            )}
-            <KomponentGruppe>
+                )}
+
                 <PictureScanningGuide />
-            </KomponentGruppe>
-            {søknad.dokumentasjon
-                .filter(dokumentasjon => erDokumentasjonRelevant(dokumentasjon))
-                .map((dokumentasjon, index) => (
-                    <LastOppVedlegg
-                        key={index}
-                        vedleggNr={index + 1}
-                        dokumentasjon={dokumentasjon}
-                        oppdaterDokumentasjon={oppdaterDokumentasjon}
-                    />
-                ))}
-            {innsendingStatus.status === RessursStatus.FEILET && <Feilside />}
+
+                {søknad.dokumentasjon
+                    .filter(dokumentasjon => erDokumentasjonRelevant(dokumentasjon))
+                    .map((dokumentasjon, index) => (
+                        <LastOppVedlegg
+                            key={index}
+                            vedleggNr={index + 1}
+                            dokumentasjon={dokumentasjon}
+                            oppdaterDokumentasjon={oppdaterDokumentasjon}
+                        />
+                    ))}
+                {innsendingStatus.status === RessursStatus.FEILET && <Feilside />}
+            </VStack>
         </Steg>
     );
 };
