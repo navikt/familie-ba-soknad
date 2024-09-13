@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { add, isBefore } from 'date-fns';
 
-import { Alert, BodyShort, VStack } from '@navikt/ds-react';
+import { Alert, BodyShort, Heading, VStack } from '@navikt/ds-react';
 import { RessursStatus } from '@navikt/familie-typer';
 
 import { useApp } from '../../../context/AppContext';
@@ -10,10 +10,11 @@ import useFørsteRender from '../../../hooks/useFørsteRender';
 import { useSendInnSkjema } from '../../../hooks/useSendInnSkjema';
 import { IDokumentasjon, IVedlegg } from '../../../typer/dokumentasjon';
 import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
-import { ESanitySteg } from '../../../typer/sanity/sanity';
+import { ESanitySteg, Typografi } from '../../../typer/sanity/sanity';
 import { erDokumentasjonRelevant } from '../../../utils/dokumentasjon';
 import { Feilside } from '../../Felleskomponenter/Feilside/Feilside';
 import PictureScanningGuide from '../../Felleskomponenter/PictureScanningGuide/PictureScanningGuide';
+import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 
@@ -26,7 +27,7 @@ export const erVedleggstidspunktGyldig = (vedleggTidspunkt: string): boolean => 
 };
 
 const Dokumentasjon: React.FC = () => {
-    const { søknad, settSøknad, innsendingStatus, tekster } = useApp();
+    const { søknad, settSøknad, innsendingStatus, tekster, plainTekst } = useApp();
     const { sendInnSkjema } = useSendInnSkjema();
     const [slettaVedlegg, settSlettaVedlegg] = useState<IVedlegg[]>([]);
 
@@ -64,6 +65,10 @@ const Dokumentasjon: React.FC = () => {
         });
     });
 
+    const relevateDokumentasjoner = søknad.dokumentasjon.filter(dokumentasjon =>
+        erDokumentasjonRelevant(dokumentasjon)
+    );
+
     const stegTekster = tekster()[ESanitySteg.DOKUMENTASJON];
     const { dokumentasjonGuide } = stegTekster;
 
@@ -92,18 +97,33 @@ const Dokumentasjon: React.FC = () => {
                     </Alert>
                 )}
 
+                {relevateDokumentasjoner.filter(
+                    dokumentasjon =>
+                        dokumentasjon.dokumentasjonsbehov !==
+                        Dokumentasjonsbehov.ANNEN_DOKUMENTASJON
+                ).length === 0 && (
+                    <div>
+                        <Heading level="3" size="medium" spacing>
+                            {plainTekst(stegTekster.ingenVedleggskravTittel)}
+                        </Heading>
+                        <TekstBlock
+                            block={stegTekster.ingenVedleggskrav}
+                            typografi={Typografi.BodyLong}
+                        />
+                    </div>
+                )}
+
                 <PictureScanningGuide />
 
-                {søknad.dokumentasjon
-                    .filter(dokumentasjon => erDokumentasjonRelevant(dokumentasjon))
-                    .map((dokumentasjon, index) => (
-                        <LastOppVedlegg
-                            key={index}
-                            vedleggNr={index + 1}
-                            dokumentasjon={dokumentasjon}
-                            oppdaterDokumentasjon={oppdaterDokumentasjon}
-                        />
-                    ))}
+                {relevateDokumentasjoner.map((dokumentasjon, index) => (
+                    <LastOppVedlegg
+                        key={index}
+                        vedleggNr={index + 1}
+                        dokumentasjon={dokumentasjon}
+                        oppdaterDokumentasjon={oppdaterDokumentasjon}
+                    />
+                ))}
+
                 {innsendingStatus.status === RessursStatus.FEILET && <Feilside />}
             </VStack>
         </Steg>

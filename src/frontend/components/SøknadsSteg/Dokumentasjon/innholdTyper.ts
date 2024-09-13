@@ -6,6 +6,8 @@ export type IDokumentasjonTekstinnhold = {
     dokumentasjonGuide: LocaleRecordBlock;
     sendtInnTidligere: LocaleRecordBlock;
     vedleggXavY: LocaleRecordBlock;
+    ingenVedleggskrav: LocaleRecordBlock;
+    ingenVedleggskravTittel: LocaleRecordBlock;
 } & {
     [TittelSanityApiNavn.bekreftelsePaaAdopsjonTittel]: LocaleRecordBlock;
     [TittelSanityApiNavn.annenDokumentasjon]: LocaleRecordBlock;
