@@ -12,7 +12,6 @@ import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
-import { VedleggOppsummering } from '../../Felleskomponenter/VedleggOppsummering';
 
 import HvilkeBarnCheckboxGruppe from './HvilkeBarnCheckboxGruppe';
 import { OmBarnaDineSpørsmålId, omBarnaDineSpørsmålSpråkId } from './spørsmål';
@@ -44,6 +43,16 @@ const OmBarnaDine: React.FC = () => {
                 skjema,
                 settSøknadsdataCallback: oppdaterSøknad,
             }}
+            vedleggOppsummering={[
+                {
+                    skalVises: skjema.felter.erBarnAdoptertFraUtland.verdi === ESvar.JA,
+                    dokumentasjonsbehov: Dokumentasjonsbehov.ADOPSJON_DATO,
+                },
+                {
+                    skalVises: skjema.felter.søktAsylForBarn.verdi === ESvar.JA,
+                    dokumentasjonsbehov: Dokumentasjonsbehov.VEDTAK_OPPHOLDSTILLATELSE,
+                },
+            ]}
         >
             <KomponentGruppe>
                 <JaNeiSpm
@@ -203,19 +212,6 @@ const OmBarnaDine: React.FC = () => {
                     />
                 </KomponentGruppe>
             )}
-
-            <VedleggOppsummering
-                vedlegg={[
-                    {
-                        skalVises: skjema.felter.erBarnAdoptertFraUtland.verdi === ESvar.JA,
-                        dokumentasjonsbehov: Dokumentasjonsbehov.ADOPSJON_DATO,
-                    },
-                    {
-                        skalVises: skjema.felter.søktAsylForBarn.verdi === ESvar.JA,
-                        dokumentasjonsbehov: Dokumentasjonsbehov.VEDTAK_OPPHOLDSTILLATELSE,
-                    },
-                ]}
-            />
         </Steg>
     );
 };

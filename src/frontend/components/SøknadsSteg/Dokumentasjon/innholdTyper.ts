@@ -6,6 +6,8 @@ export type IDokumentasjonTekstinnhold = {
     dokumentasjonGuide: LocaleRecordBlock;
     sendtInnTidligere: LocaleRecordBlock;
     vedleggXavY: LocaleRecordBlock;
+    vedleggskravTittel: LocaleRecordBlock;
+    vedleggskrav: LocaleRecordBlock;
     ingenVedleggskravTittel: LocaleRecordBlock;
     ingenVedleggskrav: LocaleRecordBlock;
     manglerDokumentasjonSpoersmaalTittel: LocaleRecordBlock;

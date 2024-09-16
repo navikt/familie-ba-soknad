@@ -124,7 +124,16 @@ const Dokumentasjon: React.FC = () => {
                 )}
 
                 {brukerMåSendeVedlegg ? (
-                    <VedleggOppsummering vedlegg={vedleggOppsummering} />
+                    <div>
+                        <Heading level="3" size="medium" spacing>
+                            {plainTekst(stegTekster.vedleggskravTittel)}
+                        </Heading>
+                        <VedleggOppsummering vedlegg={vedleggOppsummering} />
+                        <TekstBlock
+                            block={stegTekster.vedleggskrav}
+                            typografi={Typografi.BodyLong}
+                        />
+                    </div>
                 ) : (
                     <div>
                         <Heading level="3" size="medium" spacing>

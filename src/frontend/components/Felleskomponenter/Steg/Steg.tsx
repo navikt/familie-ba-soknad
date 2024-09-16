@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { ArrowLeftIcon } from '@navikt/aksel-icons';
-import { Box, FormProgress, GuidePanel, Heading, Link, VStack } from '@navikt/ds-react';
+import { Alert, Box, FormProgress, GuidePanel, Heading, Link, VStack } from '@navikt/ds-react';
 import { ISkjema } from '@navikt/familie-skjema';
 import { setAvailableLanguages } from '@navikt/nav-dekoratoren-moduler';
 
@@ -27,6 +27,7 @@ import InnholdContainer from '../InnholdContainer/InnholdContainer';
 import TekstBlock from '../Sanity/TekstBlock';
 import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeiloppsummering';
 import useModal from '../SkjemaModal/useModal';
+import { IVedleggOppsummeringProps, VedleggOppsummering } from '../VedleggOppsummering';
 
 import ModellVersjonModal from './ModellVersjonModal';
 import Navigeringspanel from './Navigeringspanel';
@@ -43,6 +44,7 @@ interface ISteg {
         settSøknadsdataCallback: () => void;
     };
     gåVidereCallback?: () => Promise<boolean>;
+    vedleggOppsummering?: IVedleggOppsummeringProps['vedlegg'];
     children?: ReactNode;
 }
 
@@ -74,7 +76,14 @@ const Form = styled.form`
     width: 100%;
 `;
 
-const Steg: React.FC<ISteg> = ({ tittel, guide, skjema, gåVidereCallback, children }) => {
+const Steg: React.FC<ISteg> = ({
+    tittel,
+    guide,
+    skjema,
+    gåVidereCallback,
+    vedleggOppsummering,
+    children,
+}) => {
     const navigate = useNavigate();
     const { erÅpen: erModellVersjonModalÅpen, åpneModal: åpneModellVersjonModal } = useModal();
     const {
@@ -165,9 +174,13 @@ const Steg: React.FC<ISteg> = ({ tittel, guide, skjema, gåVidereCallback, child
 
     const { tilbakeKnapp } = tekster().FELLES.navigasjon;
 
+    const dokumentasjonTekster = tekster().DOKUMENTASJON;
     const frittståendeOrdTekster = tekster().FELLES.frittståendeOrd;
 
     const formProgressStegOppsummeringTekst = `${plainTekst(frittståendeOrdTekster.steg)} ${hentNåværendeStegIndex()} ${plainTekst(frittståendeOrdTekster.av)} ${formProgressSteg.length}`;
+
+    const skalVedleggOppsummeringVises =
+        vedleggOppsummering && vedleggOppsummering.filter(vedlegg => vedlegg.skalVises).length > 0;
 
     return (
         <>
@@ -232,6 +245,12 @@ const Steg: React.FC<ISteg> = ({ tittel, guide, skjema, gåVidereCallback, child
                     {skjema && visFeiloppsummering(skjema.skjema) && (
                         <SkjemaFeiloppsummering skjema={skjema.skjema} />
                     )}
+                    {skalVedleggOppsummeringVises && (
+                        <Alert variant="info">
+                            {plainTekst(dokumentasjonTekster.lastOppSenereISoknad)}
+                            <VedleggOppsummering vedlegg={vedleggOppsummering} />
+                        </Alert>
+                    )}
                     {!erPåKvitteringsside() && (
                         <Navigeringspanel
                             onTilbakeCallback={håndterTilbake}
@@ -240,6 +259,7 @@ const Steg: React.FC<ISteg> = ({ tittel, guide, skjema, gåVidereCallback, child
                         />
                     )}
                 </Form>
+
                 {erModellVersjonModalÅpen && (
                     <ModellVersjonModal erÅpen={erModellVersjonModalÅpen} />
                 )}

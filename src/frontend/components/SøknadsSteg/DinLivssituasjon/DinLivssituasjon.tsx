@@ -16,7 +16,6 @@ import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGr
 import { Pensjonsperiode } from '../../Felleskomponenter/Pensjonsmodal/Pensjonsperiode';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
-import { VedleggOppsummering } from '../../Felleskomponenter/VedleggOppsummering';
 
 import SamboerSkjema from './SamboerSkjema';
 import { DinLivssituasjonSpørsmålId, dinLivssituasjonSpørsmålSpråkId } from './spørsmål';
@@ -53,6 +52,16 @@ const DinLivssituasjon: React.FC = () => {
                 skjema,
                 settSøknadsdataCallback: oppdaterSøknad,
             }}
+            vedleggOppsummering={[
+                {
+                    skalVises: skjema.felter.separertEnkeSkilt.verdi === ESvar.JA,
+                    dokumentasjonsbehov: Dokumentasjonsbehov.SEPARERT_SKILT_ENKE,
+                },
+                {
+                    skalVises: skjema.felter.erAsylsøker.verdi === ESvar.JA,
+                    dokumentasjonsbehov: Dokumentasjonsbehov.VEDTAK_OPPHOLDSTILLATELSE,
+                },
+            ]}
         >
             {erUtvidet && (
                 <>
@@ -181,19 +190,6 @@ const DinLivssituasjon: React.FC = () => {
                     personType={PersonType.Søker}
                 />
             </KomponentGruppe>
-
-            <VedleggOppsummering
-                vedlegg={[
-                    {
-                        skalVises: skjema.felter.separertEnkeSkilt.verdi === ESvar.JA,
-                        dokumentasjonsbehov: Dokumentasjonsbehov.SEPARERT_SKILT_ENKE,
-                    },
-                    {
-                        skalVises: skjema.felter.erAsylsøker.verdi === ESvar.JA,
-                        dokumentasjonsbehov: Dokumentasjonsbehov.VEDTAK_OPPHOLDSTILLATELSE,
-                    },
-                ]}
-            />
         </Steg>
     );
 };
