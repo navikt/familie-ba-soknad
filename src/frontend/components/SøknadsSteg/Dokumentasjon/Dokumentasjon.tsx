@@ -12,11 +12,16 @@ import { IDokumentasjon, IVedlegg } from '../../../typer/dokumentasjon';
 import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
 import { ESanitySteg, Typografi } from '../../../typer/sanity/sanity';
 import { erDokumentasjonRelevant } from '../../../utils/dokumentasjon';
+import { slåSammen } from '../../../utils/slåSammen';
 import { Feilside } from '../../Felleskomponenter/Feilside/Feilside';
 import PictureScanningGuide from '../../Felleskomponenter/PictureScanningGuide/PictureScanningGuide';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
+import {
+    IVedleggOppsummeringProps,
+    VedleggOppsummering,
+} from '../../Felleskomponenter/VedleggOppsummering';
 
 import LastOppVedlegg from './LastOppVedlegg';
 
@@ -75,6 +80,24 @@ const Dokumentasjon: React.FC = () => {
                 dokumentasjon.dokumentasjonsbehov !== Dokumentasjonsbehov.ANNEN_DOKUMENTASJON
         ).length > 0;
 
+    const vedleggOppsummering: IVedleggOppsummeringProps['vedlegg'] = relevateDokumentasjoner
+        .filter(
+            dokumentasjon =>
+                dokumentasjon.dokumentasjonsbehov !== Dokumentasjonsbehov.ANNEN_DOKUMENTASJON
+        )
+        .map(dokumentasjon => {
+            const barnDokGjelderFor = søknad.barnInkludertISøknaden.filter(barn =>
+                dokumentasjon.gjelderForBarnId.find(id => id === barn.id)
+            );
+            const barnasNavn = slåSammen(barnDokGjelderFor.map(barn => barn.navn));
+
+            return {
+                skalVises: true,
+                dokumentasjonsbehov: dokumentasjon.dokumentasjonsbehov,
+                flettefeltVerdier: { barnetsNavn: barnasNavn },
+            };
+        });
+
     const stegTekster = tekster()[ESanitySteg.DOKUMENTASJON];
     const { dokumentasjonGuide } = stegTekster;
 
@@ -114,6 +137,8 @@ const Dokumentasjon: React.FC = () => {
                         />
                     </div>
                 )}
+
+                <VedleggOppsummering vedlegg={vedleggOppsummering} />
 
                 <PictureScanningGuide />
 
