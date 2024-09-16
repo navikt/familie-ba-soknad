@@ -69,6 +69,12 @@ const Dokumentasjon: React.FC = () => {
         erDokumentasjonRelevant(dokumentasjon)
     );
 
+    const brukerMåSendeVedlegg =
+        relevateDokumentasjoner.filter(
+            dokumentasjon =>
+                dokumentasjon.dokumentasjonsbehov !== Dokumentasjonsbehov.ANNEN_DOKUMENTASJON
+        ).length > 0;
+
     const stegTekster = tekster()[ESanitySteg.DOKUMENTASJON];
     const { dokumentasjonGuide } = stegTekster;
 
@@ -97,11 +103,7 @@ const Dokumentasjon: React.FC = () => {
                     </Alert>
                 )}
 
-                {relevateDokumentasjoner.filter(
-                    dokumentasjon =>
-                        dokumentasjon.dokumentasjonsbehov !==
-                        Dokumentasjonsbehov.ANNEN_DOKUMENTASJON
-                ).length === 0 && (
+                {!brukerMåSendeVedlegg && (
                     <div>
                         <Heading level="3" size="medium" spacing>
                             {plainTekst(stegTekster.ingenVedleggskravTittel)}
@@ -115,15 +117,17 @@ const Dokumentasjon: React.FC = () => {
 
                 <PictureScanningGuide />
 
-                <div>
-                    <Heading level="3" size="medium" spacing>
-                        {plainTekst(stegTekster.manglerDokumentasjonSpoersmaalTittel)}
-                    </Heading>
-                    <TekstBlock
-                        block={stegTekster.manglerDokumentasjonSpoersmaal}
-                        typografi={Typografi.BodyLong}
-                    />
-                </div>
+                {brukerMåSendeVedlegg && (
+                    <div>
+                        <Heading level="3" size="medium" spacing>
+                            {plainTekst(stegTekster.manglerDokumentasjonSpoersmaalTittel)}
+                        </Heading>
+                        <TekstBlock
+                            block={stegTekster.manglerDokumentasjonSpoersmaal}
+                            typografi={Typografi.BodyLong}
+                        />
+                    </div>
+                )}
 
                 {relevateDokumentasjoner.map((dokumentasjon, index) => (
                     <LastOppVedlegg
