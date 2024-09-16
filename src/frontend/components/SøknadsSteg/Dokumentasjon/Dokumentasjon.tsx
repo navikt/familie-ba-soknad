@@ -74,18 +74,15 @@ const Dokumentasjon: React.FC = () => {
         erDokumentasjonRelevant(dokumentasjon)
     );
 
-    const brukerMåSendeVedlegg =
-        relevateDokumentasjoner.filter(
-            dokumentasjon =>
-                dokumentasjon.dokumentasjonsbehov !== Dokumentasjonsbehov.ANNEN_DOKUMENTASJON
-        ).length > 0;
+    const relevateDokumentasjonerUtenAnnenDokumentasjon = relevateDokumentasjoner.filter(
+        dokumentasjon =>
+            dokumentasjon.dokumentasjonsbehov !== Dokumentasjonsbehov.ANNEN_DOKUMENTASJON
+    );
 
-    const vedleggOppsummering: IVedleggOppsummeringProps['vedlegg'] = relevateDokumentasjoner
-        .filter(
-            dokumentasjon =>
-                dokumentasjon.dokumentasjonsbehov !== Dokumentasjonsbehov.ANNEN_DOKUMENTASJON
-        )
-        .map(dokumentasjon => {
+    const brukerMåSendeVedlegg = relevateDokumentasjonerUtenAnnenDokumentasjon.length > 0;
+
+    const vedleggOppsummering: IVedleggOppsummeringProps['vedlegg'] =
+        relevateDokumentasjonerUtenAnnenDokumentasjon.map(dokumentasjon => {
             const barnDokGjelderFor = søknad.barnInkludertISøknaden.filter(barn =>
                 dokumentasjon.gjelderForBarnId.find(id => id === barn.id)
             );
@@ -126,7 +123,9 @@ const Dokumentasjon: React.FC = () => {
                     </Alert>
                 )}
 
-                {!brukerMåSendeVedlegg && (
+                {brukerMåSendeVedlegg ? (
+                    <VedleggOppsummering vedlegg={vedleggOppsummering} />
+                ) : (
                     <div>
                         <Heading level="3" size="medium" spacing>
                             {plainTekst(stegTekster.ingenVedleggskravTittel)}
@@ -137,8 +136,6 @@ const Dokumentasjon: React.FC = () => {
                         />
                     </div>
                 )}
-
-                <VedleggOppsummering vedlegg={vedleggOppsummering} />
 
                 <PictureScanningGuide />
 
