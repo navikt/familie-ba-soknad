@@ -11,7 +11,6 @@ import {
     IVedlegg,
 } from '../../../typer/dokumentasjon';
 import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
-import { ESivilstand, ESøknadstype } from '../../../typer/kontrakt/generelle';
 import { Typografi } from '../../../typer/sanity/sanity';
 import { slåSammen } from '../../../utils/slåSammen';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
@@ -74,14 +73,6 @@ const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr, oppdaterDok
             dokumentasjonsbehovTilTittelSanityApiNavn(dokumentasjon.dokumentasjonsbehov)
         ];
 
-    const skalViseDokumentasjonsBeskrivelse = () => {
-        return (
-            dokumentasjon.dokumentasjonsbehov !== Dokumentasjonsbehov.ANNEN_DOKUMENTASJON ||
-            (søknad.søknadstype === ESøknadstype.UTVIDET &&
-                søknad.søker.sivilstand.type === ESivilstand.SKILT)
-        );
-    };
-
     const dokumentasjonsbeskrivelse = dokumentasjonsbehovTilBeskrivelseSanityApiNavn(
         dokumentasjon.dokumentasjonsbehov
     );
@@ -103,7 +94,7 @@ const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr, oppdaterDok
                 <FormSummary.Heading level={'3'}>{vedleggtittel}</FormSummary.Heading>
             </FormSummary.Header>
             <VStack gap="12" paddingInline="6" paddingBlock="5 6">
-                {dokumentasjonsbeskrivelse && skalViseDokumentasjonsBeskrivelse() && (
+                {dokumentasjonsbeskrivelse && (
                     <div>
                         <TekstBlock
                             data-testid={'dokumentasjonsbeskrivelse'}
