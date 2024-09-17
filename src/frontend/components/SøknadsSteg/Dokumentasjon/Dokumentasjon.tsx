@@ -96,12 +96,15 @@ const Dokumentasjon: React.FC = () => {
         });
 
     const stegTekster = tekster()[ESanitySteg.DOKUMENTASJON];
-    const { dokumentasjonGuide } = stegTekster;
 
     return (
         <Steg
             tittel={<SpråkTekst id={'dokumentasjon.sidetittel'} />}
-            guide={dokumentasjonGuide}
+            guide={
+                brukerMåSendeVedlegg
+                    ? stegTekster.dokumentasjonGuideVedleggskrav
+                    : stegTekster.dokumentasjonGuideIngenVedleggskrav
+            }
             gåVidereCallback={async () => {
                 const [success, _] = await sendInnSkjema();
                 return success;
