@@ -6,8 +6,8 @@ export type IDokumentasjonTekstinnhold = {
     dokumentasjonGuide: LocaleRecordBlock;
     dokumentasjonGuideVedleggskrav: LocaleRecordBlock;
     dokumentasjonGuideIngenVedleggskrav: LocaleRecordBlock;
-    sendtInnTidligere: LocaleRecordBlock;
-    vedleggXavY: LocaleRecordBlock;
+} & {
+    // Info innledning
     vedleggskravTittel: LocaleRecordBlock;
     vedleggskrav: LocaleRecordBlock;
     ingenVedleggskravTittel: LocaleRecordBlock;
@@ -15,6 +15,33 @@ export type IDokumentasjonTekstinnhold = {
     manglerDokumentasjonSpoersmaalTittel: LocaleRecordBlock;
     manglerDokumentasjonSpoersmaal: LocaleRecordBlock;
 } & {
+    // Bilde scanning guide
+    slikTarDuEtGodtBildeExpand: LocaleRecordString;
+    slikTarDuEtGodtBildeTittel: LocaleRecordBlock;
+    slikTarDuEtGodtBilde: LocaleRecordBlock;
+    etterDuHarTattBildetTittel: LocaleRecordBlock;
+    etterDuHarTattBildet: LocaleRecordBlock;
+    vaerTryggNaarDuTarBildeTittel: LocaleRecordBlock;
+    vaerTryggNaarDuTarBilde: LocaleRecordBlock;
+    // Bra og dårlige eksempler
+    braOgDaarligeTittel: LocaleRecordBlock;
+    bra: LocaleRecordBlock;
+    daarlig: LocaleRecordBlock;
+    fyllerHeleBildet: LocaleRecordBlock;
+    ikkeTattOvenfra: LocaleRecordBlock;
+    ikkeRiktigRetning: LocaleRecordBlock;
+    skyggePaaDokumentet: LocaleRecordBlock;
+} & {
+    // Knapper og checkbox
+    sendtInnTidligere: LocaleRecordBlock;
+    forMange: LocaleRecordString;
+    feilFiltype: LocaleRecordString;
+    forStor: LocaleRecordString;
+    bildetForLite: LocaleRecordString;
+    noeGikkFeil: LocaleRecordString;
+} & {
+    // Vedlegg - titler
+    vedleggXavY: LocaleRecordBlock;
     [TittelSanityApiNavn.bekreftelsePaaAdopsjonTittel]: LocaleRecordBlock;
     [TittelSanityApiNavn.annenDokumentasjon]: LocaleRecordBlock;
     [TittelSanityApiNavn.avtaleOmDeltBostedTittel]: LocaleRecordBlock;
@@ -24,6 +51,7 @@ export type IDokumentasjonTekstinnhold = {
     [TittelSanityApiNavn.dokumentasjonPaaSeparasjonSkilsmisseEllerDoedsfallTittel]: LocaleRecordBlock;
     [TittelSanityApiNavn.vedtakOmOppholdstillatelseTittel]: LocaleRecordBlock;
 } & {
+    // Vedlegg - beskrivelser
     [BeskrivelseSanityApiNavn.dokumentasjonPaaSeparasjonSkilsmisseEllerDoedsfall]: LocaleRecordBlock;
     [BeskrivelseSanityApiNavn.vedtakOmOppholdstillatelse]: LocaleRecordBlock;
     [BeskrivelseSanityApiNavn.bekreftelsePaaAdopsjonBarnetrygd]: LocaleRecordBlock;
@@ -32,10 +60,4 @@ export type IDokumentasjonTekstinnhold = {
     [BeskrivelseSanityApiNavn.meklingsattest]: LocaleRecordBlock;
     [BeskrivelseSanityApiNavn.bekreftelseFraBarnevernetBarnetrygd]: LocaleRecordBlock;
     [BeskrivelseSanityApiNavn.lastOppSenereISoknad]: LocaleRecordBlock;
-} & {
-    forMange: LocaleRecordString;
-    feilFiltype: LocaleRecordString;
-    forStor: LocaleRecordString;
-    bildetForLite: LocaleRecordString;
-    noeGikkFeil: LocaleRecordString;
 };
