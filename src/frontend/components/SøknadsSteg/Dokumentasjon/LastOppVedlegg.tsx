@@ -93,7 +93,7 @@ const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr, oppdaterDok
             <FormSummary.Header>
                 <FormSummary.Heading level={'3'}>{vedleggtittel}</FormSummary.Heading>
             </FormSummary.Header>
-            <VStack gap="12" paddingInline="6" paddingBlock="5 6">
+            <VStack gap="6" paddingInline="6" paddingBlock="5 6">
                 {dokumentasjonsbeskrivelse && (
                     <div>
                         <TekstBlock
@@ -101,19 +101,6 @@ const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr, oppdaterDok
                             block={dokumentasjonstekster[dokumentasjonsbeskrivelse]}
                             flettefelter={{ barnetsNavn: barnasNavn }}
                             typografi={Typografi.BodyLong}
-                        />
-                    </div>
-                )}
-
-                {!dokumentasjon.harSendtInn && (
-                    <div data-testid={'dokumentopplaster'}>
-                        <Filopplaster
-                            oppdaterDokumentasjon={oppdaterDokumentasjon}
-                            dokumentasjon={dokumentasjon}
-                            tillatteFiltyper={{
-                                'image/*': [EFiltyper.PNG, EFiltyper.JPG, EFiltyper.JPEG],
-                                'application/pdf': [EFiltyper.PDF],
-                            }}
                         />
                     </div>
                 )}
@@ -129,6 +116,19 @@ const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, vedleggNr, oppdaterDok
                     >
                         {plainTekst(dokumentasjonstekster.sendtInnTidligere)}
                     </Checkbox>
+                )}
+
+                {!dokumentasjon.harSendtInn && (
+                    <div data-testid={'dokumentopplaster'}>
+                        <Filopplaster
+                            oppdaterDokumentasjon={oppdaterDokumentasjon}
+                            dokumentasjon={dokumentasjon}
+                            tillatteFiltyper={{
+                                'image/*': [EFiltyper.PNG, EFiltyper.JPG, EFiltyper.JPEG],
+                                'application/pdf': [EFiltyper.PDF],
+                            }}
+                        />
+                    </div>
                 )}
             </VStack>
         </FormSummary>
