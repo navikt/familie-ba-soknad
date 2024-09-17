@@ -2,7 +2,7 @@ import React from 'react';
 
 import styled from 'styled-components';
 
-import { Heading, VStack } from '@navikt/ds-react';
+import { Heading, HGrid, VStack } from '@navikt/ds-react';
 
 import { useApp } from '../../../context/AppContext';
 import ExpandableInfo from '../expandableContent/ExpandableInfo';
@@ -21,27 +21,6 @@ const Container = styled.div`
         li {
             margin-bottom: 0.5rem;
         }
-    }
-`;
-
-const EksempelBilderWrapper = styled.div`
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-around;
-`;
-
-const BildeContainer = styled.div`
-    flex: 1 1 50%;
-    height: auto;
-    padding: 0.5rem 0.5rem 1.5rem 0.5rem;
-    &:first-child {
-        padding-left: 0;
-    }
-    &:last-child {
-        padding-right: 0;
-    }
-    @media screen and (min-width: 768px) {
-        max-width: 25%;
     }
 `;
 
@@ -69,46 +48,35 @@ const PictureScanningGuide = () => {
                         <Heading level="4" size="xsmall" spacing>
                             {plainTekst(dokumentasjonTekster.braOgDaarligeTittel)}
                         </Heading>
-                        <EksempelBilderWrapper>
-                            <BildeContainer>
-                                <PictureScanningExample
-                                    image={<ScanningIcon status="good" height={svgIconHeight} />}
-                                    status="suksess"
-                                    statusText={plainTekst(dokumentasjonTekster.bra)}
-                                    description={plainTekst(dokumentasjonTekster.fyllerHeleBildet)}
-                                />
-                            </BildeContainer>
-                            <BildeContainer>
-                                <PictureScanningExample
-                                    image={
-                                        <ScanningIcon status="keystone" height={svgIconHeight} />
-                                    }
-                                    status="feil"
-                                    statusText={plainTekst(dokumentasjonTekster.daarlig)}
-                                    description={plainTekst(dokumentasjonTekster.ikkeTattOvenfra)}
-                                />
-                            </BildeContainer>
-                            <BildeContainer>
-                                <PictureScanningExample
-                                    image={
-                                        <ScanningIcon status="horizontal" height={svgIconHeight} />
-                                    }
-                                    status="feil"
-                                    statusText={plainTekst(dokumentasjonTekster.daarlig)}
-                                    description={plainTekst(dokumentasjonTekster.ikkeRiktigRetning)}
-                                />
-                            </BildeContainer>
-                            <BildeContainer>
-                                <PictureScanningExample
-                                    image={<ScanningIcon status="shadow" height={svgIconHeight} />}
-                                    status="feil"
-                                    statusText={plainTekst(dokumentasjonTekster.daarlig)}
-                                    description={plainTekst(
-                                        dokumentasjonTekster.skyggePaaDokumentet
-                                    )}
-                                />
-                            </BildeContainer>
-                        </EksempelBilderWrapper>
+                        <HGrid gap="6 4" marginBlock="6 0" columns={{ xs: 2, md: 4 }}>
+                            <PictureScanningExample
+                                image={<ScanningIcon status="good" height={svgIconHeight} />}
+                                status="suksess"
+                                statusText={plainTekst(dokumentasjonTekster.bra)}
+                                description={plainTekst(dokumentasjonTekster.fyllerHeleBildet)}
+                            />
+
+                            <PictureScanningExample
+                                image={<ScanningIcon status="keystone" height={svgIconHeight} />}
+                                status="feil"
+                                statusText={plainTekst(dokumentasjonTekster.daarlig)}
+                                description={plainTekst(dokumentasjonTekster.ikkeTattOvenfra)}
+                            />
+
+                            <PictureScanningExample
+                                image={<ScanningIcon status="horizontal" height={svgIconHeight} />}
+                                status="feil"
+                                statusText={plainTekst(dokumentasjonTekster.daarlig)}
+                                description={plainTekst(dokumentasjonTekster.ikkeRiktigRetning)}
+                            />
+
+                            <PictureScanningExample
+                                image={<ScanningIcon status="shadow" height={svgIconHeight} />}
+                                status="feil"
+                                statusText={plainTekst(dokumentasjonTekster.daarlig)}
+                                description={plainTekst(dokumentasjonTekster.skyggePaaDokumentet)}
+                            />
+                        </HGrid>
                     </div>
                     <div>
                         <Heading level="4" size="xsmall" spacing>
