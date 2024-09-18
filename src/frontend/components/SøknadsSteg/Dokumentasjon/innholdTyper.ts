@@ -8,6 +8,7 @@ export type IDokumentasjonTekstinnhold = {
     dokumentasjonGuideIngenVedleggskrav: LocaleRecordBlock;
 } & {
     // Info innledning
+    forLangTidDokumentasjon: LocaleRecordBlock;
     vedleggskravTittel: LocaleRecordBlock;
     vedleggskrav: LocaleRecordBlock;
     ingenVedleggskravTittel: LocaleRecordBlock;
@@ -39,6 +40,9 @@ export type IDokumentasjonTekstinnhold = {
     forStor: LocaleRecordString;
     bildetForLite: LocaleRecordString;
     noeGikkFeil: LocaleRecordString;
+    lastOppKnapp: LocaleRecordString;
+    slippFilenHer: LocaleRecordString;
+    slett: LocaleRecordString;
 } & {
     // Vedlegg - titler
     vedleggXavY: LocaleRecordBlock;
@@ -60,4 +64,5 @@ export type IDokumentasjonTekstinnhold = {
     [BeskrivelseSanityApiNavn.meklingsattest]: LocaleRecordBlock;
     [BeskrivelseSanityApiNavn.bekreftelseFraBarnevernetBarnetrygd]: LocaleRecordBlock;
     [BeskrivelseSanityApiNavn.lastOppSenereISoknad]: LocaleRecordBlock;
+    [BeskrivelseSanityApiNavn.annenDokumentasjonBeskrivelse]: LocaleRecordBlock;
 };

@@ -10,7 +10,6 @@ import { ABlue500, ABorderDefault } from '@navikt/ds-tokens/dist/tokens';
 import { useApp } from '../../../../context/AppContext';
 import { IDokumentasjon, IVedlegg } from '../../../../typer/dokumentasjon';
 import { Dokumentasjonsbehov } from '../../../../typer/kontrakt/dokumentasjon';
-import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 import OpplastedeFiler from './OpplastedeFiler';
 import { useFilopplaster } from './useFilopplaster';
@@ -76,22 +75,15 @@ const Filopplaster: React.FC<Props> = ({
         accept: tillatteFiltyper,
     });
 
-    const { plainTekst } = useApp();
+    const { tekster, plainTekst } = useApp();
+    const { lastOppKnapp, slippFilenHer } = tekster().DOKUMENTASJON;
 
     return (
         <VStack gap="4">
             <FilopplastningBoks type={'button'} {...getRootProps()} $harFeil={harFeil}>
                 <input {...getInputProps()} />
                 <StyledUpload focusable={false} aria-hidden />
-                <BodyShort>
-                    <SpråkTekst
-                        id={
-                            isDragActive
-                                ? 'dokumentasjon.last-opp-dokumentasjon.aktivknapp'
-                                : 'dokumentasjon.last-opp-dokumentasjon.knapp'
-                        }
-                    />
-                </BodyShort>
+                <BodyShort>{plainTekst(isDragActive ? slippFilenHer : lastOppKnapp)}</BodyShort>
             </FilopplastningBoks>
 
             {dokumentasjon.opplastedeVedlegg.length > 0 && (

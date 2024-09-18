@@ -16,7 +16,6 @@ import { slåSammen } from '../../../utils/slåSammen';
 import { Feilside } from '../../Felleskomponenter/Feilside/Feilside';
 import PictureScanningGuide from '../../Felleskomponenter/PictureScanningGuide/PictureScanningGuide';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
-import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import {
     IVedleggOppsummeringProps,
@@ -99,7 +98,7 @@ const Dokumentasjon: React.FC = () => {
 
     return (
         <Steg
-            tittel={<SpråkTekst id={'dokumentasjon.sidetittel'} />}
+            tittel={<TekstBlock block={stegTekster.dokumentasjonTittel} />}
             guide={
                 brukerHarVedleggskrav
                     ? stegTekster.dokumentasjonGuideVedleggskrav
@@ -113,9 +112,10 @@ const Dokumentasjon: React.FC = () => {
             <VStack gap="12">
                 {slettaVedlegg.length > 0 && (
                     <Alert variant={'warning'}>
-                        <BodyShort>
-                            <SpråkTekst id={'dokumentasjon.forlangtid.info'} />
-                        </BodyShort>
+                        <TekstBlock
+                            block={stegTekster.forLangTidDokumentasjon}
+                            typografi={Typografi.BodyLong}
+                        />
                         <ul>
                             {slettaVedlegg.map(vedlegg => (
                                 <li key={vedlegg.dokumentId}>
@@ -125,7 +125,6 @@ const Dokumentasjon: React.FC = () => {
                         </ul>
                     </Alert>
                 )}
-
                 {brukerHarVedleggskrav ? (
                     <>
                         <div>
@@ -138,9 +137,7 @@ const Dokumentasjon: React.FC = () => {
                                 typografi={Typografi.BodyLong}
                             />
                         </div>
-
                         <PictureScanningGuide />
-
                         <div>
                             <Heading level="3" size="medium" spacing>
                                 {plainTekst(stegTekster.manglerDokumentasjonSpoersmaalTittel)}
@@ -162,11 +159,9 @@ const Dokumentasjon: React.FC = () => {
                                 typografi={Typografi.BodyLong}
                             />
                         </div>
-
                         <PictureScanningGuide />
                     </>
                 )}
-
                 {relevateDokumentasjoner.map((dokumentasjon, index) => (
                     <LastOppVedlegg
                         key={index}
@@ -175,7 +170,6 @@ const Dokumentasjon: React.FC = () => {
                         oppdaterDokumentasjon={oppdaterDokumentasjon}
                     />
                 ))}
-
                 {innsendingStatus.status === RessursStatus.FEILET && <Feilside />}
             </VStack>
         </Steg>
