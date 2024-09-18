@@ -79,7 +79,7 @@ const Dokumentasjon: React.FC = () => {
             dokumentasjon.dokumentasjonsbehov !== Dokumentasjonsbehov.ANNEN_DOKUMENTASJON
     );
 
-    const brukerMåSendeVedlegg = relevateDokumentasjonerUtenAnnenDokumentasjon.length > 0;
+    const brukerHarVedleggskrav = relevateDokumentasjonerUtenAnnenDokumentasjon.length > 0;
 
     const vedleggOppsummering: IVedleggOppsummeringProps['vedlegg'] =
         relevateDokumentasjonerUtenAnnenDokumentasjon.map(dokumentasjon => {
@@ -101,7 +101,7 @@ const Dokumentasjon: React.FC = () => {
         <Steg
             tittel={<SpråkTekst id={'dokumentasjon.sidetittel'} />}
             guide={
-                brukerMåSendeVedlegg
+                brukerHarVedleggskrav
                     ? stegTekster.dokumentasjonGuideVedleggskrav
                     : stegTekster.dokumentasjonGuideIngenVedleggskrav
             }
@@ -126,41 +126,45 @@ const Dokumentasjon: React.FC = () => {
                     </Alert>
                 )}
 
-                {brukerMåSendeVedlegg ? (
-                    <div>
-                        <Heading level="3" size="medium" spacing>
-                            {plainTekst(stegTekster.vedleggskravTittel)}
-                        </Heading>
-                        <VedleggOppsummering vedlegg={vedleggOppsummering} />
-                        <TekstBlock
-                            block={stegTekster.vedleggskrav}
-                            typografi={Typografi.BodyLong}
-                        />
-                    </div>
+                {brukerHarVedleggskrav ? (
+                    <>
+                        <div>
+                            <Heading level="3" size="medium" spacing>
+                                {plainTekst(stegTekster.vedleggskravTittel)}
+                            </Heading>
+                            <VedleggOppsummering vedlegg={vedleggOppsummering} />
+                            <TekstBlock
+                                block={stegTekster.vedleggskrav}
+                                typografi={Typografi.BodyLong}
+                            />
+                        </div>
+
+                        <PictureScanningGuide />
+
+                        <div>
+                            <Heading level="3" size="medium" spacing>
+                                {plainTekst(stegTekster.manglerDokumentasjonSpoersmaalTittel)}
+                            </Heading>
+                            <TekstBlock
+                                block={stegTekster.manglerDokumentasjonSpoersmaal}
+                                typografi={Typografi.BodyLong}
+                            />
+                        </div>
+                    </>
                 ) : (
-                    <div>
-                        <Heading level="3" size="medium" spacing>
-                            {plainTekst(stegTekster.ingenVedleggskravTittel)}
-                        </Heading>
-                        <TekstBlock
-                            block={stegTekster.ingenVedleggskrav}
-                            typografi={Typografi.BodyLong}
-                        />
-                    </div>
-                )}
+                    <>
+                        <div>
+                            <Heading level="3" size="medium" spacing>
+                                {plainTekst(stegTekster.ingenVedleggskravTittel)}
+                            </Heading>
+                            <TekstBlock
+                                block={stegTekster.ingenVedleggskrav}
+                                typografi={Typografi.BodyLong}
+                            />
+                        </div>
 
-                <PictureScanningGuide />
-
-                {brukerMåSendeVedlegg && (
-                    <div>
-                        <Heading level="3" size="medium" spacing>
-                            {plainTekst(stegTekster.manglerDokumentasjonSpoersmaalTittel)}
-                        </Heading>
-                        <TekstBlock
-                            block={stegTekster.manglerDokumentasjonSpoersmaal}
-                            typografi={Typografi.BodyLong}
-                        />
-                    </div>
+                        <PictureScanningGuide />
+                    </>
                 )}
 
                 {relevateDokumentasjoner.map((dokumentasjon, index) => (

@@ -22,7 +22,7 @@ const StyledVStack = styled(VStack)`
 const PictureScanningGuide = () => {
     const { tekster, plainTekst } = useApp();
     const dokumentasjonTekster = tekster().DOKUMENTASJON;
-    const svgIconHeight = 100;
+    const svgIconHeight = 112;
 
     return (
         <ExpansionCard
