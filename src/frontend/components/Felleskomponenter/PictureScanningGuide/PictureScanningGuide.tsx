@@ -25,10 +25,7 @@ const PictureScanningGuide = () => {
     const svgIconHeight = 112;
 
     return (
-        <ExpansionCard
-            size="small"
-            aria-label={plainTekst(dokumentasjonTekster.slikTarDuEtGodtBildeExpand)}
-        >
+        <ExpansionCard aria-label={plainTekst(dokumentasjonTekster.slikTarDuEtGodtBildeExpand)}>
             <ExpansionCard.Header>
                 <ExpansionCard.Title as="h3" size="small">
                     {plainTekst(dokumentasjonTekster.slikTarDuEtGodtBildeExpand)}
