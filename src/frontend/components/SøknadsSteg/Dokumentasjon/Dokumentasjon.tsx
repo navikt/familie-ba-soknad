@@ -128,7 +128,7 @@ const Dokumentasjon: React.FC = () => {
                 {brukerHarVedleggskrav ? (
                     <>
                         <div>
-                            <Heading level="3" size="medium" spacing>
+                            <Heading level="3" size="small" spacing>
                                 {plainTekst(stegTekster.vedleggskravTittel)}
                             </Heading>
                             <VedleggOppsummering vedlegg={vedleggOppsummering} />
@@ -139,7 +139,7 @@ const Dokumentasjon: React.FC = () => {
                         </div>
                         <PictureScanningGuide />
                         <div>
-                            <Heading level="3" size="medium" spacing>
+                            <Heading level="3" size="small" spacing>
                                 {plainTekst(stegTekster.manglerDokumentasjonSpoersmaalTittel)}
                             </Heading>
                             <TekstBlock
@@ -151,7 +151,7 @@ const Dokumentasjon: React.FC = () => {
                 ) : (
                     <>
                         <div>
-                            <Heading level="3" size="medium" spacing>
+                            <Heading level="3" size="small" spacing>
                                 {plainTekst(stegTekster.ingenVedleggskravTittel)}
                             </Heading>
                             <TekstBlock
@@ -165,7 +165,6 @@ const Dokumentasjon: React.FC = () => {
                 {relevateDokumentasjoner.map((dokumentasjon, index) => (
                     <LastOppVedlegg
                         key={index}
-                        vedleggNr={index + 1}
                         dokumentasjon={dokumentasjon}
                         oppdaterDokumentasjon={oppdaterDokumentasjon}
                     />

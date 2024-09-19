@@ -30,7 +30,7 @@ const PictureScanningGuide = () => {
             aria-label={plainTekst(dokumentasjonTekster.slikTarDuEtGodtBildeExpand)}
         >
             <ExpansionCard.Header>
-                <ExpansionCard.Title as="h3" size="medium">
+                <ExpansionCard.Title as="h3" size="small">
                     {plainTekst(dokumentasjonTekster.slikTarDuEtGodtBildeExpand)}
                 </ExpansionCard.Title>
             </ExpansionCard.Header>

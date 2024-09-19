@@ -45,7 +45,6 @@ export type IDokumentasjonTekstinnhold = {
     slett: LocaleRecordString;
 } & {
     // Vedlegg - titler
-    vedleggXavY: LocaleRecordBlock;
     [TittelSanityApiNavn.bekreftelsePaaAdopsjonTittel]: LocaleRecordBlock;
     [TittelSanityApiNavn.annenDokumentasjon]: LocaleRecordBlock;
     [TittelSanityApiNavn.avtaleOmDeltBostedTittel]: LocaleRecordBlock;
