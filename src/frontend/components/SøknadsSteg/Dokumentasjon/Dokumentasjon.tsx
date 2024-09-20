@@ -17,10 +17,8 @@ import { Feilside } from '../../Felleskomponenter/Feilside/Feilside';
 import PictureScanningGuide from '../../Felleskomponenter/PictureScanningGuide/PictureScanningGuide';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import Steg from '../../Felleskomponenter/Steg/Steg';
-import {
-    IVedleggOppsummeringProps,
-    VedleggOppsummering,
-} from '../../Felleskomponenter/VedleggOppsummering';
+import { VedleggOppsummering } from '../../Felleskomponenter/VedleggOppsummering/VedleggOppsummering';
+import { IVedleggOppsummering } from '../../Felleskomponenter/VedleggOppsummering/vedleggOppsummeringTypes';
 
 import LastOppVedlegg from './LastOppVedlegg';
 
@@ -69,6 +67,8 @@ const Dokumentasjon: React.FC = () => {
         });
     });
 
+    // Add the following logic to AppContext
+    // START
     const relevateDokumentasjoner = søknad.dokumentasjon.filter(dokumentasjon =>
         erDokumentasjonRelevant(dokumentasjon)
     );
@@ -80,7 +80,7 @@ const Dokumentasjon: React.FC = () => {
 
     const brukerHarVedleggskrav = relevateDokumentasjonerUtenAnnenDokumentasjon.length > 0;
 
-    const vedleggOppsummering: IVedleggOppsummeringProps['vedlegg'] =
+    const vedleggOppsummering: IVedleggOppsummering[] =
         relevateDokumentasjonerUtenAnnenDokumentasjon.map(dokumentasjon => {
             const barnDokGjelderFor = søknad.barnInkludertISøknaden.filter(barn =>
                 dokumentasjon.gjelderForBarnId.find(id => id === barn.id)
@@ -93,6 +93,7 @@ const Dokumentasjon: React.FC = () => {
                 flettefeltVerdier: { barnetsNavn: barnasNavn },
             };
         });
+    // STOP
 
     const stegTekster = tekster()[ESanitySteg.DOKUMENTASJON];
 

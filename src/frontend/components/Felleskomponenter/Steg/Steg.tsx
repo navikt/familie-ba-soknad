@@ -27,7 +27,9 @@ import InnholdContainer from '../InnholdContainer/InnholdContainer';
 import TekstBlock from '../Sanity/TekstBlock';
 import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeiloppsummering';
 import useModal from '../SkjemaModal/useModal';
-import { IVedleggOppsummeringProps, VedleggOppsummering } from '../VedleggOppsummering';
+import { VedleggOppsummering } from '../VedleggOppsummering/VedleggOppsummering';
+import { IVedleggOppsummering } from '../VedleggOppsummering/vedleggOppsummeringTypes';
+import { skalVedleggOppsummeringVises } from '../VedleggOppsummering/vedleggOppsummeringUtils';
 
 import ModellVersjonModal from './ModellVersjonModal';
 import Navigeringspanel from './Navigeringspanel';
@@ -44,7 +46,7 @@ interface ISteg {
         settSøknadsdataCallback: () => void;
     };
     gåVidereCallback?: () => Promise<boolean>;
-    vedleggOppsummering?: IVedleggOppsummeringProps['vedlegg'];
+    vedleggOppsummering?: IVedleggOppsummering[];
     children?: ReactNode;
 }
 
@@ -179,8 +181,8 @@ const Steg: React.FC<ISteg> = ({
 
     const formProgressStegOppsummeringTekst = `${plainTekst(frittståendeOrdTekster.steg)} ${hentNåværendeStegIndex()} ${plainTekst(frittståendeOrdTekster.av)} ${formProgressSteg.length}`;
 
-    const skalVedleggOppsummeringVises =
-        vedleggOppsummering && vedleggOppsummering.filter(vedlegg => vedlegg.skalVises).length > 0;
+    const visVedleggOppsummering =
+        vedleggOppsummering && skalVedleggOppsummeringVises(vedleggOppsummering);
 
     return (
         <>
@@ -245,7 +247,7 @@ const Steg: React.FC<ISteg> = ({
                     {skjema && visFeiloppsummering(skjema.skjema) && (
                         <SkjemaFeiloppsummering skjema={skjema.skjema} />
                     )}
-                    {skalVedleggOppsummeringVises && (
+                    {visVedleggOppsummering && (
                         <Alert variant="info">
                             {plainTekst(dokumentasjonTekster.lastOppSenereISoknad)}
                             <VedleggOppsummering vedlegg={vedleggOppsummering} />
