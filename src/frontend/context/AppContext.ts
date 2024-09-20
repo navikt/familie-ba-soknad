@@ -373,6 +373,13 @@ const [AppProvider, useApp] = createUseContext(() => {
 
     const brukerHarVedleggskrav = relevateDokumentasjonerUtenAnnenDokumentasjon.length > 0;
 
+    const { dokumentasjonGuideVedleggskrav, dokumentasjonGuideIngenVedleggskrav } =
+        tekster().DOKUMENTASJON;
+
+    const dokumentasjonGuide = brukerHarVedleggskrav
+        ? dokumentasjonGuideVedleggskrav
+        : dokumentasjonGuideIngenVedleggskrav;
+
     const vedleggOppsummering = hentVedleggOppsummering(
         relevateDokumentasjonerUtenAnnenDokumentasjon,
         søknad
@@ -413,6 +420,7 @@ const [AppProvider, useApp] = createUseContext(() => {
         relevateDokumentasjoner,
         relevateDokumentasjonerUtenAnnenDokumentasjon,
         brukerHarVedleggskrav,
+        dokumentasjonGuide,
         vedleggOppsummering,
     };
 });

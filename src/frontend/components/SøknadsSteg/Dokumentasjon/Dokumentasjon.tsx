@@ -35,6 +35,7 @@ const Dokumentasjon: React.FC = () => {
         brukerHarVedleggskrav,
         vedleggOppsummering,
         relevateDokumentasjoner,
+        dokumentasjonGuide,
     } = useApp();
     const { sendInnSkjema } = useSendInnSkjema();
     const [slettaVedlegg, settSlettaVedlegg] = useState<IVedlegg[]>([]);
@@ -78,11 +79,7 @@ const Dokumentasjon: React.FC = () => {
     return (
         <Steg
             tittel={<TekstBlock block={stegTekster.dokumentasjonTittel} />}
-            guide={
-                brukerHarVedleggskrav
-                    ? stegTekster.dokumentasjonGuideVedleggskrav
-                    : stegTekster.dokumentasjonGuideIngenVedleggskrav
-            }
+            guide={dokumentasjonGuide}
             gåVidereCallback={async () => {
                 const [success, _] = await sendInnSkjema();
                 return success;
