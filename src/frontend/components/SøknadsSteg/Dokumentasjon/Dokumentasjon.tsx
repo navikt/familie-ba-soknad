@@ -11,14 +11,11 @@ import { useSendInnSkjema } from '../../../hooks/useSendInnSkjema';
 import { IDokumentasjon, IVedlegg } from '../../../typer/dokumentasjon';
 import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
 import { ESanitySteg, Typografi } from '../../../typer/sanity/sanity';
-import { erDokumentasjonRelevant } from '../../../utils/dokumentasjon';
-import { slåSammen } from '../../../utils/slåSammen';
 import { Feilside } from '../../Felleskomponenter/Feilside/Feilside';
 import PictureScanningGuide from '../../Felleskomponenter/PictureScanningGuide/PictureScanningGuide';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import { VedleggOppsummering } from '../../Felleskomponenter/VedleggOppsummering/VedleggOppsummering';
-import { IVedleggOppsummering } from '../../Felleskomponenter/VedleggOppsummering/vedleggOppsummeringTypes';
 
 import LastOppVedlegg from './LastOppVedlegg';
 
@@ -29,7 +26,16 @@ export const erVedleggstidspunktGyldig = (vedleggTidspunkt: string): boolean => 
 };
 
 const Dokumentasjon: React.FC = () => {
-    const { søknad, settSøknad, innsendingStatus, tekster, plainTekst } = useApp();
+    const {
+        søknad,
+        settSøknad,
+        innsendingStatus,
+        tekster,
+        plainTekst,
+        brukerHarVedleggskrav,
+        vedleggOppsummering,
+        relevateDokumentasjoner,
+    } = useApp();
     const { sendInnSkjema } = useSendInnSkjema();
     const [slettaVedlegg, settSlettaVedlegg] = useState<IVedlegg[]>([]);
 
@@ -66,34 +72,6 @@ const Dokumentasjon: React.FC = () => {
             }
         });
     });
-
-    // Add the following logic to AppContext
-    // START
-    const relevateDokumentasjoner = søknad.dokumentasjon.filter(dokumentasjon =>
-        erDokumentasjonRelevant(dokumentasjon)
-    );
-
-    const relevateDokumentasjonerUtenAnnenDokumentasjon = relevateDokumentasjoner.filter(
-        dokumentasjon =>
-            dokumentasjon.dokumentasjonsbehov !== Dokumentasjonsbehov.ANNEN_DOKUMENTASJON
-    );
-
-    const brukerHarVedleggskrav = relevateDokumentasjonerUtenAnnenDokumentasjon.length > 0;
-
-    const vedleggOppsummering: IVedleggOppsummering[] =
-        relevateDokumentasjonerUtenAnnenDokumentasjon.map(dokumentasjon => {
-            const barnDokGjelderFor = søknad.barnInkludertISøknaden.filter(barn =>
-                dokumentasjon.gjelderForBarnId.find(id => id === barn.id)
-            );
-            const barnasNavn = slåSammen(barnDokGjelderFor.map(barn => barn.navn));
-
-            return {
-                skalVises: true,
-                dokumentasjonsbehov: dokumentasjon.dokumentasjonsbehov,
-                flettefeltVerdier: { barnetsNavn: barnasNavn },
-            };
-        });
-    // STOP
 
     const stegTekster = tekster()[ESanitySteg.DOKUMENTASJON];
 
