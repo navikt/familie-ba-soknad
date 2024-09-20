@@ -14,7 +14,7 @@ import {
 } from '@navikt/familie-typer';
 
 import Miljø, { basePath } from '../../shared-utils/Miljø';
-import { hentVedleggOppsummering } from '../components/Felleskomponenter/VedleggOppsummering/vedleggOppsummeringUtils';
+import { hentVedleggOppsummering } from '../components/Felleskomponenter/VedleggOppsummering/vedleggOppsummering.domene';
 import { DinLivssituasjonSpørsmålId } from '../components/SøknadsSteg/DinLivssituasjon/spørsmål';
 import { LocaleType } from '../typer/common';
 import { IKontoinformasjon } from '../typer/kontoinformasjon';

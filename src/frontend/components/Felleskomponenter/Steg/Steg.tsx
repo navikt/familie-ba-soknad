@@ -28,8 +28,8 @@ import TekstBlock from '../Sanity/TekstBlock';
 import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeiloppsummering';
 import useModal from '../SkjemaModal/useModal';
 import { VedleggOppsummering } from '../VedleggOppsummering/VedleggOppsummering';
-import { IVedleggOppsummering } from '../VedleggOppsummering/vedleggOppsummeringTypes';
-import { skalVedleggOppsummeringVises } from '../VedleggOppsummering/vedleggOppsummeringUtils';
+import { skalVedleggOppsummeringVises } from '../VedleggOppsummering/vedleggOppsummering.domene';
+import { IVedleggOppsummering } from '../VedleggOppsummering/vedleggOppsummering.types';
 
 import ModellVersjonModal from './ModellVersjonModal';
 import Navigeringspanel from './Navigeringspanel';
