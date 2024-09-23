@@ -11,11 +11,13 @@ import { useSendInnSkjema } from '../../../hooks/useSendInnSkjema';
 import { IDokumentasjon, IVedlegg } from '../../../typer/dokumentasjon';
 import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
 import { ESanitySteg, Typografi } from '../../../typer/sanity/sanity';
+import { hentRelevateDokumentasjoner } from '../../../utils/dokumentasjon';
 import { Feilside } from '../../Felleskomponenter/Feilside/Feilside';
 import PictureScanningGuide from '../../Felleskomponenter/PictureScanningGuide/PictureScanningGuide';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import { VedleggOppsummering } from '../../Felleskomponenter/VedleggOppsummering/VedleggOppsummering';
+import { hentVedleggOppsummering } from '../../Felleskomponenter/VedleggOppsummering/vedleggOppsummering.domene';
 
 import LastOppVedlegg from './LastOppVedlegg';
 
@@ -26,16 +28,7 @@ export const erVedleggstidspunktGyldig = (vedleggTidspunkt: string): boolean => 
 };
 
 const Dokumentasjon: React.FC = () => {
-    const {
-        søknad,
-        settSøknad,
-        innsendingStatus,
-        tekster,
-        plainTekst,
-        brukerHarVedleggskrav,
-        vedleggOppsummering,
-        relevateDokumentasjoner,
-    } = useApp();
+    const { søknad, settSøknad, innsendingStatus, tekster, plainTekst } = useApp();
     const { sendInnSkjema } = useSendInnSkjema();
     const [slettaVedlegg, settSlettaVedlegg] = useState<IVedlegg[]>([]);
 
@@ -74,6 +67,20 @@ const Dokumentasjon: React.FC = () => {
     });
 
     const stegTekster = tekster()[ESanitySteg.DOKUMENTASJON];
+
+    const relevateDokumentasjoner = hentRelevateDokumentasjoner(søknad.dokumentasjon);
+
+    const relevateDokumentasjonerUtenAnnenDokumentasjon = relevateDokumentasjoner.filter(
+        dokumentasjon =>
+            dokumentasjon.dokumentasjonsbehov !== Dokumentasjonsbehov.ANNEN_DOKUMENTASJON
+    );
+
+    const brukerHarVedleggskrav = relevateDokumentasjonerUtenAnnenDokumentasjon.length > 0;
+
+    const vedleggOppsummering = hentVedleggOppsummering(
+        relevateDokumentasjonerUtenAnnenDokumentasjon,
+        søknad
+    );
 
     return (
         <Steg

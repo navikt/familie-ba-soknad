@@ -14,11 +14,9 @@ import {
 } from '@navikt/familie-typer';
 
 import Miljø, { basePath } from '../../shared-utils/Miljø';
-import { hentVedleggOppsummering } from '../components/Felleskomponenter/VedleggOppsummering/vedleggOppsummering.domene';
 import { DinLivssituasjonSpørsmålId } from '../components/SøknadsSteg/DinLivssituasjon/spørsmål';
 import { LocaleType } from '../typer/common';
 import { IKontoinformasjon } from '../typer/kontoinformasjon';
-import { Dokumentasjonsbehov } from '../typer/kontrakt/dokumentasjon';
 import { ESivilstand, ESøknadstype, TilRestLocaleRecord } from '../typer/kontrakt/generelle';
 import { IKvittering } from '../typer/kvittering';
 import { IMellomlagretBarnetrygd } from '../typer/mellomlager';
@@ -29,7 +27,6 @@ import { ITekstinnhold } from '../typer/sanity/tekstInnhold';
 import { initialStateSøknad, ISøknad } from '../typer/søknad';
 import { InnloggetStatus } from '../utils/autentisering';
 import { mapBarnResponsTilBarn } from '../utils/barn';
-import { hentRelevateDokumentasjoner } from '../utils/dokumentasjon';
 import { plainTekstHof } from '../utils/sanity';
 
 import { preferredAxios } from './axios';
@@ -364,20 +361,6 @@ const [AppProvider, useApp] = createUseContext(() => {
         };
     };
 
-    const relevateDokumentasjoner = hentRelevateDokumentasjoner(søknad.dokumentasjon);
-
-    const relevateDokumentasjonerUtenAnnenDokumentasjon = relevateDokumentasjoner.filter(
-        dokumentasjon =>
-            dokumentasjon.dokumentasjonsbehov !== Dokumentasjonsbehov.ANNEN_DOKUMENTASJON
-    );
-
-    const brukerHarVedleggskrav = relevateDokumentasjonerUtenAnnenDokumentasjon.length > 0;
-
-    const vedleggOppsummering = hentVedleggOppsummering(
-        relevateDokumentasjonerUtenAnnenDokumentasjon,
-        søknad
-    );
-
     return {
         axiosRequest,
         sluttbruker,
@@ -410,10 +393,6 @@ const [AppProvider, useApp] = createUseContext(() => {
         tilRestLocaleRecord,
         flettefeltTilTekst,
         kontoinformasjon,
-        relevateDokumentasjoner,
-        relevateDokumentasjonerUtenAnnenDokumentasjon,
-        brukerHarVedleggskrav,
-        vedleggOppsummering,
     };
 });
 
