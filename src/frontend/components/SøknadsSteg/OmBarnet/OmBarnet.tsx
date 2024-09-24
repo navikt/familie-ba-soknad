@@ -18,7 +18,6 @@ import { SkjemaCheckbox } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaChe
 import SkjemaFieldset from '../../Felleskomponenter/SkjemaFieldset';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
-import { VedleggOppsummering } from '../../Felleskomponenter/VedleggOppsummering';
 
 import AndreForelder from './AndreForelder';
 import { OmBarnetHeader } from './OmBarnetHeader';
@@ -64,6 +63,27 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                 skjema,
                 settSøknadsdataCallback: oppdaterSøknad,
             }}
+            vedleggOppsummering={[
+                {
+                    skalVises: barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA,
+                    dokumentasjonsbehov: Dokumentasjonsbehov.BEKREFTELSE_FRA_BARNEVERN,
+                },
+                {
+                    skalVises:
+                        skjema.felter.borFastMedSøker.verdi === ESvar.JA && !barn.borMedSøker,
+                    dokumentasjonsbehov: Dokumentasjonsbehov.BOR_FAST_MED_SØKER,
+                    flettefeltVerdier: { barnetsNavn: barn.navn },
+                },
+                {
+                    skalVises: skjema.felter.skriftligAvtaleOmDeltBosted.verdi === ESvar.JA,
+                    dokumentasjonsbehov: Dokumentasjonsbehov.AVTALE_DELT_BOSTED,
+                },
+                {
+                    skalVises:
+                        skjema.felter.borMedAndreForelderCheckbox.erSynlig && barnErUnder16År(barn),
+                    dokumentasjonsbehov: Dokumentasjonsbehov.MEKLINGSATTEST,
+                },
+            ]}
         >
             <OmBarnetHeader barn={barn} />
             <Oppfølgningsspørsmål
@@ -180,31 +200,6 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                     )}
                 </KomponentGruppe>
             )}
-
-            <VedleggOppsummering
-                vedlegg={[
-                    {
-                        skalVises: barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA,
-                        dokumentasjonsbehov: Dokumentasjonsbehov.BEKREFTELSE_FRA_BARNEVERN,
-                    },
-                    {
-                        skalVises:
-                            skjema.felter.borFastMedSøker.verdi === ESvar.JA && !barn.borMedSøker,
-                        dokumentasjonsbehov: Dokumentasjonsbehov.BOR_FAST_MED_SØKER,
-                        flettefeltVerdier: { barnetsNavn: barn.navn },
-                    },
-                    {
-                        skalVises: skjema.felter.skriftligAvtaleOmDeltBosted.verdi === ESvar.JA,
-                        dokumentasjonsbehov: Dokumentasjonsbehov.AVTALE_DELT_BOSTED,
-                    },
-                    {
-                        skalVises:
-                            skjema.felter.borMedAndreForelderCheckbox.erSynlig &&
-                            barnErUnder16År(barn),
-                        dokumentasjonsbehov: Dokumentasjonsbehov.MEKLINGSATTEST,
-                    },
-                ]}
-            />
         </Steg>
     ) : null;
 };

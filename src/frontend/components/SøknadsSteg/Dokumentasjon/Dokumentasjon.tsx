@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { add, isBefore } from 'date-fns';
 
-import { Alert, BodyShort } from '@navikt/ds-react';
+import { Alert, BodyShort, Heading, VStack } from '@navikt/ds-react';
 import { RessursStatus } from '@navikt/familie-typer';
 
 import { useApp } from '../../../context/AppContext';
@@ -10,13 +10,14 @@ import useFørsteRender from '../../../hooks/useFørsteRender';
 import { useSendInnSkjema } from '../../../hooks/useSendInnSkjema';
 import { IDokumentasjon, IVedlegg } from '../../../typer/dokumentasjon';
 import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
-import { ESanitySteg } from '../../../typer/sanity/sanity';
-import { erDokumentasjonRelevant } from '../../../utils/dokumentasjon';
+import { ESanitySteg, Typografi } from '../../../typer/sanity/sanity';
+import { hentRelevateDokumentasjoner } from '../../../utils/dokumentasjon';
 import { Feilside } from '../../Felleskomponenter/Feilside/Feilside';
-import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import PictureScanningGuide from '../../Felleskomponenter/PictureScanningGuide/PictureScanningGuide';
-import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import Steg from '../../Felleskomponenter/Steg/Steg';
+import { VedleggOppsummering } from '../../Felleskomponenter/VedleggOppsummering/VedleggOppsummering';
+import { hentVedleggOppsummering } from '../../Felleskomponenter/VedleggOppsummering/vedleggOppsummering.domene';
 
 import LastOppVedlegg from './LastOppVedlegg';
 
@@ -27,7 +28,7 @@ export const erVedleggstidspunktGyldig = (vedleggTidspunkt: string): boolean => 
 };
 
 const Dokumentasjon: React.FC = () => {
-    const { søknad, settSøknad, innsendingStatus, tekster } = useApp();
+    const { søknad, settSøknad, innsendingStatus, tekster, plainTekst } = useApp();
     const { sendInnSkjema } = useSendInnSkjema();
     const [slettaVedlegg, settSlettaVedlegg] = useState<IVedlegg[]>([]);
 
@@ -66,23 +67,41 @@ const Dokumentasjon: React.FC = () => {
     });
 
     const stegTekster = tekster()[ESanitySteg.DOKUMENTASJON];
-    const { dokumentasjonGuide } = stegTekster;
+
+    const relevateDokumentasjoner = hentRelevateDokumentasjoner(søknad.dokumentasjon);
+
+    const relevateDokumentasjonerUtenAnnenDokumentasjon = relevateDokumentasjoner.filter(
+        dokumentasjon =>
+            dokumentasjon.dokumentasjonsbehov !== Dokumentasjonsbehov.ANNEN_DOKUMENTASJON
+    );
+
+    const brukerHarVedleggskrav = relevateDokumentasjonerUtenAnnenDokumentasjon.length > 0;
+
+    const vedleggOppsummering = hentVedleggOppsummering(
+        relevateDokumentasjonerUtenAnnenDokumentasjon,
+        søknad
+    );
 
     return (
         <Steg
-            tittel={<SpråkTekst id={'dokumentasjon.sidetittel'} />}
-            guide={dokumentasjonGuide}
+            tittel={<TekstBlock block={stegTekster.dokumentasjonTittel} />}
+            guide={
+                brukerHarVedleggskrav
+                    ? stegTekster.dokumentasjonGuideVedleggskrav
+                    : stegTekster.dokumentasjonGuideIngenVedleggskrav
+            }
             gåVidereCallback={async () => {
                 const [success, _] = await sendInnSkjema();
                 return success;
             }}
         >
-            {slettaVedlegg.length > 0 && (
-                <KomponentGruppe>
+            <VStack gap="12">
+                {slettaVedlegg.length > 0 && (
                     <Alert variant={'warning'}>
-                        <BodyShort>
-                            <SpråkTekst id={'dokumentasjon.forlangtid.info'} />
-                        </BodyShort>
+                        <TekstBlock
+                            block={stegTekster.forLangTidDokumentasjon}
+                            typografi={Typografi.BodyLong}
+                        />
                         <ul>
                             {slettaVedlegg.map(vedlegg => (
                                 <li key={vedlegg.dokumentId}>
@@ -91,22 +110,53 @@ const Dokumentasjon: React.FC = () => {
                             ))}
                         </ul>
                     </Alert>
-                </KomponentGruppe>
-            )}
-            <KomponentGruppe>
-                <PictureScanningGuide />
-            </KomponentGruppe>
-            {søknad.dokumentasjon
-                .filter(dokumentasjon => erDokumentasjonRelevant(dokumentasjon))
-                .map((dokumentasjon, index) => (
+                )}
+                {brukerHarVedleggskrav ? (
+                    <>
+                        <div>
+                            <Heading level="3" size="small" spacing>
+                                {plainTekst(stegTekster.vedleggskravTittel)}
+                            </Heading>
+                            <VedleggOppsummering vedlegg={vedleggOppsummering} />
+                            <TekstBlock
+                                block={stegTekster.vedleggskrav}
+                                typografi={Typografi.BodyLong}
+                            />
+                        </div>
+                        <PictureScanningGuide />
+                        <div>
+                            <Heading level="3" size="small" spacing>
+                                {plainTekst(stegTekster.manglerDokumentasjonSpoersmaalTittel)}
+                            </Heading>
+                            <TekstBlock
+                                block={stegTekster.manglerDokumentasjonSpoersmaal}
+                                typografi={Typografi.BodyLong}
+                            />
+                        </div>
+                    </>
+                ) : (
+                    <>
+                        <div>
+                            <Heading level="3" size="small" spacing>
+                                {plainTekst(stegTekster.ingenVedleggskravTittel)}
+                            </Heading>
+                            <TekstBlock
+                                block={stegTekster.ingenVedleggskrav}
+                                typografi={Typografi.BodyLong}
+                            />
+                        </div>
+                        <PictureScanningGuide />
+                    </>
+                )}
+                {relevateDokumentasjoner.map((dokumentasjon, index) => (
                     <LastOppVedlegg
                         key={index}
-                        vedleggNr={index + 1}
                         dokumentasjon={dokumentasjon}
                         oppdaterDokumentasjon={oppdaterDokumentasjon}
                     />
                 ))}
-            {innsendingStatus.status === RessursStatus.FEILET && <Feilside />}
+                {innsendingStatus.status === RessursStatus.FEILET && <Feilside />}
+            </VStack>
         </Steg>
     );
 };

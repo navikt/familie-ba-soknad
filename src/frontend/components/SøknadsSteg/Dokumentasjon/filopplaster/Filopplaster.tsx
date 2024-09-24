@@ -4,13 +4,12 @@ import { useDropzone } from 'react-dropzone';
 import styled from 'styled-components';
 
 import { UploadIcon } from '@navikt/aksel-icons';
-import { BodyShort } from '@navikt/ds-react';
+import { BodyShort, VStack } from '@navikt/ds-react';
 import { ABlue500, ABorderDefault } from '@navikt/ds-tokens/dist/tokens';
 
 import { useApp } from '../../../../context/AppContext';
 import { IDokumentasjon, IVedlegg } from '../../../../typer/dokumentasjon';
 import { Dokumentasjonsbehov } from '../../../../typer/kontrakt/dokumentasjon';
-import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 import OpplastedeFiler from './OpplastedeFiler';
 import { useFilopplaster } from './useFilopplaster';
@@ -38,7 +37,6 @@ const FilopplastningBoks = styled.button<FilopplastningBoksProps>`
     background-color: rgba(204, 222, 230, 0.5);
     width: 100%;
     padding: 1rem;
-    margin: 2rem 0 1rem 0;
     color: ${ABlue500};
     box-sizing: border-box;
 
@@ -77,27 +75,24 @@ const Filopplaster: React.FC<Props> = ({
         accept: tillatteFiltyper,
     });
 
-    const { plainTekst } = useApp();
+    const { tekster, plainTekst } = useApp();
+    const { lastOppKnapp, slippFilenHer } = tekster().DOKUMENTASJON;
 
     return (
-        <>
+        <VStack gap="4">
             <FilopplastningBoks type={'button'} {...getRootProps()} $harFeil={harFeil}>
                 <input {...getInputProps()} />
                 <StyledUpload focusable={false} aria-hidden />
-                <BodyShort>
-                    <SpråkTekst
-                        id={
-                            isDragActive
-                                ? 'dokumentasjon.last-opp-dokumentasjon.aktivknapp'
-                                : 'dokumentasjon.last-opp-dokumentasjon.knapp'
-                        }
-                    />
-                </BodyShort>
+                <BodyShort>{plainTekst(isDragActive ? slippFilenHer : lastOppKnapp)}</BodyShort>
             </FilopplastningBoks>
-            <OpplastedeFiler
-                filliste={dokumentasjon.opplastedeVedlegg}
-                slettVedlegg={slettVedlegg}
-            />
+
+            {dokumentasjon.opplastedeVedlegg.length > 0 && (
+                <OpplastedeFiler
+                    filliste={dokumentasjon.opplastedeVedlegg}
+                    slettVedlegg={slettVedlegg}
+                />
+            )}
+
             {harFeil && (
                 <StyledFeilmeldingList>
                     {Array.from(feilmeldinger).map(([key, value], index) => (
@@ -114,7 +109,7 @@ const Filopplaster: React.FC<Props> = ({
                     ))}
                 </StyledFeilmeldingList>
             )}
-        </>
+        </VStack>
     );
 };
 

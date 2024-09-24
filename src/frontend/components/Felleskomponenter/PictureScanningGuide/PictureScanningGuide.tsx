@@ -1,133 +1,91 @@
 import React from 'react';
 
-import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 
-import { Heading } from '@navikt/ds-react';
+import { ExpansionCard, Heading, HGrid, VStack } from '@navikt/ds-react';
 
-import EksternLenke from '../EksternLenke/EksternLenke';
-import ExpandableInfo from '../expandableContent/ExpandableInfo';
-import SpråkTekst from '../SpråkTekst/SpråkTekst';
+import { useApp } from '../../../context/AppContext';
+import TekstBlock from '../Sanity/TekstBlock';
 
 import PictureScanningExample from './PictureScanningExample';
 import ScanningIcon from './ScanningIcon';
 
-const Container = styled.div`
-    svg {
-        pointer-events: none;
-    }
-
-    ul {
-        margin: 0 0 1rem 0;
+const StyledVStack = styled(VStack)`
+    && ul {
+        margin: 0;
         li {
             margin-bottom: 0.5rem;
         }
     }
 `;
 
-const EksempelBilderWrapper = styled.div`
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-around;
-`;
-
-const BildeContainer = styled.div`
-    flex: 1 1 50%;
-    height: auto;
-    padding: 0.5rem 0.5rem 1.5rem 0.5rem;
-    &:first-child {
-        padding-left: 0;
-    }
-    &:last-child {
-        padding-right: 0;
-    }
-    @media screen and (min-width: 768px) {
-        max-width: 25%;
-    }
-`;
+const svgIconHeight = 112;
 
 const PictureScanningGuide = () => {
-    const { formatMessage } = useIntl();
-    const svgIconHeight = 100;
-    return (
-        <ExpandableInfo title={formatMessage({ id: 'psg.expandable.tittel' })}>
-            <Container>
-                <Heading level="3" size="xsmall" spacing>
-                    <SpråkTekst id="psg.section1.tittel" />
-                </Heading>
-                <ul>
-                    <li>
-                        <SpråkTekst id="psg.section1.liste.1" />
-                    </li>
-                    <li>
-                        <SpråkTekst id="psg.section1.liste.2" />
-                    </li>
-                    <li>
-                        <SpråkTekst id="psg.section1.liste.3" />
-                    </li>
-                </ul>
+    const { tekster, plainTekst } = useApp();
+    const dokumentasjonTekster = tekster().DOKUMENTASJON;
 
-                <Heading level="3" size="xsmall" spacing>
-                    <SpråkTekst id="psg.section2.tittel" />
-                </Heading>
-                <ul>
-                    <li>
-                        <SpråkTekst id="psg.section2.liste.1" />
-                    </li>
-                    <li>
-                        <SpråkTekst id="psg.section2.liste.2" />
-                    </li>
-                    <li>
-                        <SpråkTekst id="psg.section2.liste.3" />
-                    </li>
-                </ul>
-                <div>
-                    <Heading level="3" size="xsmall" spacing>
-                        <SpråkTekst id="psg.icon.heading" />
-                    </Heading>
-                    <EksempelBilderWrapper>
-                        <BildeContainer>
+    return (
+        <ExpansionCard aria-label={plainTekst(dokumentasjonTekster.slikTarDuEtGodtBildeExpand)}>
+            <ExpansionCard.Header>
+                <ExpansionCard.Title as="h3" size="small">
+                    {plainTekst(dokumentasjonTekster.slikTarDuEtGodtBildeExpand)}
+                </ExpansionCard.Title>
+            </ExpansionCard.Header>
+            <ExpansionCard.Content>
+                <StyledVStack gap="8">
+                    <div>
+                        <Heading level="4" size="xsmall" spacing>
+                            {plainTekst(dokumentasjonTekster.slikTarDuEtGodtBildeTittel)}
+                        </Heading>
+                        <TekstBlock block={dokumentasjonTekster.slikTarDuEtGodtBilde} />
+                    </div>
+                    <div>
+                        <Heading level="4" size="xsmall" spacing>
+                            {plainTekst(dokumentasjonTekster.etterDuHarTattBildetTittel)}
+                        </Heading>
+                        <TekstBlock block={dokumentasjonTekster.etterDuHarTattBildet} />
+                    </div>
+                    <div>
+                        <Heading level="4" size="xsmall" spacing>
+                            {plainTekst(dokumentasjonTekster.braOgDaarligeTittel)}
+                        </Heading>
+                        <HGrid gap="4" columns={{ xs: 1, sm: 2 }}>
                             <PictureScanningExample
                                 image={<ScanningIcon status="good" height={svgIconHeight} />}
-                                status="suksess"
-                                statusText={formatMessage({ id: 'psg.good' })}
-                                description={formatMessage({ id: 'psg.icon.label.good' })}
+                                variant="success"
+                                statusText={plainTekst(dokumentasjonTekster.bra)}
+                                description={plainTekst(dokumentasjonTekster.fyllerHeleBildet)}
                             />
-                        </BildeContainer>
-                        <BildeContainer>
                             <PictureScanningExample
                                 image={<ScanningIcon status="keystone" height={svgIconHeight} />}
-                                status="feil"
-                                statusText={formatMessage({ id: 'psg.bad' })}
-                                description={formatMessage({ id: 'psg.icon.label.keystone' })}
+                                variant="error"
+                                statusText={plainTekst(dokumentasjonTekster.daarlig)}
+                                description={plainTekst(dokumentasjonTekster.ikkeTattOvenfra)}
                             />
-                        </BildeContainer>
-                        <BildeContainer>
                             <PictureScanningExample
                                 image={<ScanningIcon status="horizontal" height={svgIconHeight} />}
-                                status="feil"
-                                statusText={formatMessage({ id: 'psg.bad' })}
-                                description={formatMessage({ id: 'psg.icon.label.horizontal' })}
+                                variant="error"
+                                statusText={plainTekst(dokumentasjonTekster.daarlig)}
+                                description={plainTekst(dokumentasjonTekster.ikkeRiktigRetning)}
                             />
-                        </BildeContainer>
-                        <BildeContainer>
                             <PictureScanningExample
                                 image={<ScanningIcon status="shadow" height={svgIconHeight} />}
-                                status="feil"
-                                statusText={formatMessage({ id: 'psg.bad' })}
-                                description={formatMessage({ id: 'psg.icon.label.shadow' })}
+                                variant="error"
+                                statusText={plainTekst(dokumentasjonTekster.daarlig)}
+                                description={plainTekst(dokumentasjonTekster.skyggePaaDokumentet)}
                             />
-                        </BildeContainer>
-                    </EksempelBilderWrapper>
-
-                    <EksternLenke
-                        target="_blank"
-                        lenkeSpråkId={'psg.lenkepanel.url'}
-                        lenkeTekstSpråkId={'psg.lenkepanel.text'}
-                    />
-                </div>
-            </Container>
-        </ExpandableInfo>
+                        </HGrid>
+                    </div>
+                    <div>
+                        <Heading level="4" size="xsmall" spacing>
+                            {plainTekst(dokumentasjonTekster.vaerTryggNaarDuTarBildeTittel)}
+                        </Heading>
+                        <TekstBlock block={dokumentasjonTekster.vaerTryggNaarDuTarBilde} />
+                    </div>
+                </StyledVStack>
+            </ExpansionCard.Content>
+        </ExpansionCard>
     );
 };
 export default PictureScanningGuide;
