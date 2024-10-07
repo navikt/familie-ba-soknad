@@ -1,17 +1,11 @@
 import React, { ReactNode } from 'react';
 
-import styled from 'styled-components';
-
 import { Checkbox, ErrorMessage } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Felt } from '@navikt/familie-skjema';
 
 import useFørsteRender from '../../../hooks/useFørsteRender';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
-
-const CheckboxWrapper = styled.div`
-    margin: 0 0 1rem 0;
-`;
 
 export const SkjemaCheckbox: React.FC<{
     felt: Felt<ESvar>;
@@ -24,7 +18,7 @@ export const SkjemaCheckbox: React.FC<{
     });
 
     return felt.erSynlig ? (
-        <CheckboxWrapper>
+        <div>
             <Checkbox
                 id={felt.id}
                 checked={felt.verdi === ESvar.JA}
@@ -37,6 +31,6 @@ export const SkjemaCheckbox: React.FC<{
             {visFeilmeldinger && felt.feilmelding && (
                 <ErrorMessage>{felt.feilmelding}</ErrorMessage>
             )}
-        </CheckboxWrapper>
+        </div>
     ) : null;
 };
