@@ -104,7 +104,7 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
             valideringErOk={valideringErOk}
             onAvbrytCallback={nullstillSkjema}
         >
-            <KomponentGruppe inline>
+            <KomponentGruppe>
                 <div>
                     <StyledDropdown<EUtenlandsoppholdÅrsak | ''>
                         {...skjema.felter.utenlandsoppholdÅrsak.hentNavInputProps(

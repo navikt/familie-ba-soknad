@@ -125,7 +125,7 @@ const OmDeg: React.FC = () => {
                     )}
                 </>
                 {skjema.felter.planleggerÅBoINorgeTolvMnd.erSynlig && (
-                    <KomponentGruppe inline dynamisk>
+                    <KomponentGruppe dynamisk>
                         <JaNeiSpm
                             skjema={skjema}
                             felt={skjema.felter.planleggerÅBoINorgeTolvMnd}

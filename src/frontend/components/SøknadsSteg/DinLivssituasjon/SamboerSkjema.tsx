@@ -28,7 +28,7 @@ const SamboerSkjema: React.FC<{
     erIModal?: boolean;
 }> = ({ skjema, samboerFelter, erIModal = false }) => {
     return (
-        <KomponentGruppe inline>
+        <KomponentGruppe>
             <SkjemaFeltInput
                 felt={samboerFelter.navn}
                 visFeilmeldinger={skjema.visFeilmeldinger}
@@ -47,7 +47,7 @@ const SamboerSkjema: React.FC<{
                 />
             </>
             {samboerFelter.fødselsdato.erSynlig && (
-                <KomponentGruppe inline dynamisk>
+                <KomponentGruppe dynamisk>
                     <>
                         <Datovelger
                             skjema={skjema}

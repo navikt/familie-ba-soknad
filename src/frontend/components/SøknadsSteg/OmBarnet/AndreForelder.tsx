@@ -88,7 +88,7 @@ const AndreForelder: React.FC<{
                                 />
                             </div>
                             {skjema.felter.andreForelderFnr.erSynlig && (
-                                <KomponentGruppe inline dynamisk>
+                                <KomponentGruppe dynamisk>
                                     <>
                                         <SkjemaFeltInput
                                             felt={skjema.felter.andreForelderFnr}
@@ -115,7 +115,7 @@ const AndreForelder: React.FC<{
                                 </KomponentGruppe>
                             )}
                             {skjema.felter.andreForelderFødselsdato.erSynlig && (
-                                <KomponentGruppe inline dynamisk>
+                                <KomponentGruppe dynamisk>
                                     <>
                                         <Datovelger
                                             felt={skjema.felter.andreForelderFødselsdato}

@@ -105,7 +105,7 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
             valideringErOk={valideringErOk}
             onAvbrytCallback={nullstillSkjema}
         >
-            <KomponentGruppe inline>
+            <KomponentGruppe>
                 <JaNeiSpm
                     skjema={skjema}
                     felt={skjema.felter.mottarEøsBarnetrygdNå}

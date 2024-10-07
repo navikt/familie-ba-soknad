@@ -96,7 +96,7 @@ export const PensjonModal: React.FC<Props> = ({
             valideringErOk={valideringErOk}
             onAvbrytCallback={nullstillSkjema}
         >
-            <KomponentGruppe inline>
+            <KomponentGruppe>
                 {mottarPensjonNå.erSynlig && (
                     <JaNeiSpm
                         skjema={skjema}

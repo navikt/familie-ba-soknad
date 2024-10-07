@@ -1,7 +1,5 @@
 import React, { ReactNode } from 'react';
 
-import styled from 'styled-components';
-
 import { Heading } from '@navikt/ds-react';
 
 import { HeadingLevel } from '../../../typer/common';
@@ -14,14 +12,6 @@ export interface IInformasjonsbolkProps {
     headingLevel?: HeadingLevel;
 }
 
-const InformasjonsbolkContainer = styled.div`
-    margin-top: 2rem;
-`;
-
-const InformasjonsbolkChildrenWrapper = styled.div`
-    margin-top: 1.125rem;
-`;
-
 const Informasjonsbolk: React.FC<IInformasjonsbolkProps> = ({
     tittelId,
     språkValues,
@@ -30,14 +20,14 @@ const Informasjonsbolk: React.FC<IInformasjonsbolkProps> = ({
     ...props
 }) => {
     return (
-        <InformasjonsbolkContainer {...props}>
+        <div {...props}>
             {tittelId && (
                 <Heading level={headingLevel} size={'xsmall'}>
                     <SpråkTekst id={tittelId} values={språkValues} />
                 </Heading>
             )}
-            <InformasjonsbolkChildrenWrapper>{children}</InformasjonsbolkChildrenWrapper>
-        </InformasjonsbolkContainer>
+            <div>{children}</div>
+        </div>
     );
 };
 

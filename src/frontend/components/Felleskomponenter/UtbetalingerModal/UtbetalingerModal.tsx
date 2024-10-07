@@ -96,7 +96,7 @@ export const UtbetalingerModal: React.FC<UtbetalingerModalProps> = ({
             valideringErOk={valideringErOk}
             onAvbrytCallback={nullstillSkjema}
         >
-            <KomponentGruppe inline>
+            <KomponentGruppe>
                 <JaNeiSpm
                     skjema={skjema}
                     felt={fårUtbetalingNå}
@@ -105,7 +105,7 @@ export const UtbetalingerModal: React.FC<UtbetalingerModalProps> = ({
                 />
             </KomponentGruppe>
             {(fårUtbetalingNå.valideringsstatus === Valideringsstatus.OK || andreForelderErDød) && (
-                <KomponentGruppe inline dynamisk>
+                <KomponentGruppe dynamisk>
                     <LandDropdown
                         felt={utbetalingLand}
                         skjema={skjema}

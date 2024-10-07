@@ -223,7 +223,7 @@ const Oppfølgningsspørsmål: React.FC<{
                         />
                     </PerioderContainer>
                     {planleggerÅBoINorge12Mnd.erSynlig && (
-                        <KomponentGruppe inline dynamisk>
+                        <KomponentGruppe dynamisk>
                             <JaNeiSpm
                                 skjema={skjema}
                                 felt={planleggerÅBoINorge12Mnd}

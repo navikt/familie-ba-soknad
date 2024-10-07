@@ -162,7 +162,7 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                         språkValues={{ navn: barn.navn }}
                     />
                     {skjema.felter.søkerFlyttetFraAndreForelderDato.erSynlig && (
-                        <KomponentGruppe inline dynamisk>
+                        <KomponentGruppe dynamisk>
                             <>
                                 <Datovelger
                                     felt={skjema.felter.søkerFlyttetFraAndreForelderDato}

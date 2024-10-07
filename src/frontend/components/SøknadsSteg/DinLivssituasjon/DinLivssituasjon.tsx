@@ -93,7 +93,7 @@ const DinLivssituasjon: React.FC = () => {
                             }
                         />
                         {skjema.felter.separertEnkeSkiltUtland.erSynlig && (
-                            <KomponentGruppe inline dynamisk>
+                            <KomponentGruppe dynamisk>
                                 <JaNeiSpm
                                     skjema={skjema}
                                     felt={skjema.felter.separertEnkeSkiltUtland}

@@ -107,7 +107,7 @@ export const ArbeidsperiodeModal: React.FC<ArbeidsperiodeModalProps> = ({
             valideringErOk={valideringErOk}
             onAvbrytCallback={nullstillSkjema}
         >
-            <KomponentGruppe inline>
+            <KomponentGruppe>
                 {arbeidsperiodeAvsluttet.erSynlig && (
                     <JaNeiSpm
                         skjema={skjema}
@@ -118,7 +118,7 @@ export const ArbeidsperiodeModal: React.FC<ArbeidsperiodeModalProps> = ({
                     />
                 )}
                 {arbeidsperiodeLand.erSynlig && (
-                    <KomponentGruppe inline>
+                    <KomponentGruppe>
                         <LandDropdown
                             felt={skjema.felter.arbeidsperiodeLand}
                             skjema={skjema}
