@@ -40,7 +40,7 @@ const BekreftelseOgStartSoknad: React.FC = () => {
 
     return (
         <form onSubmit={event => onStartSøknad(event)}>
-            <VStack gap="12">
+            <VStack gap="10">
                 <RadioGroup
                     legend={plainTekst(forsidetekster.soekerDuUtvidet.sporsmal)}
                     onChange={(value: ESøknadstype) => {
