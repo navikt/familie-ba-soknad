@@ -18,7 +18,6 @@ import {
 import Datovelger from '../Datovelger/Datovelger';
 import { LandDropdown } from '../Dropdowns/LandDropdown';
 import StyledDropdown from '../Dropdowns/StyledDropdown';
-import KomponentGruppe from '../KomponentGruppe/KomponentGruppe';
 import { SkjemaCheckbox } from '../SkjemaCheckbox/SkjemaCheckbox';
 import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeiloppsummering';
 import SkjemaModal from '../SkjemaModal/SkjemaModal';
@@ -104,71 +103,64 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
             valideringErOk={valideringErOk}
             onAvbrytCallback={nullstillSkjema}
         >
-            <KomponentGruppe>
-                <div>
-                    <StyledDropdown<EUtenlandsoppholdÅrsak | ''>
-                        {...skjema.felter.utenlandsoppholdÅrsak.hentNavInputProps(
-                            skjema.visFeilmeldinger
-                        )}
-                        felt={skjema.felter.utenlandsoppholdÅrsak}
-                        label={
-                            <SpråkTekst
-                                id={årsakLabelSpråkId(barn)}
-                                values={{ ...(barn && { barn: barn.navn }) }}
-                            />
-                        }
-                        skjema={skjema}
-                        placeholder={formatMessage({ id: 'felles.velg-årsak.placeholder' })}
-                    >
-                        {Object.keys(EUtenlandsoppholdÅrsak).map((årsak, number) => (
-                            <option key={number} value={årsak}>
-                                {formatMessage(
-                                    {
-                                        id: årsakSpråkId(årsak as EUtenlandsoppholdÅrsak, barn),
-                                    },
-                                    { ...(barn && { barn: barn.navn }) }
-                                )}
-                            </option>
-                        ))}
-                    </StyledDropdown>
-                </div>
-                <LandDropdown
-                    felt={skjema.felter.oppholdsland}
-                    skjema={skjema}
-                    label={
-                        landLabelSpråkId(skjema.felter.utenlandsoppholdÅrsak.verdi, barn) && (
-                            <SpråkTekst
-                                id={landLabelSpråkId(
-                                    skjema.felter.utenlandsoppholdÅrsak.verdi,
-                                    barn
-                                )}
-                                values={{ ...(barn && { barn: barn.navn }) }}
-                            />
-                        )
-                    }
-                    dynamisk
-                    ekskluderNorge
-                />
-
-                {skjema.felter.oppholdslandFraDato.erSynlig && (
-                    <Datovelger
-                        felt={skjema.felter.oppholdslandFraDato}
-                        label={
-                            <SpråkTekst
-                                id={fraDatoLabelSpråkId(
-                                    skjema.felter.utenlandsoppholdÅrsak.verdi,
-                                    barn
-                                )}
-                                values={{ ...(barn && { barn: barn.navn }) }}
-                            />
-                        }
-                        skjema={skjema}
-                        avgrensMaxDato={hentMaxAvgrensningPåFraDato(
-                            skjema.felter.utenlandsoppholdÅrsak.verdi
-                        )}
+            <StyledDropdown<EUtenlandsoppholdÅrsak | ''>
+                {...skjema.felter.utenlandsoppholdÅrsak.hentNavInputProps(skjema.visFeilmeldinger)}
+                felt={skjema.felter.utenlandsoppholdÅrsak}
+                label={
+                    <SpråkTekst
+                        id={årsakLabelSpråkId(barn)}
+                        values={{ ...(barn && { barn: barn.navn }) }}
                     />
-                )}
-                <>
+                }
+                skjema={skjema}
+                placeholder={formatMessage({ id: 'felles.velg-årsak.placeholder' })}
+            >
+                {Object.keys(EUtenlandsoppholdÅrsak).map((årsak, number) => (
+                    <option key={number} value={årsak}>
+                        {formatMessage(
+                            {
+                                id: årsakSpråkId(årsak as EUtenlandsoppholdÅrsak, barn),
+                            },
+                            { ...(barn && { barn: barn.navn }) }
+                        )}
+                    </option>
+                ))}
+            </StyledDropdown>
+            <LandDropdown
+                felt={skjema.felter.oppholdsland}
+                skjema={skjema}
+                label={
+                    landLabelSpråkId(skjema.felter.utenlandsoppholdÅrsak.verdi, barn) && (
+                        <SpråkTekst
+                            id={landLabelSpråkId(skjema.felter.utenlandsoppholdÅrsak.verdi, barn)}
+                            values={{ ...(barn && { barn: barn.navn }) }}
+                        />
+                    )
+                }
+                dynamisk
+                ekskluderNorge
+            />
+            {skjema.felter.oppholdslandFraDato.erSynlig && (
+                <Datovelger
+                    felt={skjema.felter.oppholdslandFraDato}
+                    label={
+                        <SpråkTekst
+                            id={fraDatoLabelSpråkId(
+                                skjema.felter.utenlandsoppholdÅrsak.verdi,
+                                barn
+                            )}
+                            values={{ ...(barn && { barn: barn.navn }) }}
+                        />
+                    }
+                    skjema={skjema}
+                    avgrensMaxDato={hentMaxAvgrensningPåFraDato(
+                        skjema.felter.utenlandsoppholdÅrsak.verdi
+                    )}
+                />
+            )}
+            {(skjema.felter.oppholdslandTilDato.erSynlig ||
+                skjema.felter.oppholdslandTilDato.erSynlig) && (
+                <div>
                     {skjema.felter.oppholdslandTilDato.erSynlig && (
                         <Datovelger
                             felt={skjema.felter.oppholdslandTilDato}
@@ -202,8 +194,8 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
                             labelSpråkTekstId={tilDatoUkjentLabelSpråkId}
                         />
                     )}
-                </>
-            </KomponentGruppe>
+                </div>
+            )}
             {visFeiloppsummering(skjema) && <SkjemaFeiloppsummering skjema={skjema} />}
         </SkjemaModal>
     );
