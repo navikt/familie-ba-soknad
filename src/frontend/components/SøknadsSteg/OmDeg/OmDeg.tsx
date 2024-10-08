@@ -9,6 +9,7 @@ import { IUtenlandsoppholdTekstinnhold } from '../../../typer/sanity/modaler/ute
 import { ESanitySteg } from '../../../typer/sanity/sanity';
 import { uppercaseFørsteBokstav } from '../../../utils/visning';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
+import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
 import PerioderContainer from '../../Felleskomponenter/PerioderContainer';
 import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
@@ -69,50 +70,52 @@ const OmDeg: React.FC = () => {
                 felt={skjema.felter.borPåRegistrertAdresse}
                 spørsmålTekstId={omDegSpørsmålSpråkId[OmDegSpørsmålId.borPåRegistrertAdresse]}
             />
-            <JaNeiSpm
-                skjema={skjema}
-                felt={skjema.felter.værtINorgeITolvMåneder}
-                spørsmålTekstId={omDegSpørsmålSpråkId[OmDegSpørsmålId.værtINorgeITolvMåneder]}
-                tilleggsinfoTekstId={'felles.korteopphold.info'}
-            />
-            {skjema.felter.værtINorgeITolvMåneder.verdi === ESvar.NEI && (
-                <PerioderContainer
-                    tittel={uppercaseFørsteBokstav(
-                        plainTekst(frittståendeOrdTekster.utenlandsopphold)
-                    )}
-                >
-                    {utenlandsperioder.map((periode, index) => (
-                        <UtenlandsperiodeOppsummering
-                            key={index}
-                            periode={periode}
-                            nummer={index + 1}
-                            fjernPeriodeCallback={fjernUtenlandsperiode}
+            <KomponentGruppe>
+                <JaNeiSpm
+                    skjema={skjema}
+                    felt={skjema.felter.værtINorgeITolvMåneder}
+                    spørsmålTekstId={omDegSpørsmålSpråkId[OmDegSpørsmålId.værtINorgeITolvMåneder]}
+                    tilleggsinfoTekstId={'felles.korteopphold.info'}
+                />
+                {skjema.felter.værtINorgeITolvMåneder.verdi === ESvar.NEI && (
+                    <PerioderContainer
+                        tittel={uppercaseFørsteBokstav(
+                            plainTekst(frittståendeOrdTekster.utenlandsopphold)
+                        )}
+                    >
+                        {utenlandsperioder.map((periode, index) => (
+                            <UtenlandsperiodeOppsummering
+                                key={index}
+                                periode={periode}
+                                nummer={index + 1}
+                                fjernPeriodeCallback={fjernUtenlandsperiode}
+                            />
+                        ))}
+                        {!toggles.NYE_MODAL_TEKSTER && utenlandsperioder.length > 0 && (
+                            <Label as="p" spacing>
+                                <SpråkTekst id={'omdeg.flereopphold.spm'} />
+                            </Label>
+                        )}
+                        <LeggTilKnapp
+                            onClick={åpneUtenlandsoppholdmodal}
+                            språkTekst={'felles.leggtilutenlands.knapp'}
+                            leggTilFlereTekst={
+                                toggles.NYE_MODAL_TEKSTER &&
+                                utenlandsperioder.length > 0 &&
+                                plainTekst(flerePerioder)
+                            }
+                            id={UtenlandsoppholdSpørsmålId.utenlandsopphold}
+                            feilmelding={
+                                skjema.felter.registrerteUtenlandsperioder.erSynlig &&
+                                skjema.felter.registrerteUtenlandsperioder.feilmelding &&
+                                skjema.visFeilmeldinger && (
+                                    <SpråkTekst id={'felles.leggtilutenlands.feilmelding'} />
+                                )
+                            }
                         />
-                    ))}
-                    {!toggles.NYE_MODAL_TEKSTER && utenlandsperioder.length > 0 && (
-                        <Label as="p" spacing>
-                            <SpråkTekst id={'omdeg.flereopphold.spm'} />
-                        </Label>
-                    )}
-                    <LeggTilKnapp
-                        onClick={åpneUtenlandsoppholdmodal}
-                        språkTekst={'felles.leggtilutenlands.knapp'}
-                        leggTilFlereTekst={
-                            toggles.NYE_MODAL_TEKSTER &&
-                            utenlandsperioder.length > 0 &&
-                            plainTekst(flerePerioder)
-                        }
-                        id={UtenlandsoppholdSpørsmålId.utenlandsopphold}
-                        feilmelding={
-                            skjema.felter.registrerteUtenlandsperioder.erSynlig &&
-                            skjema.felter.registrerteUtenlandsperioder.feilmelding &&
-                            skjema.visFeilmeldinger && (
-                                <SpråkTekst id={'felles.leggtilutenlands.feilmelding'} />
-                            )
-                        }
-                    />
-                </PerioderContainer>
-            )}
+                    </PerioderContainer>
+                )}
+            </KomponentGruppe>
             {skjema.felter.planleggerÅBoINorgeTolvMnd.erSynlig && (
                 <JaNeiSpm
                     skjema={skjema}
