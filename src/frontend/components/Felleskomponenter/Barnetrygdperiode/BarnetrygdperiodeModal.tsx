@@ -10,7 +10,6 @@ import { trimWhiteSpace, visFeiloppsummering } from '../../../utils/hjelpefunksj
 import Datovelger from '../Datovelger/Datovelger';
 import { LandDropdown } from '../Dropdowns/LandDropdown';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
-import KomponentGruppe from '../KomponentGruppe/KomponentGruppe';
 import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeiloppsummering';
 import { SkjemaFeltInput } from '../SkjemaFeltInput/SkjemaFeltInput';
 import SkjemaModal from '../SkjemaModal/SkjemaModal';
@@ -105,74 +104,67 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
             valideringErOk={valideringErOk}
             onAvbrytCallback={nullstillSkjema}
         >
-            <KomponentGruppe>
-                <JaNeiSpm
+            <JaNeiSpm
+                skjema={skjema}
+                felt={skjema.felter.mottarEøsBarnetrygdNå}
+                spørsmålTekstId={hentSpørsmålTekstId(
+                    BarnetrygdperiodeSpørsmålId.mottarEøsBarnetrygdNå
+                )}
+                språkValues={{ barn: barn.navn }}
+            />
+            {barnetrygdsland.erSynlig && (
+                <LandDropdown
+                    felt={skjema.felter.barnetrygdsland}
                     skjema={skjema}
-                    felt={skjema.felter.mottarEøsBarnetrygdNå}
-                    spørsmålTekstId={hentSpørsmålTekstId(
-                        BarnetrygdperiodeSpørsmålId.mottarEøsBarnetrygdNå
-                    )}
-                    språkValues={{ barn: barn.navn }}
+                    label={spørsmålSpråkTekst(BarnetrygdperiodeSpørsmålId.barnetrygdsland)}
+                    kunEøs={true}
+                    dynamisk
+                    ekskluderNorge
                 />
-
-                {barnetrygdsland.erSynlig && (
-                    <LandDropdown
-                        felt={skjema.felter.barnetrygdsland}
-                        skjema={skjema}
-                        label={spørsmålSpråkTekst(BarnetrygdperiodeSpørsmålId.barnetrygdsland)}
-                        kunEøs={true}
-                        dynamisk
-                        ekskluderNorge
-                    />
-                )}
-                {fraDatoBarnetrygdperiode.erSynlig && (
-                    <Datovelger
-                        felt={skjema.felter.fraDatoBarnetrygdperiode}
-                        skjema={skjema}
-                        label={spørsmålSpråkTekst(
-                            BarnetrygdperiodeSpørsmålId.fraDatoBarnetrygdperiode
-                        )}
-                        avgrensMaxDato={periodenErAvsluttet ? gårsdagensDato() : dagensDato()}
-                    />
-                )}
-                {tilDatoBarnetrygdperiode.erSynlig && (
-                    <Datovelger
-                        felt={skjema.felter.tilDatoBarnetrygdperiode}
-                        skjema={skjema}
-                        label={spørsmålSpråkTekst(
-                            BarnetrygdperiodeSpørsmålId.tilDatoBarnetrygdperiode
-                        )}
-                        avgrensMinDato={
-                            skjema.felter.fraDatoBarnetrygdperiode.verdi
-                                ? dagenEtterDato(
-                                      stringTilDate(skjema.felter.fraDatoBarnetrygdperiode.verdi)
-                                  )
-                                : undefined
-                        }
-                        avgrensMaxDato={dagensDato()}
-                    />
-                )}
-                {månedligBeløp.erSynlig && (
-                    <SkjemaFeltInput
-                        felt={skjema.felter.månedligBeløp}
-                        visFeilmeldinger={skjema.visFeilmeldinger}
-                        labelSpråkTekstId={hentSpørsmålTekstId(
-                            BarnetrygdperiodeSpørsmålId.månedligBeløp
-                        )}
-                        språkValues={{
-                            ...(barn && {
-                                barn: barn.navn,
-                            }),
-                        }}
-                        description={
-                            <Alert variant={'info'} inline>
-                                <SpråkTekst id={'ombarnet.trygdbeløp.info'} />
-                            </Alert>
-                        }
-                        fullbredde={false}
-                    />
-                )}
-            </KomponentGruppe>
+            )}
+            {fraDatoBarnetrygdperiode.erSynlig && (
+                <Datovelger
+                    felt={skjema.felter.fraDatoBarnetrygdperiode}
+                    skjema={skjema}
+                    label={spørsmålSpråkTekst(BarnetrygdperiodeSpørsmålId.fraDatoBarnetrygdperiode)}
+                    avgrensMaxDato={periodenErAvsluttet ? gårsdagensDato() : dagensDato()}
+                />
+            )}
+            {tilDatoBarnetrygdperiode.erSynlig && (
+                <Datovelger
+                    felt={skjema.felter.tilDatoBarnetrygdperiode}
+                    skjema={skjema}
+                    label={spørsmålSpråkTekst(BarnetrygdperiodeSpørsmålId.tilDatoBarnetrygdperiode)}
+                    avgrensMinDato={
+                        skjema.felter.fraDatoBarnetrygdperiode.verdi
+                            ? dagenEtterDato(
+                                  stringTilDate(skjema.felter.fraDatoBarnetrygdperiode.verdi)
+                              )
+                            : undefined
+                    }
+                    avgrensMaxDato={dagensDato()}
+                />
+            )}
+            {månedligBeløp.erSynlig && (
+                <SkjemaFeltInput
+                    felt={skjema.felter.månedligBeløp}
+                    visFeilmeldinger={skjema.visFeilmeldinger}
+                    labelSpråkTekstId={hentSpørsmålTekstId(
+                        BarnetrygdperiodeSpørsmålId.månedligBeløp
+                    )}
+                    språkValues={{
+                        ...(barn && {
+                            barn: barn.navn,
+                        }),
+                    }}
+                    description={
+                        <Alert variant={'info'} inline>
+                            <SpråkTekst id={'ombarnet.trygdbeløp.info'} />
+                        </Alert>
+                    }
+                    fullbredde={false}
+                />
+            )}
             {visFeiloppsummering(skjema) && <SkjemaFeiloppsummering skjema={skjema} />}
         </SkjemaModal>
     );
