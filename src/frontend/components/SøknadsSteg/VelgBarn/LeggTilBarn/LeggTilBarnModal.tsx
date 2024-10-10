@@ -55,15 +55,16 @@ const LeggTilBarnModal: React.FC<{
                 )}
             </KomponentGruppe>
             {skjema.felter.erFødt.valideringsstatus === Valideringsstatus.OK && (
-                <KomponentGruppe dynamisk>
+                <>
                     <Fieldset
                         legend={
                             <SpråkTekst
                                 id={velgBarnSpørsmålSpråkId[VelgBarnSpørsmålId.barnetsNavn]}
                             />
                         }
+                        aria-live="polite"
                     >
-                        <KomponentGruppe>
+                        <KomponentGruppe aria-live="polite">
                             <SkjemaFeltInput
                                 felt={skjema.felter.fornavn}
                                 visFeilmeldinger={skjema.visFeilmeldinger}
@@ -72,7 +73,6 @@ const LeggTilBarnModal: React.FC<{
                                 }
                                 disabled={skjema.felter.navnetErUbestemt.verdi === ESvar.JA}
                             />
-
                             <SkjemaFeltInput
                                 felt={skjema.felter.etternavn}
                                 visFeilmeldinger={skjema.visFeilmeldinger}
@@ -81,7 +81,6 @@ const LeggTilBarnModal: React.FC<{
                                 }
                                 disabled={skjema.felter.navnetErUbestemt.verdi === ESvar.JA}
                             />
-
                             <SkjemaCheckbox
                                 felt={skjema.felter.navnetErUbestemt}
                                 visFeilmeldinger={skjema.visFeilmeldinger}
@@ -93,8 +92,7 @@ const LeggTilBarnModal: React.FC<{
                             />
                         </KomponentGruppe>
                     </Fieldset>
-
-                    <div>
+                    <div aria-live="polite">
                         <SkjemaFeltInput
                             felt={skjema.felter.ident}
                             visFeilmeldinger={skjema.visFeilmeldinger}
@@ -103,7 +101,6 @@ const LeggTilBarnModal: React.FC<{
                             }
                             disabled={skjema.felter.ikkeFåttIdentChecked.verdi === ESvar.JA}
                         />
-
                         <SkjemaCheckbox
                             felt={skjema.felter.ikkeFåttIdentChecked}
                             visFeilmeldinger={skjema.visFeilmeldinger}
@@ -117,7 +114,7 @@ const LeggTilBarnModal: React.FC<{
                             />
                         )}
                     </div>
-                </KomponentGruppe>
+                </>
             )}
             {visFeiloppsummering(skjema) && <SkjemaFeiloppsummering skjema={skjema} />}
         </SkjemaModal>

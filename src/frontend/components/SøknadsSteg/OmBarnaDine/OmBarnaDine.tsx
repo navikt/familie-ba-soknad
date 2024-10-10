@@ -9,7 +9,6 @@ import { barnDataKeySpørsmål } from '../../../typer/barn';
 import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
 import { ESanitySteg } from '../../../typer/sanity/sanity';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
-import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 
@@ -54,52 +53,39 @@ const OmBarnaDine: React.FC = () => {
                 },
             ]}
         >
-            <KomponentGruppe>
-                <JaNeiSpm
-                    skjema={skjema}
-                    felt={skjema.felter.erNoenAvBarnaFosterbarn}
-                    spørsmålTekstId={
-                        omBarnaDineSpørsmålSpråkId[OmBarnaDineSpørsmålId.erNoenAvBarnaFosterbarn]
-                    }
-                />
-                <HvilkeBarnCheckboxGruppe
-                    legendSpråkId={
-                        omBarnaDineSpørsmålSpråkId[OmBarnaDineSpørsmålId.hvemErFosterbarn]
-                    }
-                    skjemafelt={skjema.felter.hvemErFosterbarn}
-                    søknadsdatafelt={barnDataKeySpørsmål.erFosterbarn}
-                    nullstillValgteBarn={skjema.felter.erNoenAvBarnaFosterbarn.verdi === ESvar.NEI}
-                    visFeilmelding={skjema.visFeilmeldinger}
-                />
-
-                <JaNeiSpm
-                    skjema={skjema}
-                    felt={skjema.felter.oppholderBarnSegIInstitusjon}
-                    spørsmålTekstId={
-                        omBarnaDineSpørsmålSpråkId[
-                            OmBarnaDineSpørsmålId.oppholderBarnSegIInstitusjon
-                        ]
-                    }
-                    tilleggsinfoTekstId={'ombarna.institusjon.info'}
-                />
-
-                <HvilkeBarnCheckboxGruppe
-                    legendSpråkId={
-                        omBarnaDineSpørsmålSpråkId[
-                            OmBarnaDineSpørsmålId.hvemOppholderSegIInstitusjon
-                        ]
-                    }
-                    skjemafelt={skjema.felter.hvemOppholderSegIInstitusjon}
-                    søknadsdatafelt={barnDataKeySpørsmål.oppholderSegIInstitusjon}
-                    nullstillValgteBarn={
-                        skjema.felter.oppholderBarnSegIInstitusjon.verdi === ESvar.NEI
-                    }
-                    visFeilmelding={skjema.visFeilmeldinger}
-                />
-            </KomponentGruppe>
-
+            <JaNeiSpm
+                skjema={skjema}
+                felt={skjema.felter.erNoenAvBarnaFosterbarn}
+                spørsmålTekstId={
+                    omBarnaDineSpørsmålSpråkId[OmBarnaDineSpørsmålId.erNoenAvBarnaFosterbarn]
+                }
+            />
+            <HvilkeBarnCheckboxGruppe
+                legendSpråkId={omBarnaDineSpørsmålSpråkId[OmBarnaDineSpørsmålId.hvemErFosterbarn]}
+                skjemafelt={skjema.felter.hvemErFosterbarn}
+                søknadsdatafelt={barnDataKeySpørsmål.erFosterbarn}
+                nullstillValgteBarn={skjema.felter.erNoenAvBarnaFosterbarn.verdi === ESvar.NEI}
+                visFeilmelding={skjema.visFeilmeldinger}
+            />
+            <JaNeiSpm
+                skjema={skjema}
+                felt={skjema.felter.oppholderBarnSegIInstitusjon}
+                spørsmålTekstId={
+                    omBarnaDineSpørsmålSpråkId[OmBarnaDineSpørsmålId.oppholderBarnSegIInstitusjon]
+                }
+                tilleggsinfoTekstId={'ombarna.institusjon.info'}
+            />
+            <HvilkeBarnCheckboxGruppe
+                legendSpråkId={
+                    omBarnaDineSpørsmålSpråkId[OmBarnaDineSpørsmålId.hvemOppholderSegIInstitusjon]
+                }
+                skjemafelt={skjema.felter.hvemOppholderSegIInstitusjon}
+                søknadsdatafelt={barnDataKeySpørsmål.oppholderSegIInstitusjon}
+                nullstillValgteBarn={skjema.felter.oppholderBarnSegIInstitusjon.verdi === ESvar.NEI}
+                visFeilmelding={skjema.visFeilmeldinger}
+            />
             {skjema.felter.erBarnAdoptertFraUtland.erSynlig && (
-                <KomponentGruppe dynamisk>
+                <>
                     <JaNeiSpm
                         skjema={skjema}
                         felt={skjema.felter.erBarnAdoptertFraUtland}
@@ -139,10 +125,10 @@ const OmBarnaDine: React.FC = () => {
                         nullstillValgteBarn={skjema.felter.søktAsylForBarn.verdi === ESvar.NEI}
                         visFeilmelding={skjema.visFeilmeldinger}
                     />
-                </KomponentGruppe>
+                </>
             )}
             {skjema.felter.barnOppholdtSegTolvMndSammenhengendeINorge.erSynlig && (
-                <KomponentGruppe dynamisk>
+                <>
                     <JaNeiSpm
                         skjema={skjema}
                         felt={skjema.felter.barnOppholdtSegTolvMndSammenhengendeINorge}
@@ -167,7 +153,6 @@ const OmBarnaDine: React.FC = () => {
                         }
                         visFeilmelding={skjema.visFeilmeldinger}
                     />
-
                     <JaNeiSpm
                         skjema={skjema}
                         felt={skjema.felter.mottarBarnetrygdForBarnFraAnnetEøsland}
@@ -177,7 +162,6 @@ const OmBarnaDine: React.FC = () => {
                             ]
                         }
                     />
-
                     <HvilkeBarnCheckboxGruppe
                         legendSpråkId={
                             omBarnaDineSpørsmålSpråkId[
@@ -190,8 +174,7 @@ const OmBarnaDine: React.FC = () => {
                             skjema.felter.mottarBarnetrygdForBarnFraAnnetEøsland.verdi === ESvar.NEI
                         }
                         visFeilmelding={skjema.visFeilmeldinger}
-                    ></HvilkeBarnCheckboxGruppe>
-
+                    />
                     <JaNeiSpm
                         skjema={skjema}
                         felt={skjema.felter.erAvdødPartnerForelder}
@@ -210,7 +193,7 @@ const OmBarnaDine: React.FC = () => {
                         }
                         visFeilmelding={skjema.visFeilmeldinger}
                     />
-                </KomponentGruppe>
+                </>
             )}
         </Steg>
     );

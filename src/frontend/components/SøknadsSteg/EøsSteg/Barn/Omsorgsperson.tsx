@@ -106,7 +106,7 @@ const Omsorgsperson: React.FC<OmsorgspersonProps> = ({ skjema, barn, periodeFunk
                     }}
                 />
             )}
-            <>
+            <div>
                 <SkjemaFeltInput
                     felt={skjema.felter.omsorgspersonIdNummer}
                     visFeilmeldinger={skjema.visFeilmeldinger}
@@ -115,14 +115,13 @@ const Omsorgsperson: React.FC<OmsorgspersonProps> = ({ skjema, barn, periodeFunk
                     }
                     disabled={skjema.felter.omsorgspersonIdNummerVetIkke.verdi === ESvar.JA}
                 />
-
                 <SkjemaCheckbox
                     felt={skjema.felter.omsorgspersonIdNummerVetIkke}
                     labelSpråkTekstId={
                         eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.omsorgspersonIdNummerVetIkke]
                     }
                 />
-            </>
+            </div>
             <SkjemaFeltInput
                 felt={skjema.felter.omsorgspersonAdresse}
                 visFeilmeldinger={skjema.visFeilmeldinger}
@@ -178,7 +177,6 @@ const Omsorgsperson: React.FC<OmsorgspersonProps> = ({ skjema, barn, periodeFunk
                 barn={barn}
                 registrerteUtbetalingsperioder={skjema.felter.omsorgspersonAndreUtbetalingsperioder}
             />
-
             <JaNeiSpm
                 skjema={skjema}
                 felt={skjema.felter.omsorgspersonPågåendeSøknadFraAnnetEøsLand}
@@ -207,7 +205,6 @@ const Omsorgsperson: React.FC<OmsorgspersonProps> = ({ skjema, barn, periodeFunk
                     }
                 />
             )}
-
             <Barnetrygdperiode
                 skjema={skjema}
                 tilhørendeJaNeiSpmFelt={skjema.felter.omsorgspersonBarnetrygdFraEøs}

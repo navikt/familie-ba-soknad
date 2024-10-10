@@ -12,7 +12,6 @@ import { Arbeidsperiode } from '../../Felleskomponenter/Arbeidsperiode/Arbeidspe
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import ÅrsakDropdown from '../../Felleskomponenter/Dropdowns/ÅrsakDropdown';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
-import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { Pensjonsperiode } from '../../Felleskomponenter/Pensjonsmodal/Pensjonsperiode';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
@@ -65,131 +64,114 @@ const DinLivssituasjon: React.FC = () => {
         >
             {erUtvidet && (
                 <>
-                    <KomponentGruppe>
-                        <ÅrsakDropdown
-                            felt={skjema.felter.årsak}
+                    <ÅrsakDropdown
+                        felt={skjema.felter.årsak}
+                        skjema={skjema}
+                        placeholder={intl.formatMessage({ id: 'omdeg.velgårsak.placeholder' })}
+                        label={
+                            <SpråkTekst
+                                id={
+                                    dinLivssituasjonSpørsmålSpråkId[
+                                        DinLivssituasjonSpørsmålId.årsak
+                                    ]
+                                }
+                            />
+                        }
+                        dynamisk
+                    />
+                    <JaNeiSpm
+                        skjema={skjema}
+                        felt={skjema.felter.separertEnkeSkilt}
+                        spørsmålTekstId={
+                            dinLivssituasjonSpørsmålSpråkId[
+                                DinLivssituasjonSpørsmålId.separertEnkeSkilt
+                            ]
+                        }
+                    />
+                    {skjema.felter.separertEnkeSkiltUtland.erSynlig && (
+                        <>
+                            <JaNeiSpm
+                                skjema={skjema}
+                                felt={skjema.felter.separertEnkeSkiltUtland}
+                                spørsmålTekstId={
+                                    dinLivssituasjonSpørsmålSpråkId[
+                                        DinLivssituasjonSpørsmålId.separertEnkeSkiltUtland
+                                    ]
+                                }
+                            />
+                            <Datovelger
+                                felt={skjema.felter.separertEnkeSkiltDato}
+                                skjema={skjema}
+                                label={
+                                    <SpråkTekst
+                                        id={
+                                            dinLivssituasjonSpørsmålSpråkId[
+                                                DinLivssituasjonSpørsmålId.separertEnkeSkiltDato
+                                            ]
+                                        }
+                                    />
+                                }
+                            />
+                        </>
+                    )}
+                    <JaNeiSpm
+                        skjema={skjema}
+                        felt={skjema.felter.harSamboerNå}
+                        spørsmålTekstId={
+                            dinLivssituasjonSpørsmålSpråkId[
+                                søknad.søker.utvidet.spørsmål.harSamboerNå.id
+                            ]
+                        }
+                    />
+                    {skjema.felter.harSamboerNå.verdi === ESvar.JA && (
+                        <SamboerSkjema
                             skjema={skjema}
-                            placeholder={intl.formatMessage({ id: 'omdeg.velgårsak.placeholder' })}
-                            label={
-                                <SpråkTekst
-                                    id={
-                                        dinLivssituasjonSpørsmålSpråkId[
-                                            DinLivssituasjonSpørsmålId.årsak
-                                        ]
-                                    }
-                                />
-                            }
-                            dynamisk
+                            samboerFelter={{
+                                navn: skjema.felter.nåværendeSamboerNavn,
+                                fnr: skjema.felter.nåværendeSamboerFnr,
+                                fnrUkjent: skjema.felter.nåværendeSamboerFnrUkjent,
+                                fødselsdato: skjema.felter.nåværendeSamboerFødselsdato,
+                                fødselsdatoUkjent: skjema.felter.nåværendeSamboerFødselsdatoUkjent,
+                                samboerFraDato: skjema.felter.nåværendeSamboerFraDato,
+                            }}
                         />
-                    </KomponentGruppe>
-                    <KomponentGruppe>
-                        <JaNeiSpm
-                            skjema={skjema}
-                            felt={skjema.felter.separertEnkeSkilt}
-                            spørsmålTekstId={
-                                dinLivssituasjonSpørsmålSpråkId[
-                                    DinLivssituasjonSpørsmålId.separertEnkeSkilt
-                                ]
-                            }
-                        />
-                        {skjema.felter.separertEnkeSkiltUtland.erSynlig && (
-                            <KomponentGruppe inline dynamisk>
-                                <JaNeiSpm
-                                    skjema={skjema}
-                                    felt={skjema.felter.separertEnkeSkiltUtland}
-                                    spørsmålTekstId={
-                                        dinLivssituasjonSpørsmålSpråkId[
-                                            DinLivssituasjonSpørsmålId.separertEnkeSkiltUtland
-                                        ]
-                                    }
-                                />
-                                <Datovelger
-                                    felt={skjema.felter.separertEnkeSkiltDato}
-                                    skjema={skjema}
-                                    label={
-                                        <SpråkTekst
-                                            id={
-                                                dinLivssituasjonSpørsmålSpråkId[
-                                                    DinLivssituasjonSpørsmålId.separertEnkeSkiltDato
-                                                ]
-                                            }
-                                        />
-                                    }
-                                />
-                            </KomponentGruppe>
-                        )}
-                    </KomponentGruppe>
-
-                    <KomponentGruppe>
-                        <JaNeiSpm
-                            skjema={skjema}
-                            felt={skjema.felter.harSamboerNå}
-                            spørsmålTekstId={
-                                dinLivssituasjonSpørsmålSpråkId[
-                                    søknad.søker.utvidet.spørsmål.harSamboerNå.id
-                                ]
-                            }
-                        />
-
-                        {skjema.felter.harSamboerNå.verdi === ESvar.JA && (
-                            <KomponentGruppe dynamisk>
-                                <SamboerSkjema
-                                    skjema={skjema}
-                                    samboerFelter={{
-                                        navn: skjema.felter.nåværendeSamboerNavn,
-                                        fnr: skjema.felter.nåværendeSamboerFnr,
-                                        fnrUkjent: skjema.felter.nåværendeSamboerFnrUkjent,
-                                        fødselsdato: skjema.felter.nåværendeSamboerFødselsdato,
-                                        fødselsdatoUkjent:
-                                            skjema.felter.nåværendeSamboerFødselsdatoUkjent,
-                                        samboerFraDato: skjema.felter.nåværendeSamboerFraDato,
-                                    }}
-                                />
-                            </KomponentGruppe>
-                        )}
-
-                        <TidligereSamboere
-                            skjema={skjema}
-                            leggTilTidligereSamboer={leggTilTidligereSamboer}
-                            fjernTidligereSamboer={fjernTidligereSamboer}
-                            hattAnnenSamboerForSøktPeriodeFelt={
-                                skjema.felter.hattAnnenSamboerForSøktPeriode
-                            }
-                            tidligereSamboere={skjema.felter.tidligereSamboere}
-                        />
-                    </KomponentGruppe>
+                    )}
+                    <TidligereSamboere
+                        skjema={skjema}
+                        leggTilTidligereSamboer={leggTilTidligereSamboer}
+                        fjernTidligereSamboer={fjernTidligereSamboer}
+                        hattAnnenSamboerForSøktPeriodeFelt={
+                            skjema.felter.hattAnnenSamboerForSøktPeriode
+                        }
+                        tidligereSamboere={skjema.felter.tidligereSamboere}
+                    />
                 </>
             )}
-
-            <KomponentGruppe>
-                <JaNeiSpm
-                    skjema={skjema}
-                    felt={skjema.felter.erAsylsøker}
-                    spørsmålTekstId={
-                        dinLivssituasjonSpørsmålSpråkId[DinLivssituasjonSpørsmålId.erAsylsøker]
-                    }
-                />
-
-                <Arbeidsperiode
-                    skjema={skjema}
-                    leggTilArbeidsperiode={leggTilArbeidsperiode}
-                    fjernArbeidsperiode={fjernArbeidsperiode}
-                    gjelderUtlandet={true}
-                    arbeiderEllerArbeidetFelt={skjema.felter.arbeidIUtlandet}
-                    registrerteArbeidsperioder={skjema.felter.registrerteArbeidsperioder}
-                    personType={PersonType.Søker}
-                />
-
-                <Pensjonsperiode
-                    skjema={skjema}
-                    mottarEllerMottattPensjonFelt={skjema.felter.mottarUtenlandspensjon}
-                    registrertePensjonsperioder={skjema.felter.registrertePensjonsperioder}
-                    leggTilPensjonsperiode={leggTilPensjonsperiode}
-                    fjernPensjonsperiode={fjernPensjonsperiode}
-                    gjelderUtlandet={true}
-                    personType={PersonType.Søker}
-                />
-            </KomponentGruppe>
+            <JaNeiSpm
+                skjema={skjema}
+                felt={skjema.felter.erAsylsøker}
+                spørsmålTekstId={
+                    dinLivssituasjonSpørsmålSpråkId[DinLivssituasjonSpørsmålId.erAsylsøker]
+                }
+            />
+            <Arbeidsperiode
+                skjema={skjema}
+                leggTilArbeidsperiode={leggTilArbeidsperiode}
+                fjernArbeidsperiode={fjernArbeidsperiode}
+                gjelderUtlandet={true}
+                arbeiderEllerArbeidetFelt={skjema.felter.arbeidIUtlandet}
+                registrerteArbeidsperioder={skjema.felter.registrerteArbeidsperioder}
+                personType={PersonType.Søker}
+            />
+            <Pensjonsperiode
+                skjema={skjema}
+                mottarEllerMottattPensjonFelt={skjema.felter.mottarUtenlandspensjon}
+                registrertePensjonsperioder={skjema.felter.registrertePensjonsperioder}
+                leggTilPensjonsperiode={leggTilPensjonsperiode}
+                fjernPensjonsperiode={fjernPensjonsperiode}
+                gjelderUtlandet={true}
+                personType={PersonType.Søker}
+            />
         </Steg>
     );
 };

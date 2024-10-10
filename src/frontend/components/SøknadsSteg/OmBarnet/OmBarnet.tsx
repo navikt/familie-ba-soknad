@@ -1,7 +1,5 @@
 import React from 'react';
 
-import styled from 'styled-components';
-
 import { BodyLong } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
@@ -24,10 +22,6 @@ import { OmBarnetHeader } from './OmBarnetHeader';
 import Oppfølgningsspørsmål from './Oppfølgningsspørsmål';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from './spørsmål';
 import { barnErUnder16År, useOmBarnet } from './useOmBarnet';
-
-const EksternLenkeContainer = styled.div`
-    margin-bottom: 4rem;
-`;
 
 const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
     const { tekster } = useApp();
@@ -107,24 +101,19 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                     fjernPensjonsperiode={fjernPensjonsperiode}
                 />
             )}
-
             {skjema.felter.borFastMedSøker.erSynlig && (
                 <SkjemaFieldset legendSpråkId={'ombarnet.bosted'} dynamisk>
                     {barn.andreForelderErDød?.svar !== ESvar.JA && (
-                        <>
-                            <div>
-                                <BodyLong>
-                                    <SpråkTekst id={'ombarnet.bosted-info'} />
-                                </BodyLong>
-                            </div>
-                            <EksternLenkeContainer>
-                                <EksternLenke
-                                    lenkeSpråkId={'ombarnet.les-mer-om-bosted.lenke'}
-                                    lenkeTekstSpråkId={'ombarnet.les-mer-om-bosted.lenketekst'}
-                                    target="_blank"
-                                />
-                            </EksternLenkeContainer>
-                        </>
+                        <KomponentGruppe>
+                            <BodyLong>
+                                <SpråkTekst id={'ombarnet.bosted-info'} />
+                            </BodyLong>
+                            <EksternLenke
+                                lenkeSpråkId={'ombarnet.les-mer-om-bosted.lenke'}
+                                lenkeTekstSpråkId={'ombarnet.les-mer-om-bosted.lenketekst'}
+                                target="_blank"
+                            />
+                        </KomponentGruppe>
                     )}
                     <JaNeiSpm
                         skjema={skjema}
@@ -134,7 +123,6 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                         }
                         språkValues={{ navn: barn.navn }}
                     />
-
                     {skjema.felter.skriftligAvtaleOmDeltBosted.erSynlig && (
                         <JaNeiSpm
                             skjema={skjema}
@@ -150,7 +138,7 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                 </SkjemaFieldset>
             )}
             {skjema.felter.søkerHarBoddMedAndreForelder.erSynlig && (
-                <KomponentGruppe dynamisk>
+                <>
                     <JaNeiSpm
                         skjema={skjema}
                         felt={skjema.felter.søkerHarBoddMedAndreForelder}
@@ -160,45 +148,41 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                             ]
                         }
                         språkValues={{ navn: barn.navn }}
+                        aria-live="polite"
                     />
                     {skjema.felter.søkerFlyttetFraAndreForelderDato.erSynlig && (
-                        <KomponentGruppe inline dynamisk>
-                            <>
-                                <Datovelger
-                                    felt={skjema.felter.søkerFlyttetFraAndreForelderDato}
-                                    skjema={skjema}
-                                    label={
-                                        <SpråkTekst
-                                            id={
-                                                omBarnetSpørsmålSpråkId[
-                                                    OmBarnetSpørsmålsId
-                                                        .søkerFlyttetFraAndreForelderDato
-                                                ]
-                                            }
-                                        />
+                        <div aria-live="polite">
+                            <Datovelger
+                                felt={skjema.felter.søkerFlyttetFraAndreForelderDato}
+                                skjema={skjema}
+                                label={
+                                    <SpråkTekst
+                                        id={
+                                            omBarnetSpørsmålSpråkId[
+                                                OmBarnetSpørsmålsId.søkerFlyttetFraAndreForelderDato
+                                            ]
+                                        }
+                                    />
+                                }
+                                disabled={
+                                    skjema.felter.borMedAndreForelderCheckbox.verdi === ESvar.JA
+                                }
+                                avgrensDatoFremITid={true}
+                            />
+                            {skjema.felter.borMedAndreForelderCheckbox.erSynlig && (
+                                <SkjemaCheckbox
+                                    felt={skjema.felter.borMedAndreForelderCheckbox}
+                                    visFeilmeldinger={skjema.visFeilmeldinger}
+                                    labelSpråkTekstId={
+                                        omBarnetSpørsmålSpråkId[
+                                            OmBarnetSpørsmålsId.søkerBorMedAndreForelder
+                                        ]
                                     }
-                                    disabled={
-                                        skjema.felter.borMedAndreForelderCheckbox.verdi === ESvar.JA
-                                    }
-                                    avgrensDatoFremITid={true}
                                 />
-                                {skjema.felter.borMedAndreForelderCheckbox.erSynlig && (
-                                    <div>
-                                        <SkjemaCheckbox
-                                            felt={skjema.felter.borMedAndreForelderCheckbox}
-                                            visFeilmeldinger={skjema.visFeilmeldinger}
-                                            labelSpråkTekstId={
-                                                omBarnetSpørsmålSpråkId[
-                                                    OmBarnetSpørsmålsId.søkerBorMedAndreForelder
-                                                ]
-                                            }
-                                        />
-                                    </div>
-                                )}
-                            </>
-                        </KomponentGruppe>
+                            )}
+                        </div>
                     )}
-                </KomponentGruppe>
+                </>
             )}
         </Steg>
     ) : null;

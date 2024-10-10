@@ -11,7 +11,6 @@ import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import Datovelger from '../Datovelger/Datovelger';
 import { LandDropdown } from '../Dropdowns/LandDropdown';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
-import KomponentGruppe from '../KomponentGruppe/KomponentGruppe';
 import { SkjemaCheckbox } from '../SkjemaCheckbox/SkjemaCheckbox';
 import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeiloppsummering';
 import { SkjemaFeltInput } from '../SkjemaFeltInput/SkjemaFeltInput';
@@ -107,85 +106,76 @@ export const ArbeidsperiodeModal: React.FC<ArbeidsperiodeModalProps> = ({
             valideringErOk={valideringErOk}
             onAvbrytCallback={nullstillSkjema}
         >
-            <KomponentGruppe inline>
-                {arbeidsperiodeAvsluttet.erSynlig && (
-                    <JaNeiSpm
-                        skjema={skjema}
-                        felt={skjema.felter.arbeidsperiodeAvsluttet}
-                        spørsmålTekstId={hentSpørsmålTekstId(
-                            ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet
-                        )}
-                    />
-                )}
-                {arbeidsperiodeLand.erSynlig && (
-                    <KomponentGruppe inline>
-                        <LandDropdown
-                            felt={skjema.felter.arbeidsperiodeLand}
-                            skjema={skjema}
-                            label={
-                                <SpråkTekst
-                                    id={hentSpørsmålTekstId(
-                                        ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand
-                                    )}
-                                />
-                            }
-                            dynamisk
-                            ekskluderNorge
+            {arbeidsperiodeAvsluttet.erSynlig && (
+                <JaNeiSpm
+                    skjema={skjema}
+                    felt={skjema.felter.arbeidsperiodeAvsluttet}
+                    spørsmålTekstId={hentSpørsmålTekstId(
+                        ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet
+                    )}
+                />
+            )}
+            {arbeidsperiodeLand.erSynlig && (
+                <LandDropdown
+                    felt={skjema.felter.arbeidsperiodeLand}
+                    skjema={skjema}
+                    label={
+                        <SpråkTekst
+                            id={hentSpørsmålTekstId(ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand)}
                         />
-                    </KomponentGruppe>
-                )}
-                {arbeidsgiver.erSynlig && (
-                    <SkjemaFeltInput
-                        felt={skjema.felter.arbeidsgiver}
-                        visFeilmeldinger={skjema.visFeilmeldinger}
-                        labelSpråkTekstId={hentSpørsmålTekstId(
-                            ArbeidsperiodeSpørsmålsId.arbeidsgiver
-                        )}
-                    />
-                )}
-                {fraDatoArbeidsperiode.erSynlig && (
+                    }
+                    dynamisk
+                    ekskluderNorge
+                />
+            )}
+            {arbeidsgiver.erSynlig && (
+                <SkjemaFeltInput
+                    felt={skjema.felter.arbeidsgiver}
+                    visFeilmeldinger={skjema.visFeilmeldinger}
+                    labelSpråkTekstId={hentSpørsmålTekstId(ArbeidsperiodeSpørsmålsId.arbeidsgiver)}
+                />
+            )}
+            {fraDatoArbeidsperiode.erSynlig && (
+                <Datovelger
+                    felt={skjema.felter.fraDatoArbeidsperiode}
+                    skjema={skjema}
+                    label={
+                        <SpråkTekst
+                            id={hentSpørsmålTekstId(
+                                ArbeidsperiodeSpørsmålsId.fraDatoArbeidsperiode
+                            )}
+                        />
+                    }
+                    avgrensMaxDato={periodenErAvsluttet ? gårsdagensDato() : dagensDato()}
+                />
+            )}
+            {tilDatoArbeidsperiode.erSynlig && (
+                <div>
                     <Datovelger
-                        felt={skjema.felter.fraDatoArbeidsperiode}
+                        felt={skjema.felter.tilDatoArbeidsperiode}
                         skjema={skjema}
                         label={
                             <SpråkTekst
                                 id={hentSpørsmålTekstId(
-                                    ArbeidsperiodeSpørsmålsId.fraDatoArbeidsperiode
+                                    ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiode
                                 )}
                             />
                         }
-                        avgrensMaxDato={periodenErAvsluttet ? gårsdagensDato() : dagensDato()}
+                        avgrensMinDato={minTilDatoForUtbetalingEllerArbeidsperiode(
+                            periodenErAvsluttet,
+                            skjema.felter.fraDatoArbeidsperiode.verdi
+                        )}
+                        avgrensMaxDato={periodenErAvsluttet ? dagensDato() : undefined}
+                        disabled={skjema.felter.tilDatoArbeidsperiodeUkjent.verdi === ESvar.JA}
                     />
-                )}
-                {tilDatoArbeidsperiode.erSynlig && (
-                    <>
-                        <Datovelger
-                            felt={skjema.felter.tilDatoArbeidsperiode}
-                            skjema={skjema}
-                            label={
-                                <SpråkTekst
-                                    id={hentSpørsmålTekstId(
-                                        ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiode
-                                    )}
-                                />
-                            }
-                            avgrensMinDato={minTilDatoForUtbetalingEllerArbeidsperiode(
-                                periodenErAvsluttet,
-                                skjema.felter.fraDatoArbeidsperiode.verdi
-                            )}
-                            avgrensMaxDato={periodenErAvsluttet ? dagensDato() : undefined}
-                            disabled={skjema.felter.tilDatoArbeidsperiodeUkjent.verdi === ESvar.JA}
-                        />
-
-                        <SkjemaCheckbox
-                            felt={skjema.felter.tilDatoArbeidsperiodeUkjent}
-                            labelSpråkTekstId={hentSpørsmålTekstId(
-                                ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiodeVetIkke
-                            )}
-                        />
-                    </>
-                )}
-            </KomponentGruppe>
+                    <SkjemaCheckbox
+                        felt={skjema.felter.tilDatoArbeidsperiodeUkjent}
+                        labelSpråkTekstId={hentSpørsmålTekstId(
+                            ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiodeVetIkke
+                        )}
+                    />
+                </div>
+            )}
             {visFeiloppsummering(skjema) && <SkjemaFeiloppsummering skjema={skjema} />}
         </SkjemaModal>
     );
