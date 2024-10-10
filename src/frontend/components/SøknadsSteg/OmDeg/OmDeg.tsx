@@ -8,7 +8,6 @@ import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { IUtenlandsoppholdTekstinnhold } from '../../../typer/sanity/modaler/utenlandsopphold';
 import { ESanitySteg, Typografi } from '../../../typer/sanity/sanity';
 import { uppercaseFørsteBokstav } from '../../../utils/visning';
-import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import JaNeiSpmForSanity from '../../Felleskomponenter/JaNeiSpm/JaNeiSpmForSanity';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
@@ -22,7 +21,6 @@ import { UtenlandsoppholdModal } from '../../Felleskomponenter/UtenlandsoppholdM
 import { UtenlandsperiodeOppsummering } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsperiodeOppsummering';
 
 import { Personopplysninger } from './Personopplysninger';
-import { OmDegSpørsmålId, omDegSpørsmålSpråkId } from './spørsmål';
 import { useOmdeg } from './useOmdeg';
 
 const OmDeg: React.FC = () => {
@@ -51,7 +49,12 @@ const OmDeg: React.FC = () => {
     const { flerePerioder, leggTilPeriodeForklaring } = teksterForModal;
 
     const stegTekster = tekster()[ESanitySteg.OM_DEG];
-    const { omDegGuide, vaertINorgeITolvMaaneder } = stegTekster;
+    const {
+        omDegGuide,
+        borPaaRegistrertAdresse,
+        vaertINorgeITolvMaaneder,
+        planleggerAaBoINorgeTolvMnd,
+    } = stegTekster;
 
     const frittståendeOrdTekster = tekster().FELLES.frittståendeOrd;
 
@@ -71,10 +74,10 @@ const OmDeg: React.FC = () => {
             </KomponentGruppe>
 
             <KomponentGruppe>
-                <JaNeiSpm
+                <JaNeiSpmForSanity
                     skjema={skjema}
                     felt={skjema.felter.borPåRegistrertAdresse}
-                    spørsmålTekstId={omDegSpørsmålSpråkId[OmDegSpørsmålId.borPåRegistrertAdresse]}
+                    spørsmålDokument={borPaaRegistrertAdresse}
                 />
             </KomponentGruppe>
             <KomponentGruppe>
@@ -131,12 +134,10 @@ const OmDeg: React.FC = () => {
                 </>
                 {skjema.felter.planleggerÅBoINorgeTolvMnd.erSynlig && (
                     <KomponentGruppe inline dynamisk>
-                        <JaNeiSpm
+                        <JaNeiSpmForSanity
                             skjema={skjema}
                             felt={skjema.felter.planleggerÅBoINorgeTolvMnd}
-                            spørsmålTekstId={
-                                omDegSpørsmålSpråkId[OmDegSpørsmålId.planleggerÅBoINorgeTolvMnd]
-                            }
+                            spørsmålDokument={planleggerAaBoINorgeTolvMnd}
                         />
                     </KomponentGruppe>
                 )}
