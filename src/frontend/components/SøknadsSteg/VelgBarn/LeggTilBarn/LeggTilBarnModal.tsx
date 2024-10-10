@@ -62,8 +62,9 @@ const LeggTilBarnModal: React.FC<{
                                 id={velgBarnSpørsmålSpråkId[VelgBarnSpørsmålId.barnetsNavn]}
                             />
                         }
+                        aria-live="polite"
                     >
-                        <KomponentGruppe>
+                        <KomponentGruppe aria-live="polite">
                             <SkjemaFeltInput
                                 felt={skjema.felter.fornavn}
                                 visFeilmeldinger={skjema.visFeilmeldinger}
@@ -91,7 +92,7 @@ const LeggTilBarnModal: React.FC<{
                             />
                         </KomponentGruppe>
                     </Fieldset>
-                    <div>
+                    <div aria-live="polite">
                         <SkjemaFeltInput
                             felt={skjema.felter.ident}
                             visFeilmeldinger={skjema.visFeilmeldinger}

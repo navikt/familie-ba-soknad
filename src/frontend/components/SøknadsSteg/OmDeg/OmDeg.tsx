@@ -123,6 +123,7 @@ const OmDeg: React.FC = () => {
                     spørsmålTekstId={
                         omDegSpørsmålSpråkId[OmDegSpørsmålId.planleggerÅBoINorgeTolvMnd]
                     }
+                    aria-live="polite"
                 />
             )}
             {utenlandsoppholdmodalErÅpen && (

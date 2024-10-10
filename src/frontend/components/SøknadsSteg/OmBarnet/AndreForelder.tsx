@@ -102,7 +102,7 @@ const AndreForelder: React.FC<{
                         </div>
                     )}
                     {skjema.felter.andreForelderFødselsdato.erSynlig && (
-                        <div>
+                        <div aria-live="polite">
                             <Datovelger
                                 felt={skjema.felter.andreForelderFødselsdato}
                                 skjema={skjema}

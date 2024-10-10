@@ -148,9 +148,10 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                             ]
                         }
                         språkValues={{ navn: barn.navn }}
+                        aria-live="polite"
                     />
                     {skjema.felter.søkerFlyttetFraAndreForelderDato.erSynlig && (
-                        <div>
+                        <div aria-live="polite">
                             <Datovelger
                                 felt={skjema.felter.søkerFlyttetFraAndreForelderDato}
                                 skjema={skjema}
