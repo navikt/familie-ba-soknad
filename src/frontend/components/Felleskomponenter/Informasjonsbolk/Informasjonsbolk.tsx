@@ -26,7 +26,7 @@ const Informasjonsbolk: React.FC<IInformasjonsbolkProps> = ({
                     <SpråkTekst id={tittelId} values={språkValues} />
                 </Heading>
             )}
-            <div>{children}</div>
+            {children}
         </div>
     );
 };
