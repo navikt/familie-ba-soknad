@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { VStack } from '@navikt/ds-react';
-
 import { useApp } from '../../../context/AppContext';
 import { ESanitySteg } from '../../../typer/sanity/sanity';
 import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
@@ -48,23 +46,16 @@ const VelgBarn: React.FC = () => {
                     },
                 }}
             >
-                <VStack
-                    id={VelgBarnSpørsmålId.velgBarn}
-                    className={'BarnekortStack'}
-                    marginBlock="12"
-                    gap="12"
-                >
-                    {barn.map(barnet => (
-                        <Barnekort
-                            key={barnet.id}
-                            barn={barnet}
-                            velgBarnCallback={håndterVelgBarnToggle}
-                            barnSomSkalVæreMed={barnSomSkalVæreMed}
-                            fjernBarnCallback={fjernBarn}
-                        />
-                    ))}
-                    <NyttBarnKort onLeggTilBarn={åpneModal} />
-                </VStack>
+                {barn.map(barnet => (
+                    <Barnekort
+                        key={barnet.id}
+                        barn={barnet}
+                        velgBarnCallback={håndterVelgBarnToggle}
+                        barnSomSkalVæreMed={barnSomSkalVæreMed}
+                        fjernBarnCallback={fjernBarn}
+                    />
+                ))}
+                <NyttBarnKort onLeggTilBarn={åpneModal} />
             </Steg>
             {erÅpen && <LeggTilBarnModal erÅpen={erÅpen} lukkModal={lukkModal} />}
         </>

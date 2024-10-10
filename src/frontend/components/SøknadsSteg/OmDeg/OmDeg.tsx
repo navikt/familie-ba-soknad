@@ -64,78 +64,68 @@ const OmDeg: React.FC = () => {
                 settSøknadsdataCallback: oppdaterSøknad,
             }}
         >
-            <KomponentGruppe>
-                <Personopplysninger />
-            </KomponentGruppe>
-
+            <Personopplysninger />
+            <JaNeiSpm
+                skjema={skjema}
+                felt={skjema.felter.borPåRegistrertAdresse}
+                spørsmålTekstId={omDegSpørsmålSpråkId[OmDegSpørsmålId.borPåRegistrertAdresse]}
+            />
             <KomponentGruppe>
                 <JaNeiSpm
                     skjema={skjema}
-                    felt={skjema.felter.borPåRegistrertAdresse}
-                    spørsmålTekstId={omDegSpørsmålSpråkId[OmDegSpørsmålId.borPåRegistrertAdresse]}
+                    felt={skjema.felter.værtINorgeITolvMåneder}
+                    spørsmålTekstId={omDegSpørsmålSpråkId[OmDegSpørsmålId.værtINorgeITolvMåneder]}
+                    tilleggsinfoTekstId={'felles.korteopphold.info'}
                 />
-            </KomponentGruppe>
-            <KomponentGruppe>
-                <>
-                    <JaNeiSpm
-                        skjema={skjema}
-                        felt={skjema.felter.værtINorgeITolvMåneder}
-                        spørsmålTekstId={
-                            omDegSpørsmålSpråkId[OmDegSpørsmålId.værtINorgeITolvMåneder]
-                        }
-                        tilleggsinfoTekstId={'felles.korteopphold.info'}
-                    />
-                    {skjema.felter.værtINorgeITolvMåneder.verdi === ESvar.NEI && (
-                        <PerioderContainer
-                            tittel={uppercaseFørsteBokstav(
-                                plainTekst(frittståendeOrdTekster.utenlandsopphold)
-                            )}
-                        >
-                            {utenlandsperioder.map((periode, index) => (
-                                <UtenlandsperiodeOppsummering
-                                    key={index}
-                                    periode={periode}
-                                    nummer={index + 1}
-                                    fjernPeriodeCallback={fjernUtenlandsperiode}
-                                />
-                            ))}
-                            {!toggles.NYE_MODAL_TEKSTER && utenlandsperioder.length > 0 && (
-                                <Label as="p" spacing>
-                                    <SpråkTekst id={'omdeg.flereopphold.spm'} />
-                                </Label>
-                            )}
-                            <LeggTilKnapp
-                                onClick={åpneUtenlandsoppholdmodal}
-                                språkTekst={'felles.leggtilutenlands.knapp'}
-                                leggTilFlereTekst={
-                                    toggles.NYE_MODAL_TEKSTER &&
-                                    utenlandsperioder.length > 0 &&
-                                    plainTekst(flerePerioder)
-                                }
-                                id={UtenlandsoppholdSpørsmålId.utenlandsopphold}
-                                feilmelding={
-                                    skjema.felter.registrerteUtenlandsperioder.erSynlig &&
-                                    skjema.felter.registrerteUtenlandsperioder.feilmelding &&
-                                    skjema.visFeilmeldinger && (
-                                        <SpråkTekst id={'felles.leggtilutenlands.feilmelding'} />
-                                    )
-                                }
+                {skjema.felter.værtINorgeITolvMåneder.verdi === ESvar.NEI && (
+                    <PerioderContainer
+                        tittel={uppercaseFørsteBokstav(
+                            plainTekst(frittståendeOrdTekster.utenlandsopphold)
+                        )}
+                    >
+                        {utenlandsperioder.map((periode, index) => (
+                            <UtenlandsperiodeOppsummering
+                                key={index}
+                                periode={periode}
+                                nummer={index + 1}
+                                fjernPeriodeCallback={fjernUtenlandsperiode}
                             />
-                        </PerioderContainer>
-                    )}
-                </>
-                {skjema.felter.planleggerÅBoINorgeTolvMnd.erSynlig && (
-                    <KomponentGruppe inline dynamisk>
-                        <JaNeiSpm
-                            skjema={skjema}
-                            felt={skjema.felter.planleggerÅBoINorgeTolvMnd}
-                            spørsmålTekstId={
-                                omDegSpørsmålSpråkId[OmDegSpørsmålId.planleggerÅBoINorgeTolvMnd]
+                        ))}
+                        {!toggles.NYE_MODAL_TEKSTER && utenlandsperioder.length > 0 && (
+                            <Label as="p" spacing>
+                                <SpråkTekst id={'omdeg.flereopphold.spm'} />
+                            </Label>
+                        )}
+                        <LeggTilKnapp
+                            onClick={åpneUtenlandsoppholdmodal}
+                            språkTekst={'felles.leggtilutenlands.knapp'}
+                            leggTilFlereTekst={
+                                toggles.NYE_MODAL_TEKSTER &&
+                                utenlandsperioder.length > 0 &&
+                                plainTekst(flerePerioder)
+                            }
+                            id={UtenlandsoppholdSpørsmålId.utenlandsopphold}
+                            feilmelding={
+                                skjema.felter.registrerteUtenlandsperioder.erSynlig &&
+                                skjema.felter.registrerteUtenlandsperioder.feilmelding &&
+                                skjema.visFeilmeldinger && (
+                                    <SpråkTekst id={'felles.leggtilutenlands.feilmelding'} />
+                                )
                             }
                         />
-                    </KomponentGruppe>
+                    </PerioderContainer>
                 )}
             </KomponentGruppe>
+            {skjema.felter.planleggerÅBoINorgeTolvMnd.erSynlig && (
+                <JaNeiSpm
+                    skjema={skjema}
+                    felt={skjema.felter.planleggerÅBoINorgeTolvMnd}
+                    spørsmålTekstId={
+                        omDegSpørsmålSpråkId[OmDegSpørsmålId.planleggerÅBoINorgeTolvMnd]
+                    }
+                    aria-live="polite"
+                />
+            )}
             {utenlandsoppholdmodalErÅpen && (
                 <UtenlandsoppholdModal
                     erÅpen={utenlandsoppholdmodalErÅpen}

@@ -15,6 +15,7 @@ import { IEøsForBarnFeltTyper, IOmBarnetFeltTyper } from '../../../typer/skjema
 import { genererPeriodeId } from '../../../utils/perioder';
 import { uppercaseFørsteBokstav } from '../../../utils/visning';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
+import KomponentGruppe from '../KomponentGruppe/KomponentGruppe';
 import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
 import PerioderContainer from '../PerioderContainer';
 import useModal from '../SkjemaModal/useModal';
@@ -66,7 +67,7 @@ export const Barnetrygdperiode: React.FC<BarnetrygdperiodeProps> = ({
     const frittståendeOrdTekster = tekster().FELLES.frittståendeOrd;
 
     return (
-        <>
+        <KomponentGruppe>
             <JaNeiSpm
                 skjema={skjema}
                 felt={tilhørendeJaNeiSpmFelt}
@@ -96,7 +97,6 @@ export const Barnetrygdperiode: React.FC<BarnetrygdperiodeProps> = ({
                             headingLevel={headingLevel}
                         />
                     ))}
-
                     {!toggles.NYE_MODAL_TEKSTER &&
                         registrerteEøsBarnetrygdsperioder.verdi.length > 0 && (
                             <Label as="p" spacing>
@@ -106,7 +106,6 @@ export const Barnetrygdperiode: React.FC<BarnetrygdperiodeProps> = ({
                                 />
                             </Label>
                         )}
-
                     <LeggTilKnapp
                         onClick={åpneBarnetrygdsmodal}
                         språkTekst={'ombarnet.trygdandreperioder.knapp'}
@@ -141,6 +140,6 @@ export const Barnetrygdperiode: React.FC<BarnetrygdperiodeProps> = ({
                     )}
                 </PerioderContainer>
             )}
-        </>
+        </KomponentGruppe>
     );
 };

@@ -58,7 +58,6 @@ export const UtenlandsperiodeOppsummering: React.FC<{
                     />
                 </BodyShort>
             </OppsummeringFelt>
-
             <OppsummeringFelt
                 tittel={
                     <SpråkTekst
@@ -68,7 +67,6 @@ export const UtenlandsperiodeOppsummering: React.FC<{
                 }
                 søknadsvar={landkodeTilSpråk(oppholdsland.svar, valgtLocale)}
             />
-
             {oppholdslandFraDato && (
                 <OppsummeringFelt
                     tittel={
@@ -80,7 +78,6 @@ export const UtenlandsperiodeOppsummering: React.FC<{
                     søknadsvar={formaterDato(oppholdslandFraDato.svar)}
                 />
             )}
-
             {oppholdslandTilDato && (
                 <OppsummeringFelt
                     tittel={
