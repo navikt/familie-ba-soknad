@@ -6,12 +6,14 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { useApp } from '../../../context/AppContext';
 import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { IUtenlandsoppholdTekstinnhold } from '../../../typer/sanity/modaler/utenlandsopphold';
-import { ESanitySteg } from '../../../typer/sanity/sanity';
+import { ESanitySteg, Typografi } from '../../../typer/sanity/sanity';
 import { uppercaseFørsteBokstav } from '../../../utils/visning';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
+import JaNeiSpmForSanity from '../../Felleskomponenter/JaNeiSpm/JaNeiSpmForSanity';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
 import PerioderContainer from '../../Felleskomponenter/PerioderContainer';
+import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
@@ -49,7 +51,7 @@ const OmDeg: React.FC = () => {
     const { flerePerioder, leggTilPeriodeForklaring } = teksterForModal;
 
     const stegTekster = tekster()[ESanitySteg.OM_DEG];
-    const { omDegGuide } = stegTekster;
+    const { omDegGuide, vaertINorgeITolvMaaneder } = stegTekster;
 
     const frittståendeOrdTekster = tekster().FELLES.frittståendeOrd;
 
@@ -77,13 +79,16 @@ const OmDeg: React.FC = () => {
             </KomponentGruppe>
             <KomponentGruppe>
                 <>
-                    <JaNeiSpm
+                    <JaNeiSpmForSanity
                         skjema={skjema}
                         felt={skjema.felter.værtINorgeITolvMåneder}
-                        spørsmålTekstId={
-                            omDegSpørsmålSpråkId[OmDegSpørsmålId.værtINorgeITolvMåneder]
+                        spørsmålDokument={vaertINorgeITolvMaaneder}
+                        tilleggsinfo={
+                            <TekstBlock
+                                block={vaertINorgeITolvMaaneder.beskrivelse}
+                                typografi={Typografi.BodyShort}
+                            />
                         }
-                        tilleggsinfoTekstId={'felles.korteopphold.info'}
                     />
                     {skjema.felter.værtINorgeITolvMåneder.verdi === ESvar.NEI && (
                         <PerioderContainer

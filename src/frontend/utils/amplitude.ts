@@ -65,6 +65,21 @@ export const logKlikkGåVidere = (steg: number, søknadstype: ESøknadstype) => 
     });
 };
 
+export const logSpørsmålBesvart = (
+    spørsmålApiNavn: string,
+    svar: string,
+    søknadstype: ESøknadstype
+) => {
+    spørsmålApiNavn &&
+        logEvent('skjemaspørsmål besvart', {
+            skjemanavn: søknadstyper[søknadstype].navn,
+            skjemaId: søknadstyper[søknadstype].id,
+            team_id: 'familie',
+            spørsmål: spørsmålApiNavn,
+            svar,
+        });
+};
+
 export const setUserProperty = (key: UserProperty, value: string | number) => {
     const identify = new amplitudeInstance.Identify().set(key, value);
     amplitudeInstance.identify(identify);

@@ -72,6 +72,7 @@ export interface IFrittståendeOrdTekstinnhold {
     norge: LocaleRecordString;
     ja: LocaleRecordString;
     nei: LocaleRecordString;
+    jegVetIkke: LocaleRecordString;
     barnetrygd: LocaleRecordString;
     skjult: LocaleRecordString;
     av: LocaleRecordString;
