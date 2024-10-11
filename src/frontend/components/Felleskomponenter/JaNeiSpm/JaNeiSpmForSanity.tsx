@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useState } from 'react';
+import React, { ReactNode } from 'react';
 
 import { v4 as uuidv4 } from 'uuid';
 
@@ -30,21 +30,18 @@ const JaNeiSpm: React.FC<IJaNeiSpmProps> = ({
     spørsmålDokument,
     flettefelter,
 }) => {
-    const [mounted, settMounted] = useState(false);
     const { søknad, tekster, plainTekst } = useApp();
     const { ja, nei, jegVetIkke } = tekster().FELLES.frittståendeOrd;
 
-    useEffect(() => {
-        if (mounted) {
-            spørsmålDokument &&
-                logSpørsmålBesvart(
-                    spørsmålDokument.api_navn,
-                    felt.verdi ?? AlternativtSvarForInput.UKJENT,
-                    søknad.søknadstype
-                );
+    const håndterEndring = (verdi: ESvar | null) => {
+        if (spørsmålDokument) {
+            logSpørsmålBesvart(
+                spørsmålDokument.api_navn,
+                verdi ?? AlternativtSvarForInput.UKJENT,
+                søknad.søknadstype
+            );
         }
-        settMounted(true);
-    }, [felt.verdi]);
+    };
 
     return felt.erSynlig ? (
         <div id={felt.id} data-testid={felt.id}>
@@ -65,6 +62,7 @@ const JaNeiSpm: React.FC<IJaNeiSpmProps> = ({
                     nei: plainTekst(nei),
                     vetikke: inkluderVetIkke ? plainTekst(jegVetIkke) : undefined,
                 }}
+                onChange={håndterEndring}
             />
         </div>
     ) : null;
