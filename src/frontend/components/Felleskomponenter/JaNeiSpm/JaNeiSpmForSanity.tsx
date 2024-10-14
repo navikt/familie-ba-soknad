@@ -13,7 +13,7 @@ import { SkjemaFeltTyper } from '../../../typer/skjema';
 import { logSpørsmålBesvart } from '../../../utils/amplitude';
 import TekstBlock from '../Sanity/TekstBlock';
 
-interface IJaNeiSpmProps {
+interface IJaNeiSpmForSanityProps {
     skjema: ISkjema<SkjemaFeltTyper, string>;
     felt: Felt<ESvar | null>;
     tilleggsinfo?: ReactNode;
@@ -22,7 +22,7 @@ interface IJaNeiSpmProps {
     flettefelter?: FlettefeltVerdier;
 }
 
-const JaNeiSpm: React.FC<IJaNeiSpmProps> = ({
+const JaNeiSpmForSanity: React.FC<IJaNeiSpmForSanityProps> = ({
     skjema,
     felt,
     tilleggsinfo,
@@ -68,4 +68,4 @@ const JaNeiSpm: React.FC<IJaNeiSpmProps> = ({
     ) : null;
 };
 
-export default JaNeiSpm;
+export default JaNeiSpmForSanity;
