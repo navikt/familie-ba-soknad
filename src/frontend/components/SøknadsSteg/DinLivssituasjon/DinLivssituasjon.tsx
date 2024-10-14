@@ -6,12 +6,14 @@ import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
 import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
+import { ESivilstand } from '../../../typer/kontrakt/generelle';
 import { PersonType } from '../../../typer/personType';
 import { ESanitySteg } from '../../../typer/sanity/sanity';
 import { Arbeidsperiode } from '../../Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import ÅrsakDropdown from '../../Felleskomponenter/Dropdowns/ÅrsakDropdown';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
+import JaNeiSpmForSanity from '../../Felleskomponenter/JaNeiSpm/JaNeiSpmForSanity';
 import { Pensjonsperiode } from '../../Felleskomponenter/Pensjonsmodal/Pensjonsperiode';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
@@ -39,7 +41,16 @@ const DinLivssituasjon: React.FC = () => {
     const { erUtvidet, søknad, tekster } = useApp();
 
     const stegTekster = tekster()[ESanitySteg.DIN_LIVSSITUASJON];
-    const { dinLivssituasjonGuide } = stegTekster;
+    const {
+        dinLivssituasjonGuide,
+        serparerteEllerSkilt,
+        separertSkiltIUtlandet,
+        harSamboerNaa,
+        harSamboerNaaGift,
+    } = stegTekster;
+
+    const harSamboerSpørsmålDokument =
+        søknad.søker.sivilstand.type === ESivilstand.GIFT ? harSamboerNaaGift : harSamboerNaa;
 
     return (
         <Steg
@@ -79,25 +90,17 @@ const DinLivssituasjon: React.FC = () => {
                         }
                         dynamisk
                     />
-                    <JaNeiSpm
+                    <JaNeiSpmForSanity
                         skjema={skjema}
                         felt={skjema.felter.separertEnkeSkilt}
-                        spørsmålTekstId={
-                            dinLivssituasjonSpørsmålSpråkId[
-                                DinLivssituasjonSpørsmålId.separertEnkeSkilt
-                            ]
-                        }
+                        spørsmålDokument={serparerteEllerSkilt}
                     />
                     {skjema.felter.separertEnkeSkiltUtland.erSynlig && (
                         <>
-                            <JaNeiSpm
+                            <JaNeiSpmForSanity
                                 skjema={skjema}
                                 felt={skjema.felter.separertEnkeSkiltUtland}
-                                spørsmålTekstId={
-                                    dinLivssituasjonSpørsmålSpråkId[
-                                        DinLivssituasjonSpørsmålId.separertEnkeSkiltUtland
-                                    ]
-                                }
+                                spørsmålDokument={separertSkiltIUtlandet}
                             />
                             <Datovelger
                                 felt={skjema.felter.separertEnkeSkiltDato}
@@ -114,14 +117,10 @@ const DinLivssituasjon: React.FC = () => {
                             />
                         </>
                     )}
-                    <JaNeiSpm
+                    <JaNeiSpmForSanity
                         skjema={skjema}
                         felt={skjema.felter.harSamboerNå}
-                        spørsmålTekstId={
-                            dinLivssituasjonSpørsmålSpråkId[
-                                søknad.søker.utvidet.spørsmål.harSamboerNå.id
-                            ]
-                        }
+                        spørsmålDokument={harSamboerSpørsmålDokument}
                     />
                     {skjema.felter.harSamboerNå.verdi === ESvar.JA && (
                         <SamboerSkjema
