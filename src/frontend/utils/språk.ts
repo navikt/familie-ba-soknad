@@ -8,9 +8,11 @@ import * as engelsk from '../assets/lang/en.json' assert { type: 'json' };
 import * as bokmål from '../assets/lang/nb.json' assert { type: 'json' };
 import * as nynorsk from '../assets/lang/nn.json' assert { type: 'json' };
 import { innebygdeFormatterere } from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
+import { IDinLivssituasjonTekstinnhold } from '../components/SøknadsSteg/DinLivssituasjon/innholdTyper';
 import { AlternativtSvarForInput, LocaleType } from '../typer/common';
 import { ESivilstand, Slektsforhold } from '../typer/kontrakt/generelle';
 import { IBarn } from '../typer/person';
+import { LocaleRecordString } from '../typer/sanity/sanity';
 import { Årsak } from '../typer/utvidet';
 
 export const toÅrsakSpråkId = (årsak: Årsak): string => {
@@ -35,6 +37,34 @@ export const toÅrsakSpråkId = (årsak: Årsak): string => {
             return 'omdeg.velgårsak.forvaring';
         case Årsak.PSYKISK_HELSEVERN:
             return 'omdeg.velgårsak.psykiskhelsevern';
+    }
+};
+
+export const hentÅrsak = (
+    årsak: Årsak,
+    tekster: IDinLivssituasjonTekstinnhold
+): LocaleRecordString => {
+    switch (årsak) {
+        case Årsak.SEPARERT:
+            return tekster.valgalternativSeparert;
+        case Årsak.SKILT:
+            return tekster.valgalternativSkilt;
+        case Årsak.BRUDD_SAMBOER:
+            return tekster.valgalternativBruddSamboer;
+        case Årsak.BODD_ALENE:
+            return tekster.valgalternativBoddAlene;
+        case Årsak.ENKE_ENKEMANN:
+            return tekster.valgalternativEnkeEnkemann;
+        case Årsak.FENGSEL_VARETEKT:
+            return tekster.valgalternativFengselVaretekt;
+        case Årsak.BRUDD_GIFT:
+            return tekster.valgalternativBruddGift;
+        case Årsak.FORSVUNNET:
+            return tekster.valgalternativForsvunnet;
+        case Årsak.FORVARING:
+            return tekster.valgalternativForvaring;
+        case Årsak.PSYKISK_HELSEVERN:
+            return tekster.valgalternativPsykiskHelsevern;
     }
 };
 

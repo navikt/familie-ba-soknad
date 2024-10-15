@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { useIntl } from 'react-intl';
-
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
@@ -11,20 +9,17 @@ import { PersonType } from '../../../typer/personType';
 import { ESanitySteg } from '../../../typer/sanity/sanity';
 import { Arbeidsperiode } from '../../Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
-import ÅrsakDropdown from '../../Felleskomponenter/Dropdowns/ÅrsakDropdown';
+import ÅrsakDropdownForSanity from '../../Felleskomponenter/Dropdowns/ÅrsakDropdownForSanity';
 import JaNeiSpmForSanity from '../../Felleskomponenter/JaNeiSpm/JaNeiSpmForSanity';
 import { Pensjonsperiode } from '../../Felleskomponenter/Pensjonsmodal/Pensjonsperiode';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
-import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 
 import SamboerSkjema from './SamboerSkjema';
-import { DinLivssituasjonSpørsmålId, dinLivssituasjonSpørsmålSpråkId } from './spørsmål';
 import TidligereSamboere from './TidligereSamboere';
 import { useDinLivssituasjon } from './useDinLivssituasjon';
 
 const DinLivssituasjon: React.FC = () => {
-    const intl = useIntl();
     const {
         skjema,
         validerFelterOgVisFeilmelding,
@@ -38,15 +33,17 @@ const DinLivssituasjon: React.FC = () => {
         fjernPensjonsperiode,
     } = useDinLivssituasjon();
 
-    const { erUtvidet, søknad, tekster } = useApp();
+    const { erUtvidet, søknad, tekster, plainTekst } = useApp();
 
     const stegTekster = tekster()[ESanitySteg.DIN_LIVSSITUASJON];
     const {
         dinLivssituasjonTittel,
         dinLivssituasjonGuide,
+        valgalternativAarsakPlaceholder,
         hvorforSoekerUtvidet,
         serparerteEllerSkilt,
         separertSkiltIUtlandet,
+        separertEnkeSkiltDato,
         harSamboerNaa,
         harSamboerNaaGift,
         asylsoeker,
@@ -78,10 +75,10 @@ const DinLivssituasjon: React.FC = () => {
         >
             {erUtvidet && (
                 <>
-                    <ÅrsakDropdown
-                        felt={skjema.felter.årsak}
+                    <ÅrsakDropdownForSanity
                         skjema={skjema}
-                        placeholder={intl.formatMessage({ id: 'omdeg.velgårsak.placeholder' })}
+                        felt={skjema.felter.årsak}
+                        placeholder={plainTekst(valgalternativAarsakPlaceholder)}
                         label={<TekstBlock block={hvorforSoekerUtvidet.sporsmal} />}
                         dynamisk
                     />
@@ -98,17 +95,9 @@ const DinLivssituasjon: React.FC = () => {
                                 spørsmålDokument={separertSkiltIUtlandet}
                             />
                             <Datovelger
-                                felt={skjema.felter.separertEnkeSkiltDato}
                                 skjema={skjema}
-                                label={
-                                    <SpråkTekst
-                                        id={
-                                            dinLivssituasjonSpørsmålSpråkId[
-                                                DinLivssituasjonSpørsmålId.separertEnkeSkiltDato
-                                            ]
-                                        }
-                                    />
-                                }
+                                felt={skjema.felter.separertEnkeSkiltDato}
+                                label={<TekstBlock block={separertEnkeSkiltDato.sporsmal} />}
                             />
                         </>
                     )}
