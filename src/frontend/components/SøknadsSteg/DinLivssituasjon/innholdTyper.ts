@@ -3,6 +3,7 @@ import { ISanitySpørsmålDokument, LocaleRecordBlock } from '../../../typer/san
 export interface IDinLivssituasjonTekstinnhold {
     dinLivssituasjonTittel: LocaleRecordBlock;
     dinLivssituasjonGuide: LocaleRecordBlock;
+    hvorforSoekerUtvidet: ISanitySpørsmålDokument;
     serparerteEllerSkilt: ISanitySpørsmålDokument;
     separertSkiltIUtlandet: ISanitySpørsmålDokument;
     harSamboerNaa: ISanitySpørsmålDokument;

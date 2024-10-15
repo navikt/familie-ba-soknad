@@ -14,6 +14,7 @@ import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import ÅrsakDropdown from '../../Felleskomponenter/Dropdowns/ÅrsakDropdown';
 import JaNeiSpmForSanity from '../../Felleskomponenter/JaNeiSpm/JaNeiSpmForSanity';
 import { Pensjonsperiode } from '../../Felleskomponenter/Pensjonsmodal/Pensjonsperiode';
+import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 
@@ -41,7 +42,9 @@ const DinLivssituasjon: React.FC = () => {
 
     const stegTekster = tekster()[ESanitySteg.DIN_LIVSSITUASJON];
     const {
+        dinLivssituasjonTittel,
         dinLivssituasjonGuide,
+        hvorforSoekerUtvidet,
         serparerteEllerSkilt,
         separertSkiltIUtlandet,
         harSamboerNaa,
@@ -54,7 +57,7 @@ const DinLivssituasjon: React.FC = () => {
 
     return (
         <Steg
-            tittel={<SpråkTekst id={'dinlivssituasjon.sidetittel'} />}
+            tittel={<TekstBlock block={dinLivssituasjonTittel} />}
             guide={dinLivssituasjonGuide}
             skjema={{
                 validerFelterOgVisFeilmelding,
@@ -79,15 +82,7 @@ const DinLivssituasjon: React.FC = () => {
                         felt={skjema.felter.årsak}
                         skjema={skjema}
                         placeholder={intl.formatMessage({ id: 'omdeg.velgårsak.placeholder' })}
-                        label={
-                            <SpråkTekst
-                                id={
-                                    dinLivssituasjonSpørsmålSpråkId[
-                                        DinLivssituasjonSpørsmålId.årsak
-                                    ]
-                                }
-                            />
-                        }
+                        label={<TekstBlock block={hvorforSoekerUtvidet.sporsmal} />}
                         dynamisk
                     />
                     <JaNeiSpmForSanity
