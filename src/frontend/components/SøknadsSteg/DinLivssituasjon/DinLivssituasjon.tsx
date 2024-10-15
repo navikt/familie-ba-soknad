@@ -9,7 +9,7 @@ import { PersonType } from '../../../typer/personType';
 import { ESanitySteg } from '../../../typer/sanity/sanity';
 import { Arbeidsperiode } from '../../Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
-import ÅrsakDropdownForSanity from '../../Felleskomponenter/Dropdowns/ÅrsakDropdownForSanity';
+import ÅrsakDropdown from '../../Felleskomponenter/Dropdowns/ÅrsakDropdown';
 import JaNeiSpmForSanity from '../../Felleskomponenter/JaNeiSpm/JaNeiSpmForSanity';
 import { Pensjonsperiode } from '../../Felleskomponenter/Pensjonsmodal/Pensjonsperiode';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
@@ -75,7 +75,7 @@ const DinLivssituasjon: React.FC = () => {
         >
             {erUtvidet && (
                 <>
-                    <ÅrsakDropdownForSanity
+                    <ÅrsakDropdown
                         skjema={skjema}
                         felt={skjema.felter.årsak}
                         placeholder={plainTekst(valgalternativAarsakPlaceholder)}
