@@ -7,4 +7,5 @@ export interface IDinLivssituasjonTekstinnhold {
     separertSkiltIUtlandet: ISanitySpørsmålDokument;
     harSamboerNaa: ISanitySpørsmålDokument;
     harSamboerNaaGift: ISanitySpørsmålDokument;
+    asylsoeker: ISanitySpørsmålDokument;
 }

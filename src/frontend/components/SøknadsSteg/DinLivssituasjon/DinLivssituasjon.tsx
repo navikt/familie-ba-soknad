@@ -12,7 +12,6 @@ import { ESanitySteg } from '../../../typer/sanity/sanity';
 import { Arbeidsperiode } from '../../Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import ÅrsakDropdown from '../../Felleskomponenter/Dropdowns/ÅrsakDropdown';
-import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import JaNeiSpmForSanity from '../../Felleskomponenter/JaNeiSpm/JaNeiSpmForSanity';
 import { Pensjonsperiode } from '../../Felleskomponenter/Pensjonsmodal/Pensjonsperiode';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -47,6 +46,7 @@ const DinLivssituasjon: React.FC = () => {
         separertSkiltIUtlandet,
         harSamboerNaa,
         harSamboerNaaGift,
+        asylsoeker,
     } = stegTekster;
 
     const harSamboerSpørsmålDokument =
@@ -146,12 +146,10 @@ const DinLivssituasjon: React.FC = () => {
                     />
                 </>
             )}
-            <JaNeiSpm
+            <JaNeiSpmForSanity
                 skjema={skjema}
                 felt={skjema.felter.erAsylsøker}
-                spørsmålTekstId={
-                    dinLivssituasjonSpørsmålSpråkId[DinLivssituasjonSpørsmålId.erAsylsøker]
-                }
+                spørsmålDokument={asylsoeker}
             />
             <Arbeidsperiode
                 skjema={skjema}
