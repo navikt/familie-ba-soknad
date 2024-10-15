@@ -6,12 +6,13 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { useApp } from '../../../context/AppContext';
 import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { IUtenlandsoppholdTekstinnhold } from '../../../typer/sanity/modaler/utenlandsopphold';
-import { ESanitySteg } from '../../../typer/sanity/sanity';
+import { ESanitySteg, Typografi } from '../../../typer/sanity/sanity';
 import { uppercaseFørsteBokstav } from '../../../utils/visning';
-import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
+import JaNeiSpmForSanity from '../../Felleskomponenter/JaNeiSpm/JaNeiSpmForSanity';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
 import PerioderContainer from '../../Felleskomponenter/PerioderContainer';
+import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
@@ -20,7 +21,6 @@ import { UtenlandsoppholdModal } from '../../Felleskomponenter/UtenlandsoppholdM
 import { UtenlandsperiodeOppsummering } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsperiodeOppsummering';
 
 import { Personopplysninger } from './Personopplysninger';
-import { OmDegSpørsmålId, omDegSpørsmålSpråkId } from './spørsmål';
 import { useOmdeg } from './useOmdeg';
 
 const OmDeg: React.FC = () => {
@@ -49,7 +49,12 @@ const OmDeg: React.FC = () => {
     const { flerePerioder, leggTilPeriodeForklaring } = teksterForModal;
 
     const stegTekster = tekster()[ESanitySteg.OM_DEG];
-    const { omDegGuide } = stegTekster;
+    const {
+        omDegGuide,
+        borPaaRegistrertAdresse,
+        vaertINorgeITolvMaaneder,
+        planleggerAaBoINorgeTolvMnd,
+    } = stegTekster;
 
     const frittståendeOrdTekster = tekster().FELLES.frittståendeOrd;
 
@@ -65,17 +70,22 @@ const OmDeg: React.FC = () => {
             }}
         >
             <Personopplysninger />
-            <JaNeiSpm
+            <JaNeiSpmForSanity
                 skjema={skjema}
                 felt={skjema.felter.borPåRegistrertAdresse}
-                spørsmålTekstId={omDegSpørsmålSpråkId[OmDegSpørsmålId.borPåRegistrertAdresse]}
+                spørsmålDokument={borPaaRegistrertAdresse}
             />
             <KomponentGruppe>
-                <JaNeiSpm
+                <JaNeiSpmForSanity
                     skjema={skjema}
                     felt={skjema.felter.værtINorgeITolvMåneder}
-                    spørsmålTekstId={omDegSpørsmålSpråkId[OmDegSpørsmålId.værtINorgeITolvMåneder]}
-                    tilleggsinfoTekstId={'felles.korteopphold.info'}
+                    spørsmålDokument={vaertINorgeITolvMaaneder}
+                    tilleggsinfo={
+                        <TekstBlock
+                            block={vaertINorgeITolvMaaneder.beskrivelse}
+                            typografi={Typografi.BodyShort}
+                        />
+                    }
                 />
                 {skjema.felter.værtINorgeITolvMåneder.verdi === ESvar.NEI && (
                     <PerioderContainer
@@ -117,13 +127,10 @@ const OmDeg: React.FC = () => {
                 )}
             </KomponentGruppe>
             {skjema.felter.planleggerÅBoINorgeTolvMnd.erSynlig && (
-                <JaNeiSpm
+                <JaNeiSpmForSanity
                     skjema={skjema}
                     felt={skjema.felter.planleggerÅBoINorgeTolvMnd}
-                    spørsmålTekstId={
-                        omDegSpørsmålSpråkId[OmDegSpørsmålId.planleggerÅBoINorgeTolvMnd]
-                    }
-                    aria-live="polite"
+                    spørsmålDokument={planleggerAaBoINorgeTolvMnd}
                 />
             )}
             {utenlandsoppholdmodalErÅpen && (
