@@ -3,17 +3,16 @@ import React from 'react';
 import { BodyShort, Button } from '@navikt/ds-react';
 
 import { useApp } from '../../../../context/AppContext';
-import { ILeggTilBarnTekstinnhold } from '../../../../typer/sanity/modaler/leggTilBarn';
-import { ESanitySteg } from '../../../../typer/sanity/sanity';
 import { BarnekortContainer } from '../Barnekort/BarnekortContainer';
-import { IVelgBarnTekstinnhold } from '../innholdTyper';
 
 export const NyttBarnKort: React.FC<{ onLeggTilBarn: () => void }> = ({ onLeggTilBarn }) => {
     const { tekster, plainTekst } = useApp();
-    const teksterForSteg: IVelgBarnTekstinnhold = tekster()[ESanitySteg.VELG_BARN];
-    const teksterForLeggTilBarnModal: ILeggTilBarnTekstinnhold =
-        tekster()[ESanitySteg.FELLES].modaler.leggTilBarn;
+
+    const teksterForSteg = tekster().VELG_BARN;
     const { soekeForUregistrerteBarn } = teksterForSteg;
+
+    const teksterForLeggTilBarnModal = tekster().FELLES.modaler.leggTilBarn;
+    const { leggTilKnapp } = teksterForLeggTilBarnModal;
 
     return (
         <BarnekortContainer>
@@ -24,7 +23,7 @@ export const NyttBarnKort: React.FC<{ onLeggTilBarn: () => void }> = ({ onLeggTi
                 data-testid="leggTilBarnKnapp"
                 onClick={() => onLeggTilBarn()}
             >
-                {plainTekst(teksterForLeggTilBarnModal.leggTilKnapp)}
+                {plainTekst(leggTilKnapp)}
             </Button>
         </BarnekortContainer>
     );
