@@ -41,12 +41,12 @@ const DinLivssituasjon: React.FC = () => {
         dinLivssituasjonGuide,
         valgalternativAarsakPlaceholder,
         hvorforSoekerUtvidet,
-        serparerteEllerSkilt,
-        separertSkiltIUtlandet,
+        separertEnkeSkilt,
+        separertEnkeSkiltUtland,
         separertEnkeSkiltDato,
         harSamboerNaa,
         harSamboerNaaGift,
-        asylsoeker,
+        erAsylsoeker,
     } = stegTekster;
 
     const harSamboerSpørsmålDokument =
@@ -85,14 +85,14 @@ const DinLivssituasjon: React.FC = () => {
                     <JaNeiSpmForSanity
                         skjema={skjema}
                         felt={skjema.felter.separertEnkeSkilt}
-                        spørsmålDokument={serparerteEllerSkilt}
+                        spørsmålDokument={separertEnkeSkilt}
                     />
                     {skjema.felter.separertEnkeSkiltUtland.erSynlig && (
                         <>
                             <JaNeiSpmForSanity
                                 skjema={skjema}
                                 felt={skjema.felter.separertEnkeSkiltUtland}
-                                spørsmålDokument={separertSkiltIUtlandet}
+                                spørsmålDokument={separertEnkeSkiltUtland}
                             />
                             <Datovelger
                                 skjema={skjema}
@@ -133,7 +133,7 @@ const DinLivssituasjon: React.FC = () => {
             <JaNeiSpmForSanity
                 skjema={skjema}
                 felt={skjema.felter.erAsylsøker}
-                spørsmålDokument={asylsoeker}
+                spørsmålDokument={erAsylsoeker}
             />
             <Arbeidsperiode
                 skjema={skjema}

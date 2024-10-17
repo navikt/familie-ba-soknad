@@ -8,12 +8,12 @@ export interface IDinLivssituasjonTekstinnhold {
     dinLivssituasjonTittel: LocaleRecordBlock;
     dinLivssituasjonGuide: LocaleRecordBlock;
     hvorforSoekerUtvidet: ISanitySpørsmålDokument;
-    serparerteEllerSkilt: ISanitySpørsmålDokument;
-    separertSkiltIUtlandet: ISanitySpørsmålDokument;
+    separertEnkeSkilt: ISanitySpørsmålDokument;
+    separertEnkeSkiltUtland: ISanitySpørsmålDokument;
     separertEnkeSkiltDato: ISanitySpørsmålDokument;
     harSamboerNaa: ISanitySpørsmålDokument;
     harSamboerNaaGift: ISanitySpørsmålDokument;
-    asylsoeker: ISanitySpørsmålDokument;
+    erAsylsoeker: ISanitySpørsmålDokument;
 
     /* Årsak valgalternativ */
     valgalternativAarsakPlaceholder: LocaleRecordString;
