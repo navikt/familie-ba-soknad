@@ -158,4 +158,23 @@ describe('DinLivssituasjon', () => {
         );
         expect(spørsmål).not.toBeInTheDocument();
     });
+
+    it('Viser spørsmål om er du separert, enke eller skilt om sivilstand GIFT', async () => {
+        spyOnUseApp({
+            ...søknad,
+            søker: {
+                ...søknad.søker,
+                sivilstand: { type: ESivilstand.GIFT },
+            },
+        });
+
+        const { findByTestId } = render(
+            <TestProvidere>
+                <DinLivssituasjon />
+            </TestProvidere>
+        );
+
+        const spørsmål = await findByTestId(DinLivssituasjonSpørsmålId.harSamboerNå);
+        expect(spørsmål).toBeInTheDocument();
+    });
 });
