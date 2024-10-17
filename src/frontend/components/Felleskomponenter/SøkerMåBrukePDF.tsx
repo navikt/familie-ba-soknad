@@ -1,44 +1,25 @@
-import React, { FC } from 'react';
+import React, { FC, ReactNode } from 'react';
 
-import styled from 'styled-components';
+import { Alert, Box } from '@navikt/ds-react';
 
-import { Alert, BodyShort, Label } from '@navikt/ds-react';
+import { useApp } from '../../context/AppContext';
 
-import EksternLenke from './EksternLenke/EksternLenke';
-import Informasjonsbolk from './Informasjonsbolk/Informasjonsbolk';
-import SpråkTekst from './SpråkTekst/SpråkTekst';
+import TekstBlock from './Sanity/TekstBlock';
 
-interface Props {
-    advarselTekstId: string;
-    utfyllendeAdvarselInfoId?: string;
+interface SøkerMåBrukePDFProps {
+    advarselTekst: ReactNode;
 }
 
-const LenkeContainer = styled.div`
-    margin: 1.75rem 0;
-`;
+export const SøkerMåBrukePDF: FC<SøkerMåBrukePDFProps> = ({ advarselTekst }) => {
+    const { tekster } = useApp();
+    const { brukPDFKontantstoette } = tekster().FELLES.kanIkkeBrukeSoeknad;
 
-export const SøkerMåBrukePDF: FC<Props> = ({ advarselTekstId, utfyllendeAdvarselInfoId }) => {
     return (
-        <Informasjonsbolk aria-live={'polite'}>
-            <Alert variant={'warning'} inline>
-                <SpråkTekst id={advarselTekstId} />
-            </Alert>
-            {utfyllendeAdvarselInfoId && (
-                <Informasjonsbolk>
-                    <Label as="p">
-                        <SpråkTekst id={utfyllendeAdvarselInfoId} />
-                    </Label>
-                </Informasjonsbolk>
-            )}
-            <LenkeContainer>
-                <EksternLenke
-                    lenkeSpråkId={'felles.bruk-pdfskjema.lenke'}
-                    lenkeTekstSpråkId={'felles.bruk-pdfskjema.lenketekst'}
-                />
-            </LenkeContainer>
-            <BodyShort>
-                <SpråkTekst id={'felles.sende-skjema.info'} />
-            </BodyShort>
-        </Informasjonsbolk>
+        <Alert variant={'warning'}>
+            {advarselTekst}
+            <Box marginBlock="3 0">
+                <TekstBlock block={brukPDFKontantstoette} />
+            </Box>
+        </Alert>
     );
 };
