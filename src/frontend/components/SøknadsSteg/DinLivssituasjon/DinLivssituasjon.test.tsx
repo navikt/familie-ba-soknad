@@ -17,7 +17,7 @@ import {
 } from '../../../utils/testing';
 
 import DinLivssituasjon from './DinLivssituasjon';
-import { DinLivssituasjonSpørsmålId, dinLivssituasjonSpørsmålSpråkId } from './spørsmål';
+import { DinLivssituasjonSpørsmålId } from './spørsmål';
 
 const søknad = mockDeep<ISøknad>({
     søknadstype: ESøknadstype.UTVIDET,
@@ -105,15 +105,13 @@ describe('DinLivssituasjon', () => {
     it('Viser ikke spørsmål om er du separert, enke eller skilt om sivilstand UGIFT', async () => {
         spyOnUseApp(søknad);
 
-        const { queryByText } = render(
+        const { queryByTestId } = render(
             <TestProvidere>
                 <DinLivssituasjon />
             </TestProvidere>
         );
 
-        const spørsmål = queryByText(
-            dinLivssituasjonSpørsmålSpråkId[DinLivssituasjonSpørsmålId.separertEnkeSkilt]
-        );
+        const spørsmål = queryByTestId(DinLivssituasjonSpørsmålId.separertEnkeSkilt);
         expect(spørsmål).not.toBeInTheDocument();
     });
 
@@ -144,21 +142,6 @@ describe('DinLivssituasjon', () => {
         expect(feiloppsummeringstittel).toBeInTheDocument();
         const feilmeldingSamboer = getAllByText('Du må oppgi om du har samboer nå for å gå videre');
         expect(feilmeldingSamboer).toHaveLength(antallFeilmeldingerPerFeil);
-    });
-
-    it('Viser ikke spørsmål om er du separert, enke eller skilt om sivilstand annet enn GIFT', async () => {
-        spyOnUseApp(søknad);
-
-        const { queryByText } = render(
-            <TestProvidere>
-                <DinLivssituasjon />
-            </TestProvidere>
-        );
-
-        const spørsmål = queryByText(
-            dinLivssituasjonSpørsmålSpråkId[DinLivssituasjonSpørsmålId.separertEnkeSkilt]
-        );
-        expect(spørsmål).not.toBeInTheDocument();
     });
 
     it('Viser riktige feilmeldinger ved ingen utfylte felt av nåværende samboer', async () => {
@@ -199,6 +182,19 @@ describe('DinLivssituasjon', () => {
             'Du må oppgi når samboerforholdet startet for å gå videre'
         );
         expect(feilmeldingForholdStart).toHaveLength(antallFeilmeldingerPerFeil);
+    });
+
+    it('Viser ikke spørsmål om er du separert, enke eller skilt om sivilstand annet enn GIFT', async () => {
+        spyOnUseApp(søknad);
+
+        const { queryByTestId } = render(
+            <TestProvidere>
+                <DinLivssituasjon />
+            </TestProvidere>
+        );
+
+        const spørsmål = await queryByTestId(DinLivssituasjonSpørsmålId.separertEnkeSkilt);
+        expect(spørsmål).not.toBeInTheDocument();
     });
 
     it('Viser spørsmål om er du separert, enke eller skilt om sivilstand GIFT', async () => {
