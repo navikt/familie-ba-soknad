@@ -1,21 +1,23 @@
 import React, { ReactNode } from 'react';
 
-import { useIntl } from 'react-intl';
-
+import { useApp } from '../../../context/AppContext';
 import { muligeÅrsaker } from '../../../typer/søknad';
 import { Årsak } from '../../../typer/utvidet';
-import { toÅrsakSpråkId } from '../../../utils/språk';
+import { hentÅrsak } from '../../../utils/språk';
 
 import StyledDropdown, { StyledDropdownProps } from './StyledDropdown';
 
-const ÅrsakDropdown: React.FC<StyledDropdownProps<Årsak | ''>> = props => {
-    const intl = useIntl();
+export interface ÅrsakDropdownProps extends StyledDropdownProps<Årsak | ''> {}
+
+const ÅrsakDropdown: React.FC<ÅrsakDropdownProps> = ({ ...props }) => {
+    const { plainTekst, tekster } = useApp();
+    const dinLivssituasjonTekster = tekster().DIN_LIVSSITUASJON;
     return (
         <StyledDropdown<Årsak | ''> {...props}>
             {muligeÅrsaker.map(
                 (årsak): ReactNode => (
                     <option value={årsak} key={årsak}>
-                        {intl.formatMessage({ id: toÅrsakSpråkId(årsak) })}
+                        {plainTekst(hentÅrsak(årsak, dinLivssituasjonTekster))}
                     </option>
                 )
             )}

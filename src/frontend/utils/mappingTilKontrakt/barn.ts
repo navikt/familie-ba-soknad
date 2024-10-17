@@ -12,6 +12,7 @@ import { ERegistrertBostedType } from '../../typer/kontrakt/generelle';
 import { ISøknadIKontraktBarn } from '../../typer/kontrakt/kontrakt';
 import { ISøker } from '../../typer/person';
 import { PersonType } from '../../typer/personType';
+import { ITekstinnhold } from '../../typer/sanity/tekstInnhold';
 import { ISøknadSpørsmålMap } from '../../typer/spørsmål';
 import { hentTekster } from '../språk';
 
@@ -31,7 +32,8 @@ import { utenlandsperiodeTilISøknadsfelt } from './utenlandsperiode';
 export const barnISøknadsFormat = (
     barn: IBarnMedISøknad,
     søker: ISøker,
-    valgtSpråk: LocaleType
+    valgtSpråk: LocaleType,
+    tekster: ITekstinnhold
 ): ISøknadIKontraktBarn => {
     /* eslint-disable @typescript-eslint/no-unused-vars */
     const {
@@ -123,10 +125,14 @@ export const barnISøknadsFormat = (
 
         omsorgsperson: omsorgsperson ? omsorgspersonTilISøknadsfelt(omsorgsperson, barn) : null,
         spørsmål: {
-            ...spørmålISøknadsFormat(typetBarnSpørsmål, {
-                navn: navn,
-                barn: navn,
-            }),
+            ...spørmålISøknadsFormat(
+                typetBarnSpørsmål,
+                {
+                    navn: navn,
+                    barn: navn,
+                },
+                tekster
+            ),
             [barnDataKeySpørsmål.institusjonOppholdSluttdato]: søknadsfeltBarn(
                 språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.institusjonOppholdSluttdato),
                 sammeVerdiAlleSpråkEllerUkjentSpråktekst(

@@ -9,9 +9,10 @@ import {
     Slektsforhold,
     SpørsmålMap as KontraktpørsmålMap,
 } from '../../typer/kontrakt/generelle';
+import { ITekstinnhold } from '../../typer/sanity/tekstInnhold';
 import { ISøknadSpørsmål, SpørsmålId, ISøknadSpørsmålMap } from '../../typer/spørsmål';
 import { Årsak } from '../../typer/utvidet';
-import { hentTekster, landkodeTilSpråk, toSlektsforholdSpråkId, toÅrsakSpråkId } from '../språk';
+import { hentTekster, hentÅrsak, landkodeTilSpråk, toSlektsforholdSpråkId } from '../språk';
 import { språkIndexListe } from '../spørsmål';
 import { isAlpha3Code } from '../typeguards';
 
@@ -47,8 +48,11 @@ export const sammeVerdiAlleSpråkEllerUkjentSpråktekst = <T>(
 
 export const spørmålISøknadsFormat = (
     spørsmålMap: ISøknadSpørsmålMap,
-    formatMessageValues: object = {}
+    formatMessageValues: object = {},
+    tekster: ITekstinnhold
 ): KontraktpørsmålMap => {
+    const dinLivssituasjonTekster = tekster.DIN_LIVSSITUASJON;
+
     return Object.fromEntries(
         Object.entries(spørsmålMap)
             .map(
@@ -69,7 +73,7 @@ export const spørmålISøknadsFormat = (
                         // Slår opp språktekst i språkteksterUtenomSpørsmål i dokgen
                         formatertVerdi = sammeVerdiAlleSpråk(verdi);
                     } else if (verdi in Årsak) {
-                        formatertVerdi = hentTekster(toÅrsakSpråkId(verdi));
+                        formatertVerdi = hentÅrsak(verdi, dinLivssituasjonTekster);
                     } else if (verdi in Slektsforhold) {
                         formatertVerdi = hentTekster(toSlektsforholdSpråkId(verdi));
                     } else {
