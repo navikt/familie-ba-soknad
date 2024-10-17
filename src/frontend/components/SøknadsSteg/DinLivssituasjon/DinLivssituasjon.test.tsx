@@ -1,8 +1,10 @@
 import React from 'react';
 
-import { render } from '@testing-library/react';
+import { render, within } from '@testing-library/react';
 import { mockDeep } from 'jest-mock-extended';
 import { act } from 'react-dom/test-utils';
+
+import { ESvar } from '@navikt/familie-form-elements';
 
 import { ESivilstand, ESøknadstype } from '../../../typer/kontrakt/generelle';
 import { ISøknad } from '../../../typer/søknad';
@@ -157,6 +159,47 @@ describe('DinLivssituasjon', () => {
             dinLivssituasjonSpørsmålSpråkId[DinLivssituasjonSpørsmålId.separertEnkeSkilt]
         );
         expect(spørsmål).not.toBeInTheDocument();
+    });
+
+    it('Viser riktige feilmeldinger ved ingen utfylte felt av nåværende samboer', async () => {
+        spyOnUseApp(søknad);
+
+        const { findByTestId, getAllByText, getByText } = render(
+            <TestProvidereMedEkteTekster>
+                <DinLivssituasjon />
+            </TestProvidereMedEkteTekster>
+        );
+
+        const harSamboerNåSpmFieldset: HTMLElement = await findByTestId(
+            DinLivssituasjonSpørsmålId.harSamboerNå
+        );
+
+        const jaKnapp: HTMLElement | undefined = within(harSamboerNåSpmFieldset)
+            .getAllByRole('radio')
+            .find(radio => radio.getAttribute('value') === ESvar.JA);
+
+        expect(jaKnapp).toBeDefined();
+
+        act(() => jaKnapp!.click());
+
+        const gåVidereKnapp = await findByTestId('neste-steg');
+        act(() => gåVidereKnapp.click());
+
+        const feiloppsummeringstittel = getByText(
+            'Du må rette opp eller svare på følgende spørsmål for å gå videre'
+        );
+        expect(feiloppsummeringstittel).toBeInTheDocument();
+
+        const feilmeldingSamboerNavn = getAllByText('Du må oppgi samboerens navn for å gå videre');
+        expect(feilmeldingSamboerNavn).toHaveLength(antallFeilmeldingerPerFeil);
+        const feilmeldingFnr = getAllByText(
+            'Du må oppgi samboerens fødselsnummer eller d-nummer for å gå videre'
+        );
+        expect(feilmeldingFnr).toHaveLength(antallFeilmeldingerPerFeil);
+        const feilmeldingForholdStart = getAllByText(
+            'Du må oppgi når samboerforholdet startet for å gå videre'
+        );
+        expect(feilmeldingForholdStart).toHaveLength(antallFeilmeldingerPerFeil);
     });
 
     it('Viser spørsmål om er du separert, enke eller skilt om sivilstand GIFT', async () => {
