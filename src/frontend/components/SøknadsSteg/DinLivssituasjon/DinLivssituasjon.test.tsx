@@ -173,13 +173,10 @@ describe('DinLivssituasjon', () => {
         const harSamboerNåSpmFieldset: HTMLElement = await findByTestId(
             DinLivssituasjonSpørsmålId.harSamboerNå
         );
-
         const jaKnapp: HTMLElement | undefined = within(harSamboerNåSpmFieldset)
             .getAllByRole('radio')
             .find(radio => radio.getAttribute('value') === ESvar.JA);
-
         expect(jaKnapp).toBeDefined();
-
         act(() => jaKnapp!.click());
 
         const gåVidereKnapp = await findByTestId('neste-steg');
@@ -192,10 +189,12 @@ describe('DinLivssituasjon', () => {
 
         const feilmeldingSamboerNavn = getAllByText('Du må oppgi samboerens navn for å gå videre');
         expect(feilmeldingSamboerNavn).toHaveLength(antallFeilmeldingerPerFeil);
+
         const feilmeldingFnr = getAllByText(
             'Du må oppgi samboerens fødselsnummer eller d-nummer for å gå videre'
         );
         expect(feilmeldingFnr).toHaveLength(antallFeilmeldingerPerFeil);
+
         const feilmeldingForholdStart = getAllByText(
             'Du må oppgi når samboerforholdet startet for å gå videre'
         );
