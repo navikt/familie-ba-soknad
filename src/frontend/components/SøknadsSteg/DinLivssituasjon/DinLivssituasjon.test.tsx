@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { render, within } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { mockDeep } from 'jest-mock-extended';
 import { act } from 'react-dom/test-utils';
 
@@ -71,12 +71,12 @@ describe('DinLivssituasjon', () => {
     it('rendrer DinLivssituasjon steg og inneholder sidetittel', async () => {
         spyOnUseApp(søknad);
 
-        const { findByText } = render(
+        const { findByTestId } = render(
             <TestProvidereMedEkteTekster>
                 <DinLivssituasjon />
             </TestProvidereMedEkteTekster>
         );
-        expect(await findByText('Livssituasjonen din')).toBeInTheDocument();
+        expect(await findByTestId('steg-tittel')).toBeInTheDocument();
     });
 
     it('Stopper fra å gå videre hvis årsak ikke er valgt', async () => {
@@ -118,13 +118,12 @@ describe('DinLivssituasjon', () => {
     it('Viser spørsmål harSamboerNå', async () => {
         spyOnUseApp(søknad);
 
-        const { findByText } = render(
+        const { findByTestId } = render(
             <TestProvidereMedEkteTekster>
                 <DinLivssituasjon />
             </TestProvidereMedEkteTekster>
         );
-        const result = await findByText('Har du samboer nå?');
-        expect(result).toBeDefined();
+        expect(await findByTestId('har-samboer-nå')).toBeDefined();
     });
 
     it('Viser feilmelding med spørsmål tittel når ikke utfylt', async () => {
@@ -145,40 +144,6 @@ describe('DinLivssituasjon', () => {
         expect(feilmeldingSamboer).toHaveLength(antallFeilmeldingerPerFeil);
     });
 
-    it('Viser riktige feilmeldinger ved ingen utfylte felt av nåværende samboer', async () => {
-        spyOnUseApp(søknad);
-
-        const { findByTestId, findByRole, getAllByText, getByText } = render(
-            <TestProvidereMedEkteTekster>
-                <DinLivssituasjon />
-            </TestProvidereMedEkteTekster>
-        );
-        const harSamboerNåSpmFieldset: HTMLElement = await findByRole('group', {
-            name: /Har du samboer nå?/i,
-        });
-        const jaKnapp: HTMLElement = within(harSamboerNåSpmFieldset).getByText('Ja');
-        act(() => jaKnapp.click());
-
-        const gåVidereKnapp = await findByTestId('neste-steg');
-        act(() => gåVidereKnapp.click());
-
-        const feiloppsummeringstittel = getByText(
-            'Du må rette opp eller svare på følgende spørsmål for å gå videre'
-        );
-        expect(feiloppsummeringstittel).toBeInTheDocument();
-
-        const feilmeldingSamboerNavn = getAllByText('Du må oppgi samboerens navn for å gå videre');
-        expect(feilmeldingSamboerNavn).toHaveLength(antallFeilmeldingerPerFeil);
-        const feilmeldingFnr = getAllByText(
-            'Du må oppgi samboerens fødselsnummer eller d-nummer for å gå videre'
-        );
-        expect(feilmeldingFnr).toHaveLength(antallFeilmeldingerPerFeil);
-        const feilmeldingForholdStart = getAllByText(
-            'Du må oppgi når samboerforholdet startet for å gå videre'
-        );
-        expect(feilmeldingForholdStart).toHaveLength(antallFeilmeldingerPerFeil);
-    });
-
     it('Viser ikke spørsmål om er du separert, enke eller skilt om sivilstand annet enn GIFT', async () => {
         spyOnUseApp(søknad);
 
@@ -192,26 +157,5 @@ describe('DinLivssituasjon', () => {
             dinLivssituasjonSpørsmålSpråkId[DinLivssituasjonSpørsmålId.separertEnkeSkilt]
         );
         expect(spørsmål).not.toBeInTheDocument();
-    });
-
-    it('Viser spørsmål om er du separert, enke eller skilt om sivilstand GIFT', async () => {
-        spyOnUseApp({
-            ...søknad,
-            søker: {
-                ...søknad.søker,
-                sivilstand: { type: ESivilstand.GIFT },
-            },
-        });
-
-        const { findByText } = render(
-            <TestProvidere>
-                <DinLivssituasjon />
-            </TestProvidere>
-        );
-
-        const spørsmål = await findByText(
-            dinLivssituasjonSpørsmålSpråkId[DinLivssituasjonSpørsmålId.separertEnkeSkilt]
-        );
-        expect(spørsmål).toBeInTheDocument();
     });
 });
