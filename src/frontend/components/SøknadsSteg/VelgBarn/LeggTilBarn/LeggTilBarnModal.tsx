@@ -93,7 +93,7 @@ const LeggTilBarnModal: React.FC<{
                             />
                         </KomponentGruppe>
                     </Fieldset>
-                    <div aria-live="polite">
+                    <div aria-live="polite" data-testid="fødselsnummer-eller-d-nummer-container">
                         <SkjemaFeltInputForSanity
                             felt={skjema.felter.ident}
                             visFeilmeldinger={skjema.visFeilmeldinger}

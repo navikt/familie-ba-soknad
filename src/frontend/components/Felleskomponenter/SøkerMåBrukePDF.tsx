@@ -15,7 +15,7 @@ export const SøkerMåBrukePDF: FC<SøkerMåBrukePDFProps> = ({ advarselTekst })
     const { brukPDFKontantstoette } = tekster().FELLES.kanIkkeBrukeSoeknad;
 
     return (
-        <Alert variant={'warning'}>
+        <Alert variant={'warning'} data-testid="søker-må-bruke-pdf">
             {advarselTekst}
             <Box marginBlock="3 0">
                 <TekstBlock block={brukPDFKontantstoette} />

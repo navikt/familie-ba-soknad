@@ -1,26 +1,40 @@
 import React from 'react';
 
-import { act, render } from '@testing-library/react';
+import { act, render, within } from '@testing-library/react';
 
-import { silenceConsoleErrors, TestProvidere } from '../../../../utils/testing';
+import { ESvar } from '@navikt/familie-form-elements';
+
+import { silenceConsoleErrors, spyOnUseApp, TestProvidere } from '../../../../utils/testing';
 
 import LeggTilBarnModal from './LeggTilBarnModal';
 
-describe('LeggTilBarnModal', function () {
+describe('LeggTilBarnModal', () => {
     test('Test at advarsel om fnr vises hvis man huker av for at barnet ikke har fått fnr enda', () => {
         silenceConsoleErrors();
+        spyOnUseApp({});
 
-        const { getByText } = render(
+        const { getByTestId } = render(
             <TestProvidere>
                 <LeggTilBarnModal erÅpen={true} lukkModal={jest.fn()} />
             </TestProvidere>
         );
-        const erFødtJa = getByText(/felles.svaralternativ.ja/);
-        act(() => erFødtJa.click());
-        const harIkkFnrCheckbox = getByText(/hvilkebarn.leggtilbarn.ikke-fått-fnr.spm/);
+
+        const erFødtSpørsmål = getByTestId('legg-til-barn-er-født');
+
+        const erFødtJaKnapp = within(erFødtSpørsmål)
+            .getAllByRole('radio')
+            .find(radio => radio.getAttribute('value') === ESvar.JA);
+        expect(erFødtJaKnapp).toBeDefined();
+        act(() => erFødtJaKnapp!.click());
+
+        const fødselsnummerEllerDNummerContainer = getByTestId(
+            'fødselsnummer-eller-d-nummer-container'
+        );
+
+        const harIkkFnrCheckbox = within(fødselsnummerEllerDNummerContainer).getByRole('checkbox');
         act(() => harIkkFnrCheckbox.click());
 
-        const advarsel = getByText(/hvilkebarn.leggtilbarn.ikke-fått-fnr.alert/);
+        const advarsel = getByTestId('søker-må-bruke-pdf');
         expect(advarsel).toBeInTheDocument();
     });
 });
