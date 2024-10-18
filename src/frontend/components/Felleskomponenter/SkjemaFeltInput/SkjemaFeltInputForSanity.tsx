@@ -45,6 +45,7 @@ export const SkjemaFeltInputForSanity: React.FC<SkjemaFeltInputForSanityProps> =
             autoComplete={autoComplete}
             disabled={disabled}
             $fullbredde={fullbredde}
+            data-testid={felt.id}
         />
     ) : null;
 };
