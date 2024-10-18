@@ -20,7 +20,7 @@ export const NyttBarnKort: React.FC<{ onLeggTilBarn: () => void }> = ({ onLeggTi
             <Button
                 type="button"
                 variant="secondary"
-                data-testid="leggTilBarnKnapp"
+                data-testid="legg-til-barn-knapp"
                 onClick={() => onLeggTilBarn()}
             >
                 {plainTekst(leggTilKnapp)}

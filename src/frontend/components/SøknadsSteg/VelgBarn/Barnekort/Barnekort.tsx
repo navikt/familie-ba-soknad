@@ -123,6 +123,7 @@ const Barnekort: React.FC<IBarnekortProps> = ({
                     checked={erMedISøknad}
                     aria-label={`${plainTekst(soekOmYtelseForBarnetSjekkboks)} ${barn.navn}`}
                     onChange={() => velgBarnCallback(barn, erMedISøknad)}
+                    data-testid={`søk-om-barnetrygd-for-barn-${barn.ident}`}
                 >
                     <TekstBlock block={soekOmYtelseForBarnetSjekkboks} />
                 </Checkbox>
@@ -132,6 +133,7 @@ const Barnekort: React.FC<IBarnekortProps> = ({
                         variant="tertiary"
                         onClick={() => fjernBarnCallback(barn.id)}
                         icon={<TrashFillIcon aria-hidden />}
+                        data-testid="fjern-barn-knapp"
                     >
                         <TekstBlock block={knappetekst} />
                     </Button>
