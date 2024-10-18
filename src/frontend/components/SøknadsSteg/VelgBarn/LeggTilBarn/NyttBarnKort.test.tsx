@@ -1,7 +1,8 @@
 import React from 'react';
 
-import { act, fireEvent, render, waitFor } from '@testing-library/react';
+import { act, fireEvent, render, waitFor, within } from '@testing-library/react';
 
+import { ESvar } from '@navikt/familie-form-elements';
 import * as fnrvalidator from '@navikt/fnrvalidator';
 
 import {
@@ -76,12 +77,18 @@ describe('NyttBarnKort', () => {
         expect(leggTilKnappIModal).toBeInTheDocument();
         expect(leggTilKnappIModal).toHaveClass('navds-button--secondary');
 
-        const erFødt = getByText('hvilkebarn.leggtilbarn.barnfødt.spm');
+        const erFødt = getByTestId('legg-til-barn-er-født');
         expect(erFødt).toBeInTheDocument();
 
         // Språktekst-id for Ja er 'ja'
-        const jaKnapp = getByText('felles.svaralternativ.ja');
-        act(() => jaKnapp.click());
+        // const jaKnapp = getByText('felles.svaralternativ.ja');
+        // act(() => jaKnapp.click());
+
+        const jaKnapp = within(erFødt)
+            .getAllByRole('radio')
+            .find(radio => radio.getAttribute('value') === ESvar.JA);
+        expect(jaKnapp).toBeDefined();
+        act(() => jaKnapp!.click());
 
         const fornavnLabel = getByText('hvilkebarn.leggtilbarn.fornavn.spm');
         const etternavnLabel = getByText('hvilkebarn.leggtilbarn.etternavn.spm');
