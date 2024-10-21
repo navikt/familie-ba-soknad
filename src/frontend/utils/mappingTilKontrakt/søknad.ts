@@ -122,8 +122,8 @@ export const dataISøknadKontraktFormat = (
                 )
             ),
             spørsmål: {
-                ...spørmålISøknadsFormat(typetSøkerSpørsmål),
-                ...spørmålISøknadsFormat(typetUtvidaSpørsmål),
+                ...spørmålISøknadsFormat(typetSøkerSpørsmål, undefined, tekster),
+                ...spørmålISøknadsFormat(typetUtvidaSpørsmål, undefined, tekster),
             },
             tidligereSamboere: tidligereSamboere.map(tidligereSamboerISøknadKontraktFormat),
             nåværendeSamboer: nåværendeSamboer
@@ -169,7 +169,9 @@ export const dataISøknadKontraktFormat = (
                 })
             ),
         },
-        barn: barnInkludertISøknaden.map(barn => barnISøknadsFormat(barn, søker, valgtSpråk)),
+        barn: barnInkludertISøknaden.map(barn =>
+            barnISøknadsFormat(barn, søker, valgtSpråk, tekster)
+        ),
         spørsmål: {
             erNoenAvBarnaFosterbarn: søknadsfelt(
                 språktekstIdFraSpørsmålId(OmBarnaDineSpørsmålId.erNoenAvBarnaFosterbarn),

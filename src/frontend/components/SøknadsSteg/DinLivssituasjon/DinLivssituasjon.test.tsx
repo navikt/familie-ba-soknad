@@ -4,6 +4,8 @@ import { render, within } from '@testing-library/react';
 import { mockDeep } from 'jest-mock-extended';
 import { act } from 'react-dom/test-utils';
 
+import { ESvar } from '@navikt/familie-form-elements';
+
 import { ESivilstand, ESøknadstype } from '../../../typer/kontrakt/generelle';
 import { ISøknad } from '../../../typer/søknad';
 import {
@@ -15,7 +17,7 @@ import {
 } from '../../../utils/testing';
 
 import DinLivssituasjon from './DinLivssituasjon';
-import { DinLivssituasjonSpørsmålId, dinLivssituasjonSpørsmålSpråkId } from './spørsmål';
+import { DinLivssituasjonSpørsmålId } from './spørsmål';
 
 const søknad = mockDeep<ISøknad>({
     søknadstype: ESøknadstype.UTVIDET,
@@ -71,12 +73,12 @@ describe('DinLivssituasjon', () => {
     it('rendrer DinLivssituasjon steg og inneholder sidetittel', async () => {
         spyOnUseApp(søknad);
 
-        const { findByText } = render(
+        const { findByTestId } = render(
             <TestProvidereMedEkteTekster>
                 <DinLivssituasjon />
             </TestProvidereMedEkteTekster>
         );
-        expect(await findByText('Livssituasjonen din')).toBeInTheDocument();
+        expect(await findByTestId('steg-tittel')).toBeInTheDocument();
     });
 
     it('Stopper fra å gå videre hvis årsak ikke er valgt', async () => {
@@ -103,28 +105,25 @@ describe('DinLivssituasjon', () => {
     it('Viser ikke spørsmål om er du separert, enke eller skilt om sivilstand UGIFT', async () => {
         spyOnUseApp(søknad);
 
-        const { queryByText } = render(
+        const { queryByTestId } = render(
             <TestProvidere>
                 <DinLivssituasjon />
             </TestProvidere>
         );
 
-        const spørsmål = queryByText(
-            dinLivssituasjonSpørsmålSpråkId[DinLivssituasjonSpørsmålId.separertEnkeSkilt]
-        );
+        const spørsmål = queryByTestId(DinLivssituasjonSpørsmålId.separertEnkeSkilt);
         expect(spørsmål).not.toBeInTheDocument();
     });
 
     it('Viser spørsmål harSamboerNå', async () => {
         spyOnUseApp(søknad);
 
-        const { findByText } = render(
+        const { findByTestId } = render(
             <TestProvidereMedEkteTekster>
                 <DinLivssituasjon />
             </TestProvidereMedEkteTekster>
         );
-        const result = await findByText('Har du samboer nå?');
-        expect(result).toBeDefined();
+        expect(await findByTestId('har-samboer-nå')).toBeDefined();
     });
 
     it('Viser feilmelding med spørsmål tittel når ikke utfylt', async () => {
@@ -148,16 +147,20 @@ describe('DinLivssituasjon', () => {
     it('Viser riktige feilmeldinger ved ingen utfylte felt av nåværende samboer', async () => {
         spyOnUseApp(søknad);
 
-        const { findByTestId, findByRole, getAllByText, getByText } = render(
+        const { findByTestId, getAllByText, getByText } = render(
             <TestProvidereMedEkteTekster>
                 <DinLivssituasjon />
             </TestProvidereMedEkteTekster>
         );
-        const harSamboerNåSpmFieldset: HTMLElement = await findByRole('group', {
-            name: /Har du samboer nå?/i,
-        });
-        const jaKnapp: HTMLElement = within(harSamboerNåSpmFieldset).getByText('Ja');
-        act(() => jaKnapp.click());
+
+        const harSamboerNåSpmFieldset: HTMLElement = await findByTestId(
+            DinLivssituasjonSpørsmålId.harSamboerNå
+        );
+        const jaKnapp: HTMLElement | undefined = within(harSamboerNåSpmFieldset)
+            .getAllByRole('radio')
+            .find(radio => radio.getAttribute('value') === ESvar.JA);
+        expect(jaKnapp).toBeDefined();
+        act(() => jaKnapp!.click());
 
         const gåVidereKnapp = await findByTestId('neste-steg');
         act(() => gåVidereKnapp.click());
@@ -169,10 +172,12 @@ describe('DinLivssituasjon', () => {
 
         const feilmeldingSamboerNavn = getAllByText('Du må oppgi samboerens navn for å gå videre');
         expect(feilmeldingSamboerNavn).toHaveLength(antallFeilmeldingerPerFeil);
+
         const feilmeldingFnr = getAllByText(
             'Du må oppgi samboerens fødselsnummer eller d-nummer for å gå videre'
         );
         expect(feilmeldingFnr).toHaveLength(antallFeilmeldingerPerFeil);
+
         const feilmeldingForholdStart = getAllByText(
             'Du må oppgi når samboerforholdet startet for å gå videre'
         );
@@ -182,15 +187,13 @@ describe('DinLivssituasjon', () => {
     it('Viser ikke spørsmål om er du separert, enke eller skilt om sivilstand annet enn GIFT', async () => {
         spyOnUseApp(søknad);
 
-        const { queryByText } = render(
+        const { queryByTestId } = render(
             <TestProvidere>
                 <DinLivssituasjon />
             </TestProvidere>
         );
 
-        const spørsmål = queryByText(
-            dinLivssituasjonSpørsmålSpråkId[DinLivssituasjonSpørsmålId.separertEnkeSkilt]
-        );
+        const spørsmål = await queryByTestId(DinLivssituasjonSpørsmålId.separertEnkeSkilt);
         expect(spørsmål).not.toBeInTheDocument();
     });
 
@@ -203,15 +206,13 @@ describe('DinLivssituasjon', () => {
             },
         });
 
-        const { findByText } = render(
+        const { findByTestId } = render(
             <TestProvidere>
                 <DinLivssituasjon />
             </TestProvidere>
         );
 
-        const spørsmål = await findByText(
-            dinLivssituasjonSpørsmålSpråkId[DinLivssituasjonSpørsmålId.separertEnkeSkilt]
-        );
+        const spørsmål = await findByTestId(DinLivssituasjonSpørsmålId.harSamboerNå);
         expect(spørsmål).toBeInTheDocument();
     });
 });

@@ -13,9 +13,10 @@ import { ISamboer, ITidligereSamboer } from '../../../../typer/person';
 import { PersonType } from '../../../../typer/personType';
 import { RouteEnum } from '../../../../typer/routes';
 import { formaterDato } from '../../../../utils/dato';
-import { toÅrsakSpråkId } from '../../../../utils/språk';
+import { hentÅrsak } from '../../../../utils/språk';
 import { ArbeidsperiodeOppsummering } from '../../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeOppsummering';
 import { PensjonsperiodeOppsummering } from '../../../Felleskomponenter/Pensjonsmodal/PensjonsperiodeOppsummering';
+import TekstBlock from '../../../Felleskomponenter/Sanity/TekstBlock';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import {
     DinLivssituasjonSpørsmålId,
@@ -80,12 +81,12 @@ const SamboerOppsummering: React.FC<{ samboer: ISamboer | ITidligereSamboer }> =
 };
 
 const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
-    const { søknad, erUtvidet } = useApp();
-    const { formatMessage } = useIntl();
+    const { søknad, erUtvidet, tekster, plainTekst } = useApp();
     const { hentRouteObjektForRouteEnum } = useRoutes();
     const dinLivsituasjonHook = useDinLivssituasjon();
 
     const tidligereSamboere = søknad.søker.utvidet.tidligereSamboere;
+    const dinLivssituasjonTekster = tekster().DIN_LIVSSITUASJON;
 
     return (
         <Oppsummeringsbolk
@@ -98,19 +99,19 @@ const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                 <>
                     <OppsummeringFelt
                         tittel={
-                            <SpråkTekst
-                                id={
-                                    dinLivssituasjonSpørsmålSpråkId[
-                                        DinLivssituasjonSpørsmålId.årsak
-                                    ]
-                                }
+                            <TekstBlock
+                                block={dinLivssituasjonTekster.hvorforSoekerUtvidet.sporsmal}
                             />
                         }
-                        søknadsvar={formatMessage({
-                            id:
-                                søknad.søker.utvidet.spørsmål.årsak.svar &&
-                                toÅrsakSpråkId(søknad.søker.utvidet.spørsmål.årsak.svar),
-                        })}
+                        søknadsvar={
+                            søknad.søker.utvidet.spørsmål.årsak.svar &&
+                            plainTekst(
+                                hentÅrsak(
+                                    søknad.søker.utvidet.spørsmål.årsak.svar,
+                                    dinLivssituasjonTekster
+                                )
+                            )
+                        }
                     />
                     {søknad.søker.sivilstand.type === ESivilstand.GIFT && (
                         <>
