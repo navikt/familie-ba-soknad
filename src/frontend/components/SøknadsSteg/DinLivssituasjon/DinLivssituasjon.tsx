@@ -1,28 +1,25 @@
 import React from 'react';
 
-import { useIntl } from 'react-intl';
-
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
 import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
+import { ESivilstand } from '../../../typer/kontrakt/generelle';
 import { PersonType } from '../../../typer/personType';
 import { ESanitySteg } from '../../../typer/sanity/sanity';
 import { Arbeidsperiode } from '../../Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import ÅrsakDropdown from '../../Felleskomponenter/Dropdowns/ÅrsakDropdown';
-import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
+import JaNeiSpmForSanity from '../../Felleskomponenter/JaNeiSpm/JaNeiSpmForSanity';
 import { Pensjonsperiode } from '../../Felleskomponenter/Pensjonsmodal/Pensjonsperiode';
-import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 
 import SamboerSkjema from './SamboerSkjema';
-import { DinLivssituasjonSpørsmålId, dinLivssituasjonSpørsmålSpråkId } from './spørsmål';
 import TidligereSamboere from './TidligereSamboere';
 import { useDinLivssituasjon } from './useDinLivssituasjon';
 
 const DinLivssituasjon: React.FC = () => {
-    const intl = useIntl();
     const {
         skjema,
         validerFelterOgVisFeilmelding,
@@ -36,14 +33,28 @@ const DinLivssituasjon: React.FC = () => {
         fjernPensjonsperiode,
     } = useDinLivssituasjon();
 
-    const { erUtvidet, søknad, tekster } = useApp();
+    const { erUtvidet, søknad, tekster, plainTekst } = useApp();
 
     const stegTekster = tekster()[ESanitySteg.DIN_LIVSSITUASJON];
-    const { dinLivssituasjonGuide } = stegTekster;
+    const {
+        dinLivssituasjonTittel,
+        dinLivssituasjonGuide,
+        valgalternativAarsakPlaceholder,
+        hvorforSoekerUtvidet,
+        separertEnkeSkilt,
+        separertEnkeSkiltUtland,
+        separertEnkeSkiltDato,
+        harSamboerNaa,
+        harSamboerNaaGift,
+        erAsylsoeker,
+    } = stegTekster;
+
+    const harSamboerSpørsmålDokument =
+        søknad.søker.sivilstand.type === ESivilstand.GIFT ? harSamboerNaaGift : harSamboerNaa;
 
     return (
         <Steg
-            tittel={<SpråkTekst id={'dinlivssituasjon.sidetittel'} />}
+            tittel={<TekstBlock block={dinLivssituasjonTittel} />}
             guide={dinLivssituasjonGuide}
             skjema={{
                 validerFelterOgVisFeilmelding,
@@ -65,63 +76,35 @@ const DinLivssituasjon: React.FC = () => {
             {erUtvidet && (
                 <>
                     <ÅrsakDropdown
-                        felt={skjema.felter.årsak}
                         skjema={skjema}
-                        placeholder={intl.formatMessage({ id: 'omdeg.velgårsak.placeholder' })}
-                        label={
-                            <SpråkTekst
-                                id={
-                                    dinLivssituasjonSpørsmålSpråkId[
-                                        DinLivssituasjonSpørsmålId.årsak
-                                    ]
-                                }
-                            />
-                        }
+                        felt={skjema.felter.årsak}
+                        placeholder={plainTekst(valgalternativAarsakPlaceholder)}
+                        label={<TekstBlock block={hvorforSoekerUtvidet.sporsmal} />}
                         dynamisk
                     />
-                    <JaNeiSpm
+                    <JaNeiSpmForSanity
                         skjema={skjema}
                         felt={skjema.felter.separertEnkeSkilt}
-                        spørsmålTekstId={
-                            dinLivssituasjonSpørsmålSpråkId[
-                                DinLivssituasjonSpørsmålId.separertEnkeSkilt
-                            ]
-                        }
+                        spørsmålDokument={separertEnkeSkilt}
                     />
                     {skjema.felter.separertEnkeSkiltUtland.erSynlig && (
                         <>
-                            <JaNeiSpm
+                            <JaNeiSpmForSanity
                                 skjema={skjema}
                                 felt={skjema.felter.separertEnkeSkiltUtland}
-                                spørsmålTekstId={
-                                    dinLivssituasjonSpørsmålSpråkId[
-                                        DinLivssituasjonSpørsmålId.separertEnkeSkiltUtland
-                                    ]
-                                }
+                                spørsmålDokument={separertEnkeSkiltUtland}
                             />
                             <Datovelger
-                                felt={skjema.felter.separertEnkeSkiltDato}
                                 skjema={skjema}
-                                label={
-                                    <SpråkTekst
-                                        id={
-                                            dinLivssituasjonSpørsmålSpråkId[
-                                                DinLivssituasjonSpørsmålId.separertEnkeSkiltDato
-                                            ]
-                                        }
-                                    />
-                                }
+                                felt={skjema.felter.separertEnkeSkiltDato}
+                                label={<TekstBlock block={separertEnkeSkiltDato.sporsmal} />}
                             />
                         </>
                     )}
-                    <JaNeiSpm
+                    <JaNeiSpmForSanity
                         skjema={skjema}
                         felt={skjema.felter.harSamboerNå}
-                        spørsmålTekstId={
-                            dinLivssituasjonSpørsmålSpråkId[
-                                søknad.søker.utvidet.spørsmål.harSamboerNå.id
-                            ]
-                        }
+                        spørsmålDokument={harSamboerSpørsmålDokument}
                     />
                     {skjema.felter.harSamboerNå.verdi === ESvar.JA && (
                         <SamboerSkjema
@@ -147,12 +130,10 @@ const DinLivssituasjon: React.FC = () => {
                     />
                 </>
             )}
-            <JaNeiSpm
+            <JaNeiSpmForSanity
                 skjema={skjema}
                 felt={skjema.felter.erAsylsøker}
-                spørsmålTekstId={
-                    dinLivssituasjonSpørsmålSpråkId[DinLivssituasjonSpørsmålId.erAsylsøker]
-                }
+                spørsmålDokument={erAsylsoeker}
             />
             <Arbeidsperiode
                 skjema={skjema}

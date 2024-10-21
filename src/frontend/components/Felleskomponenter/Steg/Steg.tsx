@@ -171,7 +171,7 @@ const Steg: React.FC<ISteg> = ({
                             {plainTekst(tilbakeKnapp)}
                         </Link>
                         <Box paddingBlock="6 5">
-                            <Heading level="2" size={'large'}>
+                            <Heading level="2" size={'large'} data-testid="steg-tittel">
                                 {tittel}
                             </Heading>
                         </Box>
