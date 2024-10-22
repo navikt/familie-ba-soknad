@@ -40,7 +40,11 @@ export const genererAdresseVisning = (
     }
 
     return (
-        <BodyShort>
+        <BodyShort
+            data-testid={`adressevisning-${
+                søker.adressebeskyttelse ? 'sperre' : 'ikke-registrert'
+            }`}
+        >
             {plainTekst(
                 søker.adressebeskyttelse
                     ? tekster.soekerAdressesperre
