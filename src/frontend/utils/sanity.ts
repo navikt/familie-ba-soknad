@@ -21,6 +21,7 @@ import {
     ESanitySteg,
     FlettefeltVerdier,
     frittståendeOrdPrefix,
+    kanIkkeBrukeSoeknadPrefix,
     LocaleRecordBlock,
     LocaleRecordString,
     modalPrefix,
@@ -30,6 +31,7 @@ import {
 import {
     IFellesTekstInnhold,
     IFrittståendeOrdTekstinnhold,
+    IKanIkkeBrukeSoeknadTekstinnhold,
     IModalerTekstinnhold,
     INavigasjonTekstinnhold,
     ITekstinnhold,
@@ -163,6 +165,9 @@ export const transformerTilTekstinnhold = (alleDokumenter: SanityDokument[]): IT
         navigasjon: struktrerInnholdForFelles(
             dokumenterFiltrertPåPrefix(fellesDokumenter, navigasjonPrefix)
         ) as INavigasjonTekstinnhold,
+        kanIkkeBrukeSoeknad: struktrerInnholdForFelles(
+            dokumenterFiltrertPåPrefix(fellesDokumenter, kanIkkeBrukeSoeknadPrefix)
+        ) as IKanIkkeBrukeSoeknadTekstinnhold,
     };
     return tekstInnhold as ITekstinnhold;
 };

@@ -2,14 +2,13 @@ import React from 'react';
 
 import { useApp } from '../../../context/AppContext';
 import { ESanitySteg } from '../../../typer/sanity/sanity';
+import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
-import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 
 import Barnekort from './Barnekort/Barnekort';
 import LeggTilBarnModal from './LeggTilBarn/LeggTilBarnModal';
 import { NyttBarnKort } from './LeggTilBarn/NyttBarnKort';
-import { VelgBarnSpørsmålId, velgBarnSpørsmålSpråkId } from './spørsmål';
 import { useVelgBarn } from './useVelgBarn';
 
 const VelgBarn: React.FC = () => {
@@ -30,12 +29,12 @@ const VelgBarn: React.FC = () => {
     const barn = barnFraRespons.concat(barnManueltLagtTil);
 
     const stegTekster = tekster()[ESanitySteg.VELG_BARN];
-    const { velgBarnGuide } = stegTekster;
+    const { velgBarnTittel, velgBarnGuide } = stegTekster;
 
     return (
         <>
             <Steg
-                tittel={<SpråkTekst id={velgBarnSpørsmålSpråkId[VelgBarnSpørsmålId.velgBarn]} />}
+                tittel={<TekstBlock block={velgBarnTittel} />}
                 guide={velgBarnGuide}
                 skjema={{
                     validerFelterOgVisFeilmelding,

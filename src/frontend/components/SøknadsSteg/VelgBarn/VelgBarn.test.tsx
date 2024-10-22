@@ -88,14 +88,13 @@ describe('VelgBarn', () => {
             søknad.barnInkludertISøknaden = nySøknad.barnInkludertISøknaden;
         });
 
-        const { getByText, getByTestId } = render(
+        const { getByTestId } = render(
             <TestProvidere mocketNettleserHistorikk={['/velg-barn']}>
                 <VelgBarn />
             </TestProvidere>
         );
 
-        const fjernBarnKnapp = getByText(/hvilkebarn.fjern-barn.knapp/);
-
+        const fjernBarnKnapp = getByTestId('fjern-barn-knapp');
         act(() => fjernBarnKnapp.click());
 
         const gåVidere = getByTestId('neste-steg');
@@ -172,32 +171,29 @@ describe('VelgBarn', () => {
             søknad.barnInkludertISøknaden = nySøknad.barnInkludertISøknaden;
         });
 
-        const { getByText, getByTestId } = render(
+        const { getByTestId, getAllByRole } = render(
             <TestProvidere mocketNettleserHistorikk={['/velg-barn']}>
                 <VelgBarn />
             </TestProvidere>
         );
 
-        const fjernBarnKnapp = getByText(/hvilkebarn.fjern-barn.knapp/);
+        const fjernBarnKnapp = getByTestId('fjern-barn-knapp');
         act(() => fjernBarnKnapp.click());
 
-        const leggTilBarnKnapp = getByTestId('leggTilBarnKnapp');
+        const leggTilBarnKnapp = getByTestId('legg-til-barn-knapp');
         act(() => leggTilBarnKnapp.click());
 
         const leggTilKnappIModal = getByTestId('hvilkebarn.leggtilbarn.kort.knapp');
 
-        const jaKnapp = getByText('felles.svaralternativ.ja');
-        act(() => jaKnapp.click());
+        const jaKnapp = getAllByRole('radio').find(
+            radio => radio.getAttribute('value') === ESvar.JA
+        );
+        expect(jaKnapp).toBeDefined();
+        act(() => jaKnapp!.click());
 
-        const fornavnLabel = getByText('hvilkebarn.leggtilbarn.fornavn.spm');
-        const etternavnLabel = getByText('hvilkebarn.leggtilbarn.etternavn.spm');
-        const idnrLabel = getByText('felles.fødsels-eller-dnummer.label');
-        expect(fornavnLabel).toBeInTheDocument();
-        expect(etternavnLabel).toBeInTheDocument();
-        expect(idnrLabel).toBeInTheDocument();
-        const fornavnInput = fornavnLabel.nextElementSibling || new Element();
-        const etternavnInput = etternavnLabel.nextElementSibling || new Element();
-        const idnrInput = idnrLabel.nextElementSibling || new Element();
+        const fornavnInput = getByTestId('legg-til-barn-fornavn');
+        const etternavnInput = getByTestId('legg-til-barn-etternavn');
+        const idnrInput = getByTestId('legg-til-barn-fnr');
 
         act(() => {
             fireEvent.input(fornavnInput, { target: { value: manueltRegistrert.navn } });
@@ -229,13 +225,13 @@ describe('VelgBarn', () => {
         };
         spyOnUseApp(søknad);
 
-        const { getByLabelText } = render(
+        const { getByTestId } = render(
             <TestProvidere mocketNettleserHistorikk={['/velg-barn']}>
                 <VelgBarn />
             </TestProvidere>
         );
-        const checkbox: HTMLInputElement = getByLabelText(
-            /hvilkebarn.barn.søk-om.spm/
+        const checkbox: HTMLInputElement = getByTestId(
+            'søk-om-barnetrygd-for-barn-12345'
         ) as HTMLInputElement;
         act(() => checkbox.click());
 

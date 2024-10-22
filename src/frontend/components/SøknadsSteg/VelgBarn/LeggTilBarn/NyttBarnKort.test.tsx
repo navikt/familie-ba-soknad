@@ -1,7 +1,8 @@
 import React from 'react';
 
-import { act, fireEvent, render, waitFor } from '@testing-library/react';
+import { act, fireEvent, render, waitFor, within } from '@testing-library/react';
 
+import { ESvar } from '@navikt/familie-form-elements';
 import * as fnrvalidator from '@navikt/fnrvalidator';
 
 import {
@@ -32,7 +33,7 @@ describe('NyttBarnKort', () => {
         jest.spyOn(fnrvalidator, 'idnr').mockReturnValue({ status: 'valid', type: 'fnr' });
         const åpen: number[] = [];
 
-        const { getByRole, getByText, getByTestId, rerender } = render(
+        const { getByRole, getByTestId, rerender } = render(
             <TestProvidere>
                 <NyttBarnKort
                     onLeggTilBarn={() => {
@@ -76,22 +77,18 @@ describe('NyttBarnKort', () => {
         expect(leggTilKnappIModal).toBeInTheDocument();
         expect(leggTilKnappIModal).toHaveClass('navds-button--secondary');
 
-        const erFødt = getByText('hvilkebarn.leggtilbarn.barnfødt.spm');
+        const erFødt = getByTestId('legg-til-barn-er-født');
         expect(erFødt).toBeInTheDocument();
 
-        // Språktekst-id for Ja er 'ja'
-        const jaKnapp = getByText('felles.svaralternativ.ja');
-        act(() => jaKnapp.click());
+        const jaKnapp = within(erFødt)
+            .getAllByRole('radio')
+            .find(radio => radio.getAttribute('value') === ESvar.JA);
+        expect(jaKnapp).toBeDefined();
+        act(() => jaKnapp!.click());
 
-        const fornavnLabel = getByText('hvilkebarn.leggtilbarn.fornavn.spm');
-        const etternavnLabel = getByText('hvilkebarn.leggtilbarn.etternavn.spm');
-        const idnrLabel = getByText('felles.fødsels-eller-dnummer.label');
-        expect(fornavnLabel).toBeInTheDocument();
-        expect(etternavnLabel).toBeInTheDocument();
-        expect(idnrLabel).toBeInTheDocument();
-        const fornavnInput = fornavnLabel.nextElementSibling || new Element();
-        const etternavnInput = etternavnLabel.nextElementSibling || new Element();
-        const idnrInput = idnrLabel.nextElementSibling || new Element();
+        const fornavnInput = getByTestId('legg-til-barn-fornavn');
+        const etternavnInput = getByTestId('legg-til-barn-etternavn');
+        const idnrInput = getByTestId('legg-til-barn-fnr');
 
         act(() => {
             fireEvent.input(fornavnInput, { target: { value: 'Sirius' } });

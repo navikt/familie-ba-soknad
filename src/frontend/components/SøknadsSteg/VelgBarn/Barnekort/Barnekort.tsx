@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 
 import { TrashFillIcon } from '@navikt/aksel-icons';
@@ -19,6 +18,7 @@ import { IBarn } from '../../../../typer/person';
 import { ESanitySteg } from '../../../../typer/sanity/sanity';
 import { hentBostedSpråkId } from '../../../../utils/språk';
 import { formaterFnr, uppercaseFørsteBokstav } from '../../../../utils/visning';
+import TekstBlock from '../../../Felleskomponenter/Sanity/TekstBlock';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { TilfeldigBarnIkon } from '../../../Felleskomponenter/TilfeldigBarnIkon/TilfeldigBarnIkon';
 
@@ -57,10 +57,19 @@ const Barnekort: React.FC<IBarnekortProps> = ({
     fjernBarnCallback,
 }) => {
     const { plainTekst, tekster } = useApp();
-    const { formatMessage } = useIntl();
     const {
         søknad: { barnRegistrertManuelt },
     } = useApp();
+
+    const teksterForSteg = tekster().VELG_BARN;
+    const {
+        alderLabel,
+        aar,
+        registrertBostedLabel,
+        soekOmYtelseForBarnetSjekkboks,
+        foedselsnummerLabel,
+        navnErstatterForAdressesperre,
+    } = teksterForSteg;
 
     const erMedISøknad = !!barnSomSkalVæreMed.find(barnMedISøknad => barnMedISøknad.id === barn.id);
 
@@ -71,6 +80,8 @@ const Barnekort: React.FC<IBarnekortProps> = ({
     const fødselsnummerTekst = !barn.adressebeskyttelse
         ? formaterFnr(barn.ident)
         : uppercaseFørsteBokstav(plainTekst(tekster()[ESanitySteg.FELLES].frittståendeOrd.skjult));
+
+    const knappetekst = tekster()[ESanitySteg.FELLES].modaler.leggTilBarn.fjernKnapp;
 
     return (
         <BarnekortContainer>
@@ -84,25 +95,25 @@ const Barnekort: React.FC<IBarnekortProps> = ({
                 </Bleed>
                 <Heading level="3" size="medium">
                     {barn.adressebeskyttelse ? (
-                        <SpråkTekst id={'hvilkebarn.barn.anonym'} />
+                        <TekstBlock block={navnErstatterForAdressesperre} />
                     ) : (
                         barn.navn
                     )}
                 </Heading>
                 <HGrid gap="6" columns={{ sm: 1, md: '2fr 1fr 3fr' }}>
                     <BarnekortInfo
-                        labelId={'hvilkebarn.barn.fødselsnummer'}
+                        label={<TekstBlock block={foedselsnummerLabel} />}
                         verdi={fødselsnummerTekst}
                     />
                     {barn.alder && ( // Barn med undefined fødselsdato i pdl eller som søker har lagt inn selv har alder -null-
                         <BarnekortInfo
-                            labelId={'hvilkebarn.barn.alder'}
-                            verdi={<SpråkTekst id={'felles.år'} values={{ alder: barn.alder }} />}
+                            label={<TekstBlock block={alderLabel} />}
+                            verdi={`${barn.alder} ${plainTekst(aar)}`}
                         />
                     )}
                     {!erRegistrertManuelt && (
                         <BarnekortInfo
-                            labelId={'hvilkebarn.barn.bosted'}
+                            label={<TekstBlock block={registrertBostedLabel} />}
                             verdi={<SpråkTekst id={hentBostedSpråkId(barn)} />}
                         />
                     )}
@@ -110,14 +121,11 @@ const Barnekort: React.FC<IBarnekortProps> = ({
                 <Divider />
                 <Checkbox
                     checked={erMedISøknad}
-                    aria-label={
-                        formatMessage({ id: 'hvilkebarn.barn.søk-om.spm' }) + ` (${barn.navn})`
-                    }
+                    aria-label={`${plainTekst(soekOmYtelseForBarnetSjekkboks)} ${barn.navn}`}
                     onChange={() => velgBarnCallback(barn, erMedISøknad)}
+                    data-testid={`søk-om-barnetrygd-for-barn-${barn.ident}`}
                 >
-                    {formatMessage({
-                        id: 'hvilkebarn.barn.søk-om.spm',
-                    })}
+                    <TekstBlock block={soekOmYtelseForBarnetSjekkboks} />
                 </Checkbox>
                 {erRegistrertManuelt && (
                     <Button
@@ -125,8 +133,9 @@ const Barnekort: React.FC<IBarnekortProps> = ({
                         variant="tertiary"
                         onClick={() => fjernBarnCallback(barn.id)}
                         icon={<TrashFillIcon aria-hidden />}
+                        data-testid="fjern-barn-knapp"
                     >
-                        <SpråkTekst id={'hvilkebarn.fjern-barn.knapp'} />
+                        <TekstBlock block={knappetekst} />
                     </Button>
                 )}
             </VStack>
