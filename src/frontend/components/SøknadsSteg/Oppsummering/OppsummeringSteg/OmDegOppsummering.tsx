@@ -31,6 +31,7 @@ interface Props {
 
 const OmDegOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
     const { søknad, tekster, plainTekst } = useApp();
+    const { OM_DEG: omDegTekster } = tekster();
     const { valgtLocale } = useSpråk();
     const { formatMessage } = useIntl();
     const { hentRouteObjektForRouteEnum } = useRoutes();
@@ -75,7 +76,7 @@ const OmDegOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
             />
             <OppsummeringFelt
                 tittel={<SpråkTekst id={omDegPersonopplysningerSpråkId.søkerAdresse} />}
-                children={genererAdresseVisning(søknad.søker)}
+                children={genererAdresseVisning(søknad.søker, omDegTekster, plainTekst)}
             />
             {søknad.søker.borPåRegistrertAdresse.svar && (
                 <OppsummeringFelt

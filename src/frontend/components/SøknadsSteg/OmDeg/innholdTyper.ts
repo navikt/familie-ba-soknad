@@ -15,4 +15,6 @@ export interface IOmDegTekstinnhold {
     ident: LocaleRecordString;
     sivilstatus: LocaleRecordString;
     statsborgerskap: LocaleRecordString;
+    ikkeRegistrertAdresse: LocaleRecordString;
+    soekerAdressesperre: LocaleRecordString;
 }

@@ -47,7 +47,7 @@ export const Personopplysninger: React.FC = () => {
             </div>
             <div>
                 <Label>{plainTekst(adresse)}</Label>
-                {genererAdresseVisning(søker)}
+                {genererAdresseVisning(søker, tekster().OM_DEG, plainTekst)}
             </div>
         </>
     );
