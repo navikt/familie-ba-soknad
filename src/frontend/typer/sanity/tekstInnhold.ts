@@ -61,6 +61,7 @@ export interface IFellesTekstInnhold {
     frittståendeOrd: IFrittståendeOrdTekstinnhold;
     modaler: IModalerTekstinnhold;
     navigasjon: INavigasjonTekstinnhold;
+    kanIkkeBrukeSoeknad: IKanIkkeBrukeSoeknadTekstinnhold;
 }
 
 export interface IFrittståendeOrdTekstinnhold {
@@ -153,4 +154,8 @@ export interface IForsideTekstinnhold {
     utvidetBarnetrygdAlert: LocaleRecordBlock;
     soekerDuUtvidet: ISanitySpørsmålDokument;
     mellomlagretAlert: LocaleRecordBlock;
+}
+
+export interface IKanIkkeBrukeSoeknadTekstinnhold {
+    brukPDFKontantstoette: LocaleRecordBlock;
 }
