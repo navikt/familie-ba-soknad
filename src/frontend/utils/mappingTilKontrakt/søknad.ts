@@ -11,7 +11,11 @@ import { ESivilstand, TilRestLocaleRecord } from '../../typer/kontrakt/generelle
 import { ISøknadKontrakt } from '../../typer/kontrakt/kontrakt';
 import { ISøker } from '../../typer/person';
 import { PersonType } from '../../typer/personType';
-import { LocaleRecordBlock, LocaleRecordString } from '../../typer/sanity/sanity';
+import {
+    ESanitySivilstandApiKey,
+    LocaleRecordBlock,
+    LocaleRecordString,
+} from '../../typer/sanity/sanity';
 import { ITekstinnhold } from '../../typer/sanity/tekstInnhold';
 import { ISøknadSpørsmålMap } from '../../typer/spørsmål';
 import { ISøknad } from '../../typer/søknad';
@@ -21,6 +25,7 @@ import {
     hentTekster,
     hentUformaterteTekster,
     landkodeTilSpråk,
+    sivilstandTilSanitySivilstandApiKey,
 } from '../språk';
 import { jaNeiSvarTilSpråkId } from '../spørsmål';
 
@@ -259,11 +264,24 @@ const teksterFraSanity = (
     tekster: ITekstinnhold,
     tilRestLocaleRecord: TilRestLocaleRecord
 ): Record<string, Record<LocaleType, string>> => {
-    return [tekster.OM_DEG.skjermetAdresse].reduce(
-        (map, sanityDok: LocaleRecordBlock | LocaleRecordString) => ({
-            ...map,
-            [sanityDok.api_navn]: tilRestLocaleRecord(sanityDok, {}),
-        }),
-        {}
-    );
+    const fellesTekster = tekster.FELLES;
+
+    return {
+        ...[tekster.OM_DEG.skjermetAdresse].reduce(
+            (map, sanityDok: LocaleRecordBlock | LocaleRecordString) => ({
+                ...map,
+                [sanityDok.api_navn]: tilRestLocaleRecord(sanityDok, {}),
+            }),
+            {}
+        ),
+        ...Object.values(ESivilstand).reduce(
+            (map, sivilstand) => ({
+                ...map,
+                [ESanitySivilstandApiKey[ESivilstand[sivilstand]]]: tilRestLocaleRecord(
+                    fellesTekster.frittståendeOrd[sivilstandTilSanitySivilstandApiKey(sivilstand)]
+                ),
+            }),
+            {}
+        ),
+    };
 };
