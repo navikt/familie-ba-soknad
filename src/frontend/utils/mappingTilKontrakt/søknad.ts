@@ -21,7 +21,6 @@ import { ISøknadSpørsmålMap } from '../../typer/spørsmål';
 import { ISøknad } from '../../typer/søknad';
 import { erDokumentasjonRelevant } from '../dokumentasjon';
 import {
-    hentSivilstatusSpråkId,
     hentTekster,
     hentUformaterteTekster,
     landkodeTilSpråk,
@@ -255,7 +254,6 @@ const lokaleTekster = (): Record<string, Record<LocaleType, string>> => {
         'pdf.dinlivssituasjon.tidligeresamboer.seksjonstittel',
         'eøs-om-deg.sidetittel',
         'eøs-om-barn.sidetittel',
-        ...Object.values(ESivilstand).map(hentSivilstatusSpråkId),
         ...Object.values(ESvar).map(jaNeiSvarTilSpråkId),
     ].reduce((map, tekstId) => ({ ...map, [tekstId]: hentUformaterteTekster(tekstId) }), {});
 };
