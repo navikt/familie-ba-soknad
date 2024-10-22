@@ -7,48 +7,55 @@ import { BodyShort, Label } from '@navikt/ds-react';
 import { useApp } from '../../../context/AppContext';
 import { useSpråk } from '../../../context/SpråkContext';
 import { genererAdresseVisning } from '../../../utils/adresse';
-import { hentSivilstatusSpråkId, landkodeTilSpråk } from '../../../utils/språk';
-import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
-
-import { omDegPersonopplysningerSpråkId } from './spørsmål';
+import { hentSivilstatusLocalRecordString, landkodeTilSpråk } from '../../../utils/språk';
+import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 
 export const Personopplysninger: React.FC = () => {
     const { valgtLocale } = useSpråk();
-    const { søknad } = useApp();
+    const { søknad, tekster, plainTekst } = useApp();
+
+    const {
+        personopplysningerFoedselsEllerDNummer,
+        personopplysningerStatsborgerskap,
+        personopplysningerSivilstatus,
+        personopplysningerAdresse,
+    } = tekster().OM_DEG;
 
     const søker = søknad.søker;
+
+    const statsborgerskapTekst = søker.statsborgerskap
+        .map((statsborgerskap: { landkode: Alpha3Code }) =>
+            landkodeTilSpråk(statsborgerskap.landkode, valgtLocale)
+        )
+        .join(', ');
+
+    const sivilStatusTekst = plainTekst(
+        hentSivilstatusLocalRecordString(tekster(), søker.sivilstand.type)
+    );
 
     return (
         <>
             <div>
                 <Label as="p">
-                    <SpråkTekst id={'felles.fødsels-eller-dnummer.label'} />
+                    <TekstBlock block={personopplysningerFoedselsEllerDNummer} />
                 </Label>
                 <BodyShort>{søker.ident}</BodyShort>
             </div>
             <div>
                 <Label as="p">
-                    <SpråkTekst id={omDegPersonopplysningerSpråkId.søkerStatsborgerskap} />
+                    <TekstBlock block={personopplysningerStatsborgerskap} />
                 </Label>
-                <BodyShort>
-                    {søker.statsborgerskap
-                        .map((statsborgerskap: { landkode: Alpha3Code }) =>
-                            landkodeTilSpråk(statsborgerskap.landkode, valgtLocale)
-                        )
-                        .join(', ')}
-                </BodyShort>
+                <BodyShort>{statsborgerskapTekst}</BodyShort>
             </div>
             <div>
                 <Label as="p">
-                    <SpråkTekst id={omDegPersonopplysningerSpråkId.søkerSivilstatus} />
+                    <TekstBlock block={personopplysningerSivilstatus} />
                 </Label>
-                <BodyShort>
-                    <SpråkTekst id={hentSivilstatusSpråkId(søker.sivilstand.type)} />
-                </BodyShort>
+                <BodyShort>{sivilStatusTekst}</BodyShort>
             </div>
             <div>
                 <Label as="p">
-                    <SpråkTekst id={omDegPersonopplysningerSpråkId.søkerAdresse} />
+                    <TekstBlock block={personopplysningerAdresse} />
                 </Label>
                 {genererAdresseVisning(søker)}
             </div>

@@ -86,6 +86,16 @@ export interface IFrittståendeOrdTekstinnhold {
     tidligereSamboere: LocaleRecordString;
     barnetrygdperioder: LocaleRecordString;
     utbetalingsperioder: LocaleRecordString;
+    sivilstandUgift: LocaleRecordString;
+    sivilstandGift: LocaleRecordString;
+    sivilstandEnkeEnkemann: LocaleRecordString;
+    sivilstandSkilt: LocaleRecordString;
+    sivilstandSeparert: LocaleRecordString;
+    sivilstandSeparertPartner: LocaleRecordString;
+    sivilstandRegistrertPartner: LocaleRecordString;
+    sivilstandSkiltPartner: LocaleRecordString;
+    sivilstandGjenlevendePartner: LocaleRecordString;
+    sivilstandUoppgitt: LocaleRecordString;
 }
 
 export interface INavigasjonTekstinnhold {

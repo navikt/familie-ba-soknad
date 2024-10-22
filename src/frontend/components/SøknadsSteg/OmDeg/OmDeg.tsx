@@ -50,6 +50,7 @@ const OmDeg: React.FC = () => {
 
     const stegTekster = tekster()[ESanitySteg.OM_DEG];
     const {
+        omDegTittel,
         omDegGuide,
         borPaaRegistrertAdresse,
         vaertINorgeITolvMaaneder,
@@ -60,7 +61,7 @@ const OmDeg: React.FC = () => {
 
     return (
         <Steg
-            tittel={<SpråkTekst id={'omdeg.sidetittel'} />}
+            tittel={<TekstBlock block={omDegTittel} />}
             guide={omDegGuide}
             skjema={{
                 validerFelterOgVisFeilmelding,

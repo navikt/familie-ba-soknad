@@ -13,6 +13,7 @@ import { AlternativtSvarForInput, LocaleType } from '../typer/common';
 import { ESivilstand, Slektsforhold } from '../typer/kontrakt/generelle';
 import { IBarn } from '../typer/person';
 import { LocaleRecordString } from '../typer/sanity/sanity';
+import { ITekstinnhold } from '../typer/sanity/tekstInnhold';
 import { Årsak } from '../typer/utvidet';
 
 export const hentÅrsak = (
@@ -129,6 +130,36 @@ export const hentSivilstatusSpråkId = (statuskode?: ESivilstand) => {
 
         default:
             return `felles.sivilstatus.kode.${ESivilstand.UOPPGITT}`;
+    }
+};
+
+export const hentSivilstatusLocalRecordString = (
+    tekster: ITekstinnhold,
+    statuskode?: ESivilstand
+): LocaleRecordString => {
+    const frittståendeOrd = tekster.FELLES.frittståendeOrd;
+
+    switch (statuskode) {
+        case ESivilstand.UGIFT:
+            return frittståendeOrd.sivilstandUgift;
+        case ESivilstand.GIFT:
+            return frittståendeOrd.sivilstandGift;
+        case ESivilstand.ENKE_ELLER_ENKEMANN:
+            return frittståendeOrd.sivilstandEnkeEnkemann;
+        case ESivilstand.SKILT:
+            return frittståendeOrd.sivilstandSkilt;
+        case ESivilstand.SEPARERT:
+            return frittståendeOrd.sivilstandSeparert;
+        case ESivilstand.REGISTRERT_PARTNER:
+            return frittståendeOrd.sivilstandRegistrertPartner;
+        case ESivilstand.SEPARERT_PARTNER:
+            return frittståendeOrd.sivilstandSeparertPartner;
+        case ESivilstand.SKILT_PARTNER:
+            return frittståendeOrd.sivilstandSkiltPartner;
+        case ESivilstand.GJENLEVENDE_PARTNER:
+            return frittståendeOrd.sivilstandGjenlevendePartner;
+        default:
+            return frittståendeOrd.sivilstandUoppgitt;
     }
 };
 

@@ -11,4 +11,8 @@ export interface IOmDegTekstinnhold {
     borPaaRegistrertAdresse: ISanitySpørsmålDokument;
     vaertINorgeITolvMaaneder: ISanitySpørsmålDokument;
     planleggerAaBoINorgeTolvMnd: ISanitySpørsmålDokument;
+    personopplysningerFoedselsEllerDNummer: LocaleRecordBlock;
+    personopplysningerStatsborgerskap: LocaleRecordBlock;
+    personopplysningerSivilstatus: LocaleRecordBlock;
+    personopplysningerAdresse: LocaleRecordBlock;
 }
