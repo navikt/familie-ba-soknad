@@ -6,20 +6,18 @@ import { BodyShort, Label } from '@navikt/ds-react';
 
 import { useApp } from '../../../context/AppContext';
 import { useSpråk } from '../../../context/SpråkContext';
+import { ESanitySteg } from '../../../typer/sanity/sanity';
 import { genererAdresseVisning } from '../../../utils/adresse';
-import { hentSivilstatusLocalRecordString, landkodeTilSpråk } from '../../../utils/språk';
-import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
+import { landkodeTilSpråk, sivilstandTilSanitySivilstandApiKey } from '../../../utils/språk';
 
 export const Personopplysninger: React.FC = () => {
     const { valgtLocale } = useSpråk();
     const { søknad, tekster, plainTekst } = useApp();
 
     const {
-        personopplysningerFoedselsEllerDNummer,
-        personopplysningerStatsborgerskap,
-        personopplysningerSivilstatus,
-        personopplysningerAdresse,
-    } = tekster().OM_DEG;
+        [ESanitySteg.OM_DEG]: { ident, statsborgerskap, sivilstatus, adresse },
+        [ESanitySteg.FELLES]: { frittståendeOrd },
+    } = tekster();
 
     const søker = søknad.søker;
 
@@ -30,33 +28,25 @@ export const Personopplysninger: React.FC = () => {
         .join(', ');
 
     const sivilStatusTekst = plainTekst(
-        hentSivilstatusLocalRecordString(tekster(), søker.sivilstand.type)
+        frittståendeOrd[sivilstandTilSanitySivilstandApiKey(søker.sivilstand.type)]
     );
 
     return (
         <>
             <div>
-                <Label as="p">
-                    <TekstBlock block={personopplysningerFoedselsEllerDNummer} />
-                </Label>
+                <Label>{plainTekst(ident)}</Label>
                 <BodyShort>{søker.ident}</BodyShort>
             </div>
             <div>
-                <Label as="p">
-                    <TekstBlock block={personopplysningerStatsborgerskap} />
-                </Label>
+                <Label>{plainTekst(statsborgerskap)}</Label>
                 <BodyShort>{statsborgerskapTekst}</BodyShort>
             </div>
             <div>
-                <Label as="p">
-                    <TekstBlock block={personopplysningerSivilstatus} />
-                </Label>
+                <Label>{plainTekst(sivilstatus)}</Label>
                 <BodyShort>{sivilStatusTekst}</BodyShort>
             </div>
             <div>
-                <Label as="p">
-                    <TekstBlock block={personopplysningerAdresse} />
-                </Label>
+                <Label>{plainTekst(adresse)}</Label>
                 {genererAdresseVisning(søker)}
             </div>
         </>

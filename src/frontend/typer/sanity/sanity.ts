@@ -77,6 +77,19 @@ export enum ESanityFlettefeltverdi {
     YTELSE_BESTEMT_FORM = 'YTELSE_BESTEMT_FORM',
 }
 
+export enum ESanitySivilstandApiKey {
+    GIFT = 'sivilstandGift',
+    ENKE_ELLER_ENKEMANN = 'sivilstandEnkeEnkemann',
+    SKILT = 'sivilstandSkilt',
+    SEPARERT = 'sivilstandSeparert',
+    REGISTRERT_PARTNER = 'sivilstandRegistrertPartner',
+    SEPARERT_PARTNER = 'sivilstandSeparertPartner',
+    SKILT_PARTNER = 'sivilstandSkiltPartner',
+    GJENLEVENDE_PARTNER = 'sivilstandGjenlevendePartner',
+    UGIFT = 'sivilstandUgift',
+    UOPPGITT = 'sivilstandUoppgitt',
+}
+
 export type FlettefeltVerdier = {
     barnetsNavn?: string;
     gjelderUtland?: boolean;

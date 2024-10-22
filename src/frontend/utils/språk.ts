@@ -12,8 +12,7 @@ import { IDinLivssituasjonTekstinnhold } from '../components/SøknadsSteg/DinLiv
 import { AlternativtSvarForInput, LocaleType } from '../typer/common';
 import { ESivilstand, Slektsforhold } from '../typer/kontrakt/generelle';
 import { IBarn } from '../typer/person';
-import { LocaleRecordString } from '../typer/sanity/sanity';
-import { ITekstinnhold } from '../typer/sanity/tekstInnhold';
+import { ESanitySivilstandApiKey, LocaleRecordString } from '../typer/sanity/sanity';
 import { Årsak } from '../typer/utvidet';
 
 export const hentÅrsak = (
@@ -133,33 +132,30 @@ export const hentSivilstatusSpråkId = (statuskode?: ESivilstand) => {
     }
 };
 
-export const hentSivilstatusLocalRecordString = (
-    tekster: ITekstinnhold,
-    statuskode?: ESivilstand
-): LocaleRecordString => {
-    const frittståendeOrd = tekster.FELLES.frittståendeOrd;
-
+export const sivilstandTilSanitySivilstandApiKey = (
+    statuskode: ESivilstand
+): ESanitySivilstandApiKey => {
     switch (statuskode) {
         case ESivilstand.UGIFT:
-            return frittståendeOrd.sivilstandUgift;
+            return ESanitySivilstandApiKey.UGIFT;
         case ESivilstand.GIFT:
-            return frittståendeOrd.sivilstandGift;
+            return ESanitySivilstandApiKey.GIFT;
         case ESivilstand.ENKE_ELLER_ENKEMANN:
-            return frittståendeOrd.sivilstandEnkeEnkemann;
+            return ESanitySivilstandApiKey.ENKE_ELLER_ENKEMANN;
         case ESivilstand.SKILT:
-            return frittståendeOrd.sivilstandSkilt;
+            return ESanitySivilstandApiKey.SKILT;
         case ESivilstand.SEPARERT:
-            return frittståendeOrd.sivilstandSeparert;
+            return ESanitySivilstandApiKey.SEPARERT;
         case ESivilstand.REGISTRERT_PARTNER:
-            return frittståendeOrd.sivilstandRegistrertPartner;
+            return ESanitySivilstandApiKey.REGISTRERT_PARTNER;
         case ESivilstand.SEPARERT_PARTNER:
-            return frittståendeOrd.sivilstandSeparertPartner;
+            return ESanitySivilstandApiKey.SEPARERT_PARTNER;
         case ESivilstand.SKILT_PARTNER:
-            return frittståendeOrd.sivilstandSkiltPartner;
+            return ESanitySivilstandApiKey.SKILT_PARTNER;
         case ESivilstand.GJENLEVENDE_PARTNER:
-            return frittståendeOrd.sivilstandGjenlevendePartner;
-        default:
-            return frittståendeOrd.sivilstandUoppgitt;
+            return ESanitySivilstandApiKey.GJENLEVENDE_PARTNER;
+        case ESivilstand.UOPPGITT:
+            return ESanitySivilstandApiKey.UOPPGITT;
     }
 };
 
