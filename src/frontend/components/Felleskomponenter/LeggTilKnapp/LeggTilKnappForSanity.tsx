@@ -10,10 +10,10 @@ import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 
 interface Props {
     onClick: () => void | Promise<void>;
-    children: ReactNode;
     leggTilFlereTekst?: ReactNode;
-    feilmelding?: ReactNode;
+    feilmelding: ReactNode;
     id?: string;
+    children?: ReactNode;
 }
 
 const StyledButton = styled(Button)`
