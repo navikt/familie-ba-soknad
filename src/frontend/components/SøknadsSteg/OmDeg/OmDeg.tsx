@@ -112,7 +112,8 @@ const OmDeg: React.FC = () => {
                             onClick={åpneUtenlandsoppholdmodal}
                             leggTilFlereTekst={
                                 toggles.NYE_MODAL_TEKSTER &&
-                                utenlandsperioder.length > 0 && <TekstBlock block={flerePerioder} />
+                                utenlandsperioder.length > 0 &&
+                                plainTekst(flerePerioder)
                             }
                             id={UtenlandsoppholdSpørsmålId.utenlandsopphold}
                             feilmelding={
