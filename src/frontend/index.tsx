@@ -9,6 +9,7 @@ import App from './App';
 import { SpråkProvider } from './context/SpråkContext';
 import MiljøProvider from './MiljøProvider';
 import { LocaleType } from './typer/common';
+import { initGrafanaFaro } from './utils/grafanaFaro';
 import { initSentry } from './utils/sentry';
 import '@navikt/ds-css';
 
@@ -45,6 +46,7 @@ const polyfillLocaledata = async () => {
 
 polyfillLocaledata().then(() => {
     initSentry();
+    initGrafanaFaro();
 
     if (process.env.NODE_ENV !== 'production') {
         import('@axe-core/react').then(({ default: axe }) => {
