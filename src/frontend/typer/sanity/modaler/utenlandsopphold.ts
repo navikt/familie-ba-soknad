@@ -1,6 +1,8 @@
-import { LocaleRecordString } from '../sanity';
+import { LocaleRecordBlock, LocaleRecordString } from '../sanity';
 
 export interface IUtenlandsoppholdTekstinnhold {
     leggTilPeriodeForklaring: LocaleRecordString;
-    flerePerioder: LocaleRecordString;
+    flerePerioder: LocaleRecordBlock;
+    leggTilKnapp: LocaleRecordBlock;
+    leggTilFeilmelding: LocaleRecordBlock;
 }

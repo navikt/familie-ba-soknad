@@ -60,13 +60,13 @@ describe('Personopplysninger', () => {
 
         spyOnUseApp({ søker });
 
-        const { queryByText } = render(
+        const { queryByText, queryByTestId } = render(
             <IntlProvider locale={LocaleType.nb}>
                 <Personopplysninger />
             </IntlProvider>
         );
         expect(queryByText('12345678901')).toBeInTheDocument();
-        expect(queryByText('omdeg.personopplysninger.ikke-registrert.alert')).toBeInTheDocument();
+        expect(queryByTestId('adressevisning-ikke-registrert')).toBeInTheDocument();
     });
 
     test('Viser riktig info og stopper søknad ved adressebeskyttelse', () => {
@@ -82,11 +82,11 @@ describe('Personopplysninger', () => {
 
         spyOnUseApp({ søker });
 
-        const { getByText } = render(
+        const { getByTestId } = render(
             <TestProvidere>
                 <Personopplysninger />
             </TestProvidere>
         );
-        expect(getByText(/omdeg\.personopplysninger\.adressesperre\.alert/)).toBeInTheDocument();
+        expect(getByTestId('adressevisning-sperre')).toBeInTheDocument();
     });
 });

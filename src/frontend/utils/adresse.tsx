@@ -4,8 +4,10 @@ import { BodyShort } from '@navikt/ds-react';
 import { feil, FeltState, ok } from '@navikt/familie-skjema';
 
 import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
+import { IOmDegTekstinnhold } from '../components/SøknadsSteg/OmDeg/innholdTyper';
 import { IAdresse } from '../typer/kontrakt/generelle';
 import { ISøker } from '../typer/person';
+import { PlainTekst } from '../typer/sanity/sanity';
 
 import { trimWhiteSpace } from './hjelpefunksjoner';
 import { uppercaseFørsteBokstav } from './visning';
@@ -26,7 +28,11 @@ export const hentAdressefelterSortert = (adresse: IAdresse): string[] => {
         .filter(value => value);
 };
 
-export const genererAdresseVisning = (søker: ISøker) => {
+export const genererAdresseVisning = (
+    søker: ISøker,
+    tekster: IOmDegTekstinnhold,
+    plainTekst: PlainTekst
+) => {
     if (søker.adresse) {
         return hentAdressefelterSortert(søker.adresse).map((adresseFelt, index) => (
             <BodyShort key={index}>{adresseFelt}</BodyShort>
@@ -34,14 +40,16 @@ export const genererAdresseVisning = (søker: ISøker) => {
     }
 
     return (
-        <BodyShort>
-            <SpråkTekst
-                id={
-                    søker.adressebeskyttelse
-                        ? 'omdeg.personopplysninger.adressesperre.alert'
-                        : 'omdeg.personopplysninger.ikke-registrert.alert'
-                }
-            />
+        <BodyShort
+            data-testid={`adressevisning-${
+                søker.adressebeskyttelse ? 'sperre' : 'ikke-registrert'
+            }`}
+        >
+            {plainTekst(
+                søker.adressebeskyttelse
+                    ? tekster.soekerAdressesperre
+                    : tekster.ikkeRegistrertAdresse
+            )}
         </BodyShort>
     );
 };

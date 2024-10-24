@@ -11,4 +11,10 @@ export interface IOmDegTekstinnhold {
     borPaaRegistrertAdresse: ISanitySpørsmålDokument;
     vaertINorgeITolvMaaneder: ISanitySpørsmålDokument;
     planleggerAaBoINorgeTolvMnd: ISanitySpørsmålDokument;
+    adresse: LocaleRecordString;
+    ident: LocaleRecordString;
+    sivilstatus: LocaleRecordString;
+    statsborgerskap: LocaleRecordString;
+    ikkeRegistrertAdresse: LocaleRecordString;
+    soekerAdressesperre: LocaleRecordString;
 }
