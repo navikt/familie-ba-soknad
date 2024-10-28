@@ -4,7 +4,7 @@ import { act } from 'react-dom/test-utils';
 import { ESivilstand } from '../../typer/kontrakt/generelle';
 import { ISøknadKontrakt } from '../../typer/kontrakt/kontrakt';
 import { ESanitySivilstandApiKey } from '../../typer/sanity/sanity';
-import { sivilstandTilSanitySivilstandApiKey } from '../../utils/språk';
+import { hentSivilstatusSpråkId, sivilstandTilSanitySivilstandApiKey } from '../../utils/språk';
 import {
     mekkGyldigUtvidetSøknad,
     silenceConsoleErrors,
@@ -32,6 +32,16 @@ describe('useSendInnSkjema', () => {
         await act(async () => {
             jest.advanceTimersByTime(500);
         });
+    });
+
+    it('Kan mappe sivilstandenum til språktekster', () => {
+        const språktekster = Object.values(ESivilstand).map(hentSivilstatusSpråkId);
+        let sivilstandCount = 0;
+        for (const sivilstand in ESivilstand) {
+            expect(språktekster).toContain(`felles.sivilstatus.kode.${sivilstand}`);
+            sivilstandCount++;
+        }
+        expect(språktekster.length).toEqual(sivilstandCount);
     });
 
     it('Kan mappe sivilstandenum til sanity sivilstand', () => {
