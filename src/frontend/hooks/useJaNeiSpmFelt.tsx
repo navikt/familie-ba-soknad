@@ -6,6 +6,8 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { feil, Felt, FeltState, ok, useFelt, Valideringsstatus } from '@navikt/familie-skjema';
 
 import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
+import { useApp } from '../context/AppContext';
+import { FlettefeltVerdier, LocaleRecordBlock } from '../typer/sanity/sanity';
 import { ISøknadSpørsmål } from '../typer/spørsmål';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -40,20 +42,25 @@ export const erRelevanteAvhengigheterValidert = (avhengigheter: { [key: string]:
 
 const useJaNeiSpmFelt = ({
     søknadsfelt,
+    feilmelding,
     feilmeldingSpråkId,
     avhengigheter,
     nullstillVedAvhengighetEndring = false,
     skalSkjules = false,
+    flettefelter,
     feilmeldingSpråkVerdier,
 }: {
     søknadsfelt?: ISøknadSpørsmål<ESvar | null>;
+    feilmelding?: LocaleRecordBlock;
     feilmeldingSpråkId: string;
     avhengigheter?: { [key: string]: FeltGruppe | undefined };
     nullstillVedAvhengighetEndring?: boolean;
     skalSkjules?: boolean;
+    flettefelter?: FlettefeltVerdier;
     feilmeldingSpråkVerdier?: { [key: string]: ReactNode };
 }) => {
     const [harBlittVist, settHarBlittVist] = useState<boolean>(!avhengigheter);
+    const { plainTekst } = useApp();
 
     return useFelt<ESvar | null>({
         feltId: søknadsfelt ? søknadsfelt.id : uuidv4(),
@@ -64,7 +71,11 @@ const useJaNeiSpmFelt = ({
                 ? ok(felt)
                 : feil(
                       felt,
-                      <SpråkTekst id={feilmeldingSpråkId} values={feilmeldingSpråkVerdier} />
+                      feilmelding ? (
+                          plainTekst(feilmelding, { ...flettefelter })
+                      ) : (
+                          <SpråkTekst id={feilmeldingSpråkId} values={feilmeldingSpråkVerdier} />
+                      )
                   );
         },
         skalFeltetVises: (avhengigheter: { [key: string]: FeltGruppe }) => {
