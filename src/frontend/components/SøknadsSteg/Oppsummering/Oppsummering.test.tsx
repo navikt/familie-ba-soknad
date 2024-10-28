@@ -51,7 +51,7 @@ describe('Oppsummering', () => {
         });
         spyOnUseApp(søknad);
 
-        const { getByText, findByTestId } = render(
+        const { container, findByTestId } = render(
             <TestProvidere mocketNettleserHistorikk={['/oppsummering']}>
                 <Oppsummering />
                 <LesUtLocation />
@@ -60,12 +60,12 @@ describe('Oppsummering', () => {
         const gåVidere = await findByTestId('neste-steg');
         await act(() => gåVidere.click());
 
-        const feilmelding = getByText('omdeg.oppholdtsammenhengende.feilmelding');
+        const feilOppsummering = container.getElementsByClassName('navds-error-summary')[0];
 
         const location = await findByTestId('location');
         expect(JSON.parse(location.innerHTML).hash).toEqual('#omdeg-feil');
 
-        expect(feilmelding).toBeInTheDocument();
+        expect(feilOppsummering).toBeInTheDocument();
     }, 10000);
 
     it('går til dokumentasjon med gyldig søknad', async () => {
