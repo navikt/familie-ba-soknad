@@ -10,7 +10,7 @@ import { ESanitySteg, Typografi } from '../../../typer/sanity/sanity';
 import { uppercaseFørsteBokstav } from '../../../utils/visning';
 import JaNeiSpmForSanity from '../../Felleskomponenter/JaNeiSpm/JaNeiSpmForSanity';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
-import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
+import { LeggTilKnappForSanity } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnappForSanity';
 import PerioderContainer from '../../Felleskomponenter/PerioderContainer';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
@@ -46,10 +46,12 @@ const OmDeg: React.FC = () => {
 
     const teksterForModal: IUtenlandsoppholdTekstinnhold =
         tekster().FELLES.modaler.utenlandsopphold.søker;
-    const { flerePerioder, leggTilPeriodeForklaring } = teksterForModal;
+    const { flerePerioder, leggTilPeriodeForklaring, leggTilKnapp, leggTilFeilmelding } =
+        teksterForModal;
 
     const stegTekster = tekster()[ESanitySteg.OM_DEG];
     const {
+        omDegTittel,
         omDegGuide,
         borPaaRegistrertAdresse,
         vaertINorgeITolvMaaneder,
@@ -60,7 +62,7 @@ const OmDeg: React.FC = () => {
 
     return (
         <Steg
-            tittel={<SpråkTekst id={'omdeg.sidetittel'} />}
+            tittel={<TekstBlock block={omDegTittel} />}
             guide={omDegGuide}
             skjema={{
                 validerFelterOgVisFeilmelding,
@@ -106,9 +108,8 @@ const OmDeg: React.FC = () => {
                                 <SpråkTekst id={'omdeg.flereopphold.spm'} />
                             </Label>
                         )}
-                        <LeggTilKnapp
+                        <LeggTilKnappForSanity
                             onClick={åpneUtenlandsoppholdmodal}
-                            språkTekst={'felles.leggtilutenlands.knapp'}
                             leggTilFlereTekst={
                                 toggles.NYE_MODAL_TEKSTER &&
                                 utenlandsperioder.length > 0 &&
@@ -118,11 +119,11 @@ const OmDeg: React.FC = () => {
                             feilmelding={
                                 skjema.felter.registrerteUtenlandsperioder.erSynlig &&
                                 skjema.felter.registrerteUtenlandsperioder.feilmelding &&
-                                skjema.visFeilmeldinger && (
-                                    <SpråkTekst id={'felles.leggtilutenlands.feilmelding'} />
-                                )
+                                skjema.visFeilmeldinger && <TekstBlock block={leggTilFeilmelding} />
                             }
-                        />
+                        >
+                            {<TekstBlock block={leggTilKnapp} />}
+                        </LeggTilKnappForSanity>
                     </PerioderContainer>
                 )}
             </KomponentGruppe>

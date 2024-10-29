@@ -12,7 +12,7 @@ import { IDinLivssituasjonTekstinnhold } from '../components/SøknadsSteg/DinLiv
 import { AlternativtSvarForInput, LocaleType } from '../typer/common';
 import { ESivilstand, Slektsforhold } from '../typer/kontrakt/generelle';
 import { IBarn } from '../typer/person';
-import { LocaleRecordString } from '../typer/sanity/sanity';
+import { ESanitySivilstandApiKey, LocaleRecordString } from '../typer/sanity/sanity';
 import { Årsak } from '../typer/utvidet';
 
 export const hentÅrsak = (
@@ -126,9 +126,35 @@ export const hentSivilstatusSpråkId = (statuskode?: ESivilstand) => {
         case ESivilstand.SKILT_PARTNER:
         case ESivilstand.GJENLEVENDE_PARTNER:
             return `felles.sivilstatus.kode.${statuskode}`;
-
         default:
             return `felles.sivilstatus.kode.${ESivilstand.UOPPGITT}`;
+    }
+};
+
+export const sivilstandTilSanitySivilstandApiKey = (
+    statuskode: ESivilstand
+): ESanitySivilstandApiKey => {
+    switch (statuskode) {
+        case ESivilstand.UGIFT:
+            return ESanitySivilstandApiKey.UGIFT;
+        case ESivilstand.GIFT:
+            return ESanitySivilstandApiKey.GIFT;
+        case ESivilstand.ENKE_ELLER_ENKEMANN:
+            return ESanitySivilstandApiKey.ENKE_ELLER_ENKEMANN;
+        case ESivilstand.SKILT:
+            return ESanitySivilstandApiKey.SKILT;
+        case ESivilstand.SEPARERT:
+            return ESanitySivilstandApiKey.SEPARERT;
+        case ESivilstand.REGISTRERT_PARTNER:
+            return ESanitySivilstandApiKey.REGISTRERT_PARTNER;
+        case ESivilstand.SEPARERT_PARTNER:
+            return ESanitySivilstandApiKey.SEPARERT_PARTNER;
+        case ESivilstand.SKILT_PARTNER:
+            return ESanitySivilstandApiKey.SKILT_PARTNER;
+        case ESivilstand.GJENLEVENDE_PARTNER:
+            return ESanitySivilstandApiKey.GJENLEVENDE_PARTNER;
+        case ESivilstand.UOPPGITT:
+            return ESanitySivilstandApiKey.UOPPGITT;
     }
 };
 

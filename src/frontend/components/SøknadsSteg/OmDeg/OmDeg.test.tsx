@@ -75,11 +75,9 @@ describe('OmDeg', () => {
                 statsborgerskap: [{ landkode: 'NOR' }],
             }),
         });
-        const { findByText } = render(<TestKomponent />);
+        const { findByTestId } = render(<TestKomponent />);
 
-        expect(
-            await findByText(/omdeg.personopplysninger.adressesperre.alert/)
-        ).toBeInTheDocument();
+        expect(await findByTestId('adressevisning-sperre')).toBeInTheDocument();
     });
 
     test('Kan gå videre i søknad ved adresse som er ukjent, får ikke spm om bosted, men opphold i norge', async () => {
