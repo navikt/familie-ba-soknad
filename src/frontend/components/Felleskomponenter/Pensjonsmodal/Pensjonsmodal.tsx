@@ -2,13 +2,16 @@ import React from 'react';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
+import { useApp } from '../../../context/AppContext';
 import { IPensjonsperiode } from '../../../typer/perioder';
 import { PersonType } from '../../../typer/personType';
+import { IPensjonsperiodeTekstinnhold } from '../../../typer/sanity/modaler/pensjonsperiode';
 import { dagensDato, gårsdagensDato } from '../../../utils/dato';
 import { visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
 import Datovelger from '../Datovelger/Datovelger';
 import { LandDropdown } from '../Dropdowns/LandDropdown';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
+import TekstBlock from '../Sanity/TekstBlock';
 import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeiloppsummering';
 import SkjemaModal from '../SkjemaModal/SkjemaModal';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
@@ -35,6 +38,7 @@ export const PensjonModal: React.FC<Props> = ({
     erDød,
     forklaring = undefined,
 }) => {
+    const { tekster } = useApp();
     const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } =
         usePensjonSkjema({
             gjelderUtland,
@@ -42,6 +46,9 @@ export const PensjonModal: React.FC<Props> = ({
             barn,
             erDød,
         });
+
+    const teksterForModal: IPensjonsperiodeTekstinnhold =
+        tekster().FELLES.modaler.pensjonsperiode[personType];
 
     const { mottarPensjonNå, pensjonTilDato, pensjonFraDato, pensjonsland } = skjema.felter;
 
@@ -72,9 +79,6 @@ export const PensjonModal: React.FC<Props> = ({
         lukkModal();
         nullstillSkjema();
     };
-    const modalTittel = gjelderUtland
-        ? 'felles.leggtilpensjon.utland.modal.tittel'
-        : 'felles.leggtilpensjon.norge.modal.tittel';
 
     const periodenErAvsluttet =
         mottarPensjonNå.verdi === ESvar.NEI || (personType === PersonType.AndreForelder && !!erDød);
@@ -87,10 +91,10 @@ export const PensjonModal: React.FC<Props> = ({
     return (
         <SkjemaModal
             erÅpen={erÅpen}
-            modalTittelSpråkId={modalTittel}
+            tittel={teksterForModal.tittel}
             forklaring={forklaring}
             onSubmitCallback={onLeggTil}
-            submitKnappSpråkId={'felles.leggtilpensjon.knapp'}
+            submitKnappTekst={<TekstBlock block={teksterForModal.leggTilKnapp} />}
             lukkModal={lukkModal}
             valideringErOk={valideringErOk}
             onAvbrytCallback={nullstillSkjema}
