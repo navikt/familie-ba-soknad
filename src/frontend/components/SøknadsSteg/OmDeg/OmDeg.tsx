@@ -45,10 +45,8 @@ const OmDeg: React.FC = () => {
         utenlandsperioder,
     } = useOmdeg();
 
-    const personType = PersonType.Søker;
-
     const teksterForModal: IUtenlandsoppholdTekstinnhold =
-        tekster().FELLES.modaler.utenlandsopphold[personType];
+        tekster().FELLES.modaler.utenlandsopphold.søker;
     const { flerePerioder, leggTilPeriodeForklaring, leggTilKnapp, leggTilFeilmelding } =
         teksterForModal;
 
@@ -141,7 +139,7 @@ const OmDeg: React.FC = () => {
                 <UtenlandsoppholdModal
                     erÅpen={utenlandsoppholdmodalErÅpen}
                     lukkModal={lukkUtenlandsoppholdmodal}
-                    personType={personType}
+                    personType={PersonType.Søker}
                     onLeggTilUtenlandsperiode={leggTilUtenlandsperiode}
                     forklaring={plainTekst(leggTilPeriodeForklaring)}
                 />
