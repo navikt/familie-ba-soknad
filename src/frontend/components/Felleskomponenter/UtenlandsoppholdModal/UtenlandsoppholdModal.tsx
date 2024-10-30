@@ -64,8 +64,6 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
 
     const teksterForPersonType = tekster()[ESanitySteg.FELLES].modaler.utenlandsopphold[personType];
 
-    console.log(teksterForPersonType);
-
     const { formatMessage } = useIntl();
 
     const onLeggTil = () => {
