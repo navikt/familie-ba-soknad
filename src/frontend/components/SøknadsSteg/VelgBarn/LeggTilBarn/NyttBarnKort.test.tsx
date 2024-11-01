@@ -73,7 +73,7 @@ describe('NyttBarnKort', () => {
             </TestProvidere>
         );
 
-        const leggTilKnappIModal = getByTestId('hvilkebarn.leggtilbarn.kort.knapp');
+        const leggTilKnappIModal = getByTestId('submit-knapp-i-modal');
         expect(leggTilKnappIModal).toBeInTheDocument();
         expect(leggTilKnappIModal).toHaveClass('navds-button--secondary');
 

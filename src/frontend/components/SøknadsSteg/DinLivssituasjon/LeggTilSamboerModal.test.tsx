@@ -43,7 +43,7 @@ describe('LeggTilSamboerModal', () => {
     it('Viser riktige feilmeldinger ved ingen utfylte felt av tidligere samboer', async () => {
         spyOnUseApp(søknad);
 
-        const { getByText, getAllByText, findByRole, queryByText } = render(
+        const { getByText, getAllByText, findByRole, queryByText, getByTestId } = render(
             <TestProvidereMedEkteTekster mocketNettleserHistorikk={['/din-livssituasjon']}>
                 <DinLivssituasjon />
             </TestProvidereMedEkteTekster>
@@ -59,8 +59,8 @@ describe('LeggTilSamboerModal', () => {
         const leggTilSamboerKnapp: HTMLElement = getByText('Legg til samboer');
         act(() => leggTilSamboerKnapp.click());
 
-        const gåVidereKnapp = getAllByText('Legg til samboer');
-        act(() => gåVidereKnapp[2].click());
+        const gåVidereKnapp = getByTestId('submit-knapp-i-modal');
+        act(() => gåVidereKnapp.click());
 
         const feiloppsummeringstittel = queryByText(
             'Du må rette opp eller svare på følgende spørsmål for å gå videre'
