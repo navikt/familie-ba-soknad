@@ -30,6 +30,8 @@ import {
 } from '../../../typer/perioder';
 import { IIdNummer } from '../../../typer/person';
 import { PersonType } from '../../../typer/personType';
+import { IArbeidsperiodeTekstinnhold } from '../../../typer/sanity/modaler/arbeidsperiode';
+import { ESanitySteg } from '../../../typer/sanity/sanity';
 import { IOmBarnetFeltTyper } from '../../../typer/skjema';
 import { Årsak } from '../../../typer/utvidet';
 import { erNorskPostnummer, valideringAdresse } from '../../../utils/adresse';
@@ -50,7 +52,6 @@ import { formaterInitVerdiForInputMedUkjent, formaterVerdiForCheckbox } from '..
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import { nullstilteEøsFelterForSøker } from '../../../utils/søker';
 import { flyttetPermanentFraNorge } from '../../../utils/utenlandsopphold';
-import { arbeidsperiodeFeilmelding } from '../../Felleskomponenter/Arbeidsperiode/arbeidsperiodeSpråkUtils';
 import { ArbeidsperiodeSpørsmålsId } from '../../Felleskomponenter/Arbeidsperiode/spørsmål';
 import { BarnetrygdperiodeSpørsmålId } from '../../Felleskomponenter/Barnetrygdperiode/spørsmål';
 import { pensjonsperiodeFeilmelding } from '../../Felleskomponenter/Pensjonsmodal/språkUtils';
@@ -83,8 +84,10 @@ export const useOmBarnet = (
     leggTilBarnetrygdsperiode: (periode: IEøsBarnetrygdsperiode) => void;
     fjernBarnetrygdsperiode: (periode: IEøsBarnetrygdsperiode) => void;
 } => {
-    const { søknad, settSøknad, erUtvidet } = useApp();
+    const { søknad, settSøknad, erUtvidet, tekster, plainTekst } = useApp();
     const { skalTriggeEøsForBarn, barnSomTriggerEøs, settBarnSomTriggerEøs, erEøsLand } = useEøs();
+    const teksterForArbeidsperiode: IArbeidsperiodeTekstinnhold =
+        tekster()[ESanitySteg.FELLES].modaler.arbeidsperiode.søker;
 
     const søker = søknad.søker;
     const gjeldendeBarn = søknad.barnInkludertISøknaden.find(barn => barn.id === barnetsUuid);
@@ -431,7 +434,12 @@ export const useOmBarnet = (
             return avhengigheter?.andreForelderArbeidUtlandet.verdi === ESvar.NEI ||
                 (avhengigheter?.andreForelderArbeidUtlandet.verdi === ESvar.JA && felt.verdi.length)
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={arbeidsperiodeFeilmelding(true)} />);
+                : feil(
+                      felt,
+                      plainTekst(teksterForArbeidsperiode.leggTilFeilmelding, {
+                          gjelderUtland: true,
+                      })
+                  );
         },
     });
 

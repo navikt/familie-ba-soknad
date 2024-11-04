@@ -27,13 +27,14 @@ import {
     IUtbetalingsperiode,
 } from '../../../../typer/perioder';
 import { PersonType } from '../../../../typer/personType';
+import { IArbeidsperiodeTekstinnhold } from '../../../../typer/sanity/modaler/arbeidsperiode';
+import { ESanitySteg } from '../../../../typer/sanity/sanity';
 import { IEøsForBarnFeltTyper } from '../../../../typer/skjema';
 import { valideringAdresse } from '../../../../utils/adresse';
 import { skalSkjuleAndreForelderFelt, skalViseBorMedOmsorgsperson } from '../../../../utils/barn';
 import { trimWhiteSpace } from '../../../../utils/hjelpefunksjoner';
 import { formaterVerdiForCheckbox } from '../../../../utils/input';
 import { svarForSpørsmålMedUkjent } from '../../../../utils/spørsmål';
-import { arbeidsperiodeFeilmelding } from '../../../Felleskomponenter/Arbeidsperiode/arbeidsperiodeSpråkUtils';
 import { ArbeidsperiodeSpørsmålsId } from '../../../Felleskomponenter/Arbeidsperiode/spørsmål';
 import { BarnetrygdperiodeSpørsmålId } from '../../../Felleskomponenter/Barnetrygdperiode/spørsmål';
 import { pensjonsperiodeFeilmelding } from '../../../Felleskomponenter/Pensjonsmodal/språkUtils';
@@ -78,7 +79,9 @@ export const useEøsForBarn = (
     idNummerFelterForAndreForelder: Felt<string>[];
     settIdNummerFelterForAndreForelder: Dispatch<SetStateAction<Felt<string>[]>>;
 } => {
-    const { søknad, settSøknad } = useApp();
+    const { søknad, settSøknad, tekster, plainTekst } = useApp();
+    const teksterForArbeidsperiode: IArbeidsperiodeTekstinnhold =
+        tekster()[ESanitySteg.FELLES].modaler.arbeidsperiode.søker;
 
     const [gjeldendeBarn] = useState<IBarnMedISøknad | undefined>(
         søknad.barnInkludertISøknaden.find(barn => barn.id === barnetsUuid)
@@ -275,7 +278,12 @@ export const useEøsForBarn = (
             return avhengigheter?.omsorgspersonArbeidUtland.verdi === ESvar.NEI ||
                 (avhengigheter?.omsorgspersonArbeidUtland.verdi === ESvar.JA && felt.verdi.length)
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={arbeidsperiodeFeilmelding(true)} />);
+                : feil(
+                      felt,
+                      plainTekst(teksterForArbeidsperiode.leggTilFeilmelding, {
+                          gjelderUtland: true,
+                      })
+                  );
         },
     });
 
@@ -299,7 +307,12 @@ export const useEøsForBarn = (
             return avhengigheter?.omsorgspersonArbeidNorge.verdi === ESvar.NEI ||
                 (avhengigheter?.omsorgspersonArbeidNorge.verdi === ESvar.JA && felt.verdi.length)
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={arbeidsperiodeFeilmelding(false)} />);
+                : feil(
+                      felt,
+                      plainTekst(teksterForArbeidsperiode.leggTilFeilmelding, {
+                          gjelderUtland: false,
+                      })
+                  );
         },
     });
 
@@ -482,7 +495,12 @@ export const useEøsForBarn = (
             return avhengigheter?.andreForelderArbeidNorge.verdi === ESvar.NEI ||
                 (avhengigheter?.andreForelderArbeidNorge.verdi === ESvar.JA && felt.verdi.length)
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={arbeidsperiodeFeilmelding(false)} />);
+                : feil(
+                      felt,
+                      plainTekst(teksterForArbeidsperiode.leggTilFeilmelding, {
+                          gjelderUtland: false,
+                      })
+                  );
         },
     });
 

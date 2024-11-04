@@ -5,4 +5,5 @@ export interface IArbeidsperiodeTekstinnhold {
     leggTilPeriodeForklaring: LocaleRecordString;
     flerePerioder: LocaleRecordString;
     leggTilKnapp: LocaleRecordBlock;
+    leggTilFeilmelding: LocaleRecordBlock;
 }
