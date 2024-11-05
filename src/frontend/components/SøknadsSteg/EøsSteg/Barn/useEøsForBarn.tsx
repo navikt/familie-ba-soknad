@@ -28,6 +28,7 @@ import {
 } from '../../../../typer/perioder';
 import { PersonType } from '../../../../typer/personType';
 import { IArbeidsperiodeTekstinnhold } from '../../../../typer/sanity/modaler/arbeidsperiode';
+import { IBarnetrygdsperiodeTekstinnhold } from '../../../../typer/sanity/modaler/barnetrygdperiode';
 import { ESanitySteg } from '../../../../typer/sanity/sanity';
 import { IEøsForBarnFeltTyper } from '../../../../typer/skjema';
 import { valideringAdresse } from '../../../../utils/adresse';
@@ -82,6 +83,8 @@ export const useEøsForBarn = (
     const { søknad, settSøknad, tekster, plainTekst } = useApp();
     const teksterForArbeidsperiode: IArbeidsperiodeTekstinnhold =
         tekster()[ESanitySteg.FELLES].modaler.arbeidsperiode.søker;
+    const teksterForBarnetrygdsperiode: IBarnetrygdsperiodeTekstinnhold =
+        tekster()[ESanitySteg.FELLES].modaler.barnetrygdsperiode.søker;
 
     const [gjeldendeBarn] = useState<IBarnMedISøknad | undefined>(
         søknad.barnInkludertISøknaden.find(barn => barn.id === barnetsUuid)
@@ -428,7 +431,7 @@ export const useEøsForBarn = (
                 (avhengigheter?.omsorgspersonBarnetrygdFraEøs.verdi === ESvar.JA &&
                     felt.verdi.length)
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={'ombarnet.trygdandreperioder.feilmelding'} />);
+                : feil(felt, plainTekst(teksterForBarnetrygdsperiode.leggTilFeilmelding));
         },
     });
 
@@ -598,7 +601,7 @@ export const useEøsForBarn = (
                 (avhengigheter?.andreForelderBarnetrygdFraEøs.verdi === ESvar.JA &&
                     felt.verdi.length)
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={'ombarnet.trygdandreperioder.feilmelding'} />);
+                : feil(felt, plainTekst(teksterForBarnetrygdsperiode.leggTilFeilmelding));
         },
     });
 
