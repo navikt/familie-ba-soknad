@@ -5,4 +5,5 @@ export interface IPensjonsperiodeTekstinnhold {
     leggTilPeriodeForklaring: LocaleRecordString;
     flerePerioder: LocaleRecordString;
     leggTilKnapp: LocaleRecordBlock;
+    leggTilFeilmelding: LocaleRecordBlock;
 }

@@ -14,12 +14,12 @@ import { IArbeidsperiode, IPensjonsperiode, IUtbetalingsperiode } from '../../..
 import { ISøker } from '../../../../typer/person';
 import { PersonType } from '../../../../typer/personType';
 import { IArbeidsperiodeTekstinnhold } from '../../../../typer/sanity/modaler/arbeidsperiode';
+import { IPensjonsperiodeTekstinnhold } from '../../../../typer/sanity/modaler/pensjonsperiode';
 import { ESanitySteg } from '../../../../typer/sanity/sanity';
 import { IEøsForSøkerFeltTyper } from '../../../../typer/skjema';
 import { valideringAdresse } from '../../../../utils/adresse';
 import { trimWhiteSpace } from '../../../../utils/hjelpefunksjoner';
 import { ArbeidsperiodeSpørsmålsId } from '../../../Felleskomponenter/Arbeidsperiode/spørsmål';
-import { pensjonsperiodeFeilmelding } from '../../../Felleskomponenter/Pensjonsmodal/språkUtils';
 import { PensjonsperiodeSpørsmålId } from '../../../Felleskomponenter/Pensjonsmodal/spørsmål';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { UtbetalingerSpørsmålId } from '../../../Felleskomponenter/UtbetalingerModal/spørsmål';
@@ -45,6 +45,8 @@ export const useEøsForSøker = (): {
     const { søknad, settSøknad, tekster, plainTekst } = useApp();
     const teksterForArbeidsperiode: IArbeidsperiodeTekstinnhold =
         tekster()[ESanitySteg.FELLES].modaler.arbeidsperiode.søker;
+    const teksterForPensjonsperiode: IPensjonsperiodeTekstinnhold =
+        tekster()[ESanitySteg.FELLES].modaler.pensjonsperiode.søker;
 
     const [idNummerFelter, settIdNummerFelter] = useState<Felt<string>[]>([]);
 
@@ -104,7 +106,7 @@ export const useEøsForSøker = (): {
             return avhengigheter?.pensjonNorge.verdi === ESvar.NEI ||
                 (avhengigheter?.pensjonNorge.verdi === ESvar.JA && felt.verdi.length)
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={pensjonsperiodeFeilmelding(false)} />);
+                : feil(felt, plainTekst(teksterForPensjonsperiode.leggTilFeilmelding));
         },
     });
 

@@ -38,7 +38,6 @@ import { formaterVerdiForCheckbox } from '../../../../utils/input';
 import { svarForSpørsmålMedUkjent } from '../../../../utils/spørsmål';
 import { ArbeidsperiodeSpørsmålsId } from '../../../Felleskomponenter/Arbeidsperiode/spørsmål';
 import { BarnetrygdperiodeSpørsmålId } from '../../../Felleskomponenter/Barnetrygdperiode/spørsmål';
-import { pensjonsperiodeFeilmelding } from '../../../Felleskomponenter/Pensjonsmodal/språkUtils';
 import { PensjonsperiodeSpørsmålId } from '../../../Felleskomponenter/Pensjonsmodal/spørsmål';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { UtbetalingerSpørsmålId } from '../../../Felleskomponenter/UtbetalingerModal/spørsmål';
@@ -85,6 +84,10 @@ export const useEøsForBarn = (
         tekster()[ESanitySteg.FELLES].modaler.arbeidsperiode.søker;
     const teksterForBarnetrygdsperiode: IBarnetrygdsperiodeTekstinnhold =
         tekster()[ESanitySteg.FELLES].modaler.barnetrygdsperiode.søker;
+    const {
+        omsorgsperson: teksterForPensjonsperiodeOmsorgsperson,
+        andreForelder: teksterForPensjonsperiodeAndreForelder,
+    } = tekster()[ESanitySteg.FELLES].modaler.pensjonsperiode;
 
     const [gjeldendeBarn] = useState<IBarnMedISøknad | undefined>(
         søknad.barnInkludertISøknaden.find(barn => barn.id === barnetsUuid)
@@ -340,7 +343,7 @@ export const useEøsForBarn = (
             return avhengigheter?.omsorgspersonPensjonUtland.verdi === ESvar.NEI ||
                 (avhengigheter?.omsorgspersonPensjonUtland.verdi === ESvar.JA && felt.verdi.length)
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={pensjonsperiodeFeilmelding(false)} />);
+                : feil(felt, plainTekst(teksterForPensjonsperiodeOmsorgsperson.leggTilFeilmelding));
         },
     });
 
@@ -365,7 +368,7 @@ export const useEøsForBarn = (
             return avhengigheter?.omsorgspersonPensjonNorge.verdi === ESvar.NEI ||
                 (avhengigheter?.omsorgspersonPensjonNorge.verdi === ESvar.JA && felt.verdi.length)
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={pensjonsperiodeFeilmelding(false)} />);
+                : feil(felt, plainTekst(teksterForPensjonsperiodeOmsorgsperson.leggTilFeilmelding));
         },
     });
 
@@ -530,7 +533,7 @@ export const useEøsForBarn = (
             return avhengigheter?.andreForelderPensjonNorge.verdi === ESvar.NEI ||
                 (avhengigheter?.andreForelderPensjonNorge.verdi === ESvar.JA && felt.verdi.length)
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={pensjonsperiodeFeilmelding(false)} />);
+                : feil(felt, plainTekst(teksterForPensjonsperiodeAndreForelder.leggTilFeilmelding));
         },
     });
 
