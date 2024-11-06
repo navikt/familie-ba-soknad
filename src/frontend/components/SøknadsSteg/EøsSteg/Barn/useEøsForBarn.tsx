@@ -347,7 +347,12 @@ export const useEøsForBarn = (
             return avhengigheter?.omsorgspersonPensjonUtland.verdi === ESvar.NEI ||
                 (avhengigheter?.omsorgspersonPensjonUtland.verdi === ESvar.JA && felt.verdi.length)
                 ? ok(felt)
-                : feil(felt, plainTekst(teksterForPensjonsperiodeOmsorgsperson.leggTilFeilmelding));
+                : feil(
+                      felt,
+                      plainTekst(teksterForPensjonsperiodeOmsorgsperson.leggTilFeilmelding, {
+                          gjelderUtland: true,
+                      })
+                  );
         },
     });
 
@@ -372,7 +377,12 @@ export const useEøsForBarn = (
             return avhengigheter?.omsorgspersonPensjonNorge.verdi === ESvar.NEI ||
                 (avhengigheter?.omsorgspersonPensjonNorge.verdi === ESvar.JA && felt.verdi.length)
                 ? ok(felt)
-                : feil(felt, plainTekst(teksterForPensjonsperiodeOmsorgsperson.leggTilFeilmelding));
+                : feil(
+                      felt,
+                      plainTekst(teksterForPensjonsperiodeOmsorgsperson.leggTilFeilmelding, {
+                          gjelderUtland: false,
+                      })
+                  );
         },
     });
 
@@ -540,7 +550,12 @@ export const useEøsForBarn = (
             return avhengigheter?.andreForelderPensjonNorge.verdi === ESvar.NEI ||
                 (avhengigheter?.andreForelderPensjonNorge.verdi === ESvar.JA && felt.verdi.length)
                 ? ok(felt)
-                : feil(felt, plainTekst(teksterForPensjonsperiodeAndreForelder.leggTilFeilmelding));
+                : feil(
+                      felt,
+                      plainTekst(teksterForPensjonsperiodeAndreForelder.leggTilFeilmelding, {
+                          gjelderUtland: false,
+                      })
+                  );
         },
     });
 

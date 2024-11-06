@@ -107,7 +107,12 @@ export const useEøsForSøker = (): {
             return avhengigheter?.pensjonNorge.verdi === ESvar.NEI ||
                 (avhengigheter?.pensjonNorge.verdi === ESvar.JA && felt.verdi.length)
                 ? ok(felt)
-                : feil(felt, plainTekst(teksterForPensjonsperiode.leggTilFeilmelding));
+                : feil(
+                      felt,
+                      plainTekst(teksterForPensjonsperiode.leggTilFeilmelding, {
+                          gjelderUtland: false,
+                      })
+                  );
         },
     });
 
