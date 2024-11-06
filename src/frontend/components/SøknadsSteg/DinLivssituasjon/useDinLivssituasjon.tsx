@@ -20,6 +20,7 @@ import { ISamboer, ISøker, ITidligereSamboer } from '../../../typer/person';
 import { PersonType } from '../../../typer/personType';
 import { IArbeidsperiodeTekstinnhold } from '../../../typer/sanity/modaler/arbeidsperiode';
 import { IPensjonsperiodeTekstinnhold } from '../../../typer/sanity/modaler/pensjonsperiode';
+import { ITidligereSamoboereTekstinnhold } from '../../../typer/sanity/modaler/tidligereSamboere';
 import { ESanitySteg } from '../../../typer/sanity/sanity';
 import { IDinLivssituasjonFeltTyper } from '../../../typer/skjema';
 import { Årsak } from '../../../typer/utvidet';
@@ -56,6 +57,8 @@ export const useDinLivssituasjon = (): {
         tekster()[ESanitySteg.FELLES].modaler.arbeidsperiode.søker;
     const teksterForPensjonsperiode: IPensjonsperiodeTekstinnhold =
         tekster()[ESanitySteg.FELLES].modaler.pensjonsperiode.søker;
+    const teksterForTidligereSamboere: ITidligereSamoboereTekstinnhold =
+        tekster()[ESanitySteg.FELLES].modaler.tidligereSamboere.søker;
 
     /*---- UTVIDET BARNETRYGD ----*/
     const årsak = useFelt<Årsak | ''>({
@@ -189,7 +192,7 @@ export const useDinLivssituasjon = (): {
     /*--- TIDLIGERE SAMBOER ---*/
     const hattAnnenSamboerForSøktPeriode = useJaNeiSpmFelt({
         søknadsfelt: søker.utvidet.spørsmål.hattAnnenSamboerForSøktPeriode,
-        feilmeldingSpråkId: 'omdeg.tidligereSamboer.feilmelding',
+        feilmeldingSpråkId: 'omdeg.annensamboer.feilmelding',
         skalSkjules: !erUtvidet,
     });
 
@@ -208,7 +211,7 @@ export const useDinLivssituasjon = (): {
                 (avhengigheter?.hattAnnenSamboerForSøktPeriode.verdi === ESvar.JA &&
                     felt.verdi.length)
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={'omdeg.tidligereSamboer.feilmelding'} />);
+                : feil(felt, plainTekst(teksterForTidligereSamboere.leggTilFeilmelding));
         },
     });
 
