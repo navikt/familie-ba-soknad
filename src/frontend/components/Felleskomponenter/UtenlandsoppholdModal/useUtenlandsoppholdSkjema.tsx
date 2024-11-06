@@ -7,7 +7,6 @@ import useDatovelgerFelt from '../../../hooks/useDatovelgerFelt';
 import useDatovelgerFeltMedUkjent from '../../../hooks/useDatovelgerFeltMedUkjent';
 import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
 import { IBarnMedISøknad } from '../../../typer/barn';
-import { PersonType } from '../../../typer/personType';
 import { IUtenlandsoppholdFeltTyper } from '../../../typer/skjema';
 import { EUtenlandsoppholdÅrsak } from '../../../typer/utenlandsopphold';
 import { dagenEtterDato, stringTilDate } from '../../../utils/dato';
@@ -28,7 +27,6 @@ import {
 } from './utenlandsoppholdSpråkUtils';
 
 export interface IUseUtenlandsoppholdSkjemaParams {
-    personType: PersonType;
     barn?: IBarnMedISøknad;
 }
 

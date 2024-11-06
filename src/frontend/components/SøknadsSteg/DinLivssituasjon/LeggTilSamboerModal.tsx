@@ -1,11 +1,8 @@
 import React from 'react';
 
-import { useApp } from '../../../context/AppContext';
 import { ITidligereSamboer } from '../../../typer/person';
-import { ITidligereSamoboereTekstinnhold } from '../../../typer/sanity/modaler/tidligereSamboere';
 import { trimWhiteSpace, visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
-import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import { SkjemaFeiloppsummering } from '../../Felleskomponenter/SkjemaFeiloppsummering/SkjemaFeiloppsummering';
 import SkjemaModal from '../../Felleskomponenter/SkjemaModal/SkjemaModal';
 
@@ -26,12 +23,8 @@ const LeggTilSamboerModal: React.FC<Props> = ({
     erÅpen,
     forklaring = undefined,
 }) => {
-    const { tekster } = useApp();
     const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } =
         useTidligereSamboer();
-
-    const teksterForModal: ITidligereSamoboereTekstinnhold =
-        tekster().FELLES.modaler.tidligereSamboere.søker;
 
     const onLeggTil = () => {
         if (!validerFelterOgVisFeilmelding()) {
@@ -71,10 +64,10 @@ const LeggTilSamboerModal: React.FC<Props> = ({
 
     return (
         <SkjemaModal
-            tittel={teksterForModal.tittel}
+            modalTittelSpråkId={'omdeg.leggtilfleresamboere.leggtil'}
+            submitKnappSpråkId={'omdeg.leggtilfleresamboere.leggtil'}
             forklaring={forklaring}
             erÅpen={erÅpen}
-            submitKnappTekst={<TekstBlock block={teksterForModal.leggTilKnapp} />}
             lukkModal={lukkModal}
             onSubmitCallback={onLeggTil}
             valideringErOk={valideringErOk}

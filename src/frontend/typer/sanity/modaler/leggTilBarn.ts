@@ -1,7 +1,6 @@
 import { ISanitySpørsmålDokument, LocaleRecordBlock } from '../sanity';
 
 export interface ILeggTilBarnTekstinnhold {
-    tittel: LocaleRecordBlock;
     leggTilKnapp: LocaleRecordBlock;
     fjernKnapp: LocaleRecordBlock;
     erBarnetFoedt: ISanitySpørsmålDokument;

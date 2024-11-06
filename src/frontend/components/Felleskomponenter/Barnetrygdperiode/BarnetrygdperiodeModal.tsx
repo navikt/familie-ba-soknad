@@ -3,16 +3,13 @@ import React from 'react';
 import { Alert } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
-import { useApp } from '../../../context/AppContext';
 import { IEøsBarnetrygdsperiode } from '../../../typer/perioder';
 import { PersonType } from '../../../typer/personType';
-import { IBarnetrygdsperiodeTekstinnhold } from '../../../typer/sanity/modaler/barnetrygdperiode';
 import { dagenEtterDato, dagensDato, gårsdagensDato, stringTilDate } from '../../../utils/dato';
 import { trimWhiteSpace, visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
 import Datovelger from '../Datovelger/Datovelger';
 import { LandDropdown } from '../Dropdowns/LandDropdown';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
-import TekstBlock from '../Sanity/TekstBlock';
 import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeiloppsummering';
 import { SkjemaFeltInput } from '../SkjemaFeltInput/SkjemaFeltInput';
 import SkjemaModal from '../SkjemaModal/SkjemaModal';
@@ -41,12 +38,8 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
     erDød = false,
     forklaring = undefined,
 }) => {
-    const { tekster } = useApp();
     const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } =
         useBarnetrygdperiodeSkjema(personType, barn, erDød);
-
-    const teksterForModal: IBarnetrygdsperiodeTekstinnhold =
-        tekster().FELLES.modaler.barnetrygdsperiode[personType];
 
     const {
         mottarEøsBarnetrygdNå,
@@ -103,10 +96,10 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
     return (
         <SkjemaModal
             erÅpen={erÅpen}
-            tittel={teksterForModal.tittel}
+            modalTittelSpråkId={'modal.trygdandreperioder.tittel'}
             forklaring={forklaring}
             onSubmitCallback={onLeggTil}
-            submitKnappTekst={<TekstBlock block={teksterForModal.leggTilKnapp} />}
+            submitKnappSpråkId={'modal.trygdandreperioder.tittel'}
             lukkModal={lukkModal}
             valideringErOk={valideringErOk}
             onAvbrytCallback={nullstillSkjema}

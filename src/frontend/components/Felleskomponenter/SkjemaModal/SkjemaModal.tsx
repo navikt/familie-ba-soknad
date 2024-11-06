@@ -1,38 +1,37 @@
 import React, { ReactNode } from 'react';
 
+import { useIntl } from 'react-intl';
+
 import { BodyShort, Button, Modal, VStack } from '@navikt/ds-react';
 
-import { useApp } from '../../../context/AppContext';
 import { useFeatureToggles } from '../../../context/FeatureToggleContext';
-import { FlettefeltVerdier, LocaleRecordBlock } from '../../../typer/sanity/sanity';
 import ModalContent from '../ModalContent';
+import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
 const SkjemaModal: React.FC<{
     erÅpen: boolean;
     lukkModal: () => void;
+    modalTittelSpråkId: string;
+    forklaring?: string;
     submitSpinner?: boolean;
     valideringErOk: () => boolean;
     onAvbrytCallback?: () => void;
+    submitKnappSpråkId: string;
     onSubmitCallback: () => void;
-    tittel: LocaleRecordBlock;
-    forklaring?: ReactNode;
-    submitKnappTekst: ReactNode;
-    flettefelter?: FlettefeltVerdier;
     children?: ReactNode;
 }> = ({
     erÅpen,
     lukkModal,
+    modalTittelSpråkId,
+    forklaring = undefined,
     submitSpinner = false,
     valideringErOk,
     onAvbrytCallback,
+    submitKnappSpråkId,
     onSubmitCallback,
-    tittel,
-    forklaring = undefined,
-    submitKnappTekst,
-    flettefelter,
     children,
 }) => {
-    const { plainTekst } = useApp();
+    const { formatMessage } = useIntl();
     const { toggles } = useFeatureToggles();
 
     return (
@@ -45,7 +44,7 @@ const SkjemaModal: React.FC<{
             width={'medium'}
             portal={true}
             header={{
-                heading: plainTekst(tittel, flettefelter),
+                heading: formatMessage({ id: modalTittelSpråkId }),
                 size: 'medium',
             }}
         >
@@ -61,14 +60,14 @@ const SkjemaModal: React.FC<{
                 <Button
                     form="skjema"
                     variant={valideringErOk() ? 'primary' : 'secondary'}
-                    data-testid="submit-knapp-i-modal"
+                    data-testid={submitKnappSpråkId}
                     loading={submitSpinner}
                     onClick={event => {
                         event.preventDefault();
                         onSubmitCallback();
                     }}
                 >
-                    {submitKnappTekst}
+                    <SpråkTekst id={submitKnappSpråkId} />
                 </Button>
             </Modal.Footer>
         </Modal>

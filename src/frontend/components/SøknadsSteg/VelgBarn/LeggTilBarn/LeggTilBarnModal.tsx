@@ -5,7 +5,6 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { Valideringsstatus } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../../context/AppContext';
-import { ILeggTilBarnTekstinnhold } from '../../../../typer/sanity/modaler/leggTilBarn';
 import { Typografi } from '../../../../typer/sanity/sanity';
 import { visFeiloppsummering } from '../../../../utils/hjelpefunksjoner';
 import JaNeiSpmForSanity from '../../../Felleskomponenter/JaNeiSpm/JaNeiSpmForSanity';
@@ -23,13 +22,12 @@ const LeggTilBarnModal: React.FC<{
     erÅpen: boolean;
     lukkModal: () => void;
 }> = ({ erÅpen, lukkModal }) => {
-    const { tekster } = useApp();
     const { skjema, nullstillSkjema, valideringErOk, leggTilBarn, validerFelterOgVisFeilmelding } =
         useLeggTilBarn();
+    const { tekster } = useApp();
 
-    const teksterForModal: ILeggTilBarnTekstinnhold = tekster().FELLES.modaler.leggTilBarn;
+    const teksterForLeggTilBarnModal = tekster().FELLES.modaler.leggTilBarn;
     const {
-        tittel,
         erBarnetFoedt,
         ikkeFoedtAlert,
         barnetsNavnSubtittel,
@@ -37,7 +35,7 @@ const LeggTilBarnModal: React.FC<{
         etternavn,
         foedselsnummerEllerDNummer,
         foedselsnummerAlert,
-    } = teksterForModal;
+    } = teksterForLeggTilBarnModal;
 
     const submitOgLukk = () => {
         if (!validerFelterOgVisFeilmelding()) {
@@ -49,9 +47,9 @@ const LeggTilBarnModal: React.FC<{
 
     return (
         <SkjemaModal
+            modalTittelSpråkId={'hvilkebarn.leggtilbarn.modal.tittel'}
+            submitKnappSpråkId={'hvilkebarn.leggtilbarn.kort.knapp'}
             erÅpen={erÅpen}
-            tittel={tittel}
-            submitKnappTekst={<TekstBlock block={teksterForModal.leggTilKnapp} />}
             lukkModal={lukkModal}
             valideringErOk={valideringErOk}
             onSubmitCallback={submitOgLukk}
