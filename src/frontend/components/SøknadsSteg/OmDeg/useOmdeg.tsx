@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { ESvar } from '@navikt/familie-form-elements';
 import { feil, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
@@ -9,12 +9,12 @@ import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import { AlternativtSvarForInput } from '../../../typer/common';
 import { IUtenlandsperiode } from '../../../typer/perioder';
 import { IIdNummer } from '../../../typer/person';
+import { IUtenlandsoppholdTekstinnhold } from '../../../typer/sanity/modaler/utenlandsopphold';
 import { ESanitySteg } from '../../../typer/sanity/sanity';
 import { IOmDegFeltTyper } from '../../../typer/skjema';
 import { nullstilteEøsFelterForBarn } from '../../../utils/barn';
 import { nullstilteEøsFelterForSøker } from '../../../utils/søker';
 import { flyttetPermanentFraNorge } from '../../../utils/utenlandsopphold';
-import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { UtenlandsoppholdSpørsmålId } from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 import { idNummerLandMedPeriodeType, PeriodeType } from '../EøsSteg/idnummerUtils';
 
@@ -30,7 +30,7 @@ export const useOmdeg = (): {
     fjernUtenlandsperiode: (periode: IUtenlandsperiode) => void;
     utenlandsperioder: IUtenlandsperiode[];
 } => {
-    const { søknad, settSøknad, tekster } = useApp();
+    const { søknad, settSøknad, tekster, plainTekst } = useApp();
     const { erEøsLand } = useEøs();
     const søker = søknad.søker;
     const [utenlandsperioder, settUtenlandsperioder] = useState<IUtenlandsperiode[]>(
@@ -38,6 +38,8 @@ export const useOmdeg = (): {
     );
     const { skalTriggeEøsForSøker, søkerTriggerEøs, settSøkerTriggerEøs } = useEøs();
     const teksterForSteg: IOmDegTekstinnhold = tekster()[ESanitySteg.OM_DEG];
+    const teksterForUtenlandsopphold: IUtenlandsoppholdTekstinnhold =
+        tekster()[ESanitySteg.FELLES].modaler.utenlandsopphold.søker;
 
     const borPåRegistrertAdresse = useJaNeiSpmFelt({
         søknadsfelt: søker.borPåRegistrertAdresse,
@@ -61,7 +63,7 @@ export const useOmdeg = (): {
         valideringsfunksjon: felt => {
             return felt.verdi.length
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={'felles.leggtilutenlands.feilmelding'} />);
+                : feil(felt, plainTekst(teksterForUtenlandsopphold.leggTilFeilmelding));
         },
         skalFeltetVises: avhengigheter => {
             return avhengigheter.værtINorgeITolvMåneder.verdi === ESvar.NEI;
