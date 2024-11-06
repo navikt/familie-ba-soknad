@@ -58,9 +58,9 @@ const SkjemaModal: React.FC<{
             </ModalContent>
             <Modal.Footer>
                 <Button
+                    data-testid={submitKnappSpråkId}
                     form="skjema"
                     variant={valideringErOk() ? 'primary' : 'secondary'}
-                    data-testid={submitKnappSpråkId}
                     loading={submitSpinner}
                     onClick={event => {
                         event.preventDefault();
