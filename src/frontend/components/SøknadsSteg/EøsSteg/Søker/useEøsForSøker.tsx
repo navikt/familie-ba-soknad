@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 
 import { Alpha3Code } from 'i18n-iso-countries';
 
@@ -21,7 +21,6 @@ import { valideringAdresse } from '../../../../utils/adresse';
 import { trimWhiteSpace } from '../../../../utils/hjelpefunksjoner';
 import { ArbeidsperiodeSpørsmålsId } from '../../../Felleskomponenter/Arbeidsperiode/spørsmål';
 import { PensjonsperiodeSpørsmålId } from '../../../Felleskomponenter/Pensjonsmodal/spørsmål';
-import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { UtbetalingerSpørsmålId } from '../../../Felleskomponenter/UtbetalingerModal/spørsmål';
 import { idNummerKeyPrefix } from '../idnummerUtils';
 
@@ -47,6 +46,8 @@ export const useEøsForSøker = (): {
         tekster()[ESanitySteg.FELLES].modaler.arbeidsperiode.søker;
     const teksterForPensjonsperiode: IPensjonsperiodeTekstinnhold =
         tekster()[ESanitySteg.FELLES].modaler.pensjonsperiode.søker;
+    const teksterForAndreUtbetalinger =
+        tekster()[ESanitySteg.FELLES].modaler.andreUtbetalinger.søker;
 
     const [idNummerFelter, settIdNummerFelter] = useState<Felt<string>[]>([]);
 
@@ -127,7 +128,7 @@ export const useEøsForSøker = (): {
             return avhengigheter?.andreUtbetalinger.verdi === ESvar.NEI ||
                 (avhengigheter?.andreUtbetalinger.verdi === ESvar.JA && felt.verdi.length)
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={'felles.flereytelser.feilmelding'} />);
+                : feil(felt, plainTekst(teksterForAndreUtbetalinger.leggTilFeilmelding));
         },
     });
 

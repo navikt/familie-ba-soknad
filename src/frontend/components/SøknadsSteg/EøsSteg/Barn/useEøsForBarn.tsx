@@ -85,9 +85,13 @@ export const useEøsForBarn = (
     const teksterForBarnetrygdsperiode: IBarnetrygdsperiodeTekstinnhold =
         tekster()[ESanitySteg.FELLES].modaler.barnetrygdsperiode.søker;
     const {
-        omsorgsperson: teksterForPensjonsperiodeOmsorgsperson,
         andreForelder: teksterForPensjonsperiodeAndreForelder,
+        omsorgsperson: teksterForPensjonsperiodeOmsorgsperson,
     } = tekster()[ESanitySteg.FELLES].modaler.pensjonsperiode;
+    const {
+        andreForelder: teksterForAndreUtbetalingerAndreForelder,
+        omsorgsperson: teksterForAndreUtbetalingerOmsorgsperson,
+    } = tekster()[ESanitySteg.FELLES].modaler.andreUtbetalinger;
 
     const [gjeldendeBarn] = useState<IBarnMedISøknad | undefined>(
         søknad.barnInkludertISøknaden.find(barn => barn.id === barnetsUuid)
@@ -394,7 +398,10 @@ export const useEøsForBarn = (
                 (avhengigheter?.omsorgspersonAndreUtbetalinger.verdi === ESvar.JA &&
                     felt.verdi.length)
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={'felles.flereytelser.feilmelding'} />);
+                : feil(
+                      felt,
+                      plainTekst(teksterForAndreUtbetalingerOmsorgsperson.leggTilFeilmelding)
+                  );
         },
     });
     const omsorgspersonPågåendeSøknadFraAnnetEøsLand = useJaNeiSpmFelt({
@@ -561,7 +568,10 @@ export const useEøsForBarn = (
                 (avhengigheter?.andreForelderAndreUtbetalinger.verdi === ESvar.JA &&
                     felt.verdi.length)
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={'felles.flereytelser.feilmelding'} />);
+                : feil(
+                      felt,
+                      plainTekst(teksterForAndreUtbetalingerAndreForelder.leggTilFeilmelding)
+                  );
         },
     });
 
