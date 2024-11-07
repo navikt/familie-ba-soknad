@@ -21,6 +21,7 @@ export const SkjemaFeiloppsummering: React.FC<Props> = ({ skjema, stegMedFeil, i
             id={id}
             heading={plainTekst(tekster().FELLES.navigasjon.duMaaRetteOppFoelgende)}
             headingTag="h3"
+            data-testid="skjema-feiloppsummering"
         >
             {Object.values(skjema.felter)
                 .filter(felt => {
