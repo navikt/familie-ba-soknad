@@ -53,6 +53,7 @@ const TidligereSamboere: React.FC<Props> = ({
 
     return (
         <KomponentGruppe>
+            {/* TODO: Legg til feilmelding fra Sanity */}
             <JaNeiSpm
                 skjema={skjema}
                 felt={hattAnnenSamboerForSøktPeriodeFelt}

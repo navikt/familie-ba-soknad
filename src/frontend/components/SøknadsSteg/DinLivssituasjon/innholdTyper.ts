@@ -14,6 +14,7 @@ export interface IDinLivssituasjonTekstinnhold {
     harSamboerNaa: ISanitySpørsmålDokument;
     harSamboerNaaGift: ISanitySpørsmålDokument;
     erAsylsoeker: ISanitySpørsmålDokument;
+    pensjonUtland: ISanitySpørsmålDokument;
 
     /* Årsak valgalternativ */
     valgalternativAarsakPlaceholder: LocaleRecordString;
