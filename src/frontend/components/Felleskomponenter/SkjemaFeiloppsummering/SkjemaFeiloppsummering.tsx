@@ -29,9 +29,9 @@ export const SkjemaFeiloppsummering: React.FC<Props> = ({ skjema, routeForFeilme
                 headingTag="h3"
             >
                 {Object.values(skjema.felter)
-                    .filter(felt => {
-                        return felt.erSynlig && felt.valideringsstatus === Valideringsstatus.FEIL;
-                    })
+                    .filter(
+                        felt => felt.erSynlig && felt.valideringsstatus === Valideringsstatus.FEIL
+                    )
                     .map((felt, key) => (
                         <ErrorSummary.Item href={`#${felt.id}`} key={key}>
                             {routeForFeilmeldinger ? (
