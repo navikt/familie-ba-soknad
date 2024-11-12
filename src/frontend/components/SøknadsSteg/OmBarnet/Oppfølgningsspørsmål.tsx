@@ -211,10 +211,8 @@ const Oppfølgningsspørsmål: React.FC<{
                             onClick={åpneUtenlandsmodal}
                             feilmelding={
                                 registrerteUtenlandsperioder.erSynlig &&
-                                registrerteUtenlandsperioder.feilmelding &&
-                                skjema.visFeilmeldinger && (
-                                    <SpråkTekst id={'felles.leggtilutenlands.feilmelding'} />
-                                )
+                                skjema.visFeilmeldinger &&
+                                registrerteUtenlandsperioder.feilmelding
                             }
                         />
                     </PerioderContainer>
