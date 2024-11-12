@@ -55,15 +55,19 @@ export const useDinLivssituasjon = (): {
     const søker = søknad.søker;
     const teksterForSteg: IDinLivssituasjonTekstinnhold = tekster()[ESanitySteg.DIN_LIVSSITUASJON];
 
+    const harSamboerSpørsmålDokument =
+        søknad.søker.sivilstand.type === ESivilstand.GIFT
+            ? teksterForSteg.harSamboerNaaGift
+            : teksterForSteg.harSamboerNaa;
+
     /*---- UTVIDET BARNETRYGD ----*/
     const årsak = useFelt<Årsak | ''>({
         feltId: søker.utvidet.spørsmål.årsak.id,
         verdi: søker.utvidet.spørsmål.årsak.svar,
         valideringsfunksjon: (felt: FeltState<Årsak | ''>) => {
-            // TODO: Legg til feilmelding fra Sanity
             return felt.verdi !== ''
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={'omdeg.velgårsak.feilmelding'} />);
+                : feil(felt, plainTekst(teksterForSteg.hvorforSoekerUtvidet.feilmelding));
         },
         skalFeltetVises: () => erUtvidet,
     });
@@ -82,7 +86,6 @@ export const useDinLivssituasjon = (): {
                 ? null
                 : søknad.søker.utvidet.spørsmål.separertEnkeSkiltUtland.svar,
         valideringsfunksjon: (felt: FeltState<ESvar | null>) => {
-            // TODO: Legg til feilmelding fra Sanity
             return felt.verdi !== null
                 ? ok(felt)
                 : feil(felt, plainTekst(teksterForSteg.separertEnkeSkiltUtland.feilmelding));
@@ -101,14 +104,13 @@ export const useDinLivssituasjon = (): {
         søknadsfelt: søker.utvidet.spørsmål.separertEnkeSkiltDato,
         avhengigSvarCondition: ESvar.JA,
         avhengighet: separertEnkeSkilt,
-        // TODO: Legg til feilmelding fra Sanity
         feilmeldingSpråkId: 'omdeg.frahvilkendatoseparertskilt.feilmelding',
     });
 
     /*---- NÅVÆRENDE SAMBOER ----*/
     const harSamboerNå = useJaNeiSpmFelt({
         søknadsfelt: søker.utvidet.spørsmål.harSamboerNå,
-        feilmelding: teksterForSteg.harSamboerNaa.feilmelding,
+        feilmelding: harSamboerSpørsmålDokument.feilmelding,
         feilmeldingSpråkId:
             søker.sivilstand.type === ESivilstand.GIFT
                 ? 'omdeg.samboernå.gift.feilmelding'
@@ -121,7 +123,7 @@ export const useDinLivssituasjon = (): {
             id: SamboerSpørsmålId.nåværendeSamboerNavn,
             svar: søknad.søker.utvidet.nåværendeSamboer?.navn.svar || '',
         },
-        // TODO: Legg til feilmelding fra Sanity
+        feilmelding: teksterForSteg.samboersNavn.feilmelding,
         feilmeldingSpråkId: 'omdeg.samboerNavn.feilmelding',
         skalVises: harSamboerNå.verdi === ESvar.JA,
     });
@@ -148,7 +150,6 @@ export const useDinLivssituasjon = (): {
             svar: fnrInitiellVerdi(søker.utvidet.nåværendeSamboer),
         },
         avhengighet: nåværendeSamboerFnrUkjent,
-        // TODO: Legg til feilmelding fra Sanity
         feilmeldingSpråkId: 'omdeg.samboer.ident.ikkebesvart.feilmelding',
         erFnrInput: true,
         skalVises: harSamboerNå.verdi === ESvar.JA,
@@ -175,7 +176,6 @@ export const useDinLivssituasjon = (): {
         feltId: SamboerSpørsmålId.nåværendeSamboerFødselsdato,
         initiellVerdi: getInitialFødselsdato(søker.utvidet.nåværendeSamboer),
         vetIkkeCheckbox: nåværendeSamboerFødselsdatoUkjent,
-        // TODO: Legg til feilmelding fra Sanity
         feilmeldingSpråkId: 'omdeg.nåværendesamboer.fødselsdato.ukjent',
         skalFeltetVises: nåværendeSamboerFnrUkjent.verdi === ESvar.JA,
         sluttdatoAvgrensning: dagensDato(),
@@ -188,7 +188,6 @@ export const useDinLivssituasjon = (): {
         },
         avhengigSvarCondition: ESvar.JA,
         avhengighet: harSamboerNå,
-        // TODO: Legg til feilmelding fra Sanity
         feilmeldingSpråkId: 'omdeg.nårstartetsamboerforhold.feilmelding',
         sluttdatoAvgrensning: dagensDato(),
     });
@@ -196,7 +195,7 @@ export const useDinLivssituasjon = (): {
     /*--- TIDLIGERE SAMBOER ---*/
     const hattAnnenSamboerForSøktPeriode = useJaNeiSpmFelt({
         søknadsfelt: søker.utvidet.spørsmål.hattAnnenSamboerForSøktPeriode,
-        // TODO: Legg til feilmelding fra Sanity
+        feilmelding: harSamboerSpørsmålDokument.feilmelding,
         feilmeldingSpråkId: 'omdeg.tidligereSamboer.feilmelding',
         skalSkjules: !erUtvidet,
     });
@@ -212,7 +211,6 @@ export const useDinLivssituasjon = (): {
         skalFeltetVises: avhengigheter =>
             avhengigheter.hattAnnenSamboerForSøktPeriode.verdi === ESvar.JA,
         valideringsfunksjon: (felt, avhengigheter) => {
-            // TODO: Legg til feilmelding fra Sanity
             return avhengigheter?.hattAnnenSamboerForSøktPeriode.verdi === ESvar.NEI ||
                 (avhengigheter?.hattAnnenSamboerForSøktPeriode.verdi === ESvar.JA &&
                     felt.verdi.length)
@@ -231,7 +229,7 @@ export const useDinLivssituasjon = (): {
 
     const arbeidIUtlandet = useJaNeiSpmFelt({
         søknadsfelt: søker.arbeidIUtlandet,
-        // TODO: Legg til feilmelding fra Sanity
+        feilmelding: teksterForSteg.arbeidUtenforNorge.feilmelding,
         feilmeldingSpråkId: 'eøs.arbeid-utland.feilmelding',
     });
 
@@ -245,7 +243,6 @@ export const useDinLivssituasjon = (): {
         avhengigheter: { arbeidIUtlandet },
         skalFeltetVises: avhengigheter => avhengigheter.arbeidIUtlandet.verdi === ESvar.JA,
         valideringsfunksjon: (felt, avhengigheter) => {
-            // TODO: Legg til feilmelding fra Sanity
             return avhengigheter?.arbeidIUtlandet.verdi === ESvar.NEI ||
                 (avhengigheter?.arbeidIUtlandet.verdi === ESvar.JA && felt.verdi.length)
                 ? ok(felt)
@@ -269,7 +266,6 @@ export const useDinLivssituasjon = (): {
         avhengigheter: { mottarUtenlandspensjon },
         skalFeltetVises: avhengigheter => avhengigheter.mottarUtenlandspensjon.verdi === ESvar.JA,
         valideringsfunksjon: (felt, avhengigheter) => {
-            // TODO: Legg til feilmelding fra Sanity
             return avhengigheter?.mottarUtenlandspensjon.verdi === ESvar.NEI ||
                 (avhengigheter?.mottarUtenlandspensjon.verdi === ESvar.JA && felt.verdi.length)
                 ? ok(felt)
