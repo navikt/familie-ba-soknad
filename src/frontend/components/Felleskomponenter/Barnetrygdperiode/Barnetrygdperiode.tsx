@@ -121,10 +121,8 @@ export const Barnetrygdperiode: React.FC<BarnetrygdperiodeProps> = ({
                         })}
                         feilmelding={
                             registrerteEøsBarnetrygdsperioder.erSynlig &&
-                            registrerteEøsBarnetrygdsperioder.feilmelding &&
-                            skjema.visFeilmeldinger && (
-                                <SpråkTekst id={'ombarnet.trygdandreperioder.feilmelding'} />
-                            )
+                            skjema.visFeilmeldinger &&
+                            registrerteEøsBarnetrygdsperioder.feilmelding
                         }
                     />
                     {barnetrygdsmodalErÅpen && (

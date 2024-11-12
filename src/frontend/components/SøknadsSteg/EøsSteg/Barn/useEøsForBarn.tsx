@@ -27,16 +27,17 @@ import {
     IUtbetalingsperiode,
 } from '../../../../typer/perioder';
 import { PersonType } from '../../../../typer/personType';
+import { IArbeidsperiodeTekstinnhold } from '../../../../typer/sanity/modaler/arbeidsperiode';
+import { IBarnetrygdsperiodeTekstinnhold } from '../../../../typer/sanity/modaler/barnetrygdperiode';
+import { ESanitySteg } from '../../../../typer/sanity/sanity';
 import { IEøsForBarnFeltTyper } from '../../../../typer/skjema';
 import { valideringAdresse } from '../../../../utils/adresse';
 import { skalSkjuleAndreForelderFelt, skalViseBorMedOmsorgsperson } from '../../../../utils/barn';
 import { trimWhiteSpace } from '../../../../utils/hjelpefunksjoner';
 import { formaterVerdiForCheckbox } from '../../../../utils/input';
 import { svarForSpørsmålMedUkjent } from '../../../../utils/spørsmål';
-import { arbeidsperiodeFeilmelding } from '../../../Felleskomponenter/Arbeidsperiode/arbeidsperiodeSpråkUtils';
 import { ArbeidsperiodeSpørsmålsId } from '../../../Felleskomponenter/Arbeidsperiode/spørsmål';
 import { BarnetrygdperiodeSpørsmålId } from '../../../Felleskomponenter/Barnetrygdperiode/spørsmål';
-import { pensjonsperiodeFeilmelding } from '../../../Felleskomponenter/Pensjonsmodal/språkUtils';
 import { PensjonsperiodeSpørsmålId } from '../../../Felleskomponenter/Pensjonsmodal/spørsmål';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { UtbetalingerSpørsmålId } from '../../../Felleskomponenter/UtbetalingerModal/spørsmål';
@@ -78,7 +79,19 @@ export const useEøsForBarn = (
     idNummerFelterForAndreForelder: Felt<string>[];
     settIdNummerFelterForAndreForelder: Dispatch<SetStateAction<Felt<string>[]>>;
 } => {
-    const { søknad, settSøknad } = useApp();
+    const { søknad, settSøknad, tekster, plainTekst } = useApp();
+    const teksterForArbeidsperiode: IArbeidsperiodeTekstinnhold =
+        tekster()[ESanitySteg.FELLES].modaler.arbeidsperiode.søker;
+    const teksterForBarnetrygdsperiode: IBarnetrygdsperiodeTekstinnhold =
+        tekster()[ESanitySteg.FELLES].modaler.barnetrygdsperiode.søker;
+    const {
+        andreForelder: teksterForPensjonsperiodeAndreForelder,
+        omsorgsperson: teksterForPensjonsperiodeOmsorgsperson,
+    } = tekster()[ESanitySteg.FELLES].modaler.pensjonsperiode;
+    const {
+        andreForelder: teksterForAndreUtbetalingerAndreForelder,
+        omsorgsperson: teksterForAndreUtbetalingerOmsorgsperson,
+    } = tekster()[ESanitySteg.FELLES].modaler.andreUtbetalinger;
 
     const [gjeldendeBarn] = useState<IBarnMedISøknad | undefined>(
         søknad.barnInkludertISøknaden.find(barn => barn.id === barnetsUuid)
@@ -275,7 +288,12 @@ export const useEøsForBarn = (
             return avhengigheter?.omsorgspersonArbeidUtland.verdi === ESvar.NEI ||
                 (avhengigheter?.omsorgspersonArbeidUtland.verdi === ESvar.JA && felt.verdi.length)
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={arbeidsperiodeFeilmelding(true)} />);
+                : feil(
+                      felt,
+                      plainTekst(teksterForArbeidsperiode.leggTilFeilmelding, {
+                          gjelderUtland: true,
+                      })
+                  );
         },
     });
 
@@ -299,7 +317,12 @@ export const useEøsForBarn = (
             return avhengigheter?.omsorgspersonArbeidNorge.verdi === ESvar.NEI ||
                 (avhengigheter?.omsorgspersonArbeidNorge.verdi === ESvar.JA && felt.verdi.length)
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={arbeidsperiodeFeilmelding(false)} />);
+                : feil(
+                      felt,
+                      plainTekst(teksterForArbeidsperiode.leggTilFeilmelding, {
+                          gjelderUtland: false,
+                      })
+                  );
         },
     });
 
@@ -324,7 +347,12 @@ export const useEøsForBarn = (
             return avhengigheter?.omsorgspersonPensjonUtland.verdi === ESvar.NEI ||
                 (avhengigheter?.omsorgspersonPensjonUtland.verdi === ESvar.JA && felt.verdi.length)
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={pensjonsperiodeFeilmelding(false)} />);
+                : feil(
+                      felt,
+                      plainTekst(teksterForPensjonsperiodeOmsorgsperson.leggTilFeilmelding, {
+                          gjelderUtland: true,
+                      })
+                  );
         },
     });
 
@@ -349,7 +377,12 @@ export const useEøsForBarn = (
             return avhengigheter?.omsorgspersonPensjonNorge.verdi === ESvar.NEI ||
                 (avhengigheter?.omsorgspersonPensjonNorge.verdi === ESvar.JA && felt.verdi.length)
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={pensjonsperiodeFeilmelding(false)} />);
+                : feil(
+                      felt,
+                      plainTekst(teksterForPensjonsperiodeOmsorgsperson.leggTilFeilmelding, {
+                          gjelderUtland: false,
+                      })
+                  );
         },
     });
 
@@ -375,7 +408,10 @@ export const useEøsForBarn = (
                 (avhengigheter?.omsorgspersonAndreUtbetalinger.verdi === ESvar.JA &&
                     felt.verdi.length)
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={'felles.flereytelser.feilmelding'} />);
+                : feil(
+                      felt,
+                      plainTekst(teksterForAndreUtbetalingerOmsorgsperson.leggTilFeilmelding)
+                  );
         },
     });
     const omsorgspersonPågåendeSøknadFraAnnetEøsLand = useJaNeiSpmFelt({
@@ -415,7 +451,7 @@ export const useEøsForBarn = (
                 (avhengigheter?.omsorgspersonBarnetrygdFraEøs.verdi === ESvar.JA &&
                     felt.verdi.length)
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={'ombarnet.trygdandreperioder.feilmelding'} />);
+                : feil(felt, plainTekst(teksterForBarnetrygdsperiode.leggTilFeilmelding));
         },
     });
 
@@ -482,7 +518,12 @@ export const useEøsForBarn = (
             return avhengigheter?.andreForelderArbeidNorge.verdi === ESvar.NEI ||
                 (avhengigheter?.andreForelderArbeidNorge.verdi === ESvar.JA && felt.verdi.length)
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={arbeidsperiodeFeilmelding(false)} />);
+                : feil(
+                      felt,
+                      plainTekst(teksterForArbeidsperiode.leggTilFeilmelding, {
+                          gjelderUtland: false,
+                      })
+                  );
         },
     });
 
@@ -509,7 +550,12 @@ export const useEøsForBarn = (
             return avhengigheter?.andreForelderPensjonNorge.verdi === ESvar.NEI ||
                 (avhengigheter?.andreForelderPensjonNorge.verdi === ESvar.JA && felt.verdi.length)
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={pensjonsperiodeFeilmelding(false)} />);
+                : feil(
+                      felt,
+                      plainTekst(teksterForPensjonsperiodeAndreForelder.leggTilFeilmelding, {
+                          gjelderUtland: false,
+                      })
+                  );
         },
     });
 
@@ -537,7 +583,10 @@ export const useEøsForBarn = (
                 (avhengigheter?.andreForelderAndreUtbetalinger.verdi === ESvar.JA &&
                     felt.verdi.length)
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={'felles.flereytelser.feilmelding'} />);
+                : feil(
+                      felt,
+                      plainTekst(teksterForAndreUtbetalingerAndreForelder.leggTilFeilmelding)
+                  );
         },
     });
 
@@ -580,7 +629,7 @@ export const useEøsForBarn = (
                 (avhengigheter?.andreForelderBarnetrygdFraEøs.verdi === ESvar.JA &&
                     felt.verdi.length)
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={'ombarnet.trygdandreperioder.feilmelding'} />);
+                : feil(felt, plainTekst(teksterForBarnetrygdsperiode.leggTilFeilmelding));
         },
     });
 

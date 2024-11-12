@@ -16,7 +16,6 @@ import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGr
 import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
 import PerioderContainer from '../../Felleskomponenter/PerioderContainer';
 import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
-import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 import LeggTilSamboerModal from './LeggTilSamboerModal';
 import SamboerOpplysninger from './SamboerOpplysninger';
@@ -90,10 +89,8 @@ const TidligereSamboere: React.FC<Props> = ({
                         })}
                         feilmelding={
                             tidligereSamboere.erSynlig &&
-                            tidligereSamboere.feilmelding &&
-                            skjema.visFeilmeldinger && (
-                                <SpråkTekst id="omdeg.tidligereSamboer.feilmelding" />
-                            )
+                            skjema.visFeilmeldinger &&
+                            tidligereSamboere.feilmelding
                         }
                     />
                     {erLeggTilSamboerModalÅpen && (

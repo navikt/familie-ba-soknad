@@ -29,7 +29,6 @@ import { PensjonsperiodeOppsummering } from './PensjonsperiodeOppsummering';
 import {
     mottarEllerMottattPensjonSpråkId,
     pensjonFlerePerioderSpmSpråkId,
-    pensjonsperiodeFeilmelding,
     pensjonsperiodeKnappSpråkId,
 } from './språkUtils';
 import { PensjonsperiodeSpørsmålId } from './spørsmål';
@@ -146,10 +145,8 @@ export const Pensjonsperiode: React.FC<Props> = ({
                         })}
                         feilmelding={
                             registrertePensjonsperioder.erSynlig &&
-                            registrertePensjonsperioder.feilmelding &&
-                            skjema.visFeilmeldinger && (
-                                <SpråkTekst id={pensjonsperiodeFeilmelding(gjelderUtlandet)} />
-                            )
+                            skjema.visFeilmeldinger &&
+                            registrertePensjonsperioder.feilmelding
                         }
                     />
                     {pensjonsmodalErÅpen && (

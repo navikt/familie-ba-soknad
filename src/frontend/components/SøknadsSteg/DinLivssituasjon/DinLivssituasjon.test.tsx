@@ -84,7 +84,7 @@ describe('DinLivssituasjon', () => {
     it('Stopper fra å gå videre hvis årsak ikke er valgt', async () => {
         spyOnUseApp(søknad);
 
-        const { queryAllByText, getByText, findByTestId } = render(
+        const { queryAllByText, findByTestId, getByTestId } = render(
             <TestProvidereMedEkteTekster>
                 <DinLivssituasjon />
             </TestProvidereMedEkteTekster>
@@ -92,10 +92,9 @@ describe('DinLivssituasjon', () => {
         const gåVidere = await findByTestId('neste-steg');
         act(() => gåVidere.click());
 
-        const feiloppsummeringstittel = getByText(
-            'Du må rette opp eller svare på følgende spørsmål for å gå videre'
-        );
-        expect(feiloppsummeringstittel).toBeInTheDocument();
+        const feiloppsummering = getByTestId('skjema-feiloppsummering');
+        expect(feiloppsummering).toBeInTheDocument();
+
         const feilmeldingÅrsak = queryAllByText(
             'Du må velge årsak til at du søker om utvidet barnetrygd for å gå videre'
         );
@@ -129,17 +128,17 @@ describe('DinLivssituasjon', () => {
     it('Viser feilmelding med spørsmål tittel når ikke utfylt', async () => {
         spyOnUseApp(søknad);
 
-        const { findByTestId, getByText, getAllByText } = render(
+        const { findByTestId, getAllByText, getByTestId } = render(
             <TestProvidereMedEkteTekster>
                 <DinLivssituasjon />
             </TestProvidereMedEkteTekster>
         );
         const gåVidere = await findByTestId('neste-steg');
         act(() => gåVidere.click());
-        const feiloppsummeringstittel = getByText(
-            'Du må rette opp eller svare på følgende spørsmål for å gå videre'
-        );
-        expect(feiloppsummeringstittel).toBeInTheDocument();
+
+        const feiloppsummering = getByTestId('skjema-feiloppsummering');
+        expect(feiloppsummering).toBeInTheDocument();
+
         const feilmeldingSamboer = getAllByText('Du må oppgi om du har samboer nå for å gå videre');
         expect(feilmeldingSamboer).toHaveLength(antallFeilmeldingerPerFeil);
     });
@@ -147,7 +146,7 @@ describe('DinLivssituasjon', () => {
     it('Viser riktige feilmeldinger ved ingen utfylte felt av nåværende samboer', async () => {
         spyOnUseApp(søknad);
 
-        const { findByTestId, getAllByText, getByText } = render(
+        const { findByTestId, getAllByText, getByTestId } = render(
             <TestProvidereMedEkteTekster>
                 <DinLivssituasjon />
             </TestProvidereMedEkteTekster>
@@ -165,10 +164,8 @@ describe('DinLivssituasjon', () => {
         const gåVidereKnapp = await findByTestId('neste-steg');
         act(() => gåVidereKnapp.click());
 
-        const feiloppsummeringstittel = getByText(
-            'Du må rette opp eller svare på følgende spørsmål for å gå videre'
-        );
-        expect(feiloppsummeringstittel).toBeInTheDocument();
+        const feiloppsummering = getByTestId('skjema-feiloppsummering');
+        expect(feiloppsummering).toBeInTheDocument();
 
         const feilmeldingSamboerNavn = getAllByText('Du må oppgi samboerens navn for å gå videre');
         expect(feilmeldingSamboerNavn).toHaveLength(antallFeilmeldingerPerFeil);
