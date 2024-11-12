@@ -17,6 +17,7 @@ export interface IDinLivssituasjonTekstinnhold {
     arbeidUtenforNorge: ISanitySpørsmålDokument;
     pensjonUtland: ISanitySpørsmålDokument;
     samboersNavn: ISanitySpørsmålDokument;
+    hattAnnenSamboerForSoektPeriode: ISanitySpørsmålDokument;
 
     /* Årsak valgalternativ */
     valgalternativAarsakPlaceholder: LocaleRecordString;

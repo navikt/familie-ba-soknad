@@ -202,7 +202,7 @@ export const useDinLivssituasjon = (): {
     /*--- TIDLIGERE SAMBOER ---*/
     const hattAnnenSamboerForSøktPeriode = useJaNeiSpmFelt({
         søknadsfelt: søker.utvidet.spørsmål.hattAnnenSamboerForSøktPeriode,
-        feilmelding: harSamboerSpørsmålDokument.feilmelding,
+        feilmelding: teksterForSteg.hattAnnenSamboerForSoektPeriode.feilmelding,
         feilmeldingSpråkId: 'omdeg.annensamboer.feilmelding',
         skalSkjules: !erUtvidet,
     });
