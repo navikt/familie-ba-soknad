@@ -24,9 +24,7 @@ export const SkjemaFeiloppsummering: React.FC<Props> = ({ skjema, stegMedFeil, i
             data-testid="skjema-feiloppsummering"
         >
             {Object.values(skjema.felter)
-                .filter(felt => {
-                    return felt.erSynlig && felt.valideringsstatus === Valideringsstatus.FEIL;
-                })
+                .filter(felt => felt.erSynlig && felt.valideringsstatus === Valideringsstatus.FEIL)
                 .map(felt => (
                     <ErrorSummary.Item href={`#${felt.id}`} key={`feil-${felt.id}`}>
                         {stegMedFeil ? (
