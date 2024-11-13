@@ -5,4 +5,5 @@ export interface ITidligereSamoboereTekstinnhold {
     leggTilPeriodeForklaring: LocaleRecordString;
     flerePerioder: LocaleRecordString;
     leggTilKnapp: LocaleRecordBlock;
+    leggTilFeilmelding: LocaleRecordBlock;
 }

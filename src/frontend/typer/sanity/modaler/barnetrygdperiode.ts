@@ -5,4 +5,5 @@ export interface IBarnetrygdsperiodeTekstinnhold {
     leggTilPeriodeForklaring: LocaleRecordString;
     flerePerioder: LocaleRecordString;
     leggTilKnapp: LocaleRecordBlock;
+    leggTilFeilmelding: LocaleRecordBlock;
 }

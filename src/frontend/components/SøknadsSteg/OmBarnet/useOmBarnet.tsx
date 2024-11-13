@@ -30,6 +30,11 @@ import {
 } from '../../../typer/perioder';
 import { IIdNummer } from '../../../typer/person';
 import { PersonType } from '../../../typer/personType';
+import { IArbeidsperiodeTekstinnhold } from '../../../typer/sanity/modaler/arbeidsperiode';
+import { IBarnetrygdsperiodeTekstinnhold } from '../../../typer/sanity/modaler/barnetrygdperiode';
+import { IPensjonsperiodeTekstinnhold } from '../../../typer/sanity/modaler/pensjonsperiode';
+import { IUtenlandsoppholdTekstinnhold } from '../../../typer/sanity/modaler/utenlandsopphold';
+import { ESanitySteg } from '../../../typer/sanity/sanity';
 import { IOmBarnetFeltTyper } from '../../../typer/skjema';
 import { Årsak } from '../../../typer/utvidet';
 import { erNorskPostnummer, valideringAdresse } from '../../../utils/adresse';
@@ -50,10 +55,8 @@ import { formaterInitVerdiForInputMedUkjent, formaterVerdiForCheckbox } from '..
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import { nullstilteEøsFelterForSøker } from '../../../utils/søker';
 import { flyttetPermanentFraNorge } from '../../../utils/utenlandsopphold';
-import { arbeidsperiodeFeilmelding } from '../../Felleskomponenter/Arbeidsperiode/arbeidsperiodeSpråkUtils';
 import { ArbeidsperiodeSpørsmålsId } from '../../Felleskomponenter/Arbeidsperiode/spørsmål';
 import { BarnetrygdperiodeSpørsmålId } from '../../Felleskomponenter/Barnetrygdperiode/spørsmål';
-import { pensjonsperiodeFeilmelding } from '../../Felleskomponenter/Pensjonsmodal/språkUtils';
 import { PensjonsperiodeSpørsmålId } from '../../Felleskomponenter/Pensjonsmodal/spørsmål';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { UtenlandsoppholdSpørsmålId } from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
@@ -83,8 +86,16 @@ export const useOmBarnet = (
     leggTilBarnetrygdsperiode: (periode: IEøsBarnetrygdsperiode) => void;
     fjernBarnetrygdsperiode: (periode: IEøsBarnetrygdsperiode) => void;
 } => {
-    const { søknad, settSøknad, erUtvidet } = useApp();
+    const { søknad, settSøknad, erUtvidet, tekster, plainTekst } = useApp();
     const { skalTriggeEøsForBarn, barnSomTriggerEøs, settBarnSomTriggerEøs, erEøsLand } = useEøs();
+    const teksterForArbeidsperiode: IArbeidsperiodeTekstinnhold =
+        tekster()[ESanitySteg.FELLES].modaler.arbeidsperiode.søker;
+    const teksterForBarnetrygdsperiode: IBarnetrygdsperiodeTekstinnhold =
+        tekster()[ESanitySteg.FELLES].modaler.barnetrygdsperiode.søker;
+    const teksterForPensjonsperiode: IPensjonsperiodeTekstinnhold =
+        tekster()[ESanitySteg.FELLES].modaler.pensjonsperiode.andreForelder;
+    const teksterForUtenlandsopphold: IUtenlandsoppholdTekstinnhold =
+        tekster()[ESanitySteg.FELLES].modaler.utenlandsopphold.søker;
 
     const søker = søknad.søker;
     const gjeldendeBarn = søknad.barnInkludertISøknaden.find(barn => barn.id === barnetsUuid);
@@ -208,7 +219,7 @@ export const useOmBarnet = (
         valideringsfunksjon: felt => {
             return felt.verdi.length
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={'felles.leggtilutenlands.feilmelding'} />);
+                : feil(felt, plainTekst(teksterForUtenlandsopphold.leggTilFeilmelding));
         },
         skalFeltetVises: () => skalFeltetVises(barnDataKeySpørsmål.boddMindreEnn12MndINorge),
     });
@@ -274,7 +285,7 @@ export const useOmBarnet = (
                 (avhengigheter?.mottarEllerMottokEøsBarnetrygd.verdi === ESvar.JA &&
                     felt.verdi.length)
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={'ombarnet.trygdandreperioder.feilmelding'} />);
+                : feil(felt, plainTekst(teksterForBarnetrygdsperiode.leggTilFeilmelding));
         },
     });
 
@@ -431,7 +442,12 @@ export const useOmBarnet = (
             return avhengigheter?.andreForelderArbeidUtlandet.verdi === ESvar.NEI ||
                 (avhengigheter?.andreForelderArbeidUtlandet.verdi === ESvar.JA && felt.verdi.length)
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={arbeidsperiodeFeilmelding(true)} />);
+                : feil(
+                      felt,
+                      plainTekst(teksterForArbeidsperiode.leggTilFeilmelding, {
+                          gjelderUtland: true,
+                      })
+                  );
         },
     });
 
@@ -471,7 +487,7 @@ export const useOmBarnet = (
             return avhengigheter?.andreForelderPensjonUtland.verdi === ESvar.NEI ||
                 (avhengigheter?.andreForelderPensjonUtland.verdi === ESvar.JA && felt.verdi.length)
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={pensjonsperiodeFeilmelding(true)} />);
+                : feil(felt, plainTekst(teksterForPensjonsperiode.leggTilFeilmelding));
         },
     });
 

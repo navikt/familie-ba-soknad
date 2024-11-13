@@ -43,7 +43,7 @@ describe('LeggTilSamboerModal', () => {
     it('Viser riktige feilmeldinger ved ingen utfylte felt av tidligere samboer', async () => {
         spyOnUseApp(søknad);
 
-        const { getByText, getAllByText, findByRole, queryByText, getByTestId } = render(
+        const { getByText, getAllByText, findByRole, getByTestId } = render(
             <TestProvidereMedEkteTekster mocketNettleserHistorikk={['/din-livssituasjon']}>
                 <DinLivssituasjon />
             </TestProvidereMedEkteTekster>
@@ -62,20 +62,22 @@ describe('LeggTilSamboerModal', () => {
         const gåVidereKnapp = getByTestId('submit-knapp-i-modal');
         act(() => gåVidereKnapp.click());
 
-        const feiloppsummeringstittel = queryByText(
-            'Du må rette opp eller svare på følgende spørsmål for å gå videre'
-        );
-        expect(feiloppsummeringstittel).toBeInTheDocument();
+        const feiloppsummering = getByTestId('skjema-feiloppsummering');
+        expect(feiloppsummering).toBeInTheDocument();
+
         const navnFeilmelding = getAllByText('Du må oppgi samboerens navn for å gå videre');
         expect(navnFeilmelding).toHaveLength(antallFeilmeldingerPerFeil);
+
         const fødselsnummerFeilmelding = getAllByText(
             'Du må oppgi samboerens fødselsnummer eller d-nummer for å gå videre'
         );
         expect(fødselsnummerFeilmelding).toHaveLength(antallFeilmeldingerPerFeil);
+
         const forholdStartFeilmelding = getAllByText(
             'Du må oppgi når samboerforholdet startet for å gå videre'
         );
         expect(forholdStartFeilmelding).toHaveLength(antallFeilmeldingerPerFeil);
+
         const forholdSluttFeilmelding = getAllByText(
             'Du må oppgi når samboerforholdet ble avsluttet for å gå videre'
         );
