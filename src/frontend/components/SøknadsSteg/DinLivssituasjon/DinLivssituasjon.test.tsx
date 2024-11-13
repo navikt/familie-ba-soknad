@@ -45,9 +45,6 @@ const søknad = mockDeep<ISøknad>({
     },
 });
 
-//Feilmelding dukker både opp under spørsmålet og i feiloppsummeringen
-const antallFeilmeldingerPerFeil = 2;
-
 describe('DinLivssituasjon', () => {
     beforeEach(() => {
         silenceConsoleErrors();
@@ -126,7 +123,7 @@ describe('DinLivssituasjon', () => {
     it('Viser feilmelding med spørsmål tittel når ikke utfylt', async () => {
         spyOnUseApp(søknad);
 
-        const { findByTestId, getAllByText, getByTestId } = render(
+        const { findByTestId, getByTestId } = render(
             <TestProvidereMedEkteTekster>
                 <DinLivssituasjon />
             </TestProvidereMedEkteTekster>
@@ -137,8 +134,8 @@ describe('DinLivssituasjon', () => {
         const feiloppsummering = getByTestId('skjema-feiloppsummering');
         expect(feiloppsummering).toBeInTheDocument();
 
-        const feilmeldingSamboer = getAllByText('Du må oppgi om du har samboer nå for å gå videre');
-        expect(feilmeldingSamboer).toHaveLength(antallFeilmeldingerPerFeil);
+        const feilmeldingSamboer = getByTestId('feilmelding-har-samboer-nå-og-gift');
+        expect(feilmeldingSamboer).toBeInTheDocument();
     });
 
     it('Viser riktige feilmeldinger ved ingen utfylte felt av nåværende samboer', async () => {
