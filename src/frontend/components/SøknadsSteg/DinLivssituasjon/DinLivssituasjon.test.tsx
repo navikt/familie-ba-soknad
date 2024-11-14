@@ -134,7 +134,7 @@ describe('DinLivssituasjon', () => {
         const feiloppsummering = getByTestId('skjema-feiloppsummering');
         expect(feiloppsummering).toBeInTheDocument();
 
-        const feilmeldingSamboer = getByTestId('feilmelding-har-samboer-nå-og-gift');
+        const feilmeldingSamboer = getByTestId('feilmelding-har-samboer-nå');
         expect(feilmeldingSamboer).toBeInTheDocument();
     });
 
