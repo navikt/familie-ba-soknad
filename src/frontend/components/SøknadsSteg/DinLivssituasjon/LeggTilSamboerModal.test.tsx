@@ -4,6 +4,8 @@ import { render, within } from '@testing-library/react';
 import { mockDeep } from 'jest-mock-extended';
 import { act } from 'react-dom/test-utils';
 
+import { ESvar } from '@navikt/familie-form-elements';
+
 import { ESøknadstype } from '../../../typer/kontrakt/generelle';
 import { ISøknad } from '../../../typer/søknad';
 import {
@@ -47,7 +49,7 @@ describe('LeggTilSamboerModal', () => {
     it('Viser riktige feilmeldinger ved ingen utfylte felt av tidligere samboer', async () => {
         spyOnUseApp(søknad);
 
-        const { getByText, getByTestId, findByTestId } = render(
+        const { getByText, getAllByText, getByTestId, findByTestId } = render(
             <TestProvidereMedEkteTekster mocketNettleserHistorikk={['/din-livssituasjon']}>
                 <DinLivssituasjon />
             </TestProvidereMedEkteTekster>
@@ -55,31 +57,34 @@ describe('LeggTilSamboerModal', () => {
 
         const hattAnnenSamboerSpørsmål = await findByTestId('hatt-annen-samboer-i-perioden');
 
-        const jaKnapp: HTMLElement = within(hattAnnenSamboerSpørsmål).getAllByRole('radio')[0];
-        act(() => jaKnapp.click());
+        const jaKnapp: HTMLElement | undefined = within(hattAnnenSamboerSpørsmål)
+            .getAllByRole('radio')
+            .find(radio => radio.getAttribute('value') === ESvar.JA);
+        expect(jaKnapp).toBeDefined();
+        act(() => jaKnapp!.click());
 
         const leggTilSamboerKnapp: HTMLElement = getByText('Legg til samboer');
         act(() => leggTilSamboerKnapp.click());
 
-        const gåVidereKnapp = getByTestId('neste-steg');
-        act(() => gåVidereKnapp.click());
+        const leggTilSamboerKnappIModal = getAllByText('Legg til samboer');
+        act(() => leggTilSamboerKnappIModal[2].click());
 
         const feiloppsummering = getByTestId('skjema-feiloppsummering');
         expect(feiloppsummering).toBeInTheDocument();
 
-        const feilmeldingSamboerNavn = getByTestId('feilmelding-utvidet-nåværende-samboer-navn');
+        const feilmeldingSamboerNavn = getByTestId('feilmelding-utvidet-tidligere-samboer-navn');
         expect(feilmeldingSamboerNavn).toBeInTheDocument();
 
-        const feilmeldingFnr = getByTestId('feilmelding-utvidet-nåværende-samboer-fnr');
+        const feilmeldingFnr = getByTestId('feilmelding-utvidet-tidligere-samboer-fnr');
         expect(feilmeldingFnr).toBeInTheDocument();
 
         const feilmeldingForholdStart = getByTestId(
-            'feilmelding-utvidet-nåværende-samboer-samboerFraDato'
+            'feilmelding-utvidet-tidligere-samboer-samboerFraDato'
         );
         expect(feilmeldingForholdStart).toBeInTheDocument();
 
         const feilmeldingForholdSlutt = getByTestId(
-            'feilmelding-utvidet-nåværende-samboer-samboerTilDato'
+            'feilmelding-utvidet-tidligere-samboer-samboerTilDato'
         );
         expect(feilmeldingForholdSlutt).toBeInTheDocument();
     });
