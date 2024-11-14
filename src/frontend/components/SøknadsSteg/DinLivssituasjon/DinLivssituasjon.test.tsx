@@ -168,8 +168,9 @@ describe('DinLivssituasjon', () => {
         const feilmeldingFnr = getByTestId('feilmelding-utvidet-nåværende-samboer-fnr');
         expect(feilmeldingFnr).toBeInTheDocument();
 
-        // TODO: Fiks
-        const feilmeldingForholdStart = getByTestId('feilmelding-nåværende-samboer-forhold-start');
+        const feilmeldingForholdStart = getByTestId(
+            'feilmelding-utvidet-nåværende-samboer-samboerFraDato'
+        );
         expect(feilmeldingForholdStart).toBeInTheDocument();
     });
 
