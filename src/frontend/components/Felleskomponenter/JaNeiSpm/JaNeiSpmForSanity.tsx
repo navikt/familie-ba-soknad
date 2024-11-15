@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useState } from 'react';
+import React, { ReactNode } from 'react';
 
 import { v4 as uuidv4 } from 'uuid';
 
@@ -9,7 +9,6 @@ import { Felt, ISkjema } from '@navikt/familie-skjema';
 import { useApp } from '../../../context/AppContext';
 import { FlettefeltVerdier, ISanitySpørsmålDokument } from '../../../typer/sanity/sanity';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
-import { logSpørsmålBesvart } from '../../../utils/amplitude';
 import TekstBlock from '../Sanity/TekstBlock';
 
 interface IJaNeiSpmForSanityProps {
@@ -29,16 +28,8 @@ const JaNeiSpmForSanity: React.FC<IJaNeiSpmForSanityProps> = ({
     spørsmålDokument,
     flettefelter,
 }) => {
-    const [mounted, settMounted] = useState(false);
-    const { søknad, tekster, plainTekst } = useApp();
+    const { tekster, plainTekst } = useApp();
     const { ja, nei, jegVetIkke } = tekster().FELLES.frittståendeOrd;
-
-    useEffect(() => {
-        if (mounted) {
-            spørsmålDokument && logSpørsmålBesvart(spørsmålDokument.api_navn, søknad.søknadstype);
-        }
-        settMounted(true);
-    }, [felt.verdi]);
 
     return felt.erSynlig ? (
         <div id={felt.id} data-testid={felt.id}>
