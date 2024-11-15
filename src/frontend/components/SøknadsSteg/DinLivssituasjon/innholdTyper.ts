@@ -14,6 +14,10 @@ export interface IDinLivssituasjonTekstinnhold {
     harSamboerNaa: ISanitySpørsmålDokument;
     harSamboerNaaGift: ISanitySpørsmålDokument;
     erAsylsoeker: ISanitySpørsmålDokument;
+    arbeidUtenforNorge: ISanitySpørsmålDokument;
+    pensjonUtland: ISanitySpørsmålDokument;
+    samboersNavn: ISanitySpørsmålDokument;
+    hattAnnenSamboerForSoektPeriode: ISanitySpørsmålDokument;
 
     /* Årsak valgalternativ */
     valgalternativAarsakPlaceholder: LocaleRecordString;
