@@ -9,8 +9,13 @@ interface IGåTilBakeTilForrigeSideLenkeProps {
 export const GåTilBakeTilForrigeSideLenke: FC<IGåTilBakeTilForrigeSideLenkeProps> = ({
     children,
 }) => {
+    const håndterTilbake = (event: React.MouseEvent<HTMLAnchorElement>) => {
+        event.preventDefault();
+        history.back();
+    };
+
     return (
-        <Link variant="action" onClick={() => history.back()}>
+        <Link variant="action" onClick={håndterTilbake}>
             {children}
         </Link>
     );
