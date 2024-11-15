@@ -1,10 +1,7 @@
 import React, { FC, ReactNode } from 'react';
 
-import { useNavigate } from 'react-router-dom';
-
-import { Link } from '@navikt/ds-react';
-
-import { useSteg } from '../../../context/StegContext';
+import { ArrowUndoIcon } from '@navikt/aksel-icons';
+import { Button } from '@navikt/ds-react';
 
 interface IGåTilBakeTilForrigeSideLenkeProps {
     children: ReactNode;
@@ -13,18 +10,14 @@ interface IGåTilBakeTilForrigeSideLenkeProps {
 export const GåTilBakeTilForrigeSideLenke: FC<IGåTilBakeTilForrigeSideLenkeProps> = ({
     children,
 }) => {
-    const navigate = useNavigate();
-    const { hentForrigeSteg } = useSteg();
-    const forrigeSteg = hentForrigeSteg();
-
     const handleNavigate = (event: React.MouseEvent) => {
+        history.back();
         event.preventDefault();
-        navigate(forrigeSteg.path);
     };
 
     return (
-        <Link href={forrigeSteg.path} variant="action" onClick={handleNavigate}>
+        <Button variant="secondary" size="small" icon={<ArrowUndoIcon />} onClick={handleNavigate}>
             {children}
-        </Link>
+        </Button>
     );
 };
