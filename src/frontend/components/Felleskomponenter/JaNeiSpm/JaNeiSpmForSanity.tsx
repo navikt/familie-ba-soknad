@@ -7,7 +7,6 @@ import { ESvar, JaNeiSpørsmål } from '@navikt/familie-form-elements';
 import { Felt, ISkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
-import { AlternativtSvarForInput } from '../../../typer/common';
 import { FlettefeltVerdier, ISanitySpørsmålDokument } from '../../../typer/sanity/sanity';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
 import { logSpørsmålBesvart } from '../../../utils/amplitude';
@@ -36,12 +35,7 @@ const JaNeiSpmForSanity: React.FC<IJaNeiSpmForSanityProps> = ({
 
     useEffect(() => {
         if (mounted) {
-            spørsmålDokument &&
-                logSpørsmålBesvart(
-                    spørsmålDokument.api_navn,
-                    felt.verdi ?? AlternativtSvarForInput.UKJENT,
-                    søknad.søknadstype
-                );
+            spørsmålDokument && logSpørsmålBesvart(spørsmålDokument.api_navn, søknad.søknadstype);
         }
         settMounted(true);
     }, [felt.verdi]);
