@@ -29,7 +29,6 @@ export const FeilsideInnhold: FC = () => {
                             <LastInnSidenPåNyttLenke>laste siden på nytt</LastInnSidenPåNyttLenke>
                         </List.Item>
                         <List.Item>
-                            eller{' '}
                             <GåTilBakeTilForrigeSideLenke>
                                 gå tilbake til forrige side
                             </GåTilBakeTilForrigeSideLenke>
@@ -61,7 +60,6 @@ export const FeilsideInnhold: FC = () => {
                             <LastInnSidenPåNyttLenke>laste sida på nytt</LastInnSidenPåNyttLenke>
                         </List.Item>
                         <List.Item>
-                            eller{' '}
                             <GåTilBakeTilForrigeSideLenke>
                                 gå tilbake til førre side
                             </GåTilBakeTilForrigeSideLenke>
@@ -93,7 +91,6 @@ export const FeilsideInnhold: FC = () => {
                             <LastInnSidenPåNyttLenke>reload the page</LastInnSidenPåNyttLenke>
                         </List.Item>
                         <List.Item>
-                            eller{' '}
                             <GåTilBakeTilForrigeSideLenke>
                                 go back to the previous page
                             </GåTilBakeTilForrigeSideLenke>
