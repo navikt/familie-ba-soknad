@@ -1,7 +1,6 @@
 import React, { FC, ReactNode } from 'react';
 
-import { ArrowUndoIcon } from '@navikt/aksel-icons';
-import { Button } from '@navikt/ds-react';
+import { Link } from '@navikt/ds-react';
 
 interface IGåTilBakeTilForrigeSideLenkeProps {
     children: ReactNode;
@@ -10,14 +9,9 @@ interface IGåTilBakeTilForrigeSideLenkeProps {
 export const GåTilBakeTilForrigeSideLenke: FC<IGåTilBakeTilForrigeSideLenkeProps> = ({
     children,
 }) => {
-    const handleNavigate = (event: React.MouseEvent) => {
-        history.back();
-        event.preventDefault();
-    };
-
     return (
-        <Button variant="secondary" size="small" icon={<ArrowUndoIcon />} onClick={handleNavigate}>
+        <Link variant="action" onClick={() => history.back()}>
             {children}
-        </Button>
+        </Link>
     );
 };
