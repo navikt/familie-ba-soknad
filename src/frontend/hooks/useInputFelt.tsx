@@ -5,25 +5,33 @@ import { v4 as uuidv4 } from 'uuid';
 import { feil, FeltState, ok, useFelt } from '@navikt/familie-skjema';
 
 import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
+import { useApp } from '../context/AppContext';
+import { FlettefeltVerdier, LocaleRecordBlock } from '../typer/sanity/sanity';
 import { ISøknadSpørsmål } from '../typer/spørsmål';
 import { trimWhiteSpace } from '../utils/hjelpefunksjoner';
 
 const useInputFelt = ({
     søknadsfelt,
+    feilmelding,
     feilmeldingSpråkId,
     skalVises = true,
     customValidering = undefined,
     nullstillVedAvhengighetEndring = true,
+    flettefelter,
     feilmeldingSpråkVerdier,
 }: {
     søknadsfelt: ISøknadSpørsmål<string> | null;
+    feilmelding?: LocaleRecordBlock;
     feilmeldingSpråkId: string;
     skalVises?: boolean;
     customValidering?: ((felt: FeltState<string>) => FeltState<string>) | undefined;
     nullstillVedAvhengighetEndring?: boolean;
+    flettefelter?: FlettefeltVerdier;
     feilmeldingSpråkVerdier?: { [key: string]: ReactNode };
-}) =>
-    useFelt<string>({
+}) => {
+    const { plainTekst } = useApp();
+
+    return useFelt<string>({
         feltId: søknadsfelt?.id ?? uuidv4(),
         verdi: søknadsfelt ? trimWhiteSpace(søknadsfelt.svar) : '',
         valideringsfunksjon: (felt: FeltState<string>) => {
@@ -34,12 +42,17 @@ const useInputFelt = ({
                     : ok(felt)
                 : feil(
                       felt,
-                      <SpråkTekst id={feilmeldingSpråkId} values={feilmeldingSpråkVerdier} />
+                      feilmelding ? (
+                          plainTekst(feilmelding, { ...flettefelter })
+                      ) : (
+                          <SpråkTekst id={feilmeldingSpråkId} values={feilmeldingSpråkVerdier} />
+                      )
                   );
         },
         avhengigheter: { skalVises },
         skalFeltetVises: avhengigheter => avhengigheter.skalVises,
         nullstillVedAvhengighetEndring,
     });
+};
 
 export default useInputFelt;

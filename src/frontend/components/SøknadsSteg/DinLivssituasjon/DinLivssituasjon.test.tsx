@@ -45,9 +45,6 @@ const søknad = mockDeep<ISøknad>({
     },
 });
 
-//Feilmelding dukker både opp under spørsmålet og i feiloppsummeringen
-const antallFeilmeldingerPerFeil = 2;
-
 describe('DinLivssituasjon', () => {
     beforeEach(() => {
         silenceConsoleErrors();
@@ -84,7 +81,7 @@ describe('DinLivssituasjon', () => {
     it('Stopper fra å gå videre hvis årsak ikke er valgt', async () => {
         spyOnUseApp(søknad);
 
-        const { queryAllByText, findByTestId, getByTestId } = render(
+        const { findByTestId, getByTestId } = render(
             <TestProvidereMedEkteTekster>
                 <DinLivssituasjon />
             </TestProvidereMedEkteTekster>
@@ -95,10 +92,8 @@ describe('DinLivssituasjon', () => {
         const feiloppsummering = getByTestId('skjema-feiloppsummering');
         expect(feiloppsummering).toBeInTheDocument();
 
-        const feilmeldingÅrsak = queryAllByText(
-            'Du må velge årsak til at du søker om utvidet barnetrygd for å gå videre'
-        );
-        expect(feilmeldingÅrsak).toHaveLength(antallFeilmeldingerPerFeil);
+        const feilmeldingÅrsak = getByTestId('feilmelding-årsak');
+        expect(feilmeldingÅrsak).toBeInTheDocument();
     });
 
     it('Viser ikke spørsmål om er du separert, enke eller skilt om sivilstand UGIFT', async () => {
@@ -128,7 +123,7 @@ describe('DinLivssituasjon', () => {
     it('Viser feilmelding med spørsmål tittel når ikke utfylt', async () => {
         spyOnUseApp(søknad);
 
-        const { findByTestId, getAllByText, getByTestId } = render(
+        const { findByTestId, getByTestId } = render(
             <TestProvidereMedEkteTekster>
                 <DinLivssituasjon />
             </TestProvidereMedEkteTekster>
@@ -139,14 +134,14 @@ describe('DinLivssituasjon', () => {
         const feiloppsummering = getByTestId('skjema-feiloppsummering');
         expect(feiloppsummering).toBeInTheDocument();
 
-        const feilmeldingSamboer = getAllByText('Du må oppgi om du har samboer nå for å gå videre');
-        expect(feilmeldingSamboer).toHaveLength(antallFeilmeldingerPerFeil);
+        const feilmeldingSamboer = getByTestId('feilmelding-har-samboer-nå');
+        expect(feilmeldingSamboer).toBeInTheDocument();
     });
 
     it('Viser riktige feilmeldinger ved ingen utfylte felt av nåværende samboer', async () => {
         spyOnUseApp(søknad);
 
-        const { findByTestId, getAllByText, getByTestId } = render(
+        const { findByTestId, getByTestId } = render(
             <TestProvidereMedEkteTekster>
                 <DinLivssituasjon />
             </TestProvidereMedEkteTekster>
@@ -167,18 +162,16 @@ describe('DinLivssituasjon', () => {
         const feiloppsummering = getByTestId('skjema-feiloppsummering');
         expect(feiloppsummering).toBeInTheDocument();
 
-        const feilmeldingSamboerNavn = getAllByText('Du må oppgi samboerens navn for å gå videre');
-        expect(feilmeldingSamboerNavn).toHaveLength(antallFeilmeldingerPerFeil);
+        const feilmeldingSamboerNavn = getByTestId('feilmelding-utvidet-nåværende-samboer-navn');
+        expect(feilmeldingSamboerNavn).toBeInTheDocument();
 
-        const feilmeldingFnr = getAllByText(
-            'Du må oppgi samboerens fødselsnummer eller d-nummer for å gå videre'
-        );
-        expect(feilmeldingFnr).toHaveLength(antallFeilmeldingerPerFeil);
+        const feilmeldingFnr = getByTestId('feilmelding-utvidet-nåværende-samboer-fnr');
+        expect(feilmeldingFnr).toBeInTheDocument();
 
-        const feilmeldingForholdStart = getAllByText(
-            'Du må oppgi når samboerforholdet startet for å gå videre'
+        const feilmeldingForholdStart = getByTestId(
+            'feilmelding-utvidet-nåværende-samboer-samboerFraDato'
         );
-        expect(feilmeldingForholdStart).toHaveLength(antallFeilmeldingerPerFeil);
+        expect(feilmeldingForholdStart).toBeInTheDocument();
     });
 
     it('Viser ikke spørsmål om er du separert, enke eller skilt om sivilstand annet enn GIFT', async () => {
