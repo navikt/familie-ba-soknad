@@ -12,6 +12,7 @@ const AppContainer = () => {
 
     return (
         <main>
+            <Feilside />
             <Page.Block width="text" gutters>
                 {systemetLaster() && <SystemetLaster />}
                 {sluttbruker.status === RessursStatus.IKKE_TILGANG && (
