@@ -37,9 +37,8 @@ const LeggTilBarnModal: React.FC<{
         etternavn,
         foedselsnummerEllerDNummer,
         foedselsnummerAlert,
-        ... , 
-        leggTilKnapp
-    } = tekster().FELLES.modaler.leggTilBarn;
+        leggTilKnapp,
+    } = teksterForModal;
 
     const submitOgLukk = () => {
         if (!validerFelterOgVisFeilmelding()) {
@@ -53,7 +52,7 @@ const LeggTilBarnModal: React.FC<{
         <SkjemaModal
             erÅpen={erÅpen}
             tittel={tittel}
-            submitKnappTekst={<TekstBlock block={teksterForModal.leggTilKnapp} />}
+            submitKnappTekst={<TekstBlock block={leggTilKnapp} />}
             lukkModal={lukkModal}
             valideringErOk={valideringErOk}
             onSubmitCallback={submitOgLukk}
