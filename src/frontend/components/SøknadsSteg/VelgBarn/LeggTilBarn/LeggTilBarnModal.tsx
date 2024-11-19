@@ -37,7 +37,9 @@ const LeggTilBarnModal: React.FC<{
         etternavn,
         foedselsnummerEllerDNummer,
         foedselsnummerAlert,
-    } = teksterForModal;
+        ... , 
+        leggTilKnapp
+    } = tekster().FELLES.modaler.leggTilBarn;
 
     const submitOgLukk = () => {
         if (!validerFelterOgVisFeilmelding()) {
