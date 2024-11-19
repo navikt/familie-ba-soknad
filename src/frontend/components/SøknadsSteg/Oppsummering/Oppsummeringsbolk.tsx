@@ -8,7 +8,13 @@ import { ISkjema } from '@navikt/familie-skjema';
 import { useApp } from '../../../context/AppContext';
 import { useSteg } from '../../../context/StegContext';
 import { ISteg, RouteEnum } from '../../../typer/routes';
+import {
+    FlettefeltVerdier,
+    LocaleRecordBlock,
+    LocaleRecordString,
+} from '../../../typer/sanity/sanity';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
+import { uppercaseFørsteBokstav } from '../../../utils/visning';
 import { AppLenke } from '../../Felleskomponenter/AppLenke/AppLenke';
 import { SkjemaFeiloppsummering } from '../../Felleskomponenter/SkjemaFeiloppsummering/SkjemaFeiloppsummering';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -22,6 +28,8 @@ interface IHookReturn {
 interface Props {
     tittel: string;
     språkValues?: { [key: string]: string };
+    tittelForSanity?: LocaleRecordBlock | LocaleRecordString;
+    flettefelter?: FlettefeltVerdier;
     steg?: ISteg;
     skjemaHook: IHookReturn;
     settFeilAnchors?: React.Dispatch<React.SetStateAction<string[]>>;
@@ -38,12 +46,14 @@ const Oppsummeringsbolk: React.FC<Props> = ({
     children,
     tittel,
     språkValues,
+    tittelForSanity,
+    flettefelter,
     steg,
     skjemaHook,
     settFeilAnchors,
 }) => {
     const { hentStegNummer } = useSteg();
-    const { søknad } = useApp();
+    const { søknad, tekster, plainTekst } = useApp();
     const { validerAlleSynligeFelter, valideringErOk, skjema } = skjemaHook;
     const [visFeil, settVisFeil] = useState(false);
 
@@ -75,12 +85,16 @@ const Oppsummeringsbolk: React.FC<Props> = ({
                     {steg?.route !== RouteEnum.OmBarnet &&
                         steg?.route !== RouteEnum.EøsForBarn &&
                         `${hentStegNummer(steg?.route ?? RouteEnum.OmDeg)}. `}
-                    <SpråkTekst id={tittel} values={språkValues} />
+                    {tittelForSanity ? (
+                        uppercaseFørsteBokstav(plainTekst(tittelForSanity, flettefelter))
+                    ) : (
+                        <SpråkTekst id={tittel} values={språkValues} />
+                    )}
                 </FormSummary.Heading>
                 {steg && !visFeil && (
                     <AppLenke steg={steg}>
                         <StyledAppLenkeTekst>
-                            <SpråkTekst id="oppsummering.endresvar.lenketekst" />
+                            {plainTekst(tekster().OPPSUMMERING.endreSvarLenkeTekst)}
                         </StyledAppLenkeTekst>
                     </AppLenke>
                 )}
