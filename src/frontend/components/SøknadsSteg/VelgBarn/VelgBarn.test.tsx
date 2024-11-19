@@ -183,7 +183,7 @@ describe('VelgBarn', () => {
         const leggTilBarnKnapp = getByTestId('legg-til-barn-knapp');
         act(() => leggTilBarnKnapp.click());
 
-        const leggTilKnappIModal = getByTestId('hvilkebarn.leggtilbarn.kort.knapp');
+        const leggTilKnappIModal = getByTestId('submit-knapp-i-modal');
 
         const jaKnapp = getAllByRole('radio').find(
             radio => radio.getAttribute('value') === ESvar.JA
