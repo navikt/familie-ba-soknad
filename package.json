@@ -85,6 +85,7 @@
     ]
   },
   "dependencies": {
+    "@amplitude/analytics-browser": "^2.11.9",
     "@formatjs/intl-datetimeformat": "^6.12.0",
     "@formatjs/intl-numberformat": "^8.10.0",
     "@grafana/faro-web-sdk": "^1.11.0",
@@ -101,7 +102,6 @@
     "@portabletext/toolkit": "^2.0.8",
     "@sanity/client": "^6.18.2",
     "@sentry/react": "^8.38.0",
-    "amplitude-js": "^8.21.9",
     "axios": "^1.7.4",
     "compression": "^1.7.4",
     "concurrently": "^8.2.2",
