@@ -108,11 +108,6 @@ export default [
                             position: 'before',
                         },
                         {
-                            pattern: 'nav-**',
-                            group: 'external',
-                            position: 'after',
-                        },
-                        {
                             pattern: '@navikt/**',
                             group: 'internal',
                             position: 'before',
