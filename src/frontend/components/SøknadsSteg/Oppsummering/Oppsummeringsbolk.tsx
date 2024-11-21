@@ -14,7 +14,6 @@ import {
     LocaleRecordString,
 } from '../../../typer/sanity/sanity';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
-import { uppercaseFørsteBokstav } from '../../../utils/visning';
 import { AppLenke } from '../../Felleskomponenter/AppLenke/AppLenke';
 import { SkjemaFeiloppsummering } from '../../Felleskomponenter/SkjemaFeiloppsummering/SkjemaFeiloppsummering';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -86,7 +85,7 @@ const Oppsummeringsbolk: React.FC<Props> = ({
                         steg?.route !== RouteEnum.EøsForBarn &&
                         `${hentStegNummer(steg?.route ?? RouteEnum.OmDeg)}. `}
                     {tittelForSanity ? (
-                        uppercaseFørsteBokstav(plainTekst(tittelForSanity, flettefelter))
+                        plainTekst(tittelForSanity, flettefelter)
                     ) : (
                         <SpråkTekst id={tittel} values={språkValues} />
                     )}
