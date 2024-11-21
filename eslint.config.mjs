@@ -74,17 +74,6 @@ export default [
                 },
             ],
 
-            '@typescript-eslint/ban-types': [
-                'error',
-                {
-                    types: {
-                        object: false,
-                    },
-
-                    extendDefaults: true,
-                },
-            ],
-
             'import/named': 'error',
             'import/namespace': 'error',
             'import/default': 'error',
