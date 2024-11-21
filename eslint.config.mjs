@@ -3,11 +3,13 @@ import prettier from 'eslint-config-prettier';
 import importPlugin from 'eslint-plugin-import';
 import globals from 'globals';
 import js from '@eslint/js';
+import jsxA11yPlugin from 'eslint-plugin-jsx-a11y';
 import tseslint from 'typescript-eslint';
 
 export default [
     js.configs.recommended,
     eslintConfigPrettier,
+    jsxA11yPlugin.flatConfigs.recommended,
     importPlugin.flatConfigs.typescript,
     ...tseslint.configs.recommended,
     {
