@@ -1,5 +1,5 @@
 import eslintConfigPrettier from 'eslint-config-prettier';
-import prettier from 'eslint-config-prettier';
+import prettier from 'eslint-plugin-prettier';
 import importPlugin from 'eslint-plugin-import';
 import globals from 'globals';
 import js from '@eslint/js';
