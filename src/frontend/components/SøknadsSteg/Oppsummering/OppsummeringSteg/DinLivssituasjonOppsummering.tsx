@@ -18,11 +18,7 @@ import { ArbeidsperiodeOppsummering } from '../../../Felleskomponenter/Arbeidspe
 import { PensjonsperiodeOppsummering } from '../../../Felleskomponenter/Pensjonsmodal/PensjonsperiodeOppsummering';
 import TekstBlock from '../../../Felleskomponenter/Sanity/TekstBlock';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
-import {
-    DinLivssituasjonSpørsmålId,
-    dinLivssituasjonSpørsmålSpråkId,
-    samboerSpråkIder,
-} from '../../DinLivssituasjon/spørsmål';
+import { samboerSpråkIder } from '../../DinLivssituasjon/spørsmål';
 import { useDinLivssituasjon } from '../../DinLivssituasjon/useDinLivssituasjon';
 import { OppsummeringFelt } from '../OppsummeringFelt';
 import Oppsummeringsbolk from '../Oppsummeringsbolk';
@@ -92,6 +88,7 @@ const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
         <Oppsummeringsbolk
             steg={hentRouteObjektForRouteEnum(RouteEnum.DinLivssituasjon)}
             tittel={'dinlivssituasjon.sidetittel'}
+            tittelForSanity={dinLivssituasjonTekster.dinLivssituasjonTittel}
             skjemaHook={dinLivsituasjonHook}
             settFeilAnchors={settFeilAnchors}
         >
@@ -117,12 +114,8 @@ const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                         <>
                             <OppsummeringFelt
                                 tittel={
-                                    <SpråkTekst
-                                        id={
-                                            dinLivssituasjonSpørsmålSpråkId[
-                                                DinLivssituasjonSpørsmålId.separertEnkeSkilt
-                                            ]
-                                        }
+                                    <TekstBlock
+                                        block={dinLivssituasjonTekster.separertEnkeSkilt.sporsmal}
                                     />
                                 }
                                 søknadsvar={søknad.søker.utvidet.spørsmål.separertEnkeSkilt.svar}
@@ -131,12 +124,10 @@ const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                                 <>
                                     <OppsummeringFelt
                                         tittel={
-                                            <SpråkTekst
-                                                id={
-                                                    dinLivssituasjonSpørsmålSpråkId[
-                                                        DinLivssituasjonSpørsmålId
-                                                            .separertEnkeSkiltUtland
-                                                    ]
+                                            <TekstBlock
+                                                block={
+                                                    dinLivssituasjonTekster.separertEnkeSkiltUtland
+                                                        .sporsmal
                                                 }
                                             />
                                         }
@@ -147,12 +138,10 @@ const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                                     />
                                     <OppsummeringFelt
                                         tittel={
-                                            <SpråkTekst
-                                                id={
-                                                    dinLivssituasjonSpørsmålSpråkId[
-                                                        DinLivssituasjonSpørsmålId
-                                                            .separertEnkeSkiltDato
-                                                    ]
+                                            <TekstBlock
+                                                block={
+                                                    dinLivssituasjonTekster.separertEnkeSkiltDato
+                                                        .sporsmal
                                                 }
                                             />
                                         }
@@ -167,13 +156,7 @@ const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
 
                     <OppsummeringFelt
                         tittel={
-                            <SpråkTekst
-                                id={
-                                    dinLivssituasjonSpørsmålSpråkId[
-                                        søknad.søker.utvidet.spørsmål.harSamboerNå.id
-                                    ]
-                                }
-                            />
+                            <TekstBlock block={dinLivssituasjonTekster.harSamboerNaa.sporsmal} />
                         }
                         søknadsvar={søknad.søker.utvidet.spørsmål.harSamboerNå.svar}
                     />
@@ -183,11 +166,9 @@ const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
 
                     <OppsummeringFelt
                         tittel={
-                            <SpråkTekst
-                                id={
-                                    dinLivssituasjonSpørsmålSpråkId[
-                                        DinLivssituasjonSpørsmålId.hattAnnenSamboerForSøktPeriode
-                                    ]
+                            <TekstBlock
+                                block={
+                                    dinLivssituasjonTekster.hattAnnenSamboerForSoektPeriode.sporsmal
                                 }
                             />
                         }
@@ -201,23 +182,11 @@ const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                 </>
             )}
             <OppsummeringFelt
-                tittel={
-                    <SpråkTekst
-                        id={dinLivssituasjonSpørsmålSpråkId[DinLivssituasjonSpørsmålId.erAsylsøker]}
-                    />
-                }
+                tittel={<TekstBlock block={dinLivssituasjonTekster.erAsylsoeker.sporsmal} />}
                 søknadsvar={søknad.søker.erAsylsøker.svar}
             />
             <OppsummeringFelt
-                tittel={
-                    <SpråkTekst
-                        id={
-                            dinLivssituasjonSpørsmålSpråkId[
-                                DinLivssituasjonSpørsmålId.arbeidIUtlandet
-                            ]
-                        }
-                    />
-                }
+                tittel={<TekstBlock block={dinLivssituasjonTekster.arbeidUtenforNorge.sporsmal} />}
                 søknadsvar={søknad.søker.arbeidIUtlandet.svar}
             />
 
@@ -232,15 +201,7 @@ const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
             ))}
 
             <OppsummeringFelt
-                tittel={
-                    <SpråkTekst
-                        id={
-                            dinLivssituasjonSpørsmålSpråkId[
-                                DinLivssituasjonSpørsmålId.mottarUtenlandspensjon
-                            ]
-                        }
-                    />
-                }
+                tittel={<TekstBlock block={dinLivssituasjonTekster.pensjonUtland.sporsmal} />}
                 søknadsvar={søknad.søker.mottarUtenlandspensjon.svar}
             />
 
