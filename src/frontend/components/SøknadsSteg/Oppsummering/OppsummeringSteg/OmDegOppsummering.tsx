@@ -14,13 +14,7 @@ import { genererAdresseVisning } from '../../../../utils/adresse';
 import { landkodeTilSpråk } from '../../../../utils/språk';
 import { jaNeiSvarTilSpråkId } from '../../../../utils/spørsmål';
 import TekstBlock from '../../../Felleskomponenter/Sanity/TekstBlock';
-import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { UtenlandsperiodeOppsummering } from '../../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsperiodeOppsummering';
-import {
-    omDegPersonopplysningerSpråkId,
-    OmDegSpørsmålId,
-    omDegSpørsmålSpråkId,
-} from '../../OmDeg/spørsmål';
 import { useOmdeg } from '../../OmDeg/useOmdeg';
 import { OppsummeringFelt } from '../OppsummeringFelt';
 import Oppsummeringsbolk from '../Oppsummeringsbolk';
@@ -42,6 +36,7 @@ const OmDegOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
         <Oppsummeringsbolk
             steg={hentRouteObjektForRouteEnum(RouteEnum.OmDeg)}
             tittel={'omdeg.sidetittel'}
+            tittelForSanity={omDegTekster.omDegTittel}
             skjemaHook={omDegHook}
             settFeilAnchors={settFeilAnchors}
         >
@@ -59,11 +54,11 @@ const OmDegOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                 }
             />
             <OppsummeringFelt
-                tittel={<SpråkTekst id={'felles.fødsels-eller-dnummer.label'} />}
+                tittel={plainTekst(omDegTekster.ident)}
                 søknadsvar={søknad.søker.ident}
             />
             <OppsummeringFelt
-                tittel={<SpråkTekst id={omDegPersonopplysningerSpråkId.søkerStatsborgerskap} />}
+                tittel={plainTekst(omDegTekster.statsborgerskap)}
                 søknadsvar={søknad.søker.statsborgerskap
                     .map((statsborgerskap: { landkode: Alpha3Code }) =>
                         landkodeTilSpråk(statsborgerskap.landkode, valgtLocale)
@@ -71,27 +66,21 @@ const OmDegOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                     .join(', ')}
             />
             <OppsummeringFelt
-                tittel={<SpråkTekst id={omDegPersonopplysningerSpråkId.søkerSivilstatus} />}
+                tittel={plainTekst(omDegTekster.sivilstatus)}
                 søknadsvar={søknad.søker.sivilstand.type}
             />
             <OppsummeringFelt
-                tittel={<SpråkTekst id={omDegPersonopplysningerSpråkId.søkerAdresse} />}
+                tittel={plainTekst(omDegTekster.adresse)}
                 children={genererAdresseVisning(søknad.søker, omDegTekster, plainTekst)}
             />
             {søknad.søker.borPåRegistrertAdresse.svar && (
                 <OppsummeringFelt
-                    tittel={
-                        <SpråkTekst
-                            id={omDegSpørsmålSpråkId[OmDegSpørsmålId.borPåRegistrertAdresse]}
-                        />
-                    }
+                    tittel={<TekstBlock block={omDegTekster.borPaaRegistrertAdresse.sporsmal} />}
                     søknadsvar={søknad.søker.borPåRegistrertAdresse.svar}
                 />
             )}
             <OppsummeringFelt
-                tittel={
-                    <SpråkTekst id={omDegSpørsmålSpråkId[OmDegSpørsmålId.værtINorgeITolvMåneder]} />
-                }
+                tittel={<TekstBlock block={omDegTekster.vaertINorgeITolvMaaneder.sporsmal} />}
                 søknadsvar={søknad.søker.værtINorgeITolvMåneder.svar}
             />
             {søknad.søker.utenlandsperioder.map((periode, index) => (
@@ -100,9 +89,7 @@ const OmDegOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
             {søknad.søker.planleggerÅBoINorgeTolvMnd.svar && (
                 <OppsummeringFelt
                     tittel={
-                        <SpråkTekst
-                            id={omDegSpørsmålSpråkId[OmDegSpørsmålId.planleggerÅBoINorgeTolvMnd]}
-                        />
+                        <TekstBlock block={omDegTekster.planleggerAaBoINorgeTolvMnd.sporsmal} />
                     }
                     søknadsvar={søknad.søker.planleggerÅBoINorgeTolvMnd.svar}
                 />
