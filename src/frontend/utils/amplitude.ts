@@ -5,12 +5,12 @@ import { ESøknadstype } from '../typer/kontrakt/generelle';
 import { søknadstyper } from '../typer/søknad';
 
 amplitude
-    .init('default', undefined, {
-        serverUrl: 'https://amplitude.nav.no/collect',
+    .init('default', '', {
+        serverUrl: 'https://amplitude.nav.no/collect-auto',
         autocapture: {
             attribution: true,
             pageViews: false,
-            sessions: false,
+            sessions: true,
             formInteractions: false,
             fileDownloads: false,
             elementInteractions: false,
