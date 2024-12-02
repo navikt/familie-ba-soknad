@@ -18,6 +18,7 @@ import {
 import { genererPeriodeId } from '../../../utils/perioder';
 import { uppercaseFørsteBokstav } from '../../../utils/visning';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
+import KomponentGruppe from '../KomponentGruppe/KomponentGruppe';
 import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
 import PerioderContainer from '../PerioderContainer';
 import useModal from '../SkjemaModal/useModal';
@@ -26,7 +27,6 @@ import SpråkTekst from '../SpråkTekst/SpråkTekst';
 import { ArbeidsperiodeModal } from './ArbeidsperiodeModal';
 import { ArbeidsperiodeOppsummering } from './ArbeidsperiodeOppsummering';
 import {
-    arbeidsperiodeFeilmelding,
     arbeidsperiodeFlereSpørsmål,
     arbeidsperiodeLeggTilFlereKnapp,
     arbeidsperiodeSpørsmålSpråkId,
@@ -86,7 +86,7 @@ export const Arbeidsperiode: React.FC<Props> = ({
     );
 
     return (
-        <>
+        <KomponentGruppe>
             <JaNeiSpm
                 skjema={skjema}
                 felt={arbeiderEllerArbeidetFelt}
@@ -141,10 +141,8 @@ export const Arbeidsperiode: React.FC<Props> = ({
                         })}
                         feilmelding={
                             registrerteArbeidsperioder.erSynlig &&
-                            registrerteArbeidsperioder.feilmelding &&
-                            skjema.visFeilmeldinger && (
-                                <SpråkTekst id={arbeidsperiodeFeilmelding(gjelderUtlandet)} />
-                            )
+                            skjema.visFeilmeldinger &&
+                            registrerteArbeidsperioder.feilmelding
                         }
                     />
                     {arbeidsmodalErÅpen && (
@@ -160,6 +158,6 @@ export const Arbeidsperiode: React.FC<Props> = ({
                     )}
                 </PerioderContainer>
             )}
-        </>
+        </KomponentGruppe>
     );
 };

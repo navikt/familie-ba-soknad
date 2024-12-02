@@ -61,6 +61,7 @@ export interface IFellesTekstInnhold {
     frittståendeOrd: IFrittståendeOrdTekstinnhold;
     modaler: IModalerTekstinnhold;
     navigasjon: INavigasjonTekstinnhold;
+    kanIkkeBrukeSoeknad: IKanIkkeBrukeSoeknadTekstinnhold;
 }
 
 export interface IFrittståendeOrdTekstinnhold {
@@ -72,6 +73,7 @@ export interface IFrittståendeOrdTekstinnhold {
     norge: LocaleRecordString;
     ja: LocaleRecordString;
     nei: LocaleRecordString;
+    jegVetIkke: LocaleRecordString;
     barnetrygd: LocaleRecordString;
     skjult: LocaleRecordString;
     av: LocaleRecordString;
@@ -152,4 +154,8 @@ export interface IForsideTekstinnhold {
     utvidetBarnetrygdAlert: LocaleRecordBlock;
     soekerDuUtvidet: ISanitySpørsmålDokument;
     mellomlagretAlert: LocaleRecordBlock;
+}
+
+export interface IKanIkkeBrukeSoeknadTekstinnhold {
+    brukPDFKontantstoette: LocaleRecordBlock;
 }

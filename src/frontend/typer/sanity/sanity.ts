@@ -53,6 +53,7 @@ export enum Typografi {
 export const frittståendeOrdPrefix = 'FRITTSTAENDEORD';
 export const modalPrefix = 'MODAL';
 export const navigasjonPrefix = 'NAVIGASJON';
+export const kanIkkeBrukeSoeknadPrefix = 'KAN_IKKE_BRUKE_SOKNAD';
 
 export interface ISanitySpørsmålDokument extends SanityDokument {
     sporsmal: LocaleRecordBlock;
@@ -75,6 +76,19 @@ export enum ESanityFlettefeltverdi {
     KLOKKESLETT = 'KLOKKESLETT',
     YTELSE = 'YTELSE',
     YTELSE_BESTEMT_FORM = 'YTELSE_BESTEMT_FORM',
+}
+
+export enum ESanitySivilstandApiKey {
+    GIFT = 'sivilstandGift',
+    ENKE_ELLER_ENKEMANN = 'sivilstandEnkeEnkemann',
+    SKILT = 'sivilstandSkilt',
+    SEPARERT = 'sivilstandSeparert',
+    REGISTRERT_PARTNER = 'sivilstandRegistrertPartner',
+    SEPARERT_PARTNER = 'sivilstandSeparertPartner',
+    SKILT_PARTNER = 'sivilstandSkiltPartner',
+    GJENLEVENDE_PARTNER = 'sivilstandGjenlevendePartner',
+    UGIFT = 'sivilstandUgift',
+    UOPPGITT = 'sivilstandUoppgitt',
 }
 
 export type FlettefeltVerdier = {

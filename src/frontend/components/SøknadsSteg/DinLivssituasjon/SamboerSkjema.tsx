@@ -7,7 +7,6 @@ import { DatoMedUkjent, ISODateString } from '../../../typer/common';
 import { IDinLivssituasjonFeltTyper, ITidligereSamboerFeltTyper } from '../../../typer/skjema';
 import { dagensDato, gårsdagensDato } from '../../../utils/dato';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
-import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { SkjemaCheckbox } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
 import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -28,13 +27,13 @@ const SamboerSkjema: React.FC<{
     erIModal?: boolean;
 }> = ({ skjema, samboerFelter, erIModal = false }) => {
     return (
-        <KomponentGruppe inline>
+        <>
             <SkjemaFeltInput
                 felt={samboerFelter.navn}
                 visFeilmeldinger={skjema.visFeilmeldinger}
                 labelSpråkTekstId={samboerSpråkIder.navn}
             />
-            <>
+            <div>
                 <SkjemaFeltInput
                     felt={samboerFelter.fnr}
                     visFeilmeldinger={skjema.visFeilmeldinger}
@@ -45,24 +44,22 @@ const SamboerSkjema: React.FC<{
                     labelSpråkTekstId={samboerSpråkIder.fnrUkjent}
                     felt={samboerFelter.fnrUkjent}
                 />
-            </>
+            </div>
             {samboerFelter.fødselsdato.erSynlig && (
-                <KomponentGruppe inline dynamisk>
-                    <>
-                        <Datovelger
-                            skjema={skjema}
-                            felt={samboerFelter.fødselsdato}
-                            label={<SpråkTekst id={samboerSpråkIder.fødselsdato} />}
-                            avgrensMaxDato={dagensDato()}
-                            disabled={samboerFelter.fødselsdatoUkjent.verdi === ESvar.JA}
-                            strategy={erIModal ? 'absolute' : 'fixed'}
-                        />
-                        <SkjemaCheckbox
-                            labelSpråkTekstId={samboerSpråkIder.fødselsdatoUkjent}
-                            felt={samboerFelter.fødselsdatoUkjent}
-                        />
-                    </>
-                </KomponentGruppe>
+                <div>
+                    <Datovelger
+                        skjema={skjema}
+                        felt={samboerFelter.fødselsdato}
+                        label={<SpråkTekst id={samboerSpråkIder.fødselsdato} />}
+                        avgrensMaxDato={dagensDato()}
+                        disabled={samboerFelter.fødselsdatoUkjent.verdi === ESvar.JA}
+                        strategy={erIModal ? 'absolute' : 'fixed'}
+                    />
+                    <SkjemaCheckbox
+                        labelSpråkTekstId={samboerSpråkIder.fødselsdatoUkjent}
+                        felt={samboerFelter.fødselsdatoUkjent}
+                    />
+                </div>
             )}
             <Datovelger
                 skjema={skjema}
@@ -81,7 +78,7 @@ const SamboerSkjema: React.FC<{
                     strategy={erIModal ? 'absolute' : 'fixed'}
                 />
             )}
-        </KomponentGruppe>
+        </>
     );
 };
 

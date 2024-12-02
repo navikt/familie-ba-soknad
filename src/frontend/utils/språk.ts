@@ -8,33 +8,38 @@ import * as engelsk from '../assets/lang/en.json' assert { type: 'json' };
 import * as bokmål from '../assets/lang/nb.json' assert { type: 'json' };
 import * as nynorsk from '../assets/lang/nn.json' assert { type: 'json' };
 import { innebygdeFormatterere } from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
+import { IDinLivssituasjonTekstinnhold } from '../components/SøknadsSteg/DinLivssituasjon/innholdTyper';
 import { AlternativtSvarForInput, LocaleType } from '../typer/common';
 import { ESivilstand, Slektsforhold } from '../typer/kontrakt/generelle';
 import { IBarn } from '../typer/person';
+import { ESanitySivilstandApiKey, LocaleRecordString } from '../typer/sanity/sanity';
 import { Årsak } from '../typer/utvidet';
 
-export const toÅrsakSpråkId = (årsak: Årsak): string => {
+export const hentÅrsak = (
+    årsak: Årsak,
+    tekster: IDinLivssituasjonTekstinnhold
+): LocaleRecordString => {
     switch (årsak) {
         case Årsak.SEPARERT:
-            return 'omdeg.velgårsak.separert';
+            return tekster.valgalternativSeparert;
         case Årsak.SKILT:
-            return 'omdeg.velgårsak.skilt';
+            return tekster.valgalternativSkilt;
         case Årsak.BRUDD_SAMBOER:
-            return 'omdeg.velgårsak.bruddsamboer';
+            return tekster.valgalternativBruddSamboer;
         case Årsak.BODD_ALENE:
-            return 'omdeg.velgårsak.boddalene';
+            return tekster.valgalternativBoddAlene;
         case Årsak.ENKE_ENKEMANN:
-            return 'omdeg.velgårsak.enkeenkemann';
+            return tekster.valgalternativEnkeEnkemann;
         case Årsak.FENGSEL_VARETEKT:
-            return 'omdeg.velgårsak.fengselvaretekt';
+            return tekster.valgalternativFengselVaretekt;
         case Årsak.BRUDD_GIFT:
-            return 'omdeg.velgårsak.bruddgift';
+            return tekster.valgalternativBruddGift;
         case Årsak.FORSVUNNET:
-            return 'omdeg.velgårsak.forsvunnet';
+            return tekster.valgalternativForsvunnet;
         case Årsak.FORVARING:
-            return 'omdeg.velgårsak.forvaring';
+            return tekster.valgalternativForvaring;
         case Årsak.PSYKISK_HELSEVERN:
-            return 'omdeg.velgårsak.psykiskhelsevern';
+            return tekster.valgalternativPsykiskHelsevern;
     }
 };
 
@@ -121,9 +126,35 @@ export const hentSivilstatusSpråkId = (statuskode?: ESivilstand) => {
         case ESivilstand.SKILT_PARTNER:
         case ESivilstand.GJENLEVENDE_PARTNER:
             return `felles.sivilstatus.kode.${statuskode}`;
-
         default:
             return `felles.sivilstatus.kode.${ESivilstand.UOPPGITT}`;
+    }
+};
+
+export const sivilstandTilSanitySivilstandApiKey = (
+    statuskode: ESivilstand
+): ESanitySivilstandApiKey => {
+    switch (statuskode) {
+        case ESivilstand.UGIFT:
+            return ESanitySivilstandApiKey.UGIFT;
+        case ESivilstand.GIFT:
+            return ESanitySivilstandApiKey.GIFT;
+        case ESivilstand.ENKE_ELLER_ENKEMANN:
+            return ESanitySivilstandApiKey.ENKE_ELLER_ENKEMANN;
+        case ESivilstand.SKILT:
+            return ESanitySivilstandApiKey.SKILT;
+        case ESivilstand.SEPARERT:
+            return ESanitySivilstandApiKey.SEPARERT;
+        case ESivilstand.REGISTRERT_PARTNER:
+            return ESanitySivilstandApiKey.REGISTRERT_PARTNER;
+        case ESivilstand.SEPARERT_PARTNER:
+            return ESanitySivilstandApiKey.SEPARERT_PARTNER;
+        case ESivilstand.SKILT_PARTNER:
+            return ESanitySivilstandApiKey.SKILT_PARTNER;
+        case ESivilstand.GJENLEVENDE_PARTNER:
+            return ESanitySivilstandApiKey.GJENLEVENDE_PARTNER;
+        case ESivilstand.UOPPGITT:
+            return ESanitySivilstandApiKey.UOPPGITT;
     }
 };
 

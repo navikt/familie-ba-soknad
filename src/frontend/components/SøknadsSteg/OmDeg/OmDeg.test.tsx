@@ -16,7 +16,7 @@ import {
 } from '../../../utils/testing';
 
 import OmDeg from './OmDeg';
-import { OmDegSpørsmålId, omDegSpørsmålSpråkId } from './spørsmål';
+import { OmDegSpørsmålId } from './spørsmål';
 
 const TestKomponent = () => (
     <TestProvidere mocketNettleserHistorikk={['/om-deg']}>
@@ -75,11 +75,9 @@ describe('OmDeg', () => {
                 statsborgerskap: [{ landkode: 'NOR' }],
             }),
         });
-        const { findByText } = render(<TestKomponent />);
+        const { findByTestId } = render(<TestKomponent />);
 
-        expect(
-            await findByText(/omdeg.personopplysninger.adressesperre.alert/)
-        ).toBeInTheDocument();
+        expect(await findByTestId('adressevisning-sperre')).toBeInTheDocument();
     });
 
     test('Kan gå videre i søknad ved adresse som er ukjent, får ikke spm om bosted, men opphold i norge', async () => {
@@ -90,15 +88,11 @@ describe('OmDeg', () => {
                 statsborgerskap: [{ landkode: 'NOR' }],
             }),
         });
-        const { queryByText } = render(<TestKomponent />);
+        const { queryByTestId } = render(<TestKomponent />);
 
         await waitFor(() => {
-            expect(
-                queryByText(omDegSpørsmålSpråkId[OmDegSpørsmålId.borPåRegistrertAdresse])
-            ).not.toBeInTheDocument();
-            expect(
-                queryByText(omDegSpørsmålSpråkId[OmDegSpørsmålId.værtINorgeITolvMåneder])
-            ).toBeInTheDocument();
+            expect(queryByTestId(OmDegSpørsmålId.borPåRegistrertAdresse)).not.toBeInTheDocument();
+            expect(queryByTestId(OmDegSpørsmålId.værtINorgeITolvMåneder)).toBeInTheDocument();
         });
     });
 
@@ -111,12 +105,12 @@ describe('OmDeg', () => {
                 værtINorgeITolvMåneder: { id: OmDegSpørsmålId.værtINorgeITolvMåneder, svar: null },
             }),
         });
-        const { queryByText } = render(<TestKomponent />);
+        const { queryByTestId } = render(<TestKomponent />);
 
-        expect(queryByText(omDegSpørsmålSpråkId['bor-på-registrert-adresse'])).toBeInTheDocument();
-        expect(
-            queryByText(omDegSpørsmålSpråkId['søker-vært-i-norge-sammenhengende-tolv-måneder'])
-        ).toBeInTheDocument();
+        await waitFor(() => {
+            expect(queryByTestId(OmDegSpørsmålId.borPåRegistrertAdresse)).toBeInTheDocument();
+            expect(queryByTestId(OmDegSpørsmålId.værtINorgeITolvMåneder)).toBeInTheDocument();
+        });
     });
 
     test('Søker med adressesperre får ikke opp spørsmål om bosted', async () => {
@@ -126,16 +120,11 @@ describe('OmDeg', () => {
                 statsborgerskap: [{ landkode: 'NOR' }],
             }),
         });
-        const { queryByText } = render(<TestKomponent />);
+        const { queryByTestId } = render(<TestKomponent />);
 
         await waitFor(() => {
-            expect(
-                queryByText(omDegSpørsmålSpråkId[OmDegSpørsmålId.borPåRegistrertAdresse])
-            ).not.toBeInTheDocument();
-
-            expect(
-                queryByText(omDegSpørsmålSpråkId['søker-vært-i-norge-sammenhengende-tolv-måneder'])
-            ).toBeInTheDocument();
+            expect(queryByTestId(OmDegSpørsmålId.borPåRegistrertAdresse)).not.toBeInTheDocument();
+            expect(queryByTestId(OmDegSpørsmålId.værtINorgeITolvMåneder)).toBeInTheDocument();
         });
     });
 });

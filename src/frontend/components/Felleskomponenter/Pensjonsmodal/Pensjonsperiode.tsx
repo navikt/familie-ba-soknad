@@ -18,6 +18,7 @@ import {
 import { genererPeriodeId } from '../../../utils/perioder';
 import { uppercaseFørsteBokstav } from '../../../utils/visning';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
+import KomponentGruppe from '../KomponentGruppe/KomponentGruppe';
 import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
 import PerioderContainer from '../PerioderContainer';
 import useModal from '../SkjemaModal/useModal';
@@ -28,7 +29,6 @@ import { PensjonsperiodeOppsummering } from './PensjonsperiodeOppsummering';
 import {
     mottarEllerMottattPensjonSpråkId,
     pensjonFlerePerioderSpmSpråkId,
-    pensjonsperiodeFeilmelding,
     pensjonsperiodeKnappSpråkId,
 } from './språkUtils';
 import { PensjonsperiodeSpørsmålId } from './spørsmål';
@@ -86,7 +86,7 @@ export const Pensjonsperiode: React.FC<Props> = ({
     );
 
     return (
-        <>
+        <KomponentGruppe>
             <JaNeiSpm
                 skjema={skjema}
                 felt={mottarEllerMottattPensjonFelt}
@@ -145,10 +145,8 @@ export const Pensjonsperiode: React.FC<Props> = ({
                         })}
                         feilmelding={
                             registrertePensjonsperioder.erSynlig &&
-                            registrertePensjonsperioder.feilmelding &&
-                            skjema.visFeilmeldinger && (
-                                <SpråkTekst id={pensjonsperiodeFeilmelding(gjelderUtlandet)} />
-                            )
+                            skjema.visFeilmeldinger &&
+                            registrertePensjonsperioder.feilmelding
                         }
                     />
                     {pensjonsmodalErÅpen && (
@@ -165,6 +163,6 @@ export const Pensjonsperiode: React.FC<Props> = ({
                     )}
                 </PerioderContainer>
             )}
-        </>
+        </KomponentGruppe>
     );
 };

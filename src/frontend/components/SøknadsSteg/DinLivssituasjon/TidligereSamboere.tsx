@@ -11,15 +11,16 @@ import { ITidligereSamoboereTekstinnhold } from '../../../typer/sanity/modaler/t
 import { IDinLivssituasjonFeltTyper } from '../../../typer/skjema';
 import { genererPeriodeId } from '../../../utils/perioder';
 import { uppercaseFørsteBokstav } from '../../../utils/visning';
-import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
+import JaNeiSpmForSanity from '../../Felleskomponenter/JaNeiSpm/JaNeiSpmForSanity';
+import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
 import PerioderContainer from '../../Felleskomponenter/PerioderContainer';
 import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
-import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
+import { IDinLivssituasjonTekstinnhold } from './innholdTyper';
 import LeggTilSamboerModal from './LeggTilSamboerModal';
 import SamboerOpplysninger from './SamboerOpplysninger';
-import { DinLivssituasjonSpørsmålId, dinLivssituasjonSpørsmålSpråkId } from './spørsmål';
+import { DinLivssituasjonSpørsmålId } from './spørsmål';
 
 interface Props {
     skjema: ISkjema<IDinLivssituasjonFeltTyper, string>;
@@ -48,18 +49,17 @@ const TidligereSamboere: React.FC<Props> = ({
         tekster().FELLES.modaler.tidligereSamboere.søker;
     const { flerePerioder, leggTilPeriodeForklaring } = teksterForModal;
 
+    const teksterForDinLivssituasjon: IDinLivssituasjonTekstinnhold = tekster().DIN_LIVSSITUASJON;
+    const { hattAnnenSamboerForSoektPeriode } = teksterForDinLivssituasjon;
+
     const frittståendeOrdTekster = tekster().FELLES.frittståendeOrd;
 
     return (
-        <>
-            <JaNeiSpm
+        <KomponentGruppe>
+            <JaNeiSpmForSanity
                 skjema={skjema}
                 felt={hattAnnenSamboerForSøktPeriodeFelt}
-                spørsmålTekstId={
-                    dinLivssituasjonSpørsmålSpråkId[
-                        DinLivssituasjonSpørsmålId.hattAnnenSamboerForSøktPeriode
-                    ]
-                }
+                spørsmålDokument={hattAnnenSamboerForSoektPeriode}
             />
             {hattAnnenSamboerForSøktPeriodeFelt.verdi === ESvar.JA && (
                 <PerioderContainer
@@ -88,10 +88,8 @@ const TidligereSamboere: React.FC<Props> = ({
                         })}
                         feilmelding={
                             tidligereSamboere.erSynlig &&
-                            tidligereSamboere.feilmelding &&
-                            skjema.visFeilmeldinger && (
-                                <SpråkTekst id="omdeg.tidligereSamboer.feilmelding" />
-                            )
+                            skjema.visFeilmeldinger &&
+                            tidligereSamboere.feilmelding
                         }
                     />
                     {erLeggTilSamboerModalÅpen && (
@@ -104,7 +102,7 @@ const TidligereSamboere: React.FC<Props> = ({
                     )}
                 </PerioderContainer>
             )}
-        </>
+        </KomponentGruppe>
     );
 };
 export default TidligereSamboere;

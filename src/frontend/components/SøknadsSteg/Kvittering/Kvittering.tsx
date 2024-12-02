@@ -62,34 +62,26 @@ const Kvittering: React.FC = () => {
 
     return (
         <Steg tittel={plainTekst(kvitteringTekster.kvitteringTittel)}>
-            <VStack gap="12">
-                <Alert variant={'success'}>
-                    {plainTekst(kvitteringTekster.soeknadMottatt, {
-                        klokkeslett: klokkeslett,
-                        dato: dato,
-                    })}
-                </Alert>
-
-                <VStack gap="6">
-                    {alleRelevanteVedleggErSendtInn.current ? (
-                        <TekstBlock
-                            block={kvitteringTekster.trengerIkkeEttersendeVedlegg}
-                            typografi={Typografi.BodyLong}
-                        />
-                    ) : (
-                        <Alert variant="warning">
-                            <TekstBlock block={kvitteringTekster.maaEttersendeVedleggAlert} />
-                        </Alert>
-                    )}
+            <Alert variant={'success'}>
+                {plainTekst(kvitteringTekster.soeknadMottatt, {
+                    klokkeslett: klokkeslett,
+                    dato: dato,
+                })}
+            </Alert>
+            <VStack gap="6">
+                {alleRelevanteVedleggErSendtInn.current ? (
                     <TekstBlock
-                        block={kvitteringTekster.infoTilSoker}
+                        block={kvitteringTekster.trengerIkkeEttersendeVedlegg}
                         typografi={Typografi.BodyLong}
                     />
-                </VStack>
-
-                <Kontoinformasjon />
+                ) : (
+                    <Alert variant="warning">
+                        <TekstBlock block={kvitteringTekster.maaEttersendeVedleggAlert} />
+                    </Alert>
+                )}
+                <TekstBlock block={kvitteringTekster.infoTilSoker} typografi={Typografi.BodyLong} />
             </VStack>
-
+            <Kontoinformasjon />
             <BlokkerTilbakeKnappModal />
         </Steg>
     );

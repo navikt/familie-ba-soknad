@@ -15,7 +15,6 @@ import { Barnetrygdperiode } from '../../../Felleskomponenter/Barnetrygdperiode/
 import { LandDropdown } from '../../../Felleskomponenter/Dropdowns/LandDropdown';
 import SlektsforholdDropdown from '../../../Felleskomponenter/Dropdowns/SlektsforholdDropdown';
 import JaNeiSpm from '../../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
-import KomponentGruppe from '../../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { Pensjonsperiode } from '../../../Felleskomponenter/Pensjonsmodal/Pensjonsperiode';
 import { SkjemaCheckbox } from '../../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
 import { SkjemaFeltInput } from '../../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
@@ -87,16 +86,15 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                 settSøknadsdataCallback: oppdaterSøknad,
             }}
         >
-            <KomponentGruppe>
+            <div>
                 <SamletIdNummerForBarn
                     barn={barn}
                     settIdNummerFelter={settIdNummerFelterForBarn}
                     skjema={skjema}
                 />
-            </KomponentGruppe>
-
+            </div>
             {skjema.felter.søkersSlektsforhold.erSynlig && (
-                <KomponentGruppe>
+                <>
                     <SlektsforholdDropdown
                         felt={skjema.felter.søkersSlektsforhold}
                         skjema={skjema}
@@ -123,12 +121,11 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                             }}
                         />
                     )}
-                </KomponentGruppe>
+                </>
             )}
-
             {(skjema.felter.borMedAndreForelder.erSynlig ||
                 skjema.felter.borMedOmsorgsperson.erSynlig) && (
-                <KomponentGruppe>
+                <>
                     <JaNeiSpm
                         skjema={skjema}
                         felt={skjema.felter.borMedAndreForelder}
@@ -145,9 +142,8 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                         }
                         språkValues={{ barn: barn.navn }}
                     />
-                </KomponentGruppe>
+                </>
             )}
-
             {skjema.felter.borMedOmsorgsperson.verdi === ESvar.JA && (
                 <Omsorgsperson
                     skjema={skjema}
@@ -168,9 +164,8 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                     }}
                 />
             )}
-
             {skjema.felter.barnetsAdresse.erSynlig && (
-                <>
+                <div>
                     <SkjemaFeltInput
                         felt={skjema.felter.barnetsAdresse}
                         visFeilmeldinger={skjema.visFeilmeldinger}
@@ -179,16 +174,14 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                         språkValues={{ barn: barn.navn }}
                         disabled={skjema.felter.barnetsAdresseVetIkke.verdi === ESvar.JA}
                     />
-
                     <SkjemaCheckbox
                         felt={skjema.felter.barnetsAdresseVetIkke}
                         labelSpråkTekstId={
                             eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.barnetsAdresseVetIkke]
                         }
                     />
-                </>
+                </div>
             )}
-
             {!skalSkjuleAndreForelderFelt(barn) && (
                 <SkjemaFieldset legendSpråkId={'ombarnet.andre-forelder'}>
                     {!barnMedSammeForelder ? (
@@ -198,139 +191,120 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                                 settIdNummerFelter={settIdNummerFelterForAndreForelder}
                                 barn={barn}
                             />
-
                             {skjema.felter.andreForelderAdresse.erSynlig && (
-                                <KomponentGruppe>
-                                    <>
-                                        <SkjemaFeltInput
-                                            felt={skjema.felter.andreForelderAdresse}
-                                            visFeilmeldinger={skjema.visFeilmeldinger}
-                                            labelSpråkTekstId={
-                                                eøsBarnSpørsmålSpråkId[
-                                                    EøsBarnSpørsmålId.andreForelderAdresse
-                                                ]
-                                            }
-                                            description={
-                                                <SpråkTekst id={'felles.hjelpetekst.fulladresse'} />
-                                            }
-                                            disabled={
-                                                skjema.felter.andreForelderAdresseVetIkke.verdi ===
-                                                ESvar.JA
-                                            }
-                                            språkValues={{ barn: barn.navn }}
-                                        />
-                                        <SkjemaCheckbox
-                                            felt={skjema.felter.andreForelderAdresseVetIkke}
-                                            labelSpråkTekstId={
-                                                eøsBarnSpørsmålSpråkId[
-                                                    EøsBarnSpørsmålId.andreForelderAdresseVetIkke
-                                                ]
-                                            }
-                                        />
-                                    </>
-                                </KomponentGruppe>
-                            )}
-
-                            <KomponentGruppe>
-                                <Arbeidsperiode
-                                    skjema={skjema}
-                                    leggTilArbeidsperiode={leggTilArbeidsperiodeNorgeAndreForelder}
-                                    fjernArbeidsperiode={fjernArbeidsperiodeNorgeAndreForelder}
-                                    arbeiderEllerArbeidetFelt={
-                                        skjema.felter.andreForelderArbeidNorge
-                                    }
-                                    registrerteArbeidsperioder={
-                                        skjema.felter.andreForelderArbeidsperioderNorge
-                                    }
-                                    personType={PersonType.AndreForelder}
-                                    erDød={barn.andreForelderErDød.svar === ESvar.JA}
-                                    barn={barn}
-                                />
-                                <Pensjonsperiode
-                                    skjema={skjema}
-                                    mottarEllerMottattPensjonFelt={
-                                        skjema.felter.andreForelderPensjonNorge
-                                    }
-                                    leggTilPensjonsperiode={
-                                        leggTilPensjonsperiodeNorgeAndreForelder
-                                    }
-                                    fjernPensjonsperiode={fjernPensjonsperiodeNorgeAndreForelder}
-                                    personType={PersonType.AndreForelder}
-                                    erDød={barn.andreForelderErDød.svar === ESvar.JA}
-                                    barn={barn}
-                                    gjelderUtlandet={false}
-                                    registrertePensjonsperioder={
-                                        skjema.felter.andreForelderPensjonsperioderNorge
-                                    }
-                                />
-                                <Utbetalingsperiode
-                                    skjema={skjema}
-                                    tilhørendeJaNeiSpmFelt={
-                                        skjema.felter.andreForelderAndreUtbetalinger
-                                    }
-                                    leggTilUtbetalingsperiode={
-                                        leggTilAndreUtbetalingsperiodeAndreForelder
-                                    }
-                                    fjernUtbetalingsperiode={
-                                        fjernAndreUtbetalingsperiodeAndreForelder
-                                    }
-                                    personType={PersonType.AndreForelder}
-                                    erDød={barn.andreForelderErDød.svar === ESvar.JA}
-                                    barn={barn}
-                                    registrerteUtbetalingsperioder={
-                                        skjema.felter.andreForelderAndreUtbetalingsperioder
-                                    }
-                                />
-
-                                <JaNeiSpm
-                                    skjema={skjema}
-                                    felt={skjema.felter.andreForelderPågåendeSøknadFraAnnetEøsLand}
-                                    spørsmålTekstId={
-                                        eøsBarnSpørsmålSpråkId[
-                                            EøsBarnSpørsmålId
-                                                .andreForelderPågåendeSøknadFraAnnetEøsLand
-                                        ]
-                                    }
-                                    språkValues={{ barn: barn.navn }}
-                                    inkluderVetIkke
-                                />
-                                {skjema.felter.andreForelderPågåendeSøknadHvilketLand.erSynlig && (
-                                    <LandDropdown
-                                        felt={skjema.felter.andreForelderPågåendeSøknadHvilketLand}
-                                        skjema={skjema}
-                                        kunEøs={true}
-                                        ekskluderNorge
-                                        label={
-                                            <SpråkTekst
-                                                id={
-                                                    eøsBarnSpørsmålSpråkId[
-                                                        EøsBarnSpørsmålId
-                                                            .andreForelderPågåendeSøknadHvilketLand
-                                                    ]
-                                                }
-                                                values={{ barn: barn.navn }}
-                                            />
+                                <div>
+                                    <SkjemaFeltInput
+                                        felt={skjema.felter.andreForelderAdresse}
+                                        visFeilmeldinger={skjema.visFeilmeldinger}
+                                        labelSpråkTekstId={
+                                            eøsBarnSpørsmålSpråkId[
+                                                EøsBarnSpørsmålId.andreForelderAdresse
+                                            ]
+                                        }
+                                        description={
+                                            <SpråkTekst id={'felles.hjelpetekst.fulladresse'} />
+                                        }
+                                        disabled={
+                                            skjema.felter.andreForelderAdresseVetIkke.verdi ===
+                                            ESvar.JA
+                                        }
+                                        språkValues={{ barn: barn.navn }}
+                                    />
+                                    <SkjemaCheckbox
+                                        felt={skjema.felter.andreForelderAdresseVetIkke}
+                                        labelSpråkTekstId={
+                                            eøsBarnSpørsmålSpråkId[
+                                                EøsBarnSpørsmålId.andreForelderAdresseVetIkke
+                                            ]
                                         }
                                     />
-                                )}
-
-                                <Barnetrygdperiode
+                                </div>
+                            )}
+                            <Arbeidsperiode
+                                skjema={skjema}
+                                leggTilArbeidsperiode={leggTilArbeidsperiodeNorgeAndreForelder}
+                                fjernArbeidsperiode={fjernArbeidsperiodeNorgeAndreForelder}
+                                arbeiderEllerArbeidetFelt={skjema.felter.andreForelderArbeidNorge}
+                                registrerteArbeidsperioder={
+                                    skjema.felter.andreForelderArbeidsperioderNorge
+                                }
+                                personType={PersonType.AndreForelder}
+                                erDød={barn.andreForelderErDød.svar === ESvar.JA}
+                                barn={barn}
+                            />
+                            <Pensjonsperiode
+                                skjema={skjema}
+                                mottarEllerMottattPensjonFelt={
+                                    skjema.felter.andreForelderPensjonNorge
+                                }
+                                leggTilPensjonsperiode={leggTilPensjonsperiodeNorgeAndreForelder}
+                                fjernPensjonsperiode={fjernPensjonsperiodeNorgeAndreForelder}
+                                personType={PersonType.AndreForelder}
+                                erDød={barn.andreForelderErDød.svar === ESvar.JA}
+                                barn={barn}
+                                gjelderUtlandet={false}
+                                registrertePensjonsperioder={
+                                    skjema.felter.andreForelderPensjonsperioderNorge
+                                }
+                            />
+                            <Utbetalingsperiode
+                                skjema={skjema}
+                                tilhørendeJaNeiSpmFelt={
+                                    skjema.felter.andreForelderAndreUtbetalinger
+                                }
+                                leggTilUtbetalingsperiode={
+                                    leggTilAndreUtbetalingsperiodeAndreForelder
+                                }
+                                fjernUtbetalingsperiode={fjernAndreUtbetalingsperiodeAndreForelder}
+                                personType={PersonType.AndreForelder}
+                                erDød={barn.andreForelderErDød.svar === ESvar.JA}
+                                barn={barn}
+                                registrerteUtbetalingsperioder={
+                                    skjema.felter.andreForelderAndreUtbetalingsperioder
+                                }
+                            />
+                            <JaNeiSpm
+                                skjema={skjema}
+                                felt={skjema.felter.andreForelderPågåendeSøknadFraAnnetEøsLand}
+                                spørsmålTekstId={
+                                    eøsBarnSpørsmålSpråkId[
+                                        EøsBarnSpørsmålId.andreForelderPågåendeSøknadFraAnnetEøsLand
+                                    ]
+                                }
+                                språkValues={{ barn: barn.navn }}
+                                inkluderVetIkke
+                            />
+                            {skjema.felter.andreForelderPågåendeSøknadHvilketLand.erSynlig && (
+                                <LandDropdown
+                                    felt={skjema.felter.andreForelderPågåendeSøknadHvilketLand}
                                     skjema={skjema}
-                                    tilhørendeJaNeiSpmFelt={
-                                        skjema.felter.andreForelderBarnetrygdFraEøs
+                                    kunEøs={true}
+                                    ekskluderNorge
+                                    label={
+                                        <SpråkTekst
+                                            id={
+                                                eøsBarnSpørsmålSpråkId[
+                                                    EøsBarnSpørsmålId
+                                                        .andreForelderPågåendeSøknadHvilketLand
+                                                ]
+                                            }
+                                            values={{ barn: barn.navn }}
+                                        />
                                     }
-                                    registrerteEøsBarnetrygdsperioder={
-                                        skjema.felter.andreForelderEøsBarnetrygdsperioder
-                                    }
-                                    leggTilBarnetrygdsperiode={
-                                        leggTilBarnetrygdsperiodeAndreForelder
-                                    }
-                                    fjernBarnetrygdsperiode={fjernBarnetrygdsperiodeAndreForelder}
-                                    barn={barn}
-                                    personType={PersonType.AndreForelder}
-                                    erDød={barn.andreForelderErDød.svar === ESvar.JA}
                                 />
-                            </KomponentGruppe>
+                            )}
+                            <Barnetrygdperiode
+                                skjema={skjema}
+                                tilhørendeJaNeiSpmFelt={skjema.felter.andreForelderBarnetrygdFraEøs}
+                                registrerteEøsBarnetrygdsperioder={
+                                    skjema.felter.andreForelderEøsBarnetrygdsperioder
+                                }
+                                leggTilBarnetrygdsperiode={leggTilBarnetrygdsperiodeAndreForelder}
+                                fjernBarnetrygdsperiode={fjernBarnetrygdsperiodeAndreForelder}
+                                barn={barn}
+                                personType={PersonType.AndreForelder}
+                                erDød={barn.andreForelderErDød.svar === ESvar.JA}
+                            />
                         </>
                     ) : (
                         barnMedSammeForelder?.andreForelder && (

@@ -23,7 +23,6 @@ import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import { LandDropdown } from '../../Felleskomponenter/Dropdowns/LandDropdown';
 import Informasjonsbolk from '../../Felleskomponenter/Informasjonsbolk/Informasjonsbolk';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
-import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
 import PerioderContainer from '../../Felleskomponenter/PerioderContainer';
 import { SkjemaCheckbox } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
@@ -88,15 +87,12 @@ const Oppfølgningsspørsmål: React.FC<{
     return (
         <>
             {barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA && (
-                <KomponentGruppe>
-                    <Informasjonsbolk
-                        tittelId={'ombarnet.fosterbarn'}
-                        språkValues={{ navn: barn.navn }}
-                        headingLevel="4"
-                    />
-                </KomponentGruppe>
+                <Informasjonsbolk
+                    tittelId={'ombarnet.fosterbarn'}
+                    språkValues={{ navn: barn.navn }}
+                    headingLevel="4"
+                />
             )}
-
             {barn[barnDataKeySpørsmål.oppholderSegIInstitusjon].svar === ESvar.JA && (
                 <SkjemaFieldset
                     legendSpråkId={'ombarnet.institusjon'}
@@ -144,7 +140,7 @@ const Oppfølgningsspørsmål: React.FC<{
                             />
                         }
                     />
-                    <>
+                    <div>
                         <Datovelger
                             felt={institusjonOppholdSluttdato}
                             avgrensMinDato={
@@ -174,7 +170,7 @@ const Oppfølgningsspørsmål: React.FC<{
                             }
                             felt={institusjonOppholdSluttVetIkke}
                         />
-                    </>
+                    </div>
                 </SkjemaFieldset>
             )}
             {barn[barnDataKeySpørsmål.boddMindreEnn12MndINorge].svar === ESvar.JA && (
@@ -215,26 +211,22 @@ const Oppfølgningsspørsmål: React.FC<{
                             onClick={åpneUtenlandsmodal}
                             feilmelding={
                                 registrerteUtenlandsperioder.erSynlig &&
-                                registrerteUtenlandsperioder.feilmelding &&
-                                skjema.visFeilmeldinger && (
-                                    <SpråkTekst id={'felles.leggtilutenlands.feilmelding'} />
-                                )
+                                skjema.visFeilmeldinger &&
+                                registrerteUtenlandsperioder.feilmelding
                             }
                         />
                     </PerioderContainer>
                     {planleggerÅBoINorge12Mnd.erSynlig && (
-                        <KomponentGruppe inline dynamisk>
-                            <JaNeiSpm
-                                skjema={skjema}
-                                felt={planleggerÅBoINorge12Mnd}
-                                spørsmålTekstId={
-                                    omBarnetSpørsmålSpråkId[
-                                        OmBarnetSpørsmålsId.planleggerÅBoINorge12Mnd
-                                    ]
-                                }
-                                språkValues={{ barn: barn.navn }}
-                            />
-                        </KomponentGruppe>
+                        <JaNeiSpm
+                            skjema={skjema}
+                            felt={planleggerÅBoINorge12Mnd}
+                            spørsmålTekstId={
+                                omBarnetSpørsmålSpråkId[
+                                    OmBarnetSpørsmålsId.planleggerÅBoINorge12Mnd
+                                ]
+                            }
+                            språkValues={{ barn: barn.navn }}
+                        />
                     )}
                 </SkjemaFieldset>
             )}
@@ -243,44 +235,42 @@ const Oppfølgningsspørsmål: React.FC<{
                     legendSpråkId={'ombarnet.barnetrygd-eøs'}
                     språkValues={{ navn: barn.navn }}
                 >
-                    <KomponentGruppe>
-                        <JaNeiSpm
+                    <JaNeiSpm
+                        skjema={skjema}
+                        felt={pågåendeSøknadFraAnnetEøsLand}
+                        spørsmålTekstId={
+                            omBarnetSpørsmålSpråkId[
+                                OmBarnetSpørsmålsId.pågåendeSøknadFraAnnetEøsLand
+                            ]
+                        }
+                    />
+                    {pågåendeSøknadHvilketLand.erSynlig && (
+                        <LandDropdown
+                            felt={pågåendeSøknadHvilketLand}
                             skjema={skjema}
-                            felt={pågåendeSøknadFraAnnetEøsLand}
-                            spørsmålTekstId={
-                                omBarnetSpørsmålSpråkId[
-                                    OmBarnetSpørsmålsId.pågåendeSøknadFraAnnetEøsLand
-                                ]
+                            kunEøs={true}
+                            ekskluderNorge
+                            label={
+                                <SpråkTekst
+                                    id={
+                                        omBarnetSpørsmålSpråkId[
+                                            OmBarnetSpørsmålsId.pågåendeSøknadHvilketLand
+                                        ]
+                                    }
+                                />
                             }
                         />
-                        {pågåendeSøknadHvilketLand.erSynlig && (
-                            <LandDropdown
-                                felt={pågåendeSøknadHvilketLand}
-                                skjema={skjema}
-                                kunEøs={true}
-                                ekskluderNorge
-                                label={
-                                    <SpråkTekst
-                                        id={
-                                            omBarnetSpørsmålSpråkId[
-                                                OmBarnetSpørsmålsId.pågåendeSøknadHvilketLand
-                                            ]
-                                        }
-                                    />
-                                }
-                            />
-                        )}
-                        <Barnetrygdperiode
-                            skjema={skjema}
-                            registrerteEøsBarnetrygdsperioder={registrerteEøsBarnetrygdsperioder}
-                            tilhørendeJaNeiSpmFelt={mottarEllerMottokEøsBarnetrygd}
-                            leggTilBarnetrygdsperiode={leggTilBarnetrygdsperiode}
-                            fjernBarnetrygdsperiode={fjernBarnetrygdsperiode}
-                            barn={barn}
-                            personType={PersonType.Søker}
-                            headingLevel="4"
-                        />
-                    </KomponentGruppe>
+                    )}
+                    <Barnetrygdperiode
+                        skjema={skjema}
+                        registrerteEøsBarnetrygdsperioder={registrerteEøsBarnetrygdsperioder}
+                        tilhørendeJaNeiSpmFelt={mottarEllerMottokEøsBarnetrygd}
+                        leggTilBarnetrygdsperiode={leggTilBarnetrygdsperiode}
+                        fjernBarnetrygdsperiode={fjernBarnetrygdsperiode}
+                        barn={barn}
+                        personType={PersonType.Søker}
+                        headingLevel="4"
+                    />
                 </SkjemaFieldset>
             )}
             {utenlandsmodalErÅpen && (
@@ -288,6 +278,7 @@ const Oppfølgningsspørsmål: React.FC<{
                     erÅpen={utenlandsmodalErÅpen}
                     lukkModal={lukkUtenlandsmodal}
                     onLeggTilUtenlandsperiode={leggTilUtenlandsperiode}
+                    personType={PersonType.Barn}
                     barn={barn}
                     forklaring={plainTekst(leggTilPeriodeForklaring)}
                 />

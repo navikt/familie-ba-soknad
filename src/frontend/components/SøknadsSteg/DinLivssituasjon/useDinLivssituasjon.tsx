@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 
 import { ESvar } from '@navikt/familie-form-elements';
 import { feil, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
@@ -18,6 +18,10 @@ import { ESivilstand } from '../../../typer/kontrakt/generelle';
 import { IArbeidsperiode, IPensjonsperiode } from '../../../typer/perioder';
 import { ISamboer, ISøker, ITidligereSamboer } from '../../../typer/person';
 import { PersonType } from '../../../typer/personType';
+import { IArbeidsperiodeTekstinnhold } from '../../../typer/sanity/modaler/arbeidsperiode';
+import { IPensjonsperiodeTekstinnhold } from '../../../typer/sanity/modaler/pensjonsperiode';
+import { ITidligereSamoboereTekstinnhold } from '../../../typer/sanity/modaler/tidligereSamboere';
+import { ESanitySteg } from '../../../typer/sanity/sanity';
 import { IDinLivssituasjonFeltTyper } from '../../../typer/skjema';
 import { Årsak } from '../../../typer/utvidet';
 import { nullstilteEøsFelterForBarn } from '../../../utils/barn';
@@ -25,14 +29,12 @@ import { dagensDato } from '../../../utils/dato';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import { nullstilteEøsFelterForSøker } from '../../../utils/søker';
-import { arbeidsperiodeFeilmelding } from '../../Felleskomponenter/Arbeidsperiode/arbeidsperiodeSpråkUtils';
 import { ArbeidsperiodeSpørsmålsId } from '../../Felleskomponenter/Arbeidsperiode/spørsmål';
-import { pensjonsperiodeFeilmelding } from '../../Felleskomponenter/Pensjonsmodal/språkUtils';
 import { PensjonsperiodeSpørsmålId } from '../../Felleskomponenter/Pensjonsmodal/spørsmål';
-import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { idNummerLand } from '../EøsSteg/idnummerUtils';
 import { OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
 
+import { IDinLivssituasjonTekstinnhold } from './innholdTyper';
 import { DinLivssituasjonSpørsmålId, SamboerSpørsmålId } from './spørsmål';
 
 export const useDinLivssituasjon = (): {
@@ -48,9 +50,22 @@ export const useDinLivssituasjon = (): {
     leggTilPensjonsperiode: (periode: IPensjonsperiode) => void;
     fjernPensjonsperiode: (periode: IPensjonsperiode) => void;
 } => {
-    const { søknad, settSøknad, erUtvidet } = useApp();
+    const { søknad, settSøknad, erUtvidet, tekster, plainTekst } = useApp();
     const { skalTriggeEøsForSøker, søkerTriggerEøs, settSøkerTriggerEøs, erEøsLand } = useEøs();
     const søker = søknad.søker;
+    const teksterForSteg: IDinLivssituasjonTekstinnhold = tekster()[ESanitySteg.DIN_LIVSSITUASJON];
+
+    const teksterForArbeidsperiode: IArbeidsperiodeTekstinnhold =
+        tekster()[ESanitySteg.FELLES].modaler.arbeidsperiode.søker;
+    const teksterForPensjonsperiode: IPensjonsperiodeTekstinnhold =
+        tekster()[ESanitySteg.FELLES].modaler.pensjonsperiode.søker;
+    const teksterForTidligereSamboere: ITidligereSamoboereTekstinnhold =
+        tekster()[ESanitySteg.FELLES].modaler.tidligereSamboere.søker;
+
+    const harSamboerSpørsmålDokument =
+        søknad.søker.sivilstand.type === ESivilstand.GIFT
+            ? teksterForSteg.harSamboerNaaGift
+            : teksterForSteg.harSamboerNaa;
 
     /*---- UTVIDET BARNETRYGD ----*/
     const årsak = useFelt<Årsak | ''>({
@@ -59,13 +74,14 @@ export const useDinLivssituasjon = (): {
         valideringsfunksjon: (felt: FeltState<Årsak | ''>) => {
             return felt.verdi !== ''
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={'omdeg.velgårsak.feilmelding'} />);
+                : feil(felt, plainTekst(teksterForSteg.hvorforSoekerUtvidet.feilmelding));
         },
         skalFeltetVises: () => erUtvidet,
     });
 
     const separertEnkeSkilt = useJaNeiSpmFelt({
         søknadsfelt: søker.utvidet.spørsmål.separertEnkeSkilt,
+        feilmelding: teksterForSteg.separertEnkeSkilt.feilmelding,
         feilmeldingSpråkId: 'omdeg.separertellerskilt.feilmelding',
         skalSkjules: søker.sivilstand.type !== ESivilstand.GIFT || !erUtvidet,
     });
@@ -79,7 +95,7 @@ export const useDinLivssituasjon = (): {
         valideringsfunksjon: (felt: FeltState<ESvar | null>) => {
             return felt.verdi !== null
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={'omdeg.separertskiltiutlandet.feilmelding'} />);
+                : feil(felt, plainTekst(teksterForSteg.separertEnkeSkiltUtland.feilmelding));
         },
         skalFeltetVises: avhengigheter => {
             return (
@@ -101,6 +117,7 @@ export const useDinLivssituasjon = (): {
     /*---- NÅVÆRENDE SAMBOER ----*/
     const harSamboerNå = useJaNeiSpmFelt({
         søknadsfelt: søker.utvidet.spørsmål.harSamboerNå,
+        feilmelding: harSamboerSpørsmålDokument.feilmelding,
         feilmeldingSpråkId:
             søker.sivilstand.type === ESivilstand.GIFT
                 ? 'omdeg.samboernå.gift.feilmelding'
@@ -113,6 +130,7 @@ export const useDinLivssituasjon = (): {
             id: SamboerSpørsmålId.nåværendeSamboerNavn,
             svar: søknad.søker.utvidet.nåværendeSamboer?.navn.svar || '',
         },
+        feilmelding: teksterForSteg.samboersNavn.feilmelding,
         feilmeldingSpråkId: 'omdeg.samboerNavn.feilmelding',
         skalVises: harSamboerNå.verdi === ESvar.JA,
     });
@@ -184,7 +202,8 @@ export const useDinLivssituasjon = (): {
     /*--- TIDLIGERE SAMBOER ---*/
     const hattAnnenSamboerForSøktPeriode = useJaNeiSpmFelt({
         søknadsfelt: søker.utvidet.spørsmål.hattAnnenSamboerForSøktPeriode,
-        feilmeldingSpråkId: 'omdeg.tidligereSamboer.feilmelding',
+        feilmelding: teksterForSteg.hattAnnenSamboerForSoektPeriode.feilmelding,
+        feilmeldingSpråkId: 'omdeg.annensamboer.feilmelding',
         skalSkjules: !erUtvidet,
     });
 
@@ -203,7 +222,7 @@ export const useDinLivssituasjon = (): {
                 (avhengigheter?.hattAnnenSamboerForSøktPeriode.verdi === ESvar.JA &&
                     felt.verdi.length)
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={'omdeg.tidligereSamboer.feilmelding'} />);
+                : feil(felt, plainTekst(teksterForTidligereSamboere.leggTilFeilmelding));
         },
     });
 
@@ -211,11 +230,13 @@ export const useDinLivssituasjon = (): {
 
     const erAsylsøker = useJaNeiSpmFelt({
         søknadsfelt: søker.erAsylsøker,
+        feilmelding: teksterForSteg.erAsylsoeker.feilmelding,
         feilmeldingSpråkId: 'omdeg.asylsøker.feilmelding',
     });
 
     const arbeidIUtlandet = useJaNeiSpmFelt({
         søknadsfelt: søker.arbeidIUtlandet,
+        feilmelding: teksterForSteg.arbeidUtenforNorge.feilmelding,
         feilmeldingSpråkId: 'eøs.arbeid-utland.feilmelding',
     });
 
@@ -232,12 +253,18 @@ export const useDinLivssituasjon = (): {
             return avhengigheter?.arbeidIUtlandet.verdi === ESvar.NEI ||
                 (avhengigheter?.arbeidIUtlandet.verdi === ESvar.JA && felt.verdi.length)
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={arbeidsperiodeFeilmelding(true)} />);
+                : feil(
+                      felt,
+                      plainTekst(teksterForArbeidsperiode.leggTilFeilmelding, {
+                          gjelderUtland: true,
+                      })
+                  );
         },
     });
 
     const mottarUtenlandspensjon = useJaNeiSpmFelt({
         søknadsfelt: søker.mottarUtenlandspensjon,
+        feilmelding: teksterForSteg.pensjonUtland.feilmelding,
         feilmeldingSpråkId: 'omdeg.pensjonutland.feilmelding',
     });
 
@@ -254,7 +281,12 @@ export const useDinLivssituasjon = (): {
             return avhengigheter?.mottarUtenlandspensjon.verdi === ESvar.NEI ||
                 (avhengigheter?.mottarUtenlandspensjon.verdi === ESvar.JA && felt.verdi.length)
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={pensjonsperiodeFeilmelding(true)} />);
+                : feil(
+                      felt,
+                      plainTekst(teksterForPensjonsperiode.leggTilFeilmelding, {
+                          gjelderUtland: true,
+                      })
+                  );
         },
     });
 

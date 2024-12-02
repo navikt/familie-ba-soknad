@@ -23,8 +23,16 @@ spec:
   readiness:
     path: /internal/isReady
     initialDelay: 5
+  observability:
+    autoInstrumentation:
+      enabled: true
+      runtime: nodejs
+  prometheus:
+    enabled: true
+    path: /internal/metrics
   ingresses:
-    - https://familie-ba-soknad.ekstern.dev.nav.no/barnetrygd/soknad
+    - "https://familie-ba-soknad.intern.dev.nav.no/barnetrygd/soknad"
+    - "https://familie-ba-soknad.ansatt.dev.nav.no/barnetrygd/soknad"
   accessPolicy:
     outbound:
       rules:

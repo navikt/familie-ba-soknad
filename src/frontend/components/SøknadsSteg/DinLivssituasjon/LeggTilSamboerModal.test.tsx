@@ -4,6 +4,8 @@ import { render, within } from '@testing-library/react';
 import { mockDeep } from 'jest-mock-extended';
 import { act } from 'react-dom/test-utils';
 
+import { ESvar } from '@navikt/familie-form-elements';
+
 import { ESøknadstype } from '../../../typer/kontrakt/generelle';
 import { ISøknad } from '../../../typer/søknad';
 import {
@@ -25,16 +27,20 @@ const søknad = mockDeep<ISøknad>({
     søker: {
         utvidet: {
             spørsmål: {
-                harSamboerNå: { id: DinLivssituasjonSpørsmålId.harSamboerNå, svar: null },
+                harSamboerNå: {
+                    id: DinLivssituasjonSpørsmålId.harSamboerNå,
+                    svar: null,
+                },
+                hattAnnenSamboerForSøktPeriode: {
+                    id: DinLivssituasjonSpørsmålId.hattAnnenSamboerForSøktPeriode,
+                    svar: null,
+                },
             },
             nåværendeSamboer: null,
             tidligereSamboere: [],
         },
     },
 });
-
-//Feilmelding dukker både opp under spørsmålet og i feiloppsummeringen
-const antallFeilmeldingerPerFeil = 2;
 
 describe('LeggTilSamboerModal', () => {
     beforeEach(() => {
@@ -43,42 +49,43 @@ describe('LeggTilSamboerModal', () => {
     it('Viser riktige feilmeldinger ved ingen utfylte felt av tidligere samboer', async () => {
         spyOnUseApp(søknad);
 
-        const { getByText, getAllByText, findByRole, queryByText } = render(
+        const { getByText, getByTestId, findByTestId } = render(
             <TestProvidereMedEkteTekster mocketNettleserHistorikk={['/din-livssituasjon']}>
                 <DinLivssituasjon />
             </TestProvidereMedEkteTekster>
         );
 
-        const hattAnnenSamboerForSøktPeriode: HTMLElement = await findByRole('group', {
-            name: /Har du hatt samboer tidligere i perioden du søker barnetrygd for?/i,
-        });
+        const hattAnnenSamboerSpørsmål = await findByTestId('hatt-annen-samboer-i-perioden');
 
-        const jaKnapp: HTMLElement = within(hattAnnenSamboerForSøktPeriode).getByText('Ja');
-        act(() => jaKnapp.click());
+        const jaKnapp: HTMLElement | undefined = within(hattAnnenSamboerSpørsmål)
+            .getAllByRole('radio')
+            .find(radio => radio.getAttribute('value') === ESvar.JA);
+        expect(jaKnapp).toBeDefined();
+        act(() => jaKnapp!.click());
 
         const leggTilSamboerKnapp: HTMLElement = getByText('Legg til samboer');
         act(() => leggTilSamboerKnapp.click());
 
-        const gåVidereKnapp = getAllByText('Legg til samboer');
-        act(() => gåVidereKnapp[2].click());
+        const gåVidereKnapp = getByTestId('submit-knapp-i-modal');
+        act(() => gåVidereKnapp.click());
 
-        const feiloppsummeringstittel = queryByText(
-            'Du må rette opp eller svare på følgende spørsmål for å gå videre'
+        const feiloppsummering = getByTestId('skjema-feiloppsummering');
+        expect(feiloppsummering).toBeInTheDocument();
+
+        const feilmeldingSamboerNavn = getByTestId('feilmelding-utvidet-tidligere-samboer-navn');
+        expect(feilmeldingSamboerNavn).toBeInTheDocument();
+
+        const feilmeldingFnr = getByTestId('feilmelding-utvidet-tidligere-samboer-fnr');
+        expect(feilmeldingFnr).toBeInTheDocument();
+
+        const feilmeldingForholdStart = getByTestId(
+            'feilmelding-utvidet-tidligere-samboer-samboerFraDato'
         );
-        expect(feiloppsummeringstittel).toBeInTheDocument();
-        const navnFeilmelding = getAllByText('Du må oppgi samboerens navn for å gå videre');
-        expect(navnFeilmelding).toHaveLength(antallFeilmeldingerPerFeil);
-        const fødselsnummerFeilmelding = getAllByText(
-            'Du må oppgi samboerens fødselsnummer eller d-nummer for å gå videre'
+        expect(feilmeldingForholdStart).toBeInTheDocument();
+
+        const feilmeldingForholdSlutt = getByTestId(
+            'feilmelding-utvidet-tidligere-samboer-samboerTilDato'
         );
-        expect(fødselsnummerFeilmelding).toHaveLength(antallFeilmeldingerPerFeil);
-        const forholdStartFeilmelding = getAllByText(
-            'Du må oppgi når samboerforholdet startet for å gå videre'
-        );
-        expect(forholdStartFeilmelding).toHaveLength(antallFeilmeldingerPerFeil);
-        const forholdSluttFeilmelding = getAllByText(
-            'Du må oppgi når samboerforholdet ble avsluttet for å gå videre'
-        );
-        expect(forholdSluttFeilmelding).toHaveLength(antallFeilmeldingerPerFeil);
+        expect(feilmeldingForholdSlutt).toBeInTheDocument();
     });
 });
