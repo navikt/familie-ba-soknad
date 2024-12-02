@@ -15,7 +15,7 @@ import { nullstilteEøsFelterForSøker } from '../../../utils/søker';
 
 import { OmBarnaDineSpørsmålId } from './spørsmål';
 import useBarnCheckboxFelt from './useBarnCheckboxFelt';
-import { genererOppdaterteBarn } from './utils';
+import { avdødPartnerForelderSpørsmålDokument, genererOppdaterteBarn } from './utils';
 
 export const useOmBarnaDine = (): {
     skjema: ISkjema<IOmBarnaDineFeltTyper, string>;
@@ -24,8 +24,10 @@ export const useOmBarnaDine = (): {
     oppdaterSøknad: () => void;
     validerAlleSynligeFelter: () => void;
 } => {
-    const { søknad, settSøknad } = useApp();
+    const { søknad, settSøknad, tekster } = useApp();
     const { skalTriggeEøsForBarn, barnSomTriggerEøs, settBarnSomTriggerEøs, erEøsLand } = useEøs();
+
+    const omBarnaTekster = tekster().OM_BARNA;
 
     const erNoenAvBarnaFosterbarn = useJaNeiSpmFelt({
         søknadsfelt: søknad.erNoenAvBarnaFosterbarn,
@@ -107,6 +109,7 @@ export const useOmBarnaDine = (): {
 
     const erAvdødPartnerForelder = useJaNeiSpmFelt({
         søknadsfelt: søknad.erAvdødPartnerForelder,
+        feilmelding: avdødPartnerForelderSpørsmålDokument(søknad, omBarnaTekster).feilmelding,
         feilmeldingSpråkId: avdødPartnerForelderFeilmelding(),
         skalSkjules: !(
             søknad.søker.sivilstand.type === ESivilstand.ENKE_ELLER_ENKEMANN ||
