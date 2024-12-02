@@ -166,7 +166,6 @@ const OmBarnaDine: React.FC = () => {
                         }
                         visFeilmelding={skjema.visFeilmeldinger}
                     />
-                    {/* TODO: Fiks feilmelding vises ikke */}
                     <JaNeiSpmForSanity
                         skjema={skjema}
                         felt={skjema.felter.erAvdødPartnerForelder}
