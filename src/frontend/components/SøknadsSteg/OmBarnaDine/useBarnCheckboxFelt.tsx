@@ -6,15 +6,25 @@ import { Avhengigheter, feil, Felt, FeltState, ok, useFelt } from '@navikt/famil
 import { useApp } from '../../../context/AppContext';
 import { barnDataKeySpørsmål } from '../../../typer/barn';
 import { BarnetsId } from '../../../typer/common';
+import { FlettefeltVerdier, LocaleRecordBlock } from '../../../typer/sanity/sanity';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
-const useBarnCheckboxFelt = (
-    datafeltNavn: barnDataKeySpørsmål,
-    feilmeldingSpråkId: string,
-    avhengighet: Felt<ESvar | null>,
-    avhengigJaNeiSpmSvarCondition = ESvar.JA
-) => {
-    const { søknad } = useApp();
+const useBarnCheckboxFelt = ({
+    datafeltNavn,
+    feilmelding,
+    flettefelter,
+    feilmeldingSpråkId,
+    avhengighet,
+    avhengigJaNeiSpmSvarCondition = ESvar.JA,
+}: {
+    datafeltNavn: barnDataKeySpørsmål;
+    feilmelding?: LocaleRecordBlock;
+    flettefelter?: FlettefeltVerdier;
+    feilmeldingSpråkId: string;
+    avhengighet: Felt<ESvar | null>;
+    avhengigJaNeiSpmSvarCondition?: ESvar;
+}) => {
+    const { søknad, plainTekst } = useApp();
     const barn = søknad.barnInkludertISøknaden;
 
     const skalFeltetVises = jaNeiSpmVerdi => jaNeiSpmVerdi === avhengigJaNeiSpmSvarCondition;
@@ -27,7 +37,14 @@ const useBarnCheckboxFelt = (
         valideringsfunksjon: (felt: FeltState<BarnetsId[]>) => {
             return felt.verdi.length > 0
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={feilmeldingSpråkId} />);
+                : feil(
+                      felt,
+                      feilmelding ? (
+                          plainTekst(feilmelding, { ...flettefelter })
+                      ) : (
+                          <SpråkTekst id={feilmeldingSpråkId} />
+                      )
+                  );
         },
         skalFeltetVises: (avhengigheter: Avhengigheter) => {
             return avhengigheter && avhengigheter.jaNeiSpm
