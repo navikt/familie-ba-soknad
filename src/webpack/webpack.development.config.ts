@@ -34,18 +34,21 @@ const devConfig: webpack.Configuration = mergeWithRules({
             overlay: true,
         },
         open: [basePath],
-        proxy: {
-            [`${basePath}modellversjon`]: `http://localhost:55554`,
-            [`${basePath}api`]: `http://localhost:55554`,
-            [`${basePath}dokument`]: `http://localhost:55554`,
-            [`${basePath}toggles`]: `http://localhost:55554`,
-            [`${basePath}konverter`]: `http://localhost:55554`,
-            // Essentially en workaround for https://github.com/nrwl/nx/issues/3859
-            '*': {
-                target: 'http://localhost:3000',
-                pathRewrite: () => basePath,
-            },
+        historyApiFallback: {
+            index: basePath,
         },
+        proxy: [
+            {
+                context: [
+                    `${basePath}modellversjon`,
+                    `${basePath}api`,
+                    `${basePath}dokument`,
+                    `${basePath}toggles`,
+                    `${basePath}konverter`,
+                ],
+                target: 'http://localhost:55554',
+            },
+        ],
         static: {
             publicPath: basePath,
         },
