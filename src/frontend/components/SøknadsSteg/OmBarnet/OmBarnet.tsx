@@ -12,6 +12,7 @@ import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
+import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import { SkjemaCheckbox } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
 import SkjemaFieldset from '../../Felleskomponenter/SkjemaFieldset';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -45,11 +46,11 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
     } = useOmBarnet(barnetsId);
 
     const stegTekster = tekster()[ESanitySteg.OM_BARNET];
-    const { omBarnetGuide } = stegTekster;
+    const { omBarnetTittel, omBarnetGuide } = stegTekster;
 
     return barn ? (
         <Steg
-            tittel={<SpråkTekst id={'ombarnet.sidetittel'} values={{ navn: barn.navn }} />}
+            tittel={<TekstBlock block={omBarnetTittel} flettefelter={{ barnetsNavn: barn.navn }} />}
             guide={omBarnetGuide}
             skjema={{
                 validerFelterOgVisFeilmelding,

@@ -1,8 +1,26 @@
-import { LocaleRecordBlock, LocaleRecordString } from '../../../typer/sanity/sanity';
+import {
+    ISanitySpørsmålDokument,
+    LocaleRecordBlock,
+    LocaleRecordString,
+} from '../../../typer/sanity/sanity';
 
 export interface IOmBarnetTekstinnhold {
     omBarnetTittel: LocaleRecordBlock;
     omBarnetTittelUtenFlettefelt: LocaleRecordBlock;
     omBarnetGuide: LocaleRecordBlock;
     barnetsAndreForelder: LocaleRecordString;
+    opplystFosterbarn: LocaleRecordBlock;
+    opplystInstitusjon: LocaleRecordBlock;
+    institusjonIUtlandetCheckbox: LocaleRecordBlock;
+    institusjonNavn: ISanitySpørsmålDokument;
+    institusjonAdresse: ISanitySpørsmålDokument;
+    institusjonPostnummer: ISanitySpørsmålDokument;
+    institusjonStartdato: ISanitySpørsmålDokument;
+    institusjonSluttdato: ISanitySpørsmålDokument;
+    institusjonUkjentSluttCheckbox: LocaleRecordBlock;
+    opplystBarnOppholdUtenforNorge: LocaleRecordBlock;
+    planlagtBoSammenhengendeINorge: ISanitySpørsmålDokument;
+    opplystFaarHarFaattEllerSoektYtelse: LocaleRecordBlock;
+    paagaaendeSoeknadYtelse: ISanitySpørsmålDokument;
+    hvilketLandYtelse: ISanitySpørsmålDokument;
 }
