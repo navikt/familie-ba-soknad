@@ -23,4 +23,14 @@ export interface IOmBarnetTekstinnhold {
     opplystFaarHarFaattEllerSoektYtelse: LocaleRecordBlock;
     paagaaendeSoeknadYtelse: ISanitySpørsmålDokument;
     hvilketLandYtelse: ISanitySpørsmålDokument;
+    svaralternativSammeSomAnnenForelder: LocaleRecordBlock;
+    svaralternativAnnenForelder: LocaleRecordBlock;
+    hvemErBarnSinAndreForelder: ISanitySpørsmålDokument;
+    navnAndreForelder: ISanitySpørsmålDokument;
+    foedselsnummerDnummerAndreForelder: ISanitySpørsmålDokument;
+    foedselsdatoAndreForelder: ISanitySpørsmålDokument;
+    arbeidUtenforNorgeAndreForelder: ISanitySpørsmålDokument;
+    pensjonUtlandAndreForelder: ISanitySpørsmålDokument;
+    boddSammenMedAndreForelder: ISanitySpørsmålDokument;
+    naarFlyttetFraAndreForelder: ISanitySpørsmålDokument;
 }

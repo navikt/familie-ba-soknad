@@ -5,12 +5,13 @@ import styled from 'styled-components';
 import { Radio, RadioGroup } from '@navikt/ds-react';
 import { ISkjema } from '@navikt/familie-skjema';
 
+import { useApp } from '../../../context/AppContext';
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { AlternativtSvarForInput } from '../../../typer/common';
 import { IOmBarnetFeltTyper } from '../../../typer/skjema';
-import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 
-import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from './spørsmål';
+import { OmBarnetSpørsmålsId } from './spørsmål';
 
 const StyledRadioGroup = styled(RadioGroup)`
     && label:not(:last-child) {
@@ -23,20 +24,27 @@ const SammeSomAnnetBarnRadio: React.FC<{
     skjema: ISkjema<IOmBarnetFeltTyper, string>;
     barnetsNavn: string;
 }> = ({ andreBarnSomErFyltUt, skjema, barnetsNavn }) => {
+    const { tekster } = useApp();
     const felt = skjema.felter.sammeForelderSomAnnetBarn;
+    const omBarnetTekster = tekster().OM_BARNET;
+    const {
+        svaralternativSammeSomAnnenForelder,
+        svaralternativAnnenForelder,
+        hvemErBarnSinAndreForelder,
+    } = omBarnetTekster;
 
     const radios = andreBarnSomErFyltUt
         .map(barn => ({
             label: (
-                <SpråkTekst
-                    id={'ombarnet.svaralternativ.samme-som-barn'}
-                    values={{ navn: barn.navn }}
+                <TekstBlock
+                    block={svaralternativSammeSomAnnenForelder}
+                    flettefelter={{ barnetsNavn: barn.navn }}
                 />
             ),
             value: barn.id,
         }))
         .concat({
-            label: <SpråkTekst id={'ombarnet.svaralternativ.annen-forelder'} />,
+            label: <TekstBlock block={svaralternativAnnenForelder} />,
             value: AlternativtSvarForInput.ANNEN_FORELDER,
         });
 
@@ -44,9 +52,9 @@ const SammeSomAnnetBarnRadio: React.FC<{
         <StyledRadioGroup
             {...felt.hentNavInputProps(skjema.visFeilmeldinger)}
             legend={
-                <SpråkTekst
-                    id={omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.sammeForelderSomAnnetBarn]}
-                    values={{ barn: barnetsNavn }}
+                <TekstBlock
+                    block={hvemErBarnSinAndreForelder.sporsmal}
+                    flettefelter={{ barnetsNavn: barnetsNavn }}
                 />
             }
             name={OmBarnetSpørsmålsId.sammeForelderSomAnnetBarn}
