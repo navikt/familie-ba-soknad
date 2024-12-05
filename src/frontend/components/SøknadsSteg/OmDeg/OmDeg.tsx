@@ -5,6 +5,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
 import { useFeatureToggles } from '../../../context/FeatureToggleContext';
+import { PersonType } from '../../../typer/personType';
 import { IUtenlandsoppholdTekstinnhold } from '../../../typer/sanity/modaler/utenlandsopphold';
 import { ESanitySteg, Typografi } from '../../../typer/sanity/sanity';
 import { uppercaseFørsteBokstav } from '../../../utils/visning';
@@ -138,6 +139,7 @@ const OmDeg: React.FC = () => {
                 <UtenlandsoppholdModal
                     erÅpen={utenlandsoppholdmodalErÅpen}
                     lukkModal={lukkUtenlandsoppholdmodal}
+                    personType={PersonType.Søker}
                     onLeggTilUtenlandsperiode={leggTilUtenlandsperiode}
                     forklaring={plainTekst(leggTilPeriodeForklaring)}
                 />

@@ -2,8 +2,10 @@ import React from 'react';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
+import { useApp } from '../../../context/AppContext';
 import { IArbeidsperiode } from '../../../typer/perioder';
 import { PersonType } from '../../../typer/personType';
+import { IArbeidsperiodeTekstinnhold } from '../../../typer/sanity/modaler/arbeidsperiode';
 import { dagensDato, gårsdagensDato } from '../../../utils/dato';
 import { trimWhiteSpace, visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
 import { minTilDatoForUtbetalingEllerArbeidsperiode } from '../../../utils/perioder';
@@ -11,6 +13,7 @@ import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import Datovelger from '../Datovelger/Datovelger';
 import { LandDropdown } from '../Dropdowns/LandDropdown';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
+import TekstBlock from '../Sanity/TekstBlock';
 import { SkjemaCheckbox } from '../SkjemaCheckbox/SkjemaCheckbox';
 import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeiloppsummering';
 import { SkjemaFeltInput } from '../SkjemaFeltInput/SkjemaFeltInput';
@@ -38,8 +41,12 @@ export const ArbeidsperiodeModal: React.FC<ArbeidsperiodeModalProps> = ({
     erDød = false,
     forklaring = undefined,
 }) => {
+    const { tekster } = useApp();
     const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } =
         useArbeidsperiodeSkjema(gjelderUtlandet, personType, erDød);
+
+    const teksterForModal: IArbeidsperiodeTekstinnhold =
+        tekster().FELLES.modaler.arbeidsperiode[personType];
 
     const {
         arbeidsperiodeAvsluttet,
@@ -85,10 +92,6 @@ export const ArbeidsperiodeModal: React.FC<ArbeidsperiodeModalProps> = ({
         nullstillSkjema();
     };
 
-    const modalTittel = gjelderUtlandet
-        ? 'felles.flerearbeidsperioderutland.tittel'
-        : 'felles.flerearbeidsperiodernorge.tittel';
-
     const periodenErAvsluttet =
         arbeidsperiodeAvsluttet.verdi === ESvar.JA ||
         (personType === PersonType.AndreForelder && erDød);
@@ -98,10 +101,11 @@ export const ArbeidsperiodeModal: React.FC<ArbeidsperiodeModalProps> = ({
     return (
         <SkjemaModal
             erÅpen={erÅpen}
-            modalTittelSpråkId={modalTittel}
+            tittel={teksterForModal.tittel}
+            flettefelter={{ gjelderUtland: gjelderUtlandet }}
             forklaring={forklaring}
             onSubmitCallback={onLeggTil}
-            submitKnappSpråkId={'felles.leggtilarbeidsperiode.knapp'}
+            submitKnappTekst={<TekstBlock block={teksterForModal.leggTilKnapp} />}
             lukkModal={lukkModal}
             valideringErOk={valideringErOk}
             onAvbrytCallback={nullstillSkjema}

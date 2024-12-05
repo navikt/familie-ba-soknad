@@ -15,6 +15,9 @@ import {
 } from '../../../utils/barn';
 import { EøsBarnSpørsmålId } from '../EøsSteg/Barn/spørsmål';
 
+import { IOmBarnaTekstinnhold } from './innholdTyper';
+import { OmBarnaDineSpørsmålId } from './spørsmål';
+
 export const genererSvarForSpørsmålBarn = (barn: IBarnMedISøknad, felt: Felt<string[]>): ESvar =>
     felt.verdi.includes(barn.id) ? ESvar.JA : ESvar.NEI;
 
@@ -24,6 +27,20 @@ export const genererSvarForOppfølgningspørsmålBarn = (
     nullstillingsVerdi
 ) => {
     return svarPåGrunnSpørsmål === ESvar.JA ? søknadsfelt.svar : nullstillingsVerdi;
+};
+
+export const avdødPartnerForelderSpørsmålDokument = (
+    søknad: ISøknad,
+    omBarnaTekster: IOmBarnaTekstinnhold
+) => {
+    switch (søknad.erAvdødPartnerForelder.id) {
+        case OmBarnaDineSpørsmålId.erOppgittAvdødPartnerForelder:
+            return omBarnaTekster.oppgittEnkeEnkemann;
+        case OmBarnaDineSpørsmålId.erFolkeregAvdødPartnerForelder:
+            return omBarnaTekster.folkeregistrertGjenlevende;
+        default:
+            return omBarnaTekster.folkeregistrertEnkeEnkemann;
+    }
 };
 
 export const genererOppdaterteBarn = (

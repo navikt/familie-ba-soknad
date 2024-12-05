@@ -8,10 +8,9 @@ import { useApp } from '../../../context/AppContext';
 import { barnDataKeySpørsmål } from '../../../typer/barn';
 import { BarnetsId } from '../../../typer/common';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
-import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 interface Props {
-    legendSpråkId: string;
+    legendTekst: ReactNode;
     skjemafelt: Felt<BarnetsId[]>;
     visFeilmelding: boolean;
     søknadsdatafelt: barnDataKeySpørsmål;
@@ -20,7 +19,7 @@ interface Props {
 }
 
 const HvilkeBarnCheckboxGruppe: React.FC<Props> = ({
-    legendSpråkId,
+    legendTekst,
     skjemafelt,
     søknadsdatafelt,
     nullstillValgteBarn,
@@ -46,7 +45,7 @@ const HvilkeBarnCheckboxGruppe: React.FC<Props> = ({
         <KomponentGruppe>
             <CheckboxGroup
                 aria-live={'polite'}
-                legend={<SpråkTekst id={legendSpråkId} />}
+                legend={legendTekst}
                 {...skjemafelt.hentNavBaseSkjemaProps(visFeilmelding)}
                 error={visFeilmelding ? skjemafelt.feilmelding : ''}
                 onChange={value => settValgteBarn(value)}

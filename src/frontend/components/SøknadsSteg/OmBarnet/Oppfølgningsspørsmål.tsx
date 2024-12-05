@@ -278,6 +278,7 @@ const Oppfølgningsspørsmål: React.FC<{
                     erÅpen={utenlandsmodalErÅpen}
                     lukkModal={lukkUtenlandsmodal}
                     onLeggTilUtenlandsperiode={leggTilUtenlandsperiode}
+                    personType={PersonType.Barn}
                     barn={barn}
                     forklaring={plainTekst(leggTilPeriodeForklaring)}
                 />

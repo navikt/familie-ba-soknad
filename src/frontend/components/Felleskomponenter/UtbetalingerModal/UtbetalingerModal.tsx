@@ -3,8 +3,10 @@ import React from 'react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Valideringsstatus } from '@navikt/familie-skjema';
 
+import { useApp } from '../../../context/AppContext';
 import { IUtbetalingsperiode } from '../../../typer/perioder';
 import { PersonType } from '../../../typer/personType';
+import { IAndreUtbetalingerTekstinnhold } from '../../../typer/sanity/modaler/andreUtbetalinger';
 import { dagensDato, gårsdagensDato } from '../../../utils/dato';
 import { visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
 import { minTilDatoForUtbetalingEllerArbeidsperiode } from '../../../utils/perioder';
@@ -12,6 +14,7 @@ import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import Datovelger from '../Datovelger/Datovelger';
 import { LandDropdown } from '../Dropdowns/LandDropdown';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
+import TekstBlock from '../Sanity/TekstBlock';
 import { SkjemaCheckbox } from '../SkjemaCheckbox/SkjemaCheckbox';
 import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeiloppsummering';
 import SkjemaModal from '../SkjemaModal/SkjemaModal';
@@ -37,8 +40,12 @@ export const UtbetalingerModal: React.FC<UtbetalingerModalProps> = ({
     erDød,
     forklaring = undefined,
 }) => {
+    const { tekster } = useApp();
     const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } =
         useUtbetalingerSkjema(personType, barn, erDød);
+
+    const teksterForModal: IAndreUtbetalingerTekstinnhold =
+        tekster().FELLES.modaler.andreUtbetalinger[personType];
 
     const andreForelderErDød: boolean = personType === PersonType.AndreForelder && !!erDød;
     const periodenErAvsluttet: boolean =
@@ -87,10 +94,10 @@ export const UtbetalingerModal: React.FC<UtbetalingerModalProps> = ({
     return (
         <SkjemaModal
             erÅpen={erÅpen}
-            modalTittelSpråkId={'felles.flereytelser.knapp'}
+            tittel={teksterForModal.tittel}
             forklaring={forklaring}
             onSubmitCallback={onLeggTil}
-            submitKnappSpråkId={'felles.flereytelser.knapp'}
+            submitKnappTekst={<TekstBlock block={teksterForModal.leggTilKnapp} />}
             lukkModal={lukkModal}
             valideringErOk={valideringErOk}
             onAvbrytCallback={nullstillSkjema}
