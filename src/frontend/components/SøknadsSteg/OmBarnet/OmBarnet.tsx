@@ -9,23 +9,19 @@ import { BarnetsId } from '../../../typer/common';
 import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
 import { ESanitySteg } from '../../../typer/sanity/sanity';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
-import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
-import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
-import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
+import JaNeiSpmForSanity from '../../Felleskomponenter/JaNeiSpm/JaNeiSpmForSanity';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
-import { SkjemaCheckbox } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
+import { SkjemaCheckboxForSanity } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckboxForSanity';
 import SkjemaFieldset from '../../Felleskomponenter/SkjemaFieldset';
-import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 
 import AndreForelder from './AndreForelder';
 import { OmBarnetHeader } from './OmBarnetHeader';
 import Oppfølgningsspørsmål from './Oppfølgningsspørsmål';
-import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from './spørsmål';
 import { barnErUnder16År, useOmBarnet } from './useOmBarnet';
 
 const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
-    const { tekster } = useApp();
+    const { tekster, plainTekst } = useApp();
 
     const {
         skjema,
@@ -46,7 +42,16 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
     } = useOmBarnet(barnetsId);
 
     const stegTekster = tekster()[ESanitySteg.OM_BARNET];
-    const { omBarnetTittel, omBarnetGuide } = stegTekster;
+    const {
+        omBarnetTittel,
+        omBarnetGuide,
+        bosted,
+        bostedInfo,
+        borBarnFastSammenMedDeg,
+        deltBosted,
+        boddSammenMedAndreForelder,
+        naarFlyttetFraAndreForelder,
+    } = stegTekster;
 
     return barn ? (
         <Steg
@@ -103,52 +108,39 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                 />
             )}
             {skjema.felter.borFastMedSøker.erSynlig && (
-                <SkjemaFieldset legendSpråkId={'ombarnet.bosted'} dynamisk>
+                <SkjemaFieldset
+                    legend={plainTekst(bosted)}
+                    legendSpråkId={'ombarnet.bosted'}
+                    dynamisk
+                >
                     {barn.andreForelderErDød?.svar !== ESvar.JA && (
-                        <KomponentGruppe>
-                            <BodyLong>
-                                <SpråkTekst id={'ombarnet.bosted-info'} />
-                            </BodyLong>
-                            <EksternLenke
-                                lenkeSpråkId={'ombarnet.les-mer-om-bosted.lenke'}
-                                lenkeTekstSpråkId={'ombarnet.les-mer-om-bosted.lenketekst'}
-                                target="_blank"
-                            />
-                        </KomponentGruppe>
+                        <BodyLong>
+                            <TekstBlock block={bostedInfo} />
+                        </BodyLong>
                     )}
-                    <JaNeiSpm
+                    <JaNeiSpmForSanity
                         skjema={skjema}
                         felt={skjema.felter.borFastMedSøker}
-                        spørsmålTekstId={
-                            omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.borFastMedSøker]
-                        }
-                        språkValues={{ navn: barn.navn }}
+                        spørsmålDokument={borBarnFastSammenMedDeg}
+                        flettefelter={{ barnetsNavn: barn.navn }}
                     />
                     {skjema.felter.skriftligAvtaleOmDeltBosted.erSynlig && (
-                        <JaNeiSpm
+                        <JaNeiSpmForSanity
                             skjema={skjema}
                             felt={skjema.felter.skriftligAvtaleOmDeltBosted}
-                            spørsmålTekstId={
-                                omBarnetSpørsmålSpråkId[
-                                    OmBarnetSpørsmålsId.skriftligAvtaleOmDeltBosted
-                                ]
-                            }
-                            språkValues={{ navn: barn.navn }}
+                            spørsmålDokument={deltBosted}
+                            flettefelter={{ barnetsNavn: barn.navn }}
                         />
                     )}
                 </SkjemaFieldset>
             )}
             {skjema.felter.søkerHarBoddMedAndreForelder.erSynlig && (
                 <>
-                    <JaNeiSpm
+                    <JaNeiSpmForSanity
                         skjema={skjema}
                         felt={skjema.felter.søkerHarBoddMedAndreForelder}
-                        spørsmålTekstId={
-                            omBarnetSpørsmålSpråkId[
-                                OmBarnetSpørsmålsId.søkerHarBoddMedAndreForelder
-                            ]
-                        }
-                        språkValues={{ navn: barn.navn }}
+                        spørsmålDokument={boddSammenMedAndreForelder}
+                        flettefelter={{ barnetsNavn: barn.navn }}
                         aria-live="polite"
                     />
                     {skjema.felter.søkerFlyttetFraAndreForelderDato.erSynlig && (
@@ -156,28 +148,20 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                             <Datovelger
                                 felt={skjema.felter.søkerFlyttetFraAndreForelderDato}
                                 skjema={skjema}
-                                label={
-                                    <SpråkTekst
-                                        id={
-                                            omBarnetSpørsmålSpråkId[
-                                                OmBarnetSpørsmålsId.søkerFlyttetFraAndreForelderDato
-                                            ]
-                                        }
-                                    />
-                                }
+                                label={<TekstBlock block={naarFlyttetFraAndreForelder.sporsmal} />}
                                 disabled={
                                     skjema.felter.borMedAndreForelderCheckbox.verdi === ESvar.JA
                                 }
                                 avgrensDatoFremITid={true}
                             />
                             {skjema.felter.borMedAndreForelderCheckbox.erSynlig && (
-                                <SkjemaCheckbox
+                                <SkjemaCheckboxForSanity
                                     felt={skjema.felter.borMedAndreForelderCheckbox}
                                     visFeilmeldinger={skjema.visFeilmeldinger}
-                                    labelSpråkTekstId={
-                                        omBarnetSpørsmålSpråkId[
-                                            OmBarnetSpørsmålsId.søkerBorMedAndreForelder
-                                        ]
+                                    label={
+                                        <TekstBlock
+                                            block={naarFlyttetFraAndreForelder.checkboxLabel}
+                                        />
                                     }
                                 />
                             )}

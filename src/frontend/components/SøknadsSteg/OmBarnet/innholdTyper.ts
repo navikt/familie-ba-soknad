@@ -33,4 +33,8 @@ export interface IOmBarnetTekstinnhold {
     pensjonUtlandAndreForelder: ISanitySpørsmålDokument;
     boddSammenMedAndreForelder: ISanitySpørsmålDokument;
     naarFlyttetFraAndreForelder: ISanitySpørsmålDokument;
+    bosted: LocaleRecordString;
+    bostedInfo: LocaleRecordBlock;
+    borBarnFastSammenMedDeg: ISanitySpørsmålDokument;
+    deltBosted: ISanitySpørsmålDokument;
 }
