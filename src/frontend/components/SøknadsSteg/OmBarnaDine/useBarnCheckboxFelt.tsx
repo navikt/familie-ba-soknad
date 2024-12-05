@@ -9,6 +9,15 @@ import { BarnetsId } from '../../../typer/common';
 import { FlettefeltVerdier, LocaleRecordBlock } from '../../../typer/sanity/sanity';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
+interface IUseBarnCheckboxFeltProps {
+    datafeltNavn: barnDataKeySpørsmål;
+    feilmelding?: LocaleRecordBlock;
+    flettefelter?: FlettefeltVerdier;
+    feilmeldingSpråkId: string;
+    avhengighet: Felt<ESvar | null>;
+    avhengigJaNeiSpmSvarCondition?: ESvar;
+}
+
 const useBarnCheckboxFelt = ({
     datafeltNavn,
     feilmelding,
@@ -16,14 +25,7 @@ const useBarnCheckboxFelt = ({
     feilmeldingSpråkId,
     avhengighet,
     avhengigJaNeiSpmSvarCondition = ESvar.JA,
-}: {
-    datafeltNavn: barnDataKeySpørsmål;
-    feilmelding?: LocaleRecordBlock;
-    flettefelter?: FlettefeltVerdier;
-    feilmeldingSpråkId: string;
-    avhengighet: Felt<ESvar | null>;
-    avhengigJaNeiSpmSvarCondition?: ESvar;
-}) => {
+}: IUseBarnCheckboxFeltProps) => {
     const { søknad, plainTekst } = useApp();
     const barn = søknad.barnInkludertISøknaden;
 
