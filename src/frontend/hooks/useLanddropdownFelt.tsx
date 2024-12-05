@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 
 import { Alpha3Code } from 'i18n-iso-countries';
 
-import { feil, FeltState, ok, useFelt } from '@navikt/familie-skjema';
+import { feil, type FeltState, ok, useFelt } from '@navikt/familie-skjema';
 
 import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
 import { ISøknadSpørsmål } from '../typer/spørsmål';

@@ -1,4 +1,4 @@
-import { ISkjema, Valideringsstatus } from '@navikt/familie-skjema';
+import { type ISkjema, Valideringsstatus } from '@navikt/familie-skjema';
 
 import { basePath } from '../../shared-utils/Miljø';
 import { SkjemaFeltTyper } from '../typer/skjema';

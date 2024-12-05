@@ -39,7 +39,9 @@ const SkjemaModal: React.FC<{
             open={erÅpen}
             onClose={() => {
                 lukkModal();
-                onAvbrytCallback && onAvbrytCallback();
+                if (onAvbrytCallback) {
+                    onAvbrytCallback();
+                }
             }}
             width={'medium'}
             portal={true}

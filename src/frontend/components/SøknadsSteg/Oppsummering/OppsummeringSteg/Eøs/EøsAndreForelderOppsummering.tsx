@@ -3,7 +3,7 @@ import React, { Dispatch, SetStateAction } from 'react';
 import { useIntl } from 'react-intl';
 
 import { ESvar } from '@navikt/familie-form-elements';
-import { Felt, ISkjema } from '@navikt/familie-skjema';
+import type { Felt, ISkjema } from '@navikt/familie-skjema';
 
 import { useSpråk } from '../../../../../context/SpråkContext';
 import {

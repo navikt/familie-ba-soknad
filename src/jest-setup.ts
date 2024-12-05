@@ -4,7 +4,7 @@ import { RessursStatus } from '@navikt/familie-typer';
 
 import { preferredAxios } from './frontend/context/axios';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+// eslint-disable-next-line @typescript-eslint/no-var-requires,@typescript-eslint/no-require-imports
 const MockAdapter = require('axios-mock-adapter');
 
 window.scrollTo = () => {

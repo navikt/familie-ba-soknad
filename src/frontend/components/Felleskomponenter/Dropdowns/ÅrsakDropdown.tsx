@@ -7,7 +7,7 @@ import { hentÅrsak } from '../../../utils/språk';
 
 import StyledDropdown, { StyledDropdownProps } from './StyledDropdown';
 
-export interface ÅrsakDropdownProps extends StyledDropdownProps<Årsak | ''> {}
+export type ÅrsakDropdownProps = StyledDropdownProps<Årsak | ''>;
 
 const ÅrsakDropdown: React.FC<ÅrsakDropdownProps> = ({ ...props }) => {
     const { plainTekst, tekster } = useApp();
