@@ -20,6 +20,7 @@ import {
     ESanityFlettefeltverdi,
     ESanitySteg,
     FlettefeltVerdier,
+    formateringsfeilmeldingerPrefix,
     frittståendeOrdPrefix,
     kanIkkeBrukeSoeknadPrefix,
     LocaleRecordBlock,
@@ -30,6 +31,7 @@ import {
 } from '../typer/sanity/sanity';
 import {
     IFellesTekstInnhold,
+    IFormateringsfeilmeldingerTekstinnhold,
     IFrittståendeOrdTekstinnhold,
     IKanIkkeBrukeSoeknadTekstinnhold,
     IModalerTekstinnhold,
@@ -165,6 +167,9 @@ export const transformerTilTekstinnhold = (alleDokumenter: SanityDokument[]): IT
         navigasjon: struktrerInnholdForFelles(
             dokumenterFiltrertPåPrefix(fellesDokumenter, navigasjonPrefix)
         ) as INavigasjonTekstinnhold,
+        formateringsfeilmeldinger: struktrerInnholdForFelles(
+            dokumenterFiltrertPåPrefix(fellesDokumenter, formateringsfeilmeldingerPrefix)
+        ) as IFormateringsfeilmeldingerTekstinnhold,
         kanIkkeBrukeSoeknad: struktrerInnholdForFelles(
             dokumenterFiltrertPåPrefix(fellesDokumenter, kanIkkeBrukeSoeknadPrefix)
         ) as IKanIkkeBrukeSoeknadTekstinnhold,

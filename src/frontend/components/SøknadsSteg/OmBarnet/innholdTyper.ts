@@ -37,4 +37,5 @@ export interface IOmBarnetTekstinnhold {
     bostedInfo: LocaleRecordBlock;
     borBarnFastSammenMedDeg: ISanitySpørsmålDokument;
     deltBosted: ISanitySpørsmålDokument;
+    faarEllerHarFaattYtelseFraAnnetLand: ISanitySpørsmålDokument;
 }

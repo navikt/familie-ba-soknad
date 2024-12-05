@@ -7,7 +7,9 @@ import { feil, Felt, FeltState, ok, useFelt } from '@navikt/familie-skjema';
 import { idnr } from '@navikt/fnrvalidator';
 
 import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
+import { useApp } from '../context/AppContext';
 import { DatoMedUkjent } from '../typer/common';
+import { FlettefeltVerdier, LocaleRecordBlock, LocaleRecordString } from '../typer/sanity/sanity';
 import { IdNummerKey } from '../typer/skjema';
 import { ISøknadSpørsmål } from '../typer/spørsmål';
 import { trimWhiteSpace } from '../utils/hjelpefunksjoner';
@@ -16,22 +18,29 @@ import { formaterInitVerdiForInputMedUkjent } from '../utils/input';
 const useInputFeltMedUkjent = ({
     søknadsfelt,
     avhengighet,
+    feilmelding,
     feilmeldingSpråkId,
     erFnrInput = false,
     skalVises = true,
     customValidering = undefined,
     språkVerdier = {},
+    flettefelter,
     nullstillVedAvhengighetEndring = true,
 }: {
     søknadsfelt: ISøknadSpørsmål<DatoMedUkjent> | { id: IdNummerKey; svar: string } | null;
+    feilmelding?: LocaleRecordBlock | LocaleRecordString;
     avhengighet: Felt<ESvar>;
     feilmeldingSpråkId: string;
     erFnrInput?: boolean;
     skalVises?: boolean;
     customValidering?: ((felt: FeltState<string>) => FeltState<string>) | undefined;
+    flettefelter?: FlettefeltVerdier;
     språkVerdier?: Record<string, ReactNode>;
     nullstillVedAvhengighetEndring?: boolean;
 }) => {
+    const { tekster, plainTekst } = useApp();
+    const formateringsfeilmeldinger = tekster().FELLES.formateringsfeilmeldinger;
+
     const inputFelt = useFelt<string>({
         feltId: søknadsfelt ? søknadsfelt.id : uuidv4(),
         verdi: søknadsfelt
@@ -45,9 +54,16 @@ const useInputFeltMedUkjent = ({
 
             if (erFnrInput) {
                 if (feltVerdi === '') {
-                    return feil(felt, <SpråkTekst id={feilmeldingSpråkId} />);
+                    return feil(
+                        felt,
+                        feilmelding ? (
+                            plainTekst(feilmelding, flettefelter)
+                        ) : (
+                            <SpråkTekst id={feilmeldingSpråkId} values={språkVerdier} />
+                        )
+                    );
                 } else if (idnr(feltVerdi).status !== 'valid') {
-                    return feil(felt, <SpråkTekst id={'felles.fnr.feil-format.feilmelding'} />);
+                    return feil(felt, plainTekst(formateringsfeilmeldinger.ugyldigFoedselsnummer));
                 } else {
                     return customValidering ? customValidering(felt) : ok(felt);
                 }
@@ -56,7 +72,14 @@ const useInputFeltMedUkjent = ({
                     ? customValidering
                         ? customValidering(felt)
                         : ok(felt)
-                    : feil(felt, <SpråkTekst id={feilmeldingSpråkId} values={språkVerdier} />);
+                    : feil(
+                          felt,
+                          feilmelding ? (
+                              plainTekst(feilmelding, flettefelter)
+                          ) : (
+                              <SpråkTekst id={feilmeldingSpråkId} values={språkVerdier} />
+                          )
+                      );
             }
         },
         avhengigheter: { vetIkkeCheckbox: avhengighet, skalVises },
