@@ -36,11 +36,15 @@ const Oppsummering: React.FC = () => {
         // Gjør dette for syns skyld, men push scroller ikke vinduet
         navigate({ hash: elementId });
         const element = document.getElementById(elementId);
-        element && element.scrollIntoView && element.scrollIntoView();
+        if (element && element.scrollIntoView) {
+            element.scrollIntoView();
+        }
     };
 
     const gåVidereCallback = (): Promise<boolean> => {
-        feilAnchors[0] && scrollTilFeil(feilAnchors[0]);
+        if (feilAnchors[0]) {
+            scrollTilFeil(feilAnchors[0]);
+        }
         return Promise.resolve(feilAnchors.length === 0);
     };
 

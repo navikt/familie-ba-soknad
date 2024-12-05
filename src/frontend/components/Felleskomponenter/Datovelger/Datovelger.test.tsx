@@ -5,7 +5,7 @@ import { formatISO } from 'date-fns';
 import { mockDeep } from 'jest-mock-extended';
 import { IntlProvider } from 'react-intl';
 
-import { ISkjema, useFelt } from '@navikt/familie-skjema';
+import { type ISkjema, useFelt } from '@navikt/familie-skjema';
 
 import { ISODateString } from '../../../typer/common';
 import { SkjemaFeltTyper } from '../../../typer/skjema';

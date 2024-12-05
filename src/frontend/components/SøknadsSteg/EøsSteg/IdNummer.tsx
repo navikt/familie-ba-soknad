@@ -5,7 +5,7 @@ import { useIntl } from 'react-intl';
 import { v4 as uuidv4 } from 'uuid';
 
 import { ESvar } from '@navikt/familie-form-elements';
-import { feil, Felt, FeltState, ISkjema, ok, useFelt } from '@navikt/familie-skjema';
+import { feil, type Felt, type FeltState, type ISkjema, ok, useFelt } from '@navikt/familie-skjema';
 
 import { useSpråk } from '../../../context/SpråkContext';
 import useInputFeltMedUkjent from '../../../hooks/useInputFeltMedUkjent';

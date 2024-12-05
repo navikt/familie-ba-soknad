@@ -103,9 +103,12 @@ export const useBekreftelseOgStartSoknad = (): {
             logSkjemaStartet(søknadstype);
             navigate(nesteRoute.path);
         } else {
-            søknadstype === undefined && settSøknadstypeFeil(true);
-            bekreftelseStatus !== BekreftelseStatus.BEKREFTET &&
+            if (søknadstype === undefined) {
+                settSøknadstypeFeil(true);
+            }
+            if (bekreftelseStatus !== BekreftelseStatus.BEKREFTET) {
                 settBekreftelseStatus(BekreftelseStatus.FEIL);
+            }
         }
     };
 

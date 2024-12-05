@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import { BodyShort, Heading, Loader } from '@navikt/ds-react';
 import {
-    Ressurs,
+    type Ressurs,
     RessursStatus,
     byggTomRessurs,
     byggHenterRessurs,

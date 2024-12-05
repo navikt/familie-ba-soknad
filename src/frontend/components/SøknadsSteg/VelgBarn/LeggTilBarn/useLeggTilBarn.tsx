@@ -5,8 +5,8 @@ import { useIntl } from 'react-intl';
 import { ESvar } from '@navikt/familie-form-elements';
 import {
     feil,
-    FeltState,
-    ISkjema,
+    type FeltState,
+    type ISkjema,
     ok,
     useFelt,
     useSkjema,

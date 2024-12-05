@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 import { ESvar } from '@navikt/familie-form-elements';
-import { Felt, useFelt } from '@navikt/familie-skjema';
+import { type Felt, useFelt } from '@navikt/familie-skjema';
 
 import { ISODateString } from '../typer/common';
 import { ISøknadSpørsmål } from '../typer/spørsmål';
@@ -46,10 +46,10 @@ const useDatovelgerFeltMedJaNeiAvhengighet = ({
     useEffect(() => {
         const skalVises = skalFeltetVises(avhengighet.verdi);
 
-        skalVises && dato.verdi !== '' && dato.validerOgSettFelt(dato.verdi);
+        if (skalVises && dato.verdi !== '') dato.validerOgSettFelt(dato.verdi);
 
         return () => {
-            !skalFeltetVises(avhengighet.verdi) && dato.validerOgSettFelt('');
+            if (!skalFeltetVises(avhengighet.verdi)) dato.validerOgSettFelt('');
         };
     }, [avhengighet]);
 

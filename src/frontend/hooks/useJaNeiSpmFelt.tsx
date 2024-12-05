@@ -3,7 +3,14 @@ import React, { ReactNode, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import { ESvar } from '@navikt/familie-form-elements';
-import { feil, Felt, FeltState, ok, useFelt, Valideringsstatus } from '@navikt/familie-skjema';
+import {
+    feil,
+    type Felt,
+    type FeltState,
+    ok,
+    useFelt,
+    Valideringsstatus,
+} from '@navikt/familie-skjema';
 
 import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
 import { useApp } from '../context/AppContext';
@@ -95,7 +102,9 @@ const useJaNeiSpmFelt = ({
             }
 
             const skalVises = erRelevanteAvhengigheterValidert(avhengigheter);
-            skalVises && settHarBlittVist(true);
+            if (skalVises) {
+                settHarBlittVist(true);
+            }
 
             return skalVises;
         },

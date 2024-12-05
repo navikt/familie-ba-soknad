@@ -3,7 +3,7 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 
 import { ESvar } from '@navikt/familie-form-elements';
-import { ISkjema } from '@navikt/familie-skjema';
+import type { ISkjema } from '@navikt/familie-skjema';
 
 import { IBarnMedISøknad } from '../../../../typer/barn';
 import {

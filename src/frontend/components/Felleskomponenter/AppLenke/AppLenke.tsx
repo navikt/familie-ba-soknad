@@ -24,7 +24,9 @@ export const AppLenke: React.FC<Props> = ({ steg, hash, språkTekstId, returnTo,
 
     const clickHandler: MouseEventHandler = event => {
         event.preventDefault();
-        returnTo && settKomFra(returnTo);
+        if (returnTo) {
+            settKomFra(returnTo);
+        }
         navigate({
             pathname: steg.path,
             hash,

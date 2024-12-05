@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { ESvar } from '@navikt/familie-form-elements';
-import { feil, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
+import { feil, type ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
 import { useEøs } from '../../../context/EøsContext';
@@ -87,8 +87,9 @@ export const useOmdeg = (): {
         registrerteUtenlandsperioder.validerOgSettFelt(utenlandsperioder);
 
         const oppdatertSøker = genererOppdatertSøker();
-        skalTriggeEøsForSøker(oppdatertSøker) !== søkerTriggerEøs &&
+        if (skalTriggeEøsForSøker(oppdatertSøker) !== søkerTriggerEøs) {
             settSøkerTriggerEøs(prevState => !prevState);
+        }
     }, [værtINorgeITolvMåneder, utenlandsperioder]);
 
     const leggTilUtenlandsperiode = (periode: IUtenlandsperiode) => {

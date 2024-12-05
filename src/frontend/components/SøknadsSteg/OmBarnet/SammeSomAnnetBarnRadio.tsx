@@ -3,7 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { Radio, RadioGroup } from '@navikt/ds-react';
-import { ISkjema } from '@navikt/familie-skjema';
+import type { ISkjema } from '@navikt/familie-skjema';
 
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { AlternativtSvarForInput } from '../../../typer/common';

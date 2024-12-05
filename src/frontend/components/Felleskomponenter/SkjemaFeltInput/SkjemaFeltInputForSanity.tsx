@@ -3,7 +3,7 @@ import React, { ReactNode } from 'react';
 import styled from 'styled-components';
 
 import { TextField } from '@navikt/ds-react';
-import { Felt } from '@navikt/familie-skjema';
+import type { Felt } from '@navikt/familie-skjema';
 
 interface SkjemaFeltInputForSanityProps {
     // eslint-disable-next-line

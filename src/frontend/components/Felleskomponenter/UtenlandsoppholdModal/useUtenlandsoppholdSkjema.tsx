@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 import { ESvar } from '@navikt/familie-form-elements';
-import { feil, FeltState, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
+import { feil, type FeltState, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
 import useDatovelgerFelt from '../../../hooks/useDatovelgerFelt';
 import useDatovelgerFeltMedUkjent from '../../../hooks/useDatovelgerFeltMedUkjent';
