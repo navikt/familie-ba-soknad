@@ -1,5 +1,5 @@
 import { ESvar } from '@navikt/familie-form-elements';
-import { Felt } from '@navikt/familie-skjema';
+import type { Felt } from '@navikt/familie-skjema';
 
 import {
     dinLivssituasjonSpørsmålSpråkId,

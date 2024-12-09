@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 
 import { v4 as uuidv4 } from 'uuid';
 
-import { feil, FeltState, ok, useFelt } from '@navikt/familie-skjema';
+import { feil, type FeltState, ok, useFelt } from '@navikt/familie-skjema';
 
 import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
 import { useApp } from '../context/AppContext';

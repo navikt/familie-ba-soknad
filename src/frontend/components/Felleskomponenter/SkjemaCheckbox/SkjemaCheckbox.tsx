@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 
 import { Checkbox, ErrorMessage } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
-import { Felt } from '@navikt/familie-skjema';
+import type { Felt } from '@navikt/familie-skjema';
 
 import useFørsteRender from '../../../hooks/useFørsteRender';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';

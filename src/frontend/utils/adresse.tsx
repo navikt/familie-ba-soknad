@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { BodyShort } from '@navikt/ds-react';
-import { feil, FeltState, ok } from '@navikt/familie-skjema';
+import { feil, type FeltState, ok } from '@navikt/familie-skjema';
 
 import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
 import { IOmDegTekstinnhold } from '../components/SøknadsSteg/OmDeg/innholdTyper';
