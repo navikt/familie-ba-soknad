@@ -5,7 +5,6 @@ import { feil, type FeltState, type ISkjema, ok, useFelt, useSkjema } from '@nav
 
 import { useApp } from '../../../context/AppContext';
 import { useEøs } from '../../../context/EøsContext';
-import useDatovelgerFeltMedUkjent from '../../../hooks/useDatovelgerFeltMedUkjent';
 import useInputFelt from '../../../hooks/useInputFelt';
 import useInputFeltMedUkjent from '../../../hooks/useInputFeltMedUkjent';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
@@ -401,14 +400,13 @@ export const useOmBarnet = (
         nullstillVedAvhengighetEndring: false,
     });
 
-    // TODO: Fortsett her
-    const andreForelderFødselsdato = useDatovelgerFeltMedUkjent({
+    const andreForelderFødselsdato = useDatovelgerFeltMedUkjentForSanity({
         feltId: andreForelder?.[andreForelderDataKeySpørsmål.fødselsdato].id,
         initiellVerdi: formaterInitVerdiForInputMedUkjent(
             andreForelder?.[andreForelderDataKeySpørsmål.fødselsdato].svar
         ),
         vetIkkeCheckbox: andreForelderFødselsdatoUkjent,
-        feilmeldingSpråkId: 'ombarnet.andre-forelder.fødselsdato.feilmelding',
+        feilmelding: stegTekster.foedselsdatoAndreForelder.feilmelding,
         skalFeltetVises:
             andreForelderFnrUkjent.erSynlig &&
             andreForelderFnrUkjent.verdi === ESvar.JA &&
@@ -507,16 +505,20 @@ export const useOmBarnet = (
     /*--- BOSTED ---*/
     const borFastMedSøker = useJaNeiSpmFelt({
         søknadsfelt: gjeldendeBarn[barnDataKeySpørsmål.borFastMedSøker],
+        feilmelding: stegTekster.borBarnFastSammenMedDeg.feilmelding,
         feilmeldingSpråkId: 'ombarnet.bor-fast.feilmelding',
+        flettefelter: { barnetsNavn: gjeldendeBarn.navn },
         feilmeldingSpråkVerdier: { navn: gjeldendeBarn.navn },
     });
 
     const skriftligAvtaleOmDeltBosted = useJaNeiSpmFelt({
         søknadsfelt: andreForelder?.[andreForelderDataKeySpørsmål.skriftligAvtaleOmDeltBosted],
+        feilmelding: stegTekster.deltBosted.feilmelding,
         feilmeldingSpråkId: 'ombarnet.delt-bosted.feilmelding',
         skalSkjules:
             !andreForelder ||
             gjeldendeBarn[barnDataKeySpørsmål.andreForelderErDød].svar === ESvar.JA,
+        flettefelter: { barnetsNavn: gjeldendeBarn.navn },
         feilmeldingSpråkVerdier: { navn: gjeldendeBarn.navn },
     });
 
@@ -525,6 +527,7 @@ export const useOmBarnet = (
     const søkerHarBoddMedAndreForelder = useJaNeiSpmFelt({
         søknadsfelt:
             andreForelder?.utvidet[andreForelderDataKeySpørsmål.søkerHarBoddMedAndreForelder],
+        feilmelding: stegTekster.boddSammenMedAndreForelder.feilmelding,
         feilmeldingSpråkId: 'ombarnet.boddsammenmedandreforelder.feilmelding',
         avhengigheter: {
             borFastMedSøker: {
@@ -537,6 +540,7 @@ export const useOmBarnet = (
                 : undefined,
         },
         skalSkjules: !erUtvidet || !andreForelder,
+        flettefelter: { barnetsNavn: gjeldendeBarn.navn },
         feilmeldingSpråkVerdier: { navn: gjeldendeBarn.navn },
     });
 
@@ -558,7 +562,7 @@ export const useOmBarnet = (
         avhengigheter: { søkerHarBoddMedAndreForelder },
     });
 
-    const søkerFlyttetFraAndreForelderDato = useDatovelgerFeltMedUkjent({
+    const søkerFlyttetFraAndreForelderDato = useDatovelgerFeltMedUkjentForSanity({
         feltId: andreForelder?.utvidet[
             andreForelderDataKeySpørsmål.søkerFlyttetFraAndreForelderDato
         ].id,
@@ -567,7 +571,7 @@ export const useOmBarnet = (
                 .svar
         ),
         vetIkkeCheckbox: borMedAndreForelderCheckbox,
-        feilmeldingSpråkId: 'ombarnet.nårflyttetfra.feilmelding',
+        feilmelding: stegTekster.naarFlyttetFraAndreForelder.feilmelding,
         skalFeltetVises:
             søkerHarBoddMedAndreForelder.verdi === ESvar.JA &&
             gjeldendeBarn[barnDataKeySpørsmål.andreForelderErDød].svar === ESvar.NEI,
