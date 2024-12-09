@@ -64,7 +64,9 @@ const Oppsummeringsbolk: React.FC<Props> = ({
     }, [søknad, skjema]);
 
     useEffect(() => {
-        if (visFeil !== !valideringErOk()) settVisFeil(!valideringErOk());
+        if (visFeil !== !valideringErOk()) {
+            settVisFeil(!valideringErOk());
+        }
     }, [skjema]);
 
     useEffect(() => {

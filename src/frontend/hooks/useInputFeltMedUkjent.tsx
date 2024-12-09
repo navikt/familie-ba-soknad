@@ -66,8 +66,8 @@ const useInputFeltMedUkjent = ({
     useEffect(() => {
         if (avhengighet.verdi === ESvar.JA) {
             inputFelt.validerOgSettFelt('', avhengighet);
-        } else {
-            if (inputFelt.verdi) inputFelt.validerOgSettFelt(inputFelt.verdi);
+        } else if (inputFelt.verdi) {
+            inputFelt.validerOgSettFelt(inputFelt.verdi);
         }
     }, [avhengighet]);
 

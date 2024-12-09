@@ -116,7 +116,9 @@ const Steg: React.FC<ISteg> = ({
             settSisteUtfylteStegIndex(nåværendeStegIndex);
         }
         const målPath = komFra?.path ?? nesteRoute.path;
-        if (komFra) settKomFra(undefined);
+        if (komFra) {
+            settKomFra(undefined);
+        }
         logSkjemaStegFullført(hentNåværendeStegIndex() + 1, søknad.søknadstype);
         navigate(målPath);
     };

@@ -75,8 +75,9 @@ const useDatovelgerFeltMedUkjent = ({
     }, [vetIkkeCheckbox]);
 
     useEffect(() => {
-        if (skalFeltetVises && datoFelt.verdi !== '')
+        if (skalFeltetVises && datoFelt.verdi !== '') {
             datoFelt.validerOgSettFelt(datoFelt.verdi, vetIkkeCheckbox);
+        }
 
         return () => {
             if (!skalFeltetVises) datoFelt.validerOgSettFelt('', vetIkkeCheckbox);

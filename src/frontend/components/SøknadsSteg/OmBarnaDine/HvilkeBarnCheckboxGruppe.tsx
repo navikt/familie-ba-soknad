@@ -38,7 +38,9 @@ const HvilkeBarnCheckboxGruppe: React.FC<Props> = ({
     }, [valgteBarn]);
 
     useEffect(() => {
-        if (nullstillValgteBarn) settValgteBarn([]);
+        if (nullstillValgteBarn) {
+            settValgteBarn([]);
+        }
     }, [nullstillValgteBarn]);
 
     return skjemafelt.erSynlig ? (
