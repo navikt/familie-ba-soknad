@@ -46,10 +46,14 @@ const useDatovelgerFeltMedJaNeiAvhengighet = ({
     useEffect(() => {
         const skalVises = skalFeltetVises(avhengighet.verdi);
 
-        if (skalVises && dato.verdi !== '') dato.validerOgSettFelt(dato.verdi);
+        if (skalVises && dato.verdi !== '') {
+            dato.validerOgSettFelt(dato.verdi);
+        }
 
         return () => {
-            if (!skalFeltetVises(avhengighet.verdi)) dato.validerOgSettFelt('');
+            if (!skalFeltetVises(avhengighet.verdi)) {
+                dato.validerOgSettFelt('');
+            }
         };
     }, [avhengighet]);
 
