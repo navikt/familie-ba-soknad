@@ -3,7 +3,7 @@ import React, { ReactNode } from 'react';
 import { Alpha3Code, getAlpha3Codes, getName } from 'i18n-iso-countries';
 import { useIntl } from 'react-intl';
 
-import { Felt, ISkjema } from '@navikt/familie-skjema';
+import type { Felt, ISkjema } from '@navikt/familie-skjema';
 
 import { useEøs } from '../../../context/EøsContext';
 import { useSpråk } from '../../../context/SpråkContext';

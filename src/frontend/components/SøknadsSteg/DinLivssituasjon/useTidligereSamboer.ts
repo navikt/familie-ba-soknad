@@ -1,5 +1,5 @@
 import { ESvar } from '@navikt/familie-form-elements';
-import { ISkjema, useFelt, useSkjema } from '@navikt/familie-skjema';
+import { type ISkjema, useFelt, useSkjema } from '@navikt/familie-skjema';
 
 import useDatovelgerFelt from '../../../hooks/useDatovelgerFelt';
 import useDatovelgerFeltMedUkjent from '../../../hooks/useDatovelgerFeltMedUkjent';

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { ArrowLeftIcon } from '@navikt/aksel-icons';
 import { Alert, Box, FormProgress, GuidePanel, Heading, Link, VStack } from '@navikt/ds-react';
-import { ISkjema } from '@navikt/familie-skjema';
+import type { ISkjema } from '@navikt/familie-skjema';
 import { setAvailableLanguages } from '@navikt/nav-dekoratoren-moduler';
 
 import { useApp } from '../../../context/AppContext';
@@ -97,7 +97,9 @@ const Steg: React.FC<ISteg> = ({
     }, []);
 
     useEffect(() => {
-        modellVersjonOppdatert && !erModellVersjonModalÅpen && åpneModellVersjonModal();
+        if (modellVersjonOppdatert && !erModellVersjonModalÅpen) {
+            åpneModellVersjonModal();
+        }
     }, [modellVersjonOppdatert]);
 
     const skjulSpråkvelger = () => {
@@ -114,7 +116,9 @@ const Steg: React.FC<ISteg> = ({
             settSisteUtfylteStegIndex(nåværendeStegIndex);
         }
         const målPath = komFra?.path ?? nesteRoute.path;
-        komFra && settKomFra(undefined);
+        if (komFra) {
+            settKomFra(undefined);
+        }
         logSkjemaStegFullført(hentNåværendeStegIndex() + 1, søknad.søknadstype);
         navigate(målPath);
     };

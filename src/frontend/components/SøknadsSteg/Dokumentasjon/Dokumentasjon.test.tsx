@@ -16,7 +16,6 @@ jest.mock('react-router-dom', () => ({
         pathname: '/dokumentasjon',
     }),
     useHistory: () => ({
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
         push: () => {},
     }),
 }));

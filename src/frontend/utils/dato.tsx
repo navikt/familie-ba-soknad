@@ -14,7 +14,7 @@ import {
     sub,
 } from 'date-fns';
 
-import { feil, FeltState, ok } from '@navikt/familie-skjema';
+import { feil, type FeltState, ok } from '@navikt/familie-skjema';
 
 import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
 import { AlternativtSvarForInput, DatoMedUkjent, ISODateString } from '../typer/common';

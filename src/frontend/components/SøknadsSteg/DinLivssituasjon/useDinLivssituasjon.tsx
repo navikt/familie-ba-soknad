@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 import { ESvar } from '@navikt/familie-form-elements';
-import { feil, FeltState, ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
+import { feil, type FeltState, type ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
 import { useEøs } from '../../../context/EøsContext';
@@ -438,8 +438,9 @@ export const useDinLivssituasjon = (): {
 
     useEffect(() => {
         const oppdatertSøker = genererOppdatertSøker();
-        skalTriggeEøsForSøker(oppdatertSøker) !== søkerTriggerEøs &&
+        if (skalTriggeEøsForSøker(oppdatertSøker) !== søkerTriggerEøs) {
             settSøkerTriggerEøs(prevState => !prevState);
+        }
     }, [arbeidIUtlandet, mottarUtenlandspensjon]);
 
     const oppdaterSøknad = () => {

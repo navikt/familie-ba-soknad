@@ -25,13 +25,14 @@ initializeUnleash();
 const app = express();
 
 // webpack serve kjører på en annen port enn oss, må tillate det som origin
-process.env.NODE_ENV === 'development' &&
+if (process.env.NODE_ENV === 'development') {
     app.use(
         cors({
             origin: 'http://localhost:3000',
             credentials: true,
         })
     );
+}
 
 // Alltid bruk gzip-compression på alt vi server med express
 app.use(compression());
