@@ -40,7 +40,6 @@ const useDatovelgerFeltMedUkjentForSanity = ({
                 return ok(felt);
             }
 
-            const feilmelding = avhengigheter?.feilmelding as LocaleRecordBlock;
             const customStartdatoFeilmelding = avhengigheter?.customStartdatoFeilmelding;
 
             return validerDatoForSanity(
@@ -57,7 +56,6 @@ const useDatovelgerFeltMedUkjentForSanity = ({
             vetIkkeCheckbox,
             skalFeltetVises,
             customStartdatoFeilmelding,
-            feilmelding,
             ...avhengigheter,
         },
         nullstillVedAvhengighetEndring,
