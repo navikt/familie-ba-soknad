@@ -109,6 +109,7 @@ const Datovelger: React.FC<DatoVelgerProps> = ({
                 <DatePicker.Input
                     {...inputProps}
                     id={felt.id}
+                    data-testid={felt.id}
                     disabled={disabled}
                     size={'medium'}
                     label={label}

@@ -25,6 +25,7 @@ export const SkjemaCheckboxForSanity: React.FC<SkjemaFeltInputForSanityProps> = 
         <div>
             <Checkbox
                 id={felt.id}
+                data-testid={felt.id}
                 checked={felt.verdi === ESvar.JA}
                 onChange={event =>
                     felt.validerOgSettFelt(event.target.checked ? ESvar.JA : ESvar.NEI)
