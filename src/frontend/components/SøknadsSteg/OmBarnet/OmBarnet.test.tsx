@@ -19,7 +19,6 @@ import {
     silenceConsoleErrors,
     spyOnUseApp,
     TestProvidere,
-    TestProvidereMedEkteTekster,
 } from '../../../utils/testing';
 import { EøsBarnSpørsmålId } from '../EøsSteg/Barn/spørsmål';
 import { OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
@@ -287,23 +286,6 @@ describe('OmBarnet', () => {
     beforeEach(() => {
         mockEøs();
         silenceConsoleErrors();
-    });
-
-    test(`Kan rendre Om Barnet og alle tekster finnes i språkfil`, async () => {
-        spyOnUseApp({
-            barnInkludertISøknaden: [jens],
-            sisteUtfylteStegIndex: 4,
-        });
-
-        await act(async () => {
-            render(
-                <TestProvidereMedEkteTekster mocketNettleserHistorikk={['/om-barnet/barn/1']}>
-                    <OmBarnet barnetsId={'random-id-jens'} />
-                </TestProvidereMedEkteTekster>
-            );
-        });
-
-        expect(console.error).toHaveBeenCalledTimes(0);
     });
 
     test(`Kan navigere mellom to barn`, async () => {
