@@ -1,13 +1,12 @@
 import React from 'react';
 
-import { BodyLong } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
 import { barnDataKeySpørsmål } from '../../../typer/barn';
 import { BarnetsId } from '../../../typer/common';
 import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
-import { ESanitySteg } from '../../../typer/sanity/sanity';
+import { ESanitySteg, Typografi } from '../../../typer/sanity/sanity';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import JaNeiSpmForSanity from '../../Felleskomponenter/JaNeiSpm/JaNeiSpmForSanity';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
@@ -114,9 +113,9 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                     dynamisk
                 >
                     {barn.andreForelderErDød?.svar !== ESvar.JA && (
-                        <BodyLong>
-                            <TekstBlock block={bostedInfo} />
-                        </BodyLong>
+                        <div>
+                            <TekstBlock block={bostedInfo} typografi={Typografi.BodyShort} />
+                        </div>
                     )}
                     <JaNeiSpmForSanity
                         skjema={skjema}
