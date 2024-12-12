@@ -77,7 +77,6 @@ const AndreForelderOppsummering: React.FC<{
                     {andreForelder[andreForelderDataKeySpørsmål.arbeidUtlandet].svar && (
                         <OppsummeringFelt
                             tittel={
-                                // TODO: Sjekk arbeidUtenforNorgeAndreForelder vs arbeidUtenforNorgeAndreForelderGjenlevende
                                 <TekstBlock
                                     block={arbeidUtenforNorgeAndreForelder.sporsmal}
                                     flettefelter={{ barnetsNavn: barn.navn }}
@@ -104,7 +103,6 @@ const AndreForelderOppsummering: React.FC<{
                     {andreForelder[andreForelderDataKeySpørsmål.pensjonUtland].svar && (
                         <OppsummeringFelt
                             tittel={
-                                // TODO: Sjekk pensjonUtlandAndreForelder vs pensjonUtlandAndreForelderGjenlevende
                                 <TekstBlock
                                     block={pensjonUtlandAndreForelder.sporsmal}
                                     flettefelter={{ barnetsNavn: barn.navn }}
