@@ -61,6 +61,7 @@ export interface IFellesTekstInnhold {
     frittståendeOrd: IFrittståendeOrdTekstinnhold;
     modaler: IModalerTekstinnhold;
     navigasjon: INavigasjonTekstinnhold;
+    formateringsfeilmeldinger: IFormateringsfeilmeldingerTekstinnhold;
     kanIkkeBrukeSoeknad: IKanIkkeBrukeSoeknadTekstinnhold;
 }
 
@@ -100,6 +101,16 @@ export interface INavigasjonTekstinnhold {
     sendSoeknadKnapp: LocaleRecordString;
     slettSoeknadKnapp: LocaleRecordString;
     fortsettSenereKnapp: LocaleRecordString;
+}
+
+export interface IFormateringsfeilmeldingerTekstinnhold {
+    ugyldigFoedselsnummer: LocaleRecordString;
+    ugyldigPostnummer: LocaleRecordString;
+    ugyldigDato: LocaleRecordString;
+    datoKanIkkeVaereFremITid: LocaleRecordString;
+    datoKanIkkeVaereDagensDatoEllerFremITid: LocaleRecordString;
+    periodeAvsluttesForTidlig: LocaleRecordString;
+    datoKanIkkeVaereTilbakeITid: LocaleRecordString;
 }
 
 export interface IModalerTekstinnhold {

@@ -14,14 +14,13 @@ import { dagensDato } from '../../../utils/dato';
 import { Arbeidsperiode } from '../../Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import { Pensjonsperiode } from '../../Felleskomponenter/Pensjonsmodal/Pensjonsperiode';
-import { SkjemaCheckbox } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
-import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
+import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
+import { SkjemaCheckboxForSanity } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckboxForSanity';
+import { SkjemaFeltInputForSanity } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInputForSanity';
 import SkjemaFieldset from '../../Felleskomponenter/SkjemaFieldset';
-import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import AndreForelderOppsummering from '../Oppsummering/OppsummeringSteg/OmBarnet/AndreForelderOppsummering';
 
 import SammeSomAnnetBarnRadio from './SammeSomAnnetBarnRadio';
-import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from './spørsmål';
 
 const AndreForelder: React.FC<{
     barn: IBarnMedISøknad;
@@ -46,10 +45,18 @@ const AndreForelder: React.FC<{
         annetBarn => annetBarn.id === skjema.felter.sammeForelderSomAnnetBarn.verdi
     );
 
-    const { barnetsAndreForelder } = tekster().OM_BARNET;
+    const {
+        barnetsAndreForelder,
+        navnAndreForelder,
+        foedselsnummerDnummerAndreForelder,
+        foedselsdatoAndreForelder,
+    } = tekster().OM_BARNET;
 
     return (
-        <SkjemaFieldset legendSpråkId={'ombarnet.andre-forelder'}>
+        <SkjemaFieldset
+            legend={plainTekst(barnetsAndreForelder)}
+            legendSpråkId={'ombarnet.andre-forelder'}
+        >
             {skjema.felter.sammeForelderSomAnnetBarn.erSynlig && (
                 <SammeSomAnnetBarnRadio
                     andreBarnSomErFyltUt={andreBarnSomErFyltUt}
@@ -62,42 +69,38 @@ const AndreForelder: React.FC<{
                 AlternativtSvarForInput.ANNEN_FORELDER ? (
                 <>
                     <div>
-                        <SkjemaFeltInput
+                        <SkjemaFeltInputForSanity
                             felt={skjema.felter.andreForelderNavn}
                             visFeilmeldinger={skjema.visFeilmeldinger}
-                            labelSpråkTekstId={
-                                omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderNavn]
-                            }
+                            label={<TekstBlock block={navnAndreForelder.sporsmal} />}
                             disabled={
                                 skjema.felter.andreForelderKanIkkeGiOpplysninger.verdi === ESvar.JA
                             }
                         />
-                        <SkjemaCheckbox
-                            labelSpråkTekstId={
-                                omBarnetSpørsmålSpråkId[
-                                    OmBarnetSpørsmålsId.andreForelderKanIkkeGiOpplysninger
-                                ]
-                            }
+                        <SkjemaCheckboxForSanity
                             felt={skjema.felter.andreForelderKanIkkeGiOpplysninger}
+                            label={<TekstBlock block={navnAndreForelder.checkboxLabel} />}
                         />
                     </div>
                     {skjema.felter.andreForelderFnr.erSynlig && (
                         <div>
-                            <SkjemaFeltInput
+                            <SkjemaFeltInputForSanity
                                 felt={skjema.felter.andreForelderFnr}
                                 visFeilmeldinger={skjema.visFeilmeldinger}
-                                labelSpråkTekstId={
-                                    omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderFnr]
+                                label={
+                                    <TekstBlock
+                                        block={foedselsnummerDnummerAndreForelder.sporsmal}
+                                    />
                                 }
                                 disabled={skjema.felter.andreForelderFnrUkjent.verdi === ESvar.JA}
                             />
-                            <SkjemaCheckbox
-                                labelSpråkTekstId={
-                                    omBarnetSpørsmålSpråkId[
-                                        OmBarnetSpørsmålsId.andreForelderFnrUkjent
-                                    ]
-                                }
+                            <SkjemaCheckboxForSanity
                                 felt={skjema.felter.andreForelderFnrUkjent}
+                                label={
+                                    <TekstBlock
+                                        block={foedselsnummerDnummerAndreForelder.checkboxLabel}
+                                    />
+                                }
                             />
                         </div>
                     )}
@@ -106,28 +109,18 @@ const AndreForelder: React.FC<{
                             <Datovelger
                                 felt={skjema.felter.andreForelderFødselsdato}
                                 skjema={skjema}
-                                label={
-                                    <SpråkTekst
-                                        id={
-                                            omBarnetSpørsmålSpråkId[
-                                                OmBarnetSpørsmålsId.andreForelderFødselsdato
-                                            ]
-                                        }
-                                    />
-                                }
+                                label={<TekstBlock block={foedselsdatoAndreForelder.sporsmal} />}
                                 avgrensMaxDato={dagensDato()}
                                 disabled={
                                     skjema.felter.andreForelderFødselsdatoUkjent.verdi === ESvar.JA
                                 }
                                 strategy={'absolute'}
                             />
-                            <SkjemaCheckbox
-                                labelSpråkTekstId={
-                                    omBarnetSpørsmålSpråkId[
-                                        OmBarnetSpørsmålsId.andreForelderFødselsdatoUkjent
-                                    ]
-                                }
+                            <SkjemaCheckboxForSanity
                                 felt={skjema.felter.andreForelderFødselsdatoUkjent}
+                                label={
+                                    <TekstBlock block={foedselsdatoAndreForelder.checkboxLabel} />
+                                }
                             />
                         </div>
                     )}

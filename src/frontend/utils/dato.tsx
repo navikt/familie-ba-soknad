@@ -18,6 +18,8 @@ import { feil, type FeltState, ok } from '@navikt/familie-skjema';
 
 import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
 import { AlternativtSvarForInput, DatoMedUkjent, ISODateString } from '../typer/common';
+import { LocaleRecordBlock, PlainTekst } from '../typer/sanity/sanity';
+import { IFormateringsfeilmeldingerTekstinnhold } from '../typer/sanity/tekstInnhold';
 
 export const erDatoFormatGodkjent = (dato: Date) => isValid(dato);
 
@@ -93,6 +95,46 @@ export const validerDato = (
                         : 'felles.tilogmedfeilformat.feilmelding'
                 }
             />
+        );
+    }
+    return ok(feltState);
+};
+
+export const validerDatoForSanity = (
+    tekster: IFormateringsfeilmeldingerTekstinnhold,
+    plainTekst: PlainTekst,
+    feltState: FeltState<string>,
+    feilmelding: LocaleRecordBlock | undefined,
+    startdatoAvgrensning: Date | undefined = undefined,
+    sluttdatoAvgrensning: Date | undefined = undefined,
+    customStartdatoFeilmelding = ''
+): FeltState<string> => {
+    if (feltState.verdi === '') {
+        return feil(feltState, plainTekst(feilmelding) ?? '');
+    }
+
+    const dato = parseTilGyldigDato(feltState.verdi, 'yyyy-MM-dd');
+
+    if (!dato) {
+        return feil(feltState, plainTekst(tekster.ugyldigDato));
+    }
+    if (!!sluttdatoAvgrensning && erDatoEtterSluttdatoAvgresning(dato, sluttdatoAvgrensning)) {
+        return feil(
+            feltState,
+            plainTekst(
+                sluttdatoAvgrensning === dagensDato()
+                    ? tekster.datoKanIkkeVaereFremITid
+                    : tekster.datoKanIkkeVaereDagensDatoEllerFremITid
+            )
+        );
+    }
+
+    if (!!startdatoAvgrensning && erDatoFørStartDatoAvgrensning(dato, startdatoAvgrensning)) {
+        return feil(
+            feltState,
+            customStartdatoFeilmelding
+                ? customStartdatoFeilmelding
+                : plainTekst(tekster.periodeAvsluttesForTidlig)
         );
     }
     return ok(feltState);

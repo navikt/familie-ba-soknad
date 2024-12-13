@@ -1,30 +1,26 @@
 import React from 'react';
 
-import { BodyLong } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
 import { barnDataKeySpørsmål } from '../../../typer/barn';
 import { BarnetsId } from '../../../typer/common';
 import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
-import { ESanitySteg } from '../../../typer/sanity/sanity';
+import { ESanitySteg, Typografi } from '../../../typer/sanity/sanity';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
-import EksternLenke from '../../Felleskomponenter/EksternLenke/EksternLenke';
-import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
-import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
-import { SkjemaCheckbox } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
+import JaNeiSpmForSanity from '../../Felleskomponenter/JaNeiSpm/JaNeiSpmForSanity';
+import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
+import { SkjemaCheckboxForSanity } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckboxForSanity';
 import SkjemaFieldset from '../../Felleskomponenter/SkjemaFieldset';
-import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 
 import AndreForelder from './AndreForelder';
 import { OmBarnetHeader } from './OmBarnetHeader';
 import Oppfølgningsspørsmål from './Oppfølgningsspørsmål';
-import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from './spørsmål';
 import { barnErUnder16År, useOmBarnet } from './useOmBarnet';
 
 const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
-    const { tekster } = useApp();
+    const { tekster, plainTekst } = useApp();
 
     const {
         skjema,
@@ -45,11 +41,20 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
     } = useOmBarnet(barnetsId);
 
     const stegTekster = tekster()[ESanitySteg.OM_BARNET];
-    const { omBarnetGuide } = stegTekster;
+    const {
+        omBarnetTittel,
+        omBarnetGuide,
+        bosted,
+        bostedInfo,
+        borBarnFastSammenMedDeg,
+        deltBosted,
+        boddSammenMedAndreForelder,
+        naarFlyttetFraAndreForelder,
+    } = stegTekster;
 
     return barn ? (
         <Steg
-            tittel={<SpråkTekst id={'ombarnet.sidetittel'} values={{ navn: barn.navn }} />}
+            tittel={<TekstBlock block={omBarnetTittel} flettefelter={{ barnetsNavn: barn.navn }} />}
             guide={omBarnetGuide}
             skjema={{
                 validerFelterOgVisFeilmelding,
@@ -102,52 +107,39 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                 />
             )}
             {skjema.felter.borFastMedSøker.erSynlig && (
-                <SkjemaFieldset legendSpråkId={'ombarnet.bosted'} dynamisk>
+                <SkjemaFieldset
+                    legend={plainTekst(bosted)}
+                    legendSpråkId={'ombarnet.bosted'}
+                    dynamisk
+                >
                     {barn.andreForelderErDød?.svar !== ESvar.JA && (
-                        <KomponentGruppe>
-                            <BodyLong>
-                                <SpråkTekst id={'ombarnet.bosted-info'} />
-                            </BodyLong>
-                            <EksternLenke
-                                lenkeSpråkId={'ombarnet.les-mer-om-bosted.lenke'}
-                                lenkeTekstSpråkId={'ombarnet.les-mer-om-bosted.lenketekst'}
-                                target="_blank"
-                            />
-                        </KomponentGruppe>
+                        <div>
+                            <TekstBlock block={bostedInfo} typografi={Typografi.BodyShort} />
+                        </div>
                     )}
-                    <JaNeiSpm
+                    <JaNeiSpmForSanity
                         skjema={skjema}
                         felt={skjema.felter.borFastMedSøker}
-                        spørsmålTekstId={
-                            omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.borFastMedSøker]
-                        }
-                        språkValues={{ navn: barn.navn }}
+                        spørsmålDokument={borBarnFastSammenMedDeg}
+                        flettefelter={{ barnetsNavn: barn.navn }}
                     />
                     {skjema.felter.skriftligAvtaleOmDeltBosted.erSynlig && (
-                        <JaNeiSpm
+                        <JaNeiSpmForSanity
                             skjema={skjema}
                             felt={skjema.felter.skriftligAvtaleOmDeltBosted}
-                            spørsmålTekstId={
-                                omBarnetSpørsmålSpråkId[
-                                    OmBarnetSpørsmålsId.skriftligAvtaleOmDeltBosted
-                                ]
-                            }
-                            språkValues={{ navn: barn.navn }}
+                            spørsmålDokument={deltBosted}
+                            flettefelter={{ barnetsNavn: barn.navn }}
                         />
                     )}
                 </SkjemaFieldset>
             )}
             {skjema.felter.søkerHarBoddMedAndreForelder.erSynlig && (
                 <>
-                    <JaNeiSpm
+                    <JaNeiSpmForSanity
                         skjema={skjema}
                         felt={skjema.felter.søkerHarBoddMedAndreForelder}
-                        spørsmålTekstId={
-                            omBarnetSpørsmålSpråkId[
-                                OmBarnetSpørsmålsId.søkerHarBoddMedAndreForelder
-                            ]
-                        }
-                        språkValues={{ navn: barn.navn }}
+                        spørsmålDokument={boddSammenMedAndreForelder}
+                        flettefelter={{ barnetsNavn: barn.navn }}
                         aria-live="polite"
                     />
                     {skjema.felter.søkerFlyttetFraAndreForelderDato.erSynlig && (
@@ -155,28 +147,20 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                             <Datovelger
                                 felt={skjema.felter.søkerFlyttetFraAndreForelderDato}
                                 skjema={skjema}
-                                label={
-                                    <SpråkTekst
-                                        id={
-                                            omBarnetSpørsmålSpråkId[
-                                                OmBarnetSpørsmålsId.søkerFlyttetFraAndreForelderDato
-                                            ]
-                                        }
-                                    />
-                                }
+                                label={<TekstBlock block={naarFlyttetFraAndreForelder.sporsmal} />}
                                 disabled={
                                     skjema.felter.borMedAndreForelderCheckbox.verdi === ESvar.JA
                                 }
                                 avgrensDatoFremITid={true}
                             />
                             {skjema.felter.borMedAndreForelderCheckbox.erSynlig && (
-                                <SkjemaCheckbox
+                                <SkjemaCheckboxForSanity
                                     felt={skjema.felter.borMedAndreForelderCheckbox}
                                     visFeilmeldinger={skjema.visFeilmeldinger}
-                                    labelSpråkTekstId={
-                                        omBarnetSpørsmålSpråkId[
-                                            OmBarnetSpørsmålsId.søkerBorMedAndreForelder
-                                        ]
+                                    label={
+                                        <TekstBlock
+                                            block={naarFlyttetFraAndreForelder.checkboxLabel}
+                                        />
                                     }
                                 />
                             )}

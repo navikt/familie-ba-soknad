@@ -19,7 +19,6 @@ import {
     silenceConsoleErrors,
     spyOnUseApp,
     TestProvidere,
-    TestProvidereMedEkteTekster,
 } from '../../../utils/testing';
 import { EøsBarnSpørsmålId } from '../EøsSteg/Barn/spørsmål';
 import { OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
@@ -289,23 +288,6 @@ describe('OmBarnet', () => {
         silenceConsoleErrors();
     });
 
-    test(`Kan rendre Om Barnet og alle tekster finnes i språkfil`, async () => {
-        spyOnUseApp({
-            barnInkludertISøknaden: [jens],
-            sisteUtfylteStegIndex: 4,
-        });
-
-        await act(async () => {
-            render(
-                <TestProvidereMedEkteTekster mocketNettleserHistorikk={['/om-barnet/barn/1']}>
-                    <OmBarnet barnetsId={'random-id-jens'} />
-                </TestProvidereMedEkteTekster>
-            );
-        });
-
-        expect(console.error).toHaveBeenCalledTimes(0);
-    });
-
     test(`Kan navigere mellom to barn`, async () => {
         spyOnUseApp({
             barnInkludertISøknaden: [jens, line],
@@ -313,7 +295,7 @@ describe('OmBarnet', () => {
             dokumentasjon: [],
         });
 
-        const { findByText, findByTestId } = render(
+        const { findByTestId, getByTestId } = render(
             <TestProvidere
                 tekster={{ 'ombarnet.sidetittel': 'Om {navn}' }}
                 mocketNettleserHistorikk={['/om-barnet/barn/1']}
@@ -326,8 +308,8 @@ describe('OmBarnet', () => {
         const location = await findByTestId('location');
         expect(JSON.parse(location.innerHTML).pathname).toEqual('/om-barnet/barn/1');
 
-        const jensTittel = await findByText('Om Jens');
-        expect(jensTittel).toBeInTheDocument();
+        const stegTittel = await getByTestId('steg-tittel');
+        expect(stegTittel).toBeInTheDocument();
 
         const gåVidere = await findByTestId('neste-steg');
         await act(() => gåVidere.click());
@@ -343,7 +325,7 @@ describe('OmBarnet', () => {
             dokumentasjon: [],
         });
 
-        const { findByText, findByTestId } = render(
+        const { findByTestId, getByTestId } = render(
             <TestProvidere
                 tekster={{ 'ombarnet.sidetittel': 'Om {navn}' }}
                 mocketNettleserHistorikk={['/om-barnet/barn/1']}
@@ -356,8 +338,8 @@ describe('OmBarnet', () => {
         const location = await findByTestId('location');
         expect(JSON.parse(location.innerHTML).pathname).toEqual('/om-barnet/barn/1');
 
-        const jensTittel = await findByText('Om Jens');
-        expect(jensTittel).toBeInTheDocument();
+        const stegTittel = await getByTestId('steg-tittel');
+        expect(stegTittel).toBeInTheDocument();
 
         const gåVidere = await findByTestId('neste-steg');
         await act(() => gåVidere.click());
@@ -382,7 +364,7 @@ describe('OmBarnet', () => {
             dokumentasjon: [],
         });
 
-        const { findByLabelText, findByText, queryByText } = render(
+        const { getByTestId, queryByTestId } = render(
             <TestProvidere
                 tekster={{ 'ombarnet.sidetittel': 'Om {navn}' }}
                 mocketNettleserHistorikk={['/om-barnet/barn/1']}
@@ -391,16 +373,17 @@ describe('OmBarnet', () => {
             </TestProvidere>
         );
 
-        const ikkeOppgiOpplysninger = await findByLabelText(
-            /ombarnet.andre-forelder.navn-ukjent.spm/
-        );
-        const andreForelderFnrLabel = await findByText(/felles.fødsels-eller-dnummer.label/);
+        const ikkeOppgiOpplysninger = await getByTestId('andre-forelder-kan-ikke-gi-opplysninger');
+        const andreForelderFnrLabel = await queryByTestId('andre-forelder-fødsels-/dnummer-ukjent');
+        const andreForelderFødselsdato = await queryByTestId('andreForelderFødselsdato');
 
-        expect(queryByText(/felles.fødselsdato.label/)).not.toBeInTheDocument();
+        expect(andreForelderFødselsdato).not.toBeInTheDocument();
         expect(andreForelderFnrLabel).toBeInTheDocument();
+
         await act(() => ikkeOppgiOpplysninger.click());
+
         expect(andreForelderFnrLabel).not.toBeInTheDocument();
-        expect(queryByText(/felles.fødselsdato.label/)).not.toBeInTheDocument();
+        expect(andreForelderFødselsdato).not.toBeInTheDocument();
     });
 
     test('Får opp feilmelding ved feil postnummer', async () => {
@@ -425,20 +408,19 @@ describe('OmBarnet', () => {
         const { erStegUtfyltFrafør } = spyOnUseApp(oppdatertSøknad);
         erStegUtfyltFrafør.mockReturnValue(false);
 
-        const { queryByText, findAllByText, findByTestId } = render(
+        const { findByTestId, getByTestId } = render(
             <TestProvidere mocketNettleserHistorikk={['/om-barnet/barn/1']}>
                 <OmBarnet barnetsId={endretBarn.id} />
             </TestProvidere>
         );
 
         const gåVidere = await findByTestId('neste-steg');
-        expect(
-            queryByText(/ombarnet.institusjon.postnummer.format.feilmelding/)
-        ).not.toBeInTheDocument();
         act(() => gåVidere.click());
-        const feilmelding = await findAllByText(
-            /ombarnet.institusjon.postnummer.format.feilmelding/
-        );
-        expect(feilmelding).toHaveLength(2);
+
+        const feiloppsummering = getByTestId('skjema-feiloppsummering');
+        expect(feiloppsummering).toBeInTheDocument();
+
+        const feilmeldingInstitusjon = getByTestId('feilmelding-institusjonspostnummer');
+        expect(feilmeldingInstitusjon).toBeInTheDocument();
     });
 });

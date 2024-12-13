@@ -14,26 +14,33 @@ import {
 } from '@navikt/familie-skjema';
 
 import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
+import { useApp } from '../context/AppContext';
+import { FlettefeltVerdier, LocaleRecordBlock } from '../typer/sanity/sanity';
 import { ISøknadSpørsmål } from '../typer/spørsmål';
 
 const useLanddropdownFeltMedJaNeiAvhengighet = ({
     søknadsfelt,
+    feilmelding,
     feilmeldingSpråkId,
     avhengigSvarCondition,
     avhengighet,
     nullstillVedAvhengighetEndring = true,
     skalFeltetVises = true,
+    flettefelter,
     feilmeldingSpråkVerdier,
 }: {
     søknadsfelt?: ISøknadSpørsmål<Alpha3Code | ''>;
+    feilmelding?: LocaleRecordBlock;
     feilmeldingSpråkId: string;
     avhengigSvarCondition: ESvar;
     avhengighet: Felt<ESvar | null>;
     nullstillVedAvhengighetEndring?: boolean;
     skalFeltetVises?: boolean;
+    flettefelter?: FlettefeltVerdier;
     feilmeldingSpråkVerdier?: { [key: string]: ReactNode };
 }) => {
     const skalViseFelt = jaNeiSpmVerdi => jaNeiSpmVerdi === avhengigSvarCondition;
+    const { plainTekst } = useApp();
 
     const landDropdown = useFelt<Alpha3Code | ''>({
         feltId: søknadsfelt ? søknadsfelt.id : uuidv4(),
@@ -51,7 +58,11 @@ const useLanddropdownFeltMedJaNeiAvhengighet = ({
                 ? ok(felt)
                 : feil(
                       felt,
-                      <SpråkTekst id={feilmeldingSpråkId} values={feilmeldingSpråkVerdier} />
+                      feilmelding ? (
+                          plainTekst(feilmelding, { ...flettefelter })
+                      ) : (
+                          <SpråkTekst id={feilmeldingSpråkId} values={feilmeldingSpråkVerdier} />
+                      )
                   );
         },
         nullstillVedAvhengighetEndring,

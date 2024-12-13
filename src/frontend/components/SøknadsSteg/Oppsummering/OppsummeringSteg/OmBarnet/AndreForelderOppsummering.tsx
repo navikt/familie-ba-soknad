@@ -1,10 +1,9 @@
 import React from 'react';
 
-import { useIntl } from 'react-intl';
-
 import { BodyShort, FormSummary } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
+import { useApp } from '../../../../../context/AppContext';
 import {
     andreForelderDataKeySpørsmål,
     barnDataKeySpørsmål,
@@ -17,16 +16,25 @@ import { formaterDato } from '../../../../../utils/dato';
 import { formaterDatoMedUkjent } from '../../../../../utils/visning';
 import { ArbeidsperiodeOppsummering } from '../../../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeOppsummering';
 import { PensjonsperiodeOppsummering } from '../../../../Felleskomponenter/Pensjonsmodal/PensjonsperiodeOppsummering';
-import SpråkTekst from '../../../../Felleskomponenter/SpråkTekst/SpråkTekst';
-import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../../../OmBarnet/spørsmål';
+import TekstBlock from '../../../../Felleskomponenter/Sanity/TekstBlock';
 import { OppsummeringFelt } from '../../OppsummeringFelt';
 
 const AndreForelderOppsummering: React.FC<{
     barn: IBarnMedISøknad;
     andreForelder: IAndreForelder;
 }> = ({ barn, andreForelder }) => {
-    const intl = useIntl();
-    const { formatMessage } = intl;
+    const { tekster, plainTekst } = useApp();
+
+    const omBarnetTekster = tekster().OM_BARNET;
+    const {
+        navnAndreForelder,
+        foedselsnummerDnummerAndreForelder,
+        foedselsdatoAndreForelder,
+        arbeidUtenforNorgeAndreForelder,
+        pensjonUtlandAndreForelder,
+        boddSammenMedAndreForelder,
+        naarFlyttetFraAndreForelder,
+    } = omBarnetTekster;
 
     return (
         <FormSummary.Answers>
@@ -35,83 +43,43 @@ const AndreForelderOppsummering: React.FC<{
                 <>
                     {andreForelder[andreForelderDataKeySpørsmål.navn].svar && (
                         <OppsummeringFelt
-                            tittel={
-                                <SpråkTekst
-                                    id={
-                                        omBarnetSpørsmålSpråkId[
-                                            OmBarnetSpørsmålsId.andreForelderNavn
-                                        ]
-                                    }
-                                />
-                            }
+                            tittel={<TekstBlock block={navnAndreForelder.sporsmal} />}
                             søknadsvar={
                                 andreForelder[andreForelderDataKeySpørsmål.navn].svar !==
                                 AlternativtSvarForInput.UKJENT
                                     ? andreForelder[andreForelderDataKeySpørsmål.navn].svar
-                                    : formatMessage({
-                                          id: omBarnetSpørsmålSpråkId[
-                                              OmBarnetSpørsmålsId.andreForelderKanIkkeGiOpplysninger
-                                          ],
-                                      })
+                                    : plainTekst(navnAndreForelder.checkboxLabel)
                             }
                         />
                     )}
                     {andreForelder[andreForelderDataKeySpørsmål.fnr].svar && (
                         <OppsummeringFelt
                             tittel={
-                                <SpråkTekst
-                                    id={
-                                        omBarnetSpørsmålSpråkId[
-                                            OmBarnetSpørsmålsId.andreForelderFnr
-                                        ]
-                                    }
-                                />
+                                <TekstBlock block={foedselsnummerDnummerAndreForelder.sporsmal} />
                             }
                             søknadsvar={
                                 andreForelder[andreForelderDataKeySpørsmål.fnr].svar !==
                                 AlternativtSvarForInput.UKJENT
                                     ? andreForelder[andreForelderDataKeySpørsmål.fnr].svar
-                                    : formatMessage({
-                                          id: omBarnetSpørsmålSpråkId[
-                                              OmBarnetSpørsmålsId.andreForelderFnrUkjent
-                                          ],
-                                      })
+                                    : plainTekst(foedselsnummerDnummerAndreForelder.checkboxLabel)
                             }
                         />
                     )}
                     {andreForelder[andreForelderDataKeySpørsmål.fødselsdato].svar && (
                         <OppsummeringFelt
-                            tittel={
-                                <SpråkTekst
-                                    id={
-                                        omBarnetSpørsmålSpråkId[
-                                            OmBarnetSpørsmålsId.andreForelderFødselsdato
-                                        ]
-                                    }
-                                />
-                            }
+                            tittel={<TekstBlock block={foedselsdatoAndreForelder.sporsmal} />}
                             søknadsvar={formaterDatoMedUkjent(
                                 andreForelder[andreForelderDataKeySpørsmål.fødselsdato].svar,
-                                formatMessage({
-                                    id: omBarnetSpørsmålSpråkId[
-                                        OmBarnetSpørsmålsId.andreForelderFødselsdatoUkjent
-                                    ],
-                                })
+                                plainTekst(foedselsdatoAndreForelder.checkboxLabel)
                             )}
                         />
                     )}
                     {andreForelder[andreForelderDataKeySpørsmål.arbeidUtlandet].svar && (
                         <OppsummeringFelt
                             tittel={
-                                <SpråkTekst
-                                    id={
-                                        omBarnetSpørsmålSpråkId[
-                                            andreForelder[
-                                                andreForelderDataKeySpørsmål.arbeidUtlandet
-                                            ].id
-                                        ]
-                                    }
-                                    values={{ navn: barn.navn }}
+                                <TekstBlock
+                                    block={arbeidUtenforNorgeAndreForelder.sporsmal}
+                                    flettefelter={{ barnetsNavn: barn.navn }}
                                 />
                             }
                             søknadsvar={
@@ -135,15 +103,9 @@ const AndreForelderOppsummering: React.FC<{
                     {andreForelder[andreForelderDataKeySpørsmål.pensjonUtland].svar && (
                         <OppsummeringFelt
                             tittel={
-                                <SpråkTekst
-                                    id={
-                                        omBarnetSpørsmålSpråkId[
-                                            andreForelder[
-                                                andreForelderDataKeySpørsmål.pensjonUtland
-                                            ].id
-                                        ]
-                                    }
-                                    values={{ navn: barn.navn }}
+                                <TekstBlock
+                                    block={pensjonUtlandAndreForelder.sporsmal}
+                                    flettefelter={{ barnetsNavn: barn.navn }}
                                 />
                             }
                             søknadsvar={
@@ -169,13 +131,9 @@ const AndreForelderOppsummering: React.FC<{
                     ].svar && (
                         <OppsummeringFelt
                             tittel={
-                                <SpråkTekst
-                                    id={
-                                        omBarnetSpørsmålSpråkId[
-                                            OmBarnetSpørsmålsId.søkerHarBoddMedAndreForelder
-                                        ]
-                                    }
-                                    values={{ navn: barn.navn }}
+                                <TekstBlock
+                                    block={boddSammenMedAndreForelder.sporsmal}
+                                    flettefelter={{ barnetsNavn: barn.navn }}
                                 />
                             }
                             søknadsvar={
@@ -189,15 +147,7 @@ const AndreForelderOppsummering: React.FC<{
                         andreForelderDataKeySpørsmål.søkerFlyttetFraAndreForelderDato
                     ].svar && (
                         <OppsummeringFelt
-                            tittel={
-                                <SpråkTekst
-                                    id={
-                                        omBarnetSpørsmålSpråkId[
-                                            OmBarnetSpørsmålsId.søkerFlyttetFraAndreForelderDato
-                                        ]
-                                    }
-                                />
-                            }
+                            tittel={<TekstBlock block={naarFlyttetFraAndreForelder.sporsmal} />}
                             søknadsvar={(() => {
                                 const svar =
                                     andreForelder.utvidet[
@@ -205,28 +155,16 @@ const AndreForelderOppsummering: React.FC<{
                                             .søkerFlyttetFraAndreForelderDato
                                     ].svar;
                                 return svar === AlternativtSvarForInput.UKJENT
-                                    ? formatMessage({
-                                          id: omBarnetSpørsmålSpråkId[
-                                              OmBarnetSpørsmålsId.søkerBorMedAndreForelder
-                                          ],
-                                      })
+                                    ? plainTekst(naarFlyttetFraAndreForelder.checkboxLabel)
                                     : formaterDato(svar);
                             })()}
                         />
                     )}
                 </>
             ) : (
-                <>
-                    <BodyShort>
-                        <SpråkTekst
-                            id={
-                                omBarnetSpørsmålSpråkId[
-                                    OmBarnetSpørsmålsId.andreForelderKanIkkeGiOpplysninger
-                                ]
-                            }
-                        />
-                    </BodyShort>
-                </>
+                <BodyShort>
+                    <TekstBlock block={navnAndreForelder.checkboxLabel} />
+                </BodyShort>
             )}
         </FormSummary.Answers>
     );
