@@ -19,7 +19,6 @@ import { ESanitySteg } from '../../../../typer/sanity/sanity';
 import { hentBostedSpråkId } from '../../../../utils/språk';
 import { formaterFnr, uppercaseFørsteBokstav } from '../../../../utils/visning';
 import TekstBlock from '../../../Felleskomponenter/Sanity/TekstBlock';
-import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { TilfeldigBarnIkon } from '../../../Felleskomponenter/TilfeldigBarnIkon/TilfeldigBarnIkon';
 
 import { BarnekortContainer } from './BarnekortContainer';
@@ -114,7 +113,7 @@ const Barnekort: React.FC<IBarnekortProps> = ({
                     {!erRegistrertManuelt && (
                         <BarnekortInfo
                             label={<TekstBlock block={registrertBostedLabel} />}
-                            verdi={<SpråkTekst id={hentBostedSpråkId(barn)} />}
+                            verdi={<TekstBlock block={hentBostedSpråkId(barn, teksterForSteg)} />}
                         />
                     )}
                 </HGrid>

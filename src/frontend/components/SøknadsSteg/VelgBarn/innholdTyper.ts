@@ -11,4 +11,7 @@ export interface IVelgBarnTekstinnhold {
     foedselsnummerLabel: LocaleRecordBlock;
     navnErstatterForAdressesperre: LocaleRecordBlock;
     maaVelgeEtBarnForAaGaaVidere: LocaleRecordBlock;
+    registrertMedAdressesperre: LocaleRecordBlock;
+    registrertPaaAdressenDin: LocaleRecordBlock;
+    ikkeRegistrertPaaAdressenDin: LocaleRecordBlock;
 }
