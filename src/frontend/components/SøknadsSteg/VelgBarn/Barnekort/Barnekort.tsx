@@ -113,7 +113,17 @@ const Barnekort: React.FC<IBarnekortProps> = ({
                     {!erRegistrertManuelt && (
                         <BarnekortInfo
                             label={<TekstBlock block={registrertBostedLabel} />}
-                            verdi={<TekstBlock block={hentBostedSpråkId(barn, teksterForSteg)} />}
+                            verdi={
+                                <div
+                                    data-testid={
+                                        barn.adressebeskyttelse
+                                            ? 'registrert-bosted-adressesperre'
+                                            : undefined
+                                    }
+                                >
+                                    <TekstBlock block={hentBostedSpråkId(barn, teksterForSteg)} />
+                                </div>
+                            }
                         />
                     )}
                 </HGrid>
