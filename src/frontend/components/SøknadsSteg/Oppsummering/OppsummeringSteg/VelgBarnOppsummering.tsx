@@ -1,14 +1,12 @@
 import React from 'react';
 
-import { useIntl } from 'react-intl';
-
 import { FormSummary } from '@navikt/ds-react';
 
 import { useApp } from '../../../../context/AppContext';
 import { useRoutes } from '../../../../context/RoutesContext';
 import { RouteEnum } from '../../../../typer/routes';
 import { hentBostedSpråkId } from '../../../../utils/språk';
-import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import TekstBlock from '../../../Felleskomponenter/Sanity/TekstBlock';
 import { VelgBarnSpørsmålId, velgBarnSpørsmålSpråkId } from '../../VelgBarn/spørsmål';
 import { useVelgBarn } from '../../VelgBarn/useVelgBarn';
 import { OppsummeringFelt } from '../OppsummeringFelt';
@@ -19,53 +17,53 @@ interface Props {
 }
 
 const VelgBarnOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
-    const { formatMessage } = useIntl();
-    const { søknad } = useApp();
+    const { søknad, tekster, plainTekst } = useApp();
     const { hentRouteObjektForRouteEnum } = useRoutes();
     const velgBarnHook = useVelgBarn();
+
+    const velgBarnTekster = tekster().VELG_BARN;
+    const frittståendeOrdTekster = tekster().FELLES.frittståendeOrd;
+    const leggTilBarnTekster = tekster().FELLES.modaler.leggTilBarn;
 
     return (
         <Oppsummeringsbolk
             steg={hentRouteObjektForRouteEnum(RouteEnum.VelgBarn)}
             tittel={velgBarnSpørsmålSpråkId[VelgBarnSpørsmålId.velgBarn]}
+            tittelForSanity={velgBarnTekster.velgBarnTittel}
             skjemaHook={velgBarnHook}
             settFeilAnchors={settFeilAnchors}
         >
             {søknad.barnInkludertISøknaden.map((barn, index) => (
                 <FormSummary.Answer key={index}>
                     <FormSummary.Label>
-                        <SpråkTekst id="hvilkebarn.barn.anonym" /> {index + 1}
+                        {plainTekst(frittståendeOrdTekster.barn)} {index + 1}
                     </FormSummary.Label>
                     <FormSummary.Value>
                         <FormSummary.Answers>
                             <OppsummeringFelt
                                 tittel={
-                                    <SpråkTekst
-                                        id={velgBarnSpørsmålSpråkId[VelgBarnSpørsmålId.barnetsNavn]}
-                                    />
+                                    <TekstBlock block={leggTilBarnTekster.barnetsNavnSubtittel} />
                                 }
                                 søknadsvar={
                                     barn.adressebeskyttelse
-                                        ? formatMessage({
-                                              id: 'hvilkebarn.barn.bosted.adressesperre',
-                                          })
+                                        ? plainTekst(velgBarnTekster.registrertMedAdressesperre)
                                         : barn.navn
                                 }
                             />
-
                             <OppsummeringFelt
-                                tittel={<SpråkTekst id={'hvilkebarn.barn.fødselsnummer'} />}
+                                tittel={<TekstBlock block={velgBarnTekster.foedselsnummerLabel} />}
                                 søknadsvar={barn.ident}
                             />
-
                             {!søknad.barnRegistrertManuelt.find(
                                 barnRegistrertManuelt => barnRegistrertManuelt.ident === barn.ident
                             ) && (
                                 <OppsummeringFelt
-                                    tittel={<SpråkTekst id={'hvilkebarn.barn.bosted'} />}
-                                    søknadsvar={formatMessage({
-                                        id: hentBostedSpråkId(barn),
-                                    })}
+                                    tittel={
+                                        <TekstBlock block={velgBarnTekster.registrertBostedLabel} />
+                                    }
+                                    søknadsvar={plainTekst(
+                                        hentBostedSpråkId(barn, velgBarnTekster)
+                                    )}
                                 />
                             )}
                         </FormSummary.Answers>
