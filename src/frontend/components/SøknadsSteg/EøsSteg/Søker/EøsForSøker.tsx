@@ -5,6 +5,7 @@ import { PersonType } from '../../../../typer/personType';
 import { ESanitySteg } from '../../../../typer/sanity/sanity';
 import { Arbeidsperiode } from '../../../Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
 import { Pensjonsperiode } from '../../../Felleskomponenter/Pensjonsmodal/Pensjonsperiode';
+import TekstBlock from '../../../Felleskomponenter/Sanity/TekstBlock';
 import { SkjemaFeltInput } from '../../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../../Felleskomponenter/Steg/Steg';
@@ -36,7 +37,7 @@ const EøsForSøker: React.FC = () => {
 
     return (
         <Steg
-            tittel={<SpråkTekst id={'eøs-om-deg.sidetittel'} />}
+            tittel={<TekstBlock block={stegTekster.eoesForSoekerTittel} />}
             guide={eosForSokerGuide}
             skjema={{
                 validerFelterOgVisFeilmelding,

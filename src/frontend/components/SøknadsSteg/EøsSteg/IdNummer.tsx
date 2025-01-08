@@ -7,14 +7,19 @@ import { v4 as uuidv4 } from 'uuid';
 import { ESvar } from '@navikt/familie-form-elements';
 import { feil, type Felt, type FeltState, type ISkjema, ok, useFelt } from '@navikt/familie-skjema';
 
+import { useApp } from '../../../context/AppContext';
 import { useSpråk } from '../../../context/SpråkContext';
 import useInputFeltMedUkjent from '../../../hooks/useInputFeltMedUkjent';
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { AlternativtSvarForInput } from '../../../typer/common';
+import { ISanitySpørsmålDokument } from '../../../typer/sanity/sanity';
 import { IEøsForBarnFeltTyper, IEøsForSøkerFeltTyper } from '../../../typer/skjema';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
+import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import { SkjemaCheckbox } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
+import { SkjemaCheckboxForSanity } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckboxForSanity';
 import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
+import { SkjemaFeltInputForSanity } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInputForSanity';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { OppsummeringFelt } from '../Oppsummering/OppsummeringFelt';
 
@@ -30,6 +35,7 @@ export const IdNummer: React.FC<{
     spørsmålSpråkId: string;
     spørsmålCheckboxSpråkId: string;
     lesevisning?: boolean;
+    spørsmålDokument?: ISanitySpørsmålDokument;
     barn?: IBarnMedISøknad;
 }> = ({
     skjema,
@@ -41,8 +47,11 @@ export const IdNummer: React.FC<{
     spørsmålSpråkId,
     spørsmålCheckboxSpråkId,
     barn,
+    spørsmålDokument,
     lesevisning = false,
 }) => {
+    const { plainTekst, tekster } = useApp();
+
     const { valgtLocale } = useSpråk();
     const intl = useIntl();
     const { formatMessage } = intl;
@@ -70,14 +79,19 @@ export const IdNummer: React.FC<{
         },
         avhengighet: idNummerUkjent,
         feilmeldingSpråkId: feilmeldingSpråkId,
+        feilmelding: spørsmålDokument?.feilmelding,
         customValidering: (felt: FeltState<string>) => {
             const verdi = trimWhiteSpace(felt.verdi);
             if (verdi.match(/^[0-9A-Za-z\s\-.\\/]{4,20}$/)) {
                 return ok(felt);
             } else {
-                return feil(felt, <SpråkTekst id={'felles.idnummer-feilformat.feilmelding'} />);
+                return feil(
+                    felt,
+                    plainTekst(tekster().FELLES.formateringsfeilmeldinger.ugyldigIDnummer)
+                );
             }
         },
+        flettefelter: { barnetsNavn: barn?.navn, land: landAlphaCode },
         ...(barn && { språkVerdier: { barn: barn.navn } }),
     });
 
@@ -92,25 +106,61 @@ export const IdNummer: React.FC<{
             {lesevisning ? (
                 <OppsummeringFelt
                     tittel={
-                        <SpråkTekst
-                            id={spørsmålSpråkId}
-                            values={{
-                                land: getName(landAlphaCode, valgtLocale),
-                                ...(barn && { barn: barn.navn }),
-                            }}
-                        />
+                        spørsmålDokument ? (
+                            <TekstBlock
+                                block={spørsmålDokument.sporsmal}
+                                flettefelter={{ land: landAlphaCode, barnetsNavn: barn?.navn }}
+                            />
+                        ) : (
+                            <SpråkTekst
+                                id={spørsmålSpråkId}
+                                values={{
+                                    land: getName(landAlphaCode, valgtLocale),
+                                    ...(barn && { barn: barn.navn }),
+                                }}
+                            />
+                        )
                     }
                     søknadsvar={
                         idNummerVerdiFraSøknad === AlternativtSvarForInput.UKJENT
-                            ? formatMessage(
-                                  {
-                                      id: spørsmålCheckboxSpråkId,
-                                  },
-                                  { land: getName(landAlphaCode, valgtLocale) }
-                              )
+                            ? spørsmålDokument
+                                ? plainTekst(spørsmålDokument.checkboxLabel, {
+                                      land: landAlphaCode,
+                                  })
+                                : formatMessage(
+                                      {
+                                          id: spørsmålCheckboxSpråkId,
+                                      },
+                                      { land: getName(landAlphaCode, valgtLocale) }
+                                  )
                             : idNummerVerdiFraSøknad
                     }
                 />
+            ) : spørsmålDokument ? (
+                <div>
+                    <SkjemaFeltInputForSanity
+                        felt={idNummerFelt}
+                        visFeilmeldinger={skjema.visFeilmeldinger}
+                        label={
+                            <TekstBlock
+                                block={spørsmålDokument.sporsmal}
+                                flettefelter={{
+                                    land: landAlphaCode,
+                                    barnetsNavn: barn?.navn,
+                                }}
+                            />
+                        }
+                        disabled={idNummerUkjent.verdi === ESvar.JA}
+                    />
+                    {idNummerUkjent.erSynlig && (
+                        <SkjemaCheckboxForSanity
+                            label={plainTekst(spørsmålDokument.checkboxLabel, {
+                                land: landAlphaCode,
+                            })}
+                            felt={idNummerUkjent}
+                        />
+                    )}
+                </div>
             ) : (
                 <div>
                     <SkjemaFeltInput
