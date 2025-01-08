@@ -4,4 +4,5 @@ export interface IEøsForSøkerTekstinnhold {
     eoesForSoekerTittel: LocaleRecordBlock;
     eosForSokerGuide: LocaleRecordBlock;
     idNummer: ISanitySpørsmålDokument;
+    hvorBor: ISanitySpørsmålDokument;
 }
