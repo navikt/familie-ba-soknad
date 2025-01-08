@@ -5,4 +5,7 @@ export interface IEøsForSøkerTekstinnhold {
     eosForSokerGuide: LocaleRecordBlock;
     idNummer: ISanitySpørsmålDokument;
     hvorBor: ISanitySpørsmålDokument;
+    arbeidNorge: ISanitySpørsmålDokument;
+    pensjonNorge: ISanitySpørsmålDokument;
+    utbetalinger: ISanitySpørsmålDokument;
 }
