@@ -142,16 +142,16 @@ describe('VelgBarn', () => {
 
         spyOnUseApp(søknad);
 
-        const { queryByText } = render(
+        const { queryByText, queryByTestId } = render(
             <TestProvidere mocketNettleserHistorikk={['/velg-barn']}>
                 <VelgBarn />
             </TestProvidere>
         );
         const ident = queryByText(søknad.søker.barn[0].ident ?? 'finnes-ikke-kast-feil');
-        const infoTekst = queryByText(/hvilkebarn.barn.bosted.adressesperre/);
+        const info = queryByTestId('registrert-bosted-adressesperre');
 
         expect(ident).not.toBeInTheDocument();
-        expect(infoTekst).toBeInTheDocument();
+        expect(info).toBeInTheDocument();
     });
 
     test('Kan legge til, fjerne og så legge et barn til igjen', async () => {
