@@ -31,7 +31,6 @@ const IdNummerForSøker: React.FC<Props> = ({ lesevisning = false, skjema, settI
         erEøsLand
     );
 
-    // TODO: Test når idNummerSomMåOppgisFraPerioder ikke er en tom liste
     return idNummerSomMåOppgisFraPerioder ? (
         <>
             {idNummerSomMåOppgisFraPerioder.map((landMedPeriodeType, index) => {
