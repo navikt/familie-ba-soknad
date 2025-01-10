@@ -15,4 +15,9 @@ export interface IEøsForBarnTekstinnhold {
     borMedAndreForelder: ISanitySpørsmålDokument;
     borMedOmsorgsperson: ISanitySpørsmålDokument;
     hvorBorBarnet: ISanitySpørsmålDokument;
+    subtittelAndreForelder: LocaleRecordBlock;
+    idNummerAndreForelder: ISanitySpørsmålDokument;
+    hvorBorAndreForelder: ISanitySpørsmålDokument;
+    paagaaendeSoeknadYtelseAndreForelder: ISanitySpørsmålDokument;
+    hvilketLandSoektYtelseAndreForelder: ISanitySpørsmålDokument;
 }

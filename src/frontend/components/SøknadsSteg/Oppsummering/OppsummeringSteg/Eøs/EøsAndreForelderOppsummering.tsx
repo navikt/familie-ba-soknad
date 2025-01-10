@@ -25,6 +25,7 @@ import IdNummerForAndreForelder from '../../../EøsSteg/Barn/IdNummerForAndreFor
 import { EøsBarnSpørsmålId, eøsBarnSpørsmålSpråkId } from '../../../EøsSteg/Barn/spørsmål';
 import { OppsummeringFelt } from '../../OppsummeringFelt';
 
+// TODO: Bytt til Sanity tekster
 const EøsAndreForelderOppsummering: React.FC<{
     barn: IBarnMedISøknad;
     andreForelder: IAndreForelder;
