@@ -46,7 +46,7 @@ interface OmsorgspersonProps {
         fjernBarnetrygdsperiodeOmsorgsperson: (periode: IEøsBarnetrygdsperiode) => void;
     };
 }
-
+// TODO: Bytt til Sanity tekster
 const Omsorgsperson: React.FC<OmsorgspersonProps> = ({ skjema, barn, periodeFunksjoner }) => {
     const intl = useIntl();
     const {

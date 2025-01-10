@@ -1,8 +1,18 @@
-import { ISanitySpørsmålDokument, LocaleRecordBlock } from '../../../../typer/sanity/sanity';
+import {
+    ISanitySpørsmålDokument,
+    LocaleRecordBlock,
+    LocaleRecordString,
+} from '../../../../typer/sanity/sanity';
 
 export interface IEøsForBarnTekstinnhold {
     eoesForBarnTittel: LocaleRecordBlock;
     eoesForBarnTittelUtenFlettefelt: LocaleRecordBlock;
     eosForBarnGuide: LocaleRecordBlock;
     idNummerBarn: ISanitySpørsmålDokument;
+    valgalternativSlektsforholdPlaceholder: LocaleRecordString;
+    slektsforhold: ISanitySpørsmålDokument;
+    hvilkenRelasjon: ISanitySpørsmålDokument;
+    borMedAndreForelder: ISanitySpørsmålDokument;
+    borMedOmsorgsperson: ISanitySpørsmålDokument;
+    hvorBorBarnet: ISanitySpørsmålDokument;
 }
