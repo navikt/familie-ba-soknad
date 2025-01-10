@@ -111,6 +111,7 @@ export interface IFormateringsfeilmeldingerTekstinnhold {
     datoKanIkkeVaereDagensDatoEllerFremITid: LocaleRecordString;
     periodeAvsluttesForTidlig: LocaleRecordString;
     datoKanIkkeVaereTilbakeITid: LocaleRecordString;
+    ugyldigIDnummer: LocaleRecordString;
 }
 
 export interface IModalerTekstinnhold {

@@ -16,6 +16,7 @@ import { LandDropdown } from '../../../Felleskomponenter/Dropdowns/LandDropdown'
 import SlektsforholdDropdown from '../../../Felleskomponenter/Dropdowns/SlektsforholdDropdown';
 import JaNeiSpm from '../../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import { Pensjonsperiode } from '../../../Felleskomponenter/Pensjonsmodal/Pensjonsperiode';
+import TekstBlock from '../../../Felleskomponenter/Sanity/TekstBlock';
 import { SkjemaCheckbox } from '../../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
 import { SkjemaFeltInput } from '../../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
 import SkjemaFieldset from '../../../Felleskomponenter/SkjemaFieldset';
@@ -77,7 +78,12 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
 
     return (
         <Steg
-            tittel={<SpråkTekst id={'eøs-om-barn.sidetittel'} values={{ barn: barn.navn }} />}
+            tittel={
+                <TekstBlock
+                    block={stegTekster.eoesForBarnTittel}
+                    flettefelter={{ barnetsNavn: barn.navn }}
+                />
+            }
             guide={eosForBarnGuide}
             skjema={{
                 validerFelterOgVisFeilmelding,
