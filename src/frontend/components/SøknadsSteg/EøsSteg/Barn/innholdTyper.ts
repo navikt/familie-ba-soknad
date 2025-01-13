@@ -28,4 +28,12 @@ export interface IEøsForBarnTekstinnhold {
     hvorBorOmsorgsperson: ISanitySpørsmålDokument;
     paagaaendeSoeknadYtelseOmsorgsperson: ISanitySpørsmålDokument;
     hvilketLandSoektYtelseOmsorgsperson: ISanitySpørsmålDokument;
+    arbeidNorgeAndreForelder: ISanitySpørsmålDokument;
+    arbeidNorgeAndreForelderGjenlevende: ISanitySpørsmålDokument;
+    pensjonNorgeAndreForelder: ISanitySpørsmålDokument;
+    pensjonNorgeAndreForelderGjenlevende: ISanitySpørsmålDokument;
+    utbetalingerAndreForelder: ISanitySpørsmålDokument;
+    utbetalingerAndreForelderGjenlevende: ISanitySpørsmålDokument;
+    ytelseFraAnnetLandAndreForelder: ISanitySpørsmålDokument;
+    ytelseFraAnnetLandAndreForelderGjenlevende: ISanitySpørsmålDokument;
 }
