@@ -20,4 +20,12 @@ export interface IEøsForBarnTekstinnhold {
     hvorBorAndreForelder: ISanitySpørsmålDokument;
     paagaaendeSoeknadYtelseAndreForelder: ISanitySpørsmålDokument;
     hvilketLandSoektYtelseAndreForelder: ISanitySpørsmålDokument;
+    oppgittIkkeBorFastSammenMedDeg: LocaleRecordBlock;
+    hvaHeterOmsorgspersonen: ISanitySpørsmålDokument;
+    slektsforholdOmsorgsperson: ISanitySpørsmålDokument;
+    hvilkenRelasjonOmsorgsperson: ISanitySpørsmålDokument;
+    idNummerOmsorgsperson: ISanitySpørsmålDokument;
+    hvorBorOmsorgsperson: ISanitySpørsmålDokument;
+    paagaaendeSoeknadYtelseOmsorgsperson: ISanitySpørsmålDokument;
+    hvilketLandSoektYtelseOmsorgsperson: ISanitySpørsmålDokument;
 }
