@@ -88,6 +88,8 @@ export const useEøsForBarn = (
     settIdNummerFelterForAndreForelder: Dispatch<SetStateAction<Felt<string>[]>>;
 } => {
     const { søknad, settSøknad, tekster, plainTekst } = useApp();
+
+    const eøsForBarnTekster = tekster().EØS_FOR_BARN;
     const teksterForArbeidsperiode: IArbeidsperiodeTekstinnhold =
         tekster()[ESanitySteg.FELLES].modaler.arbeidsperiode.søker;
     const teksterForBarnetrygdsperiode: IBarnetrygdsperiodeTekstinnhold =
@@ -125,12 +127,13 @@ export const useEøsForBarn = (
         valideringsfunksjon: (felt: FeltState<Slektsforhold | ''>) => {
             return felt.verdi !== ''
                 ? ok(felt)
-                : feil(felt, <SpråkTekst id={'felles.velgslektsforhold.feilmelding'} />);
+                : feil(felt, plainTekst(eøsForBarnTekster.slektsforhold.feilmelding));
         },
         skalFeltetVises: () => gjeldendeBarn.erFosterbarn.svar === ESvar.NEI,
     });
     const søkersSlektsforholdSpesifisering = useInputFelt({
         søknadsfelt: gjeldendeBarn[barnDataKeySpørsmål.søkersSlektsforholdSpesifisering],
+        feilmelding: eøsForBarnTekster.hvilkenRelasjon.feilmelding,
         feilmeldingSpråkId: 'eøs-om-barn.dinrelasjon.feilmelding',
         feilmeldingSpråkVerdier: { barn: gjeldendeBarn.navn },
         skalVises: søkersSlektsforhold.verdi === Slektsforhold.ANNEN_RELASJON,
@@ -140,17 +143,13 @@ export const useEøsForBarn = (
                 ? ok(felt)
                 : feil(
                       felt,
-                      <SpråkTekst
-                          id={'felles.relasjon.format.feilmelding'}
-                          values={{
-                              barn: gjeldendeBarn.navn,
-                          }}
-                      />
+                      plainTekst(tekster().FELLES.formateringsfeilmeldinger.ugyldigRelasjon)
                   );
         },
         nullstillVedAvhengighetEndring: false,
     });
 
+    // TODO:
     /*--- BOSITUASJON ---*/
     const borMedAndreForelder = useJaNeiSpmFelt({
         søknadsfelt: gjeldendeBarn[barnDataKeySpørsmål.borMedAndreForelder],
