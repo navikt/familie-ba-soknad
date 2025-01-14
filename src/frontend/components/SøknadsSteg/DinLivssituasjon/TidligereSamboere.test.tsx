@@ -16,8 +16,8 @@ import {
     TidligereSamboerSpørsmålId,
 } from './spørsmål';
 
-jest.mock('react-router-dom', () => ({
-    ...(jest.requireActual('react-router-dom') as object),
+jest.mock('react-router', () => ({
+    ...(jest.requireActual('react-router') as object),
     useLocation: () => ({
         pathname: '/din-livssituasjon',
     }),
