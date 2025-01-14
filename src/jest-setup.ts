@@ -1,4 +1,5 @@
 import '@testing-library/jest-dom';
+import { TextEncoder } from 'util';
 
 import { RessursStatus } from '@navikt/familie-typer';
 
@@ -30,3 +31,5 @@ axiosMock.onPost(/\/api\/personopplysning/).reply(200, {
 axiosMock.onAny(/:8082/).reply(200);
 
 axiosMock.onPost();
+
+global.TextEncoder = TextEncoder;

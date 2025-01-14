@@ -17,8 +17,8 @@ import { NyttBarnKort } from './NyttBarnKort';
 
 jest.mock('@navikt/fnrvalidator');
 
-jest.mock('react-router-dom', () => ({
-    ...(jest.requireActual('react-router-dom') as object),
+jest.mock('react-router', () => ({
+    ...(jest.requireActual('react-router') as object),
     useLocation: () => ({
         pathname: 'localhost:3000/velg-barn/',
     }),

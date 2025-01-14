@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { act, render, waitFor } from '@testing-library/react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 import { ESvar } from '@navikt/familie-form-elements';
 

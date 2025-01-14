@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 
 import { mockDeep } from 'jest-mock-extended';
 import { IntlProvider } from 'react-intl';
-import { MemoryRouter, useLocation } from 'react-router-dom';
+import { MemoryRouter, useLocation } from 'react-router';
 
 import { ESvar } from '@navikt/familie-form-elements';
 import { HttpProvider } from '@navikt/familie-http';
