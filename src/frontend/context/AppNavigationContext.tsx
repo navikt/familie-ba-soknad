@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import createUseContext from 'constate';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router';
 
 import { ISteg, RouteEnum } from '../typer/routes';
 
