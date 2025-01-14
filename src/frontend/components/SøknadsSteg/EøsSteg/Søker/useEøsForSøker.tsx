@@ -24,6 +24,7 @@ import { PensjonsperiodeSpørsmålId } from '../../../Felleskomponenter/Pensjons
 import { UtbetalingerSpørsmålId } from '../../../Felleskomponenter/UtbetalingerModal/spørsmål';
 import { idNummerKeyPrefix } from '../idnummerUtils';
 
+import { IEøsForSøkerTekstinnhold } from './innholdTyper';
 import { EøsSøkerSpørsmålId } from './spørsmål';
 
 export const useEøsForSøker = (): {
@@ -42,6 +43,7 @@ export const useEøsForSøker = (): {
     idNummerFelter: Felt<string>[];
 } => {
     const { søknad, settSøknad, tekster, plainTekst } = useApp();
+    const teksterForSteg: IEøsForSøkerTekstinnhold = tekster()[ESanitySteg.EØS_FOR_SØKER];
     const teksterForArbeidsperiode: IArbeidsperiodeTekstinnhold =
         tekster()[ESanitySteg.FELLES].modaler.arbeidsperiode.søker;
     const teksterForPensjonsperiode: IPensjonsperiodeTekstinnhold =
@@ -58,6 +60,7 @@ export const useEøsForSøker = (): {
             id: EøsSøkerSpørsmålId.adresseISøkeperiode,
             svar: søker.adresseISøkeperiode.svar,
         },
+        feilmelding: teksterForSteg.hvorBor.feilmelding,
         feilmeldingSpråkId: 'eøs-om-deg.dittoppholdssted.feilmelding',
         skalVises: søker.triggetEøs,
         customValidering: valideringAdresse,
@@ -65,6 +68,7 @@ export const useEøsForSøker = (): {
 
     const arbeidINorge = useJaNeiSpmFelt({
         søknadsfelt: søker.arbeidINorge,
+        feilmelding: teksterForSteg.arbeidNorge.feilmelding,
         feilmeldingSpråkId: 'eøs-om-deg.arbeidsperioderinorge.feilmelding',
     });
 
@@ -92,6 +96,7 @@ export const useEøsForSøker = (): {
 
     const pensjonNorge = useJaNeiSpmFelt({
         søknadsfelt: søker.pensjonNorge,
+        feilmelding: teksterForSteg.pensjonNorge.feilmelding,
         feilmeldingSpråkId: 'eøs-om-deg.pensjoninorge.feilmelding',
     });
     const {
@@ -118,6 +123,7 @@ export const useEøsForSøker = (): {
 
     const andreUtbetalinger = useJaNeiSpmFelt({
         søknadsfelt: søker.andreUtbetalinger,
+        feilmelding: teksterForSteg.utbetalinger.feilmelding,
         feilmeldingSpråkId: 'eøs-om-deg.utbetalinger.feilmelding',
     });
     const {

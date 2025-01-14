@@ -17,7 +17,7 @@ interface Props {
 }
 
 const IdNummerForSøker: React.FC<Props> = ({ lesevisning = false, skjema, settIdNummerFelter }) => {
-    const { søknad } = useApp();
+    const { søknad, tekster } = useApp();
     const { søker } = søknad;
     const { arbeidsperioderUtland, pensjonsperioderUtland, utenlandsperioder } = søker;
     const { erEøsLand } = useEøs();
@@ -52,6 +52,7 @@ const IdNummerForSøker: React.FC<Props> = ({ lesevisning = false, skjema, settI
                             settIdNummerFelter={settIdNummerFelter}
                             landAlphaCode={landMedPeriodeType.land}
                             periodeType={landMedPeriodeType.periodeType}
+                            spørsmålDokument={tekster().EØS_FOR_SØKER.idNummer}
                         />
                     )
                 );

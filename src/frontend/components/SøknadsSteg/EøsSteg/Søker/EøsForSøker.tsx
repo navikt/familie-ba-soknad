@@ -5,13 +5,12 @@ import { PersonType } from '../../../../typer/personType';
 import { ESanitySteg } from '../../../../typer/sanity/sanity';
 import { Arbeidsperiode } from '../../../Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
 import { Pensjonsperiode } from '../../../Felleskomponenter/Pensjonsmodal/Pensjonsperiode';
-import { SkjemaFeltInput } from '../../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
-import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import TekstBlock from '../../../Felleskomponenter/Sanity/TekstBlock';
+import { SkjemaFeltInputForSanity } from '../../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInputForSanity';
 import Steg from '../../../Felleskomponenter/Steg/Steg';
 import { Utbetalingsperiode } from '../../../Felleskomponenter/UtbetalingerModal/Utbetalingsperiode';
 
 import IdNummerForSøker from './IdNummerForSøker';
-import { EøsSøkerSpørsmålId, eøsSøkerSpørsmålSpråkId } from './spørsmål';
 import { useEøsForSøker } from './useEøsForSøker';
 
 const EøsForSøker: React.FC = () => {
@@ -36,7 +35,7 @@ const EøsForSøker: React.FC = () => {
 
     return (
         <Steg
-            tittel={<SpråkTekst id={'eøs-om-deg.sidetittel'} />}
+            tittel={<TekstBlock block={stegTekster.eoesForSoekerTittel} />}
             guide={eosForSokerGuide}
             skjema={{
                 validerFelterOgVisFeilmelding,
@@ -47,13 +46,11 @@ const EøsForSøker: React.FC = () => {
         >
             <IdNummerForSøker skjema={skjema} settIdNummerFelter={settIdNummerFelter} />
             {skjema.felter.adresseISøkeperiode.erSynlig && (
-                <SkjemaFeltInput
+                <SkjemaFeltInputForSanity
                     felt={skjema.felter.adresseISøkeperiode}
                     visFeilmeldinger={skjema.visFeilmeldinger}
-                    labelSpråkTekstId={
-                        eøsSøkerSpørsmålSpråkId[EøsSøkerSpørsmålId.adresseISøkeperiode]
-                    }
-                    description={<SpråkTekst id={'felles.hjelpetekst.fulladresse'} />}
+                    label={<TekstBlock block={stegTekster.hvorBor.sporsmal} />}
+                    description={<TekstBlock block={stegTekster.hvorBor.beskrivelse} />}
                 />
             )}
             <Arbeidsperiode

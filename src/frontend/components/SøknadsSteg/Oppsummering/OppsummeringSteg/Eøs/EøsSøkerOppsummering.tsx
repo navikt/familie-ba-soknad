@@ -1,18 +1,14 @@
 import React from 'react';
 
-import { ESvar } from '@navikt/familie-form-elements';
-
 import { useApp } from '../../../../../context/AppContext';
 import { useRoutes } from '../../../../../context/RoutesContext';
 import { PersonType } from '../../../../../typer/personType';
 import { RouteEnum } from '../../../../../typer/routes';
-import { ISøknadSpørsmål } from '../../../../../typer/spørsmål';
 import { ArbeidsperiodeOppsummering } from '../../../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeOppsummering';
 import { PensjonsperiodeOppsummering } from '../../../../Felleskomponenter/Pensjonsmodal/PensjonsperiodeOppsummering';
-import SpråkTekst from '../../../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import TekstBlock from '../../../../Felleskomponenter/Sanity/TekstBlock';
 import { UtbetalingsperiodeOppsummering } from '../../../../Felleskomponenter/UtbetalingerModal/UtbetalingsperiodeOppsummering';
 import IdNummerForSøker from '../../../EøsSteg/Søker/IdNummerForSøker';
-import { EøsSøkerSpørsmålId, eøsSøkerSpørsmålSpråkId } from '../../../EøsSteg/Søker/spørsmål';
 import { useEøsForSøker } from '../../../EøsSteg/Søker/useEøsForSøker';
 import { OppsummeringFelt } from '../../OppsummeringFelt';
 import Oppsummeringsbolk from '../../Oppsummeringsbolk';
@@ -23,21 +19,16 @@ interface Props {
 
 const EøsSøkerOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
     const { hentRouteObjektForRouteEnum } = useRoutes();
-    const { søknad } = useApp();
+    const { søknad, tekster } = useApp();
     const { søker } = søknad;
     const eøsForSøkerHook = useEøsForSøker();
-
-    const jaNeiSpmOppsummering = (søknadSpørsmål: ISøknadSpørsmål<ESvar | null>) => (
-        <OppsummeringFelt
-            tittel={<SpråkTekst id={eøsSøkerSpørsmålSpråkId[søknadSpørsmål.id]} />}
-            søknadsvar={søknadSpørsmål.svar}
-        />
-    );
+    const teskterForSteg = tekster().EØS_FOR_SØKER;
 
     return (
         <Oppsummeringsbolk
             steg={hentRouteObjektForRouteEnum(RouteEnum.EøsForSøker)}
             tittel={'eøs-om-deg.sidetittel'}
+            tittelForSanity={teskterForSteg.eoesForSoekerTittel}
             skjemaHook={eøsForSøkerHook}
             settFeilAnchors={settFeilAnchors}
         >
@@ -48,15 +39,14 @@ const EøsSøkerOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
             />
             {søker.adresseISøkeperiode.svar && (
                 <OppsummeringFelt
-                    tittel={
-                        <SpråkTekst
-                            id={eøsSøkerSpørsmålSpråkId[EøsSøkerSpørsmålId.adresseISøkeperiode]}
-                        />
-                    }
+                    tittel={<TekstBlock block={teskterForSteg.hvorBor.sporsmal} />}
                     søknadsvar={søker.adresseISøkeperiode.svar}
                 />
             )}
-            {jaNeiSpmOppsummering(søker.arbeidINorge)}
+            <OppsummeringFelt
+                tittel={<TekstBlock block={teskterForSteg.arbeidNorge.sporsmal} />}
+                søknadsvar={søker.arbeidINorge.svar}
+            />
             {søker.arbeidsperioderNorge.map((arbeidsperiode, index) => (
                 <ArbeidsperiodeOppsummering
                     key={`arbeidsperiode-søker-norge-${index}`}
@@ -66,7 +56,10 @@ const EøsSøkerOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                     gjelderUtlandet={false}
                 />
             ))}
-            {jaNeiSpmOppsummering(søker.pensjonNorge)}
+            <OppsummeringFelt
+                tittel={<TekstBlock block={teskterForSteg.pensjonNorge.sporsmal} />}
+                søknadsvar={søker.pensjonNorge.svar}
+            />
             {søker.pensjonsperioderNorge.map((pensjonsperiode, index) => (
                 <PensjonsperiodeOppsummering
                     key={`pensjonsperiode-søker-norge-${index}`}
@@ -76,7 +69,10 @@ const EøsSøkerOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                     personType={PersonType.Søker}
                 />
             ))}
-            {jaNeiSpmOppsummering(søker.andreUtbetalinger)}
+            <OppsummeringFelt
+                tittel={<TekstBlock block={teskterForSteg.utbetalinger.sporsmal} />}
+                søknadsvar={søker.andreUtbetalinger.svar}
+            />
             {søker.andreUtbetalingsperioder.map((utbetalingsperiode, index) => (
                 <UtbetalingsperiodeOppsummering
                     key={`utbetalingsperiode-søker-norge-${index}`}
