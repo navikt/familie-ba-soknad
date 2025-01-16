@@ -104,6 +104,7 @@ export interface INavigasjonTekstinnhold {
 }
 
 export interface IFormateringsfeilmeldingerTekstinnhold {
+    ugyldigIDnummer: LocaleRecordString;
     ugyldigFoedselsnummer: LocaleRecordString;
     ugyldigPostnummer: LocaleRecordString;
     ugyldigDato: LocaleRecordString;
