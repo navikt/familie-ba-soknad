@@ -7,8 +7,7 @@ import { useRoutes } from '../../../../context/RoutesContext';
 import { barnDataKeySpørsmål } from '../../../../typer/barn';
 import { RouteEnum } from '../../../../typer/routes';
 import TekstBlock from '../../../Felleskomponenter/Sanity/TekstBlock';
-import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
-import { OmBarnaDineSpørsmålId, omBarnaDineSpørsmålSpråkId } from '../../OmBarnaDine/spørsmål';
+import { OmBarnaDineSpørsmålId } from '../../OmBarnaDine/spørsmål';
 import { useOmBarnaDine } from '../../OmBarnaDine/useOmBarnaDine';
 import { avdødPartnerForelderSpørsmålDokument } from '../../OmBarnaDine/utils';
 import { OppsummeringFelt } from '../OppsummeringFelt';
@@ -79,35 +78,17 @@ const OmBarnaOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                 />
             )}
             <OppsummeringFelt
-                tittel={
-                    <SpråkTekst
-                        id={
-                            omBarnaDineSpørsmålSpråkId[
-                                OmBarnaDineSpørsmålId.barnOppholdtSegTolvMndSammenhengendeINorge
-                            ]
-                        }
-                    />
-                }
+                tittel={<TekstBlock block={omBarnaTekster.sammenhengendeOppholdINorge.sporsmal} />}
                 søknadsvar={søknad.barnOppholdtSegTolvMndSammenhengendeINorge.svar}
             />
             {søknad.barnOppholdtSegTolvMndSammenhengendeINorge.svar === ESvar.NEI && (
                 <OppsummeringFelt
-                    tittel={
-                        <TekstBlock block={omBarnaTekster.sammenhengendeOppholdINorge.sporsmal} />
-                    }
+                    tittel={<TekstBlock block={omBarnaTekster.hvemOppholdUtenforNorge.sporsmal} />}
                     søknadsvar={genererListeMedBarn(barnDataKeySpørsmål.boddMindreEnn12MndINorge)}
                 />
             )}
             <OppsummeringFelt
-                tittel={
-                    <SpråkTekst
-                        id={
-                            omBarnaDineSpørsmålSpråkId[
-                                OmBarnaDineSpørsmålId.mottarBarnetrygdForBarnFraAnnetEøsland
-                            ]
-                        }
-                    />
-                }
+                tittel={<TekstBlock block={omBarnaTekster.soektYtelseEuEoes.sporsmal} />}
                 søknadsvar={søknad.mottarBarnetrygdForBarnFraAnnetEøsland.svar}
             />
             {søknad.mottarBarnetrygdForBarnFraAnnetEøsland.svar === ESvar.JA && (
