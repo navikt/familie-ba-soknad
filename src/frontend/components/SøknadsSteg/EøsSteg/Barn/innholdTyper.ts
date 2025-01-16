@@ -36,4 +36,10 @@ export interface IEøsForBarnTekstinnhold {
     utbetalingerAndreForelderGjenlevende: ISanitySpørsmålDokument;
     ytelseFraAnnetLandAndreForelder: ISanitySpørsmålDokument;
     ytelseFraAnnetLandAndreForelderGjenlevende: ISanitySpørsmålDokument;
+    arbeidUtenforNorgeOmsorgsperson: ISanitySpørsmålDokument;
+    arbeidNorgeOmsorgsperson: ISanitySpørsmålDokument;
+    pensjonUtlandOmsorgsperson: ISanitySpørsmålDokument;
+    pensjonNorgeOmsorgsperson: ISanitySpørsmålDokument;
+    utbetalingerOmsorgsperson: ISanitySpørsmålDokument;
+    ytelseFraAnnetLandOmsorgsperson: ISanitySpørsmålDokument;
 }
