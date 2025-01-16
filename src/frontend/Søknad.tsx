@@ -1,7 +1,7 @@
 import React from 'react';
 
 import classNames from 'classnames';
-import { Navigate, Route, Routes, useParams } from 'react-router-dom';
+import { Navigate, Route, Routes, useParams } from 'react-router';
 
 import RedirectTilStart from './components/Felleskomponenter/RedirectTilStart/RedirectTilStart';
 import Helse from './components/Helse/Helse';
