@@ -45,7 +45,6 @@ export const hentÅrsak = (
     }
 };
 
-// TODO: Fjern
 export const toSlektsforholdSpråkId = (slektsforhold: Slektsforhold): string => {
     switch (slektsforhold) {
         case Slektsforhold.FORELDER:

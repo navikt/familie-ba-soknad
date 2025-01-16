@@ -1,87 +1,87 @@
 import React from 'react';
 
-import { useIntl } from 'react-intl';
-
+import { useApp } from '../../../../../context/AppContext';
 import { useSpråk } from '../../../../../context/SpråkContext';
 import { IBarnMedISøknad } from '../../../../../typer/barn';
 import { AlternativtSvarForInput } from '../../../../../typer/common';
 import { IOmsorgsperson } from '../../../../../typer/omsorgsperson';
 import { PersonType } from '../../../../../typer/personType';
-import { landkodeTilSpråk, toSlektsforholdSpråkId } from '../../../../../utils/språk';
+import { hentSlektsforhold, landkodeTilSpråk } from '../../../../../utils/språk';
 import { ArbeidsperiodeOppsummering } from '../../../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeOppsummering';
 import { BarnetrygdsperiodeOppsummering } from '../../../../Felleskomponenter/Barnetrygdperiode/BarnetrygdperiodeOppsummering';
 import { PensjonsperiodeOppsummering } from '../../../../Felleskomponenter/Pensjonsmodal/PensjonsperiodeOppsummering';
-import SpråkTekst from '../../../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import TekstBlock from '../../../../Felleskomponenter/Sanity/TekstBlock';
 import { UtbetalingsperiodeOppsummering } from '../../../../Felleskomponenter/UtbetalingerModal/UtbetalingsperiodeOppsummering';
-import { EøsBarnSpørsmålId, eøsBarnSpørsmålSpråkId } from '../../../EøsSteg/Barn/spørsmål';
 import { OppsummeringFelt } from '../../OppsummeringFelt';
 
-import { tittelSpmEøsBarnOppsummering } from './utils';
-
-// TODO: Bytt til bruk av Sanity tekster
 const EøsOmsorgspersonOppsummering: React.FC<{
     omsorgsperson: IOmsorgsperson;
     barn: IBarnMedISøknad;
 }> = ({ omsorgsperson, barn }) => {
-    const { formatMessage } = useIntl();
+    const { tekster, plainTekst } = useApp();
+    const eøsBarnTekster = tekster().EØS_FOR_BARN;
+
     const { valgtLocale } = useSpråk();
 
+    const flettefelter = { barnetsNavn: barn.navn };
     return (
         <>
             {omsorgsperson.navn.svar && (
                 <OppsummeringFelt
-                    tittel={tittelSpmEøsBarnOppsummering(omsorgsperson.navn.id, barn.navn)}
+                    tittel={<TekstBlock block={eøsBarnTekster.hvaHeterOmsorgspersonen.sporsmal} />}
                     søknadsvar={omsorgsperson.navn.svar}
                 />
             )}
-
             {omsorgsperson.slektsforhold.svar && (
                 <OppsummeringFelt
-                    tittel={tittelSpmEøsBarnOppsummering(omsorgsperson.slektsforhold.id, barn.navn)}
-                    søknadsvar={formatMessage({
-                        id: toSlektsforholdSpråkId(omsorgsperson.slektsforhold.svar),
-                    })}
+                    tittel={
+                        <TekstBlock
+                            block={eøsBarnTekster.slektsforhold.sporsmal}
+                            flettefelter={flettefelter}
+                        />
+                    }
+                    søknadsvar={plainTekst(
+                        hentSlektsforhold(omsorgsperson.slektsforhold.svar, eøsBarnTekster)
+                    )}
                 />
             )}
-
             {omsorgsperson.slektsforholdSpesifisering.svar && (
                 <OppsummeringFelt
-                    tittel={tittelSpmEøsBarnOppsummering(
-                        omsorgsperson.slektsforholdSpesifisering.id,
-                        barn.navn
-                    )}
+                    tittel={
+                        <TekstBlock
+                            block={eøsBarnTekster.hvilkenRelasjonOmsorgsperson.sporsmal}
+                            flettefelter={flettefelter}
+                        />
+                    }
                     søknadsvar={omsorgsperson.slektsforholdSpesifisering.svar}
                 />
             )}
-
             {omsorgsperson.idNummer.svar && (
                 <OppsummeringFelt
-                    tittel={tittelSpmEøsBarnOppsummering(omsorgsperson.idNummer.id, barn.navn)}
+                    tittel={<TekstBlock block={eøsBarnTekster.idNummerOmsorgsperson.sporsmal} />}
                     søknadsvar={
                         omsorgsperson.idNummer.svar === AlternativtSvarForInput.UKJENT
-                            ? formatMessage({
-                                  id: eøsBarnSpørsmålSpråkId[
-                                      EøsBarnSpørsmålId.omsorgspersonIdNummerVetIkke
-                                  ],
-                              })
+                            ? plainTekst(eøsBarnTekster.idNummerOmsorgsperson.checkboxLabel)
                             : omsorgsperson.idNummer.svar
                     }
                 />
             )}
-
             {omsorgsperson.adresse.svar && (
                 <OppsummeringFelt
-                    tittel={tittelSpmEøsBarnOppsummering(omsorgsperson.adresse.id, barn.navn)}
-                    søknadsvar={omsorgsperson.adresse.svar}
+                    tittel={<TekstBlock block={eøsBarnTekster.hvorBorOmsorgsperson.sporsmal} />}
+                    søknadsvar={
+                        omsorgsperson.adresse.svar === AlternativtSvarForInput.UKJENT
+                            ? plainTekst(eøsBarnTekster.hvorBorOmsorgsperson.checkboxLabel)
+                            : omsorgsperson.adresse.svar
+                    }
                 />
             )}
-
             {omsorgsperson.arbeidUtland.svar && (
                 <OppsummeringFelt
                     tittel={
-                        <SpråkTekst
-                            id={eøsBarnSpørsmålSpråkId[omsorgsperson.arbeidUtland.id]}
-                            values={{ barn: barn.navn }}
+                        <TekstBlock
+                            block={eøsBarnTekster.arbeidUtenforNorgeOmsorgsperson.sporsmal}
+                            flettefelter={flettefelter}
                         />
                     }
                     søknadsvar={omsorgsperson.arbeidUtland.svar}
@@ -100,9 +100,9 @@ const EøsOmsorgspersonOppsummering: React.FC<{
             {omsorgsperson.arbeidNorge.svar && (
                 <OppsummeringFelt
                     tittel={
-                        <SpråkTekst
-                            id={eøsBarnSpørsmålSpråkId[omsorgsperson.arbeidNorge.id]}
-                            values={{ barn: barn.navn }}
+                        <TekstBlock
+                            block={eøsBarnTekster.arbeidNorgeOmsorgsperson.sporsmal}
+                            flettefelter={flettefelter}
                         />
                     }
                     søknadsvar={omsorgsperson.arbeidNorge.svar}
@@ -121,9 +121,9 @@ const EøsOmsorgspersonOppsummering: React.FC<{
             {omsorgsperson.pensjonUtland.svar && (
                 <OppsummeringFelt
                     tittel={
-                        <SpråkTekst
-                            id={eøsBarnSpørsmålSpråkId[omsorgsperson.pensjonUtland.id]}
-                            values={{ barn: barn.navn }}
+                        <TekstBlock
+                            block={eøsBarnTekster.pensjonUtlandOmsorgsperson.sporsmal}
+                            flettefelter={flettefelter}
                         />
                     }
                     søknadsvar={omsorgsperson.pensjonUtland.svar}
@@ -142,9 +142,9 @@ const EøsOmsorgspersonOppsummering: React.FC<{
             {omsorgsperson.pensjonNorge.svar && (
                 <OppsummeringFelt
                     tittel={
-                        <SpråkTekst
-                            id={eøsBarnSpørsmålSpråkId[omsorgsperson.pensjonNorge.id]}
-                            values={{ barn: barn.navn }}
+                        <TekstBlock
+                            block={eøsBarnTekster.pensjonNorgeOmsorgsperson.sporsmal}
+                            flettefelter={flettefelter}
                         />
                     }
                     søknadsvar={omsorgsperson.pensjonNorge.svar}
@@ -163,9 +163,9 @@ const EøsOmsorgspersonOppsummering: React.FC<{
             {omsorgsperson.andreUtbetalinger.svar && (
                 <OppsummeringFelt
                     tittel={
-                        <SpråkTekst
-                            id={eøsBarnSpørsmålSpråkId[omsorgsperson.andreUtbetalinger.id]}
-                            values={{ barn: barn.navn }}
+                        <TekstBlock
+                            block={eøsBarnTekster.utbetalingerOmsorgsperson.sporsmal}
+                            flettefelter={flettefelter}
                         />
                     }
                     søknadsvar={omsorgsperson.andreUtbetalinger.svar}
@@ -184,13 +184,9 @@ const EøsOmsorgspersonOppsummering: React.FC<{
                 <>
                     <OppsummeringFelt
                         tittel={
-                            <SpråkTekst
-                                id={
-                                    eøsBarnSpørsmålSpråkId[
-                                        omsorgsperson.pågåendeSøknadFraAnnetEøsLand.id
-                                    ]
-                                }
-                                values={{ barn: barn.navn }}
+                            <TekstBlock
+                                block={eøsBarnTekster.paagaaendeSoeknadYtelseOmsorgsperson.sporsmal}
+                                flettefelter={flettefelter}
                             />
                         }
                         søknadsvar={omsorgsperson.pågåendeSøknadFraAnnetEøsLand.svar}
@@ -198,13 +194,11 @@ const EøsOmsorgspersonOppsummering: React.FC<{
                     {omsorgsperson.pågåendeSøknadHvilketLand.svar && (
                         <OppsummeringFelt
                             tittel={
-                                <SpråkTekst
-                                    id={
-                                        eøsBarnSpørsmålSpråkId[
-                                            omsorgsperson.pågåendeSøknadHvilketLand.id
-                                        ]
+                                <TekstBlock
+                                    block={
+                                        eøsBarnTekster.hvilketLandSoektYtelseOmsorgsperson.sporsmal
                                     }
-                                    values={{ barn: barn.navn }}
+                                    flettefelter={flettefelter}
                                 />
                             }
                             søknadsvar={landkodeTilSpråk(
@@ -218,9 +212,9 @@ const EøsOmsorgspersonOppsummering: React.FC<{
             {omsorgsperson.barnetrygdFraEøs.svar && (
                 <OppsummeringFelt
                     tittel={
-                        <SpråkTekst
-                            id={eøsBarnSpørsmålSpråkId[omsorgsperson.barnetrygdFraEøs.id]}
-                            values={{ barn: barn.navn }}
+                        <TekstBlock
+                            block={eøsBarnTekster.ytelseFraAnnetLandOmsorgsperson.sporsmal}
+                            flettefelter={flettefelter}
                         />
                     }
                     søknadsvar={omsorgsperson.barnetrygdFraEøs.svar}

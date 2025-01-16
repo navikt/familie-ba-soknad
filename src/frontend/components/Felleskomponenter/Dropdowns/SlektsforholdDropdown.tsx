@@ -12,7 +12,6 @@ export interface SlektsforholdDropdownProps extends StyledDropdownProps<Slektsfo
     gjelderSøker?: boolean;
 }
 
-// TODO: Bytt til bruk av Sanity tekster
 const SlektsforholdDropdown: React.FC<SlektsforholdDropdownProps> = ({
     gjelderSøker = false,
     ...props
