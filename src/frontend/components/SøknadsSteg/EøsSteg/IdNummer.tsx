@@ -47,7 +47,7 @@ export const IdNummer: React.FC<{
     spørsmålSpråkId,
     spørsmålCheckboxSpråkId,
     barn,
-    spørsmålDokument = undefined,
+    spørsmålDokument,
     lesevisning = false,
 }) => {
     const { plainTekst, tekster } = useApp();

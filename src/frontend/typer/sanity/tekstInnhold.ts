@@ -104,6 +104,7 @@ export interface INavigasjonTekstinnhold {
 }
 
 export interface IFormateringsfeilmeldingerTekstinnhold {
+    ugyldigIDnummer: LocaleRecordString;
     ugyldigFoedselsnummer: LocaleRecordString;
     ugyldigRelasjon: LocaleRecordString;
     ugyldigPostnummer: LocaleRecordString;
@@ -112,7 +113,6 @@ export interface IFormateringsfeilmeldingerTekstinnhold {
     datoKanIkkeVaereDagensDatoEllerFremITid: LocaleRecordString;
     periodeAvsluttesForTidlig: LocaleRecordString;
     datoKanIkkeVaereTilbakeITid: LocaleRecordString;
-    ugyldigIDnummer: LocaleRecordString;
 }
 
 export interface IModalerTekstinnhold {
