@@ -9,6 +9,7 @@ import * as bokmål from '../assets/lang/nb.json' assert { type: 'json' };
 import * as nynorsk from '../assets/lang/nn.json' assert { type: 'json' };
 import { innebygdeFormatterere } from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
 import { IDinLivssituasjonTekstinnhold } from '../components/SøknadsSteg/DinLivssituasjon/innholdTyper';
+import { IEøsForBarnTekstinnhold } from '../components/SøknadsSteg/EøsSteg/Barn/innholdTyper';
 import { IVelgBarnTekstinnhold } from '../components/SøknadsSteg/VelgBarn/innholdTyper';
 import { AlternativtSvarForInput, LocaleType } from '../typer/common';
 import { ESivilstand, Slektsforhold } from '../typer/kontrakt/generelle';
@@ -44,6 +45,7 @@ export const hentÅrsak = (
     }
 };
 
+// TODO: Fjern
 export const toSlektsforholdSpråkId = (slektsforhold: Slektsforhold): string => {
     switch (slektsforhold) {
         case Slektsforhold.FORELDER:
@@ -56,6 +58,24 @@ export const toSlektsforholdSpråkId = (slektsforhold: Slektsforhold): string =>
             return 'felles.velgslektsforhold.annenfamilie';
         case Slektsforhold.ANNEN_RELASJON:
             return 'felles.velgslektsforhold.annenrelasjon';
+    }
+};
+
+export const hentSlektsforhold = (
+    slektsforhold: Slektsforhold,
+    tekster: IEøsForBarnTekstinnhold
+) => {
+    switch (slektsforhold) {
+        case Slektsforhold.FORELDER:
+            return tekster.valgalternativForelder;
+        case Slektsforhold.BESTEFORELDER:
+            return tekster.valgalternativBesteforelder;
+        case Slektsforhold.ONKEL_ELLER_TANTE:
+            return tekster.valgalternativOnkelTante;
+        case Slektsforhold.ANNEN_FAMILIERELASJON:
+            return tekster.valgalternativAnnenFamilierelasjon;
+        case Slektsforhold.ANNEN_RELASJON:
+            return tekster.valgalternativAnnenRelasjon;
     }
 };
 

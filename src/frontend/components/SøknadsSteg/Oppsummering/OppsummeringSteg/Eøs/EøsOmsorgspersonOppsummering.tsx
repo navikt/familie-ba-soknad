@@ -18,6 +18,7 @@ import { OppsummeringFelt } from '../../OppsummeringFelt';
 
 import { tittelSpmEøsBarnOppsummering } from './utils';
 
+// TODO: Bytt til bruk av Sanity tekster
 const EøsOmsorgspersonOppsummering: React.FC<{
     omsorgsperson: IOmsorgsperson;
     barn: IBarnMedISøknad;

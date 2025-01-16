@@ -1,13 +1,12 @@
 import React from 'react';
 
-import { useIntl } from 'react-intl';
-
+import { useApp } from '../../../../../context/AppContext';
 import { useSteg } from '../../../../../context/StegContext';
 import { IBarnMedISøknad } from '../../../../../typer/barn';
 import { AlternativtSvarForInput } from '../../../../../typer/common';
-import { toSlektsforholdSpråkId } from '../../../../../utils/språk';
+import { hentSlektsforhold } from '../../../../../utils/språk';
+import TekstBlock from '../../../../Felleskomponenter/Sanity/TekstBlock';
 import SamletIdNummerForBarn from '../../../EøsSteg/Barn/SamletIdNummerForBarn';
-import { EøsBarnSpørsmålId, eøsBarnSpørsmålSpråkId } from '../../../EøsSteg/Barn/spørsmål';
 import { useEøsForBarn } from '../../../EøsSteg/Barn/useEøsForBarn';
 import { OppsummeringFelt } from '../../OppsummeringFelt';
 import Oppsummeringsbolk from '../../Oppsummeringsbolk';
@@ -24,15 +23,19 @@ interface Props {
 
 const EøsBarnOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn }) => {
     const { hentStegObjektForBarnEøs } = useSteg();
+    const { tekster, plainTekst } = useApp();
+    const eøsBarnTekster = tekster().EØS_FOR_BARN;
 
     const eøsForBarnHook = useEøsForBarn(barn.id);
 
-    const { formatMessage } = useIntl();
+    const flettefelter = { barnetsNavn: barn.navn };
 
     return (
         <Oppsummeringsbolk
             tittel={'eøs-om-barn.oppsummering.tittel'}
             språkValues={{ nummer, barn: barn.navn }}
+            tittelForSanity={eøsBarnTekster.eoesForBarnTittel}
+            flettefelter={flettefelter}
             steg={hentStegObjektForBarnEøs(barn)}
             skjemaHook={eøsForBarnHook}
             settFeilAnchors={settFeilAnchors}
@@ -46,13 +49,15 @@ const EøsBarnOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn }
             {barn.søkersSlektsforhold.svar && (
                 <>
                     <OppsummeringFelt
-                        tittel={tittelSpmEøsBarnOppsummering(
-                            barn.søkersSlektsforhold.id,
-                            barn.navn
+                        tittel={
+                            <TekstBlock
+                                block={eøsBarnTekster.slektsforhold.sporsmal}
+                                flettefelter={flettefelter}
+                            />
+                        }
+                        søknadsvar={plainTekst(
+                            hentSlektsforhold(barn.søkersSlektsforhold.svar, eøsBarnTekster)
                         )}
-                        søknadsvar={formatMessage({
-                            id: toSlektsforholdSpråkId(barn.søkersSlektsforhold.svar),
-                        })}
                     />
                     {barn.søkersSlektsforholdSpesifisering.svar && (
                         <OppsummeringFelt
@@ -68,13 +73,23 @@ const EøsBarnOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn }
 
             {barn.borMedAndreForelder.svar && (
                 <OppsummeringFelt
-                    tittel={tittelSpmEøsBarnOppsummering(barn.borMedAndreForelder.id, barn.navn)}
+                    tittel={
+                        <TekstBlock
+                            block={eøsBarnTekster.borMedAndreForelder.sporsmal}
+                            flettefelter={flettefelter}
+                        />
+                    }
                     søknadsvar={barn.borMedAndreForelder.svar}
                 />
             )}
             {barn.borMedOmsorgsperson.svar && (
                 <OppsummeringFelt
-                    tittel={tittelSpmEøsBarnOppsummering(barn.borMedOmsorgsperson.id, barn.navn)}
+                    tittel={
+                        <TekstBlock
+                            block={eøsBarnTekster.borMedOmsorgsperson.sporsmal}
+                            flettefelter={flettefelter}
+                        />
+                    }
                     søknadsvar={barn.borMedOmsorgsperson.svar}
                 />
             )}
@@ -85,14 +100,15 @@ const EøsBarnOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn }
 
             {barn.adresse.svar && (
                 <OppsummeringFelt
-                    tittel={tittelSpmEøsBarnOppsummering(barn.adresse.id, barn.navn)}
+                    tittel={
+                        <TekstBlock
+                            block={eøsBarnTekster.hvorBorBarnet.sporsmal}
+                            flettefelter={flettefelter}
+                        />
+                    }
                     søknadsvar={
                         barn.adresse.svar === AlternativtSvarForInput.UKJENT
-                            ? formatMessage({
-                                  id: eøsBarnSpørsmålSpråkId[
-                                      EøsBarnSpørsmålId.barnetsAdresseVetIkke
-                                  ],
-                              })
+                            ? plainTekst(eøsBarnTekster.hvorBorBarnet.checkboxLabel)
                             : barn.adresse.svar
                     }
                 />
