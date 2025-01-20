@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { useIntl } from 'react-intl';
-
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../../context/AppContext';
@@ -14,12 +12,12 @@ import { Arbeidsperiode } from '../../../Felleskomponenter/Arbeidsperiode/Arbeid
 import { Barnetrygdperiode } from '../../../Felleskomponenter/Barnetrygdperiode/Barnetrygdperiode';
 import { LandDropdown } from '../../../Felleskomponenter/Dropdowns/LandDropdown';
 import SlektsforholdDropdown from '../../../Felleskomponenter/Dropdowns/SlektsforholdDropdown';
-import JaNeiSpm from '../../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
+import JaNeiSpmForSanity from '../../../Felleskomponenter/JaNeiSpm/JaNeiSpmForSanity';
 import { Pensjonsperiode } from '../../../Felleskomponenter/Pensjonsmodal/Pensjonsperiode';
-import { SkjemaCheckbox } from '../../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
-import { SkjemaFeltInput } from '../../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
+import TekstBlock from '../../../Felleskomponenter/Sanity/TekstBlock';
+import { SkjemaCheckboxForSanity } from '../../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckboxForSanity';
+import { SkjemaFeltInputForSanity } from '../../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInputForSanity';
 import SkjemaFieldset from '../../../Felleskomponenter/SkjemaFieldset';
-import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../../Felleskomponenter/Steg/Steg';
 import { Utbetalingsperiode } from '../../../Felleskomponenter/UtbetalingerModal/Utbetalingsperiode';
 import EøsAndreForelderOppsummering from '../../Oppsummering/OppsummeringSteg/Eøs/EøsAndreForelderOppsummering';
@@ -27,7 +25,6 @@ import EøsAndreForelderOppsummering from '../../Oppsummering/OppsummeringSteg/E
 import IdNummerForAndreForelder from './IdNummerForAndreForelder';
 import Omsorgsperson from './Omsorgsperson';
 import SamletIdNummerForBarn from './SamletIdNummerForBarn';
-import { EøsBarnSpørsmålId, eøsBarnSpørsmålSpråkId } from './spørsmål';
 import { useEøsForBarn } from './useEøsForBarn';
 
 const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
@@ -60,8 +57,7 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
         leggTilBarnetrygdsperiodeOmsorgsperson,
         fjernBarnetrygdsperiodeOmsorgsperson,
     } = useEøsForBarn(barnetsId);
-    const intl = useIntl();
-    const { søknad, tekster } = useApp();
+    const { søknad, tekster, plainTekst } = useApp();
 
     const andreBarnSomErFyltUt = søknad.barnInkludertISøknaden.filter(
         barnISøknad =>
@@ -73,11 +69,26 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
     );
 
     const stegTekster = tekster()[ESanitySteg.EØS_FOR_BARN];
-    const { eosForBarnGuide } = stegTekster;
+    const {
+        eoesForBarnTittel,
+        eosForBarnGuide,
+        valgalternativSlektsforholdPlaceholder,
+        slektsforhold,
+        hvilkenRelasjon,
+        borMedAndreForelder,
+        borMedOmsorgsperson,
+        hvorBorBarnet,
+        subtittelAndreForelder,
+        hvorBorAndreForelder,
+        paagaaendeSoeknadYtelseAndreForelder,
+        hvilketLandSoektYtelseAndreForelder,
+    } = stegTekster;
 
     return (
         <Steg
-            tittel={<SpråkTekst id={'eøs-om-barn.sidetittel'} values={{ barn: barn.navn }} />}
+            tittel={
+                <TekstBlock block={eoesForBarnTittel} flettefelter={{ barnetsNavn: barn.navn }} />
+            }
             guide={eosForBarnGuide}
             skjema={{
                 validerFelterOgVisFeilmelding,
@@ -98,27 +109,25 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                     <SlektsforholdDropdown
                         felt={skjema.felter.søkersSlektsforhold}
                         skjema={skjema}
-                        placeholder={intl.formatMessage({ id: 'felles.velgslektsforhold.spm' })}
+                        placeholder={plainTekst(valgalternativSlektsforholdPlaceholder)}
                         label={
-                            <SpråkTekst
-                                id={eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.søkersSlektsforhold]}
-                                values={{ barn: barn.navn }}
+                            <TekstBlock
+                                block={slektsforhold.sporsmal}
+                                flettefelter={{ barnetsNavn: barn.navn }}
                             />
                         }
                         gjelderSøker={true}
                     />
                     {skjema.felter.søkersSlektsforholdSpesifisering.erSynlig && (
-                        <SkjemaFeltInput
+                        <SkjemaFeltInputForSanity
                             felt={skjema.felter.søkersSlektsforholdSpesifisering}
                             visFeilmeldinger={skjema.visFeilmeldinger}
-                            labelSpråkTekstId={
-                                eøsBarnSpørsmålSpråkId[
-                                    EøsBarnSpørsmålId.søkersSlektsforholdSpesifisering
-                                ]
+                            label={
+                                <TekstBlock
+                                    block={hvilkenRelasjon.sporsmal}
+                                    flettefelter={{ barnetsNavn: barn.navn }}
+                                />
                             }
-                            språkValues={{
-                                barn: barn.navn,
-                            }}
                         />
                     )}
                 </>
@@ -126,21 +135,17 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
             {(skjema.felter.borMedAndreForelder.erSynlig ||
                 skjema.felter.borMedOmsorgsperson.erSynlig) && (
                 <>
-                    <JaNeiSpm
+                    <JaNeiSpmForSanity
                         skjema={skjema}
                         felt={skjema.felter.borMedAndreForelder}
-                        spørsmålTekstId={
-                            eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.borMedAndreForelder]
-                        }
-                        språkValues={{ barn: barn.navn }}
+                        spørsmålDokument={borMedAndreForelder}
+                        flettefelter={{ barnetsNavn: barn.navn }}
                     />
-                    <JaNeiSpm
+                    <JaNeiSpmForSanity
                         skjema={skjema}
                         felt={skjema.felter.borMedOmsorgsperson}
-                        spørsmålTekstId={
-                            eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.borMedOmsorgsperson]
-                        }
-                        språkValues={{ barn: barn.navn }}
+                        spørsmålDokument={borMedOmsorgsperson}
+                        flettefelter={{ barnetsNavn: barn.navn }}
                     />
                 </>
             )}
@@ -166,24 +171,29 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
             )}
             {skjema.felter.barnetsAdresse.erSynlig && (
                 <div>
-                    <SkjemaFeltInput
+                    <SkjemaFeltInputForSanity
                         felt={skjema.felter.barnetsAdresse}
                         visFeilmeldinger={skjema.visFeilmeldinger}
-                        description={<SpråkTekst id={'felles.hjelpetekst.fulladresse'} />}
-                        labelSpråkTekstId={eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.barnetsAdresse]}
-                        språkValues={{ barn: barn.navn }}
+                        description={plainTekst(hvorBorBarnet.beskrivelse)}
+                        label={
+                            <TekstBlock
+                                block={hvorBorBarnet.sporsmal}
+                                flettefelter={{ barnetsNavn: barn.navn }}
+                            />
+                        }
                         disabled={skjema.felter.barnetsAdresseVetIkke.verdi === ESvar.JA}
                     />
-                    <SkjemaCheckbox
+                    <SkjemaCheckboxForSanity
                         felt={skjema.felter.barnetsAdresseVetIkke}
-                        labelSpråkTekstId={
-                            eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.barnetsAdresseVetIkke]
-                        }
+                        label={plainTekst(hvorBorBarnet.checkboxLabel)}
                     />
                 </div>
             )}
             {!skalSkjuleAndreForelderFelt(barn) && (
-                <SkjemaFieldset legendSpråkId={'ombarnet.andre-forelder'}>
+                <SkjemaFieldset
+                    legendSpråkId={'ombarnet.andre-forelder'}
+                    legend={plainTekst(subtittelAndreForelder, { barnetsNavn: barn.navn })}
+                >
                     {!barnMedSammeForelder ? (
                         <>
                             <IdNummerForAndreForelder
@@ -193,30 +203,24 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                             />
                             {skjema.felter.andreForelderAdresse.erSynlig && (
                                 <div>
-                                    <SkjemaFeltInput
+                                    <SkjemaFeltInputForSanity
                                         felt={skjema.felter.andreForelderAdresse}
                                         visFeilmeldinger={skjema.visFeilmeldinger}
-                                        labelSpråkTekstId={
-                                            eøsBarnSpørsmålSpråkId[
-                                                EøsBarnSpørsmålId.andreForelderAdresse
-                                            ]
+                                        label={
+                                            <TekstBlock
+                                                block={hvorBorAndreForelder.sporsmal}
+                                                flettefelter={{ barnetsNavn: barn.navn }}
+                                            />
                                         }
-                                        description={
-                                            <SpråkTekst id={'felles.hjelpetekst.fulladresse'} />
-                                        }
+                                        description={plainTekst(hvorBorAndreForelder.beskrivelse)}
                                         disabled={
                                             skjema.felter.andreForelderAdresseVetIkke.verdi ===
                                             ESvar.JA
                                         }
-                                        språkValues={{ barn: barn.navn }}
                                     />
-                                    <SkjemaCheckbox
+                                    <SkjemaCheckboxForSanity
                                         felt={skjema.felter.andreForelderAdresseVetIkke}
-                                        labelSpråkTekstId={
-                                            eøsBarnSpørsmålSpråkId[
-                                                EøsBarnSpørsmålId.andreForelderAdresseVetIkke
-                                            ]
-                                        }
+                                        label={plainTekst(hvorBorAndreForelder.checkboxLabel)}
                                     />
                                 </div>
                             )}
@@ -263,16 +267,12 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                                     skjema.felter.andreForelderAndreUtbetalingsperioder
                                 }
                             />
-                            <JaNeiSpm
+                            <JaNeiSpmForSanity
                                 skjema={skjema}
                                 felt={skjema.felter.andreForelderPågåendeSøknadFraAnnetEøsLand}
-                                spørsmålTekstId={
-                                    eøsBarnSpørsmålSpråkId[
-                                        EøsBarnSpørsmålId.andreForelderPågåendeSøknadFraAnnetEøsLand
-                                    ]
-                                }
-                                språkValues={{ barn: barn.navn }}
+                                spørsmålDokument={paagaaendeSoeknadYtelseAndreForelder}
                                 inkluderVetIkke
+                                flettefelter={{ barnetsNavn: barn.navn }}
                             />
                             {skjema.felter.andreForelderPågåendeSøknadHvilketLand.erSynlig && (
                                 <LandDropdown
@@ -281,14 +281,9 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                                     kunEøs={true}
                                     ekskluderNorge
                                     label={
-                                        <SpråkTekst
-                                            id={
-                                                eøsBarnSpørsmålSpråkId[
-                                                    EøsBarnSpørsmålId
-                                                        .andreForelderPågåendeSøknadHvilketLand
-                                                ]
-                                            }
-                                            values={{ barn: barn.navn }}
+                                        <TekstBlock
+                                            block={hvilketLandSoektYtelseAndreForelder.sporsmal}
+                                            flettefelter={{ barnetsNavn: barn.navn }}
                                         />
                                     }
                                 />
