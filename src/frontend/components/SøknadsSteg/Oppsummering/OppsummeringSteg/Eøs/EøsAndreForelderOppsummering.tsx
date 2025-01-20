@@ -1,10 +1,9 @@
 import React, { Dispatch, SetStateAction } from 'react';
 
-import { useIntl } from 'react-intl';
-
 import { ESvar } from '@navikt/familie-form-elements';
 import type { Felt, ISkjema } from '@navikt/familie-skjema';
 
+import { useApp } from '../../../../../context/AppContext';
 import { useSpråk } from '../../../../../context/SpråkContext';
 import {
     andreForelderDataKeySpørsmål,
@@ -14,15 +13,15 @@ import {
 } from '../../../../../typer/barn';
 import { AlternativtSvarForInput } from '../../../../../typer/common';
 import { PersonType } from '../../../../../typer/personType';
+import { LocaleRecordBlock } from '../../../../../typer/sanity/sanity';
 import { IEøsForBarnFeltTyper } from '../../../../../typer/skjema';
 import { landkodeTilSpråk } from '../../../../../utils/språk';
 import { ArbeidsperiodeOppsummering } from '../../../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeOppsummering';
 import { BarnetrygdsperiodeOppsummering } from '../../../../Felleskomponenter/Barnetrygdperiode/BarnetrygdperiodeOppsummering';
 import { PensjonsperiodeOppsummering } from '../../../../Felleskomponenter/Pensjonsmodal/PensjonsperiodeOppsummering';
-import SpråkTekst from '../../../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import TekstBlock from '../../../../Felleskomponenter/Sanity/TekstBlock';
 import { UtbetalingsperiodeOppsummering } from '../../../../Felleskomponenter/UtbetalingerModal/UtbetalingsperiodeOppsummering';
 import IdNummerForAndreForelder from '../../../EøsSteg/Barn/IdNummerForAndreForelder';
-import { EøsBarnSpørsmålId, eøsBarnSpørsmålSpråkId } from '../../../EøsSteg/Barn/spørsmål';
 import { OppsummeringFelt } from '../../OppsummeringFelt';
 
 const EøsAndreForelderOppsummering: React.FC<{
@@ -31,24 +30,40 @@ const EøsAndreForelderOppsummering: React.FC<{
     skjema: ISkjema<IEøsForBarnFeltTyper, string>;
     settIdNummerFelter: Dispatch<SetStateAction<Felt<string>[]>>;
 }> = ({ barn, andreForelder, skjema, settIdNummerFelter }) => {
-    const intl = useIntl();
-    const { formatMessage } = intl;
+    const { tekster, plainTekst } = useApp();
+    const {
+        hvorBorAndreForelder,
+        paagaaendeSoeknadYtelseAndreForelder,
+        hvilketLandSoektYtelseAndreForelder,
+        arbeidNorgeAndreForelder,
+        arbeidNorgeAndreForelderGjenlevende,
+        pensjonNorgeAndreForelder,
+        pensjonNorgeAndreForelderGjenlevende,
+        utbetalingerAndreForelder,
+        utbetalingerAndreForelderGjenlevende,
+        ytelseFraAnnetLandAndreForelder,
+        ytelseFraAnnetLandAndreForelderGjenlevende,
+    } = tekster().EØS_FOR_BARN;
     const { valgtLocale } = useSpråk();
 
     const andreForelderErDød = barn[barnDataKeySpørsmål.andreForelderErDød].svar === ESvar.JA;
 
-    const jaNeiSpmOppsummering = (andreForelderDataKeySpm: andreForelderDataKeySpørsmål) =>
-        barn.andreForelder && barn.andreForelder[andreForelderDataKeySpm].svar ? (
+    const flettefelter = { barnetsNavn: barn.navn };
+
+    const jaNeiSpmOppsummering = ({
+        andreForelderDataKeySpm,
+        spørsmålstekst,
+    }: {
+        andreForelderDataKeySpm: andreForelderDataKeySpørsmål;
+        spørsmålstekst: LocaleRecordBlock;
+    }) => {
+        return barn.andreForelder && barn.andreForelder[andreForelderDataKeySpm].svar ? (
             <OppsummeringFelt
-                tittel={
-                    <SpråkTekst
-                        id={eøsBarnSpørsmålSpråkId[barn.andreForelder[andreForelderDataKeySpm].id]}
-                        values={{ barn: barn.navn }}
-                    />
-                }
+                tittel={<TekstBlock block={spørsmålstekst} flettefelter={flettefelter} />}
                 søknadsvar={barn.andreForelder[andreForelderDataKeySpm].svar}
             />
         ) : null;
+    };
 
     return (
         <>
@@ -61,23 +76,24 @@ const EøsAndreForelderOppsummering: React.FC<{
             {andreForelder.adresse.svar && (
                 <OppsummeringFelt
                     tittel={
-                        <SpråkTekst
-                            id={eøsBarnSpørsmålSpråkId[andreForelder.adresse.id]}
-                            values={{ barn: barn.navn }}
+                        <TekstBlock
+                            block={hvorBorAndreForelder.sporsmal}
+                            flettefelter={flettefelter}
                         />
                     }
                     søknadsvar={
                         andreForelder.adresse.svar === AlternativtSvarForInput.UKJENT
-                            ? formatMessage({
-                                  id: eøsBarnSpørsmålSpråkId[
-                                      EøsBarnSpørsmålId.andreForelderAdresseVetIkke
-                                  ],
-                              })
+                            ? plainTekst(hvorBorAndreForelder.checkboxLabel)
                             : andreForelder.adresse.svar
                     }
                 />
             )}
-            {jaNeiSpmOppsummering(andreForelderDataKeySpørsmål.arbeidNorge)}
+            {jaNeiSpmOppsummering({
+                andreForelderDataKeySpm: andreForelderDataKeySpørsmål.arbeidNorge,
+                spørsmålstekst: andreForelderErDød
+                    ? arbeidNorgeAndreForelderGjenlevende.sporsmal
+                    : arbeidNorgeAndreForelder.sporsmal,
+            })}
             {andreForelder.arbeidsperioderNorge.map((arbeidsperiode, index) => (
                 <ArbeidsperiodeOppsummering
                     key={`arbeidsperiode-andre-forelder-norge-${index}`}
@@ -89,7 +105,12 @@ const EøsAndreForelderOppsummering: React.FC<{
                     barn={barn}
                 />
             ))}
-            {jaNeiSpmOppsummering(andreForelderDataKeySpørsmål.pensjonNorge)}
+            {jaNeiSpmOppsummering({
+                andreForelderDataKeySpm: andreForelderDataKeySpørsmål.pensjonNorge,
+                spørsmålstekst: andreForelderErDød
+                    ? pensjonNorgeAndreForelderGjenlevende.sporsmal
+                    : pensjonNorgeAndreForelder.sporsmal,
+            })}
             {andreForelder.pensjonsperioderNorge.map((pensjonsperiode, index) => (
                 <PensjonsperiodeOppsummering
                     key={`pensjonsperiode-andre-forelder-norge-${index}`}
@@ -101,7 +122,12 @@ const EøsAndreForelderOppsummering: React.FC<{
                     gjelderUtlandet={false}
                 />
             ))}
-            {jaNeiSpmOppsummering(andreForelderDataKeySpørsmål.andreUtbetalinger)}
+            {jaNeiSpmOppsummering({
+                andreForelderDataKeySpm: andreForelderDataKeySpørsmål.andreUtbetalinger,
+                spørsmålstekst: andreForelderErDød
+                    ? utbetalingerAndreForelderGjenlevende.sporsmal
+                    : utbetalingerAndreForelder.sporsmal,
+            })}
             {andreForelder.andreUtbetalingsperioder.map((utbetalingsperiode, index) => (
                 <UtbetalingsperiodeOppsummering
                     key={`utbetalingsperiode-andre-forelder-${index}`}
@@ -112,13 +138,16 @@ const EøsAndreForelderOppsummering: React.FC<{
                     barn={barn}
                 />
             ))}
-            {jaNeiSpmOppsummering(andreForelderDataKeySpørsmål.pågåendeSøknadFraAnnetEøsLand)}
+            {jaNeiSpmOppsummering({
+                andreForelderDataKeySpm: andreForelderDataKeySpørsmål.pågåendeSøknadFraAnnetEøsLand,
+                spørsmålstekst: paagaaendeSoeknadYtelseAndreForelder.sporsmal,
+            })}
             {andreForelder.pågåendeSøknadHvilketLand.svar && (
                 <OppsummeringFelt
                     tittel={
-                        <SpråkTekst
-                            id={eøsBarnSpørsmålSpråkId[andreForelder.pågåendeSøknadHvilketLand.id]}
-                            values={{ barn: barn.navn }}
+                        <TekstBlock
+                            block={hvilketLandSoektYtelseAndreForelder.sporsmal}
+                            flettefelter={flettefelter}
                         />
                     }
                     søknadsvar={landkodeTilSpråk(
@@ -127,7 +156,12 @@ const EøsAndreForelderOppsummering: React.FC<{
                     )}
                 />
             )}
-            {jaNeiSpmOppsummering(andreForelderDataKeySpørsmål.barnetrygdFraEøs)}
+            {jaNeiSpmOppsummering({
+                andreForelderDataKeySpm: andreForelderDataKeySpørsmål.barnetrygdFraEøs,
+                spørsmålstekst: andreForelderErDød
+                    ? ytelseFraAnnetLandAndreForelderGjenlevende.sporsmal
+                    : ytelseFraAnnetLandAndreForelder.sporsmal,
+            })}
             {andreForelder.eøsBarnetrygdsperioder.map((periode, index) => (
                 <BarnetrygdsperiodeOppsummering
                     key={`barnetrygdperiode-andre-forelder-${index}`}

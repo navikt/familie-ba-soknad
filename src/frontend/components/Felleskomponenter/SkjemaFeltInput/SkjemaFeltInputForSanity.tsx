@@ -10,7 +10,6 @@ interface SkjemaFeltInputForSanityProps {
     felt: Felt<any>;
     visFeilmeldinger: boolean;
     label: ReactNode;
-    språkValues?: Record<string, ReactNode>;
     description?: ReactNode;
     autoComplete?: 'on' | 'off';
     disabled?: boolean;

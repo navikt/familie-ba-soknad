@@ -1,10 +1,9 @@
 import React from 'react';
 
-import { useIntl } from 'react-intl';
-
 import { ESvar } from '@navikt/familie-form-elements';
 import type { ISkjema } from '@navikt/familie-skjema';
 
+import { useApp } from '../../../../context/AppContext';
 import { IBarnMedISøknad } from '../../../../typer/barn';
 import {
     IArbeidsperiode,
@@ -18,15 +17,13 @@ import { Arbeidsperiode } from '../../../Felleskomponenter/Arbeidsperiode/Arbeid
 import { Barnetrygdperiode } from '../../../Felleskomponenter/Barnetrygdperiode/Barnetrygdperiode';
 import { LandDropdown } from '../../../Felleskomponenter/Dropdowns/LandDropdown';
 import SlektsforholdDropdown from '../../../Felleskomponenter/Dropdowns/SlektsforholdDropdown';
-import JaNeiSpm from '../../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
+import JaNeiSpmForSanity from '../../../Felleskomponenter/JaNeiSpm/JaNeiSpmForSanity';
 import { Pensjonsperiode } from '../../../Felleskomponenter/Pensjonsmodal/Pensjonsperiode';
-import { SkjemaCheckbox } from '../../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
-import { SkjemaFeltInput } from '../../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
+import TekstBlock from '../../../Felleskomponenter/Sanity/TekstBlock';
+import { SkjemaCheckboxForSanity } from '../../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckboxForSanity';
+import { SkjemaFeltInputForSanity } from '../../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInputForSanity';
 import SkjemaFieldset from '../../../Felleskomponenter/SkjemaFieldset';
-import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { Utbetalingsperiode } from '../../../Felleskomponenter/UtbetalingerModal/Utbetalingsperiode';
-
-import { EøsBarnSpørsmålId, eøsBarnSpørsmålSpråkId } from './spørsmål';
 
 interface OmsorgspersonProps {
     skjema: ISkjema<IEøsForBarnFeltTyper, string>;
@@ -48,7 +45,8 @@ interface OmsorgspersonProps {
 }
 
 const Omsorgsperson: React.FC<OmsorgspersonProps> = ({ skjema, barn, periodeFunksjoner }) => {
-    const intl = useIntl();
+    const { plainTekst, tekster } = useApp();
+    const eøsForBarnTekster = tekster().EØS_FOR_BARN;
     const {
         leggTilArbeidsperiodeUtlandOmsorgsperson,
         fjernArbeidsperiodeUtlandOmsorgsperson,
@@ -63,70 +61,64 @@ const Omsorgsperson: React.FC<OmsorgspersonProps> = ({ skjema, barn, periodeFunk
         leggTilBarnetrygdsperiodeOmsorgsperson,
         fjernBarnetrygdsperiodeOmsorgsperson,
     } = periodeFunksjoner;
+    const flettefelter = { barnetsNavn: barn.navn };
 
     return (
         <SkjemaFieldset
             legendSpråkId={'eøs-om-barn.annenomsorgsperson.gjenlevende'}
             språkValues={{ barn: barn.navn }}
+            legend={plainTekst(eøsForBarnTekster.oppgittIkkeBorFastSammenMedDeg, flettefelter)}
         >
-            <SkjemaFeltInput
+            <SkjemaFeltInputForSanity
                 felt={skjema.felter.omsorgspersonNavn}
                 visFeilmeldinger={skjema.visFeilmeldinger}
-                labelSpråkTekstId={eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.omsorgspersonNavn]}
+                label={<TekstBlock block={eøsForBarnTekster.hvaHeterOmsorgspersonen.sporsmal} />}
             />
             {skjema.felter.omsorgspersonSlektsforhold.erSynlig && (
                 <SlektsforholdDropdown
                     felt={skjema.felter.omsorgspersonSlektsforhold}
                     skjema={skjema}
-                    placeholder={intl.formatMessage({
-                        id: 'felles.velgslektsforhold.spm',
-                    })}
+                    placeholder={plainTekst(
+                        eøsForBarnTekster.valgalternativSlektsforholdPlaceholder
+                    )}
                     label={
-                        <SpråkTekst
-                            id={
-                                eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.omsorgspersonSlektsforhold]
-                            }
-                            values={{ barn: barn.navn }}
+                        <TekstBlock
+                            block={eøsForBarnTekster.slektsforholdOmsorgsperson.sporsmal}
+                            flettefelter={flettefelter}
                         />
                     }
                     gjelderSøker={false}
                 />
             )}
             {skjema.felter.omsorgpersonSlektsforholdSpesifisering.erSynlig && (
-                <SkjemaFeltInput
+                <SkjemaFeltInputForSanity
                     felt={skjema.felter.omsorgpersonSlektsforholdSpesifisering}
                     visFeilmeldinger={skjema.visFeilmeldinger}
-                    labelSpråkTekstId={
-                        eøsBarnSpørsmålSpråkId[
-                            EøsBarnSpørsmålId.omsorgspersonSlektsforholdSpesifisering
-                        ]
+                    label={
+                        <TekstBlock
+                            block={eøsForBarnTekster.hvilkenRelasjonOmsorgsperson.sporsmal}
+                            flettefelter={flettefelter}
+                        />
                     }
-                    språkValues={{
-                        barn: barn.navn,
-                    }}
                 />
             )}
             <div>
-                <SkjemaFeltInput
+                <SkjemaFeltInputForSanity
                     felt={skjema.felter.omsorgspersonIdNummer}
                     visFeilmeldinger={skjema.visFeilmeldinger}
-                    labelSpråkTekstId={
-                        eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.omsorgspersonIdNummer]
-                    }
+                    label={<TekstBlock block={eøsForBarnTekster.idNummerOmsorgsperson.sporsmal} />}
                     disabled={skjema.felter.omsorgspersonIdNummerVetIkke.verdi === ESvar.JA}
                 />
-                <SkjemaCheckbox
+                <SkjemaCheckboxForSanity
                     felt={skjema.felter.omsorgspersonIdNummerVetIkke}
-                    labelSpråkTekstId={
-                        eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.omsorgspersonIdNummerVetIkke]
-                    }
+                    label={plainTekst(eøsForBarnTekster.idNummerOmsorgsperson.checkboxLabel)}
                 />
             </div>
-            <SkjemaFeltInput
+            <SkjemaFeltInputForSanity
                 felt={skjema.felter.omsorgspersonAdresse}
                 visFeilmeldinger={skjema.visFeilmeldinger}
-                labelSpråkTekstId={eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.omsorgspersonAdresse]}
-                description={<SpråkTekst id={'felles.hjelpetekst.fulladresse'} />}
+                label={<TekstBlock block={eøsForBarnTekster.hvorBorOmsorgsperson.sporsmal} />}
+                description={plainTekst(eøsForBarnTekster.hvorBorOmsorgsperson.beskrivelse)}
             />
             <Arbeidsperiode
                 skjema={skjema}
@@ -177,15 +169,11 @@ const Omsorgsperson: React.FC<OmsorgspersonProps> = ({ skjema, barn, periodeFunk
                 barn={barn}
                 registrerteUtbetalingsperioder={skjema.felter.omsorgspersonAndreUtbetalingsperioder}
             />
-            <JaNeiSpm
+            <JaNeiSpmForSanity
                 skjema={skjema}
                 felt={skjema.felter.omsorgspersonPågåendeSøknadFraAnnetEøsLand}
-                spørsmålTekstId={
-                    eøsBarnSpørsmålSpråkId[
-                        EøsBarnSpørsmålId.omsorgspersonPågåendeSøknadFraAnnetEøsLand
-                    ]
-                }
-                språkValues={{ barn: barn.navn }}
+                spørsmålDokument={eøsForBarnTekster.paagaaendeSoeknadYtelseOmsorgsperson}
+                flettefelter={flettefelter}
                 inkluderVetIkke
             />
             {skjema.felter.omsorgspersonPågåendeSøknadHvilketLand.erSynlig && (
@@ -195,12 +183,9 @@ const Omsorgsperson: React.FC<OmsorgspersonProps> = ({ skjema, barn, periodeFunk
                     kunEøs={true}
                     ekskluderNorge
                     label={
-                        <SpråkTekst
-                            id={
-                                eøsBarnSpørsmålSpråkId[
-                                    EøsBarnSpørsmålId.omsorgspersonPågåendeSøknadHvilketLand
-                                ]
-                            }
+                        <TekstBlock
+                            block={eøsForBarnTekster.hvilketLandSoektYtelseOmsorgsperson.sporsmal}
+                            flettefelter={flettefelter}
                         />
                     }
                 />

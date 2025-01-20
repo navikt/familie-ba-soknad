@@ -51,7 +51,6 @@ export const IdNummer: React.FC<{
     lesevisning = false,
 }) => {
     const { plainTekst, tekster } = useApp();
-
     const { valgtLocale } = useSpråk();
     const intl = useIntl();
     const { formatMessage } = intl;
@@ -78,8 +77,8 @@ export const IdNummer: React.FC<{
                     : '',
         },
         avhengighet: idNummerUkjent,
-        feilmeldingSpråkId: feilmeldingSpråkId,
         feilmelding: spørsmålDokument?.feilmelding,
+        feilmeldingSpråkId: feilmeldingSpråkId,
         customValidering: (felt: FeltState<string>) => {
             const verdi = trimWhiteSpace(felt.verdi);
             if (verdi.match(/^[0-9A-Za-z\s\-.\\/]{4,20}$/)) {
