@@ -10,7 +10,7 @@ import { useSteg } from '../../../context/StegContext';
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { RouteEnum } from '../../../typer/routes';
 import { ESanitySteg } from '../../../typer/sanity/sanity';
-import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 
 import DinLivssituasjonOppsummering from './OppsummeringSteg/DinLivssituasjonOppsummering';
@@ -32,6 +32,9 @@ const Oppsummering: React.FC = () => {
         ? søknad.barnInkludertISøknaden
         : søknad.barnInkludertISøknaden.filter(barn => barn.triggetEøs);
 
+    const stegTekster = tekster()[ESanitySteg.OPPSUMMERING];
+    const { oppsummeringTittel, oppsummeringGuide } = stegTekster;
+
     const scrollTilFeil = (elementId: string) => {
         // Gjør dette for syns skyld, men push scroller ikke vinduet
         navigate({ hash: elementId });
@@ -48,12 +51,9 @@ const Oppsummering: React.FC = () => {
         return Promise.resolve(feilAnchors.length === 0);
     };
 
-    const stegTekster = tekster()[ESanitySteg.OPPSUMMERING];
-    const { oppsummeringGuide } = stegTekster;
-
     return (
         <Steg
-            tittel={<SpråkTekst id={'oppsummering.sidetittel'} />}
+            tittel={<TekstBlock block={oppsummeringTittel} />}
             guide={oppsummeringGuide}
             gåVidereCallback={gåVidereCallback}
         >
