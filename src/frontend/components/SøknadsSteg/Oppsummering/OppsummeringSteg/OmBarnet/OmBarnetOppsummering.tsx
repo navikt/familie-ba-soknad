@@ -55,7 +55,6 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
         >
             {barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA && (
                 <OppsummeringFelt
-                    // tittel={<SpråkTekst id={'ombarnet.fosterbarn'} values={{ navn: barn.navn }} />}
                     tittel={
                         <TekstBlock
                             block={omBarnetTekster.opplystFosterbarn}
@@ -67,9 +66,6 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
             {barn[barnDataKeySpørsmål.oppholderSegIInstitusjon].svar === ESvar.JA && (
                 <>
                     <OppsummeringFelt
-                        // tittel={
-                        //     <SpråkTekst id={'ombarnet.institusjon'} values={{ navn: barn.navn }} />
-                        // }
                         tittel={
                             <TekstBlock
                                 block={omBarnetTekster.opplystInstitusjon}
@@ -79,15 +75,6 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                     />
                     {barn[barnDataKeySpørsmål.institusjonIUtland].svar === ESvar.JA ? (
                         <OppsummeringFelt
-                            // tittel={
-                            //     <SpråkTekst
-                            //         id={
-                            //             omBarnetSpørsmålSpråkId[
-                            //                 OmBarnetSpørsmålsId.institusjonIUtland
-                            //             ]
-                            //         }
-                            //     />
-                            // }
                             tittel={
                                 <TekstBlock block={omBarnetTekster.institusjonIUtlandetCheckbox} />
                             }
@@ -95,30 +82,12 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                     ) : (
                         <>
                             <OppsummeringFelt
-                                // tittel={
-                                //     <SpråkTekst
-                                //         id={
-                                //             omBarnetSpørsmålSpråkId[
-                                //                 OmBarnetSpørsmålsId.institusjonsnavn
-                                //             ]
-                                //         }
-                                //     />
-                                // }
                                 tittel={
                                     <TekstBlock block={omBarnetTekster.institusjonNavn.sporsmal} />
                                 }
                                 søknadsvar={barn[barnDataKeySpørsmål.institusjonsnavn].svar}
                             />
                             <OppsummeringFelt
-                                // tittel={
-                                //     <SpråkTekst
-                                //         id={
-                                //             omBarnetSpørsmålSpråkId[
-                                //                 OmBarnetSpørsmålsId.institusjonsadresse
-                                //             ]
-                                //         }
-                                //     />
-                                // }
                                 tittel={
                                     <TekstBlock
                                         block={omBarnetTekster.institusjonAdresse.sporsmal}
@@ -127,15 +96,6 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                                 søknadsvar={barn[barnDataKeySpørsmål.institusjonsadresse].svar}
                             />
                             <OppsummeringFelt
-                                // tittel={
-                                //     <SpråkTekst
-                                //         id={
-                                //             omBarnetSpørsmålSpråkId[
-                                //                 OmBarnetSpørsmålsId.institusjonspostnummer
-                                //             ]
-                                //         }
-                                //     />
-                                // }
                                 tittel={
                                     <TekstBlock
                                         block={omBarnetTekster.institusjonPostnummer.sporsmal}
@@ -146,15 +106,6 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                         </>
                     )}
                     <OppsummeringFelt
-                        // tittel={
-                        //     <SpråkTekst
-                        //         id={
-                        //             omBarnetSpørsmålSpråkId[
-                        //                 OmBarnetSpørsmålsId.institusjonOppholdStartdato
-                        //             ]
-                        //         }
-                        //     />
-                        // }
                         tittel={
                             <TekstBlock block={omBarnetTekster.institusjonStartdato.sporsmal} />
                         }
@@ -163,15 +114,6 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                         )}
                     />
                     <OppsummeringFelt
-                        // tittel={
-                        //     <SpråkTekst
-                        //         id={
-                        //             omBarnetSpørsmålSpråkId[
-                        //                 OmBarnetSpørsmålsId.institusjonOppholdSluttdato
-                        //             ]
-                        //         }
-                        //     />
-                        // }
                         tittel={
                             <TekstBlock block={omBarnetTekster.institusjonSluttdato.sporsmal} />
                         }
@@ -189,12 +131,6 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
             {barn[barnDataKeySpørsmål.boddMindreEnn12MndINorge].svar === ESvar.JA && (
                 <>
                     <OppsummeringFelt
-                        // tittel={
-                        //     <SpråkTekst
-                        //         id={'ombarnet.opplystatbarnutlandopphold.info'}
-                        //         values={{ navn: barn.navn }}
-                        //     />
-                        // }
                         tittel={
                             <TekstBlock
                                 block={omBarnetTekster.opplystBarnOppholdUtenforNorge}
@@ -212,16 +148,6 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                     ))}
                     {barn[barnDataKeySpørsmål.planleggerÅBoINorge12Mnd].svar && (
                         <OppsummeringFelt
-                            // tittel={
-                            //     <SpråkTekst
-                            //         id={
-                            //             omBarnetSpørsmålSpråkId[
-                            //                 OmBarnetSpørsmålsId.planleggerÅBoINorge12Mnd
-                            //             ]
-                            //         }
-                            //         values={{ barn: barn.navn }}
-                            //     />
-                            // }
                             tittel={
                                 <TekstBlock
                                     block={omBarnetTekster.planlagtBoSammenhengendeINorge.sporsmal}
@@ -236,12 +162,6 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
             {barn[barnDataKeySpørsmål.barnetrygdFraAnnetEøsland].svar === ESvar.JA && (
                 <>
                     <OppsummeringFelt
-                        // tittel={
-                        //     <SpråkTekst
-                        //         id={'ombarnet.barnetrygd-eøs'}
-                        //         values={{ navn: barn.navn }}
-                        //     />
-                        // }
                         tittel={
                             <TekstBlock
                                 block={omBarnetTekster.opplystFaarHarFaattEllerSoektYtelse}
@@ -251,15 +171,6 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                     />
                     {barn[barnDataKeySpørsmål.pågåendeSøknadFraAnnetEøsLand].svar && (
                         <OppsummeringFelt
-                            // tittel={
-                            //     <SpråkTekst
-                            //         id={
-                            //             omBarnetSpørsmålSpråkId[
-                            //                 OmBarnetSpørsmålsId.pågåendeSøknadFraAnnetEøsLand
-                            //             ]
-                            //         }
-                            //     />
-                            // }
                             tittel={
                                 <TekstBlock
                                     block={omBarnetTekster.paagaaendeSoeknadYtelse.sporsmal}
@@ -272,15 +183,6 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                     )}
                     {barn[barnDataKeySpørsmål.pågåendeSøknadHvilketLand].svar && (
                         <OppsummeringFelt
-                            // tittel={
-                            //     <SpråkTekst
-                            //         id={
-                            //             omBarnetSpørsmålSpråkId[
-                            //                 OmBarnetSpørsmålsId.pågåendeSøknadHvilketLand
-                            //             ]
-                            //         }
-                            //     />
-                            // }
                             tittel={
                                 <TekstBlock block={omBarnetTekster.hvilketLandYtelse.sporsmal} />
                             }
@@ -292,15 +194,6 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                     )}
                     {barn[barnDataKeySpørsmål.mottarEllerMottokEøsBarnetrygd].svar && (
                         <OppsummeringFelt
-                            // tittel={
-                            //     <SpråkTekst
-                            //         id={
-                            //             omBarnetSpørsmålSpråkId[
-                            //                 OmBarnetSpørsmålsId.mottarEllerMottokEøsBarnetrygd
-                            //             ]
-                            //         }
-                            //     />
-                            // }
                             tittel={
                                 <TekstBlock
                                     block={
@@ -332,12 +225,6 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
             )}
             <>
                 <OppsummeringFelt
-                    // tittel={
-                    //     <SpråkTekst
-                    //         id={omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.borFastMedSøker]}
-                    //         values={{ navn: barn.navn }}
-                    //     />
-                    // }
                     tittel={
                         <TekstBlock
                             block={omBarnetTekster.borBarnFastSammenMedDeg.sporsmal}
@@ -349,16 +236,6 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                 {barn.andreForelder?.[andreForelderDataKeySpørsmål.skriftligAvtaleOmDeltBosted]
                     .svar && (
                     <OppsummeringFelt
-                        // tittel={
-                        //     <SpråkTekst
-                        //         id={
-                        //             omBarnetSpørsmålSpråkId[
-                        //                 OmBarnetSpørsmålsId.skriftligAvtaleOmDeltBosted
-                        //             ]
-                        //         }
-                        //         values={{ navn: barn.navn }}
-                        //     />
-                        // }
                         tittel={
                             <TekstBlock
                                 block={omBarnetTekster.deltBosted.sporsmal}
