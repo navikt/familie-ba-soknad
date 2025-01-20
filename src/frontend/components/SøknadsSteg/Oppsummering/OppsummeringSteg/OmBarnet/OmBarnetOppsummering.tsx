@@ -120,7 +120,9 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                                 //     />
                                 // }
                                 tittel={
-                                    <TekstBlock block={omBarnetTekster.institusjonNavn.sporsmal} />
+                                    <TekstBlock
+                                        block={omBarnetTekster.institusjonAdresse.sporsmal}
+                                    />
                                 }
                                 søknadsvar={barn[barnDataKeySpørsmål.institusjonsadresse].svar}
                             />
@@ -261,7 +263,6 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                             tittel={
                                 <TekstBlock
                                     block={omBarnetTekster.paagaaendeSoeknadYtelse.sporsmal}
-                                    flettefelter={{ barnetsNavn: barn.navn }}
                                 />
                             }
                             søknadsvar={
@@ -281,10 +282,7 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                             //     />
                             // }
                             tittel={
-                                <TekstBlock
-                                    block={omBarnetTekster.hvilketLandYtelse.sporsmal}
-                                    flettefelter={{ barnetsNavn: barn.navn }}
-                                />
+                                <TekstBlock block={omBarnetTekster.hvilketLandYtelse.sporsmal} />
                             }
                             søknadsvar={landkodeTilSpråk(
                                 barn[barnDataKeySpørsmål.pågåendeSøknadHvilketLand].svar,
@@ -308,7 +306,6 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                                     block={
                                         omBarnetTekster.faarEllerHarFaattYtelseFraAnnetLand.sporsmal
                                     }
-                                    flettefelter={{ barnetsNavn: barn.navn }}
                                 />
                             }
                             søknadsvar={
