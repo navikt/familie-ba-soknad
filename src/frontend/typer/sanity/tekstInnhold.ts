@@ -62,6 +62,7 @@ export interface IFellesTekstInnhold {
     modaler: IModalerTekstinnhold;
     navigasjon: INavigasjonTekstinnhold;
     formateringsfeilmeldinger: IFormateringsfeilmeldingerTekstinnhold;
+    vedlikeholdsarbeid: IVedlikeholdsarbeidTekstinnhold;
     kanIkkeBrukeSoeknad: IKanIkkeBrukeSoeknadTekstinnhold;
 }
 
@@ -167,6 +168,12 @@ export interface IForsideTekstinnhold {
     utvidetBarnetrygdAlert: LocaleRecordBlock;
     soekerDuUtvidet: ISanitySpørsmålDokument;
     mellomlagretAlert: LocaleRecordBlock;
+}
+
+export interface IVedlikeholdsarbeidTekstinnhold {
+    vedlikeholdTittel: LocaleRecordBlock;
+    vedlikeholdBroedtekst: LocaleRecordBlock;
+    vedlikeholdVeileder: LocaleRecordBlock;
 }
 
 export interface IKanIkkeBrukeSoeknadTekstinnhold {

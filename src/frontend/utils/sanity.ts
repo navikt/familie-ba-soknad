@@ -28,6 +28,7 @@ import {
     modalPrefix,
     navigasjonPrefix,
     SanityDokument,
+    vedlikeholdsarbeidPrefix,
 } from '../typer/sanity/sanity';
 import {
     IFellesTekstInnhold,
@@ -37,6 +38,7 @@ import {
     IModalerTekstinnhold,
     INavigasjonTekstinnhold,
     ITekstinnhold,
+    IVedlikeholdsarbeidTekstinnhold,
     SanityModalPrefix,
     SanityPersonType,
 } from '../typer/sanity/tekstInnhold';
@@ -171,6 +173,9 @@ export const transformerTilTekstinnhold = (alleDokumenter: SanityDokument[]): IT
         formateringsfeilmeldinger: struktrerInnholdForFelles(
             dokumenterFiltrertPåPrefix(fellesDokumenter, formateringsfeilmeldingerPrefix)
         ) as IFormateringsfeilmeldingerTekstinnhold,
+        vedlikeholdsarbeid: struktrerInnholdForFelles(
+            dokumenterFiltrertPåPrefix(fellesDokumenter, vedlikeholdsarbeidPrefix)
+        ) as IVedlikeholdsarbeidTekstinnhold,
         kanIkkeBrukeSoeknad: struktrerInnholdForFelles(
             dokumenterFiltrertPåPrefix(fellesDokumenter, kanIkkeBrukeSoeknadPrefix)
         ) as IKanIkkeBrukeSoeknadTekstinnhold,
