@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { useIntl } from 'react-intl';
-
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../../../context/AppContext';
@@ -19,7 +17,6 @@ import { formaterDatoMedUkjent } from '../../../../../utils/visning';
 import { BarnetrygdsperiodeOppsummering } from '../../../../Felleskomponenter/Barnetrygdperiode/BarnetrygdperiodeOppsummering';
 import TekstBlock from '../../../../Felleskomponenter/Sanity/TekstBlock';
 import { UtenlandsperiodeOppsummering } from '../../../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsperiodeOppsummering';
-import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../../../OmBarnet/spørsmål';
 import { useOmBarnet } from '../../../OmBarnet/useOmBarnet';
 import { OppsummeringFelt } from '../../OppsummeringFelt';
 import Oppsummeringsbolk from '../../Oppsummeringsbolk';
@@ -35,8 +32,6 @@ interface Props {
 
 const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, index }) => {
     const { tekster, plainTekst } = useApp();
-    const intl = useIntl();
-    const { formatMessage } = intl;
     const { hentStegObjektForBarn } = useSteg();
     const { valgtLocale } = useSpråk();
     const omBarnetTekster = tekster().OM_BARNET;
@@ -119,11 +114,7 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                         }
                         søknadsvar={formaterDatoMedUkjent(
                             barn[barnDataKeySpørsmål.institusjonOppholdSluttdato].svar,
-                            formatMessage({
-                                id: omBarnetSpørsmålSpråkId[
-                                    OmBarnetSpørsmålsId.institusjonOppholdVetIkke
-                                ],
-                            })
+                            <TekstBlock block={omBarnetTekster.institusjonUkjentSluttCheckbox} />
                         )}
                     />
                 </>
