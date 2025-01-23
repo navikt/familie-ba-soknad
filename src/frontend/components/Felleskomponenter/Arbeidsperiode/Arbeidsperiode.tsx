@@ -61,18 +61,13 @@ export const Arbeidsperiode: React.FC<Props> = ({
     erDød,
     barn,
 }) => {
+    const { tekster, plainTekst } = useApp();
     const { toggles } = useFeatureToggles();
     const {
         erÅpen: arbeidsmodalErÅpen,
         lukkModal: lukkArbeidsmodal,
         åpneModal: åpneArbeidsmodal,
     } = useModal();
-    const { tekster, plainTekst } = useApp();
-
-    const barnetsNavn = !!barn && barn.navn;
-    const arbeidsperiodeSpørsmålId = gjelderUtlandet
-        ? ArbeidsperiodeSpørsmålsId.arbeidsperioderUtland
-        : ArbeidsperiodeSpørsmålsId.arbeidsperioderNorge;
 
     const teksterForModal: IArbeidsperiodeTekstinnhold =
         tekster().FELLES.modaler.arbeidsperiode[personType];
@@ -84,6 +79,11 @@ export const Arbeidsperiode: React.FC<Props> = ({
     const perioderContainerTittel = uppercaseFørsteBokstav(
         `${plainTekst(arbeidsperioder)} ${plainTekst(gjelderUtlandet ? utenfor : i)} ${plainTekst(norge)}`
     );
+
+    const barnetsNavn = !!barn && barn.navn;
+    const arbeidsperiodeSpørsmålId = gjelderUtlandet
+        ? ArbeidsperiodeSpørsmålsId.arbeidsperioderUtland
+        : ArbeidsperiodeSpørsmålsId.arbeidsperioderNorge;
 
     return (
         <KomponentGruppe>
