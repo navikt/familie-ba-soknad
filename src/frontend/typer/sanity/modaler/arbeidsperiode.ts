@@ -11,6 +11,7 @@ export interface IArbeidsperiodeTekstinnhold {
     startdato: ISanitySpørsmålDokument;
     leggTilPeriodeForklaring: LocaleRecordString;
     flerePerioder: LocaleRecordString;
+    fjernKnapp: LocaleRecordBlock;
     leggTilKnapp: LocaleRecordBlock;
     leggTilFeilmelding: LocaleRecordBlock;
     oppsummeringstittel: LocaleRecordBlock;
