@@ -10,8 +10,10 @@ import {
 } from '../../components/SøknadsSteg/OmBarnet/spørsmål';
 import { barnDataKeySpørsmål, IAndreForelder, IBarnMedISøknad } from '../../typer/barn';
 import { LocaleType } from '../../typer/common';
+import { TilRestLocaleRecord } from '../../typer/kontrakt/generelle';
 import { IAndreForelderIKontraktFormat } from '../../typer/kontrakt/kontrakt';
 import { PersonType } from '../../typer/personType';
+import { ITekstinnhold } from '../../typer/sanity/tekstInnhold';
 import { landkodeTilSpråk } from '../språk';
 
 import { tilIAndreUtbetalingsperioderIKontraktFormat } from './andreUtbetalingsperioder';
@@ -30,7 +32,9 @@ import { tilIPensjonsperiodeIKontraktFormat } from './pensjonsperioder';
 export const andreForelderTilISøknadsfelt = (
     andreForelder: IAndreForelder,
     barn: IBarnMedISøknad,
-    valgtSpråk: LocaleType
+    valgtSpråk: LocaleType,
+    tilRestLocaleRecord: TilRestLocaleRecord,
+    tekster: ITekstinnhold
 ): IAndreForelderIKontraktFormat => {
     const {
         navn,
@@ -199,6 +203,9 @@ export const andreForelderTilISøknadsfelt = (
                 periode,
                 periodeNummer: index + 1,
                 gjelderUtlandet: true,
+                tilRestLocaleRecord,
+                tekster: tekster.FELLES.modaler.arbeidsperiode.andreForelder,
+                barn,
                 personType: PersonType.AndreForelder,
                 erDød: forelderErDød,
             })
@@ -218,6 +225,9 @@ export const andreForelderTilISøknadsfelt = (
                 periode,
                 periodeNummer: index + 1,
                 gjelderUtlandet: false,
+                tilRestLocaleRecord,
+                tekster: tekster.FELLES.modaler.arbeidsperiode.andreForelder,
+                barn,
                 personType: PersonType.AndreForelder,
                 erDød: forelderErDød,
             })
