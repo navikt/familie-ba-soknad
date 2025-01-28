@@ -2,21 +2,21 @@ import React, { useEffect } from 'react';
 
 import { IntlProvider } from 'react-intl';
 
-import { BodyLong, GuidePanel, Heading, Page, VStack } from '@navikt/ds-react';
+import { GuidePanel, Heading, Page, VStack } from '@navikt/ds-react';
 import { RessursStatus } from '@navikt/familie-typer';
 import { setAvailableLanguages } from '@navikt/nav-dekoratoren-moduler';
 
-import { tekster } from '../../../shared-utils/tekster';
+import { useApp } from '../../context/AppContext';
 import { useLastRessurserContext } from '../../context/LastRessurserContext';
 import { useSanity } from '../../context/SanityContext';
 import { useSpråk } from '../../context/SpråkContext';
-import EksternLenke from '../Felleskomponenter/EksternLenke/EksternLenke';
 import { Feilside } from '../Felleskomponenter/Feilside/Feilside';
-import SpråkTekst from '../Felleskomponenter/SpråkTekst/SpråkTekst';
+import TekstBlock from '../Felleskomponenter/Sanity/TekstBlock';
 import SystemetLaster from '../Felleskomponenter/SystemetLaster/SystemetLaster';
 
 export const DisabledApp: React.FC = () => {
     const { valgtLocale } = useSpråk();
+    const { tekster, plainTekst } = useApp();
     const { teksterRessurs } = useSanity();
     const { lasterRessurser } = useLastRessurserContext();
 
@@ -50,27 +50,23 @@ export const DisabledApp: React.FC = () => {
         ]).then();
     };
 
+    const { vedlikeholdTittel, vedlikeholdBroedtekst, vedlikeholdVeileder } =
+        tekster().FELLES.vedlikeholdsarbeid;
+
     return (
         <IntlProvider locale={valgtLocale} messages={tekster[valgtLocale]}>
             <main>
                 <Page.Block width="text" gutters>
                     <VStack gap="12" marginBlock="32">
                         <GuidePanel>
-                            <SpråkTekst id={'vedlikehold.veilederhilsen'} />
+                            <TekstBlock block={vedlikeholdVeileder} />
                         </GuidePanel>
                         <div>
                             <Heading level="1" size="large" spacing>
-                                <SpråkTekst id={'vedlikehold.sidetittel'} />
+                                {plainTekst(vedlikeholdTittel)}
                             </Heading>
-                            <BodyLong>
-                                <SpråkTekst id={'vedlikehold.brødtekst'} />
-                            </BodyLong>
+                            <TekstBlock block={vedlikeholdBroedtekst} />
                         </div>
-                        <EksternLenke
-                            lenkeSpråkId={'felles.bruk-pdfskjema.lenke'}
-                            lenkeTekstSpråkId={'felles.bruk-pdfskjema.lenketekst'}
-                            target="_blank"
-                        />
                     </VStack>
                 </Page.Block>
             </main>
