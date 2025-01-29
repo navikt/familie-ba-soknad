@@ -11,13 +11,8 @@ import { landkodeTilSpråk } from '../../../utils/språk';
 import { OppsummeringFelt } from '../../SøknadsSteg/Oppsummering/OppsummeringFelt';
 import PeriodeOppsummering from '../PeriodeOppsummering/PeriodeOppsummering';
 import TekstBlock from '../Sanity/TekstBlock';
-import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
-import {
-    pensjonsperiodeModalSpørsmålSpråkId,
-    pensjonsperiodeOppsummeringOverskrift,
-} from './språkUtils';
-import { PensjonsperiodeSpørsmålId } from './spørsmål';
+import { pensjonsperiodeOppsummeringOverskrift } from './språkUtils';
 
 interface Props {
     pensjonsperiode: IPensjonsperiode;
@@ -46,20 +41,6 @@ export const PensjonsperiodeOppsummering: React.FC<PensjonsperiodeOppsummeringPr
     const periodenErAvsluttet =
         mottarPensjonNå?.svar === ESvar.NEI || (personType === PersonType.AndreForelder && !!erDød);
 
-    const hentPensjonsperiodeSpråkIder = pensjonsperiodeModalSpørsmålSpråkId(
-        personType,
-        periodenErAvsluttet
-    );
-
-    const spørsmålSpråkTekst = (spørsmålId: PensjonsperiodeSpørsmålId) => (
-        <SpråkTekst
-            id={hentPensjonsperiodeSpråkIder(spørsmålId)}
-            values={{
-                ...(barn && { barn: barn.navn }),
-            }}
-        />
-    );
-
     return (
         <PeriodeOppsummering
             fjernPeriodeCallback={
@@ -78,12 +59,6 @@ export const PensjonsperiodeOppsummering: React.FC<PensjonsperiodeOppsummeringPr
         >
             {mottarPensjonNå.svar && (
                 <OppsummeringFelt
-                    tittel={spørsmålSpråkTekst(PensjonsperiodeSpørsmålId.mottarPensjonNå)}
-                    søknadsvar={mottarPensjonNå.svar}
-                />
-            )}
-            {mottarPensjonNå.svar && (
-                <OppsummeringFelt
                     tittel={
                         <TekstBlock
                             block={teksterForModal.faarPensjonNaa.sporsmal}
@@ -91,12 +66,6 @@ export const PensjonsperiodeOppsummering: React.FC<PensjonsperiodeOppsummeringPr
                         />
                     }
                     søknadsvar={mottarPensjonNå.svar}
-                />
-            )}
-            {pensjonsland.svar && (
-                <OppsummeringFelt
-                    tittel={spørsmålSpråkTekst(PensjonsperiodeSpørsmålId.pensjonsland)}
-                    søknadsvar={landkodeTilSpråk(pensjonsland.svar, valgtLocale)}
                 />
             )}
             {pensjonsland.svar && (
@@ -116,20 +85,8 @@ export const PensjonsperiodeOppsummering: React.FC<PensjonsperiodeOppsummeringPr
             )}
             {pensjonFra.svar && (
                 <OppsummeringFelt
-                    tittel={spørsmålSpråkTekst(PensjonsperiodeSpørsmålId.fraDatoPensjon)}
-                    søknadsvar={formaterDato(pensjonFra.svar)}
-                />
-            )}
-            {pensjonFra.svar && (
-                <OppsummeringFelt
                     tittel={<TekstBlock block={teksterForModal.startdato.sporsmal} />}
                     søknadsvar={formaterDato(pensjonFra.svar)}
-                />
-            )}
-            {pensjonTil.svar && (
-                <OppsummeringFelt
-                    tittel={spørsmålSpråkTekst(PensjonsperiodeSpørsmålId.tilDatoPensjon)}
-                    søknadsvar={formaterDato(pensjonTil.svar)}
                 />
             )}
             {pensjonTil.svar && (
