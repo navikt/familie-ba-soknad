@@ -40,6 +40,7 @@ export const usePensjonSkjema = ({
 
     const mottarPensjonNå = useJaNeiSpmFelt({
         søknadsfelt: { id: PensjonsperiodeSpørsmålId.mottarPensjonNå, svar: null },
+        feilmelding: teksterForPersonType.faarPensjonNaa.feilmelding,
         feilmeldingSpråkId: mottarPensjonNåFeilmeldingSpråkId(personType),
         feilmeldingSpråkVerdier: barn ? { barn: barn.navn } : undefined,
         skalSkjules: erAndreForelderDød,
