@@ -8,7 +8,9 @@ import {
     ISøknadsfelt,
     Slektsforhold,
     SpørsmålMap as KontraktpørsmålMap,
+    TilRestLocaleRecord,
 } from '../../typer/kontrakt/generelle';
+import { FlettefeltVerdier, LocaleRecordBlock } from '../../typer/sanity/sanity';
 import { ITekstinnhold } from '../../typer/sanity/tekstInnhold';
 import { ISøknadSpørsmål, SpørsmålId, ISøknadSpørsmålMap } from '../../typer/spørsmål';
 import { Årsak } from '../../typer/utvidet';
@@ -36,6 +38,16 @@ export const verdiCallbackAlleSpråk = <T>(
 
 export const sammeVerdiAlleSpråk = <T>(verdi: T): Record<LocaleType, T> =>
     verdiCallbackAlleSpråk(() => verdi);
+
+export const sammeVerdiAlleSpråkEllerUkjent = <T>(
+    tilRestLocaleRecord: TilRestLocaleRecord,
+    svar: T | AlternativtSvarForInput,
+    checkboxLabel?: LocaleRecordBlock,
+    flettefelter?: FlettefeltVerdier
+): Record<LocaleType, T | string> =>
+    checkboxLabel && svar === AlternativtSvarForInput.UKJENT
+        ? tilRestLocaleRecord(checkboxLabel, flettefelter)
+        : sammeVerdiAlleSpråk(svar);
 
 export const sammeVerdiAlleSpråkEllerUkjentSpråktekst = <T>(
     svar: T | AlternativtSvarForInput,
