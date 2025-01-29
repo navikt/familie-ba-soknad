@@ -3,10 +3,11 @@ import {
     eøsBarnSpørsmålSpråkId,
 } from '../../components/SøknadsSteg/EøsSteg/Barn/spørsmål';
 import { IBarnMedISøknad } from '../../typer/barn';
-import { Slektsforhold } from '../../typer/kontrakt/generelle';
+import { Slektsforhold, TilRestLocaleRecord } from '../../typer/kontrakt/generelle';
 import { IOmsorgspersonIKontraktFormat } from '../../typer/kontrakt/kontrakt';
 import { IOmsorgsperson } from '../../typer/omsorgsperson';
 import { PersonType } from '../../typer/personType';
+import { ITekstinnhold } from '../../typer/sanity/tekstInnhold';
 import { hentTekster, landkodeTilSpråk, toSlektsforholdSpråkId } from '../språk';
 
 import { tilIAndreUtbetalingsperioderIKontraktFormat } from './andreUtbetalingsperioder';
@@ -23,7 +24,9 @@ import { tilIPensjonsperiodeIKontraktFormat } from './pensjonsperioder';
 
 export const omsorgspersonTilISøknadsfelt = (
     omsorgsperson: IOmsorgsperson,
-    barn: IBarnMedISøknad
+    barn: IBarnMedISøknad,
+    tilRestLocaleRecord: TilRestLocaleRecord,
+    tekster: ITekstinnhold
 ): IOmsorgspersonIKontraktFormat => {
     const {
         navn,
@@ -98,6 +101,8 @@ export const omsorgspersonTilISøknadsfelt = (
                 periode,
                 periodeNummer: index + 1,
                 gjelderUtlandet: true,
+                tilRestLocaleRecord,
+                tekster: tekster.FELLES.modaler.arbeidsperiode.omsorgsperson,
                 personType: PersonType.Omsorgsperson,
             })
         ),
@@ -111,6 +116,8 @@ export const omsorgspersonTilISøknadsfelt = (
                 periode,
                 periodeNummer: index + 1,
                 gjelderUtlandet: false,
+                tilRestLocaleRecord,
+                tekster: tekster.FELLES.modaler.arbeidsperiode.omsorgsperson,
                 personType: PersonType.Omsorgsperson,
             })
         ),
