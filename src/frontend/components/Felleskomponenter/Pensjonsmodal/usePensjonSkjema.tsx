@@ -84,7 +84,9 @@ export const usePensjonSkjema = ({
         skalFeltetVises:
             (mottarPensjonNå.verdi === ESvar.NEI || erAndreForelderDød) &&
             (!gjelderUtland || !!erEøsLand(pensjonsland.verdi)),
-        feilmelding: teksterForPersonType.sluttdato.feilmelding,
+        feilmelding: periodenErAvsluttet
+            ? teksterForPersonType.sluttdatoFortid.feilmelding
+            : teksterForPersonType.sluttdatoFremtid.feilmelding,
         sluttdatoAvgrensning: dagensDato(),
         startdatoAvgrensning: dagenEtterDato(stringTilDate(pensjonFraDato.verdi)),
         avhengigheter: { mottarPensjonNå, pensjonFraDato },

@@ -129,7 +129,15 @@ export const PensjonModal: React.FC<Props> = ({
             {pensjonTilDato.erSynlig && (
                 <Datovelger
                     felt={pensjonTilDato}
-                    label={<TekstBlock block={teksterForModal.sluttdato.sporsmal} />}
+                    label={
+                        <TekstBlock
+                            block={
+                                periodenErAvsluttet
+                                    ? teksterForModal.sluttdatoFortid.sporsmal
+                                    : teksterForModal.sluttdatoFremtid.sporsmal
+                            }
+                        />
+                    }
                     skjema={skjema}
                     avgrensMaxDato={dagensDato()}
                     tilhørendeFraOgMedFelt={pensjonFraDato}

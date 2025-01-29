@@ -72,7 +72,11 @@ export const tilIPensjonsperiodeIKontraktFormat = ({
                 : null,
             pensjonTil: pensjonTil.svar
                 ? {
-                      label: tilRestLocaleRecord(tekster.sluttdato.sporsmal),
+                      label: tilRestLocaleRecord(
+                          periodenErAvsluttet
+                              ? tekster.sluttdatoFortid.sporsmal
+                              : tekster.sluttdatoFremtid.sporsmal
+                      ),
                       verdi: sammeVerdiAlleSpråk(pensjonTil.svar),
                   }
                 : null,
