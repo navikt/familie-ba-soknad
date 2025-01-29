@@ -4,20 +4,34 @@ import { TrashFillIcon } from '@navikt/aksel-icons';
 import { Button, FormSummary } from '@navikt/ds-react';
 
 import { HeadingLevel } from '../../../typer/common';
+import { LocaleRecordBlock } from '../../../typer/sanity/sanity';
+import TekstBlock from '../Sanity/TekstBlock';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
-const PeriodeOppsummering: React.FC<{
+interface Props {
     nummer: number;
     fjernPeriodeCallback?: () => void;
     fjernKnappSpråkId?: string;
+    fjernKnappTekst?: LocaleRecordBlock;
     tittelSpråkId: string;
+    tittel?: ReactNode;
     children?: ReactNode;
     headingLevel?: HeadingLevel;
-}> = ({ nummer, fjernPeriodeCallback = undefined, fjernKnappSpråkId, tittelSpråkId, children }) => {
+}
+
+function PeriodeOppsummering({
+    nummer,
+    fjernPeriodeCallback = undefined,
+    fjernKnappSpråkId,
+    fjernKnappTekst,
+    tittelSpråkId,
+    tittel,
+    children,
+}: Props) {
     return (
         <FormSummary.Answer>
             <FormSummary.Label>
-                <SpråkTekst id={tittelSpråkId} values={{ x: nummer }} />
+                {tittel ? tittel : <SpråkTekst id={tittelSpråkId} values={{ x: nummer }} />}
             </FormSummary.Label>
             <FormSummary.Value>
                 <FormSummary.Answers>
@@ -29,13 +43,17 @@ const PeriodeOppsummering: React.FC<{
                             onClick={() => fjernPeriodeCallback()}
                             icon={<TrashFillIcon aria-hidden />}
                         >
-                            <SpråkTekst id={fjernKnappSpråkId} />
+                            {fjernKnappTekst ? (
+                                <TekstBlock block={fjernKnappTekst} />
+                            ) : (
+                                <SpråkTekst id={fjernKnappSpråkId} />
+                            )}
                         </Button>
                     )}
                 </FormSummary.Answers>
             </FormSummary.Value>
         </FormSummary.Answer>
     );
-};
+}
 
 export default PeriodeOppsummering;

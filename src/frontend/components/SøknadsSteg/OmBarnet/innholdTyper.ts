@@ -38,4 +38,5 @@ export interface IOmBarnetTekstinnhold {
     borBarnFastSammenMedDeg: ISanitySpørsmålDokument;
     deltBosted: ISanitySpørsmålDokument;
     faarEllerHarFaattYtelseFraAnnetLand: ISanitySpørsmålDokument;
+    arbeidUtenforNorgeAndreForelderGjenlevende: ISanitySpørsmålDokument;
 }

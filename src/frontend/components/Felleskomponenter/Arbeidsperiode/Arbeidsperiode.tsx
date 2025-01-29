@@ -17,10 +17,11 @@ import {
 } from '../../../typer/skjema';
 import { genererPeriodeId } from '../../../utils/perioder';
 import { uppercaseFørsteBokstav } from '../../../utils/visning';
-import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
+import JaNeiSpmForSanity from '../JaNeiSpm/JaNeiSpmForSanity';
 import KomponentGruppe from '../KomponentGruppe/KomponentGruppe';
-import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
+import { LeggTilKnappForSanity } from '../LeggTilKnapp/LeggTilKnappForSanity';
 import PerioderContainer from '../PerioderContainer';
+import TekstBlock from '../Sanity/TekstBlock';
 import useModal from '../SkjemaModal/useModal';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
@@ -28,8 +29,7 @@ import { ArbeidsperiodeModal } from './ArbeidsperiodeModal';
 import { ArbeidsperiodeOppsummering } from './ArbeidsperiodeOppsummering';
 import {
     arbeidsperiodeFlereSpørsmål,
-    arbeidsperiodeLeggTilFlereKnapp,
-    arbeidsperiodeSpørsmålSpråkId,
+    arbeidsperiodeSpørsmålDokument,
 } from './arbeidsperiodeSpråkUtils';
 import { ArbeidsperiodeSpørsmålsId } from './spørsmål';
 
@@ -61,22 +61,17 @@ export const Arbeidsperiode: React.FC<Props> = ({
     erDød,
     barn,
 }) => {
+    const { tekster, plainTekst } = useApp();
     const { toggles } = useFeatureToggles();
     const {
         erÅpen: arbeidsmodalErÅpen,
         lukkModal: lukkArbeidsmodal,
         åpneModal: åpneArbeidsmodal,
     } = useModal();
-    const { tekster, plainTekst } = useApp();
-
-    const barnetsNavn = !!barn && barn.navn;
-    const arbeidsperiodeSpørsmålId = gjelderUtlandet
-        ? ArbeidsperiodeSpørsmålsId.arbeidsperioderUtland
-        : ArbeidsperiodeSpørsmålsId.arbeidsperioderNorge;
 
     const teksterForModal: IArbeidsperiodeTekstinnhold =
         tekster().FELLES.modaler.arbeidsperiode[personType];
-    const { flerePerioder, leggTilPeriodeForklaring } = teksterForModal;
+    const { flerePerioder, leggTilKnapp, leggTilPeriodeForklaring } = teksterForModal;
 
     const frittståendeOrdTekster = tekster().FELLES.frittståendeOrd;
     const { arbeidsperioder, utenfor, i, norge } = frittståendeOrdTekster;
@@ -85,19 +80,23 @@ export const Arbeidsperiode: React.FC<Props> = ({
         `${plainTekst(arbeidsperioder)} ${plainTekst(gjelderUtlandet ? utenfor : i)} ${plainTekst(norge)}`
     );
 
+    const arbeidsperiodeSpørsmålId = gjelderUtlandet
+        ? ArbeidsperiodeSpørsmålsId.arbeidsperioderUtland
+        : ArbeidsperiodeSpørsmålsId.arbeidsperioderNorge;
+
     return (
         <KomponentGruppe>
-            <JaNeiSpm
+            <JaNeiSpmForSanity
                 skjema={skjema}
                 felt={arbeiderEllerArbeidetFelt}
-                spørsmålTekstId={arbeidsperiodeSpørsmålSpråkId(gjelderUtlandet, personType, erDød)}
+                spørsmålDokument={arbeidsperiodeSpørsmålDokument(
+                    gjelderUtlandet,
+                    personType,
+                    tekster,
+                    erDød
+                )}
                 inkluderVetIkke={personType !== PersonType.Søker}
-                språkValues={{
-                    ...(barnetsNavn && {
-                        navn: barnetsNavn,
-                        barn: barnetsNavn,
-                    }),
-                }}
+                flettefelter={{ barnetsNavn: barn?.navn }}
             />
             {arbeiderEllerArbeidetFelt.verdi === ESvar.JA && (
                 <PerioderContainer tittel={perioderContainerTittel}>
@@ -117,21 +116,18 @@ export const Arbeidsperiode: React.FC<Props> = ({
                         <Label as="p" spacing>
                             <SpråkTekst
                                 id={arbeidsperiodeFlereSpørsmål(gjelderUtlandet, personType)}
-                                values={{
-                                    ...(barnetsNavn && { barn: barnetsNavn }),
-                                }}
+                                values={{ barn: barn?.navn }}
                             />
                         </Label>
                     )}
-                    <LeggTilKnapp
+                    <LeggTilKnappForSanity
                         onClick={åpneArbeidsmodal}
-                        språkTekst={arbeidsperiodeLeggTilFlereKnapp(gjelderUtlandet)}
                         leggTilFlereTekst={
                             toggles.NYE_MODAL_TEKSTER &&
                             registrerteArbeidsperioder.verdi.length > 0 &&
                             plainTekst(flerePerioder, {
                                 gjelderUtland: gjelderUtlandet,
-                                ...(barnetsNavn && { barnetsNavn: barnetsNavn }),
+                                barnetsNavn: barn?.navn,
                             })
                         }
                         id={genererPeriodeId({
@@ -144,7 +140,9 @@ export const Arbeidsperiode: React.FC<Props> = ({
                             skjema.visFeilmeldinger &&
                             registrerteArbeidsperioder.feilmelding
                         }
-                    />
+                    >
+                        <TekstBlock block={leggTilKnapp} />
+                    </LeggTilKnappForSanity>
                     {arbeidsmodalErÅpen && (
                         <ArbeidsperiodeModal
                             erÅpen={arbeidsmodalErÅpen}
