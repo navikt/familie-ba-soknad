@@ -11,6 +11,8 @@ export interface IPensjonsperiodeTekstinnhold {
     pensjonLandFortid: ISanitySpørsmålDokument;
     pensjonLandNaatid: ISanitySpørsmålDokument;
     startdato: ISanitySpørsmålDokument;
+    startdatoFortid: ISanitySpørsmålDokument;
+    startdatoNaatid: ISanitySpørsmålDokument;
     sluttdato: ISanitySpørsmålDokument;
     sluttdatoFortid: ISanitySpørsmålDokument;
     sluttdatoFremtid: ISanitySpørsmålDokument;

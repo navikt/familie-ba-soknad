@@ -85,7 +85,18 @@ export const PensjonsperiodeOppsummering: React.FC<PensjonsperiodeOppsummeringPr
             )}
             {pensjonFra.svar && (
                 <OppsummeringFelt
-                    tittel={<TekstBlock block={teksterForModal.startdato.sporsmal} />}
+                    tittel={
+                        <TekstBlock
+                            block={
+                                periodenErAvsluttet
+                                    ? teksterForModal.startdatoFortid.sporsmal
+                                    : teksterForModal.startdatoNaatid.sporsmal
+                            }
+                            flettefelter={{
+                                barnetsNavn: barn?.navn,
+                            }}
+                        />
+                    }
                     søknadsvar={formaterDato(pensjonFra.svar)}
                 />
             )}

@@ -72,7 +72,9 @@ export const usePensjonSkjema = ({
         skalFeltetVises:
             (mottarPensjonNå.valideringsstatus === Valideringsstatus.OK || erAndreForelderDød) &&
             (!gjelderUtland || !!erEøsLand(pensjonsland.verdi)),
-        feilmelding: teksterForPersonType.startdato.feilmelding,
+        feilmelding: periodenErAvsluttet
+            ? teksterForPersonType.startdatoFortid.feilmelding
+            : teksterForPersonType.startdatoNaatid.feilmelding,
         sluttdatoAvgrensning: periodenErAvsluttet ? gårsdagensDato() : dagensDato(),
         avhengigheter: { mottarPensjonNå },
     });
