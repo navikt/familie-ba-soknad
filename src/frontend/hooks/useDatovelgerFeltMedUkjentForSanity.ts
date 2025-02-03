@@ -40,6 +40,7 @@ const useDatovelgerFeltMedUkjentForSanity = ({
                 return ok(felt);
             }
 
+            const feilmelding = avhengigheter?.feilmelding as LocaleRecordBlock;
             const customStartdatoFeilmelding = avhengigheter?.customStartdatoFeilmelding;
             const startdatoAvgrensningOppdatert = avhengigheter?.startdatoAvgrensning;
 
