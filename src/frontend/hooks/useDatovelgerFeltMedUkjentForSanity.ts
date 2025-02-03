@@ -41,9 +41,7 @@ const useDatovelgerFeltMedUkjentForSanity = ({
             }
 
             const customStartdatoFeilmelding = avhengigheter?.customStartdatoFeilmelding;
-
-            const startdatoAvgrensningOppdatert =
-                avhengigheter && avhengigheter.startdatoAvgrensning;
+            const startdatoAvgrensningOppdatert = avhengigheter?.startdatoAvgrensning;
 
             return validerDatoForSanity(
                 tekster().FELLES.formateringsfeilmeldinger,
