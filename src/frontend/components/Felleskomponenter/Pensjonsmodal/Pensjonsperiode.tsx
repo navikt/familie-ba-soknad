@@ -17,20 +17,17 @@ import {
 } from '../../../typer/skjema';
 import { genererPeriodeId } from '../../../utils/perioder';
 import { uppercaseFørsteBokstav } from '../../../utils/visning';
-import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
+import JaNeiSpmForSanity from '../JaNeiSpm/JaNeiSpmForSanity';
 import KomponentGruppe from '../KomponentGruppe/KomponentGruppe';
-import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
+import { LeggTilKnappForSanity } from '../LeggTilKnapp/LeggTilKnappForSanity';
 import PerioderContainer from '../PerioderContainer';
+import TekstBlock from '../Sanity/TekstBlock';
 import useModal from '../SkjemaModal/useModal';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
 import { PensjonModal } from './Pensjonsmodal';
 import { PensjonsperiodeOppsummering } from './PensjonsperiodeOppsummering';
-import {
-    mottarEllerMottattPensjonSpråkId,
-    pensjonFlerePerioderSpmSpråkId,
-    pensjonsperiodeKnappSpråkId,
-} from './språkUtils';
+import { pensjonFlerePerioderSpmSpråkId, pensjonSpørsmålDokument } from './språkUtils';
 import { PensjonsperiodeSpørsmålId } from './spørsmål';
 
 interface PensjonsperiodeProps {
@@ -76,7 +73,7 @@ export const Pensjonsperiode: React.FC<Props> = ({
 
     const teksterForModal: IPensjonsperiodeTekstinnhold =
         tekster().FELLES.modaler.pensjonsperiode[personType];
-    const { flerePerioder, leggTilPeriodeForklaring } = teksterForModal;
+    const { flerePerioder, leggTilKnapp, leggTilPeriodeForklaring } = teksterForModal;
 
     const frittståendeOrdTekster = tekster().FELLES.frittståendeOrd;
     const { pensjonsperioder, fra, utlandet, norge } = frittståendeOrdTekster;
@@ -87,21 +84,17 @@ export const Pensjonsperiode: React.FC<Props> = ({
 
     return (
         <KomponentGruppe>
-            <JaNeiSpm
+            <JaNeiSpmForSanity
                 skjema={skjema}
                 felt={mottarEllerMottattPensjonFelt}
-                spørsmålTekstId={mottarEllerMottattPensjonSpråkId(
+                spørsmålDokument={pensjonSpørsmålDokument(
                     gjelderUtlandet,
                     personType,
+                    tekster,
                     erDød
                 )}
                 inkluderVetIkke={personType !== PersonType.Søker}
-                språkValues={{
-                    ...(barn && {
-                        navn: barn.navn,
-                        barn: barn.navn,
-                    }),
-                }}
+                flettefelter={{ barnetsNavn: barn?.navn }}
             />
             {mottarEllerMottattPensjonFelt.verdi === ESvar.JA && (
                 <PerioderContainer tittel={perioderContainerTittel}>
@@ -127,9 +120,8 @@ export const Pensjonsperiode: React.FC<Props> = ({
                             />
                         </Label>
                     )}
-                    <LeggTilKnapp
+                    <LeggTilKnappForSanity
                         onClick={åpnePensjonsmodal}
-                        språkTekst={pensjonsperiodeKnappSpråkId(gjelderUtlandet)}
                         leggTilFlereTekst={
                             toggles.NYE_MODAL_TEKSTER &&
                             registrertePensjonsperioder.verdi.length > 0 &&
@@ -148,7 +140,9 @@ export const Pensjonsperiode: React.FC<Props> = ({
                             skjema.visFeilmeldinger &&
                             registrertePensjonsperioder.feilmelding
                         }
-                    />
+                    >
+                        <TekstBlock block={leggTilKnapp} />
+                    </LeggTilKnappForSanity>
                     {pensjonsmodalErÅpen && (
                         <PensjonModal
                             erÅpen={pensjonsmodalErÅpen}
