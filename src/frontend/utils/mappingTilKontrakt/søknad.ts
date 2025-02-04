@@ -154,6 +154,8 @@ export const dataISøknadKontraktFormat = (
                     periode,
                     periodeNummer: index + 1,
                     gjelderUtlandet: true,
+                    tilRestLocaleRecord,
+                    tekster: tekster.FELLES.modaler.pensjonsperiode.søker,
                     personType: PersonType.Søker,
                 })
             ),
@@ -162,6 +164,8 @@ export const dataISøknadKontraktFormat = (
                     periode,
                     periodeNummer: index + 1,
                     gjelderUtlandet: false,
+                    tilRestLocaleRecord,
+                    tekster: tekster.FELLES.modaler.pensjonsperiode.søker,
                     personType: PersonType.Søker,
                 })
             ),

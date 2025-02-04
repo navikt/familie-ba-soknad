@@ -131,8 +131,10 @@ export const omsorgspersonTilISøknadsfelt = (
                 periode,
                 periodeNummer: index + 1,
                 gjelderUtlandet: true,
-                personType: PersonType.Omsorgsperson,
+                tilRestLocaleRecord,
+                tekster: tekster.FELLES.modaler.pensjonsperiode.omsorgsperson,
                 barn: barn,
+                personType: PersonType.Omsorgsperson,
             })
         ),
         pensjonNorge: søknadsfeltBarn(
@@ -145,8 +147,10 @@ export const omsorgspersonTilISøknadsfelt = (
                 periode,
                 periodeNummer: index + 1,
                 gjelderUtlandet: false,
-                personType: PersonType.Omsorgsperson,
+                tilRestLocaleRecord,
+                tekster: tekster.FELLES.modaler.pensjonsperiode.omsorgsperson,
                 barn: barn,
+                personType: PersonType.Omsorgsperson,
             })
         ),
         andreUtbetalinger: søknadsfeltBarn(
