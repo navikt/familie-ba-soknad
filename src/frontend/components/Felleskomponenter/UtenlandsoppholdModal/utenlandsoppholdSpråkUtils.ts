@@ -50,6 +50,21 @@ export const hentLandSpørsmål = (
     }
 };
 
+export const hentFraDatoSpørsmål = (
+    årsak: EUtenlandsoppholdÅrsak | '',
+    tekster: IUtenlandsoppholdTekstinnhold
+): LocaleRecordBlock => {
+    switch (årsak) {
+        case EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_FRA_NORGE:
+            return tekster.flyttetFraNorgeDato.sporsmal;
+        case EUtenlandsoppholdÅrsak.HAR_OPPHOLDT_SEG_UTENFOR_NORGE:
+        case EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE:
+        default: {
+            return tekster.startdato.sporsmal;
+        }
+    }
+};
+
 export const årsakFeilmeldingSpråkId = (barn?: IBarnMedISøknad): string =>
     barn ? 'ombarnet.beskriveopphold.feilmelding' : 'modal.beskriveopphold.feilmelding';
 

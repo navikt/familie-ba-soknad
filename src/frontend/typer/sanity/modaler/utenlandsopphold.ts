@@ -15,4 +15,6 @@ export interface IUtenlandsoppholdTekstinnhold {
     landFlyttetFra: ISanitySpørsmålDokument;
     tidligereOpphold: ISanitySpørsmålDokument;
     naavaerendeOpphold: ISanitySpørsmålDokument;
+    flyttetFraNorgeDato: ISanitySpørsmålDokument;
+    startdato: ISanitySpørsmålDokument;
 }

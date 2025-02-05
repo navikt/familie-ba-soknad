@@ -19,21 +19,19 @@ import Datovelger from '../Datovelger/Datovelger';
 import { LandDropdown } from '../Dropdowns/LandDropdown';
 import StyledDropdown from '../Dropdowns/StyledDropdown';
 import TekstBlock from '../Sanity/TekstBlock';
-import { SkjemaCheckbox } from '../SkjemaCheckbox/SkjemaCheckbox';
+import { SkjemaCheckboxForSanity } from '../SkjemaCheckbox/SkjemaCheckboxForSanity';
 import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeiloppsummering';
 import SkjemaModal from '../SkjemaModal/SkjemaModal';
-import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
-import { tilDatoUkjentLabelSpråkId, UtenlandsoppholdSpørsmålId } from './spørsmål';
+import { UtenlandsoppholdSpørsmålId } from './spørsmål';
 import {
     IUseUtenlandsoppholdSkjemaParams,
     useUtenlandsoppholdSkjema,
 } from './useUtenlandsoppholdSkjema';
 import {
-    fraDatoLabelSpråkId,
+    hentFraDatoSpørsmål,
+    hentLandSpørsmål,
     hentUtenlandsoppholdÅrsak,
-    landLabelSpråkId,
-    tilDatoLabelSpråkId,
 } from './utenlandsoppholdSpråkUtils';
 
 interface Props extends IUseUtenlandsoppholdSkjemaParams {
@@ -134,12 +132,13 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
                 felt={skjema.felter.oppholdsland}
                 skjema={skjema}
                 label={
-                    landLabelSpråkId(skjema.felter.utenlandsoppholdÅrsak.verdi, barn) && (
-                        <SpråkTekst
-                            id={landLabelSpråkId(skjema.felter.utenlandsoppholdÅrsak.verdi, barn)}
-                            values={{ ...(barn && { barn: barn.navn }) }}
-                        />
-                    )
+                    <TekstBlock
+                        block={hentLandSpørsmål(
+                            skjema.felter.utenlandsoppholdÅrsak.verdi,
+                            teksterForPersonType
+                        )}
+                        flettefelter={{ barnetsNavn: barn?.navn }}
+                    />
                 }
                 dynamisk
                 ekskluderNorge
@@ -148,12 +147,11 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
                 <Datovelger
                     felt={skjema.felter.oppholdslandFraDato}
                     label={
-                        <SpråkTekst
-                            id={fraDatoLabelSpråkId(
+                        <TekstBlock
+                            block={hentFraDatoSpørsmål(
                                 skjema.felter.utenlandsoppholdÅrsak.verdi,
-                                barn
+                                teksterForPersonType
                             )}
-                            values={{ ...(barn && { barn: barn.navn }) }}
                         />
                     }
                     skjema={skjema}
@@ -169,12 +167,11 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
                         <Datovelger
                             felt={skjema.felter.oppholdslandTilDato}
                             label={
-                                <SpråkTekst
-                                    id={tilDatoLabelSpråkId(
+                                <TekstBlock
+                                    block={hentFraDatoSpørsmål(
                                         skjema.felter.utenlandsoppholdÅrsak.verdi,
-                                        barn
+                                        teksterForPersonType
                                     )}
-                                    values={{ ...(barn && { barn: barn.navn }) }}
                                 />
                             }
                             skjema={skjema}
@@ -193,9 +190,9 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
                         />
                     )}
                     {skjema.felter.oppholdslandTilDatoUkjent.erSynlig && (
-                        <SkjemaCheckbox
+                        <SkjemaCheckboxForSanity
                             felt={skjema.felter.oppholdslandTilDatoUkjent}
-                            labelSpråkTekstId={tilDatoUkjentLabelSpråkId}
+                            label={plainTekst(teksterForPersonType.sluttdatoFremtid.checkboxLabel)}
                         />
                     )}
                 </div>
