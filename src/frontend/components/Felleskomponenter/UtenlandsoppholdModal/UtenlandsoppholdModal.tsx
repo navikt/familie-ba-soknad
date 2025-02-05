@@ -5,6 +5,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { useApp } from '../../../context/AppContext';
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { IUtenlandsperiode } from '../../../typer/perioder';
+import { IUtenlandsoppholdTekstinnhold } from '../../../typer/sanity/modaler/utenlandsopphold';
 import { ESanitySteg } from '../../../typer/sanity/sanity';
 import { EUtenlandsoppholdÅrsak } from '../../../typer/utenlandsopphold';
 import { visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
@@ -57,7 +58,8 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
             barn,
         });
 
-    const teksterForPersonType = tekster()[ESanitySteg.FELLES].modaler.utenlandsopphold[personType];
+    const teksterForPersonType: IUtenlandsoppholdTekstinnhold =
+        tekster()[ESanitySteg.FELLES].modaler.utenlandsopphold[personType];
 
     const onLeggTil = () => {
         if (!validerFelterOgVisFeilmelding()) {

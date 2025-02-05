@@ -192,6 +192,7 @@ const Oppfølgningsspørsmål: React.FC<{
                                 periode={periode}
                                 nummer={index + 1}
                                 fjernPeriodeCallback={fjernUtenlandsperiode}
+                                personType={PersonType.Barn}
                                 barn={barn}
                             />
                         ))}

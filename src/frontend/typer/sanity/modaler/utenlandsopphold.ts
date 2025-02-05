@@ -13,8 +13,14 @@ export interface IUtenlandsoppholdTekstinnhold {
     valgalternativPlaceholder: LocaleRecordString;
     landFlyttetTil: ISanitySpørsmålDokument;
     landFlyttetFra: ISanitySpørsmålDokument;
+    periodeBeskrivelse: ISanitySpørsmålDokument;
     tidligereOpphold: ISanitySpørsmålDokument;
+    fjernKnapp: LocaleRecordBlock;
     naavaerendeOpphold: ISanitySpørsmålDokument;
     flyttetFraNorgeDato: ISanitySpørsmålDokument;
     startdato: ISanitySpørsmålDokument;
+    sluttdatoFremtid: ISanitySpørsmålDokument;
+    oppsummeringstittel: LocaleRecordBlock;
+    adresseFortid: ISanitySpørsmålDokument;
+    adresseNaatid: ISanitySpørsmålDokument;
 }
