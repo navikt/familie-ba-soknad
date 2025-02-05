@@ -1,4 +1,6 @@
 import { IBarnMedISøknad } from '../../../typer/barn';
+import { IUtenlandsoppholdTekstinnhold } from '../../../typer/sanity/modaler/utenlandsopphold';
+import { LocaleRecordBlock, LocaleRecordString } from '../../../typer/sanity/sanity';
 import { EUtenlandsoppholdÅrsak } from '../../../typer/utenlandsopphold';
 
 import {
@@ -8,6 +10,45 @@ import {
     årsakSpråkIdsBarn,
     årsakSpråkIdsSøker,
 } from './spørsmål';
+
+export const hentUtenlandsoppholdÅrsak = (
+    årsak: EUtenlandsoppholdÅrsak | '',
+    tekster: IUtenlandsoppholdTekstinnhold
+): LocaleRecordString => {
+    switch (årsak) {
+        case EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_FRA_NORGE: {
+            return tekster.valgalternativPermanentIUtland;
+        }
+        case EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_TIL_NORGE: {
+            return tekster.valgalternativPermanentINorge;
+        }
+        case EUtenlandsoppholdÅrsak.HAR_OPPHOLDT_SEG_UTENFOR_NORGE:
+            return tekster.valgalternativOppholdUtenforNorgeTidligere;
+        case EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE:
+            return tekster.valgalternativOppholdUtenforNorgeNaa;
+        default: {
+            return tekster.valgalternativPlaceholder;
+        }
+    }
+};
+
+export const hentLandSpørsmål = (
+    årsak: EUtenlandsoppholdÅrsak | '',
+    tekster: IUtenlandsoppholdTekstinnhold
+): LocaleRecordBlock => {
+    switch (årsak) {
+        case EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_FRA_NORGE:
+            return tekster.landFlyttetTil.sporsmal;
+        case EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_TIL_NORGE:
+            return tekster.landFlyttetFra.sporsmal;
+        case EUtenlandsoppholdÅrsak.HAR_OPPHOLDT_SEG_UTENFOR_NORGE:
+            return tekster.tidligereOpphold.sporsmal;
+        case EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE:
+        default: {
+            return tekster.naavaerendeOpphold.sporsmal;
+        }
+    }
+};
 
 export const årsakFeilmeldingSpråkId = (barn?: IBarnMedISøknad): string =>
     barn ? 'ombarnet.beskriveopphold.feilmelding' : 'modal.beskriveopphold.feilmelding';

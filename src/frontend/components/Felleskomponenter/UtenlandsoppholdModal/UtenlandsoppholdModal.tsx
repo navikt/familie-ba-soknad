@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { useIntl } from 'react-intl';
-
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
@@ -33,10 +31,9 @@ import {
 } from './useUtenlandsoppholdSkjema';
 import {
     fraDatoLabelSpråkId,
+    hentUtenlandsoppholdÅrsak,
     landLabelSpråkId,
     tilDatoLabelSpråkId,
-    årsakLabelSpråkId,
-    årsakSpråkId,
 } from './utenlandsoppholdSpråkUtils';
 
 interface Props extends IUseUtenlandsoppholdSkjemaParams {
@@ -55,7 +52,7 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
     barn,
     forklaring = undefined,
 }) => {
-    const { tekster } = useApp();
+    const { tekster, plainTekst } = useApp();
     const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } =
         useUtenlandsoppholdSkjema({
             personType,
@@ -63,8 +60,6 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
         });
 
     const teksterForPersonType = tekster()[ESanitySteg.FELLES].modaler.utenlandsopphold[personType];
-
-    const { formatMessage } = useIntl();
 
     const onLeggTil = () => {
         if (!validerFelterOgVisFeilmelding()) {
@@ -116,21 +111,21 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
                 {...skjema.felter.utenlandsoppholdÅrsak.hentNavInputProps(skjema.visFeilmeldinger)}
                 felt={skjema.felter.utenlandsoppholdÅrsak}
                 label={
-                    <SpråkTekst
-                        id={årsakLabelSpråkId(barn)}
-                        values={{ ...(barn && { barn: barn.navn }) }}
+                    <TekstBlock
+                        block={teksterForPersonType.periodeBeskrivelse.sporsmal}
+                        flettefelter={{ barnetsNavn: barn?.navn }}
                     />
                 }
                 skjema={skjema}
-                placeholder={formatMessage({ id: 'felles.velg-årsak.placeholder' })}
+                placeholder={plainTekst(teksterForPersonType.valgalternativPlaceholder)}
             >
                 {Object.keys(EUtenlandsoppholdÅrsak).map((årsak, number) => (
                     <option key={number} value={årsak}>
-                        {formatMessage(
-                            {
-                                id: årsakSpråkId(årsak as EUtenlandsoppholdÅrsak, barn),
-                            },
-                            { ...(barn && { barn: barn.navn }) }
+                        {plainTekst(
+                            hentUtenlandsoppholdÅrsak(
+                                årsak as EUtenlandsoppholdÅrsak,
+                                teksterForPersonType
+                            )
                         )}
                     </option>
                 ))}
