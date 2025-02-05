@@ -41,13 +41,14 @@ const useDatovelgerFeltMedUkjentForSanity = ({
             }
 
             const customStartdatoFeilmelding = avhengigheter?.customStartdatoFeilmelding;
+            const startdatoAvgrensningOppdatert = avhengigheter?.startdatoAvgrensning;
 
             return validerDatoForSanity(
                 tekster().FELLES.formateringsfeilmeldinger,
                 plainTekst,
                 felt,
                 feilmelding,
-                startdatoAvgrensning,
+                startdatoAvgrensningOppdatert,
                 sluttdatoAvgrensning,
                 customStartdatoFeilmelding
             );
@@ -56,6 +57,7 @@ const useDatovelgerFeltMedUkjentForSanity = ({
             vetIkkeCheckbox,
             skalFeltetVises,
             customStartdatoFeilmelding,
+            startdatoAvgrensning,
             ...avhengigheter,
         },
         nullstillVedAvhengighetEndring,
