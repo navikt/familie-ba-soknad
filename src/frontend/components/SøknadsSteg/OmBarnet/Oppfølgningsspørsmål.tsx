@@ -22,7 +22,7 @@ import { Barnetrygdperiode } from '../../Felleskomponenter/Barnetrygdperiode/Bar
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import { LandDropdown } from '../../Felleskomponenter/Dropdowns/LandDropdown';
 import JaNeiSpmForSanity from '../../Felleskomponenter/JaNeiSpm/JaNeiSpmForSanity';
-import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
+import { LeggTilKnappForSanity } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnappForSanity';
 import PerioderContainer from '../../Felleskomponenter/PerioderContainer';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import { SkjemaCheckboxForSanity } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckboxForSanity';
@@ -98,7 +98,7 @@ const Oppfølgningsspørsmål: React.FC<{
 
     const teksterForModal: IUtenlandsoppholdTekstinnhold =
         tekster().FELLES.modaler.utenlandsopphold.barn;
-    const { flerePerioder, leggTilPeriodeForklaring } = teksterForModal;
+    const { leggTilKnapp, flerePerioder, leggTilPeriodeForklaring } = teksterForModal;
 
     const frittståendeOrdTekster = tekster().FELLES.frittståendeOrd;
 
@@ -183,7 +183,9 @@ const Oppfølgningsspørsmål: React.FC<{
                 >
                     <PerioderContainer
                         tittel={uppercaseFørsteBokstav(
-                            plainTekst(frittståendeOrdTekster.utenlandsopphold)
+                            plainTekst(frittståendeOrdTekster.utenlandsopphold, {
+                                barnetsNavn: barn.navn,
+                            })
                         )}
                     >
                         {utenlandsperioder.map((periode, index) => (
@@ -204,13 +206,12 @@ const Oppfølgningsspørsmål: React.FC<{
                                 />
                             </Label>
                         )}
-                        <LeggTilKnapp
+                        <LeggTilKnappForSanity
                             id={UtenlandsoppholdSpørsmålId.utenlandsopphold}
-                            språkTekst={'felles.leggtilutenlands.knapp'}
                             leggTilFlereTekst={
                                 toggles.NYE_MODAL_TEKSTER &&
                                 registrerteUtenlandsperioder.verdi.length > 0 &&
-                                plainTekst(flerePerioder)
+                                plainTekst(flerePerioder, { barnetsNavn: barn.navn })
                             }
                             onClick={åpneUtenlandsmodal}
                             feilmelding={
@@ -218,7 +219,9 @@ const Oppfølgningsspørsmål: React.FC<{
                                 skjema.visFeilmeldinger &&
                                 registrerteUtenlandsperioder.feilmelding
                             }
-                        />
+                        >
+                            <TekstBlock block={leggTilKnapp} />
+                        </LeggTilKnappForSanity>
                     </PerioderContainer>
                     {planleggerÅBoINorge12Mnd.erSynlig && (
                         <JaNeiSpmForSanity
