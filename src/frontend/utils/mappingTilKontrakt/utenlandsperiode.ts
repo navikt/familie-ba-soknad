@@ -1,6 +1,7 @@
 import {
     hentFraDatoSpørsmål,
     hentLandSpørsmål,
+    hentTilDatoSpørsmål,
     hentUtenlandsoppholdÅrsak,
 } from '../../components/Felleskomponenter/UtenlandsoppholdModal/utenlandsoppholdSpråkUtils';
 import { IBarnMedISøknad } from '../../typer/barn';
@@ -67,7 +68,7 @@ export const utenlandsperiodeTilISøknadsfelt = ({
             },
             oppholdslandTilDato: {
                 label: tilRestLocaleRecord(
-                    hentFraDatoSpørsmål(utenlandperiode.utenlandsoppholdÅrsak.svar, tekster),
+                    hentTilDatoSpørsmål(utenlandperiode.utenlandsoppholdÅrsak.svar, tekster),
                     { barnetsNavn: barn?.navn }
                 ),
                 verdi: sammeVerdiAlleSpråkEllerUkjent(

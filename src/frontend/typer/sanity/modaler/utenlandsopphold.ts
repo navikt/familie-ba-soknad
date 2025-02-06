@@ -2,6 +2,8 @@ import { ISanitySpørsmålDokument, LocaleRecordBlock, LocaleRecordString } from
 
 export interface IUtenlandsoppholdTekstinnhold {
     tittel: LocaleRecordBlock;
+    flyttetTilNorgeDato: ISanitySpørsmålDokument;
+    sluttdatoFortid: ISanitySpørsmålDokument;
     leggTilPeriodeForklaring: LocaleRecordString;
     flerePerioder: LocaleRecordBlock;
     leggTilKnapp: LocaleRecordBlock;

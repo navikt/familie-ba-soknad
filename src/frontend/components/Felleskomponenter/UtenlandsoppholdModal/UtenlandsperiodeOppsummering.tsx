@@ -15,6 +15,7 @@ import TekstBlock from '../Sanity/TekstBlock';
 import {
     hentFraDatoSpørsmål,
     hentLandSpørsmål,
+    hentTilDatoSpørsmål,
     hentUtenlandsoppholdÅrsak,
 } from './utenlandsoppholdSpråkUtils';
 
@@ -76,7 +77,7 @@ export const UtenlandsperiodeOppsummering: React.FC<UtenlandsperiodeOppsummering
             )}
             {oppholdslandTilDato && (
                 <OppsummeringFelt
-                    tittel={<TekstBlock block={hentFraDatoSpørsmål(årsak, teksterForPersonType)} />}
+                    tittel={<TekstBlock block={hentTilDatoSpørsmål(årsak, teksterForPersonType)} />}
                     søknadsvar={formaterDatoMedUkjent(
                         oppholdslandTilDato.svar,
                         plainTekst(teksterForPersonType.sluttdatoFremtid.checkboxLabel)

@@ -95,6 +95,22 @@ export const hentFraDatoSpørsmål = (
     }
 };
 
+export const hentTilDatoSpørsmål = (
+    årsak: EUtenlandsoppholdÅrsak | '',
+    tekster: IUtenlandsoppholdTekstinnhold
+): LocaleRecordBlock => {
+    switch (årsak) {
+        case EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_TIL_NORGE:
+            return tekster.flyttetTilNorgeDato.sporsmal;
+        case EUtenlandsoppholdÅrsak.HAR_OPPHOLDT_SEG_UTENFOR_NORGE:
+            return tekster.sluttdatoFortid.sporsmal;
+        case EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE:
+        default: {
+            return tekster.sluttdatoFremtid.sporsmal;
+        }
+    }
+};
+
 export const årsakFeilmeldingSpråkId = (barn?: IBarnMedISøknad): string =>
     barn ? 'ombarnet.beskriveopphold.feilmelding' : 'modal.beskriveopphold.feilmelding';
 

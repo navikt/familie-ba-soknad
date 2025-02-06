@@ -32,6 +32,7 @@ import {
 import {
     hentFraDatoSpørsmål,
     hentLandSpørsmål,
+    hentTilDatoSpørsmål,
     hentUtenlandsoppholdÅrsak,
 } from './utenlandsoppholdSpråkUtils';
 
@@ -170,7 +171,7 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
                             felt={skjema.felter.oppholdslandTilDato}
                             label={
                                 <TekstBlock
-                                    block={hentFraDatoSpørsmål(
+                                    block={hentTilDatoSpørsmål(
                                         skjema.felter.utenlandsoppholdÅrsak.verdi,
                                         teksterForPersonType
                                     )}
