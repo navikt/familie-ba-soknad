@@ -104,7 +104,7 @@
     "@sentry/react": "^8.38.0",
     "axios": "^1.7.4",
     "compression": "^1.7.4",
-    "concurrently": "^8.2.2",
+    "concurrently": "^9.1.2",
     "constate": "^3.3.2",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
