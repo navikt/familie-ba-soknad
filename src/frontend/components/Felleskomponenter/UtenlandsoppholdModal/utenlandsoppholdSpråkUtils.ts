@@ -50,6 +50,36 @@ export const hentLandSpørsmål = (
     }
 };
 
+export const hentLandFeilmelding = (
+    årsak: EUtenlandsoppholdÅrsak | '',
+    tekster: IUtenlandsoppholdTekstinnhold
+): LocaleRecordBlock => {
+    switch (årsak) {
+        case EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_TIL_NORGE:
+            return tekster.landFlyttetFra.feilmelding;
+        case EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_FRA_NORGE:
+            return tekster.landFlyttetTil.feilmelding;
+        case EUtenlandsoppholdÅrsak.HAR_OPPHOLDT_SEG_UTENFOR_NORGE:
+            return tekster.tidligereOpphold.feilmelding;
+        case EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE:
+        default: {
+            return tekster.naavaerendeOpphold.feilmelding;
+        }
+    }
+};
+
+export const hentFraDatoFeilmelding = (
+    årsak: EUtenlandsoppholdÅrsak | '',
+    tekster: IUtenlandsoppholdTekstinnhold
+) => {
+    switch (årsak) {
+        case EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_FRA_NORGE:
+            return tekster.flyttetFraNorgeDato.feilmelding;
+        default:
+            return tekster.startdato.feilmelding;
+    }
+};
+
 export const hentFraDatoSpørsmål = (
     årsak: EUtenlandsoppholdÅrsak | '',
     tekster: IUtenlandsoppholdTekstinnhold
