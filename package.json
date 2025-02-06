@@ -67,7 +67,7 @@
   },
   "resolutions": {
     "styled-components": "^6",
-    "browserslist": "^4.16.5",
+    "browserslist": "^4.24.2",
     "ansi-regex": "^5.0.1",
     "got": "^11.8.5",
     "@types/react": "^18.2.17"
@@ -132,11 +132,11 @@
   },
   "devDependencies": {
     "@axe-core/react": "^4.10.1",
-    "@babel/core": "^7.24.1",
-    "@babel/plugin-syntax-import-assertions": "^7.24.1",
-    "@babel/preset-env": "^7.24.1",
-    "@babel/preset-react": "^7.24.1",
-    "@babel/preset-typescript": "^7.24.1",
+    "@babel/core": "^7.26.7",
+    "@babel/plugin-syntax-import-assertions": "^7.26.0",
+    "@babel/preset-env": "^7.26.7",
+    "@babel/preset-react": "^7.26.3",
+    "@babel/preset-typescript": "^7.26.0",
     "@eslint/js": "^9.15.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.11",
     "@portabletext/types": "^2.0.6",
