@@ -30,6 +30,7 @@ export interface IOmBarnetTekstinnhold {
     foedselsnummerDnummerAndreForelder: ISanitySpørsmålDokument;
     foedselsdatoAndreForelder: ISanitySpørsmålDokument;
     arbeidUtenforNorgeAndreForelder: ISanitySpørsmålDokument;
+    pensjonUtlandAndreForelderGjenlevende: ISanitySpørsmålDokument;
     pensjonUtlandAndreForelder: ISanitySpørsmålDokument;
     boddSammenMedAndreForelder: ISanitySpørsmålDokument;
     naarFlyttetFraAndreForelder: ISanitySpørsmålDokument;
@@ -38,4 +39,5 @@ export interface IOmBarnetTekstinnhold {
     borBarnFastSammenMedDeg: ISanitySpørsmålDokument;
     deltBosted: ISanitySpørsmålDokument;
     faarEllerHarFaattYtelseFraAnnetLand: ISanitySpørsmålDokument;
+    arbeidUtenforNorgeAndreForelderGjenlevende: ISanitySpørsmålDokument;
 }

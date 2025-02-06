@@ -5,21 +5,26 @@ import { Alpha3Code } from 'i18n-iso-countries';
 import { feil, type FeltState, ok, useFelt } from '@navikt/familie-skjema';
 
 import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
+import { useApp } from '../context/AppContext';
+import { LocaleRecordBlock } from '../typer/sanity/sanity';
 import { ISøknadSpørsmål } from '../typer/spørsmål';
 
 const useLanddropdownFelt = ({
     søknadsfelt,
+    feilmelding,
     feilmeldingSpråkId,
     skalFeltetVises,
     nullstillVedAvhengighetEndring = false,
     feilmeldingSpråkVerdier,
 }: {
     søknadsfelt: ISøknadSpørsmål<Alpha3Code | ''>;
+    feilmelding?: LocaleRecordBlock;
     feilmeldingSpråkId: string;
     skalFeltetVises: boolean;
     nullstillVedAvhengighetEndring?: boolean;
     feilmeldingSpråkVerdier?: { [key: string]: ReactNode };
 }) => {
+    const { plainTekst } = useApp();
     return useFelt<Alpha3Code | ''>({
         feltId: søknadsfelt.id,
         verdi: søknadsfelt.svar,
@@ -32,17 +37,21 @@ const useLanddropdownFelt = ({
                 : feil(
                       felt,
                       avhengigheter?.feilmeldingSpråkId ? (
-                          <SpråkTekst
-                              id={avhengigheter.feilmeldingSpråkId}
-                              values={feilmeldingSpråkVerdier}
-                          />
+                          avhengigheter?.feilmelding ? (
+                              plainTekst(avhengigheter?.feilmelding)
+                          ) : (
+                              <SpråkTekst
+                                  id={avhengigheter.feilmeldingSpråkId}
+                                  values={feilmeldingSpråkVerdier}
+                              />
+                          )
                       ) : (
                           ''
                       )
                   );
         },
         nullstillVedAvhengighetEndring,
-        avhengigheter: { skalFeltetVises, feilmeldingSpråkId },
+        avhengigheter: { skalFeltetVises, feilmelding, feilmeldingSpråkId },
     });
 };
 

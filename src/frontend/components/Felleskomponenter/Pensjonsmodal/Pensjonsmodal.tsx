@@ -10,13 +10,11 @@ import { dagensDato, gårsdagensDato } from '../../../utils/dato';
 import { visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
 import Datovelger from '../Datovelger/Datovelger';
 import { LandDropdown } from '../Dropdowns/LandDropdown';
-import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
+import JaNeiSpmForSanity from '../JaNeiSpm/JaNeiSpmForSanity';
 import TekstBlock from '../Sanity/TekstBlock';
 import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeiloppsummering';
 import SkjemaModal from '../SkjemaModal/SkjemaModal';
-import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
-import { pensjonsperiodeModalSpørsmålSpråkId } from './språkUtils';
 import { PensjonsperiodeSpørsmålId } from './spørsmål';
 import { IUsePensjonSkjemaParams, usePensjonSkjema } from './usePensjonSkjema';
 
@@ -83,11 +81,6 @@ export const PensjonModal: React.FC<Props> = ({
     const periodenErAvsluttet =
         mottarPensjonNå.verdi === ESvar.NEI || (personType === PersonType.AndreForelder && !!erDød);
 
-    const hentSpørsmålTekstId = pensjonsperiodeModalSpørsmålSpråkId(
-        personType,
-        periodenErAvsluttet
-    );
-
     return (
         <SkjemaModal
             erÅpen={erÅpen}
@@ -100,11 +93,11 @@ export const PensjonModal: React.FC<Props> = ({
             onAvbrytCallback={nullstillSkjema}
         >
             {mottarPensjonNå.erSynlig && (
-                <JaNeiSpm
+                <JaNeiSpmForSanity
                     skjema={skjema}
                     felt={mottarPensjonNå}
-                    spørsmålTekstId={hentSpørsmålTekstId(PensjonsperiodeSpørsmålId.mottarPensjonNå)}
-                    språkValues={{ ...(barn && { barn: barn.navn }) }}
+                    spørsmålDokument={teksterForModal.faarPensjonNaa}
+                    flettefelter={{ barnetsNavn: barn?.navn }}
                 />
             )}
             {pensjonsland.erSynlig && (
@@ -112,9 +105,13 @@ export const PensjonModal: React.FC<Props> = ({
                     felt={pensjonsland}
                     skjema={skjema}
                     label={
-                        <SpråkTekst
-                            id={hentSpørsmålTekstId(PensjonsperiodeSpørsmålId.pensjonsland)}
-                            values={{ ...(barn && { barn: barn.navn }) }}
+                        <TekstBlock
+                            block={
+                                periodenErAvsluttet
+                                    ? teksterForModal.pensjonLandFortid.sporsmal
+                                    : teksterForModal.pensjonLandNaatid.sporsmal
+                            }
+                            flettefelter={{ barnetsNavn: barn?.navn }}
                         />
                     }
                     dynamisk
@@ -125,9 +122,15 @@ export const PensjonModal: React.FC<Props> = ({
                 <Datovelger
                     felt={pensjonFraDato}
                     label={
-                        <SpråkTekst
-                            id={hentSpørsmålTekstId(PensjonsperiodeSpørsmålId.fraDatoPensjon)}
-                            values={{ ...(barn && { barn: barn.navn }) }}
+                        <TekstBlock
+                            block={
+                                periodenErAvsluttet
+                                    ? teksterForModal.startdatoFortid.sporsmal
+                                    : teksterForModal.startdatoNaatid.sporsmal
+                            }
+                            flettefelter={{
+                                barnetsNavn: barn?.navn,
+                            }}
                         />
                     }
                     skjema={skjema}
@@ -138,9 +141,12 @@ export const PensjonModal: React.FC<Props> = ({
                 <Datovelger
                     felt={pensjonTilDato}
                     label={
-                        <SpråkTekst
-                            id={hentSpørsmålTekstId(PensjonsperiodeSpørsmålId.tilDatoPensjon)}
-                            values={{ ...(barn && { barn: barn.navn }) }}
+                        <TekstBlock
+                            block={
+                                periodenErAvsluttet
+                                    ? teksterForModal.sluttdatoFortid.sporsmal
+                                    : teksterForModal.sluttdatoFremtid.sporsmal
+                            }
                         />
                     }
                     skjema={skjema}
