@@ -57,7 +57,12 @@ export const UtenlandsperiodeOppsummering: React.FC<UtenlandsperiodeOppsummering
             fjernPeriodeCallback={fjernPeriodeCallback && (() => fjernPeriodeCallback(periode))}
         >
             <OppsummeringFelt
-                tittel={<TekstBlock block={teksterForPersonType.periodeBeskrivelse.sporsmal} />}
+                tittel={
+                    <TekstBlock
+                        block={teksterForPersonType.periodeBeskrivelse.sporsmal}
+                        flettefelter={{ barnetsNavn: barn?.navn }}
+                    />
+                }
                 søknadsvar={plainTekst(hentUtenlandsoppholdÅrsak(årsak, teksterForPersonType))}
             />
             <OppsummeringFelt
@@ -71,13 +76,23 @@ export const UtenlandsperiodeOppsummering: React.FC<UtenlandsperiodeOppsummering
             />
             {oppholdslandFraDato && (
                 <OppsummeringFelt
-                    tittel={<TekstBlock block={hentFraDatoSpørsmål(årsak, teksterForPersonType)} />}
+                    tittel={
+                        <TekstBlock
+                            block={hentFraDatoSpørsmål(årsak, teksterForPersonType)}
+                            flettefelter={{ barnetsNavn: barn?.navn }}
+                        />
+                    }
                     søknadsvar={formaterDato(oppholdslandFraDato.svar)}
                 />
             )}
             {oppholdslandTilDato && (
                 <OppsummeringFelt
-                    tittel={<TekstBlock block={hentTilDatoSpørsmål(årsak, teksterForPersonType)} />}
+                    tittel={
+                        <TekstBlock
+                            block={hentTilDatoSpørsmål(årsak, teksterForPersonType)}
+                            flettefelter={{ barnetsNavn: barn?.navn }}
+                        />
+                    }
                     søknadsvar={formaterDatoMedUkjent(
                         oppholdslandTilDato.svar,
                         plainTekst(teksterForPersonType.sluttdatoFremtid.checkboxLabel)

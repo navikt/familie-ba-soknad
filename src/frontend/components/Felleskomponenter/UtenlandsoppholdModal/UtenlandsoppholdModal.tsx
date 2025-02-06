@@ -155,6 +155,7 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
                                 skjema.felter.utenlandsoppholdÅrsak.verdi,
                                 teksterForPersonType
                             )}
+                            flettefelter={{ barnetsNavn: barn?.navn }}
                         />
                     }
                     skjema={skjema}
@@ -175,6 +176,7 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
                                         skjema.felter.utenlandsoppholdÅrsak.verdi,
                                         teksterForPersonType
                                     )}
+                                    flettefelter={{ barnetsNavn: barn?.navn }}
                                 />
                             }
                             skjema={skjema}
