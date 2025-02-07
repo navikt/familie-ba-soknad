@@ -7,6 +7,7 @@ import { RessursStatus } from '@navikt/familie-typer';
 
 import { useApp } from '../../../context/AppContext';
 import { useSteg } from '../../../context/StegContext';
+import useUxSignals from '../../../hooks/useUxSignals';
 import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
 import { RouteEnum } from '../../../typer/routes';
 import { Typografi } from '../../../typer/sanity/sanity';
@@ -59,6 +60,8 @@ const Kvittering: React.FC = () => {
     }, []);
 
     const kvitteringTekster = tekster().KVITTERING;
+
+    useUxSignals(true);
 
     return (
         <Steg tittel={plainTekst(kvitteringTekster.kvitteringTittel)}>
