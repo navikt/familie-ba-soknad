@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 import { getCurrentConsent } from '@navikt/nav-dekoratoren-moduler';
 
-const useUxSignals = (ready: boolean) => {
+export const useUxSignals = (ready: boolean) => {
     const consent = getCurrentConsent();
 
     useEffect(() => {
@@ -22,5 +22,3 @@ const useUxSignals = (ready: boolean) => {
         };
     }, [ready]);
 };
-
-export default useUxSignals;
