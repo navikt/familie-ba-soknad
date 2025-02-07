@@ -85,6 +85,7 @@ const Kvittering: React.FC = () => {
                 <TekstBlock block={kvitteringTekster.infoTilSoker} typografi={Typografi.BodyLong} />
             </VStack>
             <Kontoinformasjon />
+            <div data-uxsignals-embed="panel-8zpbns6bc" style={{ maxWidth: '620px' }}></div>
             <BlokkerTilbakeKnappModal />
         </Steg>
     );
