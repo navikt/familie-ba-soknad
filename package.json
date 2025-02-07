@@ -65,9 +65,6 @@
       "eslint --fix src/ --max-warnings=0"
     ]
   },
-  "resolutions": {
-    "got": "^11.8.5"
-  },
   "browserslist": {
     "production": [
       ">0.2%",
