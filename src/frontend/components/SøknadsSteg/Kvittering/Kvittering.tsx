@@ -11,7 +11,6 @@ import { useUxSignals } from '../../../hooks/useUxSignals';
 import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
 import { RouteEnum } from '../../../typer/routes';
 import { Typografi } from '../../../typer/sanity/sanity';
-import { setUserProperty, UserProperty } from '../../../utils/amplitude';
 import { erDokumentasjonRelevant } from '../../../utils/dokumentasjon';
 import BlokkerTilbakeKnappModal from '../../Felleskomponenter/BlokkerTilbakeKnappModal/BlokkerTilbakeKnappModal';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
@@ -28,7 +27,6 @@ const Kvittering: React.FC = () => {
         tekster,
         plainTekst,
     } = useApp();
-    const { barnInkludertISøknaden } = søknad;
     const { hentStegNummer } = useSteg();
 
     const innsendtDato: Date =
@@ -51,9 +49,6 @@ const Kvittering: React.FC = () => {
     useEffect(() => {
         if (sisteUtfylteStegIndex === hentStegNummer(RouteEnum.Dokumentasjon)) {
             settFåttGyldigKvittering(true);
-
-            // I tilfelle vi kommer via mellomlagring og ikke har satt denne fra før, sett den her før vi nullstiller søknaden
-            setUserProperty(UserProperty.ANTALL_VALGTE_BARN, barnInkludertISøknaden.length);
 
             avbrytOgSlettSøknad();
         }
