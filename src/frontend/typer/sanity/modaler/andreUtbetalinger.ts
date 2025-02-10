@@ -9,4 +9,7 @@ export interface IAndreUtbetalingerTekstinnhold {
     faarUtbetalingerNaa: ISanitySpørsmålDokument;
     utbetalingLandFortid: ISanitySpørsmålDokument;
     utbetalingLandNaatid: ISanitySpørsmålDokument;
+    startdato: ISanitySpørsmålDokument;
+    sluttdatoFortid: ISanitySpørsmålDokument;
+    sluttdatoFremtid: ISanitySpørsmålDokument;
 }

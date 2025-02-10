@@ -15,12 +15,10 @@ import Datovelger from '../Datovelger/Datovelger';
 import { LandDropdown } from '../Dropdowns/LandDropdown';
 import JaNeiSpmForSanity from '../JaNeiSpm/JaNeiSpmForSanity';
 import TekstBlock from '../Sanity/TekstBlock';
-import { SkjemaCheckbox } from '../SkjemaCheckbox/SkjemaCheckbox';
+import { SkjemaCheckboxForSanity } from '../SkjemaCheckbox/SkjemaCheckboxForSanity';
 import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeiloppsummering';
 import SkjemaModal from '../SkjemaModal/SkjemaModal';
-import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
-import { utbetalingsperiodeModalSpørsmålSpråkIder } from './språkUtils';
 import { UtbetalingerSpørsmålId } from './spørsmål';
 import { IUseUtbetalingerSkjemaParams, useUtbetalingerSkjema } from './useUtbetalingerSkjema';
 
@@ -40,7 +38,7 @@ export const UtbetalingerModal: React.FC<UtbetalingerModalProps> = ({
     erDød,
     forklaring = undefined,
 }) => {
-    const { tekster } = useApp();
+    const { tekster, plainTekst } = useApp();
     const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } =
         useUtbetalingerSkjema(personType, barn, erDød);
 
@@ -86,11 +84,6 @@ export const UtbetalingerModal: React.FC<UtbetalingerModalProps> = ({
         nullstillSkjema();
     };
 
-    const hentSpørsmålTekstId = utbetalingsperiodeModalSpørsmålSpråkIder(
-        personType,
-        periodenErAvsluttet
-    );
-
     return (
         <SkjemaModal
             erÅpen={erÅpen}
@@ -128,11 +121,7 @@ export const UtbetalingerModal: React.FC<UtbetalingerModalProps> = ({
                     <Datovelger
                         skjema={skjema}
                         felt={utbetalingFraDato}
-                        label={
-                            <SpråkTekst
-                                id={hentSpørsmålTekstId(UtbetalingerSpørsmålId.utbetalingFraDato)}
-                            />
-                        }
+                        label={<TekstBlock block={teksterForPersonType.startdato.sporsmal} />}
                         avgrensMaxDato={periodenErAvsluttet ? gårsdagensDato() : dagensDato()}
                     />
                     <div>
@@ -140,10 +129,12 @@ export const UtbetalingerModal: React.FC<UtbetalingerModalProps> = ({
                             skjema={skjema}
                             felt={utbetalingTilDato}
                             label={
-                                <SpråkTekst
-                                    id={hentSpørsmålTekstId(
-                                        UtbetalingerSpørsmålId.utbetalingTilDato
-                                    )}
+                                <TekstBlock
+                                    block={
+                                        periodenErAvsluttet
+                                            ? teksterForPersonType.sluttdatoFortid.sporsmal
+                                            : teksterForPersonType.sluttdatoFremtid.sporsmal
+                                    }
                                 />
                             }
                             avgrensMaxDato={periodenErAvsluttet ? dagensDato() : undefined}
@@ -153,10 +144,8 @@ export const UtbetalingerModal: React.FC<UtbetalingerModalProps> = ({
                             )}
                             disabled={utbetalingTilDatoUkjent.verdi === ESvar.JA}
                         />
-                        <SkjemaCheckbox
-                            labelSpråkTekstId={hentSpørsmålTekstId(
-                                UtbetalingerSpørsmålId.utbetalingTilDatoVetIkke
-                            )}
+                        <SkjemaCheckboxForSanity
+                            label={plainTekst(teksterForPersonType.sluttdatoFremtid.checkboxLabel)}
                             felt={utbetalingTilDatoUkjent}
                         />
                     </div>
