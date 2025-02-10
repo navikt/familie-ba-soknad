@@ -1,32 +1,17 @@
-import * as amplitude from '@amplitude/analytics-browser';
-import { Identify } from '@amplitude/analytics-browser';
+import { getAmplitudeInstance, getCurrentConsent } from '@navikt/nav-dekoratoren-moduler';
 
 import { ESøknadstype } from '../typer/kontrakt/generelle';
 import { søknadstyper } from '../typer/søknad';
 
-amplitude
-    .init('default', '', {
-        serverUrl: 'https://amplitude.nav.no/collect-auto',
-        autocapture: {
-            attribution: true,
-            pageViews: false,
-            sessions: true,
-            formInteractions: false,
-            fileDownloads: false,
-            elementInteractions: false,
-        },
-    })
-    .promise.catch(error => {
-        console.error('#MSA error initializing amplitude', error);
-    });
-
-export enum UserProperty {
-    ANTALL_VALGTE_BARN = 'antallValgteBarn',
-}
+const logger = getAmplitudeInstance('dekoratoren');
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export function logEvent(eventName: string, eventProperties: any) {
-    amplitude.track(eventName, eventProperties);
+    const consent = getCurrentConsent();
+
+    if (logger && consent && consent.consent.analytics) {
+        logger(eventName, eventProperties);
+    }
 }
 
 export const logSidevisningBarnetrygd = (side: string, søknadstype: ESøknadstype) => {
@@ -70,9 +55,4 @@ export const logKlikkGåVidere = (steg: number, søknadstype: ESøknadstype) => 
         team_id: 'familie',
         steg,
     });
-};
-
-export const setUserProperty = (key: UserProperty, value: string | number) => {
-    const identify = new Identify().set(key, value);
-    amplitude.identify(identify);
 };
