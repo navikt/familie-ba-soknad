@@ -12,15 +12,16 @@ import { IAndreUtbetalingerTekstinnhold } from '../../../typer/sanity/modaler/an
 import { IEøsForBarnFeltTyper, IEøsForSøkerFeltTyper } from '../../../typer/skjema';
 import { genererPeriodeId } from '../../../utils/perioder';
 import { uppercaseFørsteBokstav } from '../../../utils/visning';
-import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
+import JaNeiSpmForSanity from '../JaNeiSpm/JaNeiSpmForSanity';
 import KomponentGruppe from '../KomponentGruppe/KomponentGruppe';
-import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
+import { LeggTilKnappForSanity } from '../LeggTilKnapp/LeggTilKnappForSanity';
 import PerioderContainer from '../PerioderContainer';
+import TekstBlock from '../Sanity/TekstBlock';
 import useModal from '../SkjemaModal/useModal';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
 import {
-    mottarEllerMottattUtbetalingSpråkId,
+    mottarEllerMottattUtbetalingApiNavn,
     utbetalingerFlerePerioderSpmSpråkId,
 } from './språkUtils';
 import { UtbetalingerSpørsmålId } from './spørsmål';
@@ -49,34 +50,29 @@ export const Utbetalingsperiode: React.FC<Props> = ({
     barn,
 }) => {
     const { toggles } = useFeatureToggles();
+    const { tekster, plainTekst } = useApp();
     const {
         erÅpen: erUtbetalingerModalÅpen,
         lukkModal: lukkUtbetalingerModal,
         åpneModal: åpneUtbetalingerModal,
     } = useModal();
-    const { tekster, plainTekst } = useApp();
 
-    const barnetsNavn = barn && barn.navn;
-
-    const teksterForModal: IAndreUtbetalingerTekstinnhold =
+    const teksterForPersontype: IAndreUtbetalingerTekstinnhold =
         tekster().FELLES.modaler.andreUtbetalinger[personType];
-    const { flerePerioder, leggTilPeriodeForklaring } = teksterForModal;
+    const { flerePerioder, leggTilPeriodeForklaring } = teksterForPersontype;
 
     const frittståendeOrdTekster = tekster().FELLES.frittståendeOrd;
 
+    const barnetsNavn = barn && barn.navn;
+
     return (
         <KomponentGruppe>
-            <JaNeiSpm
+            <JaNeiSpmForSanity
                 skjema={skjema}
                 felt={tilhørendeJaNeiSpmFelt}
-                spørsmålTekstId={mottarEllerMottattUtbetalingSpråkId(personType, erDød)}
                 inkluderVetIkke={personType !== PersonType.Søker}
-                språkValues={{
-                    ...(barn && {
-                        navn: barnetsNavn,
-                        barn: barnetsNavn,
-                    }),
-                }}
+                spørsmålDokument={mottarEllerMottattUtbetalingApiNavn(personType, tekster(), erDød)}
+                flettefelter={{ barnetsNavn: barnetsNavn }}
             />
             {tilhørendeJaNeiSpmFelt.verdi === ESvar.JA && (
                 <PerioderContainer
@@ -106,9 +102,8 @@ export const Utbetalingsperiode: React.FC<Props> = ({
                                 />
                             </Label>
                         )}
-                    <LeggTilKnapp
+                    <LeggTilKnappForSanity
                         onClick={åpneUtbetalingerModal}
-                        språkTekst={'felles.flereytelser.knapp'}
                         leggTilFlereTekst={
                             toggles.NYE_MODAL_TEKSTER &&
                             registrerteUtbetalingsperioder.verdi.length > 0 &&
@@ -124,7 +119,9 @@ export const Utbetalingsperiode: React.FC<Props> = ({
                         feilmelding={
                             skjema.visFeilmeldinger && registrerteUtbetalingsperioder.feilmelding
                         }
-                    />
+                    >
+                        <TekstBlock block={teksterForPersontype.leggTilKnapp} />
+                    </LeggTilKnappForSanity>
                     {erUtbetalingerModalÅpen && (
                         <UtbetalingerModal
                             erÅpen={erUtbetalingerModalÅpen}
