@@ -1,12 +1,11 @@
 import React from 'react';
 
-import { useIntl } from 'react-intl';
-
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { IUtenlandsperiode } from '../../../typer/perioder';
+import { IUtenlandsoppholdTekstinnhold } from '../../../typer/sanity/modaler/utenlandsopphold';
 import { ESanitySteg } from '../../../typer/sanity/sanity';
 import { EUtenlandsoppholdÅrsak } from '../../../typer/utenlandsopphold';
 import { visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
@@ -21,22 +20,20 @@ import Datovelger from '../Datovelger/Datovelger';
 import { LandDropdown } from '../Dropdowns/LandDropdown';
 import StyledDropdown from '../Dropdowns/StyledDropdown';
 import TekstBlock from '../Sanity/TekstBlock';
-import { SkjemaCheckbox } from '../SkjemaCheckbox/SkjemaCheckbox';
+import { SkjemaCheckboxForSanity } from '../SkjemaCheckbox/SkjemaCheckboxForSanity';
 import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeiloppsummering';
 import SkjemaModal from '../SkjemaModal/SkjemaModal';
-import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
-import { tilDatoUkjentLabelSpråkId, UtenlandsoppholdSpørsmålId } from './spørsmål';
+import { UtenlandsoppholdSpørsmålId } from './spørsmål';
 import {
     IUseUtenlandsoppholdSkjemaParams,
     useUtenlandsoppholdSkjema,
 } from './useUtenlandsoppholdSkjema';
 import {
-    fraDatoLabelSpråkId,
-    landLabelSpråkId,
-    tilDatoLabelSpråkId,
-    årsakLabelSpråkId,
-    årsakSpråkId,
+    hentFraDatoSpørsmål,
+    hentLandSpørsmål,
+    hentTilDatoSpørsmål,
+    hentUtenlandsoppholdÅrsak,
 } from './utenlandsoppholdSpråkUtils';
 
 interface Props extends IUseUtenlandsoppholdSkjemaParams {
@@ -55,16 +52,15 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
     barn,
     forklaring = undefined,
 }) => {
-    const { tekster } = useApp();
+    const { tekster, plainTekst } = useApp();
     const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } =
         useUtenlandsoppholdSkjema({
             personType,
             barn,
         });
 
-    const teksterForPersonType = tekster()[ESanitySteg.FELLES].modaler.utenlandsopphold[personType];
-
-    const { formatMessage } = useIntl();
+    const teksterForPersonType: IUtenlandsoppholdTekstinnhold =
+        tekster()[ESanitySteg.FELLES].modaler.utenlandsopphold[personType];
 
     const onLeggTil = () => {
         if (!validerFelterOgVisFeilmelding()) {
@@ -116,21 +112,21 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
                 {...skjema.felter.utenlandsoppholdÅrsak.hentNavInputProps(skjema.visFeilmeldinger)}
                 felt={skjema.felter.utenlandsoppholdÅrsak}
                 label={
-                    <SpråkTekst
-                        id={årsakLabelSpråkId(barn)}
-                        values={{ ...(barn && { barn: barn.navn }) }}
+                    <TekstBlock
+                        block={teksterForPersonType.periodeBeskrivelse.sporsmal}
+                        flettefelter={{ barnetsNavn: barn?.navn }}
                     />
                 }
                 skjema={skjema}
-                placeholder={formatMessage({ id: 'felles.velg-årsak.placeholder' })}
+                placeholder={plainTekst(teksterForPersonType.valgalternativPlaceholder)}
             >
                 {Object.keys(EUtenlandsoppholdÅrsak).map((årsak, number) => (
                     <option key={number} value={årsak}>
-                        {formatMessage(
-                            {
-                                id: årsakSpråkId(årsak as EUtenlandsoppholdÅrsak, barn),
-                            },
-                            { ...(barn && { barn: barn.navn }) }
+                        {plainTekst(
+                            hentUtenlandsoppholdÅrsak(
+                                årsak as EUtenlandsoppholdÅrsak,
+                                teksterForPersonType
+                            )
                         )}
                     </option>
                 ))}
@@ -139,12 +135,13 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
                 felt={skjema.felter.oppholdsland}
                 skjema={skjema}
                 label={
-                    landLabelSpråkId(skjema.felter.utenlandsoppholdÅrsak.verdi, barn) && (
-                        <SpråkTekst
-                            id={landLabelSpråkId(skjema.felter.utenlandsoppholdÅrsak.verdi, barn)}
-                            values={{ ...(barn && { barn: barn.navn }) }}
-                        />
-                    )
+                    <TekstBlock
+                        block={hentLandSpørsmål(
+                            skjema.felter.utenlandsoppholdÅrsak.verdi,
+                            teksterForPersonType
+                        )}
+                        flettefelter={{ barnetsNavn: barn?.navn }}
+                    />
                 }
                 dynamisk
                 ekskluderNorge
@@ -153,12 +150,12 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
                 <Datovelger
                     felt={skjema.felter.oppholdslandFraDato}
                     label={
-                        <SpråkTekst
-                            id={fraDatoLabelSpråkId(
+                        <TekstBlock
+                            block={hentFraDatoSpørsmål(
                                 skjema.felter.utenlandsoppholdÅrsak.verdi,
-                                barn
+                                teksterForPersonType
                             )}
-                            values={{ ...(barn && { barn: barn.navn }) }}
+                            flettefelter={{ barnetsNavn: barn?.navn }}
                         />
                     }
                     skjema={skjema}
@@ -174,12 +171,12 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
                         <Datovelger
                             felt={skjema.felter.oppholdslandTilDato}
                             label={
-                                <SpråkTekst
-                                    id={tilDatoLabelSpråkId(
+                                <TekstBlock
+                                    block={hentTilDatoSpørsmål(
                                         skjema.felter.utenlandsoppholdÅrsak.verdi,
-                                        barn
+                                        teksterForPersonType
                                     )}
-                                    values={{ ...(barn && { barn: barn.navn }) }}
+                                    flettefelter={{ barnetsNavn: barn?.navn }}
                                 />
                             }
                             skjema={skjema}
@@ -198,9 +195,9 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
                         />
                     )}
                     {skjema.felter.oppholdslandTilDatoUkjent.erSynlig && (
-                        <SkjemaCheckbox
+                        <SkjemaCheckboxForSanity
                             felt={skjema.felter.oppholdslandTilDatoUkjent}
-                            labelSpråkTekstId={tilDatoUkjentLabelSpråkId}
+                            label={plainTekst(teksterForPersonType.sluttdatoFremtid.checkboxLabel)}
                         />
                     )}
                 </div>
