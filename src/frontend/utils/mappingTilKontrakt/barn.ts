@@ -57,6 +57,7 @@ export const barnISøknadsFormat = (
         // resterende felter, hvor alle må være av type ISøknadSpørsmål
         ...barnSpørsmål
     } = barn;
+    const fellesTekster = tekster.FELLES;
     const typetBarnSpørsmål = barnSpørsmål as unknown as ISøknadSpørsmålMap;
 
     const registertBostedVerdi = (): ERegistrertBostedType => {
@@ -101,7 +102,13 @@ export const barnISøknadsFormat = (
             ? søknadsfeltBarn('pdf.barn.alder.label', hentTekster('felles.år', { alder }), barn)
             : null,
         utenlandsperioder: utenlandsperioder.map((periode, index) =>
-            utenlandsperiodeTilISøknadsfelt(periode, index + 1, barn)
+            utenlandsperiodeTilISøknadsfelt({
+                utenlandperiode: periode,
+                periodeNummer: index + 1,
+                tekster: fellesTekster.modaler.utenlandsopphold[PersonType.Barn],
+                tilRestLocaleRecord,
+                barn,
+            })
         ),
         eøsBarnetrygdsperioder: eøsBarnetrygdsperioder.map((periode, index) =>
             tilIEøsBarnetrygsperiodeIKontraktFormat({

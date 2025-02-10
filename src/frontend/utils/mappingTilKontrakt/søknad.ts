@@ -84,6 +84,7 @@ export const dataISøknadKontraktFormat = (
         // resterende felter, hvor alle må være av type ISøknadSpørsmål
         ...søkerSpørsmål
     } = søker;
+    const fellesTekster = tekster.FELLES;
     const { spørsmål: utvidaSpørsmål, tidligereSamboere, nåværendeSamboer } = utvidet;
     const { barnInkludertISøknaden } = søknad;
     const typetSøkerSpørsmål: ISøknadSpørsmålMap = søkerSpørsmål as unknown as ISøknadSpørsmålMap;
@@ -111,7 +112,12 @@ export const dataISøknadKontraktFormat = (
             adresse: søknadsfelt('pdf.søker.adresse.label', sammeVerdiAlleSpråk(adresse)),
             adressebeskyttelse: søker.adressebeskyttelse,
             utenlandsperioder: utenlandsperioder.map((periode, index) =>
-                utenlandsperiodeTilISøknadsfelt(periode, index + 1)
+                utenlandsperiodeTilISøknadsfelt({
+                    utenlandperiode: periode,
+                    periodeNummer: index + 1,
+                    tekster: fellesTekster.modaler.utenlandsopphold[PersonType.Søker],
+                    tilRestLocaleRecord,
+                })
             ),
             idNummer: idNummer.map(idnummerObj =>
                 idNummerTilISøknadsfelt(

@@ -134,6 +134,7 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                             key={index}
                             periode={periode}
                             nummer={index + 1}
+                            personType={PersonType.Barn}
                             barn={barn}
                         />
                     ))}

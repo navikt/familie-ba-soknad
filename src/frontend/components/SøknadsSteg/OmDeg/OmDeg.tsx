@@ -102,6 +102,7 @@ const OmDeg: React.FC = () => {
                                 periode={periode}
                                 nummer={index + 1}
                                 fjernPeriodeCallback={fjernUtenlandsperiode}
+                                personType={PersonType.Søker}
                             />
                         ))}
                         {!toggles.NYE_MODAL_TEKSTER && utenlandsperioder.length > 0 && (

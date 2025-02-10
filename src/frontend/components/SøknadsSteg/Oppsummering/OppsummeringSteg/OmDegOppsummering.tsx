@@ -8,6 +8,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { useApp } from '../../../../context/AppContext';
 import { useRoutes } from '../../../../context/RoutesContext';
 import { useSpråk } from '../../../../context/SpråkContext';
+import { PersonType } from '../../../../typer/personType';
 import { RouteEnum } from '../../../../typer/routes';
 import { ESanitySteg } from '../../../../typer/sanity/sanity';
 import { genererAdresseVisning } from '../../../../utils/adresse';
@@ -84,7 +85,12 @@ const OmDegOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                 søknadsvar={søknad.søker.værtINorgeITolvMåneder.svar}
             />
             {søknad.søker.utenlandsperioder.map((periode, index) => (
-                <UtenlandsperiodeOppsummering key={index} periode={periode} nummer={index + 1} />
+                <UtenlandsperiodeOppsummering
+                    key={index}
+                    periode={periode}
+                    nummer={index + 1}
+                    personType={PersonType.Søker}
+                />
             ))}
             {søknad.søker.planleggerÅBoINorgeTolvMnd.svar && (
                 <OppsummeringFelt
