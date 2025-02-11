@@ -1,4 +1,4 @@
-import { RequestHandler, Request, Response } from 'express';
+import { Request, Response, NextFunction, RequestHandler } from 'express';
 
 import { byggFeiletRessurs } from '@navikt/familie-typer';
 
@@ -19,7 +19,7 @@ export const hentSpråkteksterAlleSpråk = (språknøkkel: string): Record<Local
 export const erklaeringInterceptor: RequestHandler = (
     request: Request,
     response: Response,
-    next
+    next: NextFunction
 ) => {
     const søknad: ISøknadKontrakt = request.body;
     const spmKey = 'lestOgForståttBekreftelse';
@@ -29,7 +29,8 @@ export const erklaeringInterceptor: RequestHandler = (
     if (
         !('spørsmål' in søknad && spmKey in søknad.spørsmål && 'verdi' in søknad.spørsmål[spmKey])
     ) {
-        return response.status(400).send(byggFeiletRessurs('Ugyldig søknadformat'));
+        response.status(400).send(byggFeiletRessurs('Ugyldig søknadformat'));
+        return;
     }
 
     const svar = søknad.spørsmål[spmKey];
@@ -37,7 +38,7 @@ export const erklaeringInterceptor: RequestHandler = (
     if (aksepterteSvar.includes(svar.verdi[søknad.originalSpråk])) {
         next();
     } else {
-        return response
+        response
             .status(403)
             .send(byggFeiletRessurs('Du må huke av for at du oppgir korrekte opplysninger'));
     }
