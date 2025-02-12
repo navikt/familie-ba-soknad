@@ -13,4 +13,5 @@ export interface IBarnetrygdsperiodeTekstinnhold {
     startdato: ISanitySpørsmålDokument;
     sluttdato: ISanitySpørsmålDokument;
     belopPerManed: ISanitySpørsmålDokument;
+    belopFormatFeilmelding: LocaleRecordBlock;
 }
