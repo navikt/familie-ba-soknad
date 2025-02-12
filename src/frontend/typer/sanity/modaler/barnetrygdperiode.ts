@@ -2,6 +2,7 @@ import { ISanitySpørsmålDokument, LocaleRecordBlock, LocaleRecordString } from
 
 export interface IBarnetrygdsperiodeTekstinnhold {
     tittel: LocaleRecordBlock;
+    oppsummeringstittel: LocaleRecordBlock;
     leggTilPeriodeForklaring: LocaleRecordString;
     flerePerioder: LocaleRecordString;
     leggTilKnapp: LocaleRecordBlock;
