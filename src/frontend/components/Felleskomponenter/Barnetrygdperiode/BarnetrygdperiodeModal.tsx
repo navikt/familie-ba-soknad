@@ -11,14 +11,12 @@ import { dagenEtterDato, dagensDato, gårsdagensDato, stringTilDate } from '../.
 import { trimWhiteSpace, visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
 import Datovelger from '../Datovelger/Datovelger';
 import { LandDropdown } from '../Dropdowns/LandDropdown';
-import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
+import JaNeiSpmForSanity from '../JaNeiSpm/JaNeiSpmForSanity';
 import TekstBlock from '../Sanity/TekstBlock';
 import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeiloppsummering';
-import { SkjemaFeltInput } from '../SkjemaFeltInput/SkjemaFeltInput';
+import { SkjemaFeltInputForSanity } from '../SkjemaFeltInput/SkjemaFeltInputForSanity';
 import SkjemaModal from '../SkjemaModal/SkjemaModal';
-import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
-import { barnetrygdperiodeModalSpørsmålSpråkId } from './barnetrygdperiodeSpråkUtils';
 import { BarnetrygdperiodeSpørsmålId } from './spørsmål';
 import {
     IUsePensjonsperiodeSkjemaParams,
@@ -91,15 +89,6 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
         mottarEøsBarnetrygdNå.verdi === ESvar.NEI ||
         (personType === PersonType.AndreForelder && erDød);
 
-    const hentSpørsmålTekstId = barnetrygdperiodeModalSpørsmålSpråkId(
-        personType,
-        periodenErAvsluttet
-    );
-
-    const spørsmålSpråkTekst = (spørsmålId: BarnetrygdperiodeSpørsmålId) => (
-        <SpråkTekst id={hentSpørsmålTekstId(spørsmålId)} values={{ barn: barn.navn }} />
-    );
-
     return (
         <SkjemaModal
             erÅpen={erÅpen}
@@ -111,19 +100,26 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
             valideringErOk={valideringErOk}
             onAvbrytCallback={nullstillSkjema}
         >
-            <JaNeiSpm
+            <JaNeiSpmForSanity
                 skjema={skjema}
                 felt={skjema.felter.mottarEøsBarnetrygdNå}
-                spørsmålTekstId={hentSpørsmålTekstId(
-                    BarnetrygdperiodeSpørsmålId.mottarEøsBarnetrygdNå
-                )}
-                språkValues={{ barn: barn.navn }}
+                spørsmålDokument={teksterForModal.mottarBarnetrygdNa}
+                flettefelter={{ barnetsNavn: barn.navn }}
             />
             {barnetrygdsland.erSynlig && (
                 <LandDropdown
                     felt={skjema.felter.barnetrygdsland}
                     skjema={skjema}
-                    label={spørsmålSpråkTekst(BarnetrygdperiodeSpørsmålId.barnetrygdsland)}
+                    label={
+                        <TekstBlock
+                            block={
+                                periodenErAvsluttet
+                                    ? teksterForModal.barnetrygdLandFortid.sporsmal
+                                    : teksterForModal.barnetrygdLandNatid.sporsmal
+                            }
+                            flettefelter={{ barnetsNavn: barn.navn }}
+                        />
+                    }
                     kunEøs={true}
                     dynamisk
                     ekskluderNorge
@@ -133,7 +129,7 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
                 <Datovelger
                     felt={skjema.felter.fraDatoBarnetrygdperiode}
                     skjema={skjema}
-                    label={spørsmålSpråkTekst(BarnetrygdperiodeSpørsmålId.fraDatoBarnetrygdperiode)}
+                    label={<TekstBlock block={teksterForModal.startdato.sporsmal} />}
                     avgrensMaxDato={periodenErAvsluttet ? gårsdagensDato() : dagensDato()}
                 />
             )}
@@ -141,7 +137,7 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
                 <Datovelger
                     felt={skjema.felter.tilDatoBarnetrygdperiode}
                     skjema={skjema}
-                    label={spørsmålSpråkTekst(BarnetrygdperiodeSpørsmålId.tilDatoBarnetrygdperiode)}
+                    label={<TekstBlock block={teksterForModal.sluttdato.sporsmal} />}
                     avgrensMinDato={
                         skjema.felter.fraDatoBarnetrygdperiode.verdi
                             ? dagenEtterDato(
@@ -153,20 +149,18 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
                 />
             )}
             {månedligBeløp.erSynlig && (
-                <SkjemaFeltInput
+                <SkjemaFeltInputForSanity
                     felt={skjema.felter.månedligBeløp}
                     visFeilmeldinger={skjema.visFeilmeldinger}
-                    labelSpråkTekstId={hentSpørsmålTekstId(
-                        BarnetrygdperiodeSpørsmålId.månedligBeløp
-                    )}
-                    språkValues={{
-                        ...(barn && {
-                            barn: barn.navn,
-                        }),
-                    }}
+                    label={
+                        <TekstBlock
+                            block={teksterForModal.belopPerManed.sporsmal}
+                            flettefelter={{ barnetsNavn: barn.navn }}
+                        />
+                    }
                     description={
                         <Alert variant={'info'} inline>
-                            <SpråkTekst id={'ombarnet.trygdbeløp.info'} />
+                            <TekstBlock block={teksterForModal.belopPerManed.beskrivelse} />
                         </Alert>
                     }
                     fullbredde={false}
