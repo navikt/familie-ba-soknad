@@ -55,8 +55,8 @@ export const useBarnetrygdperiodeSkjema = (personType: PersonType, barn, erDød)
     const barnetrygdsland = useLanddropdownFelt({
         søknadsfelt: { id: BarnetrygdperiodeSpørsmålId.barnetrygdsland, svar: '' },
         feilmelding: periodenErAvsluttet
-            ? teksterForPersonType.barnetrygdLandFortid.sporsmal
-            : teksterForPersonType.barnetrygdLandNatid.sporsmal,
+            ? teksterForPersonType.barnetrygdLandFortid.feilmelding
+            : teksterForPersonType.barnetrygdLandNatid.feilmelding,
         feilmeldingSpråkId: barnetrygdslandFeilmelding(periodenErAvsluttet, personType),
         skalFeltetVises:
             mottarEøsBarnetrygdNå.valideringsstatus === Valideringsstatus.OK || andreForelderErDød,
