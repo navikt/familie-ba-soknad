@@ -1,4 +1,6 @@
 import { PersonType } from '../../../typer/personType';
+import { ISanitySpørsmålDokument } from '../../../typer/sanity/sanity';
+import { ITekstinnhold } from '../../../typer/sanity/tekstInnhold';
 import { EøsBarnSpørsmålId, eøsBarnSpørsmålSpråkId } from '../../SøknadsSteg/EøsSteg/Barn/spørsmål';
 import {
     EøsSøkerSpørsmålId,
@@ -6,6 +8,24 @@ import {
 } from '../../SøknadsSteg/EøsSteg/Søker/spørsmål';
 
 import { UtbetalingerSpørsmålId } from './spørsmål';
+
+export const mottarEllerMottattUtbetalingApiNavn = (
+    personType: PersonType,
+    tekster: ITekstinnhold,
+    erDød?: boolean
+): ISanitySpørsmålDokument => {
+    switch (personType) {
+        case PersonType.AndreForelder:
+            return erDød
+                ? tekster.EØS_FOR_BARN.utbetalingerAndreForelderGjenlevende
+                : tekster.EØS_FOR_BARN.utbetalingerAndreForelder;
+        case PersonType.Omsorgsperson:
+            return tekster.EØS_FOR_BARN.utbetalingerOmsorgsperson;
+        case PersonType.Søker:
+        default:
+            return tekster.EØS_FOR_SØKER.utbetalinger;
+    }
+};
 
 export const mottarEllerMottattUtbetalingSpråkId = (
     personType: PersonType,

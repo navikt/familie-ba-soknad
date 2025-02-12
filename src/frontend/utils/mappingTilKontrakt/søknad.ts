@@ -179,6 +179,8 @@ export const dataISøknadKontraktFormat = (
                 tilIAndreUtbetalingsperioderIKontraktFormat({
                     periode,
                     periodeNummer: index + 1,
+                    tilRestLocaleRecord,
+                    tekster: tekster.FELLES.modaler.andreUtbetalinger.søker,
                     personType: PersonType.Søker,
                 })
             ),
