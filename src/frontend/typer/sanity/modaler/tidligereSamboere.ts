@@ -6,6 +6,7 @@ export interface ITidligereSamoboereTekstinnhold {
     flerePerioder: LocaleRecordString;
     leggTilKnapp: LocaleRecordBlock;
     leggTilFeilmelding: LocaleRecordBlock;
+    fjernKnapp: LocaleRecordBlock;
     samboerNavn: ISanitySpørsmålDokument;
     foedselsnummerEllerDNummer: ISanitySpørsmålDokument;
     foedselsdato: ISanitySpørsmålDokument;
