@@ -114,8 +114,10 @@ export const barnISøknadsFormat = (
             tilIEøsBarnetrygsperiodeIKontraktFormat({
                 periode,
                 periodeNummer: index + 1,
-                barn,
                 personType: PersonType.Søker,
+                tilRestLocaleRecord,
+                tekster: fellesTekster.modaler.barnetrygdsperiode.søker,
+                barn,
             })
         ),
         idNummer: idNummer.map(idnummerObj =>

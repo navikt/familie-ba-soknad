@@ -262,6 +262,8 @@ export const andreForelderTilISøknadsfelt = (
                 periode,
                 periodeNummer: index + 1,
                 personType: PersonType.AndreForelder,
+                tilRestLocaleRecord,
+                tekster: tekster.FELLES.modaler.barnetrygdsperiode.andreForelder,
                 erDød: forelderErDød,
                 barn,
             })

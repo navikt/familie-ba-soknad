@@ -10,15 +10,17 @@ import {
     Valideringsstatus,
 } from '@navikt/familie-skjema';
 
-import useDatovelgerFelt from '../../../hooks/useDatovelgerFelt';
+import { useApp } from '../../../context/AppContext';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
+import useDatovelgerFeltForSanity from '../../../hooks/useSendInnSkjemaTest/useDatovelgerForSanity';
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { PersonType } from '../../../typer/personType';
+import { IBarnetrygdsperiodeTekstinnhold } from '../../../typer/sanity/modaler/barnetrygdperiode';
 import { IBarnetrygdperioderFeltTyper } from '../../../typer/skjema';
 import { dagenEtterDato, dagensDato, gårsdagensDato, stringTilDate } from '../../../utils/dato';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
-import SpråkTekst from '../SpråkTekst/SpråkTekst';
+import TekstBlock from '../Sanity/TekstBlock';
 
 import {
     barnetrygdslandFeilmelding,
@@ -33,8 +35,14 @@ export interface IUsePensjonsperiodeSkjemaParams {
 }
 
 export const useBarnetrygdperiodeSkjema = (personType: PersonType, barn, erDød) => {
+    const { tekster } = useApp();
+
+    const teksterForPersonType: IBarnetrygdsperiodeTekstinnhold =
+        tekster().FELLES.modaler.barnetrygdsperiode[personType];
+
     const mottarEøsBarnetrygdNå = useJaNeiSpmFelt({
         søknadsfelt: { id: BarnetrygdperiodeSpørsmålId.mottarEøsBarnetrygdNå, svar: null },
+        feilmelding: teksterForPersonType.mottarBarnetrygdNa.feilmelding,
         feilmeldingSpråkId: mottarBarnetrygdNåFeilmelding(personType),
         feilmeldingSpråkVerdier: { barn: barn.navn },
         skalSkjules: erDød,
@@ -46,6 +54,9 @@ export const useBarnetrygdperiodeSkjema = (personType: PersonType, barn, erDød)
 
     const barnetrygdsland = useLanddropdownFelt({
         søknadsfelt: { id: BarnetrygdperiodeSpørsmålId.barnetrygdsland, svar: '' },
+        feilmelding: periodenErAvsluttet
+            ? teksterForPersonType.barnetrygdLandFortid.feilmelding
+            : teksterForPersonType.barnetrygdLandNatid.feilmelding,
         feilmeldingSpråkId: barnetrygdslandFeilmelding(periodenErAvsluttet, personType),
         skalFeltetVises:
             mottarEøsBarnetrygdNå.valideringsstatus === Valideringsstatus.OK || andreForelderErDød,
@@ -53,18 +64,18 @@ export const useBarnetrygdperiodeSkjema = (personType: PersonType, barn, erDød)
         feilmeldingSpråkVerdier: { barn: barn.navn },
     });
 
-    const fraDatoBarnetrygdperiode = useDatovelgerFelt({
+    const fraDatoBarnetrygdperiode = useDatovelgerFeltForSanity({
         søknadsfelt: { id: BarnetrygdperiodeSpørsmålId.fraDatoBarnetrygdperiode, svar: '' },
         skalFeltetVises:
             mottarEøsBarnetrygdNå.valideringsstatus === Valideringsstatus.OK || andreForelderErDød,
-        feilmeldingSpråkId: 'modal.trygdnårbegynte.feilmelding',
+        feilmelding: teksterForPersonType.startdato.feilmelding,
         sluttdatoAvgrensning: periodenErAvsluttet ? gårsdagensDato() : dagensDato(),
     });
 
-    const tilDatoBarnetrygdperiode = useDatovelgerFelt({
+    const tilDatoBarnetrygdperiode = useDatovelgerFeltForSanity({
         søknadsfelt: { id: BarnetrygdperiodeSpørsmålId.tilDatoBarnetrygdperiode, svar: '' },
         skalFeltetVises: periodenErAvsluttet || andreForelderErDød,
-        feilmeldingSpråkId: 'modal.trygdnåravsluttet.spm',
+        feilmelding: teksterForPersonType.sluttdato.feilmelding,
         sluttdatoAvgrensning: dagensDato(),
         startdatoAvgrensning: fraDatoBarnetrygdperiode.verdi
             ? dagenEtterDato(stringTilDate(fraDatoBarnetrygdperiode.verdi))
@@ -83,11 +94,11 @@ export const useBarnetrygdperiodeSkjema = (personType: PersonType, barn, erDød)
             } else {
                 return feil(
                     felt,
-                    <SpråkTekst
-                        id={
+                    <TekstBlock
+                        block={
                             verdi === ''
-                                ? 'ombarnet.trygdbeløp.feilmelding'
-                                : 'ombarnet.trygdbeløp.format.feilmelding'
+                                ? teksterForPersonType.belopPerManed.feilmelding
+                                : teksterForPersonType.belopFormatFeilmelding
                         }
                     />
                 );
