@@ -1,10 +1,12 @@
 import { ESvar } from '@navikt/familie-form-elements';
 import { type ISkjema, useFelt, useSkjema } from '@navikt/familie-skjema';
 
-import useDatovelgerFelt from '../../../hooks/useDatovelgerFelt';
-import useDatovelgerFeltMedUkjent from '../../../hooks/useDatovelgerFeltMedUkjent';
+import { useApp } from '../../../context/AppContext';
+import useDatovelgerFeltMedUkjentForSanity from '../../../hooks/useDatovelgerFeltMedUkjentForSanity';
 import useInputFelt from '../../../hooks/useInputFelt';
 import useInputFeltMedUkjent from '../../../hooks/useInputFeltMedUkjent';
+import useDatovelgerFeltForSanity from '../../../hooks/useSendInnSkjemaTest/useDatovelgerForSanity';
+import { ITidligereSamoboereTekstinnhold } from '../../../typer/sanity/modaler/tidligereSamboere';
 import { ITidligereSamboerFeltTyper } from '../../../typer/skjema';
 import { dagenEtterDato, dagensDato, gårsdagensDato, stringTilDate } from '../../../utils/dato';
 
@@ -16,12 +18,18 @@ export const useTidligereSamboer = (): {
     valideringErOk: () => boolean;
     nullstillSkjema: () => void;
 } => {
+    const { tekster } = useApp();
+
+    const teksterForSøker: ITidligereSamoboereTekstinnhold =
+        tekster().FELLES.modaler.tidligereSamboere.søker;
+
     const tidligereSamboerNavn = useInputFelt({
         søknadsfelt: {
             id: TidligereSamboerSpørsmålId.tidligereSamboerNavn,
             svar: '',
         },
         feilmeldingSpråkId: 'omdeg.samboerNavn.feilmelding',
+        feilmelding: teksterForSøker.samboerNavn.feilmelding,
     });
 
     const tidligereSamboerFnrUkjent = useFelt<ESvar>({
@@ -37,6 +45,7 @@ export const useTidligereSamboer = (): {
         },
         avhengighet: tidligereSamboerFnrUkjent,
         feilmeldingSpråkId: 'omdeg.samboer.ident.ikkebesvart.feilmelding',
+        feilmelding: teksterForSøker.foedselsnummerEllerDNummer.feilmelding,
         erFnrInput: true,
     });
 
@@ -48,31 +57,31 @@ export const useTidligereSamboer = (): {
         nullstillVedAvhengighetEndring: false,
     });
 
-    const tidligereSamboerFødselsdato = useDatovelgerFeltMedUkjent({
+    const tidligereSamboerFødselsdato = useDatovelgerFeltMedUkjentForSanity({
         feltId: TidligereSamboerSpørsmålId.tidligereSamboerFødselsdato,
         initiellVerdi: '',
         vetIkkeCheckbox: tidligereSamboerFødselsdatoUkjent,
-        feilmeldingSpråkId: 'omdeg.nåværendesamboer.fødselsdato.ukjent',
+        feilmelding: teksterForSøker.foedselsdato.feilmelding,
         skalFeltetVises: tidligereSamboerFnrUkjent.verdi === ESvar.JA,
     });
 
-    const tidligereSamboerFraDato = useDatovelgerFelt({
+    const tidligereSamboerFraDato = useDatovelgerFeltForSanity({
         søknadsfelt: {
             id: TidligereSamboerSpørsmålId.tidligereSamboerFraDato,
             svar: '',
         },
         skalFeltetVises: true,
-        feilmeldingSpråkId: 'omdeg.nårstartetsamboerforhold.feilmelding',
+        feilmelding: teksterForSøker.startdato.feilmelding,
         sluttdatoAvgrensning: gårsdagensDato(),
     });
 
-    const tidligereSamboerTilDato = useDatovelgerFelt({
+    const tidligereSamboerTilDato = useDatovelgerFeltForSanity({
         søknadsfelt: {
             id: TidligereSamboerSpørsmålId.tidligereSamboerTilDato,
             svar: '',
         },
         skalFeltetVises: true,
-        feilmeldingSpråkId: 'omdeg.nårsamboerforholdavsluttet.feilmelding',
+        feilmelding: teksterForSøker.sluttdato.feilmelding,
         sluttdatoAvgrensning: dagensDato(),
         startdatoAvgrensning: dagenEtterDato(stringTilDate(tidligereSamboerFraDato.verdi)),
         avhengigheter: { tidligereSamboerFraDato },
