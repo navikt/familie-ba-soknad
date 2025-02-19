@@ -14,19 +14,17 @@ import { IBarnetrygdsperiodeTekstinnhold } from '../../../typer/sanity/modaler/b
 import { IEøsForBarnFeltTyper, IOmBarnetFeltTyper } from '../../../typer/skjema';
 import { genererPeriodeId } from '../../../utils/perioder';
 import { uppercaseFørsteBokstav } from '../../../utils/visning';
-import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
+import JaNeiSpmForSanity from '../JaNeiSpm/JaNeiSpmForSanity';
 import KomponentGruppe from '../KomponentGruppe/KomponentGruppe';
-import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
+import { LeggTilKnappForSanity } from '../LeggTilKnapp/LeggTilKnappForSanity';
 import PerioderContainer from '../PerioderContainer';
+import TekstBlock from '../Sanity/TekstBlock';
 import useModal from '../SkjemaModal/useModal';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
 import { BarnetrygdperiodeModal } from './BarnetrygdperiodeModal';
 import { BarnetrygdsperiodeOppsummering } from './BarnetrygdperiodeOppsummering';
-import {
-    barnetrygdSpørsmålSpråkId,
-    barnetrygdperiodeFlereSpørsmål,
-} from './barnetrygdperiodeSpråkUtils';
+import { barnetrygdperiodeFlereSpørsmål } from './barnetrygdperiodeSpråkUtils';
 import { BarnetrygdperiodeSpørsmålId } from './spørsmål';
 
 interface Props {
@@ -62,22 +60,25 @@ export const Barnetrygdperiode: React.FC<BarnetrygdperiodeProps> = ({
 
     const teksterForModal: IBarnetrygdsperiodeTekstinnhold =
         tekster().FELLES.modaler.barnetrygdsperiode[personType];
-    const { flerePerioder, leggTilPeriodeForklaring } = teksterForModal;
+    const { leggTilKnapp, flerePerioder, leggTilPeriodeForklaring } = teksterForModal;
+
+    const { ytelseFraAnnetLandAndreForelder, ytelseFraAnnetLandAndreForelderGjenlevende } =
+        tekster().EØS_FOR_BARN;
 
     const frittståendeOrdTekster = tekster().FELLES.frittståendeOrd;
 
     return (
         <KomponentGruppe>
-            <JaNeiSpm
+            <JaNeiSpmForSanity
                 skjema={skjema}
                 felt={tilhørendeJaNeiSpmFelt}
-                spørsmålTekstId={barnetrygdSpørsmålSpråkId(personType, erDød)}
+                spørsmålDokument={
+                    erDød
+                        ? ytelseFraAnnetLandAndreForelderGjenlevende
+                        : ytelseFraAnnetLandAndreForelder
+                }
+                flettefelter={{ barnetsNavn: barn?.navn }}
                 inkluderVetIkke={personType !== PersonType.Søker}
-                språkValues={{
-                    ...(personType !== PersonType.Søker && {
-                        barn: barn.navn,
-                    }),
-                }}
             />
             {tilhørendeJaNeiSpmFelt.verdi === ESvar.JA && (
                 <PerioderContainer
@@ -106,9 +107,8 @@ export const Barnetrygdperiode: React.FC<BarnetrygdperiodeProps> = ({
                                 />
                             </Label>
                         )}
-                    <LeggTilKnapp
+                    <LeggTilKnappForSanity
                         onClick={åpneBarnetrygdsmodal}
-                        språkTekst={'ombarnet.trygdandreperioder.knapp'}
                         leggTilFlereTekst={
                             toggles.NYE_MODAL_TEKSTER &&
                             registrerteEøsBarnetrygdsperioder.verdi.length > 0 &&
@@ -124,7 +124,9 @@ export const Barnetrygdperiode: React.FC<BarnetrygdperiodeProps> = ({
                             skjema.visFeilmeldinger &&
                             registrerteEøsBarnetrygdsperioder.feilmelding
                         }
-                    />
+                    >
+                        <TekstBlock block={leggTilKnapp} />
+                    </LeggTilKnappForSanity>
                     {barnetrygdsmodalErÅpen && (
                         <BarnetrygdperiodeModal
                             erÅpen={barnetrygdsmodalErÅpen}

@@ -1,25 +1,28 @@
 import { ESvar } from '@navikt/familie-form-elements';
 
-import { barnetrygdperiodeModalSpørsmålSpråkId } from '../../components/Felleskomponenter/Barnetrygdperiode/barnetrygdperiodeSpråkUtils';
-import { BarnetrygdperiodeSpørsmålId } from '../../components/Felleskomponenter/Barnetrygdperiode/spørsmål';
 import { IBarnMedISøknad } from '../../typer/barn';
-import { ISøknadsfelt } from '../../typer/kontrakt/generelle';
+import { ISøknadsfelt, TilRestLocaleRecord } from '../../typer/kontrakt/generelle';
 import { IEøsBarnetrygdsperiodeIKontraktFormat } from '../../typer/kontrakt/kontrakt';
 import { IEøsBarnetrygdsperiode } from '../../typer/perioder';
 import { PeriodePersonTypeProps, PersonType } from '../../typer/personType';
-import { hentTekster, landkodeTilSpråk } from '../språk';
+import { IBarnetrygdsperiodeTekstinnhold } from '../../typer/sanity/modaler/barnetrygdperiode';
+import { landkodeTilSpråk } from '../språk';
 
 import { sammeVerdiAlleSpråk, verdiCallbackAlleSpråk } from './hjelpefunksjoner';
 
 interface PensjonperiodeIKontraktFormatParams {
     periode: IEøsBarnetrygdsperiode;
     periodeNummer: number;
+    tekster: IBarnetrygdsperiodeTekstinnhold;
+    tilRestLocaleRecord: TilRestLocaleRecord;
     barn: IBarnMedISøknad;
 }
 
 export const tilIEøsBarnetrygsperiodeIKontraktFormat = ({
     periode,
     periodeNummer,
+    tekster,
+    tilRestLocaleRecord,
     barn,
     personType,
     erDød,
@@ -32,51 +35,51 @@ export const tilIEøsBarnetrygsperiodeIKontraktFormat = ({
         tilDatoBarnetrygdperiode,
         månedligBeløp,
     } = periode;
+
     const periodenErAvsluttet =
         mottarEøsBarnetrygdNå.svar === ESvar.NEI ||
         (personType === PersonType.AndreForelder && erDød);
 
-    const hentSpørsmålTekstId = (spørsmålId: BarnetrygdperiodeSpørsmålId) => {
-        const barnetrygdperiodeSpørsmålSpråkIder = barnetrygdperiodeModalSpørsmålSpråkId(
-            personType,
-            periodenErAvsluttet
-        );
-        return hentTekster(barnetrygdperiodeSpørsmålSpråkIder(spørsmålId), {
-            ...(barn && { barn: barn.navn }),
-        });
-    };
-
     return {
-        label: hentTekster('ombarnet.trygdandreperioder.periode', {
-            x: periodeNummer,
+        label: tilRestLocaleRecord(tekster.oppsummeringstittel, {
+            antall: periodeNummer.toString(),
         }),
         verdi: sammeVerdiAlleSpråk({
             mottarEøsBarnetrygdNå: mottarEøsBarnetrygdNå.svar
                 ? {
-                      label: hentSpørsmålTekstId(BarnetrygdperiodeSpørsmålId.mottarEøsBarnetrygdNå),
+                      label: tilRestLocaleRecord(tekster.mottarBarnetrygdNa.sporsmal, {
+                          barnetsNavn: barn?.navn,
+                      }),
                       verdi: sammeVerdiAlleSpråk(mottarEøsBarnetrygdNå.svar),
                   }
                 : null,
             barnetrygdsland: {
-                label: hentSpørsmålTekstId(BarnetrygdperiodeSpørsmålId.barnetrygdsland),
+                label: tilRestLocaleRecord(
+                    periodenErAvsluttet
+                        ? tekster.barnetrygdLandFortid.sporsmal
+                        : tekster.barnetrygdLandNatid.sporsmal,
+                    {
+                        barnetsNavn: barn?.navn,
+                    }
+                ),
                 verdi: verdiCallbackAlleSpråk(
                     locale => barnetrygdsland && landkodeTilSpråk(barnetrygdsland.svar, locale)
                 ),
             },
             fraDatoBarnetrygdperiode: {
-                label: hentSpørsmålTekstId(BarnetrygdperiodeSpørsmålId.fraDatoBarnetrygdperiode),
+                label: tilRestLocaleRecord(tekster.startdato.sporsmal),
                 verdi: sammeVerdiAlleSpråk(fraDatoBarnetrygdperiode?.svar),
             },
             tilDatoBarnetrygdperiode: tilDatoBarnetrygdperiode.svar
                 ? {
-                      label: hentSpørsmålTekstId(
-                          BarnetrygdperiodeSpørsmålId.tilDatoBarnetrygdperiode
-                      ),
+                      label: tilRestLocaleRecord(tekster.sluttdato.sporsmal),
                       verdi: sammeVerdiAlleSpråk(tilDatoBarnetrygdperiode?.svar ?? null),
                   }
                 : null,
             månedligBeløp: {
-                label: hentSpørsmålTekstId(BarnetrygdperiodeSpørsmålId.månedligBeløp),
+                label: tilRestLocaleRecord(tekster.belopPerManed.sporsmal, {
+                    barnetsNavn: barn?.navn,
+                }),
                 verdi: sammeVerdiAlleSpråk(månedligBeløp.svar),
             },
         }),
