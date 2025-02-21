@@ -73,6 +73,7 @@ export const useTidligereSamboer = (): {
         skalFeltetVises: true,
         feilmelding: teksterForSøker.startdato.feilmelding,
         sluttdatoAvgrensning: gårsdagensDato(),
+        nullstillVedAvhengighetEndring: false,
     });
 
     const tidligereSamboerTilDato = useDatovelgerFeltForSanity({

@@ -59,7 +59,9 @@ const SamboerOpplysninger: React.FC<{
                     <OppsummeringFelt
                         tittel={<TekstBlock block={teksterForModal.sluttdato.sporsmal} />}
                     >
-                        {formaterDato(samboer.samboerTilDato.svar)}
+                        <div data-testid={samboer.samboerTilDato.id}>
+                            {formaterDato(samboer.samboerTilDato.svar)}
+                        </div>
                     </OppsummeringFelt>
                     <Button
                         type={'button'}
