@@ -1,65 +1,45 @@
 import {
-    samboerSpråkIder,
-    SamboerSpørsmålId,
-    TidligereSamboerSpørsmålId,
-} from '../../components/SøknadsSteg/DinLivssituasjon/spørsmål';
-import { IKontraktNåværendeSamboer, ISøknadsfelt } from '../../typer/kontrakt/generelle';
+    IKontraktNåværendeSamboer,
+    ISøknadsfelt,
+    TilRestLocaleRecord,
+} from '../../typer/kontrakt/generelle';
 import { ISamboer } from '../../typer/person';
-import { erTidligereSamboer } from '../typeguards';
+import { ITidligereSamoboereTekstinnhold } from '../../typer/sanity/modaler/tidligereSamboere';
 
-import {
-    sammeVerdiAlleSpråk,
-    sammeVerdiAlleSpråkEllerUkjentSpråktekst,
-    språktekstIdFraSpørsmålId,
-    søknadsfelt,
-} from './hjelpefunksjoner';
+import { sammeVerdiAlleSpråk } from './hjelpefunksjoner';
 
-export const samboerISøknadKontraktFormat = (
-    samboer: ISamboer
-): ISøknadsfelt<IKontraktNåværendeSamboer> => {
+interface SamboerIKontraktFormatParams {
+    tekster: ITidligereSamoboereTekstinnhold;
+    tilRestLocaleRecord: TilRestLocaleRecord;
+    samboer: ISamboer;
+}
+
+export const samboerISøknadKontraktFormat = ({
+    tekster,
+    tilRestLocaleRecord,
+    samboer,
+}: SamboerIKontraktFormatParams): ISøknadsfelt<IKontraktNåværendeSamboer> => {
     const { ident, samboerFraDato, navn, fødselsdato } = samboer;
-    const erTidligere = erTidligereSamboer(samboer);
-    const språktekstIds = {
-        navn: språktekstIdFraSpørsmålId(
-            erTidligere
-                ? TidligereSamboerSpørsmålId.tidligereSamboerNavn
-                : SamboerSpørsmålId.nåværendeSamboerNavn
-        ),
-        ident: språktekstIdFraSpørsmålId(
-            erTidligere
-                ? TidligereSamboerSpørsmålId.tidligereSamboerFnr
-                : SamboerSpørsmålId.nåværendeSamboerFnr
-        ),
-        fødselsdato: språktekstIdFraSpørsmålId(
-            erTidligere
-                ? TidligereSamboerSpørsmålId.tidligereSamboerFødselsdato
-                : SamboerSpørsmålId.nåværendeSamboerFødselsdato
-        ),
-        samboerFraDato: språktekstIdFraSpørsmålId(
-            erTidligere
-                ? TidligereSamboerSpørsmålId.tidligereSamboerFraDato
-                : SamboerSpørsmålId.nåværendeSamboerFraDato
-        ),
+
+    return {
+        label: tilRestLocaleRecord(tekster.oppsummeringstittel),
+        verdi: sammeVerdiAlleSpråk({
+            navn: {
+                label: tilRestLocaleRecord(tekster.samboerNavn.sporsmal),
+                verdi: sammeVerdiAlleSpråk(navn.svar),
+            },
+            ident: {
+                label: tilRestLocaleRecord(tekster.foedselsnummerEllerDNummer.sporsmal),
+                verdi: sammeVerdiAlleSpråk(ident.svar),
+            },
+            fødselsdato: {
+                label: tilRestLocaleRecord(tekster.foedselsdato.sporsmal),
+                verdi: sammeVerdiAlleSpråk(fødselsdato.svar),
+            },
+            samboerFraDato: {
+                label: tilRestLocaleRecord(tekster.startdato.sporsmal),
+                verdi: sammeVerdiAlleSpråk(samboerFraDato.svar),
+            },
+        }),
     };
-    return søknadsfelt(
-        'pdf.samboer.label',
-        sammeVerdiAlleSpråk({
-            navn: søknadsfelt(språktekstIds.navn, sammeVerdiAlleSpråk(navn.svar)),
-            ident: søknadsfelt(
-                språktekstIds.ident,
-                sammeVerdiAlleSpråkEllerUkjentSpråktekst(ident.svar, samboerSpråkIder.fnrUkjent)
-            ),
-            fødselsdato: søknadsfelt(
-                språktekstIds.fødselsdato,
-                sammeVerdiAlleSpråkEllerUkjentSpråktekst(
-                    fødselsdato.svar,
-                    samboerSpråkIder.fødselsdatoUkjent
-                )
-            ),
-            samboerFraDato: søknadsfelt(
-                språktekstIds.samboerFraDato,
-                sammeVerdiAlleSpråk(samboerFraDato.svar)
-            ),
-        })
-    );
 };

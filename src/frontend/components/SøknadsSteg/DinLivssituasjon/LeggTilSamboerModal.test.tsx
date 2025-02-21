@@ -49,7 +49,7 @@ describe('LeggTilSamboerModal', () => {
     it('Viser riktige feilmeldinger ved ingen utfylte felt av tidligere samboer', async () => {
         spyOnUseApp(søknad);
 
-        const { getByText, getByTestId, findByTestId } = render(
+        const { getByTestId, findByTestId } = render(
             <TestProvidereMedEkteTekster mocketNettleserHistorikk={['/din-livssituasjon']}>
                 <DinLivssituasjon />
             </TestProvidereMedEkteTekster>
@@ -63,7 +63,7 @@ describe('LeggTilSamboerModal', () => {
         expect(jaKnapp).toBeDefined();
         act(() => jaKnapp!.click());
 
-        const leggTilSamboerKnapp: HTMLElement = getByText('Legg til samboer');
+        const leggTilSamboerKnapp = getByTestId('hatt-annen-samboer-i-perioden-søker');
         act(() => leggTilSamboerKnapp.click());
 
         const gåVidereKnapp = getByTestId('submit-knapp-i-modal');

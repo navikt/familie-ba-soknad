@@ -39,6 +39,7 @@ export const LeggTilKnappForSanity: React.FC<Props> = ({
             )}
             <StyledButton
                 id={id}
+                data-testid={id}
                 variant={'tertiary'}
                 type={'button'}
                 onClick={onClick}
