@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Checkbox, FormSummary, VStack } from '@navikt/ds-react';
+import { Checkbox, FileUpload, FormSummary, VStack } from '@navikt/ds-react';
 
 import { useApp } from '../../../context/AppContext';
 import {
@@ -92,6 +92,13 @@ const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon 
                             }}
                         />
                     </div>
+                )}
+
+                {!dokumentasjon.harSendtInn && (
+                    <FileUpload.Dropzone
+                        label={'hei'}
+                        onSelect={nyeFiler => console.log(nyeFiler)}
+                    />
                 )}
             </VStack>
         </FormSummary>
