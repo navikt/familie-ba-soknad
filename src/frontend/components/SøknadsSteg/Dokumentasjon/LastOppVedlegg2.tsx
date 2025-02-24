@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Checkbox, FormSummary, VStack } from '@navikt/ds-react';
+import { Checkbox, FileUpload, FormSummary, Heading, VStack } from '@navikt/ds-react';
 
 import { useApp } from '../../../context/AppContext';
 import {
@@ -15,8 +15,6 @@ import { Typografi } from '../../../typer/sanity/sanity';
 import { slåSammen } from '../../../utils/slåSammen';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 
-import Filopplaster from './filopplaster/Filopplaster';
-
 interface Props {
     dokumentasjon: IDokumentasjon;
     oppdaterDokumentasjon: (
@@ -26,28 +24,34 @@ interface Props {
     ) => void;
 }
 
-const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon }) => {
+const LastOppVedlegg2: React.FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon }) => {
     const { søknad, tekster, plainTekst } = useApp();
+
     const dokumentasjonstekster = tekster().DOKUMENTASJON;
+    const frittståendeOrdTekster = tekster().FELLES.frittståendeOrd;
+
     const settHarSendtInnTidligere = (event: React.ChangeEvent<HTMLInputElement>) => {
         const huketAv = event.target.checked;
         const vedlegg = huketAv ? [] : dokumentasjon.opplastedeVedlegg;
         oppdaterDokumentasjon(dokumentasjon.dokumentasjonsbehov, vedlegg, huketAv);
     };
 
-    const barnDokGjelderFor = søknad.barnInkludertISøknaden.filter(barn =>
-        dokumentasjon.gjelderForBarnId.find(id => id === barn.id)
-    );
-    const barnasNavn = slåSammen(barnDokGjelderFor.map(barn => barn.navn));
-
     const tittelBlock =
         dokumentasjonstekster[
             dokumentasjonsbehovTilTittelSanityApiNavn(dokumentasjon.dokumentasjonsbehov)
         ];
 
+    const barnDokGjelderFor = søknad.barnInkludertISøknaden.filter(barn =>
+        dokumentasjon.gjelderForBarnId.find(id => id === barn.id)
+    );
+    const barnasNavn = slåSammen(barnDokGjelderFor.map(barn => barn.navn));
+
     const dokumentasjonsbeskrivelse = dokumentasjonsbehovTilBeskrivelseSanityApiNavn(
         dokumentasjon.dokumentasjonsbehov
     );
+
+    const MAKS_FILSTØRRELSE = 1024 * 1024 * 10; // 10 MB
+    const MAKS_ANTALL_FILER = 25;
 
     return (
         <FormSummary>
@@ -56,7 +60,7 @@ const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon 
                     {plainTekst(tittelBlock, { barnetsNavn: barnasNavn })}
                 </FormSummary.Heading>
             </FormSummary.Header>
-            <VStack gap="6" paddingInline="6" paddingBlock="5 6">
+            <VStack gap="5" paddingInline="6" paddingBlock="5 6">
                 {dokumentasjonsbeskrivelse && (
                     <div>
                         <TekstBlock
@@ -82,20 +86,47 @@ const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon 
                 )}
 
                 {!dokumentasjon.harSendtInn && (
-                    <div data-testid={'dokumentopplaster'}>
-                        <Filopplaster
-                            oppdaterDokumentasjon={oppdaterDokumentasjon}
-                            dokumentasjon={dokumentasjon}
-                            tillatteFiltyper={{
-                                'image/*': [EFiltyper.PNG, EFiltyper.JPG, EFiltyper.JPEG],
-                                'application/pdf': [EFiltyper.PDF],
-                            }}
-                        />
-                    </div>
+                    <FileUpload.Dropzone
+                        label={'Last opp filer'}
+                        accept={[EFiltyper.PNG, EFiltyper.JPG, EFiltyper.JPEG, EFiltyper.PDF].join(
+                            ','
+                        )}
+                        maxSizeInBytes={MAKS_FILSTØRRELSE}
+                        fileLimit={{
+                            max: MAKS_ANTALL_FILER,
+                            current: dokumentasjon.opplastedeVedlegg.length,
+                        }}
+                        onSelect={nyeFiler => console.log(nyeFiler)}
+                    />
+                )}
+
+                {dokumentasjon.opplastedeVedlegg.length > 0 && (
+                    <VStack gap="2" marginBlock={'8 0'}>
+                        <Heading level="3" size="xsmall">
+                            {`${plainTekst(frittståendeOrdTekster.vedlegg)} (${dokumentasjon.opplastedeVedlegg.length})`}
+                        </Heading>
+                        <VStack as="ul" gap="3">
+                            {dokumentasjon.opplastedeVedlegg.map(vedlegg => (
+                                <FileUpload.Item
+                                    as="li"
+                                    key={vedlegg.dokumentId}
+                                    file={{
+                                        name: vedlegg.navn,
+                                        size: vedlegg.størrelse,
+                                        lastModified: new Date(vedlegg.tidspunkt).getTime(),
+                                    }}
+                                    button={{
+                                        action: 'delete',
+                                        onClick: () => console.log(vedlegg),
+                                    }}
+                                />
+                            ))}
+                        </VStack>
+                    </VStack>
                 )}
             </VStack>
         </FormSummary>
     );
 };
 
-export default LastOppVedlegg;
+export default LastOppVedlegg2;
