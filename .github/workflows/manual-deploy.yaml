@@ -17,10 +17,6 @@ on:
         description: 'Skip validation? (eslint, prettier, typecheck)'
         default: false
         type: boolean
-      skip-cypress:
-        description: 'Skip cypress?'
-        default: false
-        type: boolean
 
 env:
   BASE_PATH: /barnetrygd/soknad/
