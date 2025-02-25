@@ -1,6 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { Checkbox, FileUpload, FormSummary, Heading, VStack } from '@navikt/ds-react';
+import {
+    Checkbox,
+    FileObject,
+    FileRejected,
+    FileRejectionReason,
+    FileUpload,
+    FormSummary,
+    Heading,
+    VStack,
+} from '@navikt/ds-react';
 
 import { useApp } from '../../../context/AppContext';
 import {
@@ -50,8 +59,34 @@ const LastOppVedlegg2: React.FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon
         dokumentasjon.dokumentasjonsbehov
     );
 
-    const MAKS_FILSTØRRELSE = 1024 * 1024 * 10; // 10 MB
+    const filePdf = new File(['abc'.repeat(100000)], 'document.pdf');
+    const fileJpg = new File(['abc'.repeat(500000)], 'picture.jpg');
+    const exampleFiles: FileObject[] = [
+        { file: filePdf, error: false },
+        { file: fileJpg, error: true, reasons: ['fileType'] },
+    ];
+
+    const [files, setFiles] = useState<FileObject[]>(exampleFiles);
+
+    function removeFile(fileToRemove: FileObject) {
+        setFiles(files.filter(file => file !== fileToRemove));
+    }
+
+    const acceptedFiles = files.filter(file => !file.error);
+    const rejectedFiles = files.filter((f): f is FileRejected => f.error);
+
+    const MAKS_FILSTØRRELSE_MB = 10;
+    const MAKS_FILSTØRRELSE = MAKS_FILSTØRRELSE_MB * 1024 * 1024;
     const MAKS_ANTALL_FILER = 25;
+
+    const errors: Record<FileRejectionReason, string> = {
+        fileType: 'Filformatet støttes ikke',
+        fileSize: `Filen er større enn ${MAKS_FILSTØRRELSE_MB} MB`,
+    };
+
+    const addFile = async (newFiles: FileObject[]) => {
+        setFiles([...files, ...newFiles]);
+    };
 
     return (
         <FormSummary>
@@ -60,7 +95,7 @@ const LastOppVedlegg2: React.FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon
                     {plainTekst(tittelBlock, { barnetsNavn: barnasNavn })}
                 </FormSummary.Heading>
             </FormSummary.Header>
-            <VStack gap="5" paddingInline="6" paddingBlock="5 6">
+            <VStack gap="6" paddingInline="6" paddingBlock="5 6">
                 {dokumentasjonsbeskrivelse && (
                     <div>
                         <TekstBlock
@@ -86,6 +121,69 @@ const LastOppVedlegg2: React.FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon
                 )}
 
                 {!dokumentasjon.harSendtInn && (
+                    <>
+                        <FileUpload.Dropzone
+                            label={'Last opp filer'}
+                            accept={[
+                                EFiltyper.PNG,
+                                EFiltyper.JPG,
+                                EFiltyper.JPEG,
+                                EFiltyper.PDF,
+                            ].join(',')}
+                            maxSizeInBytes={MAKS_FILSTØRRELSE}
+                            fileLimit={{
+                                max: MAKS_ANTALL_FILER,
+                                current: acceptedFiles.length,
+                            }}
+                            onSelect={newFiles => addFile(newFiles)}
+                        />
+
+                        {acceptedFiles.length > 0 && (
+                            <VStack gap="2">
+                                <Heading level="4" size="xsmall">
+                                    {`${plainTekst(frittståendeOrdTekster.vedlegg)} (${acceptedFiles.length})`}
+                                </Heading>
+                                <VStack as="ul" gap="3">
+                                    {acceptedFiles.map((file, index) => (
+                                        <FileUpload.Item
+                                            as="li"
+                                            key={index}
+                                            file={file.file}
+                                            button={{
+                                                action: 'delete',
+                                                onClick: () => removeFile(file),
+                                            }}
+                                        />
+                                    ))}
+                                </VStack>
+                            </VStack>
+                        )}
+
+                        {rejectedFiles.length > 0 && (
+                            <VStack gap="2">
+                                <Heading level="4" size="xsmall">
+                                    Vedlegg med feil
+                                </Heading>
+                                <VStack as="ul" gap="3">
+                                    {rejectedFiles.map((rejected, index) => (
+                                        <FileUpload.Item
+                                            as="li"
+                                            key={index}
+                                            file={rejected.file}
+                                            error={errors[rejected.reasons[0]]}
+                                            button={{
+                                                action: 'delete',
+                                                onClick: () => removeFile(rejected),
+                                            }}
+                                        />
+                                    ))}
+                                </VStack>
+                            </VStack>
+                        )}
+                    </>
+                )}
+
+                {/* {!dokumentasjon.harSendtInn && (
                     <FileUpload.Dropzone
                         label={'Last opp filer'}
                         accept={[EFiltyper.PNG, EFiltyper.JPG, EFiltyper.JPEG, EFiltyper.PDF].join(
@@ -123,7 +221,7 @@ const LastOppVedlegg2: React.FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon
                             ))}
                         </VStack>
                     </VStack>
-                )}
+                )} */}
             </VStack>
         </FormSummary>
     );
