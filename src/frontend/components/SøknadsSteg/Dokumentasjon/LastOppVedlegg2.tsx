@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import {
     Checkbox,
+    FileAccepted,
     FileObject,
     FileRejected,
     FileRejectionReason,
@@ -23,6 +24,14 @@ import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
 import { Typografi } from '../../../typer/sanity/sanity';
 import { slåSammen } from '../../../utils/slåSammen';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
+import { useLastRessurserContext } from '../../../context/LastRessurserContext';
+import axios from 'axios';
+import Miljø from '../../../../shared-utils/Miljø';
+
+interface OpplastetVedlegg {
+    dokumentId: string;
+    filnavn: string;
+}
 
 interface Props {
     dokumentasjon: IDokumentasjon;
@@ -35,6 +44,7 @@ interface Props {
 
 const LastOppVedlegg2: React.FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon }) => {
     const { søknad, tekster, plainTekst } = useApp();
+    const { wrapMedSystemetLaster } = useLastRessurserContext();
 
     const dokumentasjonstekster = tekster().DOKUMENTASJON;
     const frittståendeOrdTekster = tekster().FELLES.frittståendeOrd;
@@ -61,19 +71,20 @@ const LastOppVedlegg2: React.FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon
 
     const filePdf = new File(['abc'.repeat(100000)], 'document.pdf');
     const fileJpg = new File(['abc'.repeat(500000)], 'picture.jpg');
-    const exampleFiles: FileObject[] = [
+
+    const [acceptedFiles, setAcceptedFiles] = useState<FileAccepted[]>([
         { file: filePdf, error: false },
+    ]);
+    const [rejectedFiles, setRejectedFiles] = useState<FileRejected[]>([
         { file: fileJpg, error: true, reasons: ['fileType'] },
-    ];
+    ]);
 
-    const [files, setFiles] = useState<FileObject[]>(exampleFiles);
-
-    function removeFile(fileToRemove: FileObject) {
-        setFiles(files.filter(file => file !== fileToRemove));
+    function removeAcceptedFile(fileToRemove: FileAccepted) {
+        setAcceptedFiles(acceptedFiles.filter(file => file !== fileToRemove));
     }
-
-    const acceptedFiles = files.filter(file => !file.error);
-    const rejectedFiles = files.filter((f): f is FileRejected => f.error);
+    function removeRejectedFile(fileToRemove: FileRejected) {
+        setRejectedFiles(rejectedFiles.filter(file => file !== fileToRemove));
+    }
 
     const MAKS_FILSTØRRELSE_MB = 10;
     const MAKS_FILSTØRRELSE = MAKS_FILSTØRRELSE_MB * 1024 * 1024;
@@ -84,8 +95,44 @@ const LastOppVedlegg2: React.FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon
         fileSize: `Filen er større enn ${MAKS_FILSTØRRELSE_MB} MB`,
     };
 
+    const datoTilStreng = (date: Date): string => {
+        return date.toISOString();
+    };
+    const dagensDatoStreng = datoTilStreng(new Date());
+
     const addFile = async (newFiles: FileObject[]) => {
-        setFiles([...files, ...newFiles]);
+        const nyeVedlegg: IVedlegg[] = [];
+
+        await Promise.all(
+            newFiles.map((newFile: FileObject) => {
+                wrapMedSystemetLaster(async () => {
+                    const requestData = new FormData();
+                    requestData.append('file', newFile.file);
+
+                    await axios
+                        .post<OpplastetVedlegg>(
+                            `${Miljø().dokumentProxyUrl}/mapper/familievedlegg`,
+                            requestData,
+                            {
+                                withCredentials: true,
+                                headers: {
+                                    'content-type': 'multipart/form-data',
+                                    accept: 'application/json',
+                                },
+                            }
+                        )
+                        .then((response: { data: OpplastetVedlegg }) => {
+                            const { data } = response;
+                            nyeVedlegg.push({
+                                dokumentId: data.dokumentId,
+                                navn: newFile.file.name,
+                                størrelse: newFile.file.size,
+                                tidspunkt: dagensDatoStreng,
+                            });
+                        });
+                });
+            })
+        );
     };
 
     return (
@@ -151,7 +198,7 @@ const LastOppVedlegg2: React.FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon
                                             file={file.file}
                                             button={{
                                                 action: 'delete',
-                                                onClick: () => removeFile(file),
+                                                onClick: () => removeAcceptedFile(file),
                                             }}
                                         />
                                     ))}
@@ -173,7 +220,7 @@ const LastOppVedlegg2: React.FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon
                                             error={errors[rejected.reasons[0]]}
                                             button={{
                                                 action: 'delete',
-                                                onClick: () => removeFile(rejected),
+                                                onClick: () => removeRejectedFile(rejected),
                                             }}
                                         />
                                     ))}
@@ -182,46 +229,6 @@ const LastOppVedlegg2: React.FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon
                         )}
                     </>
                 )}
-
-                {/* {!dokumentasjon.harSendtInn && (
-                    <FileUpload.Dropzone
-                        label={'Last opp filer'}
-                        accept={[EFiltyper.PNG, EFiltyper.JPG, EFiltyper.JPEG, EFiltyper.PDF].join(
-                            ','
-                        )}
-                        maxSizeInBytes={MAKS_FILSTØRRELSE}
-                        fileLimit={{
-                            max: MAKS_ANTALL_FILER,
-                            current: dokumentasjon.opplastedeVedlegg.length,
-                        }}
-                        onSelect={nyeFiler => console.log(nyeFiler)}
-                    />
-                )}
-
-                {dokumentasjon.opplastedeVedlegg.length > 0 && (
-                    <VStack gap="2" marginBlock={'8 0'}>
-                        <Heading level="3" size="xsmall">
-                            {`${plainTekst(frittståendeOrdTekster.vedlegg)} (${dokumentasjon.opplastedeVedlegg.length})`}
-                        </Heading>
-                        <VStack as="ul" gap="3">
-                            {dokumentasjon.opplastedeVedlegg.map(vedlegg => (
-                                <FileUpload.Item
-                                    as="li"
-                                    key={vedlegg.dokumentId}
-                                    file={{
-                                        name: vedlegg.navn,
-                                        size: vedlegg.størrelse,
-                                        lastModified: new Date(vedlegg.tidspunkt).getTime(),
-                                    }}
-                                    button={{
-                                        action: 'delete',
-                                        onClick: () => console.log(vedlegg),
-                                    }}
-                                />
-                            ))}
-                        </VStack>
-                    </VStack>
-                )} */}
             </VStack>
         </FormSummary>
     );
