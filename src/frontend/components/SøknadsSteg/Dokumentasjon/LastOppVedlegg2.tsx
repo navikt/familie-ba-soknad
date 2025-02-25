@@ -101,13 +101,16 @@ const LastOppVedlegg2: React.FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon
     const dagensDatoStreng = datoTilStreng(new Date());
 
     const addFile = async (newFiles: FileObject[]) => {
+        const acceptedNewFiles = newFiles.filter(file => !file.error);
+        const rejectedNewFiles = newFiles.filter(file => file.error);
+
         const nyeVedlegg: IVedlegg[] = [];
 
         await Promise.all(
-            newFiles.map((newFile: FileObject) => {
+            acceptedNewFiles.map((acceptedNewFile: FileAccepted) => {
                 wrapMedSystemetLaster(async () => {
                     const requestData = new FormData();
-                    requestData.append('file', newFile.file);
+                    requestData.append('file', acceptedNewFile.file);
 
                     await axios
                         .post<OpplastetVedlegg>(
@@ -125,13 +128,22 @@ const LastOppVedlegg2: React.FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon
                             const { data } = response;
                             nyeVedlegg.push({
                                 dokumentId: data.dokumentId,
-                                navn: newFile.file.name,
-                                størrelse: newFile.file.size,
+                                navn: acceptedNewFile.file.name,
+                                størrelse: acceptedNewFile.file.size,
                                 tidspunkt: dagensDatoStreng,
                             });
                         });
                 });
             })
+        );
+
+        setAcceptedFiles([...acceptedFiles, ...acceptedNewFiles]);
+        setRejectedFiles([...rejectedFiles, ...rejectedNewFiles]);
+
+        oppdaterDokumentasjon(
+            dokumentasjon.dokumentasjonsbehov,
+            [...dokumentasjon.opplastedeVedlegg, ...nyeVedlegg],
+            dokumentasjon.harSendtInn
         );
     };
 
