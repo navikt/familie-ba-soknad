@@ -79,13 +79,6 @@ const LastOppVedlegg2: React.FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon
         { file: fileJpg, error: true, reasons: ['fileType'] },
     ]);
 
-    function removeAcceptedFile(fileToRemove: FileAccepted) {
-        setAcceptedFiles(acceptedFiles.filter(file => file !== fileToRemove));
-    }
-    function removeRejectedFile(fileToRemove: FileRejected) {
-        setRejectedFiles(rejectedFiles.filter(file => file !== fileToRemove));
-    }
-
     const MAKS_FILSTØRRELSE_MB = 10;
     const MAKS_FILSTØRRELSE = MAKS_FILSTØRRELSE_MB * 1024 * 1024;
     const MAKS_ANTALL_FILER = 25;
@@ -95,10 +88,7 @@ const LastOppVedlegg2: React.FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon
         fileSize: `Filen er større enn ${MAKS_FILSTØRRELSE_MB} MB`,
     };
 
-    const datoTilStreng = (date: Date): string => {
-        return date.toISOString();
-    };
-    const dagensDatoStreng = datoTilStreng(new Date());
+    const dagensDatoStreng = new Date().toISOString();
 
     const addFile = async (newFiles: FileObject[]) => {
         const acceptedNewFiles = newFiles.filter(file => !file.error);
@@ -145,6 +135,13 @@ const LastOppVedlegg2: React.FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon
             [...dokumentasjon.opplastedeVedlegg, ...nyeVedlegg],
             dokumentasjon.harSendtInn
         );
+    };
+
+    const removeAcceptedFile = (fileToRemove: FileAccepted) => {
+        setAcceptedFiles(acceptedFiles.filter(file => file !== fileToRemove));
+    };
+    const removeRejectedFile = (fileToRemove: FileRejected) => {
+        setRejectedFiles(rejectedFiles.filter(file => file !== fileToRemove));
     };
 
     return (
