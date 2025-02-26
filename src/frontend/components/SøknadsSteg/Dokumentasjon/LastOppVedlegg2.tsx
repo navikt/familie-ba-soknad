@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import {
     Checkbox,
+    Detail,
     FileAccepted,
     FileObject,
     FileRejected,
@@ -21,7 +22,7 @@ import {
     IVedlegg,
 } from '../../../typer/dokumentasjon';
 import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
-import { Typografi } from '../../../typer/sanity/sanity';
+import { LocaleRecordBlock, Typografi } from '../../../typer/sanity/sanity';
 import { slåSammen } from '../../../utils/slåSammen';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import { useLastRessurserContext } from '../../../context/LastRessurserContext';
@@ -55,44 +56,46 @@ const LastOppVedlegg2: React.FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon
         oppdaterDokumentasjon(dokumentasjon.dokumentasjonsbehov, vedlegg, huketAv);
     };
 
-    const tittelBlock =
+    const tittel: LocaleRecordBlock =
         dokumentasjonstekster[
             dokumentasjonsbehovTilTittelSanityApiNavn(dokumentasjon.dokumentasjonsbehov)
         ];
 
-    const barnDokGjelderFor = søknad.barnInkludertISøknaden.filter(barn =>
+    const barnDokumentasjonenGjelderFor = søknad.barnInkludertISøknaden.filter(barn =>
         dokumentasjon.gjelderForBarnId.find(id => id === barn.id)
     );
-    const barnasNavn = slåSammen(barnDokGjelderFor.map(barn => barn.navn));
+    const barnasNavn = slåSammen(barnDokumentasjonenGjelderFor.map(barn => barn.navn));
 
     const dokumentasjonsbeskrivelse = dokumentasjonsbehovTilBeskrivelseSanityApiNavn(
         dokumentasjon.dokumentasjonsbehov
     );
 
-    const [rejectedFiles, setRejectedFiles] = useState<FileRejected[]>([]);
+    const [avvisteFiler, setAvvsiteFiler] = useState<FileRejected[]>([]);
 
     const MAKS_FILSTØRRELSE_MB = 10;
-    const MAKS_FILSTØRRELSE = MAKS_FILSTØRRELSE_MB * 1024 * 1024;
+    const MAKS_FILSTØRRELSE_BYTES = MAKS_FILSTØRRELSE_MB * 1024 * 1024;
     const MAKS_ANTALL_FILER = 25;
 
-    const errors: Record<FileRejectionReason, string> = {
+    const feilMeldinger: Record<FileRejectionReason, string> = {
         fileType: 'Filformatet støttes ikke',
         fileSize: `Filen er større enn ${MAKS_FILSTØRRELSE_MB} MB`,
     };
 
     const dagensDatoStreng = new Date().toISOString();
 
-    const addFile = async (newFiles: FileObject[]) => {
-        const acceptedNewFiles = newFiles.filter(file => !file.error);
-        const rejectedNewFiles = newFiles.filter(file => file.error);
+    const leggTilVedlegg = async (nyeFiler: FileObject[]) => {
+        const nyeAksepterteFiler = nyeFiler.filter(file => !file.error);
+        const nyeAvvisteFiler = nyeFiler.filter(file => file.error);
+
+        setAvvsiteFiler([...avvisteFiler, ...nyeAvvisteFiler]);
 
         const nyeVedlegg: IVedlegg[] = [];
 
         await Promise.all(
-            acceptedNewFiles.map((acceptedNewFile: FileAccepted) => {
+            nyeAksepterteFiler.map((fil: FileAccepted) => {
                 return wrapMedSystemetLaster(async () => {
                     const requestData = new FormData();
-                    requestData.append('file', acceptedNewFile.file);
+                    requestData.append('file', fil.file);
 
                     await axios
                         .post<OpplastetVedlegg>(
@@ -110,8 +113,8 @@ const LastOppVedlegg2: React.FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon
                             const { data } = response;
                             nyeVedlegg.push({
                                 dokumentId: data.dokumentId,
-                                navn: acceptedNewFile.file.name,
-                                størrelse: acceptedNewFile.file.size,
+                                navn: fil.file.name,
+                                størrelse: fil.file.size,
                                 tidspunkt: dagensDatoStreng,
                             });
                         });
@@ -119,19 +122,22 @@ const LastOppVedlegg2: React.FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon
             })
         );
 
-        setRejectedFiles([...rejectedFiles, ...rejectedNewFiles]);
-
-        oppdaterDokumentasjon(
-            dokumentasjon.dokumentasjonsbehov,
-            [...dokumentasjon.opplastedeVedlegg, ...nyeVedlegg],
-            dokumentasjon.harSendtInn
-        );
+        if (nyeVedlegg.length > 0) {
+            oppdaterDokumentasjon(
+                dokumentasjon.dokumentasjonsbehov,
+                [...dokumentasjon.opplastedeVedlegg, ...nyeVedlegg],
+                dokumentasjon.harSendtInn
+            );
+        }
     };
 
-    const removeAcceptedFile = (vedlegg: IVedlegg) => {
-        const nyVedleggsliste = dokumentasjon.opplastedeVedlegg.filter((obj: IVedlegg) => {
-            return obj.dokumentId !== vedlegg.dokumentId;
-        });
+    const fjernVedlegg = (vedleggSomSkalFjernes: IVedlegg) => {
+        const nyVedleggsliste = dokumentasjon.opplastedeVedlegg.filter(
+            (opplastetVedlegg: IVedlegg) => {
+                return opplastetVedlegg.dokumentId !== vedleggSomSkalFjernes.dokumentId;
+            }
+        );
+
         oppdaterDokumentasjon(
             dokumentasjon.dokumentasjonsbehov,
             nyVedleggsliste,
@@ -139,15 +145,15 @@ const LastOppVedlegg2: React.FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon
         );
     };
 
-    const removeRejectedFile = (fileToRemove: FileRejected) => {
-        setRejectedFiles(rejectedFiles.filter(file => file !== fileToRemove));
+    const fjernAvvistFil = (fil: FileRejected) => {
+        setAvvsiteFiler(avvisteFiler.filter(file => file !== fil));
     };
 
     return (
         <FormSummary>
             <FormSummary.Header>
                 <FormSummary.Heading level="3">
-                    {plainTekst(tittelBlock, { barnetsNavn: barnasNavn })}
+                    {plainTekst(tittel, { barnetsNavn: barnasNavn })}
                 </FormSummary.Heading>
             </FormSummary.Header>
             <VStack gap="6" paddingInline="6" paddingBlock="5 6">
@@ -167,7 +173,7 @@ const LastOppVedlegg2: React.FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon
                         data-testid={'dokumentasjon-er-sendt-inn-checkboks'}
                         aria-label={`${plainTekst(
                             dokumentasjonstekster.sendtInnTidligere
-                        )} (${plainTekst(tittelBlock, { barnetsNavn: barnasNavn })})`}
+                        )} (${plainTekst(tittel, { barnetsNavn: barnasNavn })})`}
                         checked={dokumentasjon.harSendtInn}
                         onChange={settHarSendtInnTidligere}
                     >
@@ -185,12 +191,12 @@ const LastOppVedlegg2: React.FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon
                                 EFiltyper.JPEG,
                                 EFiltyper.PDF,
                             ].join(',')}
-                            maxSizeInBytes={MAKS_FILSTØRRELSE}
+                            maxSizeInBytes={MAKS_FILSTØRRELSE_BYTES}
                             fileLimit={{
                                 max: MAKS_ANTALL_FILER,
                                 current: dokumentasjon.opplastedeVedlegg.length,
                             }}
-                            onSelect={newFiles => addFile(newFiles)}
+                            onSelect={nyeFiler => leggTilVedlegg(nyeFiler)}
                         />
 
                         {dokumentasjon.opplastedeVedlegg.length > 0 && (
@@ -213,8 +219,7 @@ const LastOppVedlegg2: React.FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon
                                                 }}
                                                 button={{
                                                     action: 'delete',
-                                                    onClick: () =>
-                                                        removeAcceptedFile(opplastetVedlegg),
+                                                    onClick: () => fjernVedlegg(opplastetVedlegg),
                                                 }}
                                             />
                                         )
@@ -223,44 +228,32 @@ const LastOppVedlegg2: React.FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon
                             </VStack>
                         )}
 
-                        {rejectedFiles.length > 0 && (
+                        {avvisteFiler.length > 0 && (
                             <VStack gap="2">
-                                <Heading level="4" size="xsmall">
-                                    Vedlegg med feil
-                                </Heading>
+                                <div>
+                                    <Heading level="4" size="xsmall">
+                                        Vedlegg med feil ({avvisteFiler.length})
+                                    </Heading>
+                                    <Detail textColor="subtle">
+                                        Disse filene ble ikke lastet opp fordi de inneholder feil.
+                                    </Detail>
+                                </div>
                                 <VStack as="ul" gap="3">
-                                    {rejectedFiles.map((rejected, index) => (
+                                    {avvisteFiler.map((fil, index) => (
                                         <FileUpload.Item
                                             as="li"
                                             key={index}
-                                            file={rejected.file}
-                                            error={errors[rejected.reasons[0]]}
+                                            file={fil.file}
+                                            error={feilMeldinger[fil.reasons[0]]}
                                             button={{
                                                 action: 'delete',
-                                                onClick: () => removeRejectedFile(rejected),
+                                                onClick: () => fjernAvvistFil(fil),
                                             }}
                                         />
                                     ))}
                                 </VStack>
                             </VStack>
                         )}
-
-                        <VStack gap="2">
-                            <Heading level="4" size="xsmall">
-                                dokumentasjon.opplastedeVedlegg
-                            </Heading>
-                            <VStack gap="3">
-                                {dokumentasjon.opplastedeVedlegg.map((vedlegg, index) => (
-                                    <div key={index}>
-                                        <div>{vedlegg.dokumentId}</div>
-                                        <div>{vedlegg.navn}</div>
-                                        <div>{vedlegg.størrelse}</div>
-                                        <div>{vedlegg.tidspunkt}</div>
-                                        <hr></hr>
-                                    </div>
-                                ))}
-                            </VStack>
-                        </VStack>
                     </>
                 )}
             </VStack>
