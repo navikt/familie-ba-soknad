@@ -69,15 +69,7 @@ const LastOppVedlegg2: React.FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon
         dokumentasjon.dokumentasjonsbehov
     );
 
-    // const filePdf = new File(['abc'.repeat(100000)], 'document.pdf');
-    // const fileJpg = new File(['abc'.repeat(500000)], 'picture.jpg');
-
-    const [acceptedFiles, setAcceptedFiles] = useState<FileAccepted[]>([
-        // { file: filePdf, error: false },
-    ]);
-    const [rejectedFiles, setRejectedFiles] = useState<FileRejected[]>([
-        // { file: fileJpg, error: true, reasons: ['fileType'] },
-    ]);
+    const [rejectedFiles, setRejectedFiles] = useState<FileRejected[]>([]);
 
     const MAKS_FILSTØRRELSE_MB = 10;
     const MAKS_FILSTØRRELSE = MAKS_FILSTØRRELSE_MB * 1024 * 1024;
@@ -127,7 +119,6 @@ const LastOppVedlegg2: React.FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon
             })
         );
 
-        setAcceptedFiles([...acceptedFiles, ...acceptedNewFiles]);
         setRejectedFiles([...rejectedFiles, ...rejectedNewFiles]);
 
         oppdaterDokumentasjon(
@@ -137,9 +128,17 @@ const LastOppVedlegg2: React.FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon
         );
     };
 
-    const removeAcceptedFile = (fileToRemove: FileAccepted) => {
-        setAcceptedFiles(acceptedFiles.filter(file => file !== fileToRemove));
+    const removeAcceptedFile = (vedlegg: IVedlegg) => {
+        const nyVedleggsliste = dokumentasjon.opplastedeVedlegg.filter((obj: IVedlegg) => {
+            return obj.dokumentId !== vedlegg.dokumentId;
+        });
+        oppdaterDokumentasjon(
+            dokumentasjon.dokumentasjonsbehov,
+            nyVedleggsliste,
+            dokumentasjon.harSendtInn
+        );
     };
+
     const removeRejectedFile = (fileToRemove: FileRejected) => {
         setRejectedFiles(rejectedFiles.filter(file => file !== fileToRemove));
     };
@@ -189,28 +188,37 @@ const LastOppVedlegg2: React.FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon
                             maxSizeInBytes={MAKS_FILSTØRRELSE}
                             fileLimit={{
                                 max: MAKS_ANTALL_FILER,
-                                current: acceptedFiles.length,
+                                current: dokumentasjon.opplastedeVedlegg.length,
                             }}
                             onSelect={newFiles => addFile(newFiles)}
                         />
 
-                        {acceptedFiles.length > 0 && (
+                        {dokumentasjon.opplastedeVedlegg.length > 0 && (
                             <VStack gap="2">
                                 <Heading level="4" size="xsmall">
-                                    {`${plainTekst(frittståendeOrdTekster.vedlegg)} (${acceptedFiles.length})`}
+                                    {`${plainTekst(frittståendeOrdTekster.vedlegg)} (${dokumentasjon.opplastedeVedlegg.length})`}
                                 </Heading>
                                 <VStack as="ul" gap="3">
-                                    {acceptedFiles.map((file, index) => (
-                                        <FileUpload.Item
-                                            as="li"
-                                            key={index}
-                                            file={file.file}
-                                            button={{
-                                                action: 'delete',
-                                                onClick: () => removeAcceptedFile(file),
-                                            }}
-                                        />
-                                    ))}
+                                    {dokumentasjon.opplastedeVedlegg.map(
+                                        (opplastetVedlegg, index) => (
+                                            <FileUpload.Item
+                                                as="li"
+                                                key={index}
+                                                file={{
+                                                    name: opplastetVedlegg.navn,
+                                                    size: opplastetVedlegg.størrelse,
+                                                    lastModified: Date.parse(
+                                                        opplastetVedlegg.tidspunkt
+                                                    ),
+                                                }}
+                                                button={{
+                                                    action: 'delete',
+                                                    onClick: () =>
+                                                        removeAcceptedFile(opplastetVedlegg),
+                                                }}
+                                            />
+                                        )
+                                    )}
                                 </VStack>
                             </VStack>
                         )}
