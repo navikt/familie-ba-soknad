@@ -121,6 +121,7 @@ export const useFilopplaster = (
                                     navn: fil.name,
                                     størrelse: fil.size,
                                     tidspunkt: dagensDatoStreng,
+                                    fil: fil,
                                 });
                             })
                             .catch(error => {
