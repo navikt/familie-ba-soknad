@@ -1,45 +1,67 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 
 import { TrashFillIcon } from '@navikt/aksel-icons';
 import { Button, FormSummary } from '@navikt/ds-react';
 
+import { useApp } from '../../../context/AppContext';
 import { AlternativtSvarForInput } from '../../../typer/common';
 import { ITidligereSamboer } from '../../../typer/person';
+import { ITidligereSamoboereTekstinnhold } from '../../../typer/sanity/modaler/tidligereSamboere';
 import { formaterDato } from '../../../utils/dato';
-import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import { OppsummeringFelt } from '../Oppsummering/OppsummeringFelt';
-
-import { samboerSpråkIder } from './spørsmål';
 
 const SamboerOpplysninger: React.FC<{
     samboer: ITidligereSamboer;
     fjernTidligereSamboer: (samboer: ITidligereSamboer) => void;
 }> = ({ samboer, fjernTidligereSamboer }) => {
-    const svarSomKanVæreUkjent = (svar: string, språkIdForUkjent: string): ReactNode =>
-        svar === AlternativtSvarForInput.UKJENT ? <SpråkTekst id={språkIdForUkjent} /> : svar;
+    const { tekster } = useApp();
+
+    const teksterForModal: ITidligereSamoboereTekstinnhold =
+        tekster().FELLES.modaler.tidligereSamboere.søker;
 
     return (
         <FormSummary.Answer>
             <FormSummary.Value>
                 <FormSummary.Answers>
                     <OppsummeringFelt tittel={samboer.navn.svar.toUpperCase()} />
-                    <OppsummeringFelt tittel={<SpråkTekst id={samboerSpråkIder.fnr} />}>
-                        {svarSomKanVæreUkjent(samboer.ident.svar, samboerSpråkIder.fnrUkjent)}
+                    <OppsummeringFelt
+                        tittel={
+                            <TekstBlock
+                                block={teksterForModal.foedselsnummerEllerDNummer.sporsmal}
+                            />
+                        }
+                    >
+                        {samboer.ident.svar === AlternativtSvarForInput.UKJENT ? (
+                            <TekstBlock
+                                block={teksterForModal.foedselsnummerEllerDNummer.checkboxLabel}
+                            />
+                        ) : (
+                            samboer.ident.svar
+                        )}
                     </OppsummeringFelt>
                     {samboer.fødselsdato.svar && (
-                        <OppsummeringFelt tittel={<SpråkTekst id={samboerSpråkIder.fødselsdato} />}>
+                        <OppsummeringFelt
+                            tittel={<TekstBlock block={teksterForModal.foedselsdato.sporsmal} />}
+                        >
                             {samboer.fødselsdato.svar === AlternativtSvarForInput.UKJENT ? (
-                                <SpråkTekst id={samboerSpråkIder.fødselsdatoUkjent} />
+                                <TekstBlock block={teksterForModal.foedselsdato.checkboxLabel} />
                             ) : (
                                 formaterDato(samboer.fødselsdato.svar)
                             )}
                         </OppsummeringFelt>
                     )}
-                    <OppsummeringFelt tittel={<SpråkTekst id={samboerSpråkIder.samboerFraDato} />}>
+                    <OppsummeringFelt
+                        tittel={<TekstBlock block={teksterForModal.startdato.sporsmal} />}
+                    >
                         {formaterDato(samboer.samboerFraDato.svar)}
                     </OppsummeringFelt>
-                    <OppsummeringFelt tittel={<SpråkTekst id={samboerSpråkIder.samboerTilDato} />}>
-                        {formaterDato(samboer.samboerTilDato.svar)}
+                    <OppsummeringFelt
+                        tittel={<TekstBlock block={teksterForModal.sluttdato.sporsmal} />}
+                    >
+                        <div data-testid={samboer.samboerTilDato.id}>
+                            {formaterDato(samboer.samboerTilDato.svar)}
+                        </div>
                     </OppsummeringFelt>
                     <Button
                         type={'button'}
@@ -47,7 +69,7 @@ const SamboerOpplysninger: React.FC<{
                         onClick={() => fjernTidligereSamboer(samboer)}
                         icon={<TrashFillIcon aria-hidden />}
                     >
-                        <SpråkTekst id={'omdeg.fjernsamboer.knapp'} />
+                        <TekstBlock block={teksterForModal.fjernKnapp} />
                     </Button>
                 </FormSummary.Answers>
             </FormSummary.Value>
