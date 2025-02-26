@@ -195,10 +195,10 @@ const LastOppVedlegg2: React.FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon
                                         {`Støttede filtyper: ${støttedeFiltyper.join(' ')}`}
                                     </List.Item>
                                     <List.Item>
-                                        {`Du kan laste opp inntil ${MAKS_ANTALL_FILER} filer`}
+                                        {`Maks filstørrelse: ${MAKS_FILSTØRRELSE_MB} MB`}
                                     </List.Item>
                                     <List.Item>
-                                        {`Maks filstørrelse er ${MAKS_FILSTØRRELSE_MB} MB`}
+                                        {`Maks antall filer: ${MAKS_ANTALL_FILER}`}
                                     </List.Item>
                                 </List>
                             }
