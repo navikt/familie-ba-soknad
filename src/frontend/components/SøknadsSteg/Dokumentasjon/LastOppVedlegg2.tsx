@@ -10,6 +10,7 @@ import {
     FileUpload,
     FormSummary,
     Heading,
+    List,
     VStack,
 } from '@navikt/ds-react';
 
@@ -76,6 +77,8 @@ const LastOppVedlegg2: React.FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon
     const MAKS_FILSTØRRELSE_BYTES = MAKS_FILSTØRRELSE_MB * 1024 * 1024;
     const MAKS_ANTALL_FILER = 25;
 
+    const støttedeFiltyper = [EFiltyper.PNG, EFiltyper.JPG, EFiltyper.JPEG, EFiltyper.PDF];
+
     const feilMeldinger: Record<FileRejectionReason, string> = {
         fileType: 'Filformatet støttes ikke',
         fileSize: `Filen er større enn ${MAKS_FILSTØRRELSE_MB} MB`,
@@ -116,6 +119,7 @@ const LastOppVedlegg2: React.FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon
                                 navn: fil.file.name,
                                 størrelse: fil.file.size,
                                 tidspunkt: dagensDatoStreng,
+                                fil: fil.file,
                             });
                         });
                 });
@@ -185,12 +189,20 @@ const LastOppVedlegg2: React.FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon
                     <>
                         <FileUpload.Dropzone
                             label={'Last opp filer'}
-                            accept={[
-                                EFiltyper.PNG,
-                                EFiltyper.JPG,
-                                EFiltyper.JPEG,
-                                EFiltyper.PDF,
-                            ].join(',')}
+                            description={
+                                <List as="ul" size="small">
+                                    <List.Item>
+                                        {`Støttede filtyper: ${støttedeFiltyper.join(' ')}`}
+                                    </List.Item>
+                                    <List.Item>
+                                        {`Du kan laste opp inntil ${MAKS_ANTALL_FILER} filer`}
+                                    </List.Item>
+                                    <List.Item>
+                                        {`Maks filstørrelse er ${MAKS_FILSTØRRELSE_MB} MB`}
+                                    </List.Item>
+                                </List>
+                            }
+                            accept={støttedeFiltyper.join(',')}
                             maxSizeInBytes={MAKS_FILSTØRRELSE_BYTES}
                             fileLimit={{
                                 max: MAKS_ANTALL_FILER,
@@ -210,13 +222,7 @@ const LastOppVedlegg2: React.FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon
                                             <FileUpload.Item
                                                 as="li"
                                                 key={index}
-                                                file={{
-                                                    name: opplastetVedlegg.navn,
-                                                    size: opplastetVedlegg.størrelse,
-                                                    lastModified: Date.parse(
-                                                        opplastetVedlegg.tidspunkt
-                                                    ),
-                                                }}
+                                                file={opplastetVedlegg.fil}
                                                 button={{
                                                     action: 'delete',
                                                     onClick: () => fjernVedlegg(opplastetVedlegg),
@@ -230,14 +236,9 @@ const LastOppVedlegg2: React.FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon
 
                         {avvisteFiler.length > 0 && (
                             <VStack gap="2">
-                                <div>
-                                    <Heading level="4" size="xsmall">
-                                        Vedlegg med feil ({avvisteFiler.length})
-                                    </Heading>
-                                    <Detail textColor="subtle">
-                                        Disse filene ble ikke lastet opp fordi de inneholder feil.
-                                    </Detail>
-                                </div>
+                                <Heading level="4" size="xsmall">
+                                    Vedlegg med feil ({avvisteFiler.length})
+                                </Heading>
                                 <VStack as="ul" gap="3">
                                     {avvisteFiler.map((fil, index) => (
                                         <FileUpload.Item
