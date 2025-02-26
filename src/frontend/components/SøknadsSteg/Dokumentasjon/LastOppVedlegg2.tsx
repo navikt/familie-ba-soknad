@@ -69,14 +69,14 @@ const LastOppVedlegg2: React.FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon
         dokumentasjon.dokumentasjonsbehov
     );
 
-    const filePdf = new File(['abc'.repeat(100000)], 'document.pdf');
-    const fileJpg = new File(['abc'.repeat(500000)], 'picture.jpg');
+    // const filePdf = new File(['abc'.repeat(100000)], 'document.pdf');
+    // const fileJpg = new File(['abc'.repeat(500000)], 'picture.jpg');
 
     const [acceptedFiles, setAcceptedFiles] = useState<FileAccepted[]>([
-        { file: filePdf, error: false },
+        // { file: filePdf, error: false },
     ]);
     const [rejectedFiles, setRejectedFiles] = useState<FileRejected[]>([
-        { file: fileJpg, error: true, reasons: ['fileType'] },
+        // { file: fileJpg, error: true, reasons: ['fileType'] },
     ]);
 
     const MAKS_FILSTØRRELSE_MB = 10;
@@ -98,7 +98,7 @@ const LastOppVedlegg2: React.FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon
 
         await Promise.all(
             acceptedNewFiles.map((acceptedNewFile: FileAccepted) => {
-                wrapMedSystemetLaster(async () => {
+                return wrapMedSystemetLaster(async () => {
                     const requestData = new FormData();
                     requestData.append('file', acceptedNewFile.file);
 
@@ -236,6 +236,23 @@ const LastOppVedlegg2: React.FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon
                                 </VStack>
                             </VStack>
                         )}
+
+                        <VStack gap="2">
+                            <Heading level="4" size="xsmall">
+                                dokumentasjon.opplastedeVedlegg
+                            </Heading>
+                            <VStack gap="3">
+                                {dokumentasjon.opplastedeVedlegg.map((vedlegg, index) => (
+                                    <div key={index}>
+                                        <div>{vedlegg.dokumentId}</div>
+                                        <div>{vedlegg.navn}</div>
+                                        <div>{vedlegg.størrelse}</div>
+                                        <div>{vedlegg.tidspunkt}</div>
+                                        <hr></hr>
+                                    </div>
+                                ))}
+                            </VStack>
+                        </VStack>
                     </>
                 )}
             </VStack>
