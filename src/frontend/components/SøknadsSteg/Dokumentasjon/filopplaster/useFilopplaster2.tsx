@@ -25,27 +25,43 @@ export const useFilopplaster2 = (
 
     const MAKS_FILSTØRRELSE_MB = 10;
     const MAKS_FILSTØRRELSE_BYTES = MAKS_FILSTØRRELSE_MB * 1024 * 1024;
-    const MAKS_ANTALL_FILER = 25;
+    const MAKS_ANTALL_FILER = 4;
 
     const støttedeFiltyper = [EFiltyper.PNG, EFiltyper.JPG, EFiltyper.JPEG, EFiltyper.PDF];
 
-    const feilMeldinger: Record<FileRejectionReason, string> = {
+    const feilmeldinger: Record<FileRejectionReason | string, string> = {
         fileType: 'Filformatet støttes ikke',
         fileSize: `Filen er større enn ${MAKS_FILSTØRRELSE_MB} MB`,
+        maksFilerNådd: `Du kan ikke laste opp flere enn ${MAKS_ANTALL_FILER} filer`,
     };
 
     const dagensDatoStreng = new Date().toISOString();
 
     const leggTilVedlegg = async (nyeFiler: FileObject[]) => {
-        const nyeAksepterteFiler = nyeFiler.filter(file => !file.error);
-        const nyeAvvisteFiler = nyeFiler.filter(file => file.error);
+        const ledigePlasser = MAKS_ANTALL_FILER - dokumentasjon.opplastedeVedlegg.length;
+
+        const gyldigeFiler: FileAccepted[] = nyeFiler.filter(file => !file.error);
+        const feilendeFiler: FileRejected[] = nyeFiler.filter(file => file.error);
+
+        const aksepterteFiler = gyldigeFiler.slice(0, ledigePlasser);
+        const filerOverMaksAntall = gyldigeFiler.slice(aksepterteFiler.length);
+
+        const filerOverMaksAntallMedFeilmeldinger: FileRejected[] = filerOverMaksAntall.map(fil => {
+            return {
+                file: fil.file,
+                error: true,
+                reasons: [feilmeldinger.maksFilerNådd],
+            };
+        });
+
+        const nyeAvvisteFiler = [...feilendeFiler, ...filerOverMaksAntallMedFeilmeldinger];
 
         setAvvsiteFiler([...avvisteFiler, ...nyeAvvisteFiler]);
 
         const nyeVedlegg: IVedlegg[] = [];
 
         await Promise.all(
-            nyeAksepterteFiler.map((fil: FileAccepted) => {
+            aksepterteFiler.map(fil => {
                 return wrapMedSystemetLaster(async () => {
                     const requestData = new FormData();
                     requestData.append('file', fil.file);
@@ -113,7 +129,7 @@ export const useFilopplaster2 = (
         MAKS_FILSTØRRELSE_BYTES,
         MAKS_ANTALL_FILER,
         støttedeFiltyper,
-        feilMeldinger,
+        feilmeldinger,
         leggTilVedlegg,
         fjernVedlegg,
         fjernAvvistFil,

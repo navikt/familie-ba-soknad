@@ -31,7 +31,7 @@ const LastOppVedlegg2: React.FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon
         MAKS_FILSTØRRELSE_BYTES,
         MAKS_ANTALL_FILER,
         støttedeFiltyper,
-        feilMeldinger,
+        feilmeldinger,
         leggTilVedlegg,
         fjernVedlegg,
         fjernAvvistFil,
@@ -158,7 +158,7 @@ const LastOppVedlegg2: React.FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon
                                             as="li"
                                             key={index}
                                             file={fil.file}
-                                            error={feilMeldinger[fil.reasons[0]]}
+                                            error={feilmeldinger[fil.reasons[0]]}
                                             button={{
                                                 action: 'delete',
                                                 onClick: () => fjernAvvistFil(fil),
