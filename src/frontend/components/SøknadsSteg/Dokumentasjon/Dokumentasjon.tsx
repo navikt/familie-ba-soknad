@@ -152,12 +152,7 @@ const Dokumentasjon: React.FC = () => {
                 {relevateDokumentasjoner.map((dokumentasjon, index) => (
                     <>
                         <LastOppVedlegg2
-                            key={'LastOppVedlegg2-' + index}
-                            dokumentasjon={dokumentasjon}
-                            oppdaterDokumentasjon={oppdaterDokumentasjon}
-                        />
-                        <LastOppVedlegg
-                            key={'LastOppVedlegg-' + index}
+                            key={index}
                             dokumentasjon={dokumentasjon}
                             oppdaterDokumentasjon={oppdaterDokumentasjon}
                         />

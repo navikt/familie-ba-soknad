@@ -14,6 +14,7 @@ import { LocaleRecordBlock, Typografi } from '../../../typer/sanity/sanity';
 import { slåSammen } from '../../../utils/slåSammen';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import { useFilopplaster2 } from './filopplaster/useFilopplaster2';
+import Filopplaster2 from './filopplaster/Filopplaster2';
 
 interface Props {
     dokumentasjon: IDokumentasjon;
@@ -87,7 +88,7 @@ const LastOppVedlegg2: React.FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon
                 )}
 
                 {!dokumentasjon.harSendtInn && (
-                    <LastOppVedlegg2
+                    <Filopplaster2
                         dokumentasjon={dokumentasjon}
                         oppdaterDokumentasjon={oppdaterDokumentasjon}
                     />

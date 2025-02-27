@@ -37,12 +37,12 @@ const Filopplaster2: React.FC<IFilopplasterProps> = ({ dokumentasjon, oppdaterDo
     return (
         <>
             <FileUpload.Dropzone
-                label={'Last opp filer'}
+                label={plainTekst(dokumentasjonTekster.lastOppFiler)}
                 description={
                     <List as="ul" size="small">
-                        <List.Item>{`${dokumentasjonTekster.stottedeFiltyper} ${STØTTEDE_FILTYPER.join(' ')}`}</List.Item>
-                        <List.Item>{`${dokumentasjonTekster.maksFilstorrelse} ${MAKS_FILSTØRRELSE_MB} MB`}</List.Item>
-                        <List.Item>{`${dokumentasjonTekster.maksAntallFiler} ${MAKS_ANTALL_FILER}`}</List.Item>
+                        <List.Item>{`${plainTekst(dokumentasjonTekster.stottedeFiltyper)} ${STØTTEDE_FILTYPER.join(' ')}`}</List.Item>
+                        <List.Item>{`${plainTekst(dokumentasjonTekster.maksFilstorrelse)} ${MAKS_FILSTØRRELSE_MB} MB`}</List.Item>
+                        <List.Item>{`${plainTekst(dokumentasjonTekster.maksAntallFiler)} ${MAKS_ANTALL_FILER}`}</List.Item>
                     </List>
                 }
                 accept={STØTTEDE_FILTYPER.join(',')}
