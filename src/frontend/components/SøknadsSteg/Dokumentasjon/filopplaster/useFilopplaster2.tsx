@@ -1,12 +1,15 @@
 import { useState } from 'react';
+
+import axios from 'axios';
+
+import { FileAccepted, FileObject, FileRejected, FileRejectionReason } from '@navikt/ds-react';
+
+import Miljø from '../../../../../shared-utils/Miljø';
+import { useLastRessurserContext } from '../../../../context/LastRessurserContext';
 import { EFiltyper, IDokumentasjon, IVedlegg } from '../../../../typer/dokumentasjon';
 import { Dokumentasjonsbehov } from '../../../../typer/kontrakt/dokumentasjon';
-import { FileAccepted, FileObject, FileRejected, FileRejectionReason } from '@navikt/ds-react';
-import { useLastRessurserContext } from '../../../../context/LastRessurserContext';
-import axios from 'axios';
-import Miljø from '../../../../../shared-utils/Miljø';
-import { ITekstinnhold } from '../../../../typer/sanity/tekstInnhold';
 import { PlainTekst } from '../../../../typer/sanity/sanity';
+import { ITekstinnhold } from '../../../../typer/sanity/tekstInnhold';
 import { IDokumentasjonTekstinnhold } from '../innholdTyper';
 
 interface OpplastetVedlegg {
