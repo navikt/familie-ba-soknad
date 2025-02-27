@@ -90,6 +90,7 @@ export interface IFrittståendeOrdTekstinnhold {
     barnetrygdperioder: LocaleRecordString;
     utbetalingsperioder: LocaleRecordString;
     vedlegg: LocaleRecordString;
+    vedleggMedFeil: LocaleRecordString;
 }
 
 export interface INavigasjonTekstinnhold {

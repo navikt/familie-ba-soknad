@@ -31,6 +31,7 @@ const Filopplaster2: React.FC<IFilopplasterProps> = ({ dokumentasjon, oppdaterDo
     } = useFilopplaster2(dokumentasjon, oppdaterDokumentasjon);
     const { tekster, plainTekst } = useApp();
 
+    const dokumentasjonTekster = tekster().DOKUMENTASJON;
     const frittståendeOrdTekster = tekster().FELLES.frittståendeOrd;
 
     return (
@@ -39,9 +40,9 @@ const Filopplaster2: React.FC<IFilopplasterProps> = ({ dokumentasjon, oppdaterDo
                 label={'Last opp filer'}
                 description={
                     <List as="ul" size="small">
-                        <List.Item>{`Støttede filtyper: ${STØTTEDE_FILTYPER.join(' ')}`}</List.Item>
-                        <List.Item>{`Maks filstørrelse: ${MAKS_FILSTØRRELSE_MB} MB`}</List.Item>
-                        <List.Item>{`Maks antall filer: ${MAKS_ANTALL_FILER}`}</List.Item>
+                        <List.Item>{`${dokumentasjonTekster.stottedeFiltyper} ${STØTTEDE_FILTYPER.join(' ')}`}</List.Item>
+                        <List.Item>{`${dokumentasjonTekster.maksFilstorrelse} ${MAKS_FILSTØRRELSE_MB} MB`}</List.Item>
+                        <List.Item>{`${dokumentasjonTekster.maksAntallFiler} ${MAKS_ANTALL_FILER}`}</List.Item>
                     </List>
                 }
                 accept={STØTTEDE_FILTYPER.join(',')}
@@ -59,10 +60,10 @@ const Filopplaster2: React.FC<IFilopplasterProps> = ({ dokumentasjon, oppdaterDo
                         {`${plainTekst(frittståendeOrdTekster.vedlegg)} (${dokumentasjon.opplastedeVedlegg.length})`}
                     </Heading>
                     <VStack as="ul" gap="3">
-                        {dokumentasjon.opplastedeVedlegg.map((opplastetVedlegg, index) => (
+                        {dokumentasjon.opplastedeVedlegg.map(opplastetVedlegg => (
                             <FileUpload.Item
                                 as="li"
-                                key={index}
+                                key={opplastetVedlegg.dokumentId}
                                 file={opplastetVedlegg.fil}
                                 button={{
                                     action: 'delete',
@@ -77,7 +78,7 @@ const Filopplaster2: React.FC<IFilopplasterProps> = ({ dokumentasjon, oppdaterDo
             {avvisteFiler.length > 0 && (
                 <VStack gap="2">
                     <Heading level="4" size="xsmall">
-                        Vedlegg med feil ({avvisteFiler.length})
+                        {`${plainTekst(frittståendeOrdTekster.vedleggMedFeil)} (${avvisteFiler.length})`}
                     </Heading>
                     <VStack as="ul" gap="3">
                         {avvisteFiler.map((fil, index) => (

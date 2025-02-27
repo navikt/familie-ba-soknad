@@ -43,6 +43,9 @@ export type IDokumentasjonTekstinnhold = {
     lastOppKnapp: LocaleRecordString;
     slippFilenHer: LocaleRecordString;
     slett: LocaleRecordString;
+    stottedeFiltyper: LocaleRecordString;
+    maksFilstorrelse: LocaleRecordString;
+    maksAntallFiler: LocaleRecordString;
 } & {
     // Vedlegg - titler
     [TittelSanityApiNavn.bekreftelsePaaAdopsjonTittel]: LocaleRecordBlock;
