@@ -18,6 +18,11 @@ interface IFilopplasterProps {
 }
 
 const Filopplaster2: React.FC<IFilopplasterProps> = ({ dokumentasjon, oppdaterDokumentasjon }) => {
+    const { tekster, plainTekst } = useApp();
+
+    const dokumentasjonTekster = tekster().DOKUMENTASJON;
+    const frittståendeOrdTekster = tekster().FELLES.frittståendeOrd;
+
     const {
         avvisteFiler,
         MAKS_FILSTØRRELSE_MB,
@@ -28,11 +33,7 @@ const Filopplaster2: React.FC<IFilopplasterProps> = ({ dokumentasjon, oppdaterDo
         leggTilVedlegg,
         fjernVedlegg,
         fjernAvvistFil,
-    } = useFilopplaster2(dokumentasjon, oppdaterDokumentasjon);
-    const { tekster, plainTekst } = useApp();
-
-    const dokumentasjonTekster = tekster().DOKUMENTASJON;
-    const frittståendeOrdTekster = tekster().FELLES.frittståendeOrd;
+    } = useFilopplaster2(dokumentasjon, oppdaterDokumentasjon, dokumentasjonTekster, plainTekst);
 
     return (
         <>
@@ -60,17 +61,21 @@ const Filopplaster2: React.FC<IFilopplasterProps> = ({ dokumentasjon, oppdaterDo
                         {`${plainTekst(frittståendeOrdTekster.vedlegg)} (${dokumentasjon.opplastedeVedlegg.length})`}
                     </Heading>
                     <VStack as="ul" gap="3">
-                        {dokumentasjon.opplastedeVedlegg.map(opplastetVedlegg => (
-                            <FileUpload.Item
-                                as="li"
-                                key={opplastetVedlegg.dokumentId}
-                                file={opplastetVedlegg.fil}
-                                button={{
-                                    action: 'delete',
-                                    onClick: () => fjernVedlegg(opplastetVedlegg),
-                                }}
-                            />
-                        ))}
+                        {dokumentasjon.opplastedeVedlegg.map(
+                            (opplastetVedlegg, index) => (
+                                console.log(opplastetVedlegg.fil),
+                                (<div>{opplastetVedlegg.fil.name}</div>)
+                                // <FileUpload.Item
+                                //     as="li"
+                                //     key={index}
+                                //     file={opplastetVedlegg.fil}
+                                //     button={{
+                                //         action: 'delete',
+                                //         onClick: () => fjernVedlegg(opplastetVedlegg),
+                                //     }}
+                                // />
+                            )
+                        )}
                     </VStack>
                 </VStack>
             )}

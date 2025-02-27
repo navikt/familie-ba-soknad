@@ -26,11 +26,16 @@ interface Props {
 }
 
 const LastOppVedlegg2: React.FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon }) => {
-    const { fjernAlleAvvisteFiler } = useFilopplaster2(dokumentasjon, oppdaterDokumentasjon);
-
     const { søknad, tekster, plainTekst } = useApp();
 
-    const dokumentasjonstekster = tekster().DOKUMENTASJON;
+    const dokumentasjonTekster = tekster().DOKUMENTASJON;
+
+    const { fjernAlleAvvisteFiler } = useFilopplaster2(
+        dokumentasjon,
+        oppdaterDokumentasjon,
+        dokumentasjonTekster,
+        plainTekst
+    );
 
     const settHarSendtInnTidligere = (event: React.ChangeEvent<HTMLInputElement>) => {
         const huketAv = event.target.checked;
@@ -42,7 +47,7 @@ const LastOppVedlegg2: React.FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon
     };
 
     const tittel: LocaleRecordBlock =
-        dokumentasjonstekster[
+        dokumentasjonTekster[
             dokumentasjonsbehovTilTittelSanityApiNavn(dokumentasjon.dokumentasjonsbehov)
         ];
 
@@ -67,7 +72,7 @@ const LastOppVedlegg2: React.FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon
                     <div>
                         <TekstBlock
                             data-testid={'dokumentasjonsbeskrivelse'}
-                            block={dokumentasjonstekster[dokumentasjonsbeskrivelse]}
+                            block={dokumentasjonTekster[dokumentasjonsbeskrivelse]}
                             flettefelter={{ barnetsNavn: barnasNavn }}
                             typografi={Typografi.BodyLong}
                         />
@@ -78,12 +83,12 @@ const LastOppVedlegg2: React.FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon
                     <Checkbox
                         data-testid={'dokumentasjon-er-sendt-inn-checkboks'}
                         aria-label={`${plainTekst(
-                            dokumentasjonstekster.sendtInnTidligere
+                            dokumentasjonTekster.sendtInnTidligere
                         )} (${plainTekst(tittel, { barnetsNavn: barnasNavn })})`}
                         checked={dokumentasjon.harSendtInn}
                         onChange={settHarSendtInnTidligere}
                     >
-                        {plainTekst(dokumentasjonstekster.sendtInnTidligere)}
+                        {plainTekst(dokumentasjonTekster.sendtInnTidligere)}
                     </Checkbox>
                 )}
 

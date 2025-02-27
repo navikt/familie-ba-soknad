@@ -5,6 +5,9 @@ import { FileAccepted, FileObject, FileRejected, FileRejectionReason } from '@na
 import { useLastRessurserContext } from '../../../../context/LastRessurserContext';
 import axios from 'axios';
 import Miljø from '../../../../../shared-utils/Miljø';
+import { ITekstinnhold } from '../../../../typer/sanity/tekstInnhold';
+import { PlainTekst } from '../../../../typer/sanity/sanity';
+import { IDokumentasjonTekstinnhold } from '../innholdTyper';
 
 interface OpplastetVedlegg {
     dokumentId: string;
@@ -21,7 +24,9 @@ export const useFilopplaster2 = (
         dokumentasjonsBehov: Dokumentasjonsbehov,
         opplastedeVedlegg: IVedlegg[],
         harSendtInn: boolean
-    ) => void
+    ) => void,
+    dokumentasjonTekster: IDokumentasjonTekstinnhold,
+    plainTekst: PlainTekst
 ) => {
     const { wrapMedSystemetLaster } = useLastRessurserContext();
 
@@ -33,9 +38,9 @@ export const useFilopplaster2 = (
     const STØTTEDE_FILTYPER = [EFiltyper.PNG, EFiltyper.JPG, EFiltyper.JPEG, EFiltyper.PDF];
 
     const feilmeldinger: Record<FileRejectionReason | ECustomFileRejectionReasons, string> = {
-        fileType: 'Filformatet støttes ikke',
-        fileSize: `Filen er større enn ${MAKS_FILSTØRRELSE_MB} MB`,
-        [ECustomFileRejectionReasons.MAKS_ANTALL_FILER_NÅDD]: `Du kan ikke laste opp flere enn ${MAKS_ANTALL_FILER} filer`,
+        fileType: plainTekst(dokumentasjonTekster.stottedeFiltyper),
+        fileSize: `${plainTekst(dokumentasjonTekster.maksFilstorrelse)} ${MAKS_FILSTØRRELSE_MB} MB`,
+        [ECustomFileRejectionReasons.MAKS_ANTALL_FILER_NÅDD]: `${plainTekst(dokumentasjonTekster.antallFilerFeilmelding)} ${MAKS_ANTALL_FILER}`,
     };
 
     const dagensDatoStreng = new Date().toISOString();

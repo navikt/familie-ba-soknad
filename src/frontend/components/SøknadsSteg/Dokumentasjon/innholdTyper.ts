@@ -47,6 +47,9 @@ export type IDokumentasjonTekstinnhold = {
     maksFilstorrelse: LocaleRecordString;
     maksAntallFiler: LocaleRecordString;
     lastOppFiler: LocaleRecordString;
+    filtypeFeilmelding: LocaleRecordString;
+    filstorrelseFeilmelding: LocaleRecordString;
+    antallFilerFeilmelding: LocaleRecordString;
 } & {
     // Vedlegg - titler
     [TittelSanityApiNavn.bekreftelsePaaAdopsjonTittel]: LocaleRecordBlock;
