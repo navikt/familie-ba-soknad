@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Checkbox, FileUpload, FormSummary, Heading, List, VStack } from '@navikt/ds-react';
+import { Checkbox, FormSummary, VStack } from '@navikt/ds-react';
 
 import { useApp } from '../../../context/AppContext';
 import {
@@ -25,23 +25,11 @@ interface Props {
 }
 
 const LastOppVedlegg2: React.FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon }) => {
-    const {
-        avvisteFiler,
-        MAKS_FILSTØRRELSE_MB,
-        MAKS_FILSTØRRELSE_BYTES,
-        MAKS_ANTALL_FILER,
-        støttedeFiltyper,
-        feilmeldinger,
-        leggTilVedlegg,
-        fjernVedlegg,
-        fjernAvvistFil,
-        fjernAlleAvvisteFiler,
-    } = useFilopplaster2(dokumentasjon, oppdaterDokumentasjon);
+    const { fjernAlleAvvisteFiler } = useFilopplaster2(dokumentasjon, oppdaterDokumentasjon);
 
     const { søknad, tekster, plainTekst } = useApp();
 
     const dokumentasjonstekster = tekster().DOKUMENTASJON;
-    const frittståendeOrdTekster = tekster().FELLES.frittståendeOrd;
 
     const settHarSendtInnTidligere = (event: React.ChangeEvent<HTMLInputElement>) => {
         const huketAv = event.target.checked;
@@ -99,76 +87,10 @@ const LastOppVedlegg2: React.FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon
                 )}
 
                 {!dokumentasjon.harSendtInn && (
-                    <>
-                        <FileUpload.Dropzone
-                            label={'Last opp filer'}
-                            description={
-                                <List as="ul" size="small">
-                                    <List.Item>
-                                        {`Støttede filtyper: ${støttedeFiltyper.join(' ')}`}
-                                    </List.Item>
-                                    <List.Item>
-                                        {`Maks filstørrelse: ${MAKS_FILSTØRRELSE_MB} MB`}
-                                    </List.Item>
-                                    <List.Item>
-                                        {`Maks antall filer: ${MAKS_ANTALL_FILER}`}
-                                    </List.Item>
-                                </List>
-                            }
-                            accept={støttedeFiltyper.join(',')}
-                            maxSizeInBytes={MAKS_FILSTØRRELSE_BYTES}
-                            fileLimit={{
-                                max: MAKS_ANTALL_FILER,
-                                current: dokumentasjon.opplastedeVedlegg.length,
-                            }}
-                            onSelect={nyeFiler => leggTilVedlegg(nyeFiler)}
-                        />
-
-                        {dokumentasjon.opplastedeVedlegg.length > 0 && (
-                            <VStack gap="2">
-                                <Heading level="4" size="xsmall">
-                                    {`${plainTekst(frittståendeOrdTekster.vedlegg)} (${dokumentasjon.opplastedeVedlegg.length})`}
-                                </Heading>
-                                <VStack as="ul" gap="3">
-                                    {dokumentasjon.opplastedeVedlegg.map(
-                                        (opplastetVedlegg, index) => (
-                                            <FileUpload.Item
-                                                as="li"
-                                                key={index}
-                                                file={opplastetVedlegg.fil}
-                                                button={{
-                                                    action: 'delete',
-                                                    onClick: () => fjernVedlegg(opplastetVedlegg),
-                                                }}
-                                            />
-                                        )
-                                    )}
-                                </VStack>
-                            </VStack>
-                        )}
-
-                        {avvisteFiler.length > 0 && (
-                            <VStack gap="2">
-                                <Heading level="4" size="xsmall">
-                                    Vedlegg med feil ({avvisteFiler.length})
-                                </Heading>
-                                <VStack as="ul" gap="3">
-                                    {avvisteFiler.map((fil, index) => (
-                                        <FileUpload.Item
-                                            as="li"
-                                            key={index}
-                                            file={fil.file}
-                                            error={feilmeldinger[fil.reasons[0]]}
-                                            button={{
-                                                action: 'delete',
-                                                onClick: () => fjernAvvistFil(fil),
-                                            }}
-                                        />
-                                    ))}
-                                </VStack>
-                            </VStack>
-                        )}
-                    </>
+                    <LastOppVedlegg2
+                        dokumentasjon={dokumentasjon}
+                        oppdaterDokumentasjon={oppdaterDokumentasjon}
+                    />
                 )}
             </VStack>
         </FormSummary>

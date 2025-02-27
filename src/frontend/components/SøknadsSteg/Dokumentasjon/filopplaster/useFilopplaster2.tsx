@@ -30,8 +30,7 @@ export const useFilopplaster2 = (
     const MAKS_FILSTØRRELSE_MB = 10;
     const MAKS_FILSTØRRELSE_BYTES = MAKS_FILSTØRRELSE_MB * 1024 * 1024;
     const MAKS_ANTALL_FILER = 4;
-
-    const støttedeFiltyper = [EFiltyper.PNG, EFiltyper.JPG, EFiltyper.JPEG, EFiltyper.PDF];
+    const STØTTEDE_FILTYPER = [EFiltyper.PNG, EFiltyper.JPG, EFiltyper.JPEG, EFiltyper.PDF];
 
     const feilmeldinger: Record<FileRejectionReason | ECustomFileRejectionReasons, string> = {
         fileType: 'Filformatet støttes ikke',
@@ -49,8 +48,7 @@ export const useFilopplaster2 = (
 
         const aksepterteFiler = gyldigeFiler.slice(0, ledigePlasser);
         const filerOverMaksAntall = gyldigeFiler.slice(aksepterteFiler.length);
-
-        const filerOverMaksAntallMedFeilmeldinger: FileRejected[] = filerOverMaksAntall.map(fil => {
+        const filerOverMaksAntallMedFeilmelding: FileRejected[] = filerOverMaksAntall.map(fil => {
             return {
                 file: fil.file,
                 error: true,
@@ -58,7 +56,7 @@ export const useFilopplaster2 = (
             };
         });
 
-        const nyeAvvisteFiler = [...feilendeFiler, ...filerOverMaksAntallMedFeilmeldinger];
+        const nyeAvvisteFiler = [...feilendeFiler, ...filerOverMaksAntallMedFeilmelding];
 
         setAvvsiteFiler([...avvisteFiler, ...nyeAvvisteFiler]);
 
@@ -132,7 +130,7 @@ export const useFilopplaster2 = (
         MAKS_FILSTØRRELSE_MB,
         MAKS_FILSTØRRELSE_BYTES,
         MAKS_ANTALL_FILER,
-        støttedeFiltyper,
+        STØTTEDE_FILTYPER,
         feilmeldinger,
         leggTilVedlegg,
         fjernVedlegg,
