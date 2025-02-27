@@ -59,7 +59,7 @@ spec:
     enabled: true
   env:
     - name: BASE_PATH
-      value: /barnetrygd/soknad/
+      value: {{base_path}}
     - name: ENV
       value: prod
   secureLogs:
