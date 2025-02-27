@@ -11,6 +11,10 @@ interface OpplastetVedlegg {
     filnavn: string;
 }
 
+enum ECustomFileRejectionReasons {
+    MAKS_ANTALL_FILER_NÅDD = 'maksAntallFilerNådd',
+}
+
 export const useFilopplaster2 = (
     dokumentasjon: IDokumentasjon,
     oppdaterDokumentasjon: (
@@ -29,10 +33,10 @@ export const useFilopplaster2 = (
 
     const støttedeFiltyper = [EFiltyper.PNG, EFiltyper.JPG, EFiltyper.JPEG, EFiltyper.PDF];
 
-    const feilmeldinger: Record<FileRejectionReason | string, string> = {
+    const feilmeldinger: Record<FileRejectionReason | ECustomFileRejectionReasons, string> = {
         fileType: 'Filformatet støttes ikke',
         fileSize: `Filen er større enn ${MAKS_FILSTØRRELSE_MB} MB`,
-        maksFilerNådd: `Du kan ikke laste opp flere enn ${MAKS_ANTALL_FILER} filer`,
+        [ECustomFileRejectionReasons.MAKS_ANTALL_FILER_NÅDD]: `Du kan ikke laste opp flere enn ${MAKS_ANTALL_FILER} filer`,
     };
 
     const dagensDatoStreng = new Date().toISOString();
@@ -50,7 +54,7 @@ export const useFilopplaster2 = (
             return {
                 file: fil.file,
                 error: true,
-                reasons: [feilmeldinger.maksFilerNådd],
+                reasons: [ECustomFileRejectionReasons.MAKS_ANTALL_FILER_NÅDD],
             };
         });
 
