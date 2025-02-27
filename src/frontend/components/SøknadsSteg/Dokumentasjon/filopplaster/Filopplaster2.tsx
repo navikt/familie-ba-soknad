@@ -61,21 +61,17 @@ const Filopplaster2: React.FC<IFilopplasterProps> = ({ dokumentasjon, oppdaterDo
                         {`${plainTekst(frittståendeOrdTekster.vedlegg)} (${dokumentasjon.opplastedeVedlegg.length})`}
                     </Heading>
                     <VStack as="ul" gap="3">
-                        {dokumentasjon.opplastedeVedlegg.map(
-                            (opplastetVedlegg, index) => (
-                                console.log(opplastetVedlegg.fil),
-                                (<div>{opplastetVedlegg.fil.name}</div>)
-                                // <FileUpload.Item
-                                //     as="li"
-                                //     key={index}
-                                //     file={opplastetVedlegg.fil}
-                                //     button={{
-                                //         action: 'delete',
-                                //         onClick: () => fjernVedlegg(opplastetVedlegg),
-                                //     }}
-                                // />
-                            )
-                        )}
+                        {dokumentasjon.opplastedeVedlegg.map((opplastetVedlegg, index) => (
+                            <FileUpload.Item
+                                as="li"
+                                key={index}
+                                file={opplastetVedlegg.fil}
+                                button={{
+                                    action: 'delete',
+                                    onClick: () => fjernVedlegg(opplastetVedlegg),
+                                }}
+                            />
+                        ))}
                     </VStack>
                 </VStack>
             )}

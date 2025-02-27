@@ -9,7 +9,6 @@ import { useLastRessurserContext } from '../../../../context/LastRessurserContex
 import { EFiltyper, IDokumentasjon, IVedlegg } from '../../../../typer/dokumentasjon';
 import { Dokumentasjonsbehov } from '../../../../typer/kontrakt/dokumentasjon';
 import { PlainTekst } from '../../../../typer/sanity/sanity';
-import { ITekstinnhold } from '../../../../typer/sanity/tekstInnhold';
 import { IDokumentasjonTekstinnhold } from '../innholdTyper';
 
 interface OpplastetVedlegg {
