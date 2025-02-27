@@ -28,7 +28,6 @@ jobs:
     with:
       build-image: true
       push-image: true
-      base-path: /barnetrygd/soknad/
     secrets: inherit
   deploy-dev:
     name: Deploy dev
