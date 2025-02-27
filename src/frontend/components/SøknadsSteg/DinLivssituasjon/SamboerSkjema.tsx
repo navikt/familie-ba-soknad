@@ -3,15 +3,15 @@ import React from 'react';
 import { ESvar } from '@navikt/familie-form-elements';
 import type { Felt, ISkjema } from '@navikt/familie-skjema';
 
+import { useApp } from '../../../context/AppContext';
 import { DatoMedUkjent, ISODateString } from '../../../typer/common';
+import { ITidligereSamoboereTekstinnhold } from '../../../typer/sanity/modaler/tidligereSamboere';
 import { IDinLivssituasjonFeltTyper, ITidligereSamboerFeltTyper } from '../../../typer/skjema';
 import { dagensDato, gårsdagensDato } from '../../../utils/dato';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
-import { SkjemaCheckbox } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
-import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
-import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
-
-import { samboerSpråkIder } from './spørsmål';
+import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
+import { SkjemaCheckboxForSanity } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckboxForSanity';
+import { SkjemaFeltInputForSanity } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInputForSanity';
 
 const SamboerSkjema: React.FC<{
     skjema: ISkjema<IDinLivssituasjonFeltTyper | ITidligereSamboerFeltTyper, string>;
@@ -26,22 +26,33 @@ const SamboerSkjema: React.FC<{
     };
     erIModal?: boolean;
 }> = ({ skjema, samboerFelter, erIModal = false }) => {
+    const { tekster } = useApp();
+
+    const teksterForModal: ITidligereSamoboereTekstinnhold =
+        tekster().FELLES.modaler.tidligereSamboere.søker;
+
     return (
         <>
-            <SkjemaFeltInput
+            <SkjemaFeltInputForSanity
                 felt={samboerFelter.navn}
                 visFeilmeldinger={skjema.visFeilmeldinger}
-                labelSpråkTekstId={samboerSpråkIder.navn}
+                label={<TekstBlock block={teksterForModal.samboerNavn.sporsmal} />}
             />
             <div>
-                <SkjemaFeltInput
+                <SkjemaFeltInputForSanity
                     felt={samboerFelter.fnr}
                     visFeilmeldinger={skjema.visFeilmeldinger}
-                    labelSpråkTekstId={samboerSpråkIder.fnr}
+                    label={
+                        <TekstBlock block={teksterForModal.foedselsnummerEllerDNummer.sporsmal} />
+                    }
                     disabled={samboerFelter.fnrUkjent.verdi === ESvar.JA}
                 />
-                <SkjemaCheckbox
-                    labelSpråkTekstId={samboerSpråkIder.fnrUkjent}
+                <SkjemaCheckboxForSanity
+                    label={
+                        <TekstBlock
+                            block={teksterForModal.foedselsnummerEllerDNummer.checkboxLabel}
+                        />
+                    }
                     felt={samboerFelter.fnrUkjent}
                 />
             </div>
@@ -50,13 +61,13 @@ const SamboerSkjema: React.FC<{
                     <Datovelger
                         skjema={skjema}
                         felt={samboerFelter.fødselsdato}
-                        label={<SpråkTekst id={samboerSpråkIder.fødselsdato} />}
+                        label={<TekstBlock block={teksterForModal.foedselsdato.sporsmal} />}
                         avgrensMaxDato={dagensDato()}
                         disabled={samboerFelter.fødselsdatoUkjent.verdi === ESvar.JA}
                         strategy={erIModal ? 'absolute' : 'fixed'}
                     />
-                    <SkjemaCheckbox
-                        labelSpråkTekstId={samboerSpråkIder.fødselsdatoUkjent}
+                    <SkjemaCheckboxForSanity
+                        label={<TekstBlock block={teksterForModal.foedselsdato.checkboxLabel} />}
                         felt={samboerFelter.fødselsdatoUkjent}
                     />
                 </div>
@@ -64,7 +75,7 @@ const SamboerSkjema: React.FC<{
             <Datovelger
                 skjema={skjema}
                 felt={samboerFelter.samboerFraDato}
-                label={<SpråkTekst id={samboerSpråkIder.samboerFraDato} />}
+                label={<TekstBlock block={teksterForModal.startdato.sporsmal} />}
                 avgrensMaxDato={samboerFelter.samboerTilDato ? gårsdagensDato() : dagensDato()}
                 strategy={erIModal ? 'absolute' : 'fixed'}
             />
@@ -72,7 +83,7 @@ const SamboerSkjema: React.FC<{
                 <Datovelger
                     skjema={skjema}
                     felt={samboerFelter.samboerTilDato}
-                    label={<SpråkTekst id={samboerSpråkIder.samboerTilDato} />}
+                    label={<TekstBlock block={teksterForModal.sluttdato.sporsmal} />}
                     tilhørendeFraOgMedFelt={samboerFelter.samboerFraDato}
                     avgrensDatoFremITid={true}
                     strategy={erIModal ? 'absolute' : 'fixed'}
