@@ -40,8 +40,8 @@ export const useFilopplaster2 = (
     const STØTTEDE_FILTYPER = [EFiltyper.PNG, EFiltyper.JPG, EFiltyper.JPEG, EFiltyper.PDF];
 
     const feilmeldinger: Record<FileRejectionReason | ECustomFileRejectionReasons, string> = {
-        fileType: plainTekst(dokumentasjonTekster.stottedeFiltyper),
-        fileSize: `${plainTekst(dokumentasjonTekster.maksFilstorrelse)} ${MAKS_FILSTØRRELSE_MB} MB`,
+        fileType: plainTekst(dokumentasjonTekster.filtypeFeilmelding),
+        fileSize: `${plainTekst(dokumentasjonTekster.filstorrelseFeilmelding)} ${MAKS_FILSTØRRELSE_MB} MB`,
         [ECustomFileRejectionReasons.MAKS_ANTALL_FILER_NÅDD]: `${plainTekst(dokumentasjonTekster.antallFilerFeilmelding)} ${MAKS_ANTALL_FILER}`,
     };
 
@@ -54,6 +54,7 @@ export const useFilopplaster2 = (
         const feilendeFiler: FileRejected[] = nyeFiler.filter(file => file.error);
 
         const aksepterteFiler = gyldigeFiler.slice(0, ledigePlasser);
+
         const filerOverMaksAntall = gyldigeFiler.slice(aksepterteFiler.length);
         const filerOverMaksAntallMedFeilmelding: FileRejected[] = filerOverMaksAntall.map(fil => {
             return {
@@ -94,7 +95,6 @@ export const useFilopplaster2 = (
                                 navn: fil.file.name,
                                 størrelse: fil.file.size,
                                 tidspunkt: dagensDatoStreng,
-                                fil: fil.file,
                             });
                         });
                 });
