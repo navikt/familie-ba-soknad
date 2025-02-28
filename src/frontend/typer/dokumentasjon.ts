@@ -5,7 +5,6 @@ export interface IVedlegg {
     navn: string;
     størrelse: number;
     tidspunkt: string;
-    fil: File;
 }
 
 export interface IDokumentasjon {

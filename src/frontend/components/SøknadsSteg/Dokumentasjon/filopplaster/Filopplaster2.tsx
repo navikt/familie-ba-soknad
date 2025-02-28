@@ -65,7 +65,10 @@ const Filopplaster2: React.FC<IFilopplasterProps> = ({ dokumentasjon, oppdaterDo
                             <FileUpload.Item
                                 as="li"
                                 key={index}
-                                file={opplastetVedlegg.fil}
+                                file={{
+                                    name: opplastetVedlegg.navn,
+                                    size: opplastetVedlegg.størrelse,
+                                }}
                                 button={{
                                     action: 'delete',
                                     onClick: () => fjernVedlegg(opplastetVedlegg),
@@ -86,7 +89,10 @@ const Filopplaster2: React.FC<IFilopplasterProps> = ({ dokumentasjon, oppdaterDo
                             <FileUpload.Item
                                 as="li"
                                 key={index}
-                                file={fil.file}
+                                file={{
+                                    name: fil.file.name,
+                                    size: fil.file.size,
+                                }}
                                 error={feilmeldinger[fil.reasons[0]]}
                                 button={{
                                     action: 'delete',
