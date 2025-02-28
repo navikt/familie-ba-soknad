@@ -19,7 +19,6 @@ import Steg from '../../Felleskomponenter/Steg/Steg';
 import { VedleggOppsummering } from '../../Felleskomponenter/VedleggOppsummering/VedleggOppsummering';
 import { hentVedleggOppsummering } from '../../Felleskomponenter/VedleggOppsummering/vedleggOppsummering.domene';
 
-import LastOppVedlegg from './LastOppVedlegg';
 import LastOppVedlegg2 from './LastOppVedlegg2';
 
 // Vedlegg er lagret 48 timer

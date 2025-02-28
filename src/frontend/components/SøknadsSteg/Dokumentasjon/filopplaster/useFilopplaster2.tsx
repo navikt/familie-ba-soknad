@@ -2,7 +2,12 @@ import { useState } from 'react';
 
 import axios from 'axios';
 
-import { FileAccepted, FileObject, FileRejected, FileRejectionReason } from '@navikt/ds-react';
+import {
+    type FileAccepted,
+    type FileObject,
+    type FileRejected,
+    type FileRejectionReason,
+} from '@navikt/ds-react';
 
 import Miljø from '../../../../../shared-utils/Miljø';
 import { useLastRessurserContext } from '../../../../context/LastRessurserContext';
