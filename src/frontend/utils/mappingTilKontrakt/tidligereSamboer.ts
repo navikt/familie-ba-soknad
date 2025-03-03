@@ -1,26 +1,42 @@
 import { TidligereSamboerSpørsmålId } from '../../components/SøknadsSteg/DinLivssituasjon/spørsmål';
 import { LocaleType } from '../../typer/common';
-import { IKontraktTidligereSamboer, ISøknadsfelt } from '../../typer/kontrakt/generelle';
+import {
+    IKontraktTidligereSamboer,
+    ISøknadsfelt,
+    TilRestLocaleRecord,
+} from '../../typer/kontrakt/generelle';
 import { ITidligereSamboer } from '../../typer/person';
+import { ITidligereSamoboereTekstinnhold } from '../../typer/sanity/modaler/tidligereSamboere';
 
 import { sammeVerdiAlleSpråk, språktekstIdFraSpørsmålId, søknadsfelt } from './hjelpefunksjoner';
 import { samboerISøknadKontraktFormat } from './samboer';
 
-export const tidligereSamboerISøknadKontraktFormat = (
-    samboer: ITidligereSamboer
-): ISøknadsfelt<IKontraktTidligereSamboer> => {
-    const { samboerTilDato, navn } = samboer;
-    const { verdi: samboerIKontraktFormat } = samboerISøknadKontraktFormat(samboer);
+interface TidligereSamboerIKontraktFormatParams {
+    tekster: ITidligereSamoboereTekstinnhold;
+    tilRestLocaleRecord: TilRestLocaleRecord;
+    samboer: ITidligereSamboer;
+}
 
-    return søknadsfelt(
-        'pdf.tidligeresamboer.label',
-        sammeVerdiAlleSpråk({
+export const tidligereSamboerISøknadKontraktFormat = ({
+    tekster,
+    tilRestLocaleRecord,
+    samboer,
+}: TidligereSamboerIKontraktFormatParams): ISøknadsfelt<IKontraktTidligereSamboer> => {
+    const { samboerTilDato } = samboer;
+    const { verdi: samboerIKontraktFormat } = samboerISøknadKontraktFormat({
+        tekster,
+        tilRestLocaleRecord,
+        samboer,
+    });
+
+    return {
+        label: tilRestLocaleRecord(tekster.oppsummeringstittel),
+        verdi: sammeVerdiAlleSpråk({
             ...samboerIKontraktFormat[LocaleType.nb],
             samboerTilDato: søknadsfelt(
                 språktekstIdFraSpørsmålId(TidligereSamboerSpørsmålId.tidligereSamboerTilDato),
                 sammeVerdiAlleSpråk(samboerTilDato.svar)
             ),
         }),
-        { navn: navn.svar }
-    );
+    };
 };

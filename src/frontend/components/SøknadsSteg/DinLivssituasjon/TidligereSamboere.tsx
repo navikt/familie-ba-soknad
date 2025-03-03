@@ -13,8 +13,9 @@ import { genererPeriodeId } from '../../../utils/perioder';
 import { uppercaseFørsteBokstav } from '../../../utils/visning';
 import JaNeiSpmForSanity from '../../Felleskomponenter/JaNeiSpm/JaNeiSpmForSanity';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
-import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
+import { LeggTilKnappForSanity } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnappForSanity';
 import PerioderContainer from '../../Felleskomponenter/PerioderContainer';
+import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
 
 import { IDinLivssituasjonTekstinnhold } from './innholdTyper';
@@ -47,7 +48,7 @@ const TidligereSamboere: React.FC<Props> = ({
 
     const teksterForModal: ITidligereSamoboereTekstinnhold =
         tekster().FELLES.modaler.tidligereSamboere.søker;
-    const { flerePerioder, leggTilPeriodeForklaring } = teksterForModal;
+    const { flerePerioder, leggTilKnapp, leggTilPeriodeForklaring } = teksterForModal;
 
     const teksterForDinLivssituasjon: IDinLivssituasjonTekstinnhold = tekster().DIN_LIVSSITUASJON;
     const { hattAnnenSamboerForSoektPeriode } = teksterForDinLivssituasjon;
@@ -74,8 +75,7 @@ const TidligereSamboere: React.FC<Props> = ({
                             fjernTidligereSamboer={fjernTidligereSamboer}
                         />
                     ))}
-                    <LeggTilKnapp
-                        språkTekst="omdeg.leggtilfleresamboere.leggtil"
+                    <LeggTilKnappForSanity
                         leggTilFlereTekst={
                             toggles.NYE_MODAL_TEKSTER &&
                             tidligereSamboere.verdi.length > 0 &&
@@ -91,7 +91,9 @@ const TidligereSamboere: React.FC<Props> = ({
                             skjema.visFeilmeldinger &&
                             tidligereSamboere.feilmelding
                         }
-                    />
+                    >
+                        <TekstBlock block={leggTilKnapp} />
+                    </LeggTilKnappForSanity>
                     {erLeggTilSamboerModalÅpen && (
                         <LeggTilSamboerModal
                             leggTilTidligereSamboer={leggTilTidligereSamboer}

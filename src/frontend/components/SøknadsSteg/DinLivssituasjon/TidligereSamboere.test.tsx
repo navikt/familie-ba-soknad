@@ -10,11 +10,7 @@ import { ISøknad } from '../../../typer/søknad';
 import { silenceConsoleErrors, spyOnUseApp, TestProvidere } from '../../../utils/testing';
 
 import DinLivssituasjon from './DinLivssituasjon';
-import {
-    DinLivssituasjonSpørsmålId,
-    samboerSpråkIder,
-    TidligereSamboerSpørsmålId,
-} from './spørsmål';
+import { DinLivssituasjonSpørsmålId, TidligereSamboerSpørsmålId } from './spørsmål';
 
 jest.mock('react-router', () => ({
     ...(jest.requireActual('react-router') as object),
@@ -62,12 +58,12 @@ describe('TidligereSamboere', () => {
     it('"Når ble samboerforholdet avsluttet?" skal ikke vises dersom man ikke har tidligere samboere', () => {
         spyOnUseApp(søknad);
 
-        const { queryByText } = render(
+        const { queryByTestId } = render(
             <TestProvidere>
                 <DinLivssituasjon />
             </TestProvidere>
         );
-        const result = queryByText(samboerSpråkIder.samboerTilDato);
+        const result = queryByTestId('utvidet-tidligere-samboer-samboerTilDato');
         expect(result).not.toBeInTheDocument();
     });
 
@@ -113,12 +109,12 @@ describe('TidligereSamboere', () => {
             },
         });
 
-        const { queryByText } = render(
+        const { getByTestId } = render(
             <TestProvidere>
                 <DinLivssituasjon />
             </TestProvidere>
         );
-        const result = queryByText(samboerSpråkIder.samboerTilDato);
+        const result = getByTestId('utvidet-tidligere-samboer-samboerTilDato');
         expect(result).toBeInTheDocument();
     });
 });

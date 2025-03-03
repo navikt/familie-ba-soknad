@@ -131,9 +131,19 @@ export const dataISøknadKontraktFormat = (
                 ...spørmålISøknadsFormat(typetSøkerSpørsmål, undefined, tekster),
                 ...spørmålISøknadsFormat(typetUtvidaSpørsmål, undefined, tekster),
             },
-            tidligereSamboere: tidligereSamboere.map(tidligereSamboerISøknadKontraktFormat),
+            tidligereSamboere: tidligereSamboere.map(samboer =>
+                tidligereSamboerISøknadKontraktFormat({
+                    tekster: fellesTekster.modaler.tidligereSamboere.søker,
+                    tilRestLocaleRecord,
+                    samboer,
+                })
+            ),
             nåværendeSamboer: nåværendeSamboer
-                ? samboerISøknadKontraktFormat(nåværendeSamboer)
+                ? samboerISøknadKontraktFormat({
+                      tekster: fellesTekster.modaler.tidligereSamboere.søker,
+                      tilRestLocaleRecord,
+                      samboer: nåværendeSamboer,
+                  })
                 : null,
             arbeidsperioderUtland: arbeidsperioderUtland.map((periode, index) =>
                 tilIArbeidsperiodeIKontraktFormat({

@@ -1,12 +1,7 @@
-name: Build, push, and deploy app to prod
+name: Gammel Build, push, and deploy app to prod
 
 on:
   workflow_dispatch:
-    branches:
-      - main
-  push:
-    branches:
-      - 'main'
 
 env:
   BASE_PATH: /barnetrygd/soknad/
@@ -76,7 +71,7 @@ jobs:
         uses: nais/deploy/actions/deploy@v2
         env:
           CLUSTER: dev-gcp
-          RESOURCE: build_n_deploy/naiserator/naiserator_dev.yaml
+          RESOURCE: .nais/app-dev.yaml
           VAR: base_path=${{ env.BASE_PATH }}
           IMAGE: ${{ needs.bygg.outputs.image }}
 
@@ -95,6 +90,6 @@ jobs:
         uses: nais/deploy/actions/deploy@v2
         env:
           CLUSTER: prod-gcp
-          RESOURCE: build_n_deploy/naiserator/naiserator_prod.yaml
+          RESOURCE: .nais/app-prod.yaml
           VAR: base_path=${{ env.BASE_PATH }}
           IMAGE: ${{ needs.bygg.outputs.image }}
