@@ -41,7 +41,7 @@ export const useFilopplaster2 = (
 
     const MAKS_FILSTØRRELSE_MB = 10;
     const MAKS_FILSTØRRELSE_BYTES = MAKS_FILSTØRRELSE_MB * 1024 * 1024;
-    const MAKS_ANTALL_FILER = 4;
+    const MAKS_ANTALL_FILER = 25;
     const STØTTEDE_FILTYPER = [EFiltyper.PNG, EFiltyper.JPG, EFiltyper.JPEG, EFiltyper.PDF];
 
     const feilmeldinger: Record<FileRejectionReason | ECustomFileRejectionReasons, string> = {
