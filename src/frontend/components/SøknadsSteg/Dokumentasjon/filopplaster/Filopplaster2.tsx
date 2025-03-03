@@ -40,16 +40,22 @@ const Filopplaster2: React.FC<IFilopplasterProps> = ({ dokumentasjon, oppdaterDo
         <FileUpload
             translations={{
                 dropzone: {
-                    button: plainTekst(dokumentasjonTekster.velgFilerEnkelt),
-                    buttonMultiple: plainTekst(dokumentasjonTekster.velgFilerFlere),
-                    dragAndDrop: plainTekst(dokumentasjonTekster.draOgSlippFilerEnkelt),
-                    dragAndDropMultiple: plainTekst(dokumentasjonTekster.draOgSlippFilerFlere),
+                    button: plainTekst(dokumentasjonTekster.velgFil),
+                    buttonMultiple: plainTekst(dokumentasjonTekster.velgFiler),
+                    dragAndDrop: plainTekst(dokumentasjonTekster.draOgSlippFilenHer),
+                    dragAndDropMultiple: plainTekst(dokumentasjonTekster.draOgSlippFilerHer),
                     drop: uppercaseFørsteBokstav(plainTekst(frittståendeOrdTekster.slipp)),
                     or: plainTekst(frittståendeOrdTekster.eller),
                     disabled: plainTekst(dokumentasjonTekster.filopplastingDeaktivert),
                     disabledFilelimit: plainTekst(
                         dokumentasjonTekster.filopplastingDeaktivertMaksAntallFiler
                     ),
+                },
+                item: {
+                    retryButtonTitle: plainTekst(dokumentasjonTekster.lastOppFilenPaNytt),
+                    deleteButtonTitle: plainTekst(dokumentasjonTekster.slettFilen),
+                    uploading: plainTekst(dokumentasjonTekster.lasterOpp),
+                    downloading: plainTekst(dokumentasjonTekster.lasterNed),
                 },
             }}
         >

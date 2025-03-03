@@ -50,12 +50,16 @@ export type IDokumentasjonTekstinnhold = {
     filtypeFeilmelding: LocaleRecordString;
     filstorrelseFeilmelding: LocaleRecordString;
     antallFilerFeilmelding: LocaleRecordString;
-    draOgSlippFilerEnkelt: LocaleRecordString;
-    draOgSlippFilerFlere: LocaleRecordString;
-    velgFilerEnkelt: LocaleRecordString;
-    velgFilerFlere: LocaleRecordString;
+    velgFil: LocaleRecordString;
+    velgFiler: LocaleRecordString;
+    draOgSlippFilenHer: LocaleRecordString;
+    draOgSlippFilerHer: LocaleRecordString;
     filopplastingDeaktivert: LocaleRecordString;
     filopplastingDeaktivertMaksAntallFiler: LocaleRecordString;
+    lastOppFilenPaNytt: LocaleRecordString;
+    slettFilen: LocaleRecordString;
+    lasterNed: LocaleRecordString;
+    lasterOpp: LocaleRecordString;
 } & {
     // Vedlegg - titler
     [TittelSanityApiNavn.bekreftelsePaaAdopsjonTittel]: LocaleRecordBlock;
