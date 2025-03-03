@@ -91,6 +91,8 @@ export interface IFrittståendeOrdTekstinnhold {
     utbetalingsperioder: LocaleRecordString;
     vedlegg: LocaleRecordString;
     vedleggMedFeil: LocaleRecordString;
+    slipp: LocaleRecordString;
+    eller: LocaleRecordString;
 }
 
 export interface INavigasjonTekstinnhold {
