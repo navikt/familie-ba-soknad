@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 
 import {
     type FileAccepted,
@@ -10,7 +10,6 @@ import {
 } from '@navikt/ds-react';
 
 import Miljø from '../../../../../shared-utils/Miljø';
-import { useLastRessurserContext } from '../../../../context/LastRessurserContext';
 import { EFiltyper, IDokumentasjon, IVedlegg } from '../../../../typer/dokumentasjon';
 import { Dokumentasjonsbehov } from '../../../../typer/kontrakt/dokumentasjon';
 import { PlainTekst } from '../../../../typer/sanity/sanity';
@@ -77,7 +76,7 @@ const badRequestCodeFraError = (error): BadRequestCode | undefined => {
     return;
 };
 
-const feilmeldingFraError = (error: AxiosError): string => {
+const feilmeldingFraError = (error): string => {
     const badRequestCode = badRequestCodeFraError(error);
     switch (badRequestCode) {
         case BadRequestCode.IMAGE_DIMENSIONS_TOO_SMALL:
@@ -101,8 +100,6 @@ export const useFilopplaster2 = (
     dokumentasjonTekster: IDokumentasjonTekstinnhold,
     plainTekst: PlainTekst
 ) => {
-    const { wrapMedSystemetLaster } = useLastRessurserContext();
-
     const [avvisteFiler, setAvvsiteFiler] = useState<FileRejected[]>([]);
 
     const MAKS_FILSTØRRELSE_MB = 10;
@@ -140,41 +137,39 @@ export const useFilopplaster2 = (
 
         await Promise.all(
             aksepterteFiler.map((fil: FileAccepted) => {
-                return wrapMedSystemetLaster(async () => {
-                    const requestData = new FormData();
-                    requestData.append('file', fil.file);
+                const requestData = new FormData();
+                requestData.append('file', fil.file);
 
-                    await axios
-                        .post<OpplastetVedlegg>(
-                            `${Miljø().dokumentProxyUrl}/mapper/familievedlegg`,
-                            requestData,
-                            {
-                                withCredentials: true,
-                                headers: {
-                                    'content-type': 'multipart/form-data',
-                                    accept: 'application/json',
-                                },
-                            }
-                        )
-                        .then((response: { data: OpplastetVedlegg }) => {
-                            const { data } = response;
-                            const nyttVedlegg: IVedlegg = {
-                                dokumentId: data.dokumentId,
-                                navn: fil.file.name,
-                                størrelse: fil.file.size,
-                                tidspunkt: dagensDatoStreng,
-                            };
-                            nyeVedlegg.push(nyttVedlegg);
-                        })
-                        .catch((error: AxiosError) => {
-                            const filMedFeil: FileRejected = {
-                                file: fil.file,
-                                error: true,
-                                reasons: [feilmeldingFraError(error)],
-                            };
-                            avvisteVedlegg.push(filMedFeil);
-                        });
-                });
+                return axios
+                    .post<OpplastetVedlegg>(
+                        `${Miljø().dokumentProxyUrl}/mapper/familievedlegg`,
+                        requestData,
+                        {
+                            withCredentials: true,
+                            headers: {
+                                'content-type': 'multipart/form-data',
+                                accept: 'application/json',
+                            },
+                        }
+                    )
+                    .then((response: { data: OpplastetVedlegg }) => {
+                        const { data } = response;
+                        const nyttVedlegg: IVedlegg = {
+                            dokumentId: data.dokumentId,
+                            navn: fil.file.name,
+                            størrelse: fil.file.size,
+                            tidspunkt: dagensDatoStreng,
+                        };
+                        nyeVedlegg.push(nyttVedlegg);
+                    })
+                    .catch(error => {
+                        const filMedFeil: FileRejected = {
+                            file: fil.file,
+                            error: true,
+                            reasons: [feilmeldingFraError(error)],
+                        };
+                        avvisteVedlegg.push(filMedFeil);
+                    });
             })
         );
 
