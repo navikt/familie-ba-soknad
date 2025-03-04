@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 
 import {
     type FileAccepted,
@@ -21,9 +21,45 @@ interface OpplastetVedlegg {
     filnavn: string;
 }
 
-enum ECustomFileRejectionReasons {
-    MAKS_ANTALL_FILER_NÅDD = 'maksAntallFilerNådd',
+enum EStandardFileRejectionReasons {
+    FIL_TYPE = 'fileType',
+    FIL_STØRRELSE_FOR_STOR = 'fileSize',
 }
+
+enum ECustomFileRejectionReasons {
+    FIL_STØRRELSE_FOR_LITEN = 'filStørrelseForLiten',
+    MAKS_ANTALL_FILER_NÅDD = 'maksAntallFilerNådd',
+    NOE_GIKK_FEIL = 'noeGikkFeil',
+}
+
+enum BadRequestCode {
+    IMAGE_TOO_LARGE = 'IMAGE_TOO_LARGE',
+    IMAGE_DIMENSIONS_TOO_SMALL = 'IMAGE_DIMENSIONS_TOO_SMALL',
+    INVALID_DOCUMENT_FORMAT = 'INVALID_DOCUMENT_FORMAT',
+}
+
+// Meldingsfeltet på respons ved BadRequest inneholder tekst på følgende format: CODE=ENUM_NAVN
+const badRequestCodeFraError = (error): BadRequestCode | undefined => {
+    const melding = error.response?.data?.melding;
+    if (melding) {
+        return BadRequestCode[melding.split('=')[1]];
+    }
+    return;
+};
+
+const feilmeldingFraError = (error: AxiosError): string => {
+    const badRequestCode = badRequestCodeFraError(error);
+    switch (badRequestCode) {
+        case BadRequestCode.IMAGE_DIMENSIONS_TOO_SMALL:
+            return ECustomFileRejectionReasons.FIL_STØRRELSE_FOR_LITEN;
+        case BadRequestCode.IMAGE_TOO_LARGE:
+            return EStandardFileRejectionReasons.FIL_STØRRELSE_FOR_STOR;
+        case BadRequestCode.INVALID_DOCUMENT_FORMAT:
+            return EStandardFileRejectionReasons.FIL_TYPE;
+        default:
+            return ECustomFileRejectionReasons.NOE_GIKK_FEIL;
+    }
+};
 
 export const useFilopplaster2 = (
     dokumentasjon: IDokumentasjon,
@@ -45,9 +81,15 @@ export const useFilopplaster2 = (
     const STØTTEDE_FILTYPER = [EFiltyper.PNG, EFiltyper.JPG, EFiltyper.JPEG, EFiltyper.PDF];
 
     const feilmeldinger: Record<FileRejectionReason | ECustomFileRejectionReasons, string> = {
-        fileType: plainTekst(dokumentasjonTekster.filtypeFeilmelding),
-        fileSize: `${plainTekst(dokumentasjonTekster.filstorrelseFeilmelding)} ${MAKS_FILSTØRRELSE_MB} MB`,
+        [EStandardFileRejectionReasons.FIL_TYPE]: plainTekst(
+            dokumentasjonTekster.filtypeFeilmelding
+        ),
+        [EStandardFileRejectionReasons.FIL_STØRRELSE_FOR_STOR]: `${plainTekst(dokumentasjonTekster.filstorrelseFeilmelding)} ${MAKS_FILSTØRRELSE_MB} MB`,
+        [ECustomFileRejectionReasons.FIL_STØRRELSE_FOR_LITEN]: plainTekst(
+            dokumentasjonTekster.bildetForLite
+        ),
         [ECustomFileRejectionReasons.MAKS_ANTALL_FILER_NÅDD]: `${plainTekst(dokumentasjonTekster.antallFilerFeilmelding)} ${MAKS_ANTALL_FILER}`,
+        [ECustomFileRejectionReasons.NOE_GIKK_FEIL]: plainTekst(dokumentasjonTekster.noeGikkFeil),
     };
 
     const dagensDatoStreng = new Date().toISOString();
@@ -101,6 +143,15 @@ export const useFilopplaster2 = (
                                 størrelse: fil.file.size,
                                 tidspunkt: dagensDatoStreng,
                             });
+                        })
+                        .catch((error: AxiosError) => {
+                            const oppfangetFeil: FileRejected = {
+                                file: fil.file,
+                                error: true,
+                                reasons: [feilmeldingFraError(error)],
+                            };
+
+                            setAvvsiteFiler([...avvisteFiler, oppfangetFeil]);
                         });
                 });
             })
