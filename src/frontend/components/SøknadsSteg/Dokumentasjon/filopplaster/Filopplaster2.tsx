@@ -25,6 +25,7 @@ const Filopplaster2: React.FC<IFilopplasterProps> = ({ dokumentasjon, oppdaterDo
     const frittståendeOrdTekster = tekster().FELLES.frittståendeOrd;
 
     const {
+        filerUnderOpplastning,
         avvisteFiler,
         MAKS_FILSTØRRELSE_MB,
         MAKS_FILSTØRRELSE_BYTES,
@@ -75,13 +76,15 @@ const Filopplaster2: React.FC<IFilopplasterProps> = ({ dokumentasjon, oppdaterDo
                         max: MAKS_ANTALL_FILER,
                         current: dokumentasjon.opplastedeVedlegg.length,
                     }}
+                    disabled={filerUnderOpplastning.length > 0}
                     onSelect={nyeFiler => leggTilVedlegg(nyeFiler)}
                 />
 
-                {dokumentasjon.opplastedeVedlegg.length > 0 && (
+                {(dokumentasjon.opplastedeVedlegg.length > 0 ||
+                    filerUnderOpplastning.length > 0) && (
                     <VStack gap="2">
                         <Heading level="4" size="xsmall">
-                            {`${plainTekst(frittståendeOrdTekster.vedlegg)} (${dokumentasjon.opplastedeVedlegg.length})`}
+                            {`${plainTekst(frittståendeOrdTekster.vedlegg)} (${dokumentasjon.opplastedeVedlegg.length + filerUnderOpplastning.length})`}
                         </Heading>
                         <VStack as="ul" gap="3">
                             {dokumentasjon.opplastedeVedlegg.map((opplastetVedlegg, index) => (
@@ -96,6 +99,17 @@ const Filopplaster2: React.FC<IFilopplasterProps> = ({ dokumentasjon, oppdaterDo
                                         action: 'delete',
                                         onClick: () => fjernVedlegg(opplastetVedlegg),
                                     }}
+                                />
+                            ))}
+                            {filerUnderOpplastning.map((filUnderOpplastning, index) => (
+                                <FileUpload.Item
+                                    as="li"
+                                    key={index}
+                                    file={{
+                                        name: filUnderOpplastning.file.name,
+                                        size: filUnderOpplastning.file.size,
+                                    }}
+                                    status="uploading"
                                 />
                             ))}
                         </VStack>

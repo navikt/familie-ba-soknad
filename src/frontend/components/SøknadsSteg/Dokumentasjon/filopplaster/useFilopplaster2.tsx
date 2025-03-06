@@ -100,6 +100,7 @@ export const useFilopplaster2 = (
     dokumentasjonTekster: IDokumentasjonTekstinnhold,
     plainTekst: PlainTekst
 ) => {
+    const [filerUnderOpplastning, setFilerUnderOpplastning] = useState<FileObject[]>([]);
     const [avvisteFiler, setAvvsiteFiler] = useState<FileRejected[]>([]);
 
     const MAKS_FILSTØRRELSE_MB = 10;
@@ -132,57 +133,63 @@ export const useFilopplaster2 = (
             setAvvsiteFiler([...avvisteFiler, ...feilendeFiler]);
         }
 
-        const nyeVedlegg: IVedlegg[] = [];
-        const avvisteVedlegg: FileRejected[] = [];
+        if (aksepterteFiler.length > 0) {
+            setFilerUnderOpplastning(aksepterteFiler);
 
-        await Promise.all(
-            aksepterteFiler.map((fil: FileAccepted) => {
-                const requestData = new FormData();
-                requestData.append('file', fil.file);
+            const nyeVedlegg: IVedlegg[] = [];
+            const avvisteVedlegg: FileRejected[] = [];
 
-                return axios
-                    .post<OpplastetVedlegg>(
-                        `${Miljø().dokumentProxyUrl}/mapper/familievedlegg`,
-                        requestData,
-                        {
-                            withCredentials: true,
-                            headers: {
-                                'content-type': 'multipart/form-data',
-                                accept: 'application/json',
-                            },
-                        }
-                    )
-                    .then((response: { data: OpplastetVedlegg }) => {
-                        const { data } = response;
-                        const nyttVedlegg: IVedlegg = {
-                            dokumentId: data.dokumentId,
-                            navn: fil.file.name,
-                            størrelse: fil.file.size,
-                            tidspunkt: dagensDatoStreng,
-                        };
-                        nyeVedlegg.push(nyttVedlegg);
-                    })
-                    .catch(error => {
-                        const filMedFeil: FileRejected = {
-                            file: fil.file,
-                            error: true,
-                            reasons: [feilmeldingFraError(error)],
-                        };
-                        avvisteVedlegg.push(filMedFeil);
-                    });
-            })
-        );
+            await Promise.all(
+                aksepterteFiler.map((fil: FileAccepted) => {
+                    const requestData = new FormData();
+                    requestData.append('file', fil.file);
 
-        if (nyeVedlegg.length > 0) {
-            oppdaterDokumentasjon(
-                dokumentasjon.dokumentasjonsbehov,
-                [...dokumentasjon.opplastedeVedlegg, ...nyeVedlegg],
-                dokumentasjon.harSendtInn
+                    return axios
+                        .post<OpplastetVedlegg>(
+                            `${Miljø().dokumentProxyUrl}/mapper/familievedlegg`,
+                            requestData,
+                            {
+                                withCredentials: true,
+                                headers: {
+                                    'content-type': 'multipart/form-data',
+                                    accept: 'application/json',
+                                },
+                            }
+                        )
+                        .then((response: { data: OpplastetVedlegg }) => {
+                            const { data } = response;
+                            const nyttVedlegg: IVedlegg = {
+                                dokumentId: data.dokumentId,
+                                navn: fil.file.name,
+                                størrelse: fil.file.size,
+                                tidspunkt: dagensDatoStreng,
+                            };
+                            nyeVedlegg.push(nyttVedlegg);
+                        })
+                        .catch(error => {
+                            const filMedFeil: FileRejected = {
+                                file: fil.file,
+                                error: true,
+                                reasons: [feilmeldingFraError(error)],
+                            };
+                            avvisteVedlegg.push(filMedFeil);
+                        });
+                })
             );
-        }
 
-        if (avvisteVedlegg.length > 0) {
-            setAvvsiteFiler([...avvisteFiler, ...avvisteVedlegg]);
+            if (nyeVedlegg.length > 0) {
+                oppdaterDokumentasjon(
+                    dokumentasjon.dokumentasjonsbehov,
+                    [...dokumentasjon.opplastedeVedlegg, ...nyeVedlegg],
+                    dokumentasjon.harSendtInn
+                );
+            }
+
+            if (avvisteVedlegg.length > 0) {
+                setAvvsiteFiler([...avvisteFiler, ...avvisteVedlegg]);
+            }
+
+            setFilerUnderOpplastning([]);
         }
     };
 
@@ -208,6 +215,7 @@ export const useFilopplaster2 = (
     };
 
     return {
+        filerUnderOpplastning,
         avvisteFiler,
         MAKS_FILSTØRRELSE_MB,
         MAKS_FILSTØRRELSE_BYTES,
