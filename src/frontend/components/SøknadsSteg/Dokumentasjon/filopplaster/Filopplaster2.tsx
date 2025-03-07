@@ -47,7 +47,11 @@ const Filopplaster2: React.FC<IFilopplasterProps> = ({ dokumentasjon, oppdaterDo
                     dragAndDropMultiple: plainTekst(dokumentasjonTekster.draOgSlippFilerHer),
                     drop: uppercaseFørsteBokstav(plainTekst(frittståendeOrdTekster.slipp)),
                     or: plainTekst(frittståendeOrdTekster.eller),
-                    disabled: plainTekst(dokumentasjonTekster.filopplastingDeaktivert),
+                    disabled: plainTekst(
+                        filerUnderOpplastning.length > 0
+                            ? dokumentasjonTekster.filopplastingDeaktivertFilerErUnderOpplastning
+                            : dokumentasjonTekster.filopplastingDeaktivert
+                    ),
                     disabledFilelimit: plainTekst(
                         dokumentasjonTekster.filopplastingDeaktivertMaksAntallFiler
                     ),
@@ -76,7 +80,7 @@ const Filopplaster2: React.FC<IFilopplasterProps> = ({ dokumentasjon, oppdaterDo
                         max: MAKS_ANTALL_FILER,
                         current: dokumentasjon.opplastedeVedlegg.length,
                     }}
-                    disabled={filerUnderOpplastning.length > 0}
+                    disabled={filerUnderOpplastning.length > 0 ? true : undefined}
                     onSelect={nyeFiler => leggTilVedlegg(nyeFiler)}
                 />
 

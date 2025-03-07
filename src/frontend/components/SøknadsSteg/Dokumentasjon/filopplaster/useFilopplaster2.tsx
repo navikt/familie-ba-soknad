@@ -130,7 +130,10 @@ export const useFilopplaster2 = (
         );
 
         if (feilendeFiler.length > 0) {
-            setAvvsiteFiler([...avvisteFiler, ...feilendeFiler]);
+            setAvvsiteFiler(eksisterendeAvvisteFiler => [
+                ...eksisterendeAvvisteFiler,
+                ...feilendeFiler,
+            ]);
         }
 
         if (aksepterteFiler.length > 0) {
@@ -186,7 +189,10 @@ export const useFilopplaster2 = (
             }
 
             if (avvisteVedlegg.length > 0) {
-                setAvvsiteFiler([...avvisteFiler, ...avvisteVedlegg]);
+                setAvvsiteFiler(eksisterendeAvvisteFiler => [
+                    ...eksisterendeAvvisteFiler,
+                    ...avvisteVedlegg,
+                ]);
             }
 
             setFilerUnderOpplastning([]);

@@ -55,6 +55,7 @@ export type IDokumentasjonTekstinnhold = {
     draOgSlippFilenHer: LocaleRecordString;
     draOgSlippFilerHer: LocaleRecordString;
     filopplastingDeaktivert: LocaleRecordString;
+    filopplastingDeaktivertFilerErUnderOpplastning: LocaleRecordString;
     filopplastingDeaktivertMaksAntallFiler: LocaleRecordString;
     lastOppFilenPaNytt: LocaleRecordString;
     slettFilen: LocaleRecordString;
