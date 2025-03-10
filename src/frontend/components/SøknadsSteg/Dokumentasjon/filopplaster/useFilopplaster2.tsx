@@ -20,15 +20,15 @@ interface OpplastetVedlegg {
     filnavn: string;
 }
 
-enum EStandardFileRejectionReasons {
+export enum EStandardFileRejectionReasons {
     FIL_TYPE = 'fileType',
     FIL_STØRRELSE_FOR_STOR = 'fileSize',
 }
 
-enum ECustomFileRejectionReasons {
+export enum ECustomFileRejectionReasons {
     FIL_DIMENSJONER_FOR_LITEN = 'filDimensjonerForLiten',
     MAKS_ANTALL_FILER_NÅDD = 'maksAntallFilerNådd',
-    NOE_GIKK_FEIL = 'noeGikkFeil',
+    UKJENT_FEIL = 'ukjentFeil',
 }
 
 const filtrerFiler = (
@@ -86,7 +86,7 @@ const feilmeldingFraError = (error): string => {
         case BadRequestCode.INVALID_DOCUMENT_FORMAT:
             return EStandardFileRejectionReasons.FIL_TYPE;
         default:
-            return ECustomFileRejectionReasons.NOE_GIKK_FEIL;
+            return ECustomFileRejectionReasons.UKJENT_FEIL;
     }
 };
 
@@ -117,7 +117,9 @@ export const useFilopplaster2 = (
             dokumentasjonTekster.bildetForLite
         ),
         [ECustomFileRejectionReasons.MAKS_ANTALL_FILER_NÅDD]: `${plainTekst(dokumentasjonTekster.antallFilerFeilmelding)} ${MAKS_ANTALL_FILER}`,
-        [ECustomFileRejectionReasons.NOE_GIKK_FEIL]: plainTekst(dokumentasjonTekster.noeGikkFeil),
+        [ECustomFileRejectionReasons.UKJENT_FEIL]: plainTekst(
+            dokumentasjonTekster.ukjentFeilmelding
+        ),
     };
 
     const dagensDatoStreng = new Date().toISOString();
@@ -220,6 +222,15 @@ export const useFilopplaster2 = (
         setAvvsiteFiler([]);
     };
 
+    const prøvOpplastingAvAvvistFilPåNytt = (fil: FileRejected) => {
+        fjernAvvistFil(fil);
+        const filUtenFeil: FileAccepted = {
+            file: fil.file,
+            error: false,
+        };
+        leggTilVedlegg([filUtenFeil]);
+    };
+
     return {
         filerUnderOpplastning,
         avvisteFiler,
@@ -232,5 +243,6 @@ export const useFilopplaster2 = (
         fjernVedlegg,
         fjernAvvistFil,
         fjernAlleAvvisteFiler,
+        prøvOpplastingAvAvvistFilPåNytt,
     };
 };

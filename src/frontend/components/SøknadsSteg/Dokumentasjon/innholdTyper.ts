@@ -50,6 +50,7 @@ export type IDokumentasjonTekstinnhold = {
     filtypeFeilmelding: LocaleRecordString;
     filstorrelseFeilmelding: LocaleRecordString;
     antallFilerFeilmelding: LocaleRecordString;
+    ukjentFeilmelding: LocaleRecordString;
     velgFil: LocaleRecordString;
     velgFiler: LocaleRecordString;
     draOgSlippFilenHer: LocaleRecordString;

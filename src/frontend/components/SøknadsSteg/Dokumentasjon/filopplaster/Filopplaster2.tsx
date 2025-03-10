@@ -7,7 +7,7 @@ import { IDokumentasjon, IVedlegg } from '../../../../typer/dokumentasjon';
 import { Dokumentasjonsbehov } from '../../../../typer/kontrakt/dokumentasjon';
 import { uppercaseFørsteBokstav } from '../../../../utils/visning';
 
-import { useFilopplaster2 } from './useFilopplaster2';
+import { ECustomFileRejectionReasons, useFilopplaster2 } from './useFilopplaster2';
 
 interface IFilopplasterProps {
     dokumentasjon: IDokumentasjon;
@@ -35,6 +35,7 @@ const Filopplaster2: React.FC<IFilopplasterProps> = ({ dokumentasjon, oppdaterDo
         leggTilVedlegg,
         fjernVedlegg,
         fjernAvvistFil,
+        prøvOpplastingAvAvvistFilPåNytt,
     } = useFilopplaster2(dokumentasjon, oppdaterDokumentasjon, dokumentasjonTekster, plainTekst);
 
     return (
@@ -135,10 +136,18 @@ const Filopplaster2: React.FC<IFilopplasterProps> = ({ dokumentasjon, oppdaterDo
                                         size: fil.file.size,
                                     }}
                                     error={feilmeldinger[fil.reasons[0]]}
-                                    button={{
-                                        action: 'delete',
-                                        onClick: () => fjernAvvistFil(fil),
-                                    }}
+                                    button={
+                                        fil.reasons[0] === ECustomFileRejectionReasons.UKJENT_FEIL
+                                            ? {
+                                                  action: 'retry',
+                                                  onClick: () =>
+                                                      prøvOpplastingAvAvvistFilPåNytt(fil),
+                                              }
+                                            : {
+                                                  action: 'delete',
+                                                  onClick: () => fjernAvvistFil(fil),
+                                              }
+                                    }
                                 />
                             ))}
                         </VStack>
