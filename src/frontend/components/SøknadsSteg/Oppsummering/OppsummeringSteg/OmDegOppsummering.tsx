@@ -42,12 +42,7 @@ const OmDegOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
             settFeilAnchors={settFeilAnchors}
         >
             <OppsummeringFelt
-                tittel={
-                    <TekstBlock
-                        block={forsidetekster.bekreftelsesboksBroedtekst}
-                        brukTypografiWrapper={false}
-                    />
-                }
+                tittel={<TekstBlock block={forsidetekster.bekreftelsesboksBroedtekst} />}
                 søknadsvar={
                     søknad.lestOgForståttBekreftelse
                         ? plainTekst(forsidetekster.bekreftelsesboksErklaering)
