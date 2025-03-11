@@ -43,13 +43,14 @@ export enum Typografi {
     StegHeadingH1 = 'StegHeadingH1',
     ModalHeadingH1 = 'ModalHeadingH1',
     ForsideHeadingH1 = 'ForsideHeadingH1',
+    Ingress = 'Ingress',
     BodyLong = 'BodyLong',
     BodyShort = 'BodyShort',
     Label = 'Label',
     Detail = 'Detail',
     HeadingH2 = 'HeadingH2',
+    HeadingH3 = 'HeadingH3',
 }
-
 export const frittståendeOrdPrefix = 'FRITTSTAENDEORD';
 export const modalPrefix = 'MODAL';
 export const navigasjonPrefix = 'NAVIGASJON';
