@@ -214,10 +214,12 @@ export const ArbeidsperiodeModal: React.FC<ArbeidsperiodeModalProps> = ({
                     )}
                 </>
             )}
-            <SkjemaCheckboxForSanity
-                felt={skjema.felter.tilDatoArbeidsperiodeUkjent}
-                label={plainTekst(teksterForModal.sluttdatoFremtid.checkboxLabel)}
-            />
+            {tilDatoArbeidsperiode.erSynlig && (
+                <SkjemaCheckboxForSanity
+                    felt={skjema.felter.tilDatoArbeidsperiodeUkjent}
+                    label={plainTekst(teksterForModal.sluttdatoFremtid.checkboxLabel)}
+                />
+            )}
             {visFeiloppsummering(skjema) && <SkjemaFeiloppsummering skjema={skjema} />}
         </SkjemaModal>
     );

@@ -3,11 +3,13 @@ import React from 'react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import { useSpråk } from '../../../context/SpråkContext';
+import { EFeatureToggle } from '../../../typer/feature-toggles';
 import { IArbeidsperiode } from '../../../typer/perioder';
 import { PeriodePersonTypeMedBarnProps, PersonType } from '../../../typer/personType';
 import { IArbeidsperiodeTekstinnhold } from '../../../typer/sanity/modaler/arbeidsperiode';
-import { formaterDatostringKunMåned } from '../../../utils/dato';
+import { formaterDato, formaterDatostringKunMåned } from '../../../utils/dato';
 import { landkodeTilSpråk } from '../../../utils/språk';
 import { formaterMånedMedUkjent, uppercaseFørsteBokstav } from '../../../utils/visning';
 import { OppsummeringFelt } from '../../SøknadsSteg/Oppsummering/OppsummeringFelt';
@@ -33,6 +35,7 @@ export const ArbeidsperiodeOppsummering: React.FC<ArbeidsperiodeOppsummeringProp
     personType,
     erDød = false,
 }) => {
+    const { toggles } = useFeatureToggles();
     const { tekster, plainTekst } = useApp();
     const { valgtLocale } = useSpråk();
     const {
@@ -94,21 +97,22 @@ export const ArbeidsperiodeOppsummering: React.FC<ArbeidsperiodeOppsummeringProp
                     søknadsvar={arbeidsgiver.svar}
                 />
             )}
-            {/* {fraDatoArbeidsperiode.svar && (
-                <OppsummeringFelt
-                    tittel={<TekstBlock block={teksterForModal.startdato.sporsmal} />}
-                    søknadsvar={formaterDato(fraDatoArbeidsperiode.svar)}
-                />
-            )} */}
             {fraDatoArbeidsperiode.svar && (
                 <OppsummeringFelt
                     tittel={<TekstBlock block={teksterForModal.startdato.sporsmal} />}
-                    søknadsvar={uppercaseFørsteBokstav(
-                        formaterDatostringKunMåned(fraDatoArbeidsperiode.svar, valgtLocale)
-                    )}
+                    søknadsvar={
+                        toggles[EFeatureToggle.SPOR_OM_MANED_IKKE_DATO]
+                            ? uppercaseFørsteBokstav(
+                                  formaterDatostringKunMåned(
+                                      fraDatoArbeidsperiode.svar,
+                                      valgtLocale
+                                  )
+                              )
+                            : formaterDato(fraDatoArbeidsperiode.svar)
+                    }
                 />
             )}
-            {/* {tilDatoArbeidsperiode.svar && (
+            {tilDatoArbeidsperiode.svar && (
                 <OppsummeringFelt
                     tittel={
                         <TekstBlock
@@ -119,12 +123,14 @@ export const ArbeidsperiodeOppsummering: React.FC<ArbeidsperiodeOppsummeringProp
                             }
                         />
                     }
-                    søknadsvar={formaterDatoMedUkjent(
+                    søknadsvar={formaterMånedMedUkjent(
                         tilDatoArbeidsperiode.svar,
-                        plainTekst(teksterForModal.sluttdatoFremtid.checkboxLabel)
+                        plainTekst(teksterForModal.sluttdatoFremtid.checkboxLabel),
+                        toggles[EFeatureToggle.SPOR_OM_MANED_IKKE_DATO],
+                        valgtLocale
                     )}
                 />
-            )} */}
+            )}
             {tilDatoArbeidsperiode.svar && (
                 <OppsummeringFelt
                     tittel={
