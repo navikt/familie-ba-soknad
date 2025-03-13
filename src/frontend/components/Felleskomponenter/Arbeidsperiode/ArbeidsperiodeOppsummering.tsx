@@ -7,9 +7,9 @@ import { useSpråk } from '../../../context/SpråkContext';
 import { IArbeidsperiode } from '../../../typer/perioder';
 import { PeriodePersonTypeMedBarnProps, PersonType } from '../../../typer/personType';
 import { IArbeidsperiodeTekstinnhold } from '../../../typer/sanity/modaler/arbeidsperiode';
-import { formaterDato } from '../../../utils/dato';
+import { formaterDatostringKunMåned } from '../../../utils/dato';
 import { landkodeTilSpråk } from '../../../utils/språk';
-import { formaterDatoMedUkjent } from '../../../utils/visning';
+import { formaterMånedMedUkjent, uppercaseFørsteBokstav } from '../../../utils/visning';
 import { OppsummeringFelt } from '../../SøknadsSteg/Oppsummering/OppsummeringFelt';
 import PeriodeOppsummering from '../PeriodeOppsummering/PeriodeOppsummering';
 import TekstBlock from '../Sanity/TekstBlock';
@@ -94,13 +94,21 @@ export const ArbeidsperiodeOppsummering: React.FC<ArbeidsperiodeOppsummeringProp
                     søknadsvar={arbeidsgiver.svar}
                 />
             )}
-            {fraDatoArbeidsperiode.svar && (
+            {/* {fraDatoArbeidsperiode.svar && (
                 <OppsummeringFelt
                     tittel={<TekstBlock block={teksterForModal.startdato.sporsmal} />}
                     søknadsvar={formaterDato(fraDatoArbeidsperiode.svar)}
                 />
+            )} */}
+            {fraDatoArbeidsperiode.svar && (
+                <OppsummeringFelt
+                    tittel={<TekstBlock block={teksterForModal.startdato.sporsmal} />}
+                    søknadsvar={uppercaseFørsteBokstav(
+                        formaterDatostringKunMåned(fraDatoArbeidsperiode.svar, valgtLocale)
+                    )}
+                />
             )}
-            {tilDatoArbeidsperiode.svar && (
+            {/* {tilDatoArbeidsperiode.svar && (
                 <OppsummeringFelt
                     tittel={
                         <TekstBlock
@@ -114,6 +122,25 @@ export const ArbeidsperiodeOppsummering: React.FC<ArbeidsperiodeOppsummeringProp
                     søknadsvar={formaterDatoMedUkjent(
                         tilDatoArbeidsperiode.svar,
                         plainTekst(teksterForModal.sluttdatoFremtid.checkboxLabel)
+                    )}
+                />
+            )} */}
+            {tilDatoArbeidsperiode.svar && (
+                <OppsummeringFelt
+                    tittel={
+                        <TekstBlock
+                            block={
+                                periodenErAvsluttet
+                                    ? teksterForModal.sluttdatoFortid.sporsmal
+                                    : teksterForModal.sluttdatoFremtid.sporsmal
+                            }
+                        />
+                    }
+                    søknadsvar={formaterMånedMedUkjent(
+                        tilDatoArbeidsperiode.svar,
+                        plainTekst(teksterForModal.sluttdatoFremtid.checkboxLabel),
+                        true,
+                        valgtLocale
                     )}
                 />
             )}
