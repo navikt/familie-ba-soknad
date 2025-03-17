@@ -39,9 +39,9 @@ const filtrerFiler = (
     const filerUtenFeil: FileAccepted[] = filer.filter(file => !file.error);
     const filerMedFeil: FileRejected[] = filer.filter(file => file.error);
 
-    const forMangeFiler = antallEksisterendeFiler + filerUtenFeil.length > maksAntallFiler;
+    const ikkeForMangeFiler = antallEksisterendeFiler + filerUtenFeil.length <= maksAntallFiler;
 
-    if (!forMangeFiler) {
+    if (ikkeForMangeFiler) {
         return { aksepterteFiler: filerUtenFeil, feilendeFiler: filerMedFeil };
     } else {
         const ledigePlasser = maksAntallFiler - antallEksisterendeFiler;
@@ -141,8 +141,8 @@ export const useFilopplaster2 = (
         if (aksepterteFiler.length > 0) {
             setFilerUnderOpplastning(aksepterteFiler);
 
-            const nyeVedlegg: IVedlegg[] = [];
-            const avvisteVedlegg: FileRejected[] = [];
+            const aksepterteVedlegg: IVedlegg[] = [];
+            const feilendeVedlegg: FileRejected[] = [];
 
             await Promise.all(
                 aksepterteFiler.map((fil: FileAccepted) => {
@@ -169,7 +169,7 @@ export const useFilopplaster2 = (
                                 størrelse: fil.file.size,
                                 tidspunkt: dagensDatoStreng,
                             };
-                            nyeVedlegg.push(nyttVedlegg);
+                            aksepterteVedlegg.push(nyttVedlegg);
                         })
                         .catch(error => {
                             const filMedFeil: FileRejected = {
@@ -177,23 +177,23 @@ export const useFilopplaster2 = (
                                 error: true,
                                 reasons: [feilmeldingFraError(error)],
                             };
-                            avvisteVedlegg.push(filMedFeil);
+                            feilendeVedlegg.push(filMedFeil);
                         });
                 })
             );
 
-            if (nyeVedlegg.length > 0) {
+            if (aksepterteVedlegg.length > 0) {
                 oppdaterDokumentasjon(
                     dokumentasjon.dokumentasjonsbehov,
-                    [...dokumentasjon.opplastedeVedlegg, ...nyeVedlegg],
+                    [...dokumentasjon.opplastedeVedlegg, ...aksepterteVedlegg],
                     dokumentasjon.harSendtInn
                 );
             }
 
-            if (avvisteVedlegg.length > 0) {
+            if (feilendeVedlegg.length > 0) {
                 setAvvsiteFiler(eksisterendeAvvisteFiler => [
                     ...eksisterendeAvvisteFiler,
-                    ...avvisteVedlegg,
+                    ...feilendeVedlegg,
                 ]);
             }
 

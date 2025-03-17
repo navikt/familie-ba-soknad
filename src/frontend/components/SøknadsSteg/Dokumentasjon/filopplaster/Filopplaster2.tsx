@@ -81,6 +81,7 @@ const Filopplaster2: React.FC<IFilopplasterProps> = ({ dokumentasjon, oppdaterDo
                         max: MAKS_ANTALL_FILER,
                         current: dokumentasjon.opplastedeVedlegg.length,
                     }}
+                    // Dersom disabled blir satt til false her vil dette overskrive disabled-staten som blir satt av "fileLimit" prop-en. Derfor settes den til undefined slik at "fileLimit" fungerer som forventet.
                     disabled={filerUnderOpplastning.length > 0 ? true : undefined}
                     onSelect={nyeFiler => leggTilVedlegg(nyeFiler)}
                 />
