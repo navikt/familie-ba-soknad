@@ -57,7 +57,8 @@ export const dataISøknadKontraktFormat = (
     søknad: ISøknad,
     tekster: ITekstinnhold,
     tilRestLocaleRecord: TilRestLocaleRecord,
-    kontraktVersjon: number
+    kontraktVersjon: number,
+    toggleSpørOmMånedIkkeDato: boolean
 ): ISøknadKontrakt => {
     const { søker } = søknad;
 
@@ -153,6 +154,7 @@ export const dataISøknadKontraktFormat = (
                     tilRestLocaleRecord,
                     tekster: tekster.FELLES.modaler.arbeidsperiode.søker,
                     personType: PersonType.Søker,
+                    toggleSpørOmMånedIkkeDato,
                 })
             ),
             arbeidsperioderNorge: arbeidsperioderNorge.map((periode, index) =>
@@ -163,6 +165,7 @@ export const dataISøknadKontraktFormat = (
                     tilRestLocaleRecord,
                     tekster: tekster.FELLES.modaler.arbeidsperiode.søker,
                     personType: PersonType.Søker,
+                    toggleSpørOmMånedIkkeDato,
                 })
             ),
             pensjonsperioderUtland: pensjonsperioderUtland.map((periode, index) =>
@@ -173,6 +176,7 @@ export const dataISøknadKontraktFormat = (
                     tilRestLocaleRecord,
                     tekster: tekster.FELLES.modaler.pensjonsperiode.søker,
                     personType: PersonType.Søker,
+                    toggleSpørOmMånedIkkeDato,
                 })
             ),
             pensjonsperioderNorge: pensjonsperioderNorge.map((periode, index) =>
@@ -183,6 +187,7 @@ export const dataISøknadKontraktFormat = (
                     tilRestLocaleRecord,
                     tekster: tekster.FELLES.modaler.pensjonsperiode.søker,
                     personType: PersonType.Søker,
+                    toggleSpørOmMånedIkkeDato,
                 })
             ),
             andreUtbetalingsperioder: andreUtbetalingsperioder.map((periode, index) =>
@@ -192,11 +197,19 @@ export const dataISøknadKontraktFormat = (
                     tilRestLocaleRecord,
                     tekster: tekster.FELLES.modaler.andreUtbetalinger.søker,
                     personType: PersonType.Søker,
+                    toggleSpørOmMånedIkkeDato,
                 })
             ),
         },
         barn: barnInkludertISøknaden.map(barn =>
-            barnISøknadsFormat(barn, søker, valgtSpråk, tekster, tilRestLocaleRecord)
+            barnISøknadsFormat(
+                barn,
+                søker,
+                valgtSpråk,
+                tekster,
+                tilRestLocaleRecord,
+                toggleSpørOmMånedIkkeDato
+            )
         ),
         spørsmål: {
             erNoenAvBarnaFosterbarn: søknadsfelt(

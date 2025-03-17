@@ -34,7 +34,8 @@ export const barnISøknadsFormat = (
     søker: ISøker,
     valgtSpråk: LocaleType,
     tekster: ITekstinnhold,
-    tilRestLocaleRecord: TilRestLocaleRecord
+    tilRestLocaleRecord: TilRestLocaleRecord,
+    toggleSpørOmMånedIkkeDato: boolean
 ): ISøknadIKontraktBarn => {
     /* eslint-disable @typescript-eslint/no-unused-vars */
     const {
@@ -135,12 +136,19 @@ export const barnISøknadsFormat = (
                   barn,
                   valgtSpråk,
                   tilRestLocaleRecord,
-                  tekster
+                  tekster,
+                  toggleSpørOmMånedIkkeDato
               )
             : null,
 
         omsorgsperson: omsorgsperson
-            ? omsorgspersonTilISøknadsfelt(omsorgsperson, barn, tilRestLocaleRecord, tekster)
+            ? omsorgspersonTilISøknadsfelt(
+                  omsorgsperson,
+                  barn,
+                  tilRestLocaleRecord,
+                  tekster,
+                  toggleSpørOmMånedIkkeDato
+              )
             : null,
         spørsmål: {
             ...spørmålISøknadsFormat(
