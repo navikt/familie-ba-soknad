@@ -216,43 +216,6 @@ export const PensjonModal: React.FC<Props> = ({
                     )}
                 </>
             )}
-            {pensjonFraDato.erSynlig && (
-                <Datovelger
-                    felt={pensjonFraDato}
-                    label={
-                        <TekstBlock
-                            block={
-                                periodenErAvsluttet
-                                    ? teksterForModal.startdatoFortid.sporsmal
-                                    : teksterForModal.startdatoNaatid.sporsmal
-                            }
-                            flettefelter={{
-                                barnetsNavn: barn?.navn,
-                            }}
-                        />
-                    }
-                    skjema={skjema}
-                    avgrensMaxDato={periodenErAvsluttet ? gårsdagensDato() : dagensDato()}
-                />
-            )}
-            {pensjonTilDato.erSynlig && (
-                <Datovelger
-                    felt={pensjonTilDato}
-                    label={
-                        <TekstBlock
-                            block={
-                                periodenErAvsluttet
-                                    ? teksterForModal.sluttdatoFortid.sporsmal
-                                    : teksterForModal.sluttdatoFremtid.sporsmal
-                            }
-                        />
-                    }
-                    skjema={skjema}
-                    avgrensMaxDato={dagensDato()}
-                    tilhørendeFraOgMedFelt={pensjonFraDato}
-                    dynamisk
-                />
-            )}
             {visFeiloppsummering(skjema) && <SkjemaFeiloppsummering skjema={skjema} />}
         </SkjemaModal>
     );
