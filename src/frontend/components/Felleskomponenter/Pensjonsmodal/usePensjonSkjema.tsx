@@ -89,6 +89,10 @@ export const usePensjonSkjema = ({
         avhengigheter: { mottarPensjonNå },
     });
 
+    const tilPensjonperiodeSluttdatoAvgrensning = toggles[EFeatureToggle.SPOR_OM_MANED_IKKE_DATO]
+        ? sisteDagDenneMåneden()
+        : dagensDato();
+
     const pensjonTilDato = useDatovelgerFeltForSanity({
         søknadsfelt: {
             id: PensjonsperiodeSpørsmålId.tilDatoPensjon,
@@ -100,7 +104,7 @@ export const usePensjonSkjema = ({
         feilmelding: periodenErAvsluttet
             ? teksterForPersonType.sluttdatoFortid.feilmelding
             : teksterForPersonType.sluttdatoFremtid.feilmelding,
-        sluttdatoAvgrensning: dagensDato(),
+        sluttdatoAvgrensning: tilPensjonperiodeSluttdatoAvgrensning,
         startdatoAvgrensning: dagenEtterDato(stringTilDate(pensjonFraDato.verdi)),
         avhengigheter: { mottarPensjonNå, pensjonFraDato },
         nullstillVedAvhengighetEndring: false,
