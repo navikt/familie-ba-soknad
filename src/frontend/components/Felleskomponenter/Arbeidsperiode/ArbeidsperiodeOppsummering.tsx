@@ -131,25 +131,6 @@ export const ArbeidsperiodeOppsummering: React.FC<ArbeidsperiodeOppsummeringProp
                     )}
                 />
             )}
-            {tilDatoArbeidsperiode.svar && (
-                <OppsummeringFelt
-                    tittel={
-                        <TekstBlock
-                            block={
-                                periodenErAvsluttet
-                                    ? teksterForModal.sluttdatoFortid.sporsmal
-                                    : teksterForModal.sluttdatoFremtid.sporsmal
-                            }
-                        />
-                    }
-                    søknadsvar={formaterMånedMedUkjent(
-                        tilDatoArbeidsperiode.svar,
-                        plainTekst(teksterForModal.sluttdatoFremtid.checkboxLabel),
-                        toggles[EFeatureToggle.SPOR_OM_MANED_IKKE_DATO],
-                        valgtLocale
-                    )}
-                />
-            )}
         </PeriodeOppsummering>
     );
 };
