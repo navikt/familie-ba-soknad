@@ -9,12 +9,12 @@ import {
     isFuture,
     isToday,
     isValid,
+    type Locale,
     parse,
     startOfDay,
     startOfToday,
     sub,
 } from 'date-fns';
-import type { Locale } from 'date-fns/locale';
 import { enGB, nb, nn } from 'date-fns/locale';
 
 import { feil, type FeltState, ok } from '@navikt/familie-skjema';

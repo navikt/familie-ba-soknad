@@ -145,7 +145,7 @@ export const ArbeidsperiodeOppsummering: React.FC<ArbeidsperiodeOppsummeringProp
                     søknadsvar={formaterMånedMedUkjent(
                         tilDatoArbeidsperiode.svar,
                         plainTekst(teksterForModal.sluttdatoFremtid.checkboxLabel),
-                        true,
+                        toggles[EFeatureToggle.SPOR_OM_MANED_IKKE_DATO],
                         valgtLocale
                     )}
                 />
