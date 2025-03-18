@@ -156,29 +156,38 @@ export const ArbeidsperiodeModal: React.FC<ArbeidsperiodeModalProps> = ({
                         />
                     )}
                     {tilDatoArbeidsperiode.erSynlig && (
-                        <MånedÅrVelger
-                            label={
-                                <TekstBlock
-                                    block={
-                                        periodenErAvsluttet
-                                            ? teksterForModal.sluttdatoFortid.sporsmal
-                                            : teksterForModal.sluttdatoFremtid.sporsmal
-                                    }
-                                />
-                            }
-                            tidligsteValgbareMåned={minTilDatoForUtbetalingEllerArbeidsperiode(
-                                periodenErAvsluttet,
-                                skjema.felter.fraDatoArbeidsperiode.verdi
-                            )}
-                            senesteValgbareMåned={
-                                periodenErAvsluttet ? sisteDagDenneMåneden() : undefined
-                            }
-                            felt={skjema.felter.tilDatoArbeidsperiode}
-                            visFeilmeldinger={skjema.visFeilmeldinger}
-                            dagIMåneden={DagIMåneden.SISTE_DAG}
-                            kanIkkeVæreFremtid={periodenErAvsluttet}
-                            kanIkkeVæreFortid={!periodenErAvsluttet}
-                        />
+                        <div>
+                            <MånedÅrVelger
+                                label={
+                                    <TekstBlock
+                                        block={
+                                            periodenErAvsluttet
+                                                ? teksterForModal.sluttdatoFortid.sporsmal
+                                                : teksterForModal.sluttdatoFremtid.sporsmal
+                                        }
+                                    />
+                                }
+                                tidligsteValgbareMåned={minTilDatoForUtbetalingEllerArbeidsperiode(
+                                    periodenErAvsluttet,
+                                    skjema.felter.fraDatoArbeidsperiode.verdi
+                                )}
+                                senesteValgbareMåned={
+                                    periodenErAvsluttet ? sisteDagDenneMåneden() : undefined
+                                }
+                                felt={skjema.felter.tilDatoArbeidsperiode}
+                                visFeilmeldinger={skjema.visFeilmeldinger}
+                                dagIMåneden={DagIMåneden.SISTE_DAG}
+                                kanIkkeVæreFremtid={periodenErAvsluttet}
+                                kanIkkeVæreFortid={!periodenErAvsluttet}
+                                disabled={
+                                    skjema.felter.tilDatoArbeidsperiodeUkjent.verdi === ESvar.JA
+                                }
+                            />
+                            <SkjemaCheckboxForSanity
+                                felt={skjema.felter.tilDatoArbeidsperiodeUkjent}
+                                label={plainTekst(teksterForModal.sluttdatoFremtid.checkboxLabel)}
+                            />
+                        </div>
                     )}
                 </>
             ) : (
@@ -192,34 +201,37 @@ export const ArbeidsperiodeModal: React.FC<ArbeidsperiodeModalProps> = ({
                         />
                     )}
                     {tilDatoArbeidsperiode.erSynlig && (
-                        <Datovelger
-                            felt={skjema.felter.tilDatoArbeidsperiode}
-                            skjema={skjema}
-                            label={
-                                <TekstBlock
-                                    block={
-                                        periodenErAvsluttet
-                                            ? teksterForModal.sluttdatoFortid.sporsmal
-                                            : teksterForModal.sluttdatoFremtid.sporsmal
-                                    }
-                                />
-                            }
-                            avgrensMinDato={minTilDatoForUtbetalingEllerArbeidsperiode(
-                                periodenErAvsluttet,
-                                skjema.felter.fraDatoArbeidsperiode.verdi
-                            )}
-                            avgrensMaxDato={periodenErAvsluttet ? dagensDato() : undefined}
-                            disabled={skjema.felter.tilDatoArbeidsperiodeUkjent.verdi === ESvar.JA}
-                        />
+                        <div>
+                            <Datovelger
+                                felt={skjema.felter.tilDatoArbeidsperiode}
+                                skjema={skjema}
+                                label={
+                                    <TekstBlock
+                                        block={
+                                            periodenErAvsluttet
+                                                ? teksterForModal.sluttdatoFortid.sporsmal
+                                                : teksterForModal.sluttdatoFremtid.sporsmal
+                                        }
+                                    />
+                                }
+                                avgrensMinDato={minTilDatoForUtbetalingEllerArbeidsperiode(
+                                    periodenErAvsluttet,
+                                    skjema.felter.fraDatoArbeidsperiode.verdi
+                                )}
+                                avgrensMaxDato={periodenErAvsluttet ? dagensDato() : undefined}
+                                disabled={
+                                    skjema.felter.tilDatoArbeidsperiodeUkjent.verdi === ESvar.JA
+                                }
+                            />
+                            <SkjemaCheckboxForSanity
+                                felt={skjema.felter.tilDatoArbeidsperiodeUkjent}
+                                label={plainTekst(teksterForModal.sluttdatoFremtid.checkboxLabel)}
+                            />
+                        </div>
                     )}
                 </>
             )}
-            {tilDatoArbeidsperiode.erSynlig && (
-                <SkjemaCheckboxForSanity
-                    felt={skjema.felter.tilDatoArbeidsperiodeUkjent}
-                    label={plainTekst(teksterForModal.sluttdatoFremtid.checkboxLabel)}
-                />
-            )}
+
             {visFeiloppsummering(skjema) && <SkjemaFeiloppsummering skjema={skjema} />}
         </SkjemaModal>
     );
