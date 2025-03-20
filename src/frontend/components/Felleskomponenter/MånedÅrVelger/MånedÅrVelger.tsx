@@ -53,6 +53,9 @@ export const MånedÅrVelger: React.FC<MånedÅrVelgerProps> = ({
     const { valgtLocale } = useSpråk();
     const { tekster, plainTekst } = useApp();
     const [error, setError] = useState<Feilmelding | undefined>(undefined);
+
+    const { manedformatPlaceholder } = tekster().FELLES.hjelpeteksterForInput;
+
     const formateringsfeilmeldinger = tekster()[ESanitySteg.FELLES].formateringsfeilmeldinger;
 
     const nullstillOgSettFeilmelding = (feilmelding: Feilmelding) => {
@@ -109,6 +112,7 @@ export const MånedÅrVelger: React.FC<MånedÅrVelgerProps> = ({
             <MonthPicker.Input
                 {...inputProps}
                 label={label}
+                placeholder={plainTekst(manedformatPlaceholder)}
                 disabled={disabled}
                 error={
                     error && visFeilmeldinger

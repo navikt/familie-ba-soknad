@@ -64,6 +64,7 @@ export interface IFellesTekstInnhold {
     formateringsfeilmeldinger: IFormateringsfeilmeldingerTekstinnhold;
     vedlikeholdsarbeid: IVedlikeholdsarbeidTekstinnhold;
     kanIkkeBrukeSoeknad: IKanIkkeBrukeSoeknadTekstinnhold;
+    hjelpeteksterForInput: IHjelpeteksterForInputTekstInnhold;
 }
 
 export interface IFrittståendeOrdTekstinnhold {
@@ -188,4 +189,11 @@ export interface IVedlikeholdsarbeidTekstinnhold {
 
 export interface IKanIkkeBrukeSoeknadTekstinnhold {
     brukPDFKontantstoette: LocaleRecordBlock;
+}
+
+export interface IHjelpeteksterForInputTekstInnhold {
+    datoformatHjelpetekst: LocaleRecordBlock;
+    datoformatPlaceholder: LocaleRecordBlock;
+    manedformatPlaceholder: LocaleRecordBlock;
+    velgLandPlaceholder: LocaleRecordBlock;
 }
