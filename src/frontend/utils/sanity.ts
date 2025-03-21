@@ -22,6 +22,7 @@ import {
     FlettefeltVerdier,
     formateringsfeilmeldingerPrefix,
     frittståendeOrdPrefix,
+    hjelpeteksterForInputPrefix,
     kanIkkeBrukeSoeknadPrefix,
     LocaleRecordBlock,
     LocaleRecordString,
@@ -34,6 +35,7 @@ import {
     IFellesTekstInnhold,
     IFormateringsfeilmeldingerTekstinnhold,
     IFrittståendeOrdTekstinnhold,
+    IHjelpeteksterForInputTekstInnhold,
     IKanIkkeBrukeSoeknadTekstinnhold,
     IModalerTekstinnhold,
     INavigasjonTekstinnhold,
@@ -179,6 +181,9 @@ export const transformerTilTekstinnhold = (alleDokumenter: SanityDokument[]): IT
         kanIkkeBrukeSoeknad: struktrerInnholdForFelles(
             dokumenterFiltrertPåPrefix(fellesDokumenter, kanIkkeBrukeSoeknadPrefix)
         ) as IKanIkkeBrukeSoeknadTekstinnhold,
+        hjelpeteksterForInput: struktrerInnholdForFelles(
+            dokumenterFiltrertPåPrefix(fellesDokumenter, hjelpeteksterForInputPrefix)
+        ) as IHjelpeteksterForInputTekstInnhold,
     };
     return tekstInnhold as ITekstinnhold;
 };

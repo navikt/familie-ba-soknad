@@ -11,7 +11,7 @@ import { ISODateString } from '../../../typer/common';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
 import * as datoUtils from '../../../utils/dato';
 import { dagensDato } from '../../../utils/dato';
-import { silenceConsoleErrors, TestProvidere } from '../../../utils/testing';
+import { silenceConsoleErrors, spyOnUseApp, TestProvidere } from '../../../utils/testing';
 
 import Datovelger from './Datovelger';
 
@@ -31,6 +31,7 @@ const IntlProviderMedLocale = ({ children }) => <IntlProvider locale="nb">{child
 
 describe('Datovelger', () => {
     beforeEach(() => {
+        spyOnUseApp({});
         silenceConsoleErrors();
         window.ResizeObserver = ResizeObserver;
     });

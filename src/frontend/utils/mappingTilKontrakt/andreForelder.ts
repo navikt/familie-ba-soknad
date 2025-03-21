@@ -34,7 +34,8 @@ export const andreForelderTilISøknadsfelt = (
     barn: IBarnMedISøknad,
     valgtSpråk: LocaleType,
     tilRestLocaleRecord: TilRestLocaleRecord,
-    tekster: ITekstinnhold
+    tekster: ITekstinnhold,
+    toggleSpørOmMånedIkkeDato: boolean
 ): IAndreForelderIKontraktFormat => {
     const {
         navn,
@@ -208,6 +209,7 @@ export const andreForelderTilISøknadsfelt = (
                 barn,
                 personType: PersonType.AndreForelder,
                 erDød: forelderErDød,
+                toggleSpørOmMånedIkkeDato,
             })
         ),
         pensjonsperioderUtland: pensjonsperioderUtland.map((periode, index) =>
@@ -220,6 +222,7 @@ export const andreForelderTilISøknadsfelt = (
                 barn,
                 personType: PersonType.AndreForelder,
                 erDød: forelderErDød,
+                toggleSpørOmMånedIkkeDato,
             })
         ),
         arbeidsperioderNorge: arbeidsperioderNorge.map((periode, index) =>
@@ -232,6 +235,7 @@ export const andreForelderTilISøknadsfelt = (
                 barn,
                 personType: PersonType.AndreForelder,
                 erDød: forelderErDød,
+                toggleSpørOmMånedIkkeDato,
             })
         ),
         pensjonsperioderNorge: pensjonsperioderNorge.map((periode, index) =>
@@ -244,6 +248,7 @@ export const andreForelderTilISøknadsfelt = (
                 barn,
                 personType: PersonType.AndreForelder,
                 erDød: forelderErDød,
+                toggleSpørOmMånedIkkeDato,
             })
         ),
         andreUtbetalingsperioder: andreUtbetalingsperioder.map((periode, index) =>
@@ -255,6 +260,7 @@ export const andreForelderTilISøknadsfelt = (
                 personType: PersonType.AndreForelder,
                 erDød: forelderErDød,
                 barn,
+                toggleSpørOmMånedIkkeDato,
             })
         ),
         eøsBarnetrygdsperioder: eøsBarnetrygdsperioder.map((periode, index) =>
