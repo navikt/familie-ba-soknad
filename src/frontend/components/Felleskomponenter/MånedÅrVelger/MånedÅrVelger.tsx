@@ -26,7 +26,7 @@ interface MånedÅrVelgerProps {
 - vurder å lagre som Date og gjøre parsing/format mot mellomlagring og innsending - i neste runde
 */
 
-export enum Feilmelding {
+enum Feilmelding {
     FØR_MIN_DATO = 'FØR_MIN_DATO',
     ETTER_MAKS_DATO = 'ETTER_MAKS_DATO',
     UGYLDIG_DATO = 'UGYLDIG_DATO',
