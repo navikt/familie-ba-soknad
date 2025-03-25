@@ -1,18 +1,18 @@
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { IBarnMedISøknad } from '../../typer/barn';
+import { AlternativtSvarForInput, ISODateString } from '../../typer/common';
 import { ISøknadsfelt, TilRestLocaleRecord } from '../../typer/kontrakt/generelle';
 import { IArbeidsperiodeIKontraktFormat } from '../../typer/kontrakt/kontrakt';
 import { IArbeidsperiode } from '../../typer/perioder';
 import { PeriodePersonTypeProps, PersonType } from '../../typer/personType';
 import { IArbeidsperiodeTekstinnhold } from '../../typer/sanity/modaler/arbeidsperiode';
+import { ISøknadSpørsmål } from '../../typer/spørsmål';
+import { formaterDatostringKunMåned } from '../dato';
 import { landkodeTilSpråk } from '../språk';
+import { uppercaseFørsteBokstav } from '../visning';
 
-import {
-    sammeVerdiAlleSpråk,
-    sammeVerdiAlleSpråkEllerUkjent,
-    verdiCallbackAlleSpråk,
-} from './hjelpefunksjoner';
+import { sammeVerdiAlleSpråk, verdiCallbackAlleSpråk } from './hjelpefunksjoner';
 
 interface ArbeidsperiodeIKontraktFormatParams {
     periode: IArbeidsperiode;
@@ -21,6 +21,7 @@ interface ArbeidsperiodeIKontraktFormatParams {
     tilRestLocaleRecord: TilRestLocaleRecord;
     tekster: IArbeidsperiodeTekstinnhold;
     barn?: IBarnMedISøknad;
+    toggleSpørOmMånedIkkeDato: boolean;
 }
 
 export const tilIArbeidsperiodeIKontraktFormat = ({
@@ -30,6 +31,7 @@ export const tilIArbeidsperiodeIKontraktFormat = ({
     tilRestLocaleRecord,
     tekster,
     barn,
+    toggleSpørOmMånedIkkeDato,
     personType,
     erDød,
 }: ArbeidsperiodeIKontraktFormatParams &
@@ -78,19 +80,36 @@ export const tilIArbeidsperiodeIKontraktFormat = ({
             fraDatoArbeidsperiode: fraDatoArbeidsperiode.svar
                 ? {
                       label: tilRestLocaleRecord(tekster.startdato.sporsmal),
-                      verdi: sammeVerdiAlleSpråk(fraDatoArbeidsperiode.svar),
+                      verdi: datoTilVerdiForKontrakt(
+                          toggleSpørOmMånedIkkeDato,
+                          fraDatoArbeidsperiode
+                      ),
                   }
                 : null,
             tilDatoArbeidsperiode: tilDatoArbeidsperiode.svar
                 ? {
                       label: tilRestLocaleRecord(sluttdatoTekst.sporsmal),
-                      verdi: sammeVerdiAlleSpråkEllerUkjent(
-                          tilRestLocaleRecord,
-                          tilDatoArbeidsperiode.svar,
+                      verdi:
+                          tilDatoArbeidsperiode.svar === AlternativtSvarForInput.UKJENT &&
                           tekster.sluttdatoFremtid.checkboxLabel
-                      ),
+                              ? tilRestLocaleRecord(tekster.sluttdatoFremtid.checkboxLabel)
+                              : datoTilVerdiForKontrakt(
+                                    toggleSpørOmMånedIkkeDato,
+                                    tilDatoArbeidsperiode
+                                ),
                   }
                 : null,
         }),
     };
 };
+
+function datoTilVerdiForKontrakt(
+    toggleSpørOmMånedIkkeDato: boolean,
+    skjemaSpørsmål: ISøknadSpørsmål<ISODateString | ''>
+) {
+    return toggleSpørOmMånedIkkeDato
+        ? verdiCallbackAlleSpråk(locale =>
+              uppercaseFørsteBokstav(formaterDatostringKunMåned(skjemaSpørsmål.svar, locale))
+          )
+        : sammeVerdiAlleSpråk(skjemaSpørsmål.svar);
+}

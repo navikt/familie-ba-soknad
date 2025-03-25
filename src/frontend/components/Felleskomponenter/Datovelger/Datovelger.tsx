@@ -1,11 +1,11 @@
 import React, { ReactNode, useEffect } from 'react';
 
 import { formatISO, isAfter, startOfDay } from 'date-fns';
-import { useIntl } from 'react-intl';
 
 import { BodyShort, ErrorMessage, DatePicker, useDatepicker } from '@navikt/ds-react';
 import type { Felt, ISkjema } from '@navikt/familie-skjema';
 
+import { useApp } from '../../../context/AppContext';
 import { useSpråk } from '../../../context/SpråkContext';
 import { ISODateString } from '../../../typer/common';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
@@ -17,7 +17,6 @@ import {
     tidenesEnde,
     tidenesMorgen,
 } from '../../../utils/dato';
-import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
 interface DatoVelgerProps {
     felt: Felt<ISODateString>;
@@ -44,8 +43,9 @@ const Datovelger: React.FC<DatoVelgerProps> = ({
     dynamisk = false,
     strategy = 'fixed',
 }) => {
-    const { formatMessage } = useIntl();
     const { valgtLocale } = useSpråk();
+    const { tekster, plainTekst } = useApp();
+    const { datoformatHjelpetekst, datoformatPlaceholder } = tekster().FELLES.hjelpeteksterForInput;
 
     const minDatoErIFremtiden = () =>
         tilhørendeFraOgMedFelt?.verdi &&
@@ -113,12 +113,8 @@ const Datovelger: React.FC<DatoVelgerProps> = ({
                     disabled={disabled}
                     size={'medium'}
                     label={label}
-                    description={
-                        <BodyShort>
-                            <SpråkTekst id={'felles.velg-dato.hjelpetekst'} />
-                        </BodyShort>
-                    }
-                    placeholder={formatMessage({ id: 'felles.velg-dato.placeholder' })}
+                    description={<BodyShort>{plainTekst(datoformatHjelpetekst)}</BodyShort>}
+                    placeholder={plainTekst(datoformatPlaceholder)}
                     error={!!(felt.feilmelding && skjema.visFeilmeldinger)}
                 />
             </DatePicker>
