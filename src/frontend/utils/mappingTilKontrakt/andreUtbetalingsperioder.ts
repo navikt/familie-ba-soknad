@@ -84,13 +84,11 @@ export const tilIAndreUtbetalingsperioderIKontraktFormat = ({
         }),
     };
 
-    function datoTilVerdiForKontrakt(fraDatoArbeidsperiode: ISøknadSpørsmål<ISODateString | ''>) {
+    function datoTilVerdiForKontrakt(skjemaSpørsmål: ISøknadSpørsmål<ISODateString | ''>) {
         return toggleSpørOmMånedIkkeDato
             ? verdiCallbackAlleSpråk(locale =>
-                  uppercaseFørsteBokstav(
-                      formaterDatostringKunMåned(fraDatoArbeidsperiode.svar, locale)
-                  )
+                  uppercaseFørsteBokstav(formaterDatostringKunMåned(skjemaSpørsmål.svar, locale))
               )
-            : sammeVerdiAlleSpråk(fraDatoArbeidsperiode.svar);
+            : sammeVerdiAlleSpråk(skjemaSpørsmål.svar);
     }
 };

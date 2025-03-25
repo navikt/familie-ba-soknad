@@ -105,11 +105,11 @@ export const tilIArbeidsperiodeIKontraktFormat = ({
 
 function datoTilVerdiForKontrakt(
     toggleSpørOmMånedIkkeDato: boolean,
-    fraDatoArbeidsperiode: ISøknadSpørsmål<ISODateString | ''>
+    skjemaSpørsmål: ISøknadSpørsmål<ISODateString | ''>
 ) {
     return toggleSpørOmMånedIkkeDato
         ? verdiCallbackAlleSpråk(locale =>
-              uppercaseFørsteBokstav(formaterDatostringKunMåned(fraDatoArbeidsperiode.svar, locale))
+              uppercaseFørsteBokstav(formaterDatostringKunMåned(skjemaSpørsmål.svar, locale))
           )
-        : sammeVerdiAlleSpråk(fraDatoArbeidsperiode.svar);
+        : sammeVerdiAlleSpråk(skjemaSpørsmål.svar);
 }
