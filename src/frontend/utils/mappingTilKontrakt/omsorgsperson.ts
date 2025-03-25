@@ -26,7 +26,8 @@ export const omsorgspersonTilISøknadsfelt = (
     omsorgsperson: IOmsorgsperson,
     barn: IBarnMedISøknad,
     tilRestLocaleRecord: TilRestLocaleRecord,
-    tekster: ITekstinnhold
+    tekster: ITekstinnhold,
+    toggleSpørOmMånedIkkeDato: boolean
 ): IOmsorgspersonIKontraktFormat => {
     const {
         navn,
@@ -104,6 +105,7 @@ export const omsorgspersonTilISøknadsfelt = (
                 tilRestLocaleRecord,
                 tekster: tekster.FELLES.modaler.arbeidsperiode.omsorgsperson,
                 personType: PersonType.Omsorgsperson,
+                toggleSpørOmMånedIkkeDato,
             })
         ),
         arbeidNorge: søknadsfeltBarn(
@@ -119,6 +121,7 @@ export const omsorgspersonTilISøknadsfelt = (
                 tilRestLocaleRecord,
                 tekster: tekster.FELLES.modaler.arbeidsperiode.omsorgsperson,
                 personType: PersonType.Omsorgsperson,
+                toggleSpørOmMånedIkkeDato,
             })
         ),
         pensjonUtland: søknadsfeltBarn(
@@ -135,6 +138,7 @@ export const omsorgspersonTilISøknadsfelt = (
                 tekster: tekster.FELLES.modaler.pensjonsperiode.omsorgsperson,
                 barn: barn,
                 personType: PersonType.Omsorgsperson,
+                toggleSpørOmMånedIkkeDato,
             })
         ),
         pensjonNorge: søknadsfeltBarn(
@@ -151,6 +155,7 @@ export const omsorgspersonTilISøknadsfelt = (
                 tekster: tekster.FELLES.modaler.pensjonsperiode.omsorgsperson,
                 barn: barn,
                 personType: PersonType.Omsorgsperson,
+                toggleSpørOmMånedIkkeDato,
             })
         ),
         andreUtbetalinger: søknadsfeltBarn(
@@ -166,6 +171,7 @@ export const omsorgspersonTilISøknadsfelt = (
                 tilRestLocaleRecord,
                 tekster: tekster.FELLES.modaler.andreUtbetalinger.omsorgsperson,
                 barn,
+                toggleSpørOmMånedIkkeDato,
             })
         ),
         pågåendeSøknadFraAnnetEøsLand: søknadsfeltBarn(

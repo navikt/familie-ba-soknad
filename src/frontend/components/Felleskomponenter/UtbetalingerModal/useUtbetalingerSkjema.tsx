@@ -2,11 +2,13 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { useFelt, useSkjema, Valideringsstatus } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import useDatovelgerFeltMedUkjentForSanity from '../../../hooks/useDatovelgerFeltMedUkjentForSanity';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
 import useDatovelgerFeltForSanity from '../../../hooks/useSendInnSkjemaTest/useDatovelgerForSanity';
 import { IBarnMedISøknad } from '../../../typer/barn';
+import { EFeatureToggle } from '../../../typer/feature-toggles';
 import { PersonType } from '../../../typer/personType';
 import { IAndreUtbetalingerTekstinnhold } from '../../../typer/sanity/modaler/andreUtbetalinger';
 import { ESanitySteg } from '../../../typer/sanity/sanity';
@@ -15,6 +17,7 @@ import {
     dagensDato,
     erSammeDatoSomDagensDato,
     gårsdagensDato,
+    sisteDagDenneMåneden,
     stringTilDate,
 } from '../../../utils/dato';
 import { minTilDatoForUtbetalingEllerArbeidsperiode } from '../../../utils/perioder';
@@ -29,6 +32,7 @@ export interface IUseUtbetalingerSkjemaParams {
 }
 
 export const useUtbetalingerSkjema = (personType, barn, erDød) => {
+    const { toggles } = useFeatureToggles();
     const { tekster, plainTekst } = useApp();
     const teksterForPersontype: IAndreUtbetalingerTekstinnhold =
         tekster()[ESanitySteg.FELLES].modaler.andreUtbetalinger[personType];
@@ -75,6 +79,10 @@ export const useUtbetalingerSkjema = (personType, barn, erDød) => {
         avhengigheter: { fårUtbetalingNå },
     });
 
+    const utbetalingTilDatoSluttdatoAvgrensning = toggles[EFeatureToggle.SPOR_OM_MANED_IKKE_DATO]
+        ? sisteDagDenneMåneden()
+        : dagensDato();
+
     const utbetalingTilDato = useDatovelgerFeltMedUkjentForSanity({
         feltId: UtbetalingerSpørsmålId.utbetalingTilDato,
         initiellVerdi: '',
@@ -84,7 +92,9 @@ export const useUtbetalingerSkjema = (personType, barn, erDød) => {
             : teksterForPersontype.sluttdatoFremtid.feilmelding,
         skalFeltetVises:
             andreForelderErDød || fårUtbetalingNå.valideringsstatus === Valideringsstatus.OK,
-        sluttdatoAvgrensning: periodenErAvsluttet ? dagensDato() : undefined,
+        sluttdatoAvgrensning: periodenErAvsluttet
+            ? utbetalingTilDatoSluttdatoAvgrensning
+            : undefined,
         startdatoAvgrensning: minTilDatoForUtbetalingEllerArbeidsperiode(
             periodenErAvsluttet,
             utbetalingFraDato.verdi
