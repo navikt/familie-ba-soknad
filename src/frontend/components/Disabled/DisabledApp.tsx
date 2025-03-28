@@ -9,13 +9,13 @@ import { setAvailableLanguages } from '@navikt/nav-dekoratoren-moduler';
 import { useApp } from '../../context/AppContext';
 import { useLastRessurserContext } from '../../context/LastRessurserContext';
 import { useSanity } from '../../context/SanityContext';
-import { useSpråk } from '../../context/SpråkContext';
+import { useSpråkContext } from '../../context/SpråkContext';
 import { Feilside } from '../Felleskomponenter/Feilside/Feilside';
 import TekstBlock from '../Felleskomponenter/Sanity/TekstBlock';
 import SystemetLaster from '../Felleskomponenter/SystemetLaster/SystemetLaster';
 
 export const DisabledApp: React.FC = () => {
-    const { valgtLocale } = useSpråk();
+    const { valgtLocale } = useSpråkContext();
     const { tekster, plainTekst } = useApp();
     const { teksterRessurs } = useSanity();
     const { lasterRessurser } = useLastRessurserContext();

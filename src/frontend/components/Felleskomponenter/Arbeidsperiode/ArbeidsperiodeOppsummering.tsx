@@ -4,7 +4,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
 import { useFeatureToggles } from '../../../context/FeatureToggleContext';
-import { useSpråk } from '../../../context/SpråkContext';
+import { useSpråkContext } from '../../../context/SpråkContext';
 import { EFeatureToggle } from '../../../typer/feature-toggles';
 import { IArbeidsperiode } from '../../../typer/perioder';
 import { PeriodePersonTypeMedBarnProps, PersonType } from '../../../typer/personType';
@@ -37,7 +37,7 @@ export const ArbeidsperiodeOppsummering: React.FC<ArbeidsperiodeOppsummeringProp
 }) => {
     const { toggles } = useFeatureToggles();
     const { tekster, plainTekst } = useApp();
-    const { valgtLocale } = useSpråk();
+    const { valgtLocale } = useSpråkContext();
     const {
         arbeidsperiodeAvsluttet,
         arbeidsperiodeland,

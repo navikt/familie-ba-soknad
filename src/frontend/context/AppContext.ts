@@ -34,10 +34,10 @@ import { useInnloggetContext } from './InnloggetContext';
 import { useLastRessurserContext } from './LastRessurserContext';
 import { hentSluttbrukerFraPdl } from './pdl';
 import { useSanity } from './SanityContext';
-import { useSpråk } from './SpråkContext';
+import { useSpråkContext } from './SpråkContext';
 
 const [AppProvider, useApp] = createUseContext(() => {
-    const { valgtLocale } = useSpråk();
+    const { valgtLocale } = useSpråkContext();
     const intl = useIntl();
     const { axiosRequest, lasterRessurser } = useLastRessurserContext();
     const { innloggetStatus } = useInnloggetContext();
