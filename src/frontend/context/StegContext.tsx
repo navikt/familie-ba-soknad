@@ -152,7 +152,7 @@ export function StegProvider(props: PropsWithChildren) {
     );
 }
 
-export function useSteg() {
+export function useStegContext() {
     const context = useContext(StegContext);
 
     if (context === undefined) {

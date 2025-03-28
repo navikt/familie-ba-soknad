@@ -4,7 +4,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../../../context/AppContext';
 import { useSpråkContext } from '../../../../../context/SpråkContext';
-import { useSteg } from '../../../../../context/StegContext';
+import { useStegContext } from '../../../../../context/StegContext';
 import {
     andreForelderDataKeySpørsmål,
     barnDataKeySpørsmål,
@@ -32,7 +32,7 @@ interface Props {
 
 const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, index }) => {
     const { tekster, plainTekst } = useApp();
-    const { hentStegObjektForBarn } = useSteg();
+    const { hentStegObjektForBarn } = useStegContext();
     const { valgtLocale } = useSpråkContext();
     const omBarnetTekster = tekster().OM_BARNET;
     const omBarnetHook = useOmBarnet(barn.id);
