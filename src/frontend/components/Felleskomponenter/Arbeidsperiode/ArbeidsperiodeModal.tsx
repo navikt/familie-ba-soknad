@@ -10,7 +10,7 @@ import { PersonType } from '../../../typer/personType';
 import { IArbeidsperiodeTekstinnhold } from '../../../typer/sanity/modaler/arbeidsperiode';
 import { dagensDato, gårsdagensDato, sisteDagDenneMåneden } from '../../../utils/dato';
 import { trimWhiteSpace, visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
-import { minTilDatoForUtbetalingEllerArbeidsperiode } from '../../../utils/perioder';
+import { minTilDatoForPeriode } from '../../../utils/perioder';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import Datovelger from '../Datovelger/Datovelger';
 import { LandDropdown } from '../Dropdowns/LandDropdown';
@@ -167,7 +167,7 @@ export const ArbeidsperiodeModal: React.FC<ArbeidsperiodeModalProps> = ({
                                         }
                                     />
                                 }
-                                tidligsteValgbareMåned={minTilDatoForUtbetalingEllerArbeidsperiode(
+                                tidligsteValgbareMåned={minTilDatoForPeriode(
                                     periodenErAvsluttet,
                                     skjema.felter.fraDatoArbeidsperiode.verdi
                                 )}
@@ -214,7 +214,7 @@ export const ArbeidsperiodeModal: React.FC<ArbeidsperiodeModalProps> = ({
                                         }
                                     />
                                 }
-                                avgrensMinDato={minTilDatoForUtbetalingEllerArbeidsperiode(
+                                avgrensMinDato={minTilDatoForPeriode(
                                     periodenErAvsluttet,
                                     skjema.felter.fraDatoArbeidsperiode.verdi
                                 )}

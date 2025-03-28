@@ -4,14 +4,24 @@ import { Alert } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
+import { EFeatureToggle } from '../../../typer/feature-toggles';
 import { IEøsBarnetrygdsperiode } from '../../../typer/perioder';
 import { PersonType } from '../../../typer/personType';
 import { IBarnetrygdsperiodeTekstinnhold } from '../../../typer/sanity/modaler/barnetrygdperiode';
-import { dagenEtterDato, dagensDato, gårsdagensDato, stringTilDate } from '../../../utils/dato';
+import {
+    dagenEtterDato,
+    dagensDato,
+    gårsdagensDato,
+    sisteDagDenneMåneden,
+    stringTilDate,
+} from '../../../utils/dato';
 import { trimWhiteSpace, visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
+import { minTilDatoForPeriode } from '../../../utils/perioder';
 import Datovelger from '../Datovelger/Datovelger';
 import { LandDropdown } from '../Dropdowns/LandDropdown';
 import JaNeiSpmForSanity from '../JaNeiSpm/JaNeiSpmForSanity';
+import { DagIMåneden, MånedÅrVelger } from '../MånedÅrVelger/MånedÅrVelger';
 import TekstBlock from '../Sanity/TekstBlock';
 import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeiloppsummering';
 import { SkjemaFeltInputForSanity } from '../SkjemaFeltInput/SkjemaFeltInputForSanity';
@@ -39,6 +49,7 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
     erDød = false,
     forklaring = undefined,
 }) => {
+    const { toggles } = useFeatureToggles();
     const { tekster } = useApp();
     const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } =
         useBarnetrygdperiodeSkjema(personType, barn, erDød);
@@ -125,29 +136,68 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
                     ekskluderNorge
                 />
             )}
-            {fraDatoBarnetrygdperiode.erSynlig && (
-                <Datovelger
-                    felt={skjema.felter.fraDatoBarnetrygdperiode}
-                    skjema={skjema}
-                    label={<TekstBlock block={teksterForModal.startdato.sporsmal} />}
-                    avgrensMaxDato={periodenErAvsluttet ? gårsdagensDato() : dagensDato()}
-                />
+            {toggles[EFeatureToggle.SPOR_OM_MANED_IKKE_DATO] ? (
+                <>
+                    {fraDatoBarnetrygdperiode.erSynlig && (
+                        <MånedÅrVelger
+                            felt={skjema.felter.fraDatoBarnetrygdperiode}
+                            label={<TekstBlock block={teksterForModal.startdato.sporsmal} />}
+                            senesteValgbareMåned={
+                                periodenErAvsluttet ? gårsdagensDato() : dagensDato()
+                            }
+                            visFeilmeldinger={skjema.visFeilmeldinger}
+                            dagIMåneden={DagIMåneden.FØRSTE_DAG}
+                            kanIkkeVæreFremtid={true}
+                        />
+                    )}
+                    {tilDatoBarnetrygdperiode.erSynlig && (
+                        <MånedÅrVelger
+                            felt={skjema.felter.tilDatoBarnetrygdperiode}
+                            label={<TekstBlock block={teksterForModal.sluttdato.sporsmal} />}
+                            tidligsteValgbareMåned={minTilDatoForPeriode(
+                                periodenErAvsluttet,
+                                skjema.felter.fraDatoBarnetrygdperiode.verdi
+                            )}
+                            senesteValgbareMåned={
+                                periodenErAvsluttet ? sisteDagDenneMåneden() : undefined
+                            }
+                            visFeilmeldinger={skjema.visFeilmeldinger}
+                            dagIMåneden={DagIMåneden.SISTE_DAG}
+                            kanIkkeVæreFremtid={periodenErAvsluttet}
+                            kanIkkeVæreFortid={!periodenErAvsluttet}
+                        />
+                    )}
+                </>
+            ) : (
+                <>
+                    {fraDatoBarnetrygdperiode.erSynlig && (
+                        <Datovelger
+                            felt={skjema.felter.fraDatoBarnetrygdperiode}
+                            skjema={skjema}
+                            label={<TekstBlock block={teksterForModal.startdato.sporsmal} />}
+                            avgrensMaxDato={periodenErAvsluttet ? gårsdagensDato() : dagensDato()}
+                        />
+                    )}
+                    {tilDatoBarnetrygdperiode.erSynlig && (
+                        <Datovelger
+                            felt={skjema.felter.tilDatoBarnetrygdperiode}
+                            skjema={skjema}
+                            label={<TekstBlock block={teksterForModal.sluttdato.sporsmal} />}
+                            avgrensMinDato={
+                                skjema.felter.fraDatoBarnetrygdperiode.verdi
+                                    ? dagenEtterDato(
+                                          stringTilDate(
+                                              skjema.felter.fraDatoBarnetrygdperiode.verdi
+                                          )
+                                      )
+                                    : undefined
+                            }
+                            avgrensMaxDato={dagensDato()}
+                        />
+                    )}
+                </>
             )}
-            {tilDatoBarnetrygdperiode.erSynlig && (
-                <Datovelger
-                    felt={skjema.felter.tilDatoBarnetrygdperiode}
-                    skjema={skjema}
-                    label={<TekstBlock block={teksterForModal.sluttdato.sporsmal} />}
-                    avgrensMinDato={
-                        skjema.felter.fraDatoBarnetrygdperiode.verdi
-                            ? dagenEtterDato(
-                                  stringTilDate(skjema.felter.fraDatoBarnetrygdperiode.verdi)
-                              )
-                            : undefined
-                    }
-                    avgrensMaxDato={dagensDato()}
-                />
-            )}
+
             {månedligBeløp.erSynlig && (
                 <SkjemaFeltInputForSanity
                     felt={skjema.felter.månedligBeløp}
