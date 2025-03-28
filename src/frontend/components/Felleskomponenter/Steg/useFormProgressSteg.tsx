@@ -1,5 +1,5 @@
 import { useApp } from '../../../context/AppContext';
-import { useSteg } from '../../../context/StegContext';
+import { useStegContext } from '../../../context/StegContext';
 import { ISteg, RouteEnum } from '../../../typer/routes';
 import { FlettefeltVerdier, LocaleRecordBlock } from '../../../typer/sanity/sanity';
 
@@ -9,7 +9,7 @@ interface IStegMedTittel extends ISteg {
 
 export const useFormProgressSteg = (): IStegMedTittel[] => {
     const { tekster, plainTekst } = useApp();
-    const { steg, barnForSteg } = useSteg();
+    const { steg, barnForSteg } = useStegContext();
 
     const {
         FORSIDE,

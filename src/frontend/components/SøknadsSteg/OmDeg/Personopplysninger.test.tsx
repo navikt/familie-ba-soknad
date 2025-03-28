@@ -1,9 +1,8 @@
 import React from 'react';
 
 import { render } from '@testing-library/react';
-import { IntlProvider } from 'react-intl';
 
-import { LocaleType } from '../../../typer/common';
+import { SpråkProvider } from '../../../context/SpråkContext';
 import { ESivilstand } from '../../../typer/kontrakt/generelle';
 import { ISøker } from '../../../typer/person';
 import {
@@ -40,9 +39,9 @@ describe('Personopplysninger', () => {
         spyOnUseApp({ søker });
 
         const { getByText } = render(
-            <IntlProvider locale={LocaleType.nb}>
+            <SpråkProvider>
                 <Personopplysninger />
-            </IntlProvider>
+            </SpråkProvider>
         );
         expect(getByText(/Testgata/)).toBeInTheDocument();
         expect(getByText(/Oslo/)).toBeInTheDocument();
@@ -61,9 +60,9 @@ describe('Personopplysninger', () => {
         spyOnUseApp({ søker });
 
         const { queryByText, queryByTestId } = render(
-            <IntlProvider locale={LocaleType.nb}>
+            <SpråkProvider>
                 <Personopplysninger />
-            </IntlProvider>
+            </SpråkProvider>
         );
         expect(queryByText('12345678901')).toBeInTheDocument();
         expect(queryByTestId('adressevisning-ikke-registrert')).toBeInTheDocument();

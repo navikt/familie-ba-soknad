@@ -12,10 +12,10 @@ import { FeatureTogglesProvider } from './context/FeatureToggleContext';
 import { InnloggetProvider } from './context/InnloggetContext';
 import { LastRessurserProvider } from './context/LastRessurserContext';
 import { SanityProvider } from './context/SanityContext';
-import { useSpråk } from './context/SpråkContext';
+import { useSpråkContext } from './context/SpråkContext';
 
 const MiljøProvider: React.FC<PropsWithChildren> = ({ children }) => {
-    const { valgtLocale } = useSpråk();
+    const { valgtLocale } = useSpråkContext();
     return (
         <IntlProvider locale={valgtLocale} messages={tekster[valgtLocale]}>
             <HttpProvider>

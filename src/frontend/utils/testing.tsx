@@ -168,7 +168,7 @@ export const mockFeatureToggle = () => {
 };
 
 export const mockSanity = () => {
-    const useSanity = jest.spyOn(sanityContext, 'useSanity').mockImplementation(
+    const useSanity = jest.spyOn(sanityContext, 'useSanityContext').mockImplementation(
         jest.fn().mockReturnValue({
             teksterRessurs: RessursStatus.SUKSESS,
         })

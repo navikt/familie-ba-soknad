@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useApp } from '../../../context/AppContext';
-import { useSpråk } from '../../../context/SpråkContext';
+import { useSpråkContext } from '../../../context/SpråkContext';
 import { IUtenlandsperiode } from '../../../typer/perioder';
 import { PeriodePersonTypeMedBarnProps } from '../../../typer/personType';
 import { IUtenlandsoppholdTekstinnhold } from '../../../typer/sanity/modaler/utenlandsopphold';
@@ -34,7 +34,7 @@ export const UtenlandsperiodeOppsummering: React.FC<UtenlandsperiodeOppsummering
     personType,
     barn,
 }) => {
-    const { valgtLocale } = useSpråk();
+    const { valgtLocale } = useSpråkContext();
     const { plainTekst, tekster } = useApp();
     const { oppholdsland, utenlandsoppholdÅrsak, oppholdslandFraDato, oppholdslandTilDato } =
         periode;

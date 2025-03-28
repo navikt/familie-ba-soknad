@@ -8,7 +8,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { feil, type Felt, type FeltState, type ISkjema, ok, useFelt } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
-import { useSpråk } from '../../../context/SpråkContext';
+import { useSpråkContext } from '../../../context/SpråkContext';
 import useInputFeltMedUkjent from '../../../hooks/useInputFeltMedUkjent';
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { AlternativtSvarForInput } from '../../../typer/common';
@@ -51,7 +51,7 @@ export const IdNummer: React.FC<{
     lesevisning = false,
 }) => {
     const { plainTekst, tekster } = useApp();
-    const { valgtLocale } = useSpråk();
+    const { valgtLocale } = useSpråkContext();
     const intl = useIntl();
     const { formatMessage } = intl;
 

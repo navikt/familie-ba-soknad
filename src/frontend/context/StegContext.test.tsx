@@ -7,7 +7,7 @@ import { RouteEnum } from '../typer/routes';
 import { mockEøs, mockFeatureToggle, spyOnUseApp } from '../utils/testing';
 
 import { RoutesProvider } from './RoutesContext';
-import { StegProvider, useSteg } from './StegContext';
+import { StegProvider, useStegContext } from './StegContext';
 
 describe('Steg', () => {
     beforeEach(() => {
@@ -26,7 +26,7 @@ describe('Steg', () => {
                 </MemoryRouter>
             </RoutesProvider>
         );
-        const { result } = renderHook(() => useSteg(), { wrapper });
+        const { result } = renderHook(() => useStegContext(), { wrapper });
         expect(result.current.steg.length).toEqual(9);
     });
 
@@ -46,7 +46,7 @@ describe('Steg', () => {
                 </MemoryRouter>
             </RoutesProvider>
         );
-        const { result } = renderHook(() => useSteg(), { wrapper });
+        const { result } = renderHook(() => useStegContext(), { wrapper });
         const nesteSteg = result.current.hentNesteSteg();
         expect(nesteSteg.route).toBe(RouteEnum.OmDeg);
     });
@@ -67,7 +67,7 @@ describe('Steg', () => {
                 </MemoryRouter>
             </RoutesProvider>
         );
-        const { result } = renderHook(() => useSteg(), { wrapper });
+        const { result } = renderHook(() => useStegContext(), { wrapper });
         const nesteRoute = result.current.hentNesteSteg();
         expect(nesteRoute.route).toBe(RouteEnum.Oppsummering);
     });
@@ -88,7 +88,7 @@ describe('Steg', () => {
                 </MemoryRouter>
             </RoutesProvider>
         );
-        const { result } = renderHook(() => useSteg(), { wrapper });
+        const { result } = renderHook(() => useStegContext(), { wrapper });
         const nesteRoute = result.current.hentNesteSteg();
         expect(nesteRoute.route).toBe(RouteEnum.Oppsummering);
     });
@@ -109,7 +109,7 @@ describe('Steg', () => {
                 </MemoryRouter>
             </RoutesProvider>
         );
-        const { result } = renderHook(() => useSteg(), { wrapper });
+        const { result } = renderHook(() => useStegContext(), { wrapper });
 
         const route = result.current.steg[5];
         const label = route.label;
@@ -135,7 +135,7 @@ describe('Steg', () => {
             </RoutesProvider>
         );
 
-        const { result } = renderHook(() => useSteg(), { wrapper });
+        const { result } = renderHook(() => useStegContext(), { wrapper });
 
         expect(result.current.hentForrigeSteg().path).toBe('/om-barna');
         expect(result.current.hentNesteSteg().path).toBe('/om-barnet/barn/2');
@@ -160,7 +160,7 @@ describe('Steg', () => {
             </RoutesProvider>
         );
 
-        const { result } = renderHook(() => useSteg(), { wrapper });
+        const { result } = renderHook(() => useStegContext(), { wrapper });
 
         expect(result.current.hentForrigeSteg().path).toBe('/om-barnet/barn/1');
         expect(result.current.hentNesteSteg().path).toBe('/oppsummering');

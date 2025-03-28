@@ -3,7 +3,7 @@ import React from 'react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
-import { useSpråk } from '../../../context/SpråkContext';
+import { useSpråkContext } from '../../../context/SpråkContext';
 import { HeadingLevel } from '../../../typer/common';
 import { IEøsBarnetrygdsperiode } from '../../../typer/perioder';
 import { PersonType } from '../../../typer/personType';
@@ -49,7 +49,7 @@ export const BarnetrygdsperiodeOppsummering: React.FC<Props> = ({
     const periodenErAvsluttet =
         mottarEøsBarnetrygdNå.svar === ESvar.NEI ||
         (personType === PersonType.AndreForelder && erDød);
-    const { valgtLocale } = useSpråk();
+    const { valgtLocale } = useSpråkContext();
     const { tekster } = useApp();
 
     const teksterForPersonType: IBarnetrygdsperiodeTekstinnhold =

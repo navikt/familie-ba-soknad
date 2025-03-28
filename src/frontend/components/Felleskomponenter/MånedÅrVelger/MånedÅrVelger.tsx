@@ -6,7 +6,7 @@ import { MonthPicker, useMonthpicker } from '@navikt/ds-react';
 import type { Felt } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
-import { useSpråk } from '../../../context/SpråkContext';
+import { useSpråkContext } from '../../../context/SpråkContext';
 import { ISODateString } from '../../../typer/common';
 import { ESanitySteg } from '../../../typer/sanity/sanity';
 
@@ -50,7 +50,7 @@ export const MånedÅrVelger: React.FC<MånedÅrVelgerProps> = ({
     kanIkkeVæreFortid,
     kanIkkeVæreFremtid,
 }) => {
-    const { valgtLocale } = useSpråk();
+    const { valgtLocale } = useSpråkContext();
     const { tekster, plainTekst } = useApp();
     const [error, setError] = useState<Feilmelding | undefined>(undefined);
 
