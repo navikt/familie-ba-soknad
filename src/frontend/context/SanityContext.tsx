@@ -64,7 +64,7 @@ export function SanityProvider(props: PropsWithChildren) {
     );
 }
 
-export function useSanity() {
+export function useSanityContext() {
     const context = useContext(SanityContext);
 
     if (context === undefined) {

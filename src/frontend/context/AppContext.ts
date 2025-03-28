@@ -33,7 +33,7 @@ import { preferredAxios } from './axios';
 import { useInnloggetContext } from './InnloggetContext';
 import { useLastRessurserContext } from './LastRessurserContext';
 import { hentSluttbrukerFraPdl } from './pdl';
-import { useSanity } from './SanityContext';
+import { useSanityContext } from './SanityContext';
 import { useSpråkContext } from './SpråkContext';
 
 const [AppProvider, useApp] = createUseContext(() => {
@@ -54,7 +54,7 @@ const [AppProvider, useApp] = createUseContext(() => {
     const [sisteModellVersjon, settSisteModellVersjon] = useState(modellVersjon);
     const modellVersjonOppdatert = sisteModellVersjon > modellVersjon;
 
-    const { teksterRessurs } = useSanity();
+    const { teksterRessurs } = useSanityContext();
 
     useEffect(() => {
         if (nåværendeRoute === RouteEnum.Kvittering) {
