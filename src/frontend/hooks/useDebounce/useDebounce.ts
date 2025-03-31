@@ -4,42 +4,42 @@ export function useDebounce<T extends (...args: unknown[]) => void>(
     funksjon: T,
     forsinkelseMs: number
 ) {
-    const timeout = useRef<ReturnType<typeof setTimeout> | null>(null);
-    const lastArgs = useRef<Parameters<T> | null>(null);
+    const timeoutId = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const sistBrukteArgumenter = useRef<Parameters<T> | null>(null);
 
     const debouncedFunksjon = useCallback(
         (...args: Parameters<T>) => {
-            if (timeout.current) {
-                clearTimeout(timeout.current);
+            if (timeoutId.current) {
+                clearTimeout(timeoutId.current);
             }
 
-            lastArgs.current = args;
+            sistBrukteArgumenter.current = args;
 
-            timeout.current = setTimeout(() => {
+            timeoutId.current = setTimeout(() => {
                 funksjon(...args);
-                timeout.current = null;
-                lastArgs.current = null;
+                timeoutId.current = null;
+                sistBrukteArgumenter.current = null;
             }, forsinkelseMs);
         },
         [funksjon, forsinkelseMs]
     );
 
-    const ferdiggjørDebouncedFunksjon = () => {
-        if (timeout.current && lastArgs.current) {
-            clearTimeout(timeout.current);
-            funksjon(...lastArgs.current);
-            timeout.current = null;
-            lastArgs.current = null;
+    const tvingKjøringAvDebouncedFunksjon = () => {
+        if (timeoutId.current && sistBrukteArgumenter.current) {
+            clearTimeout(timeoutId.current);
+            funksjon(...sistBrukteArgumenter.current);
+            timeoutId.current = null;
+            sistBrukteArgumenter.current = null;
         }
     };
 
     useEffect(() => {
         return () => {
-            if (timeout.current) {
-                clearTimeout(timeout.current);
+            if (timeoutId.current) {
+                clearTimeout(timeoutId.current);
             }
         };
     }, []);
 
-    return { debouncedFunksjon, ferdiggjørDebouncedFunksjon };
+    return { debouncedFunksjon, tvingKjøringAvDebouncedFunksjon };
 }

@@ -36,7 +36,7 @@ const Dokumentasjon: React.FC = () => {
         innsendingStatus,
         tekster,
         plainTekst,
-        feridggjørDebouncedMellomlagre,
+        tvingKjøringAvDebouncedMellomlagre,
     } = useApp();
     const { toggles } = useFeatureToggles();
     const { sendInnSkjema } = useSendInnSkjema();
@@ -101,7 +101,7 @@ const Dokumentasjon: React.FC = () => {
                     : stegTekster.dokumentasjonGuideIngenVedleggskrav
             }
             gåVidereCallback={async () => {
-                feridggjørDebouncedMellomlagre();
+                tvingKjøringAvDebouncedMellomlagre();
                 const [success, _] = await sendInnSkjema();
                 return success;
             }}

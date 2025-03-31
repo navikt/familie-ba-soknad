@@ -146,7 +146,7 @@ const [AppProvider, useApp] = createUseContext(() => {
 
     const {
         debouncedFunksjon: debouncedMellomlagre,
-        ferdiggjørDebouncedFunksjon: feridggjørDebouncedMellomlagre,
+        tvingKjøringAvDebouncedFunksjon: tvingKjøringAvDebouncedMellomlagre,
     } = useDebounce(mellomlagre, 500);
 
     useEffect(() => {
@@ -391,7 +391,7 @@ const [AppProvider, useApp] = createUseContext(() => {
         systemetOK,
         systemetLaster,
         mellomlagre,
-        feridggjørDebouncedMellomlagre,
+        tvingKjøringAvDebouncedMellomlagre,
         modellVersjonOppdatert,
         settSisteModellVersjon,
         eøsLand,
