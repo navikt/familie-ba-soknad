@@ -2,30 +2,30 @@ import { useCallback, useEffect, useRef } from 'react';
 
 export function useDebounce<T extends (...args: unknown[]) => void>(
     funksjon: T,
-    forsinkelse: number
+    forsinkelseMs: number
 ) {
-    const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const timeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-    const debounced = useCallback(
+    const forsinketFunksjon = useCallback(
         (...args: Parameters<T>) => {
-            if (timer.current) {
-                clearTimeout(timer.current);
+            if (timeout.current) {
+                clearTimeout(timeout.current);
             }
 
-            timer.current = setTimeout(() => {
+            timeout.current = setTimeout(() => {
                 funksjon(...args);
-            }, forsinkelse);
+            }, forsinkelseMs);
         },
-        [funksjon, forsinkelse]
+        [funksjon, forsinkelseMs]
     );
 
     useEffect(() => {
         return () => {
-            if (timer.current) {
-                clearTimeout(timer.current);
+            if (timeout.current) {
+                clearTimeout(timeout.current);
             }
         };
     }, []);
 
-    return debounced;
+    return forsinketFunksjon;
 }
