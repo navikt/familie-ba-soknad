@@ -144,7 +144,10 @@ const [AppProvider, useApp] = createUseContext(() => {
         settMellomlagretVerdi(barnetrygd);
     };
 
-    const debouncedMellomlagre = useDebounce(mellomlagre, 2000);
+    const {
+        debouncedFunksjon: debouncedMellomlagre,
+        ferdiggjørDebouncedFunksjon: feridggjørDebouncedMellomlagre,
+    } = useDebounce(mellomlagre, 500);
 
     useEffect(() => {
         if (sisteUtfylteStegIndex > -1) {
@@ -388,6 +391,7 @@ const [AppProvider, useApp] = createUseContext(() => {
         systemetOK,
         systemetLaster,
         mellomlagre,
+        feridggjørDebouncedMellomlagre,
         modellVersjonOppdatert,
         settSisteModellVersjon,
         eøsLand,
