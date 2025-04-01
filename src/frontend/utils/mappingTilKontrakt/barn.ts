@@ -119,6 +119,7 @@ export const barnISøknadsFormat = (
                 tilRestLocaleRecord,
                 tekster: fellesTekster.modaler.barnetrygdsperiode.søker,
                 barn,
+                toggleSpørOmMånedIkkeDato,
             })
         ),
         idNummer: idNummer.map(idnummerObj =>

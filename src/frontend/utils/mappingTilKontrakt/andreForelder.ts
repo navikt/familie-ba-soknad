@@ -272,6 +272,7 @@ export const andreForelderTilISøknadsfelt = (
                 tekster: tekster.FELLES.modaler.barnetrygdsperiode.andreForelder,
                 erDød: forelderErDød,
                 barn,
+                toggleSpørOmMånedIkkeDato,
             })
         ),
         idNummer: idNummer.map(idnummerObj =>
