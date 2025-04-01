@@ -203,6 +203,7 @@ export const omsorgspersonTilISøknadsfelt = (
                 tilRestLocaleRecord,
                 tekster: tekster.FELLES.modaler.barnetrygdsperiode.omsorgsperson,
                 barn: barn,
+                toggleSpørOmMånedIkkeDato,
             })
         ),
     };

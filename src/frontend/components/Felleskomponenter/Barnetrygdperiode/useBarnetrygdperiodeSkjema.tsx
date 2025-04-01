@@ -11,14 +11,22 @@ import {
 } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
+import { useFeatureToggles } from '../../../context/FeatureToggleContext';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
 import useDatovelgerFeltForSanity from '../../../hooks/useSendInnSkjemaTest/useDatovelgerForSanity';
 import { IBarnMedISøknad } from '../../../typer/barn';
+import { EFeatureToggle } from '../../../typer/feature-toggles';
 import { PersonType } from '../../../typer/personType';
 import { IBarnetrygdsperiodeTekstinnhold } from '../../../typer/sanity/modaler/barnetrygdperiode';
 import { IBarnetrygdperioderFeltTyper } from '../../../typer/skjema';
-import { dagenEtterDato, dagensDato, gårsdagensDato, stringTilDate } from '../../../utils/dato';
+import {
+    dagenEtterDato,
+    dagensDato,
+    gårsdagensDato,
+    sisteDagDenneMåneden,
+    stringTilDate,
+} from '../../../utils/dato';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import TekstBlock from '../Sanity/TekstBlock';
 
@@ -35,6 +43,7 @@ export interface IUsePensjonsperiodeSkjemaParams {
 }
 
 export const useBarnetrygdperiodeSkjema = (personType: PersonType, barn, erDød) => {
+    const { toggles } = useFeatureToggles();
     const { tekster } = useApp();
 
     const teksterForPersonType: IBarnetrygdsperiodeTekstinnhold =
@@ -72,11 +81,17 @@ export const useBarnetrygdperiodeSkjema = (personType: PersonType, barn, erDød)
         sluttdatoAvgrensning: periodenErAvsluttet ? gårsdagensDato() : dagensDato(),
     });
 
+    const tilDatoBarnetrygdperiodeSluttdatoAvgrensning = toggles[
+        EFeatureToggle.SPOR_OM_MANED_IKKE_DATO
+    ]
+        ? sisteDagDenneMåneden()
+        : dagensDato();
+
     const tilDatoBarnetrygdperiode = useDatovelgerFeltForSanity({
         søknadsfelt: { id: BarnetrygdperiodeSpørsmålId.tilDatoBarnetrygdperiode, svar: '' },
         skalFeltetVises: periodenErAvsluttet || andreForelderErDød,
         feilmelding: teksterForPersonType.sluttdato.feilmelding,
-        sluttdatoAvgrensning: dagensDato(),
+        sluttdatoAvgrensning: tilDatoBarnetrygdperiodeSluttdatoAvgrensning,
         startdatoAvgrensning: fraDatoBarnetrygdperiode.verdi
             ? dagenEtterDato(stringTilDate(fraDatoBarnetrygdperiode.verdi))
             : undefined,

@@ -20,7 +20,7 @@ import {
     sisteDagDenneMåneden,
     stringTilDate,
 } from '../../../utils/dato';
-import { minTilDatoForUtbetalingEllerArbeidsperiode } from '../../../utils/perioder';
+import { minTilDatoForPeriode } from '../../../utils/perioder';
 
 import { arbeidslandFeilmelding } from './arbeidsperiodeSpråkUtils';
 import { ArbeidsperiodeSpørsmålsId } from './spørsmål';
@@ -115,7 +115,7 @@ export const useArbeidsperiodeSkjema = (
         sluttdatoAvgrensning: periodenErAvsluttet
             ? tilArbeidsperiodeSluttdatoAvgrensning
             : undefined,
-        startdatoAvgrensning: minTilDatoForUtbetalingEllerArbeidsperiode(
+        startdatoAvgrensning: minTilDatoForPeriode(
             periodenErAvsluttet,
             fraDatoArbeidsperiode.verdi
         ),
