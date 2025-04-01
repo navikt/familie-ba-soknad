@@ -142,7 +142,7 @@ export const mockEøs = (barnSomTriggerEøs = [], søkerTriggerEøs = false) => 
 };
 
 export const mockRoutes = () => {
-    const useRoutes = jest.spyOn(routesContext, 'useRoutes').mockImplementation(
+    const useRoutes = jest.spyOn(routesContext, 'useRoutesContext').mockImplementation(
         jest.fn().mockReturnValue({
             routes: getRoutes(),
             hentRouteObjektForRouteEnum: jest.fn(),

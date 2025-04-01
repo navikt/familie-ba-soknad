@@ -6,11 +6,11 @@ import '@testing-library/jest-dom';
 
 import { RouteEnum } from '../typer/routes';
 
-import { RoutesProvider, useRoutes } from './RoutesContext';
+import { RoutesProvider, useRoutesContext } from './RoutesContext';
 
 test('Kan hente ut info om routes fra RoutesContext', () => {
     const Eksempelkomponent = () => {
-        const { hentRouteObjektForRouteEnum } = useRoutes();
+        const { hentRouteObjektForRouteEnum } = useRoutesContext();
 
         return (
             <>

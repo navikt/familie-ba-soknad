@@ -74,7 +74,7 @@ export function RoutesProvider(props: PropsWithChildren) {
     );
 }
 
-export function useRoutes() {
+export function useRoutesContext() {
     const context = useContext(RoutesContext);
 
     if (context === undefined) {
