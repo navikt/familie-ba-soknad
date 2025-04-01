@@ -36,7 +36,7 @@ export const fjernPersonopplysninger = (
     };
 };
 
-const maskerPersonoppysningerIObjekt = <T>(data: T): T => {
+const maskerPersonoppysningerIObjekt = <T>(data: T): T | undefined => {
     if (data === undefined) return data;
 
     const asText = JSON.stringify(data);
