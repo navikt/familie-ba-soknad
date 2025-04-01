@@ -6,7 +6,7 @@ import { PlusCircleIcon } from '@navikt/aksel-icons';
 import { BodyShort, Box, Button, ErrorMessage } from '@navikt/ds-react';
 import { ARed500 } from '@navikt/ds-tokens/dist/tokens';
 
-import { useFeatureToggles } from '../../../context/FeatureToggleContext';
+import { useFeatureToggles } from '../../../context/FeatureTogglesContext';
 
 interface Props {
     onClick: () => void | Promise<void>;

@@ -4,7 +4,7 @@ import { Alert } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
-import { useFeatureToggles } from '../../../context/FeatureToggleContext';
+import { useFeatureToggles } from '../../../context/FeatureTogglesContext';
 import { EFeatureToggle } from '../../../typer/feature-toggles';
 import { IEøsBarnetrygdsperiode } from '../../../typer/perioder';
 import { PersonType } from '../../../typer/personType';

@@ -6,7 +6,7 @@ import { Alert, BodyShort, Heading, VStack } from '@navikt/ds-react';
 import { RessursStatus } from '@navikt/familie-typer';
 
 import { useApp } from '../../../context/AppContext';
-import { useFeatureToggles } from '../../../context/FeatureToggleContext';
+import { useFeatureToggles } from '../../../context/FeatureTogglesContext';
 import useFørsteRender from '../../../hooks/useFørsteRender';
 import { useSendInnSkjema } from '../../../hooks/useSendInnSkjema';
 import { IDokumentasjon, IVedlegg } from '../../../typer/dokumentasjon';

@@ -4,7 +4,7 @@ import { Label } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
-import { useFeatureToggles } from '../../../context/FeatureToggleContext';
+import { useFeatureToggles } from '../../../context/FeatureTogglesContext';
 import { PersonType } from '../../../typer/personType';
 import { IUtenlandsoppholdTekstinnhold } from '../../../typer/sanity/modaler/utenlandsopphold';
 import { ESanitySteg, Typografi } from '../../../typer/sanity/sanity';
