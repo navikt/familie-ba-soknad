@@ -4,7 +4,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../context/AppContext';
 import { useFeatureToggles } from '../../../context/FeatureToggleContext';
-import { useSpråk } from '../../../context/SpråkContext';
+import { useSpråkContext } from '../../../context/SpråkContext';
 import { EFeatureToggle } from '../../../typer/feature-toggles';
 import { IPensjonsperiode } from '../../../typer/perioder';
 import { PeriodePersonTypeMedBarnProps, PersonType } from '../../../typer/personType';
@@ -36,7 +36,7 @@ export const PensjonsperiodeOppsummering: React.FC<PensjonsperiodeOppsummeringPr
     barn = undefined,
 }) => {
     const { toggles } = useFeatureToggles();
-    const { valgtLocale } = useSpråk();
+    const { valgtLocale } = useSpråkContext();
     const { tekster } = useApp();
     const teksterForModal = tekster().FELLES.modaler.pensjonsperiode[personType];
 
