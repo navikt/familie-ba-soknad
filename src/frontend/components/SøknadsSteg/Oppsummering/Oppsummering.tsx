@@ -6,7 +6,7 @@ import { VStack } from '@navikt/ds-react';
 
 import { useApp } from '../../../context/AppContext';
 import { useEøs } from '../../../context/EøsContext';
-import { useSteg } from '../../../context/StegContext';
+import { useStegContext } from '../../../context/StegContext';
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { RouteEnum } from '../../../typer/routes';
 import { ESanitySteg } from '../../../typer/sanity/sanity';
@@ -23,7 +23,7 @@ import VelgBarnOppsummering from './OppsummeringSteg/VelgBarnOppsummering';
 
 const Oppsummering: React.FC = () => {
     const { søknad, tekster } = useApp();
-    const { hentStegNummer } = useSteg();
+    const { hentStegNummer } = useStegContext();
     const navigate = useNavigate();
     const [feilAnchors, settFeilAnchors] = useState<string[]>([]);
     const { barnSomTriggerEøs, søkerTriggerEøs } = useEøs();

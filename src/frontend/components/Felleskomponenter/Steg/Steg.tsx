@@ -9,7 +9,7 @@ import { setAvailableLanguages } from '@navikt/nav-dekoratoren-moduler';
 
 import { useApp } from '../../../context/AppContext';
 import { useAppNavigation } from '../../../context/AppNavigationContext';
-import { useSteg } from '../../../context/StegContext';
+import { useStegContext } from '../../../context/StegContext';
 import useFørsteRender from '../../../hooks/useFørsteRender';
 import { RouteEnum } from '../../../typer/routes';
 import { LocaleRecordBlock } from '../../../typer/sanity/sanity';
@@ -73,7 +73,7 @@ const Steg: React.FC<ISteg> = ({
         hentNåværendeSteg,
         hentNåværendeStegIndex,
         erPåKvitteringsside,
-    } = useSteg();
+    } = useStegContext();
     const { komFra, settKomFra } = useAppNavigation();
 
     const nesteRoute = hentNesteSteg();
