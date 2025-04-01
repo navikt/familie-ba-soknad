@@ -64,6 +64,7 @@ export interface IFellesTekstInnhold {
     formateringsfeilmeldinger: IFormateringsfeilmeldingerTekstinnhold;
     vedlikeholdsarbeid: IVedlikeholdsarbeidTekstinnhold;
     kanIkkeBrukeSoeknad: IKanIkkeBrukeSoeknadTekstinnhold;
+    hjelpeteksterForInput: IHjelpeteksterForInputTekstInnhold;
 }
 
 export interface IFrittståendeOrdTekstinnhold {
@@ -89,6 +90,10 @@ export interface IFrittståendeOrdTekstinnhold {
     tidligereSamboere: LocaleRecordString;
     barnetrygdperioder: LocaleRecordString;
     utbetalingsperioder: LocaleRecordString;
+    vedlegg: LocaleRecordString;
+    vedleggMedFeil: LocaleRecordString;
+    slipp: LocaleRecordString;
+    eller: LocaleRecordString;
 }
 
 export interface INavigasjonTekstinnhold {
@@ -115,6 +120,11 @@ export interface IFormateringsfeilmeldingerTekstinnhold {
     periodeAvsluttesForTidlig: LocaleRecordString;
     datoKanIkkeVaereTilbakeITid: LocaleRecordString;
     datoKanIkkeVaere12MndTilbake: LocaleRecordString;
+    ugyldigManed: LocaleRecordString;
+    datoErForForsteGyldigeTidspunkt: LocaleRecordString;
+    datoErEtterSisteGyldigeTidspunkt: LocaleRecordString;
+    datoKanIkkeVareIFortid: LocaleRecordString;
+    datoKanIkkeVareIFremtid: LocaleRecordString;
 }
 
 export interface IModalerTekstinnhold {
@@ -179,4 +189,11 @@ export interface IVedlikeholdsarbeidTekstinnhold {
 
 export interface IKanIkkeBrukeSoeknadTekstinnhold {
     brukPDFKontantstoette: LocaleRecordBlock;
+}
+
+export interface IHjelpeteksterForInputTekstInnhold {
+    datoformatHjelpetekst: LocaleRecordBlock;
+    datoformatPlaceholder: LocaleRecordBlock;
+    manedformatPlaceholder: LocaleRecordBlock;
+    velgLandPlaceholder: LocaleRecordBlock;
 }

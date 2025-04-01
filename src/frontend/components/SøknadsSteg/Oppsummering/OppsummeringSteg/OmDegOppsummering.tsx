@@ -7,7 +7,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../../context/AppContext';
 import { useRoutes } from '../../../../context/RoutesContext';
-import { useSpråk } from '../../../../context/SpråkContext';
+import { useSpråkContext } from '../../../../context/SpråkContext';
 import { PersonType } from '../../../../typer/personType';
 import { RouteEnum } from '../../../../typer/routes';
 import { ESanitySteg } from '../../../../typer/sanity/sanity';
@@ -27,7 +27,7 @@ interface Props {
 const OmDegOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
     const { søknad, tekster, plainTekst } = useApp();
     const { OM_DEG: omDegTekster } = tekster();
-    const { valgtLocale } = useSpråk();
+    const { valgtLocale } = useSpråkContext();
     const { formatMessage } = useIntl();
     const { hentRouteObjektForRouteEnum } = useRoutes();
     const omDegHook = useOmdeg();
@@ -42,12 +42,7 @@ const OmDegOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
             settFeilAnchors={settFeilAnchors}
         >
             <OppsummeringFelt
-                tittel={
-                    <TekstBlock
-                        block={forsidetekster.bekreftelsesboksBroedtekst}
-                        brukTypografiWrapper={false}
-                    />
-                }
+                tittel={<TekstBlock block={forsidetekster.bekreftelsesboksBroedtekst} />}
                 søknadsvar={
                     søknad.lestOgForståttBekreftelse
                         ? plainTekst(forsidetekster.bekreftelsesboksErklaering)

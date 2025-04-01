@@ -7,7 +7,8 @@ import Miljø from '../../shared-utils/Miljø';
 import { erModellMismatchResponsRessurs } from '../../shared-utils/modellversjon';
 import { useApp } from '../context/AppContext';
 import { useFeatureToggles } from '../context/FeatureToggleContext';
-import { useSpråk } from '../context/SpråkContext';
+import { useSpråkContext } from '../context/SpråkContext';
+import { EFeatureToggle } from '../typer/feature-toggles';
 import { ISøknadKontrakt } from '../typer/kontrakt/kontrakt';
 import { dataISøknadKontraktFormat } from '../utils/mappingTilKontrakt/søknad';
 import { sendInn } from '../utils/sendInnSkjema';
@@ -24,7 +25,7 @@ export const useSendInnSkjema = (): {
         tilRestLocaleRecord,
     } = useApp();
     const { soknadApiProxyUrl } = Miljø();
-    const { valgtLocale } = useSpråk();
+    const { valgtLocale } = useSpråkContext();
     const { toggles } = useFeatureToggles();
 
     const sendInnSkjema = async (): Promise<[boolean, ISøknadKontrakt]> => {
@@ -37,7 +38,8 @@ export const useSendInnSkjema = (): {
                 søknad,
                 tekster(),
                 tilRestLocaleRecord,
-                kontraktVersjon
+                kontraktVersjon,
+                toggles[EFeatureToggle.SPOR_OM_MANED_IKKE_DATO] === true
             );
 
             const res = await sendInn<ISøknadKontrakt>(

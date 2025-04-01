@@ -3,10 +3,10 @@ import React, { ReactNode } from 'react';
 import { PortableText } from '@portabletext/react';
 import styled from 'styled-components';
 
-import { BodyLong, BodyShort, Detail, Heading, Label } from '@navikt/ds-react';
+import { BodyLong, BodyShort, Detail, Heading, Ingress, Label } from '@navikt/ds-react';
 
 import { useApp } from '../../../context/AppContext';
-import { useSpråk } from '../../../context/SpråkContext';
+import { useSpråkContext } from '../../../context/SpråkContext';
 import { FlettefeltVerdier, LocaleRecordBlock, Typografi } from '../../../typer/sanity/sanity';
 
 const StyledLabel = styled(Label)`
@@ -47,10 +47,18 @@ export function TypografiWrapper({ typografi, style, children }: Props) {
             );
         case Typografi.HeadingH2:
             return (
-                <Heading level={'2'} size={'xsmall'} spacing style={style}>
+                <Heading level={'2'} size={'medium'} spacing style={style}>
                     {children}
                 </Heading>
             );
+        case Typografi.HeadingH3:
+            return (
+                <Heading level={'3'} size={'small'} spacing style={style}>
+                    {children}
+                </Heading>
+            );
+        case Typografi.Ingress:
+            return <Ingress style={style}>{children}</Ingress>;
         case Typografi.BodyLong:
             return <StyledBodyLong style={style}>{children}</StyledBodyLong>;
         case Typografi.BodyShort:
@@ -72,23 +80,34 @@ const TekstBlock: React.FC<{
     block: LocaleRecordBlock | undefined;
     flettefelter?: FlettefeltVerdier;
     typografi?: Typografi;
-    brukTypografiWrapper?: boolean;
-}> = ({ block, flettefelter, typografi, brukTypografiWrapper = true }) => {
-    const { valgtLocale } = useSpråk();
+}> = ({ block, flettefelter, typografi }) => {
+    const { valgtLocale } = useSpråkContext();
     const { flettefeltTilTekst } = useApp();
 
     return block ? (
         <PortableText
             value={block[valgtLocale]}
             components={{
-                block: ({ children }) =>
-                    brukTypografiWrapper ? (
+                block: {
+                    normal: ({ children }) => (
                         <TypografiWrapper typografi={typografi} style={{ minHeight: '1rem' }}>
                             {children}
                         </TypografiWrapper>
-                    ) : (
-                        children
                     ),
+                    h1: ({ children }) => (
+                        <TypografiWrapper typografi={typografi}>{children}</TypografiWrapper>
+                    ),
+                    h2: ({ children }) => (
+                        <TypografiWrapper typografi={Typografi.HeadingH2}>
+                            {children}
+                        </TypografiWrapper>
+                    ),
+                    h3: ({ children }) => (
+                        <TypografiWrapper typografi={Typografi.HeadingH3}>
+                            {children}
+                        </TypografiWrapper>
+                    ),
+                },
                 marks: {
                     flettefelt: props => {
                         if (props?.value?.flettefeltVerdi) {
