@@ -8,7 +8,7 @@ import { HttpProvider } from '@navikt/familie-http';
 import { tekster } from '../shared-utils/tekster';
 
 import { Feilside } from './components/Felleskomponenter/Feilside/Feilside';
-import { FeatureTogglesProvider } from './context/FeatureToggleContext';
+import { FeatureTogglesProvider } from './context/FeatureTogglesContext';
 import { InnloggetProvider } from './context/InnloggetContext';
 import { LastRessurserProvider } from './context/LastRessurserContext';
 import { SanityProvider } from './context/SanityContext';
