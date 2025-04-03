@@ -15,6 +15,7 @@ import {
 
 import Miljø, { basePath } from '../../shared-utils/Miljø';
 import { DinLivssituasjonSpørsmålId } from '../components/SøknadsSteg/DinLivssituasjon/spørsmål';
+import { useDebounce } from '../hooks/useDebounce/useDebounce';
 import { LocaleType } from '../typer/common';
 import { IKontoinformasjon } from '../typer/kontoinformasjon';
 import { ESivilstand, ESøknadstype, TilRestLocaleRecord } from '../typer/kontrakt/generelle';
@@ -143,9 +144,14 @@ const [AppProvider, useApp] = createUseContext(() => {
         settMellomlagretVerdi(barnetrygd);
     };
 
+    const {
+        debouncedFunksjon: debouncedMellomlagre,
+        tvingKjøringAvDebouncedFunksjon: tvingKjøringAvDebouncedMellomlagre,
+    } = useDebounce(mellomlagre, 500);
+
     useEffect(() => {
         if (sisteUtfylteStegIndex > -1) {
-            mellomlagre();
+            debouncedMellomlagre();
         }
     }, [nåværendeRoute, søknad.dokumentasjon]);
 
@@ -385,6 +391,7 @@ const [AppProvider, useApp] = createUseContext(() => {
         systemetOK,
         systemetLaster,
         mellomlagre,
+        tvingKjøringAvDebouncedMellomlagre,
         modellVersjonOppdatert,
         settSisteModellVersjon,
         eøsLand,

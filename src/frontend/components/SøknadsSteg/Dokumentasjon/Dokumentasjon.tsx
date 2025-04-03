@@ -30,7 +30,14 @@ export const erVedleggstidspunktGyldig = (vedleggTidspunkt: string): boolean => 
 };
 
 const Dokumentasjon: React.FC = () => {
-    const { søknad, settSøknad, innsendingStatus, tekster, plainTekst } = useApp();
+    const {
+        søknad,
+        settSøknad,
+        innsendingStatus,
+        tekster,
+        plainTekst,
+        tvingKjøringAvDebouncedMellomlagre,
+    } = useApp();
     const { toggles } = useFeatureToggles();
     const { sendInnSkjema } = useSendInnSkjema();
     const [slettaVedlegg, settSlettaVedlegg] = useState<IVedlegg[]>([]);
@@ -94,6 +101,7 @@ const Dokumentasjon: React.FC = () => {
                     : stegTekster.dokumentasjonGuideIngenVedleggskrav
             }
             gåVidereCallback={async () => {
+                tvingKjøringAvDebouncedMellomlagre();
                 const [success, _] = await sendInnSkjema();
                 return success;
             }}
