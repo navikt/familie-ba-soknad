@@ -9,6 +9,7 @@ import { HttpProvider } from '@navikt/familie-http';
 import { type Ressurs, RessursStatus } from '@navikt/familie-typer';
 
 import norskeTekster from '../assets/lang/nb.json' assert { type: 'json' };
+import { UtenlandsoppholdSpørsmålId } from '../components/Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 import {
     DinLivssituasjonSpørsmålId,
     SamboerSpørsmålId,
@@ -39,9 +40,11 @@ import { AlternativtSvarForInput, LocaleType } from '../typer/common';
 import { EFeatureToggle } from '../typer/feature-toggles';
 import { ESivilstand, ESøknadstype, Slektsforhold } from '../typer/kontrakt/generelle';
 import { IKvittering } from '../typer/kvittering';
+import { IUtenlandsperiode } from '../typer/perioder';
 import { ISøker, ISøkerRespons } from '../typer/person';
 import { ITekstinnhold } from '../typer/sanity/tekstInnhold';
 import { initialStateSøknad, ISøknad } from '../typer/søknad';
+import { EUtenlandsoppholdÅrsak } from '../typer/utenlandsopphold';
 import { Årsak } from '../typer/utvidet';
 
 import { genererInitialBarnMedISøknad } from './barn';
@@ -324,6 +327,42 @@ export const mekkGyldigSøker = (): ISøker => {
         },
     };
 };
+
+export function mekkGyldigUtenlandsoppholdEøs(): IUtenlandsperiode {
+    return {
+        utenlandsoppholdÅrsak: {
+            id: UtenlandsoppholdSpørsmålId.årsakUtenlandsopphold,
+            svar: EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE,
+        },
+        oppholdsland: { id: UtenlandsoppholdSpørsmålId.landUtenlandsopphold, svar: 'BEL' },
+        oppholdslandFraDato: {
+            id: UtenlandsoppholdSpørsmålId.fraDatoUtenlandsopphold,
+            svar: '',
+        },
+        oppholdslandTilDato: {
+            id: UtenlandsoppholdSpørsmålId.tilDatoUtenlandsopphold,
+            svar: '',
+        },
+    };
+}
+
+export function mekkGyldigUtenlandsoppholdIkkeEøs(): IUtenlandsperiode {
+    return {
+        utenlandsoppholdÅrsak: {
+            id: UtenlandsoppholdSpørsmålId.årsakUtenlandsopphold,
+            svar: EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE,
+        },
+        oppholdsland: { id: UtenlandsoppholdSpørsmålId.landUtenlandsopphold, svar: 'USA' },
+        oppholdslandFraDato: {
+            id: UtenlandsoppholdSpørsmålId.fraDatoUtenlandsopphold,
+            svar: '',
+        },
+        oppholdslandTilDato: {
+            id: UtenlandsoppholdSpørsmålId.tilDatoUtenlandsopphold,
+            svar: '',
+        },
+    };
+}
 
 export const mekkGyldigSøknad = (): ISøknad => {
     return {
