@@ -2,7 +2,7 @@ import React, { FC, ReactNode } from 'react';
 
 import { Alert, Box } from '@navikt/ds-react';
 
-import { useApp } from '../../context/AppContext';
+import { useAppContext } from '../../context/AppContext';
 
 import TekstBlock from './Sanity/TekstBlock';
 
@@ -11,7 +11,7 @@ interface SøkerMåBrukePDFProps {
 }
 
 export const SøkerMåBrukePDF: FC<SøkerMåBrukePDFProps> = ({ advarselTekst }) => {
-    const { tekster } = useApp();
+    const { tekster } = useAppContext();
     const { brukPDFKontantstoette } = tekster().FELLES.kanIkkeBrukeSoeknad;
 
     return (

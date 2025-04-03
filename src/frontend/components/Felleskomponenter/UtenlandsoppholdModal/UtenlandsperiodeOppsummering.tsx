@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useApp } from '../../../context/AppContext';
+import { useAppContext } from '../../../context/AppContext';
 import { useSpråkContext } from '../../../context/SpråkContext';
 import { IUtenlandsperiode } from '../../../typer/perioder';
 import { PeriodePersonTypeMedBarnProps } from '../../../typer/personType';
@@ -35,7 +35,7 @@ export const UtenlandsperiodeOppsummering: React.FC<UtenlandsperiodeOppsummering
     barn,
 }) => {
     const { valgtLocale } = useSpråkContext();
-    const { plainTekst, tekster } = useApp();
+    const { plainTekst, tekster } = useAppContext();
     const { oppholdsland, utenlandsoppholdÅrsak, oppholdslandFraDato, oppholdslandTilDato } =
         periode;
     const årsak = utenlandsoppholdÅrsak.svar;

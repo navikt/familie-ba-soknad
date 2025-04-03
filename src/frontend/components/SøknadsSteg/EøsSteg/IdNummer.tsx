@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { ESvar } from '@navikt/familie-form-elements';
 import { feil, type Felt, type FeltState, type ISkjema, ok, useFelt } from '@navikt/familie-skjema';
 
-import { useApp } from '../../../context/AppContext';
+import { useAppContext } from '../../../context/AppContext';
 import { useSpråkContext } from '../../../context/SpråkContext';
 import useInputFeltMedUkjent from '../../../hooks/useInputFeltMedUkjent';
 import { IBarnMedISøknad } from '../../../typer/barn';
@@ -50,7 +50,7 @@ export const IdNummer: React.FC<{
     spørsmålDokument,
     lesevisning = false,
 }) => {
-    const { plainTekst, tekster } = useApp();
+    const { plainTekst, tekster } = useAppContext();
     const { valgtLocale } = useSpråkContext();
     const intl = useIntl();
     const { formatMessage } = intl;

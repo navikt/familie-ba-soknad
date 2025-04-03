@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { feil, type FeltState, type ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
-import { useApp } from '../../../context/AppContext';
+import { useAppContext } from '../../../context/AppContext';
 import { useEøsContext } from '../../../context/EøsContext';
 import useDatovelgerFeltMedUkjentForSanity from '../../../hooks/useDatovelgerFeltMedUkjentForSanity';
 import useInputFelt from '../../../hooks/useInputFelt';
@@ -88,7 +88,7 @@ export const useOmBarnet = (
     leggTilBarnetrygdsperiode: (periode: IEøsBarnetrygdsperiode) => void;
     fjernBarnetrygdsperiode: (periode: IEøsBarnetrygdsperiode) => void;
 } => {
-    const { søknad, settSøknad, erUtvidet, tekster, plainTekst } = useApp();
+    const { søknad, settSøknad, erUtvidet, tekster, plainTekst } = useAppContext();
     const { skalTriggeEøsForBarn, barnSomTriggerEøs, settBarnSomTriggerEøs, erEøsLand } =
         useEøsContext();
     const stegTekster: IOmBarnetTekstinnhold = tekster()[ESanitySteg.OM_BARNET];

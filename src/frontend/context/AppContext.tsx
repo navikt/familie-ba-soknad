@@ -455,7 +455,7 @@ export function AppProvider(props: PropsWithChildren) {
     );
 }
 
-export function useApp() {
+export function useAppContext() {
     const context = useContext(AppContext);
 
     if (context === undefined) {

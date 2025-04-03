@@ -10,7 +10,7 @@ import {
     useFelt,
 } from '@navikt/familie-skjema';
 
-import { useApp } from '../../../context/AppContext';
+import { useAppContext } from '../../../context/AppContext';
 import { barnDataKeySpørsmål } from '../../../typer/barn';
 import { BarnetsId } from '../../../typer/common';
 import { FlettefeltVerdier, LocaleRecordBlock } from '../../../typer/sanity/sanity';
@@ -33,7 +33,7 @@ const useBarnCheckboxFelt = ({
     avhengighet,
     avhengigJaNeiSpmSvarCondition = ESvar.JA,
 }: IUseBarnCheckboxFeltProps) => {
-    const { søknad, plainTekst } = useApp();
+    const { søknad, plainTekst } = useAppContext();
     const barn = søknad.barnInkludertISøknaden;
 
     const skalFeltetVises = jaNeiSpmVerdi => jaNeiSpmVerdi === avhengigJaNeiSpmSvarCondition;

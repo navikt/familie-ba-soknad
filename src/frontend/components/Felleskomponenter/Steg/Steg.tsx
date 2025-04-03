@@ -7,7 +7,7 @@ import { Alert, Box, FormProgress, GuidePanel, Heading, Link, VStack } from '@na
 import type { ISkjema } from '@navikt/familie-skjema';
 import { setAvailableLanguages } from '@navikt/nav-dekoratoren-moduler';
 
-import { useApp } from '../../../context/AppContext';
+import { useAppContext } from '../../../context/AppContext';
 import { useAppNavigationContext } from '../../../context/AppNavigationContext';
 import { useStegContext } from '../../../context/StegContext';
 import useFørsteRender from '../../../hooks/useFørsteRender';
@@ -66,7 +66,7 @@ const Steg: React.FC<ISteg> = ({
         søknad,
         tekster,
         plainTekst,
-    } = useApp();
+    } = useAppContext();
     const {
         hentNesteSteg,
         hentForrigeSteg,

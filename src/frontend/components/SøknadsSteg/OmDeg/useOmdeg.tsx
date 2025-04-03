@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { feil, type ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
-import { useApp } from '../../../context/AppContext';
+import { useAppContext } from '../../../context/AppContext';
 import { useEøsContext } from '../../../context/EøsContext';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import { AlternativtSvarForInput } from '../../../typer/common';
@@ -30,7 +30,7 @@ export const useOmdeg = (): {
     fjernUtenlandsperiode: (periode: IUtenlandsperiode) => void;
     utenlandsperioder: IUtenlandsperiode[];
 } => {
-    const { søknad, settSøknad, tekster, plainTekst } = useApp();
+    const { søknad, settSøknad, tekster, plainTekst } = useAppContext();
     const { erEøsLand } = useEøsContext();
     const søker = søknad.søker;
     const [utenlandsperioder, settUtenlandsperioder] = useState<IUtenlandsperiode[]>(

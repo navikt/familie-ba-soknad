@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { type ISkjema, useSkjema } from '@navikt/familie-skjema';
 
-import { useApp } from '../../../context/AppContext';
+import { useAppContext } from '../../../context/AppContext';
 import { useEøsContext } from '../../../context/EøsContext';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import { barnDataKeySpørsmål } from '../../../typer/barn';
@@ -24,7 +24,7 @@ export const useOmBarnaDine = (): {
     oppdaterSøknad: () => void;
     validerAlleSynligeFelter: () => void;
 } => {
-    const { søknad, settSøknad, tekster } = useApp();
+    const { søknad, settSøknad, tekster } = useAppContext();
     const { skalTriggeEøsForBarn, barnSomTriggerEøs, settBarnSomTriggerEøs, erEøsLand } =
         useEøsContext();
 

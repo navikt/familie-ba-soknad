@@ -4,7 +4,7 @@ import { Accordion, GuidePanel, Heading } from '@navikt/ds-react';
 import { setAvailableLanguages } from '@navikt/nav-dekoratoren-moduler';
 
 import Miljø from '../../../../shared-utils/Miljø';
-import { useApp } from '../../../context/AppContext';
+import { useAppContext } from '../../../context/AppContext';
 import useFørsteRender from '../../../hooks/useFørsteRender';
 import { RouteEnum } from '../../../typer/routes';
 import { ESanitySteg, Typografi } from '../../../typer/sanity/sanity';
@@ -16,7 +16,7 @@ import BekreftelseOgStartSoknad from './BekreftelseOgStartSoknad';
 import { FortsettPåSøknad } from './FortsettPåSøknad';
 
 const Forside: React.FC = () => {
-    const { mellomlagretVerdi, søknad, settNåværendeRoute, tekster, plainTekst } = useApp();
+    const { mellomlagretVerdi, søknad, settNåværendeRoute, tekster, plainTekst } = useAppContext();
 
     useFørsteRender(() => logSidevisningBarnetrygd(`${RouteEnum.Forside}`, søknad.søknadstype));
 

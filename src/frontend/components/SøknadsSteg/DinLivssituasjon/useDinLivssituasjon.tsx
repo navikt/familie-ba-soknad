@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { feil, type FeltState, type ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
-import { useApp } from '../../../context/AppContext';
+import { useAppContext } from '../../../context/AppContext';
 import { useEøsContext } from '../../../context/EøsContext';
 import useDatovelgerFeltMedJaNeiAvhengighet from '../../../hooks/useDatovelgerFeltMedJaNeiAvhengighet';
 import useDatovelgerFeltMedUkjent from '../../../hooks/useDatovelgerFeltMedUkjent';
@@ -50,7 +50,7 @@ export const useDinLivssituasjon = (): {
     leggTilPensjonsperiode: (periode: IPensjonsperiode) => void;
     fjernPensjonsperiode: (periode: IPensjonsperiode) => void;
 } => {
-    const { søknad, settSøknad, erUtvidet, tekster, plainTekst } = useApp();
+    const { søknad, settSøknad, erUtvidet, tekster, plainTekst } = useAppContext();
     const { skalTriggeEøsForSøker, søkerTriggerEøs, settSøkerTriggerEøs, erEøsLand } =
         useEøsContext();
     const søker = søknad.søker;

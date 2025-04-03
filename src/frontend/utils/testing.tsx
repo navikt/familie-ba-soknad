@@ -114,7 +114,7 @@ export const spyOnUseApp = søknad => {
         tilRestLocaleRecord,
     });
 
-    jest.spyOn(appContext, 'useApp').mockImplementation(useAppMock);
+    jest.spyOn(appContext, 'useAppContext').mockImplementation(useAppMock);
 
     return {
         useAppMock,

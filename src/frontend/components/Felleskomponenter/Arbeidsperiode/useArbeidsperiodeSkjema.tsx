@@ -1,7 +1,7 @@
 import { ESvar } from '@navikt/familie-form-elements';
 import { useFelt, useSkjema, Valideringsstatus } from '@navikt/familie-skjema';
 
-import { useApp } from '../../../context/AppContext';
+import { useAppContext } from '../../../context/AppContext';
 import { useEøsContext } from '../../../context/EøsContext';
 import { useFeatureToggles } from '../../../context/FeatureTogglesContext';
 import useDatovelgerFeltMedUkjentForSanity from '../../../hooks/useDatovelgerFeltMedUkjentForSanity';
@@ -37,7 +37,7 @@ export const useArbeidsperiodeSkjema = (
     erDød = false
 ) => {
     const { toggles } = useFeatureToggles();
-    const { tekster, plainTekst } = useApp();
+    const { tekster, plainTekst } = useAppContext();
     const { erEøsLand } = useEøsContext();
 
     const teksterForPersonType: IArbeidsperiodeTekstinnhold =
