@@ -129,7 +129,7 @@ export function EøsProvider(props: PropsWithChildren) {
     );
 }
 
-export function useEøs() {
+export function useEøsContext() {
     const context = useContext(EøsContext);
 
     if (context === undefined) {

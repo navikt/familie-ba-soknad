@@ -4,7 +4,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { feil, type ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
-import { useEøs } from '../../../context/EøsContext';
+import { useEøsContext } from '../../../context/EøsContext';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import { AlternativtSvarForInput } from '../../../typer/common';
 import { IUtenlandsperiode } from '../../../typer/perioder';
@@ -31,12 +31,12 @@ export const useOmdeg = (): {
     utenlandsperioder: IUtenlandsperiode[];
 } => {
     const { søknad, settSøknad, tekster, plainTekst } = useApp();
-    const { erEøsLand } = useEøs();
+    const { erEøsLand } = useEøsContext();
     const søker = søknad.søker;
     const [utenlandsperioder, settUtenlandsperioder] = useState<IUtenlandsperiode[]>(
         søker.utenlandsperioder
     );
-    const { skalTriggeEøsForSøker, søkerTriggerEøs, settSøkerTriggerEøs } = useEøs();
+    const { skalTriggeEøsForSøker, søkerTriggerEøs, settSøkerTriggerEøs } = useEøsContext();
     const teksterForSteg: IOmDegTekstinnhold = tekster()[ESanitySteg.OM_DEG];
     const teksterForUtenlandsopphold: IUtenlandsoppholdTekstinnhold =
         tekster()[ESanitySteg.FELLES].modaler.utenlandsopphold.søker;

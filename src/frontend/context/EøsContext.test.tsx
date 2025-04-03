@@ -17,7 +17,7 @@ import {
 
 import { AppProvider } from './AppContext';
 import { preferredAxios } from './axios';
-import { EøsProvider, useEøs } from './EøsContext';
+import { EøsProvider, useEøsContext } from './EøsContext';
 import { InnloggetProvider } from './InnloggetContext';
 import { LastRessurserProvider } from './LastRessurserContext';
 import * as pdlRequest from './pdl';
@@ -71,7 +71,7 @@ describe('EøsContext', () => {
     });
 
     test(`Skal kunne sjekke om et land er EØS-land`, async () => {
-        const { result } = renderHook(() => useEøs(), { wrapper });
+        const { result } = renderHook(() => useEøsContext(), { wrapper });
         await waitFor(() => {
             expect(result.current.erEøsLand('DNK')).toEqual(true);
             expect(result.current.erEøsLand('ARG')).toEqual(false);
@@ -82,7 +82,7 @@ describe('EøsContext', () => {
         const søker = mekkGyldigSøker();
         søker.utenlandsperioder = [mekkGyldigUtenlandsoppholdEøs()];
 
-        const { result } = renderHook(() => useEøs(), { wrapper });
+        const { result } = renderHook(() => useEøsContext(), { wrapper });
         await waitFor(() => {
             expect(result.current.skalTriggeEøsForSøker(søker)).toEqual(true);
         });
@@ -92,7 +92,7 @@ describe('EøsContext', () => {
         const søker = mekkGyldigSøker();
         søker.utenlandsperioder = [mekkGyldigUtenlandsoppholdIkkeEøs()];
 
-        const { result } = renderHook(() => useEøs(), { wrapper });
+        const { result } = renderHook(() => useEøsContext(), { wrapper });
         await waitFor(() => {
             expect(result.current.skalTriggeEøsForSøker(søker)).toEqual(false);
         });

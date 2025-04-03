@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 
 import { useApp } from '../../../context/AppContext';
-import { useEøs } from '../../../context/EøsContext';
+import { useEøsContext } from '../../../context/EøsContext';
 import { useStegContext } from '../../../context/StegContext';
 import { ESøknadstype } from '../../../typer/kontrakt/generelle';
 import { ISteg } from '../../../typer/routes';
@@ -40,7 +40,7 @@ export const useBekreftelseOgStartSoknad = (): {
         avbrytOgSlettSøknad,
         mellomlagretVerdi,
     } = useApp();
-    const { settBarnSomTriggerEøs, skalTriggeEøsForBarn, settSøkerTriggerEøs } = useEøs();
+    const { settBarnSomTriggerEøs, skalTriggeEøsForBarn, settSøkerTriggerEøs } = useEøsContext();
 
     const [bekreftelseStatus, settBekreftelseStatus] = useState<BekreftelseStatus>(
         søknad.lestOgForståttBekreftelse ? BekreftelseStatus.BEKREFTET : BekreftelseStatus.NORMAL

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { feil, type ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
-import { useEøs } from '../../../context/EøsContext';
+import { useEøsContext } from '../../../context/EøsContext';
 import { useStegContext } from '../../../context/StegContext';
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { BarnetsId } from '../../../typer/common';
@@ -28,7 +28,7 @@ export const useVelgBarn = (): {
     const { søknad, settSøknad, mellomlagre, tekster, plainTekst } = useApp();
     const { barnInkludertISøknaden } = søknad;
     const { settBarnForSteg } = useStegContext();
-    const { settBarnSomTriggerEøs } = useEøs();
+    const { settBarnSomTriggerEøs } = useEøsContext();
     const [barnSomSkalVæreMed, settBarnSomSkalVæreMed] =
         useState<IBarnMedISøknad[]>(barnInkludertISøknaden);
 

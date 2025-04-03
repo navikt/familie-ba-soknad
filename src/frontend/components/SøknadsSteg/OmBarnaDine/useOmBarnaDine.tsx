@@ -4,7 +4,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { type ISkjema, useSkjema } from '@navikt/familie-skjema';
 
 import { useApp } from '../../../context/AppContext';
-import { useEøs } from '../../../context/EøsContext';
+import { useEøsContext } from '../../../context/EøsContext';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import { barnDataKeySpørsmål } from '../../../typer/barn';
 import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
@@ -25,7 +25,8 @@ export const useOmBarnaDine = (): {
     validerAlleSynligeFelter: () => void;
 } => {
     const { søknad, settSøknad, tekster } = useApp();
-    const { skalTriggeEøsForBarn, barnSomTriggerEøs, settBarnSomTriggerEøs, erEøsLand } = useEøs();
+    const { skalTriggeEøsForBarn, barnSomTriggerEøs, settBarnSomTriggerEøs, erEøsLand } =
+        useEøsContext();
 
     const teksterForSteg = tekster().OM_BARNA;
 
