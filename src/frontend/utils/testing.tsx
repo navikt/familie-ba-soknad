@@ -274,6 +274,12 @@ export const LesUtLocation = () => {
     return <pre data-testid="location">{JSON.stringify(location)}</pre>;
 };
 
+export const mockedHistory: string[] = [];
+
+export const mockHistory = (newHistory: string[]) => {
+    mockedHistory.push(...newHistory);
+};
+
 export const mekkGyldigSøker = (): ISøker => {
     return {
         ...initialStateSøknad().søker,
