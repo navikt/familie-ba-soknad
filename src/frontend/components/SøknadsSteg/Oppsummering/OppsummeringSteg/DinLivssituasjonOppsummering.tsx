@@ -6,7 +6,7 @@ import { FormSummary } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../../context/AppContext';
-import { useRoutes } from '../../../../context/RoutesContext';
+import { useRoutesContext } from '../../../../context/RoutesContext';
 import { AlternativtSvarForInput } from '../../../../typer/common';
 import { ESivilstand } from '../../../../typer/kontrakt/generelle';
 import { ISamboer, ITidligereSamboer } from '../../../../typer/person';
@@ -78,7 +78,7 @@ const SamboerOppsummering: React.FC<{ samboer: ISamboer | ITidligereSamboer }> =
 
 const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
     const { søknad, erUtvidet, tekster, plainTekst } = useApp();
-    const { hentRouteObjektForRouteEnum } = useRoutes();
+    const { hentRouteObjektForRouteEnum } = useRoutesContext();
     const dinLivsituasjonHook = useDinLivssituasjon();
 
     const tidligereSamboere = søknad.søker.utvidet.tidligereSamboere;

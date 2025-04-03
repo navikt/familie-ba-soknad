@@ -6,7 +6,7 @@ import { useIntl } from 'react-intl';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useApp } from '../../../../context/AppContext';
-import { useRoutes } from '../../../../context/RoutesContext';
+import { useRoutesContext } from '../../../../context/RoutesContext';
 import { useSpråkContext } from '../../../../context/SpråkContext';
 import { PersonType } from '../../../../typer/personType';
 import { RouteEnum } from '../../../../typer/routes';
@@ -29,7 +29,7 @@ const OmDegOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
     const { OM_DEG: omDegTekster } = tekster();
     const { valgtLocale } = useSpråkContext();
     const { formatMessage } = useIntl();
-    const { hentRouteObjektForRouteEnum } = useRoutes();
+    const { hentRouteObjektForRouteEnum } = useRoutesContext();
     const omDegHook = useOmdeg();
     const forsidetekster = tekster()[ESanitySteg.FORSIDE];
 

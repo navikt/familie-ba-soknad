@@ -23,8 +23,8 @@ import { AppProvider } from '../context/AppContext';
 import { AppNavigationProvider } from '../context/AppNavigationContext';
 import * as eøsContext from '../context/EøsContext';
 import { EøsProvider } from '../context/EøsContext';
-import * as featureToggleContext from '../context/FeatureToggleContext';
-import { FeatureTogglesProvider } from '../context/FeatureToggleContext';
+import * as featureToggleContext from '../context/FeatureTogglesContext';
+import { FeatureTogglesProvider } from '../context/FeatureTogglesContext';
 import { InnloggetProvider } from '../context/InnloggetContext';
 import { LastRessurserProvider } from '../context/LastRessurserContext';
 import * as pdlRequest from '../context/pdl';
@@ -142,7 +142,7 @@ export const mockEøs = (barnSomTriggerEøs = [], søkerTriggerEøs = false) => 
 };
 
 export const mockRoutes = () => {
-    const useRoutes = jest.spyOn(routesContext, 'useRoutes').mockImplementation(
+    const useRoutes = jest.spyOn(routesContext, 'useRoutesContext').mockImplementation(
         jest.fn().mockReturnValue({
             routes: getRoutes(),
             hentRouteObjektForRouteEnum: jest.fn(),
