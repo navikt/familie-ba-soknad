@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { FormSummary } from '@navikt/ds-react';
 import type { ISkjema } from '@navikt/familie-skjema';
 
-import { useApp } from '../../../context/AppContext';
+import { useAppContext } from '../../../context/AppContext';
 import { useStegContext } from '../../../context/StegContext';
 import { ISteg, RouteEnum } from '../../../typer/routes';
 import {
@@ -52,7 +52,7 @@ const Oppsummeringsbolk: React.FC<Props> = ({
     settFeilAnchors,
 }) => {
     const { hentStegNummer } = useStegContext();
-    const { søknad, tekster, plainTekst } = useApp();
+    const { søknad, tekster, plainTekst } = useAppContext();
     const { validerAlleSynligeFelter, valideringErOk, skjema } = skjemaHook;
     const [visFeil, settVisFeil] = useState(false);
 

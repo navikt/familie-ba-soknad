@@ -10,7 +10,7 @@ import {
     Valideringsstatus,
 } from '@navikt/familie-skjema';
 
-import { useApp } from '../../../context/AppContext';
+import { useAppContext } from '../../../context/AppContext';
 import { useFeatureToggles } from '../../../context/FeatureTogglesContext';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
@@ -44,7 +44,7 @@ export interface IUsePensjonsperiodeSkjemaParams {
 
 export const useBarnetrygdperiodeSkjema = (personType: PersonType, barn, erDød) => {
     const { toggles } = useFeatureToggles();
-    const { tekster } = useApp();
+    const { tekster } = useAppContext();
 
     const teksterForPersonType: IBarnetrygdsperiodeTekstinnhold =
         tekster().FELLES.modaler.barnetrygdsperiode[personType];

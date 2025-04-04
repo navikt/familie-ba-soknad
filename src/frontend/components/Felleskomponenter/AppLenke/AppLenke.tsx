@@ -6,7 +6,7 @@ import { Link } from '@navikt/ds-react';
 
 import { basePath } from '../../../../shared-utils/Miljø';
 import { unslash } from '../../../../shared-utils/unslash';
-import { useAppNavigation } from '../../../context/AppNavigationContext';
+import { useAppNavigationContext } from '../../../context/AppNavigationContext';
 import { ISteg } from '../../../typer/routes';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
@@ -20,7 +20,7 @@ interface Props {
 
 export const AppLenke: React.FC<Props> = ({ steg, hash, språkTekstId, returnTo, children }) => {
     const navigate = useNavigate();
-    const { settKomFra } = useAppNavigation();
+    const { settKomFra } = useAppNavigationContext();
 
     const clickHandler: MouseEventHandler = event => {
         event.preventDefault();

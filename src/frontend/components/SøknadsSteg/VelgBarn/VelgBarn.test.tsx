@@ -58,7 +58,7 @@ const fraPdlSomIBarnMedISøknad: Partial<IBarnMedISøknad> = {
 
 describe('VelgBarn', () => {
     beforeEach(() => {
-        jest.spyOn(eøsContext, 'useEøs').mockImplementation(jest.fn());
+        jest.spyOn(eøsContext, 'useEøsContext').mockImplementation(jest.fn());
         jest.spyOn(pdlRequest, 'hentSluttbrukerFraPdl').mockImplementation(async () => ({
             status: RessursStatus.SUKSESS,
             data: mockDeep<ISøkerRespons>({

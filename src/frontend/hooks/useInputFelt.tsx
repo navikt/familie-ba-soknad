@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { feil, type FeltState, ok, useFelt } from '@navikt/familie-skjema';
 
 import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
-import { useApp } from '../context/AppContext';
+import { useAppContext } from '../context/AppContext';
 import { FlettefeltVerdier, LocaleRecordBlock } from '../typer/sanity/sanity';
 import { ISøknadSpørsmål } from '../typer/spørsmål';
 import { trimWhiteSpace } from '../utils/hjelpefunksjoner';
@@ -29,7 +29,7 @@ const useInputFelt = ({
     flettefelter?: FlettefeltVerdier;
     feilmeldingSpråkVerdier?: { [key: string]: ReactNode };
 }) => {
-    const { plainTekst } = useApp();
+    const { plainTekst } = useAppContext();
 
     return useFelt<string>({
         feltId: søknadsfelt?.id ?? uuidv4(),

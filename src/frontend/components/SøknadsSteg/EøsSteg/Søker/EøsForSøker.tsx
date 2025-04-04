@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useApp } from '../../../../context/AppContext';
+import { useAppContext } from '../../../../context/AppContext';
 import { PersonType } from '../../../../typer/personType';
 import { ESanitySteg } from '../../../../typer/sanity/sanity';
 import { Arbeidsperiode } from '../../../Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
@@ -14,7 +14,7 @@ import IdNummerForSøker from './IdNummerForSøker';
 import { useEøsForSøker } from './useEøsForSøker';
 
 const EøsForSøker: React.FC = () => {
-    const { tekster } = useApp();
+    const { tekster } = useAppContext();
 
     const {
         skjema,

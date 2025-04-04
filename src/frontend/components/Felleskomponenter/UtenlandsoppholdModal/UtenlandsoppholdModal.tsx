@@ -2,7 +2,7 @@ import React from 'react';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
-import { useApp } from '../../../context/AppContext';
+import { useAppContext } from '../../../context/AppContext';
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { IUtenlandsperiode } from '../../../typer/perioder';
 import { IUtenlandsoppholdTekstinnhold } from '../../../typer/sanity/modaler/utenlandsopphold';
@@ -52,7 +52,7 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
     barn,
     forklaring = undefined,
 }) => {
-    const { tekster, plainTekst } = useApp();
+    const { tekster, plainTekst } = useAppContext();
     const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } =
         useUtenlandsoppholdSkjema({
             personType,

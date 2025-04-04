@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import { BodyLong, Button, Modal } from '@navikt/ds-react';
 
-import { useAppNavigation } from '../../../context/AppNavigationContext';
+import { useAppNavigationContext } from '../../../context/AppNavigationContext';
 import EksternLenke from '../EksternLenke/EksternLenke';
 import ModalContent from '../ModalContent';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
@@ -15,7 +15,8 @@ const StyledEksternLenke = styled(EksternLenke)`
 `;
 
 const BlokkerTilbakeKnappModal = () => {
-    const { visBlokkerTilbakeKnappModal, settVisBlokkerTilbakeKnappModal } = useAppNavigation();
+    const { visBlokkerTilbakeKnappModal, settVisBlokkerTilbakeKnappModal } =
+        useAppNavigationContext();
     const { formatMessage } = useIntl();
 
     const håndterAvbryt = () => {

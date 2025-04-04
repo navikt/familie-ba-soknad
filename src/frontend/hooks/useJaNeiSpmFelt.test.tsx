@@ -1,11 +1,19 @@
+import React from 'react';
+
 import { renderHook } from '@testing-library/react';
 import { Alpha3Code } from 'i18n-iso-countries';
 import { mock } from 'jest-mock-extended';
+import { IntlProvider } from 'react-intl';
 
 import { ESvar } from '@navikt/familie-form-elements';
 import { type Felt, Valideringsstatus } from '@navikt/familie-skjema';
 
 import { OmDegSpørsmålId } from '../components/SøknadsSteg/OmDeg/spørsmål';
+import { AppProvider } from '../context/AppContext';
+import { InnloggetProvider } from '../context/InnloggetContext';
+import { LastRessurserProvider } from '../context/LastRessurserContext';
+import { SanityProvider } from '../context/SanityContext';
+import { SpråkProvider } from '../context/SpråkContext';
 import { ISODateString } from '../typer/common';
 import { ISøknadSpørsmål } from '../typer/spørsmål';
 
@@ -136,15 +144,31 @@ describe('useJaNeiSpmFelt', () => {
             valideringsstatus: Valideringsstatus.IKKE_VALIDERT,
         });
 
-        const { result } = renderHook(() =>
-            useJaNeiSpmFelt({
-                søknadsfelt: værtINorgeITolvMåneder,
-                feilmeldingSpråkId: 'test',
-                avhengigheter: {
-                    borPåRegistrertAdresse: { hovedSpørsmål: borPåRegistrertAdresseFeltMock },
-                },
-                nullstillVedAvhengighetEndring: true,
-            })
+        const wrapper = ({ children }) => (
+            <SpråkProvider>
+                <IntlProvider locale="no">
+                    <LastRessurserProvider>
+                        <InnloggetProvider>
+                            <SanityProvider>
+                                <AppProvider>{children}</AppProvider>
+                            </SanityProvider>
+                        </InnloggetProvider>
+                    </LastRessurserProvider>
+                </IntlProvider>
+            </SpråkProvider>
+        );
+
+        const { result } = renderHook(
+            () =>
+                useJaNeiSpmFelt({
+                    søknadsfelt: værtINorgeITolvMåneder,
+                    feilmeldingSpråkId: 'test',
+                    avhengigheter: {
+                        borPåRegistrertAdresse: { hovedSpørsmål: borPåRegistrertAdresseFeltMock },
+                    },
+                    nullstillVedAvhengighetEndring: true,
+                }),
+            { wrapper }
         );
 
         expect(result.current.erSynlig).toEqual(false);

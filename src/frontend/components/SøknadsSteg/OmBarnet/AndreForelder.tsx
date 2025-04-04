@@ -4,7 +4,7 @@ import { FormSummary } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import type { ISkjema } from '@navikt/familie-skjema';
 
-import { useApp } from '../../../context/AppContext';
+import { useAppContext } from '../../../context/AppContext';
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { AlternativtSvarForInput } from '../../../typer/common';
 import { IArbeidsperiode, IPensjonsperiode } from '../../../typer/perioder';
@@ -39,7 +39,7 @@ const AndreForelder: React.FC<{
     leggTilPensjonsperiode,
     fjernPensjonsperiode,
 }) => {
-    const { tekster, plainTekst } = useApp();
+    const { tekster, plainTekst } = useAppContext();
 
     const barnMedSammeForelder: IBarnMedISøknad | undefined = andreBarnSomErFyltUt.find(
         annetBarn => annetBarn.id === skjema.felter.sammeForelderSomAnnetBarn.verdi

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useApp } from '../../../context/AppContext';
+import { useAppContext } from '../../../context/AppContext';
 import { ITidligereSamboer } from '../../../typer/person';
 import { ITidligereSamoboereTekstinnhold } from '../../../typer/sanity/modaler/tidligereSamboere';
 import { trimWhiteSpace, visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
@@ -26,7 +26,7 @@ const LeggTilSamboerModal: React.FC<Props> = ({
     erÅpen,
     forklaring = undefined,
 }) => {
-    const { tekster } = useApp();
+    const { tekster } = useAppContext();
     const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } =
         useTidligereSamboer();
 

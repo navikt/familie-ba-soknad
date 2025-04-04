@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useApp } from '../../../context/AppContext';
+import { useAppContext } from '../../../context/AppContext';
 import { ESanitySteg } from '../../../typer/sanity/sanity';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
@@ -12,7 +12,7 @@ import { NyttBarnKort } from './LeggTilBarn/NyttBarnKort';
 import { useVelgBarn } from './useVelgBarn';
 
 const VelgBarn: React.FC = () => {
-    const { søknad, tekster } = useApp();
+    const { søknad, tekster } = useAppContext();
     const { lukkModal, åpneModal, erÅpen } = useModal();
     const {
         skjema,

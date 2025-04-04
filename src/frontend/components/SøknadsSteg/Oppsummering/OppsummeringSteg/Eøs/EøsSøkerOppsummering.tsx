@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useApp } from '../../../../../context/AppContext';
+import { useAppContext } from '../../../../../context/AppContext';
 import { useRoutesContext } from '../../../../../context/RoutesContext';
 import { PersonType } from '../../../../../typer/personType';
 import { RouteEnum } from '../../../../../typer/routes';
@@ -19,7 +19,7 @@ interface Props {
 
 const EøsSøkerOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
     const { hentRouteObjektForRouteEnum } = useRoutesContext();
-    const { søknad, tekster } = useApp();
+    const { søknad, tekster } = useAppContext();
     const { søker } = søknad;
     const eøsForSøkerHook = useEøsForSøker();
     const teskterForSteg = tekster().EØS_FOR_SØKER;

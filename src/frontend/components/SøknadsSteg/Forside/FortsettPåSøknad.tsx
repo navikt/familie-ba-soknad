@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Alert, Button, VStack } from '@navikt/ds-react';
 
-import { useApp } from '../../../context/AppContext';
+import { useAppContext } from '../../../context/AppContext';
 import { Typografi } from '../../../typer/sanity/sanity';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import { SlettSøknadenModal } from '../../Felleskomponenter/Steg/SlettSøknadenModal';
@@ -10,7 +10,7 @@ import { SlettSøknadenModal } from '../../Felleskomponenter/Steg/SlettSøknaden
 import { useBekreftelseOgStartSoknad } from './useBekreftelseOgStartSoknad';
 
 export const FortsettPåSøknad: React.FC = () => {
-    const { tekster, plainTekst } = useApp();
+    const { tekster, plainTekst } = useAppContext();
     const { fortsettPåSøknaden, visStartPåNyttModal, settVisStartPåNyttModal, startPåNytt } =
         useBekreftelseOgStartSoknad();
 

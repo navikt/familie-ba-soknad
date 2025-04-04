@@ -5,7 +5,7 @@ import { useIntl } from 'react-intl';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
-import { useApp } from '../../../../context/AppContext';
+import { useAppContext } from '../../../../context/AppContext';
 import { useRoutesContext } from '../../../../context/RoutesContext';
 import { useSpråkContext } from '../../../../context/SpråkContext';
 import { PersonType } from '../../../../typer/personType';
@@ -25,7 +25,7 @@ interface Props {
 }
 
 const OmDegOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
-    const { søknad, tekster, plainTekst } = useApp();
+    const { søknad, tekster, plainTekst } = useAppContext();
     const { OM_DEG: omDegTekster } = tekster();
     const { valgtLocale } = useSpråkContext();
     const { formatMessage } = useIntl();

@@ -4,7 +4,7 @@ import { Label } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import type { Felt, ISkjema } from '@navikt/familie-skjema';
 
-import { useApp } from '../../../context/AppContext';
+import { useAppContext } from '../../../context/AppContext';
 import { useFeatureToggles } from '../../../context/FeatureTogglesContext';
 import { IUtbetalingsperiode } from '../../../typer/perioder';
 import { PeriodePersonTypeMedBarnProps, PersonType } from '../../../typer/personType';
@@ -50,7 +50,7 @@ export const Utbetalingsperiode: React.FC<Props> = ({
     barn,
 }) => {
     const { toggles } = useFeatureToggles();
-    const { tekster, plainTekst } = useApp();
+    const { tekster, plainTekst } = useAppContext();
     const {
         erÅpen: erUtbetalingerModalÅpen,
         lukkModal: lukkUtbetalingerModal,

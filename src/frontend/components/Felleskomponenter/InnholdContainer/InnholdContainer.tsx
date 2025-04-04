@@ -2,13 +2,13 @@ import React, { ReactNode } from 'react';
 
 import { Box, Heading, VStack } from '@navikt/ds-react';
 
-import { useApp } from '../../../context/AppContext';
+import { useAppContext } from '../../../context/AppContext';
 
 const InnholdContainer: React.FC<{ className?: string; children?: ReactNode }> = ({
     children,
     className,
 }) => {
-    const { tekster, plainTekst } = useApp();
+    const { tekster, plainTekst } = useAppContext();
     const forsidetekster = tekster().FORSIDE;
 
     return (

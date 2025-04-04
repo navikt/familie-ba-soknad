@@ -19,7 +19,7 @@ import {
     TestProvidere,
 } from '../utils/testing';
 
-import { useApp } from './AppContext';
+import { useAppContext } from './AppContext';
 
 const initialSøknad = initialStateSøknad();
 
@@ -72,7 +72,7 @@ jest.mock('../context/pdl', () => {
 });
 
 describe('AppContext', () => {
-    let hookResult: RenderHookResult<ReturnType<typeof useApp>, unknown>;
+    let hookResult: RenderHookResult<ReturnType<typeof useAppContext>, unknown>;
 
     const resolveAxiosRequestTilSøkerRessurs = async () =>
         mockResult.resolve({ status: 'SUKSESS', data: mockDeep<ISøkerRespons>() });
@@ -91,7 +91,7 @@ describe('AppContext', () => {
         mockSanity();
         mockFeatureToggle();
         silenceConsoleErrors();
-        hookResult = renderHook(() => useApp(), {
+        hookResult = renderHook(() => useAppContext(), {
             wrapper: TestProvidere,
         });
     });

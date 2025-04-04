@@ -2,7 +2,7 @@ import React from 'react';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
-import { useApp } from '../../../context/AppContext';
+import { useAppContext } from '../../../context/AppContext';
 import { useFeatureToggles } from '../../../context/FeatureTogglesContext';
 import { EFeatureToggle } from '../../../typer/feature-toggles';
 import { IArbeidsperiode } from '../../../typer/perioder';
@@ -43,7 +43,7 @@ export const ArbeidsperiodeModal: React.FC<ArbeidsperiodeModalProps> = ({
     forklaring = undefined,
 }) => {
     const { toggles } = useFeatureToggles();
-    const { tekster, plainTekst } = useApp();
+    const { tekster, plainTekst } = useAppContext();
     const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } =
         useArbeidsperiodeSkjema(gjelderUtlandet, personType, erDød);
 

@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { feil, type FeltState, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
-import { useApp } from '../../../context/AppContext';
+import { useAppContext } from '../../../context/AppContext';
 import useDatovelgerFeltMedUkjentForSanity from '../../../hooks/useDatovelgerFeltMedUkjentForSanity';
 import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
 import useDatovelgerFeltForSanity from '../../../hooks/useSendInnSkjemaTest/useDatovelgerForSanity';
@@ -37,7 +37,7 @@ export const useUtenlandsoppholdSkjema = ({
     personType,
     barn,
 }: IUseUtenlandsoppholdSkjemaParams) => {
-    const { tekster, plainTekst } = useApp();
+    const { tekster, plainTekst } = useAppContext();
     const teksterForPersontype: IUtenlandsoppholdTekstinnhold =
         tekster()[ESanitySteg.FELLES].modaler.utenlandsopphold[personType];
 

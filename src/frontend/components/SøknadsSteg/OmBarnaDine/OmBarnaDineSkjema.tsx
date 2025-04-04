@@ -2,7 +2,7 @@ import React from 'react';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
-import { useApp } from '../../../context/AppContext';
+import { useAppContext } from '../../../context/AppContext';
 import { barnDataKeySpørsmål } from '../../../typer/barn';
 import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
 import { ESanitySteg, Typografi } from '../../../typer/sanity/sanity';
@@ -18,7 +18,7 @@ const OmBarnaDineSkjema: React.FC = () => {
     const { skjema, validerFelterOgVisFeilmelding, valideringErOk, oppdaterSøknad } =
         useOmBarnaDine();
 
-    const { søknad, tekster } = useApp();
+    const { søknad, tekster } = useAppContext();
 
     const stegTekster = tekster()[ESanitySteg.OM_BARNA];
     const {

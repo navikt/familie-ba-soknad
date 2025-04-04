@@ -13,7 +13,7 @@ import {
 } from '@navikt/familie-skjema';
 
 import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
-import { useApp } from '../context/AppContext';
+import { useAppContext } from '../context/AppContext';
 import { FlettefeltVerdier, LocaleRecordBlock } from '../typer/sanity/sanity';
 import { ISøknadSpørsmål } from '../typer/spørsmål';
 
@@ -67,7 +67,7 @@ const useJaNeiSpmFelt = ({
     feilmeldingSpråkVerdier?: { [key: string]: ReactNode };
 }) => {
     const [harBlittVist, settHarBlittVist] = useState<boolean>(!avhengigheter);
-    const { plainTekst } = useApp();
+    const { plainTekst } = useAppContext();
 
     return useFelt<ESvar | null>({
         feltId: søknadsfelt ? søknadsfelt.id : uuidv4(),

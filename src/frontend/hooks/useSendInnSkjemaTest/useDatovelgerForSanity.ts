@@ -1,6 +1,6 @@
 import { type Avhengigheter, useFelt } from '@navikt/familie-skjema';
 
-import { useApp } from '../../context/AppContext';
+import { useAppContext } from '../../context/AppContext';
 import { ISODateString } from '../../typer/common';
 import { LocaleRecordBlock } from '../../typer/sanity/sanity';
 import { ISøknadSpørsmål } from '../../typer/spørsmål';
@@ -25,7 +25,7 @@ const useDatovelgerFeltForSanity = ({
     nullstillVedAvhengighetEndring?: boolean;
     customStartdatoFeilmelding?: string;
 }) => {
-    const { plainTekst, tekster } = useApp();
+    const { plainTekst, tekster } = useAppContext();
     return useFelt<ISODateString>({
         feltId: søknadsfelt.id,
         verdi: søknadsfelt.svar,

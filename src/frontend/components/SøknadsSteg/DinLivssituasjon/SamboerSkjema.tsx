@@ -3,7 +3,7 @@ import React from 'react';
 import { ESvar } from '@navikt/familie-form-elements';
 import type { Felt, ISkjema } from '@navikt/familie-skjema';
 
-import { useApp } from '../../../context/AppContext';
+import { useAppContext } from '../../../context/AppContext';
 import { DatoMedUkjent, ISODateString } from '../../../typer/common';
 import { ITidligereSamoboereTekstinnhold } from '../../../typer/sanity/modaler/tidligereSamboere';
 import { IDinLivssituasjonFeltTyper, ITidligereSamboerFeltTyper } from '../../../typer/skjema';
@@ -26,7 +26,7 @@ const SamboerSkjema: React.FC<{
     };
     erIModal?: boolean;
 }> = ({ skjema, samboerFelter, erIModal = false }) => {
-    const { tekster } = useApp();
+    const { tekster } = useAppContext();
 
     const teksterForModal: ITidligereSamoboereTekstinnhold =
         tekster().FELLES.modaler.tidligereSamboere.søker;

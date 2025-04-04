@@ -4,7 +4,7 @@ import { Label } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import type { Felt, ISkjema } from '@navikt/familie-skjema';
 
-import { useApp } from '../../../context/AppContext';
+import { useAppContext } from '../../../context/AppContext';
 import { useFeatureToggles } from '../../../context/FeatureTogglesContext';
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { HeadingLevel } from '../../../typer/common';
@@ -56,7 +56,7 @@ export const Barnetrygdperiode: React.FC<BarnetrygdperiodeProps> = ({
         lukkModal: lukkBarnetrygdsmodal,
         åpneModal: åpneBarnetrygdsmodal,
     } = useModal();
-    const { tekster, plainTekst } = useApp();
+    const { tekster, plainTekst } = useAppContext();
 
     const teksterForModal: IBarnetrygdsperiodeTekstinnhold =
         tekster().FELLES.modaler.barnetrygdsperiode[personType];

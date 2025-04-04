@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router';
 
 import { VStack } from '@navikt/ds-react';
 
-import { useApp } from '../../../context/AppContext';
-import { useEøs } from '../../../context/EøsContext';
+import { useAppContext } from '../../../context/AppContext';
+import { useEøsContext } from '../../../context/EøsContext';
 import { useStegContext } from '../../../context/StegContext';
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { RouteEnum } from '../../../typer/routes';
@@ -22,11 +22,11 @@ import OmDegOppsummering from './OppsummeringSteg/OmDegOppsummering';
 import VelgBarnOppsummering from './OppsummeringSteg/VelgBarnOppsummering';
 
 const Oppsummering: React.FC = () => {
-    const { søknad, tekster } = useApp();
+    const { søknad, tekster } = useAppContext();
     const { hentStegNummer } = useStegContext();
     const navigate = useNavigate();
     const [feilAnchors, settFeilAnchors] = useState<string[]>([]);
-    const { barnSomTriggerEøs, søkerTriggerEøs } = useEøs();
+    const { barnSomTriggerEøs, søkerTriggerEøs } = useEøsContext();
     const søkerHarEøsSteg = søkerTriggerEøs || !!barnSomTriggerEøs.length;
     const barnSomHarEøsSteg: IBarnMedISøknad[] = søkerTriggerEøs
         ? søknad.barnInkludertISøknaden
