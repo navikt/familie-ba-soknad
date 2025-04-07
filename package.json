@@ -59,6 +59,7 @@
     "transform": {
       "\\.[jt]sx?$": "babel-jest"
     },
+    "maxWorkers": "50%",
     "resetMocks": true
   },
   "lint-staged": {
