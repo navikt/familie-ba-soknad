@@ -9,6 +9,7 @@ import { HttpProvider } from '@navikt/familie-http';
 import { type Ressurs, RessursStatus } from '@navikt/familie-typer';
 
 import norskeTekster from '../assets/lang/nb.json' assert { type: 'json' };
+import { UtenlandsoppholdSpørsmålId } from '../components/Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 import {
     DinLivssituasjonSpørsmålId,
     SamboerSpørsmålId,
@@ -39,9 +40,11 @@ import { AlternativtSvarForInput, LocaleType } from '../typer/common';
 import { EFeatureToggle } from '../typer/feature-toggles';
 import { ESivilstand, ESøknadstype, Slektsforhold } from '../typer/kontrakt/generelle';
 import { IKvittering } from '../typer/kvittering';
+import { IUtenlandsperiode } from '../typer/perioder';
 import { ISøker, ISøkerRespons } from '../typer/person';
 import { ITekstinnhold } from '../typer/sanity/tekstInnhold';
 import { initialStateSøknad, ISøknad } from '../typer/søknad';
+import { EUtenlandsoppholdÅrsak } from '../typer/utenlandsopphold';
 import { Årsak } from '../typer/utvidet';
 
 import { genererInitialBarnMedISøknad } from './barn';
@@ -111,7 +114,7 @@ export const spyOnUseApp = søknad => {
         tilRestLocaleRecord,
     });
 
-    jest.spyOn(appContext, 'useApp').mockImplementation(useAppMock);
+    jest.spyOn(appContext, 'useAppContext').mockImplementation(useAppMock);
 
     return {
         useAppMock,
@@ -127,7 +130,7 @@ export const spyOnUseApp = søknad => {
 export const mockEøs = (barnSomTriggerEøs = [], søkerTriggerEøs = false) => {
     const erEøsLand = jest.fn();
 
-    const useEøs = jest.spyOn(eøsContext, 'useEøs').mockImplementation(
+    const useEøs = jest.spyOn(eøsContext, 'useEøsContext').mockImplementation(
         jest.fn().mockReturnValue({
             erEøsLand,
             barnSomTriggerEøs,
@@ -271,6 +274,12 @@ export const LesUtLocation = () => {
     return <pre data-testid="location">{JSON.stringify(location)}</pre>;
 };
 
+export const mockedHistory: string[] = [];
+
+export const mockHistory = (newHistory: string[]) => {
+    mockedHistory.push(...newHistory);
+};
+
 export const mekkGyldigSøker = (): ISøker => {
     return {
         ...initialStateSøknad().søker,
@@ -324,6 +333,42 @@ export const mekkGyldigSøker = (): ISøker => {
         },
     };
 };
+
+export function mekkGyldigUtenlandsoppholdEøs(): IUtenlandsperiode {
+    return {
+        utenlandsoppholdÅrsak: {
+            id: UtenlandsoppholdSpørsmålId.årsakUtenlandsopphold,
+            svar: EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE,
+        },
+        oppholdsland: { id: UtenlandsoppholdSpørsmålId.landUtenlandsopphold, svar: 'BEL' },
+        oppholdslandFraDato: {
+            id: UtenlandsoppholdSpørsmålId.fraDatoUtenlandsopphold,
+            svar: '',
+        },
+        oppholdslandTilDato: {
+            id: UtenlandsoppholdSpørsmålId.tilDatoUtenlandsopphold,
+            svar: '',
+        },
+    };
+}
+
+export function mekkGyldigUtenlandsoppholdIkkeEøs(): IUtenlandsperiode {
+    return {
+        utenlandsoppholdÅrsak: {
+            id: UtenlandsoppholdSpørsmålId.årsakUtenlandsopphold,
+            svar: EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE,
+        },
+        oppholdsland: { id: UtenlandsoppholdSpørsmålId.landUtenlandsopphold, svar: 'USA' },
+        oppholdslandFraDato: {
+            id: UtenlandsoppholdSpørsmålId.fraDatoUtenlandsopphold,
+            svar: '',
+        },
+        oppholdslandTilDato: {
+            id: UtenlandsoppholdSpørsmålId.tilDatoUtenlandsopphold,
+            svar: '',
+        },
+    };
+}
 
 export const mekkGyldigSøknad = (): ISøknad => {
     return {

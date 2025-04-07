@@ -10,10 +10,10 @@ import {
 } from '@navikt/familie-typer';
 
 import Miljø from '../../../shared-utils/Miljø';
-import { useApp } from '../../context/AppContext';
+import { useAppContext } from '../../context/AppContext';
 
 const Helse: React.FC = () => {
-    const { axiosRequest } = useApp();
+    const { axiosRequest } = useAppContext();
 
     const [helseApi, settHelseApi] = useState(byggTomRessurs<string>());
     const [helseMottak, settHelseMottak] = useState(byggTomRessurs<string>());

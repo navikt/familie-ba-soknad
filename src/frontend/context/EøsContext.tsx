@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react';
+import React, { createContext, PropsWithChildren, useContext, useEffect, useState } from 'react';
 
-import createUseContext from 'constate';
 import { Alpha3Code } from 'i18n-iso-countries';
 
 import { ESvar } from '@navikt/familie-form-elements';
@@ -11,13 +10,25 @@ import { barnDataKeySpørsmål, IBarnMedISøknad } from '../typer/barn';
 import { BarnetsId } from '../typer/common';
 import { ISøker } from '../typer/person';
 
-import { useApp } from './AppContext';
+import { useAppContext } from './AppContext';
 import { useLastRessurserContext } from './LastRessurserContext';
 
-const [EøsProvider, useEøs] = createUseContext(() => {
+export interface EøsContext {
+    erEøsLand: (land: Alpha3Code | '') => boolean;
+    skalTriggeEøsForSøker: (søker: ISøker) => boolean;
+    skalTriggeEøsForBarn: (barn: IBarnMedISøknad) => boolean;
+    settSøkerTriggerEøs: React.Dispatch<React.SetStateAction<boolean>>;
+    settBarnSomTriggerEøs: React.Dispatch<React.SetStateAction<string[]>>;
+    søkerTriggerEøs: boolean;
+    barnSomTriggerEøs: BarnetsId[];
+}
+
+const EøsContext = createContext<EøsContext | undefined>(undefined);
+
+export function EøsProvider(props: PropsWithChildren) {
     const { axiosRequest } = useLastRessurserContext();
 
-    const { søknad, settSøknad, eøsLand, settEøsLand } = useApp();
+    const { søknad, settSøknad, eøsLand, settEøsLand } = useAppContext();
     const [søkerTriggerEøs, settSøkerTriggerEøs] = useState(søknad.søker.triggetEøs);
     const [barnSomTriggerEøs, settBarnSomTriggerEøs] = useState<BarnetsId[]>(
         søknad.barnInkludertISøknaden.filter(barn => barn.triggetEøs).map(barn => barn.id)
@@ -101,15 +112,29 @@ const [EøsProvider, useEøs] = createUseContext(() => {
         }
     }, [søknad.søker, søknad.barnInkludertISøknaden]);
 
-    return {
-        erEøsLand,
-        skalTriggeEøsForSøker,
-        skalTriggeEøsForBarn,
-        settSøkerTriggerEøs,
-        settBarnSomTriggerEøs,
-        søkerTriggerEøs,
-        barnSomTriggerEøs,
-    };
-});
+    return (
+        <EøsContext.Provider
+            value={{
+                erEøsLand,
+                skalTriggeEøsForSøker,
+                skalTriggeEøsForBarn,
+                settSøkerTriggerEøs,
+                settBarnSomTriggerEøs,
+                søkerTriggerEøs,
+                barnSomTriggerEøs,
+            }}
+        >
+            {props.children}
+        </EøsContext.Provider>
+    );
+}
 
-export { EøsProvider, useEøs };
+export function useEøsContext() {
+    const context = useContext(EøsContext);
+
+    if (context === undefined) {
+        throw new Error('useEøs må brukes innenfor EøsProvider');
+    }
+
+    return context;
+}

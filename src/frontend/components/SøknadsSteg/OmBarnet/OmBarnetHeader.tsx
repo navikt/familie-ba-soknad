@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import { Heading } from '@navikt/ds-react';
 
-import { useApp } from '../../../context/AppContext';
+import { useAppContext } from '../../../context/AppContext';
 import { IBarnMedISøknad } from '../../../typer/barn';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { TilfeldigBarnIkon } from '../../Felleskomponenter/TilfeldigBarnIkon/TilfeldigBarnIkon';
@@ -28,7 +28,7 @@ const HorisontalLinje = styled.span`
 export const OmBarnetHeader: React.FC<{ barn: IBarnMedISøknad }> = ({ barn }) => {
     const {
         søknad: { barnInkludertISøknaden },
-    } = useApp();
+    } = useAppContext();
     const barnIndex = barnInkludertISøknaden.findIndex(b => b.id === barn.id);
 
     return (

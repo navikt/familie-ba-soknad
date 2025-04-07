@@ -4,7 +4,7 @@ import { Heading, Label } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import type { Felt, ISkjema } from '@navikt/familie-skjema';
 
-import { useApp } from '../../../context/AppContext';
+import { useAppContext } from '../../../context/AppContext';
 import { useFeatureToggles } from '../../../context/FeatureTogglesContext';
 import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../typer/barn';
 import { IEøsBarnetrygdsperiode, IUtenlandsperiode } from '../../../typer/perioder';
@@ -55,7 +55,7 @@ const Oppfølgningsspørsmål: React.FC<{
     fjernBarnetrygdsperiode,
     registrerteEøsBarnetrygdsperioder,
 }) => {
-    const { tekster, plainTekst } = useApp();
+    const { tekster, plainTekst } = useAppContext();
     const { toggles } = useFeatureToggles();
     const {
         erÅpen: utenlandsmodalErÅpen,

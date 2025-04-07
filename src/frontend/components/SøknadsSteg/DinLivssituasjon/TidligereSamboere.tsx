@@ -3,7 +3,7 @@ import React from 'react';
 import { ESvar } from '@navikt/familie-form-elements';
 import type { Felt, ISkjema } from '@navikt/familie-skjema';
 
-import { useApp } from '../../../context/AppContext';
+import { useAppContext } from '../../../context/AppContext';
 import { useFeatureToggles } from '../../../context/FeatureTogglesContext';
 import { ITidligereSamboer } from '../../../typer/person';
 import { PersonType } from '../../../typer/personType';
@@ -44,7 +44,7 @@ const TidligereSamboere: React.FC<Props> = ({
         åpneModal: åpneLeggTilSamboerModal,
         erÅpen: erLeggTilSamboerModalÅpen,
     } = useModal();
-    const { tekster, plainTekst } = useApp();
+    const { tekster, plainTekst } = useAppContext();
 
     const teksterForModal: ITidligereSamoboereTekstinnhold =
         tekster().FELLES.modaler.tidligereSamboere.søker;
