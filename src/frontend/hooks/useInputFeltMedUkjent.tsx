@@ -7,7 +7,7 @@ import { feil, type Felt, type FeltState, ok, useFelt } from '@navikt/familie-sk
 import { idnr } from '@navikt/fnrvalidator';
 
 import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
-import { useApp } from '../context/AppContext';
+import { useAppContext } from '../context/AppContext';
 import { DatoMedUkjent } from '../typer/common';
 import { FlettefeltVerdier, LocaleRecordBlock, LocaleRecordString } from '../typer/sanity/sanity';
 import { IdNummerKey } from '../typer/skjema';
@@ -38,7 +38,7 @@ const useInputFeltMedUkjent = ({
     språkVerdier?: Record<string, ReactNode>;
     nullstillVedAvhengighetEndring?: boolean;
 }) => {
-    const { tekster, plainTekst } = useApp();
+    const { tekster, plainTekst } = useAppContext();
     const formateringsfeilmeldinger = tekster().FELLES.formateringsfeilmeldinger;
 
     const inputFelt = useFelt<string>({

@@ -2,13 +2,13 @@ import React, { useEffect } from 'react';
 
 import { useNavigate } from 'react-router';
 
-import { useApp } from '../../../context/AppContext';
+import { useAppContext } from '../../../context/AppContext';
 
 import OmBarnaDineSkjema from './OmBarnaDineSkjema';
 
 const OmBarnaDine = () => {
     const navigate = useNavigate();
-    const { søknad } = useApp();
+    const { søknad } = useAppContext();
     const { barnInkludertISøknaden } = søknad;
     const manglerData = !barnInkludertISøknaden.length;
 

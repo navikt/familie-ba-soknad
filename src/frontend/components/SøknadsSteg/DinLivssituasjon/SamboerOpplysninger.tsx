@@ -3,7 +3,7 @@ import React from 'react';
 import { TrashFillIcon } from '@navikt/aksel-icons';
 import { Button, FormSummary } from '@navikt/ds-react';
 
-import { useApp } from '../../../context/AppContext';
+import { useAppContext } from '../../../context/AppContext';
 import { AlternativtSvarForInput } from '../../../typer/common';
 import { ITidligereSamboer } from '../../../typer/person';
 import { ITidligereSamoboereTekstinnhold } from '../../../typer/sanity/modaler/tidligereSamboere';
@@ -15,7 +15,7 @@ const SamboerOpplysninger: React.FC<{
     samboer: ITidligereSamboer;
     fjernTidligereSamboer: (samboer: ITidligereSamboer) => void;
 }> = ({ samboer, fjernTidligereSamboer }) => {
-    const { tekster } = useApp();
+    const { tekster } = useAppContext();
 
     const teksterForModal: ITidligereSamoboereTekstinnhold =
         tekster().FELLES.modaler.tidligereSamboere.søker;

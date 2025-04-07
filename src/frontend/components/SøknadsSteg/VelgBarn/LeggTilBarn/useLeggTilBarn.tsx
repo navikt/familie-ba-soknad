@@ -13,7 +13,7 @@ import {
     Valideringsstatus,
 } from '@navikt/familie-skjema';
 
-import { useApp } from '../../../../context/AppContext';
+import { useAppContext } from '../../../../context/AppContext';
 import useInputFeltMedUkjent from '../../../../hooks/useInputFeltMedUkjent';
 import { ESvarMedUbesvart } from '../../../../typer/common';
 import { ILeggTilBarnTyper } from '../../../../typer/skjema';
@@ -29,7 +29,7 @@ export const useLeggTilBarn = (): {
     nullstillSkjema: () => void;
     leggTilBarn: () => void;
 } => {
-    const { søknad, settSøknad, mellomlagre } = useApp();
+    const { søknad, settSøknad, mellomlagre } = useAppContext();
     const intl = useIntl();
 
     const erFødt = useFelt<ESvarMedUbesvart>({

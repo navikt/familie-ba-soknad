@@ -4,7 +4,7 @@ import { Alert, Fieldset } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Valideringsstatus } from '@navikt/familie-skjema';
 
-import { useApp } from '../../../../context/AppContext';
+import { useAppContext } from '../../../../context/AppContext';
 import { ILeggTilBarnTekstinnhold } from '../../../../typer/sanity/modaler/leggTilBarn';
 import { Typografi } from '../../../../typer/sanity/sanity';
 import { visFeiloppsummering } from '../../../../utils/hjelpefunksjoner';
@@ -23,7 +23,7 @@ const LeggTilBarnModal: React.FC<{
     erÅpen: boolean;
     lukkModal: () => void;
 }> = ({ erÅpen, lukkModal }) => {
-    const { tekster } = useApp();
+    const { tekster } = useAppContext();
     const { skjema, nullstillSkjema, valideringErOk, leggTilBarn, validerFelterOgVisFeilmelding } =
         useLeggTilBarn();
 

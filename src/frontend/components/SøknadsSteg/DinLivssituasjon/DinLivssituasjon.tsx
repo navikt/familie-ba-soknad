@@ -2,7 +2,7 @@ import React from 'react';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
-import { useApp } from '../../../context/AppContext';
+import { useAppContext } from '../../../context/AppContext';
 import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
 import { ESivilstand } from '../../../typer/kontrakt/generelle';
 import { PersonType } from '../../../typer/personType';
@@ -33,7 +33,7 @@ const DinLivssituasjon: React.FC = () => {
         fjernPensjonsperiode,
     } = useDinLivssituasjon();
 
-    const { erUtvidet, søknad, tekster, plainTekst } = useApp();
+    const { erUtvidet, søknad, tekster, plainTekst } = useAppContext();
 
     const stegTekster = tekster()[ESanitySteg.DIN_LIVSSITUASJON];
     const {

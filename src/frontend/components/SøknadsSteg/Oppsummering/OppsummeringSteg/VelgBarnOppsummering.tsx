@@ -2,7 +2,7 @@ import React from 'react';
 
 import { FormSummary } from '@navikt/ds-react';
 
-import { useApp } from '../../../../context/AppContext';
+import { useAppContext } from '../../../../context/AppContext';
 import { useRoutesContext } from '../../../../context/RoutesContext';
 import { RouteEnum } from '../../../../typer/routes';
 import { hentBostedSpråkId } from '../../../../utils/språk';
@@ -17,7 +17,7 @@ interface Props {
 }
 
 const VelgBarnOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
-    const { søknad, tekster, plainTekst } = useApp();
+    const { søknad, tekster, plainTekst } = useAppContext();
     const { hentRouteObjektForRouteEnum } = useRoutesContext();
     const velgBarnHook = useVelgBarn();
 
