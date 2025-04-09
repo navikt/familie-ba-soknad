@@ -6,7 +6,7 @@ import { GuidePanel, Heading, Page, VStack } from '@navikt/ds-react';
 import { RessursStatus } from '@navikt/familie-typer';
 import { setAvailableLanguages } from '@navikt/nav-dekoratoren-moduler';
 
-import { useApp } from '../../context/AppContext';
+import { useAppContext } from '../../context/AppContext';
 import { useLastRessurserContext } from '../../context/LastRessurserContext';
 import { useSanityContext } from '../../context/SanityContext';
 import { useSpråkContext } from '../../context/SpråkContext';
@@ -16,7 +16,7 @@ import SystemetLaster from '../Felleskomponenter/SystemetLaster/SystemetLaster';
 
 export const DisabledApp: React.FC = () => {
     const { valgtLocale } = useSpråkContext();
-    const { tekster, plainTekst } = useApp();
+    const { tekster, plainTekst } = useAppContext();
     const { teksterRessurs } = useSanityContext();
     const { lasterRessurser } = useLastRessurserContext();
 

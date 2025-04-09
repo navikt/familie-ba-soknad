@@ -5,9 +5,9 @@ import { matchPath, useLocation } from 'react-router';
 import { IBarnMedISøknad } from '../typer/barn';
 import { ISteg, RouteEnum } from '../typer/routes';
 
-import { useApp } from './AppContext';
-import { useEøs } from './EøsContext';
-import { useRoutes } from './RoutesContext';
+import { useAppContext } from './AppContext';
+import { useEøsContext } from './EøsContext';
+import { useRoutesContext } from './RoutesContext';
 
 interface StegContext {
     steg: ISteg[];
@@ -26,14 +26,14 @@ interface StegContext {
 const StegContext = createContext<StegContext | undefined>(undefined);
 
 export function StegProvider(props: PropsWithChildren) {
-    const { søknad } = useApp();
+    const { søknad } = useAppContext();
     const { barnInkludertISøknaden } = søknad;
     const location = useLocation();
 
-    const { routes } = useRoutes();
+    const { routes } = useRoutesContext();
 
     const [barnForSteg, settBarnForSteg] = useState<IBarnMedISøknad[]>([]);
-    const { barnSomTriggerEøs, søkerTriggerEøs } = useEøs();
+    const { barnSomTriggerEøs, søkerTriggerEøs } = useEøsContext();
 
     useEffect(() => {
         settBarnForSteg(søknad.barnInkludertISøknaden);

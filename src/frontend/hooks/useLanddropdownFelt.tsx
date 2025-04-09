@@ -5,7 +5,7 @@ import { Alpha3Code } from 'i18n-iso-countries';
 import { feil, type FeltState, ok, useFelt } from '@navikt/familie-skjema';
 
 import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
-import { useApp } from '../context/AppContext';
+import { useAppContext } from '../context/AppContext';
 import { LocaleRecordBlock } from '../typer/sanity/sanity';
 import { ISøknadSpørsmål } from '../typer/spørsmål';
 
@@ -24,7 +24,7 @@ const useLanddropdownFelt = ({
     nullstillVedAvhengighetEndring?: boolean;
     feilmeldingSpråkVerdier?: { [key: string]: ReactNode };
 }) => {
-    const { plainTekst } = useApp();
+    const { plainTekst } = useAppContext();
     return useFelt<Alpha3Code | ''>({
         feltId: søknadsfelt.id,
         verdi: søknadsfelt.svar,

@@ -2,8 +2,8 @@ import React from 'react';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
-import { useApp } from '../../../context/AppContext';
-import { useFeatureToggles } from '../../../context/FeatureToggleContext';
+import { useAppContext } from '../../../context/AppContext';
+import { useFeatureToggles } from '../../../context/FeatureTogglesContext';
 import { useSpråkContext } from '../../../context/SpråkContext';
 import { EFeatureToggle } from '../../../typer/feature-toggles';
 import { IPensjonsperiode } from '../../../typer/perioder';
@@ -37,7 +37,7 @@ export const PensjonsperiodeOppsummering: React.FC<PensjonsperiodeOppsummeringPr
 }) => {
     const { toggles } = useFeatureToggles();
     const { valgtLocale } = useSpråkContext();
-    const { tekster } = useApp();
+    const { tekster } = useAppContext();
     const teksterForModal = tekster().FELLES.modaler.pensjonsperiode[personType];
 
     const { mottarPensjonNå, pensjonsland, pensjonFra, pensjonTil } = pensjonsperiode;

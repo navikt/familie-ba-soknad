@@ -1,7 +1,7 @@
 import { ESvar } from '@navikt/familie-form-elements';
 import { type ISkjema, useFelt, useSkjema } from '@navikt/familie-skjema';
 
-import { useApp } from '../../../context/AppContext';
+import { useAppContext } from '../../../context/AppContext';
 import useDatovelgerFeltMedUkjentForSanity from '../../../hooks/useDatovelgerFeltMedUkjentForSanity';
 import useInputFelt from '../../../hooks/useInputFelt';
 import useInputFeltMedUkjent from '../../../hooks/useInputFeltMedUkjent';
@@ -18,7 +18,7 @@ export const useTidligereSamboer = (): {
     valideringErOk: () => boolean;
     nullstillSkjema: () => void;
 } => {
-    const { tekster } = useApp();
+    const { tekster } = useAppContext();
 
     const teksterForSøker: ITidligereSamoboereTekstinnhold =
         tekster().FELLES.modaler.tidligereSamboere.søker;

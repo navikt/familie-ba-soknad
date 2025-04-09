@@ -3,8 +3,8 @@ import React from 'react';
 import { Label } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
-import { useApp } from '../../../context/AppContext';
-import { useFeatureToggles } from '../../../context/FeatureToggleContext';
+import { useAppContext } from '../../../context/AppContext';
+import { useFeatureToggles } from '../../../context/FeatureTogglesContext';
 import { PersonType } from '../../../typer/personType';
 import { IUtenlandsoppholdTekstinnhold } from '../../../typer/sanity/modaler/utenlandsopphold';
 import { ESanitySteg, Typografi } from '../../../typer/sanity/sanity';
@@ -25,7 +25,7 @@ import { Personopplysninger } from './Personopplysninger';
 import { useOmdeg } from './useOmdeg';
 
 const OmDeg: React.FC = () => {
-    const { tekster, plainTekst } = useApp();
+    const { tekster, plainTekst } = useAppContext();
 
     const { toggles } = useFeatureToggles();
 

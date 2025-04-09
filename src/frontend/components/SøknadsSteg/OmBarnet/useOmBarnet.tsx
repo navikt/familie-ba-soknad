@@ -3,8 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { feil, type FeltState, type ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
-import { useApp } from '../../../context/AppContext';
-import { useEøs } from '../../../context/EøsContext';
+import { useAppContext } from '../../../context/AppContext';
+import { useEøsContext } from '../../../context/EøsContext';
 import useDatovelgerFeltMedUkjentForSanity from '../../../hooks/useDatovelgerFeltMedUkjentForSanity';
 import useInputFelt from '../../../hooks/useInputFelt';
 import useInputFeltMedUkjent from '../../../hooks/useInputFeltMedUkjent';
@@ -88,8 +88,9 @@ export const useOmBarnet = (
     leggTilBarnetrygdsperiode: (periode: IEøsBarnetrygdsperiode) => void;
     fjernBarnetrygdsperiode: (periode: IEøsBarnetrygdsperiode) => void;
 } => {
-    const { søknad, settSøknad, erUtvidet, tekster, plainTekst } = useApp();
-    const { skalTriggeEøsForBarn, barnSomTriggerEøs, settBarnSomTriggerEøs, erEøsLand } = useEøs();
+    const { søknad, settSøknad, erUtvidet, tekster, plainTekst } = useAppContext();
+    const { skalTriggeEøsForBarn, barnSomTriggerEøs, settBarnSomTriggerEøs, erEøsLand } =
+        useEøsContext();
     const stegTekster: IOmBarnetTekstinnhold = tekster()[ESanitySteg.OM_BARNET];
     const teksterForArbeidsperiode: IArbeidsperiodeTekstinnhold =
         tekster()[ESanitySteg.FELLES].modaler.arbeidsperiode.søker;

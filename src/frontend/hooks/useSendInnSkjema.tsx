@@ -5,8 +5,8 @@ import { RessursStatus } from '@navikt/familie-typer';
 
 import Miljø from '../../shared-utils/Miljø';
 import { erModellMismatchResponsRessurs } from '../../shared-utils/modellversjon';
-import { useApp } from '../context/AppContext';
-import { useFeatureToggles } from '../context/FeatureToggleContext';
+import { useAppContext } from '../context/AppContext';
+import { useFeatureToggles } from '../context/FeatureTogglesContext';
 import { useSpråkContext } from '../context/SpråkContext';
 import { EFeatureToggle } from '../typer/feature-toggles';
 import { ISøknadKontrakt } from '../typer/kontrakt/kontrakt';
@@ -23,14 +23,14 @@ export const useSendInnSkjema = (): {
         settSisteModellVersjon,
         tekster,
         tilRestLocaleRecord,
-    } = useApp();
+    } = useAppContext();
     const { soknadApiProxyUrl } = Miljø();
     const { valgtLocale } = useSpråkContext();
     const { toggles } = useFeatureToggles();
 
     const sendInnSkjema = async (): Promise<[boolean, ISøknadKontrakt]> => {
         settInnsendingStatus({ status: RessursStatus.HENTER });
-        const kontraktVersjon = toggles.BRUK_NYTT_ENDEPUNKT_FOR_INNSENDING_AV_SOKNAD ? 9 : 8;
+        const kontraktVersjon = 9;
 
         try {
             const formatert: ISøknadKontrakt = dataISøknadKontraktFormat(

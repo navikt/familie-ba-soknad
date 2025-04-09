@@ -3,8 +3,8 @@ import React from 'react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Valideringsstatus } from '@navikt/familie-skjema';
 
-import { useApp } from '../../../context/AppContext';
-import { useFeatureToggles } from '../../../context/FeatureToggleContext';
+import { useAppContext } from '../../../context/AppContext';
+import { useFeatureToggles } from '../../../context/FeatureTogglesContext';
 import { EFeatureToggle } from '../../../typer/feature-toggles';
 import { IUtbetalingsperiode } from '../../../typer/perioder';
 import { PersonType } from '../../../typer/personType';
@@ -42,7 +42,7 @@ export const UtbetalingerModal: React.FC<UtbetalingerModalProps> = ({
     forklaring = undefined,
 }) => {
     const { toggles } = useFeatureToggles();
-    const { tekster, plainTekst } = useApp();
+    const { tekster, plainTekst } = useAppContext();
     const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } =
         useUtbetalingerSkjema(personType, barn, erDød);
 

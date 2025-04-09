@@ -2,8 +2,8 @@ import React from 'react';
 
 import { FormSummary } from '@navikt/ds-react';
 
-import { useApp } from '../../../../context/AppContext';
-import { useRoutes } from '../../../../context/RoutesContext';
+import { useAppContext } from '../../../../context/AppContext';
+import { useRoutesContext } from '../../../../context/RoutesContext';
 import { RouteEnum } from '../../../../typer/routes';
 import { hentBostedSpråkId } from '../../../../utils/språk';
 import TekstBlock from '../../../Felleskomponenter/Sanity/TekstBlock';
@@ -17,8 +17,8 @@ interface Props {
 }
 
 const VelgBarnOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
-    const { søknad, tekster, plainTekst } = useApp();
-    const { hentRouteObjektForRouteEnum } = useRoutes();
+    const { søknad, tekster, plainTekst } = useAppContext();
+    const { hentRouteObjektForRouteEnum } = useRoutesContext();
     const velgBarnHook = useVelgBarn();
 
     const velgBarnTekster = tekster().VELG_BARN;

@@ -4,8 +4,8 @@ import { Label } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import type { Felt, ISkjema } from '@navikt/familie-skjema';
 
-import { useApp } from '../../../context/AppContext';
-import { useFeatureToggles } from '../../../context/FeatureToggleContext';
+import { useAppContext } from '../../../context/AppContext';
+import { useFeatureToggles } from '../../../context/FeatureTogglesContext';
 import { IArbeidsperiode } from '../../../typer/perioder';
 import { PeriodePersonTypeMedBarnProps, PersonType } from '../../../typer/personType';
 import { IArbeidsperiodeTekstinnhold } from '../../../typer/sanity/modaler/arbeidsperiode';
@@ -61,7 +61,7 @@ export const Arbeidsperiode: React.FC<Props> = ({
     erDød,
     barn,
 }) => {
-    const { tekster, plainTekst } = useApp();
+    const { tekster, plainTekst } = useAppContext();
     const { toggles } = useFeatureToggles();
     const {
         erÅpen: arbeidsmodalErÅpen,

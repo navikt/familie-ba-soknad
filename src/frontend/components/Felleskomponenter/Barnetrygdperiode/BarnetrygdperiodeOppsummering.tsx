@@ -2,8 +2,8 @@ import React from 'react';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
-import { useApp } from '../../../context/AppContext';
-import { useFeatureToggles } from '../../../context/FeatureToggleContext';
+import { useAppContext } from '../../../context/AppContext';
+import { useFeatureToggles } from '../../../context/FeatureTogglesContext';
 import { useSpråkContext } from '../../../context/SpråkContext';
 import { HeadingLevel } from '../../../typer/common';
 import { EFeatureToggle } from '../../../typer/feature-toggles';
@@ -54,7 +54,7 @@ export const BarnetrygdsperiodeOppsummering: React.FC<Props> = ({
         mottarEøsBarnetrygdNå.svar === ESvar.NEI ||
         (personType === PersonType.AndreForelder && erDød);
     const { valgtLocale } = useSpråkContext();
-    const { tekster } = useApp();
+    const { tekster } = useAppContext();
 
     const teksterForPersonType: IBarnetrygdsperiodeTekstinnhold =
         tekster().FELLES.modaler.barnetrygdsperiode[personType];

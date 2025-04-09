@@ -2,8 +2,8 @@ import React from 'react';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
-import { useApp } from '../../../context/AppContext';
-import { useFeatureToggles } from '../../../context/FeatureToggleContext';
+import { useAppContext } from '../../../context/AppContext';
+import { useFeatureToggles } from '../../../context/FeatureTogglesContext';
 import { useSpråkContext } from '../../../context/SpråkContext';
 import { EFeatureToggle } from '../../../typer/feature-toggles';
 import { IArbeidsperiode } from '../../../typer/perioder';
@@ -36,7 +36,7 @@ export const ArbeidsperiodeOppsummering: React.FC<ArbeidsperiodeOppsummeringProp
     erDød = false,
 }) => {
     const { toggles } = useFeatureToggles();
-    const { tekster, plainTekst } = useApp();
+    const { tekster, plainTekst } = useAppContext();
     const { valgtLocale } = useSpråkContext();
     const {
         arbeidsperiodeAvsluttet,

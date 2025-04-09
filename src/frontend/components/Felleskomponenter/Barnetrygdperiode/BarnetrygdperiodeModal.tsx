@@ -3,8 +3,8 @@ import React from 'react';
 import { Alert } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
-import { useApp } from '../../../context/AppContext';
-import { useFeatureToggles } from '../../../context/FeatureToggleContext';
+import { useAppContext } from '../../../context/AppContext';
+import { useFeatureToggles } from '../../../context/FeatureTogglesContext';
 import { EFeatureToggle } from '../../../typer/feature-toggles';
 import { IEøsBarnetrygdsperiode } from '../../../typer/perioder';
 import { PersonType } from '../../../typer/personType';
@@ -50,7 +50,7 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
     forklaring = undefined,
 }) => {
     const { toggles } = useFeatureToggles();
-    const { tekster } = useApp();
+    const { tekster } = useAppContext();
     const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } =
         useBarnetrygdperiodeSkjema(personType, barn, erDød);
 

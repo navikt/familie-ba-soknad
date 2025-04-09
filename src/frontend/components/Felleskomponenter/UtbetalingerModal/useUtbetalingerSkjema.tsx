@@ -1,8 +1,8 @@
 import { ESvar } from '@navikt/familie-form-elements';
 import { useFelt, useSkjema, Valideringsstatus } from '@navikt/familie-skjema';
 
-import { useApp } from '../../../context/AppContext';
-import { useFeatureToggles } from '../../../context/FeatureToggleContext';
+import { useAppContext } from '../../../context/AppContext';
+import { useFeatureToggles } from '../../../context/FeatureTogglesContext';
 import useDatovelgerFeltMedUkjentForSanity from '../../../hooks/useDatovelgerFeltMedUkjentForSanity';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
@@ -33,7 +33,7 @@ export interface IUseUtbetalingerSkjemaParams {
 
 export const useUtbetalingerSkjema = (personType, barn, erDød) => {
     const { toggles } = useFeatureToggles();
-    const { tekster, plainTekst } = useApp();
+    const { tekster, plainTekst } = useAppContext();
     const teksterForPersontype: IAndreUtbetalingerTekstinnhold =
         tekster()[ESanitySteg.FELLES].modaler.andreUtbetalinger[personType];
     const andreForelderErDød = personType === PersonType.AndreForelder && erDød;
