@@ -30,7 +30,7 @@ export const useSendInnSkjema = (): {
 
     const sendInnSkjema = async (): Promise<[boolean, ISøknadKontrakt]> => {
         settInnsendingStatus({ status: RessursStatus.HENTER });
-        const kontraktVersjon = toggles.BRUK_NYTT_ENDEPUNKT_FOR_INNSENDING_AV_SOKNAD ? 9 : 8;
+        const kontraktVersjon = 9;
 
         try {
             const formatert: ISøknadKontrakt = dataISøknadKontraktFormat(
