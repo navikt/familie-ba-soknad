@@ -104,7 +104,7 @@
     "concurrently": "^9.1.2",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
-    "csp-header": "^6.0.0",
+    "csp-header": "^6.1.0",
     "date-fns": "^4.1.0",
     "dotenv": "^16.4.7",
     "express": "^5.0.1",
