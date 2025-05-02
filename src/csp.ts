@@ -15,6 +15,7 @@ export const cspMap = (dekoratorenUrl: string): Record<string, string[]> => {
             '*.taskanalytics.com',
             '*.hotjar.com',
             '*.uxsignals.com',
+            '*.skyra.no',
         ],
         // Hvor vi kan hente .css filer fra.
         'style-src': [
