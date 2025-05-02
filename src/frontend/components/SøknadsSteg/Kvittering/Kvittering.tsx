@@ -57,9 +57,7 @@ const Kvittering: React.FC = () => {
 
     const kvitteringTekster = tekster().KVITTERING;
 
-    if (erUtvidet) {
-        useUxSignals(true);
-    }
+    useUxSignals(true);
 
     return (
         <Steg tittel={plainTekst(kvitteringTekster.kvitteringTittel)}>
