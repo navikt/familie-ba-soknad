@@ -26,6 +26,7 @@ const Kvittering: React.FC = () => {
         innsendingStatus,
         tekster,
         plainTekst,
+        erUtvidet,
     } = useAppContext();
     const { hentStegNummer } = useStegContext();
 
@@ -56,7 +57,9 @@ const Kvittering: React.FC = () => {
 
     const kvitteringTekster = tekster().KVITTERING;
 
-    useUxSignals(true);
+    if (erUtvidet) {
+        useUxSignals(true);
+    }
 
     return (
         <Steg tittel={plainTekst(kvitteringTekster.kvitteringTittel)}>
@@ -80,7 +83,9 @@ const Kvittering: React.FC = () => {
                 <TekstBlock block={kvitteringTekster.infoTilSoker} typografi={Typografi.BodyLong} />
             </VStack>
             <Kontoinformasjon />
-            <div data-uxsignals-embed="panel-8zpbns6bc" style={{ maxWidth: '620px' }}></div>
+            {erUtvidet && (
+                <div data-uxsignals-embed="panel-1zfoi9d7uh" style={{ maxWidth: '620px' }}></div>
+            )}
             <BlokkerTilbakeKnappModal />
         </Steg>
     );
