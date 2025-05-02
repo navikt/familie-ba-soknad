@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { format } from 'date-fns';
 
@@ -9,6 +9,7 @@ import { useAppContext } from '../../../context/AppContext';
 import { useStegContext } from '../../../context/StegContext';
 import { useUxSignals } from '../../../hooks/useUxSignals';
 import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
+import { ESøknadstype } from '../../../typer/kontrakt/generelle';
 import { RouteEnum } from '../../../typer/routes';
 import { Typografi } from '../../../typer/sanity/sanity';
 import { erDokumentasjonRelevant } from '../../../utils/dokumentasjon';
@@ -26,9 +27,10 @@ const Kvittering: React.FC = () => {
         innsendingStatus,
         tekster,
         plainTekst,
-        erUtvidet,
     } = useAppContext();
     const { hentStegNummer } = useStegContext();
+
+    const [innsendtSøknadErUtvidet, settInnsendtSøknadErUtvidet] = useState(false);
 
     const innsendtDato: Date =
         innsendingStatus.status === RessursStatus.SUKSESS
@@ -50,7 +52,7 @@ const Kvittering: React.FC = () => {
     useEffect(() => {
         if (sisteUtfylteStegIndex === hentStegNummer(RouteEnum.Dokumentasjon)) {
             settFåttGyldigKvittering(true);
-
+            settInnsendtSøknadErUtvidet(søknad.søknadstype === ESøknadstype.UTVIDET);
             avbrytOgSlettSøknad();
         }
     }, []);
@@ -81,7 +83,7 @@ const Kvittering: React.FC = () => {
                 <TekstBlock block={kvitteringTekster.infoTilSoker} typografi={Typografi.BodyLong} />
             </VStack>
             <Kontoinformasjon />
-            {erUtvidet && (
+            {innsendtSøknadErUtvidet && (
                 <div data-uxsignals-embed="panel-1zfoi9d7uh" style={{ maxWidth: '620px' }}></div>
             )}
             <BlokkerTilbakeKnappModal />
