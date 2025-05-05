@@ -15,6 +15,7 @@ export const cspMap = (dekoratorenUrl: string): Record<string, string[]> => {
             '*.taskanalytics.com',
             '*.hotjar.com',
             '*.uxsignals.com',
+            '*.skyra.no',
         ],
         // Hvor vi kan hente .css filer fra.
         'style-src': [
@@ -24,6 +25,7 @@ export const cspMap = (dekoratorenUrl: string): Record<string, string[]> => {
             '*.nav.no',
             '*.psplugin.com',
             '*.uxsignals.com',
+            '*.skyra.no',
         ],
         // Hvor vi kan kjøre XHR/REST-kall mot.
         'connect-src': [
@@ -38,6 +40,7 @@ export const cspMap = (dekoratorenUrl: string): Record<string, string[]> => {
             '*.boost.ai',
             '*.taskanalytics.com',
             '*.uxsignals.com',
+            '*.skyra.no',
             erProd() ? 'telemetry.nav.no' : 'telemetry.ekstern.dev.nav.no',
         ],
         // Kan kun submitte forms til seg selv.
