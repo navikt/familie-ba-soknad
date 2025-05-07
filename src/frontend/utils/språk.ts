@@ -4,9 +4,9 @@ import { Alpha3Code, alpha3ToAlpha2, getName } from 'i18n-iso-countries';
 import reactElementToJSXString from 'react-element-to-jsx-string';
 import { createIntl, createIntlCache } from 'react-intl';
 
-import * as engelsk from '../assets/lang/en.json' assert { type: 'json' };
-import * as bokmål from '../assets/lang/nb.json' assert { type: 'json' };
-import * as nynorsk from '../assets/lang/nn.json' assert { type: 'json' };
+import engelsk from '../assets/lang/en.json' assert { type: 'json' };
+import bokmål from '../assets/lang/nb.json' assert { type: 'json' };
+import nynorsk from '../assets/lang/nn.json' assert { type: 'json' };
 import { innebygdeFormatterere } from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
 import { IDinLivssituasjonTekstinnhold } from '../components/SøknadsSteg/DinLivssituasjon/innholdTyper';
 import { IEøsForBarnTekstinnhold } from '../components/SøknadsSteg/EøsSteg/Barn/innholdTyper';
@@ -88,9 +88,11 @@ export const landkodeTilSpråk = (landkode: Alpha3Code | '', locale: string): st
 
 const stripSpråkfil = (språkfilInnhold: Record<string, string>): Record<string, string> => {
     const språkEntries = Object.entries(språkfilInnhold);
-    // Vi får med en default import her som vi må fjerne før vi kan mappe over entryene
-    språkEntries.pop();
-    return Object.fromEntries(språkEntries.map(([key, value]) => [key, value.trim()]));
+    return Object.fromEntries(
+        språkEntries.map(([key, value]) => {
+            return [key, value.trim()];
+        })
+    );
 };
 
 const texts: Record<LocaleType, Record<string, string>> = {
