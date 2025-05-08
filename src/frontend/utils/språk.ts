@@ -1,12 +1,10 @@
-import { ReactElement } from 'react';
-
 import { Alpha3Code, alpha3ToAlpha2, getName } from 'i18n-iso-countries';
 import reactElementToJSXString from 'react-element-to-jsx-string';
 import { createIntl, createIntlCache } from 'react-intl';
 
-import engelsk from '../assets/lang/en.json' assert { type: 'json' };
-import bokmål from '../assets/lang/nb.json' assert { type: 'json' };
-import nynorsk from '../assets/lang/nn.json' assert { type: 'json' };
+import engelsk from '../assets/lang/en.json' with { type: 'json' };
+import bokmål from '../assets/lang/nb.json' with { type: 'json' };
+import nynorsk from '../assets/lang/nn.json' with { type: 'json' };
 import { innebygdeFormatterere } from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
 import { IDinLivssituasjonTekstinnhold } from '../components/SøknadsSteg/DinLivssituasjon/innholdTyper';
 import { IEøsForBarnTekstinnhold } from '../components/SøknadsSteg/EøsSteg/Barn/innholdTyper';
@@ -119,7 +117,7 @@ export const hentTekster = (
               )
             : '';
 
-        map[locale] = message && reactElementToJSXString(message as ReactElement);
+        map[locale] = message && reactElementToJSXString(message);
     }
 
     // Typescript er ikke smart nok til å se at alle locales er satt

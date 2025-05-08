@@ -8,7 +8,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { HttpProvider } from '@navikt/familie-http';
 import { type Ressurs, RessursStatus } from '@navikt/familie-typer';
 
-import norskeTekster from '../assets/lang/nb.json' assert { type: 'json' };
+import norskeTekster from '../assets/lang/nb.json' with { type: 'json' };
 import { UtenlandsoppholdSpørsmålId } from '../components/Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 import {
     DinLivssituasjonSpørsmålId,
