@@ -1,5 +1,3 @@
-import { ReactElement } from 'react';
-
 import { Alpha3Code, alpha3ToAlpha2, getName } from 'i18n-iso-countries';
 import reactElementToJSXString from 'react-element-to-jsx-string';
 import { createIntl, createIntlCache } from 'react-intl';
@@ -119,7 +117,7 @@ export const hentTekster = (
               )
             : '';
 
-        map[locale] = message && reactElementToJSXString(message as ReactElement);
+        map[locale] = message && reactElementToJSXString(message);
     }
 
     // Typescript er ikke smart nok til å se at alle locales er satt
