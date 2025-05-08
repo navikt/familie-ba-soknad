@@ -98,7 +98,7 @@
     "@portabletext/react": "^3.2.0",
     "@portabletext/toolkit": "^2.0.8",
     "@sanity/client": "^6.29.0",
-    "@sentry/react": "^9.15.0",
+    "@sentry/react": "^9.16.1",
     "axios": "^1.9.0",
     "compression": "^1.8.0",
     "concurrently": "^9.1.2",
