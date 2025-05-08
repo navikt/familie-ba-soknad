@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
 import { DisabledApp } from './components/Disabled/DisabledApp';
 import InnholdContainer from './components/Felleskomponenter/InnholdContainer/InnholdContainer';
@@ -10,7 +10,10 @@ import { GlobalStyle } from './Theme';
 
 hentDekorator();
 
-ReactDOM.render(
+const container = document.getElementById('root');
+const root = createRoot(container!);
+
+root.render(
     <React.StrictMode>
         <InnholdContainer>
             <GlobalStyle />
@@ -18,6 +21,5 @@ ReactDOM.render(
                 <DisabledApp />
             </SpråkProvider>
         </InnholdContainer>
-    </React.StrictMode>,
-    document.getElementById('root')
+    </React.StrictMode>
 );

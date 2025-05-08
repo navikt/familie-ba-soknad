@@ -1,5 +1,6 @@
+import { act } from 'react';
+
 import { renderHook } from '@testing-library/react';
-import { act } from 'react-dom/test-utils';
 
 import { ESivilstand } from '../../typer/kontrakt/generelle';
 import { ISøknadKontrakt } from '../../typer/kontrakt/kontrakt';
