@@ -11,7 +11,7 @@ import { ESivilstand, TilRestLocaleRecord } from '../../typer/kontrakt/generelle
 import { ISøknadKontrakt } from '../../typer/kontrakt/kontrakt';
 import { ISøker } from '../../typer/person';
 import { PersonType } from '../../typer/personType';
-import { LocaleRecordBlock, LocaleRecordString } from '../../typer/sanity/sanity';
+import { LocaleRecordBlock, LocaleRecordString, PlainTekst } from '../../typer/sanity/sanity';
 import { ITekstinnhold } from '../../typer/sanity/tekstInnhold';
 import { ISøknadSpørsmålMap } from '../../typer/spørsmål';
 import { ISøknad } from '../../typer/søknad';
@@ -58,7 +58,8 @@ export const dataISøknadKontraktFormat = (
     tekster: ITekstinnhold,
     tilRestLocaleRecord: TilRestLocaleRecord,
     kontraktVersjon: number,
-    toggleSpørOmMånedIkkeDato: boolean
+    toggleSpørOmMånedIkkeDato: boolean,
+    plainTekst: PlainTekst
 ): ISøknadKontrakt => {
     const { søker } = søknad;
 
@@ -253,7 +254,9 @@ export const dataISøknadKontraktFormat = (
         },
         dokumentasjon: søknad.dokumentasjon
             .filter(dok => erDokumentasjonRelevant(dok))
-            .map(dok => dokumentasjonISøknadFormat(dok, tekster, tilRestLocaleRecord, søknad)),
+            .map(dok =>
+                dokumentasjonISøknadFormat(dok, tekster, tilRestLocaleRecord, søknad, plainTekst)
+            ),
         teksterUtenomSpørsmål: {
             ...lokaleTekster(),
             ...teksterFraSanity(tekster, tilRestLocaleRecord),

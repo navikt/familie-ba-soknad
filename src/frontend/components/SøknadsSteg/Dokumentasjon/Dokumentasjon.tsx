@@ -77,6 +77,7 @@ const Dokumentasjon: React.FC = () => {
     });
 
     const stegTekster = tekster()[ESanitySteg.DOKUMENTASJON];
+    const frittståendeOrdTekster = tekster()[ESanitySteg.FELLES].frittståendeOrd;
 
     const relevateDokumentasjoner = hentRelevateDokumentasjoner(søknad.dokumentasjon);
 
@@ -89,7 +90,9 @@ const Dokumentasjon: React.FC = () => {
 
     const vedleggOppsummering = hentVedleggOppsummering(
         relevateDokumentasjonerUtenAnnenDokumentasjon,
-        søknad
+        søknad,
+        plainTekst,
+        frittståendeOrdTekster
     );
 
     return (
