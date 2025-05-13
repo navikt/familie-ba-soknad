@@ -14,8 +14,8 @@ import { LocaleRecordBlock, Typografi } from '../../../typer/sanity/sanity';
 import { slåSammen } from '../../../utils/slåSammen';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 
-import Filopplaster2 from './filopplaster/Filopplaster2';
-import { useFilopplaster2 } from './filopplaster/useFilopplaster2';
+import Filopplaster from './filopplaster/Filopplaster';
+import { useFilopplaster } from './filopplaster/useFilopplaster';
 
 interface Props {
     dokumentasjon: IDokumentasjon;
@@ -26,13 +26,13 @@ interface Props {
     ) => void;
 }
 
-const LastOppVedlegg2: React.FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon }) => {
+const LastOppVedlegg: React.FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon }) => {
     const { søknad, tekster, plainTekst } = useAppContext();
 
     const dokumentasjonTekster = tekster().DOKUMENTASJON;
     const frittståendeOrdTekster = tekster().FELLES.frittståendeOrd;
 
-    const { fjernAlleAvvisteFiler } = useFilopplaster2(
+    const { fjernAlleAvvisteFiler } = useFilopplaster(
         dokumentasjon,
         oppdaterDokumentasjon,
         dokumentasjonTekster,
@@ -99,7 +99,7 @@ const LastOppVedlegg2: React.FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon
                 )}
 
                 {!dokumentasjon.harSendtInn && (
-                    <Filopplaster2
+                    <Filopplaster
                         dokumentasjon={dokumentasjon}
                         oppdaterDokumentasjon={oppdaterDokumentasjon}
                     />
@@ -109,4 +109,4 @@ const LastOppVedlegg2: React.FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon
     );
 };
 
-export default LastOppVedlegg2;
+export default LastOppVedlegg;

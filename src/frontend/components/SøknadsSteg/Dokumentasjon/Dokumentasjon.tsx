@@ -19,7 +19,7 @@ import Steg from '../../Felleskomponenter/Steg/Steg';
 import { VedleggOppsummering } from '../../Felleskomponenter/VedleggOppsummering/VedleggOppsummering';
 import { hentVedleggOppsummering } from '../../Felleskomponenter/VedleggOppsummering/vedleggOppsummering.domene';
 
-import LastOppVedlegg2 from './LastOppVedlegg2';
+import LastOppVedlegg from './LastOppVedlegg';
 
 // Vedlegg er lagret 48 timer
 export const erVedleggstidspunktGyldig = (vedleggTidspunkt: string): boolean => {
@@ -160,7 +160,7 @@ const Dokumentasjon: React.FC = () => {
                     </>
                 )}
                 {relevateDokumentasjoner.map((dokumentasjon, index) => (
-                    <LastOppVedlegg2
+                    <LastOppVedlegg
                         key={index}
                         dokumentasjon={dokumentasjon}
                         oppdaterDokumentasjon={oppdaterDokumentasjon}
