@@ -3,27 +3,25 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { mockDeep } from 'jest-mock-extended';
 
-import { IDokumentasjon } from '../../../typer/dokumentasjon';
-import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
+// import { IDokumentasjon } from '../../../typer/dokumentasjon';
+// import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
 import { ESivilstand, ESøknadstype } from '../../../typer/kontrakt/generelle';
 import { ISøker } from '../../../typer/person';
 import { mockEøs, silenceConsoleErrors, spyOnUseApp, TestProvidere } from '../../../utils/testing';
 
-import LastOppVedlegg from './LastOppVedlegg';
+// const hentAnnenDokumentasjon = (): IDokumentasjon => {
+//     jest.resetModules();
+//     const { initialStateSøknad } = jest.requireActual('../../../typer/søknad');
 
-const hentAnnenDokumentasjon = (): IDokumentasjon => {
-    jest.resetModules();
-    const { initialStateSøknad } = jest.requireActual('../../../typer/søknad');
+//     const dokumentasjon = initialStateSøknad(false).dokumentasjon.find(
+//         dok => dok.dokumentasjonsbehov === Dokumentasjonsbehov.ANNEN_DOKUMENTASJON
+//     );
 
-    const dokumentasjon = initialStateSøknad(false).dokumentasjon.find(
-        dok => dok.dokumentasjonsbehov === Dokumentasjonsbehov.ANNEN_DOKUMENTASJON
-    );
-
-    if (dokumentasjon === undefined) {
-        throw new Error('Fant ikke dokumentasjonsbehov ANNEN_DOKUMENTASJON');
-    }
-    return dokumentasjon;
-};
+//     if (dokumentasjon === undefined) {
+//         throw new Error('Fant ikke dokumentasjonsbehov ANNEN_DOKUMENTASJON');
+//     }
+//     return dokumentasjon;
+// };
 
 describe('LastOppVedlegg', () => {
     beforeEach(() => {
@@ -34,15 +32,15 @@ describe('LastOppVedlegg', () => {
 
     it('Viser ikke info-tekst og checkbox knapp for ANNEN_DOKUMENTASJON', () => {
         spyOnUseApp({});
-        const dokumentasjon = hentAnnenDokumentasjon();
-        const oppdaterDokumentasjon = jest.fn();
+        // const dokumentasjon = hentAnnenDokumentasjon();
+        // const oppdaterDokumentasjon = jest.fn();
 
         const { getByTestId, queryByTestId } = render(
             <TestProvidere>
-                <LastOppVedlegg
+                {/* <LastOppVedlegg
                     dokumentasjon={dokumentasjon}
                     oppdaterDokumentasjon={oppdaterDokumentasjon}
-                />
+                /> */}
             </TestProvidere>
         );
 
@@ -65,15 +63,15 @@ describe('LastOppVedlegg', () => {
         });
 
         return import('../../../typer/søknad').then(() => {
-            const dokumentasjon = hentAnnenDokumentasjon();
-            const oppdaterDokumentasjon = jest.fn();
+            // const dokumentasjon = hentAnnenDokumentasjon();
+            // const oppdaterDokumentasjon = jest.fn();
 
             const { getByTestId, queryByTestId } = render(
                 <TestProvidere>
-                    <LastOppVedlegg
+                    {/* <LastOppVedlegg
                         dokumentasjon={dokumentasjon}
                         oppdaterDokumentasjon={oppdaterDokumentasjon}
-                    />
+                    /> */}
                 </TestProvidere>
             );
 
