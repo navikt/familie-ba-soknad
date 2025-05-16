@@ -37,10 +37,10 @@ const AndreForelderOppsummering: React.FC<{
     } = omBarnetTekster;
 
     return (
-        <FormSummary.Answers>
+        <>
             {andreForelder[andreForelderDataKeySpørsmål.kanIkkeGiOpplysninger].svar ===
             ESvar.NEI ? (
-                <>
+                <FormSummary.Answers>
                     {andreForelder[andreForelderDataKeySpørsmål.navn].svar && (
                         <OppsummeringFelt
                             tittel={<TekstBlock block={navnAndreForelder.sporsmal} />}
@@ -160,13 +160,15 @@ const AndreForelderOppsummering: React.FC<{
                             })()}
                         />
                     )}
-                </>
+                </FormSummary.Answers>
             ) : (
-                <BodyShort>
-                    <TekstBlock block={navnAndreForelder.checkboxLabel} />
-                </BodyShort>
+                <FormSummary.Answer>
+                    <BodyShort>
+                        <TekstBlock block={navnAndreForelder.checkboxLabel} />
+                    </BodyShort>
+                </FormSummary.Answer>
             )}
-        </FormSummary.Answers>
+        </>
     );
 };
 
