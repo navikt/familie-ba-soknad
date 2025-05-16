@@ -34,8 +34,7 @@ export const barnISøknadsFormat = (
     søker: ISøker,
     valgtSpråk: LocaleType,
     tekster: ITekstinnhold,
-    tilRestLocaleRecord: TilRestLocaleRecord,
-    toggleSpørOmMånedIkkeDato: boolean
+    tilRestLocaleRecord: TilRestLocaleRecord
 ): ISøknadIKontraktBarn => {
     /* eslint-disable @typescript-eslint/no-unused-vars */
     const {
@@ -119,7 +118,6 @@ export const barnISøknadsFormat = (
                 tilRestLocaleRecord,
                 tekster: fellesTekster.modaler.barnetrygdsperiode.søker,
                 barn,
-                toggleSpørOmMånedIkkeDato,
             })
         ),
         idNummer: idNummer.map(idnummerObj =>
@@ -137,19 +135,12 @@ export const barnISøknadsFormat = (
                   barn,
                   valgtSpråk,
                   tilRestLocaleRecord,
-                  tekster,
-                  toggleSpørOmMånedIkkeDato
+                  tekster
               )
             : null,
 
         omsorgsperson: omsorgsperson
-            ? omsorgspersonTilISøknadsfelt(
-                  omsorgsperson,
-                  barn,
-                  tilRestLocaleRecord,
-                  tekster,
-                  toggleSpørOmMånedIkkeDato
-              )
+            ? omsorgspersonTilISøknadsfelt(omsorgsperson, barn, tilRestLocaleRecord, tekster)
             : null,
         spørsmål: {
             ...spørmålISøknadsFormat(

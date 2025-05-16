@@ -12,18 +12,11 @@ export const formaterDatoMedUkjent = (datoMedUkjent: DatoMedUkjent, tekstForUkje
         : formaterDato(datoMedUkjent);
 };
 
-export const formaterMånedMedUkjent = (
-    svar: string,
-    vetIkkeTekst,
-    toggle: boolean,
-    valgtLocale: LocaleType
-) => {
+export const formaterMånedMedUkjent = (svar: string, vetIkkeTekst, valgtLocale: LocaleType) => {
     if (svar === AlternativtSvarForInput.UKJENT) {
         return vetIkkeTekst;
-    } else if (toggle) {
-        return uppercaseFørsteBokstav(formaterDatostringKunMåned(svar, valgtLocale));
     } else {
-        return formaterDato(svar);
+        return uppercaseFørsteBokstav(formaterDatostringKunMåned(svar, valgtLocale));
     }
 };
 

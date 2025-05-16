@@ -21,7 +21,6 @@ interface ArbeidsperiodeIKontraktFormatParams {
     tilRestLocaleRecord: TilRestLocaleRecord;
     tekster: IArbeidsperiodeTekstinnhold;
     barn?: IBarnMedISøknad;
-    toggleSpørOmMånedIkkeDato: boolean;
 }
 
 export const tilIArbeidsperiodeIKontraktFormat = ({
@@ -31,7 +30,6 @@ export const tilIArbeidsperiodeIKontraktFormat = ({
     tilRestLocaleRecord,
     tekster,
     barn,
-    toggleSpørOmMånedIkkeDato,
     personType,
     erDød,
 }: ArbeidsperiodeIKontraktFormatParams &
@@ -80,10 +78,7 @@ export const tilIArbeidsperiodeIKontraktFormat = ({
             fraDatoArbeidsperiode: fraDatoArbeidsperiode.svar
                 ? {
                       label: tilRestLocaleRecord(tekster.startdato.sporsmal),
-                      verdi: datoTilVerdiForKontrakt(
-                          toggleSpørOmMånedIkkeDato,
-                          fraDatoArbeidsperiode
-                      ),
+                      verdi: datoTilVerdiForKontrakt(fraDatoArbeidsperiode),
                   }
                 : null,
             tilDatoArbeidsperiode: tilDatoArbeidsperiode.svar
@@ -93,23 +88,15 @@ export const tilIArbeidsperiodeIKontraktFormat = ({
                           tilDatoArbeidsperiode.svar === AlternativtSvarForInput.UKJENT &&
                           tekster.sluttdatoFremtid.checkboxLabel
                               ? tilRestLocaleRecord(tekster.sluttdatoFremtid.checkboxLabel)
-                              : datoTilVerdiForKontrakt(
-                                    toggleSpørOmMånedIkkeDato,
-                                    tilDatoArbeidsperiode
-                                ),
+                              : datoTilVerdiForKontrakt(tilDatoArbeidsperiode),
                   }
                 : null,
         }),
     };
 };
 
-function datoTilVerdiForKontrakt(
-    toggleSpørOmMånedIkkeDato: boolean,
-    skjemaSpørsmål: ISøknadSpørsmål<ISODateString | ''>
-) {
-    return toggleSpørOmMånedIkkeDato
-        ? verdiCallbackAlleSpråk(locale =>
-              uppercaseFørsteBokstav(formaterDatostringKunMåned(skjemaSpørsmål.svar, locale))
-          )
-        : sammeVerdiAlleSpråk(skjemaSpørsmål.svar);
+function datoTilVerdiForKontrakt(skjemaSpørsmål: ISøknadSpørsmål<ISODateString | ''>) {
+    return verdiCallbackAlleSpråk(locale =>
+        uppercaseFørsteBokstav(formaterDatostringKunMåned(skjemaSpørsmål.svar, locale))
+    );
 }

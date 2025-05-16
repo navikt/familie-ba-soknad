@@ -163,7 +163,6 @@ export const mockFeatureToggle = () => {
                 toggles: {
                     [EFeatureToggle.NYE_MODAL_TEKSTER]: false,
                     [EFeatureToggle.BRUK_NYTT_ENDEPUNKT_FOR_INNSENDING_AV_SOKNAD]: true,
-                    [EFeatureToggle.SPOR_OM_MANED_IKKE_DATO]: false,
                 },
             })
         );

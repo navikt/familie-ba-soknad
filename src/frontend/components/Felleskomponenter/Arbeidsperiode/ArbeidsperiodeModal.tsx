@@ -3,8 +3,6 @@ import React from 'react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useAppContext } from '../../../context/AppContext';
-import { useFeatureToggles } from '../../../context/FeatureTogglesContext';
-import { EFeatureToggle } from '../../../typer/feature-toggles';
 import { IArbeidsperiode } from '../../../typer/perioder';
 import { PersonType } from '../../../typer/personType';
 import { IArbeidsperiodeTekstinnhold } from '../../../typer/sanity/modaler/arbeidsperiode';
@@ -12,7 +10,6 @@ import { dagensDato, gårsdagensDato, sisteDagDenneMåneden } from '../../../uti
 import { trimWhiteSpace, visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
 import { minTilDatoForPeriode } from '../../../utils/perioder';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
-import Datovelger from '../Datovelger/Datovelger';
 import { LandDropdown } from '../Dropdowns/LandDropdown';
 import JaNeiSpmForSanity from '../JaNeiSpm/JaNeiSpmForSanity';
 import { DagIMåneden, MånedÅrVelger } from '../MånedÅrVelger/MånedÅrVelger';
@@ -42,7 +39,6 @@ export const ArbeidsperiodeModal: React.FC<ArbeidsperiodeModalProps> = ({
     erDød = false,
     forklaring = undefined,
 }) => {
-    const { toggles } = useFeatureToggles();
     const { tekster, plainTekst } = useAppContext();
     const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } =
         useArbeidsperiodeSkjema(gjelderUtlandet, personType, erDød);
@@ -141,97 +137,48 @@ export const ArbeidsperiodeModal: React.FC<ArbeidsperiodeModalProps> = ({
                     label={<TekstBlock block={teksterForModal.arbeidsgiver.sporsmal} />}
                 />
             )}
-            {toggles[EFeatureToggle.SPOR_OM_MANED_IKKE_DATO] ? (
-                <>
-                    {fraDatoArbeidsperiode.erSynlig && (
-                        <MånedÅrVelger
-                            label={<TekstBlock block={teksterForModal.startdato.sporsmal} />}
-                            senesteValgbareMåned={
-                                periodenErAvsluttet ? gårsdagensDato() : dagensDato()
-                            }
-                            felt={skjema.felter.fraDatoArbeidsperiode}
-                            visFeilmeldinger={skjema.visFeilmeldinger}
-                            dagIMåneden={DagIMåneden.FØRSTE_DAG}
-                            kanIkkeVæreFremtid={true}
-                        />
-                    )}
-                    {tilDatoArbeidsperiode.erSynlig && (
-                        <div>
-                            <MånedÅrVelger
-                                label={
-                                    <TekstBlock
-                                        block={
-                                            periodenErAvsluttet
-                                                ? teksterForModal.sluttdatoFortid.sporsmal
-                                                : teksterForModal.sluttdatoFremtid.sporsmal
-                                        }
-                                    />
-                                }
-                                tidligsteValgbareMåned={minTilDatoForPeriode(
-                                    periodenErAvsluttet,
-                                    skjema.felter.fraDatoArbeidsperiode.verdi
-                                )}
-                                senesteValgbareMåned={
-                                    periodenErAvsluttet ? sisteDagDenneMåneden() : undefined
-                                }
-                                felt={skjema.felter.tilDatoArbeidsperiode}
-                                visFeilmeldinger={skjema.visFeilmeldinger}
-                                dagIMåneden={DagIMåneden.SISTE_DAG}
-                                kanIkkeVæreFremtid={periodenErAvsluttet}
-                                kanIkkeVæreFortid={!periodenErAvsluttet}
-                                disabled={
-                                    skjema.felter.tilDatoArbeidsperiodeUkjent.verdi === ESvar.JA
-                                }
-                            />
-                            <SkjemaCheckboxForSanity
-                                felt={skjema.felter.tilDatoArbeidsperiodeUkjent}
-                                label={plainTekst(teksterForModal.sluttdatoFremtid.checkboxLabel)}
-                            />
-                        </div>
-                    )}
-                </>
-            ) : (
-                <>
-                    {fraDatoArbeidsperiode.erSynlig && (
-                        <Datovelger
-                            felt={skjema.felter.fraDatoArbeidsperiode}
-                            skjema={skjema}
-                            label={<TekstBlock block={teksterForModal.startdato.sporsmal} />}
-                            avgrensMaxDato={periodenErAvsluttet ? gårsdagensDato() : dagensDato()}
-                        />
-                    )}
-                    {tilDatoArbeidsperiode.erSynlig && (
-                        <div>
-                            <Datovelger
-                                felt={skjema.felter.tilDatoArbeidsperiode}
-                                skjema={skjema}
-                                label={
-                                    <TekstBlock
-                                        block={
-                                            periodenErAvsluttet
-                                                ? teksterForModal.sluttdatoFortid.sporsmal
-                                                : teksterForModal.sluttdatoFremtid.sporsmal
-                                        }
-                                    />
-                                }
-                                avgrensMinDato={minTilDatoForPeriode(
-                                    periodenErAvsluttet,
-                                    skjema.felter.fraDatoArbeidsperiode.verdi
-                                )}
-                                avgrensMaxDato={periodenErAvsluttet ? dagensDato() : undefined}
-                                disabled={
-                                    skjema.felter.tilDatoArbeidsperiodeUkjent.verdi === ESvar.JA
-                                }
-                            />
-                            <SkjemaCheckboxForSanity
-                                felt={skjema.felter.tilDatoArbeidsperiodeUkjent}
-                                label={plainTekst(teksterForModal.sluttdatoFremtid.checkboxLabel)}
-                            />
-                        </div>
-                    )}
-                </>
+            {fraDatoArbeidsperiode.erSynlig && (
+                <MånedÅrVelger
+                    label={<TekstBlock block={teksterForModal.startdato.sporsmal} />}
+                    senesteValgbareMåned={periodenErAvsluttet ? gårsdagensDato() : dagensDato()}
+                    felt={skjema.felter.fraDatoArbeidsperiode}
+                    visFeilmeldinger={skjema.visFeilmeldinger}
+                    dagIMåneden={DagIMåneden.FØRSTE_DAG}
+                    kanIkkeVæreFremtid={true}
+                />
             )}
-
+            {tilDatoArbeidsperiode.erSynlig && (
+                <div>
+                    <MånedÅrVelger
+                        label={
+                            <TekstBlock
+                                block={
+                                    periodenErAvsluttet
+                                        ? teksterForModal.sluttdatoFortid.sporsmal
+                                        : teksterForModal.sluttdatoFremtid.sporsmal
+                                }
+                            />
+                        }
+                        tidligsteValgbareMåned={minTilDatoForPeriode(
+                            periodenErAvsluttet,
+                            skjema.felter.fraDatoArbeidsperiode.verdi
+                        )}
+                        senesteValgbareMåned={
+                            periodenErAvsluttet ? sisteDagDenneMåneden() : undefined
+                        }
+                        felt={skjema.felter.tilDatoArbeidsperiode}
+                        visFeilmeldinger={skjema.visFeilmeldinger}
+                        dagIMåneden={DagIMåneden.SISTE_DAG}
+                        kanIkkeVæreFremtid={periodenErAvsluttet}
+                        kanIkkeVæreFortid={!periodenErAvsluttet}
+                        disabled={skjema.felter.tilDatoArbeidsperiodeUkjent.verdi === ESvar.JA}
+                    />
+                    <SkjemaCheckboxForSanity
+                        felt={skjema.felter.tilDatoArbeidsperiodeUkjent}
+                        label={plainTekst(teksterForModal.sluttdatoFremtid.checkboxLabel)}
+                    />
+                </div>
+            )}
             {visFeiloppsummering(skjema) && <SkjemaFeiloppsummering skjema={skjema} />}
         </SkjemaModal>
     );
