@@ -121,7 +121,7 @@
     "react-element-to-jsx-string": "^17.0.1",
     "react-intl": "^7.1.11",
     "react-is": "^19.1.0",
-    "react-router": "^7.5.2",
+    "react-router": "^7.6.0",
     "unleash-client": "^6.6.0",
     "uuid": "^11.1.0",
     "xss": "^1.0.14"
