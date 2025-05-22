@@ -2,13 +2,11 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { useFelt, useSkjema, Valideringsstatus } from '@navikt/familie-skjema';
 
 import { useAppContext } from '../../../context/AppContext';
-import { useFeatureToggles } from '../../../context/FeatureTogglesContext';
 import useDatovelgerFeltMedUkjentForSanity from '../../../hooks/useDatovelgerFeltMedUkjentForSanity';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
 import useDatovelgerFeltForSanity from '../../../hooks/useSendInnSkjemaTest/useDatovelgerForSanity';
 import { IBarnMedISøknad } from '../../../typer/barn';
-import { EFeatureToggle } from '../../../typer/feature-toggles';
 import { PersonType } from '../../../typer/personType';
 import { IAndreUtbetalingerTekstinnhold } from '../../../typer/sanity/modaler/andreUtbetalinger';
 import { ESanitySteg } from '../../../typer/sanity/sanity';
@@ -32,7 +30,6 @@ export interface IUseUtbetalingerSkjemaParams {
 }
 
 export const useUtbetalingerSkjema = (personType, barn, erDød) => {
-    const { toggles } = useFeatureToggles();
     const { tekster, plainTekst } = useAppContext();
     const teksterForPersontype: IAndreUtbetalingerTekstinnhold =
         tekster()[ESanitySteg.FELLES].modaler.andreUtbetalinger[personType];
@@ -79,9 +76,7 @@ export const useUtbetalingerSkjema = (personType, barn, erDød) => {
         avhengigheter: { fårUtbetalingNå },
     });
 
-    const utbetalingTilDatoSluttdatoAvgrensning = toggles[EFeatureToggle.SPOR_OM_MANED_IKKE_DATO]
-        ? sisteDagDenneMåneden()
-        : dagensDato();
+    const utbetalingTilDatoSluttdatoAvgrensning = sisteDagDenneMåneden();
 
     const utbetalingTilDato = useDatovelgerFeltMedUkjentForSanity({
         feltId: UtbetalingerSpørsmålId.utbetalingTilDato,

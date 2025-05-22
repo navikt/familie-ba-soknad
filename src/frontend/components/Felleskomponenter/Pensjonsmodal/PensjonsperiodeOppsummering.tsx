@@ -3,12 +3,10 @@ import React from 'react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useAppContext } from '../../../context/AppContext';
-import { useFeatureToggles } from '../../../context/FeatureTogglesContext';
 import { useSpråkContext } from '../../../context/SpråkContext';
-import { EFeatureToggle } from '../../../typer/feature-toggles';
 import { IPensjonsperiode } from '../../../typer/perioder';
 import { PeriodePersonTypeMedBarnProps, PersonType } from '../../../typer/personType';
-import { formaterDato, formaterDatostringKunMåned } from '../../../utils/dato';
+import { formaterDatostringKunMåned } from '../../../utils/dato';
 import { landkodeTilSpråk } from '../../../utils/språk';
 import { uppercaseFørsteBokstav } from '../../../utils/visning';
 import { OppsummeringFelt } from '../../SøknadsSteg/Oppsummering/OppsummeringFelt';
@@ -35,7 +33,6 @@ export const PensjonsperiodeOppsummering: React.FC<PensjonsperiodeOppsummeringPr
     erDød = false,
     barn = undefined,
 }) => {
-    const { toggles } = useFeatureToggles();
     const { valgtLocale } = useSpråkContext();
     const { tekster } = useAppContext();
     const teksterForModal = tekster().FELLES.modaler.pensjonsperiode[personType];
@@ -101,13 +98,9 @@ export const PensjonsperiodeOppsummering: React.FC<PensjonsperiodeOppsummeringPr
                             }}
                         />
                     }
-                    søknadsvar={
-                        toggles[EFeatureToggle.SPOR_OM_MANED_IKKE_DATO]
-                            ? uppercaseFørsteBokstav(
-                                  formaterDatostringKunMåned(pensjonFra.svar, valgtLocale)
-                              )
-                            : formaterDato(pensjonFra.svar)
-                    }
+                    søknadsvar={uppercaseFørsteBokstav(
+                        formaterDatostringKunMåned(pensjonFra.svar, valgtLocale)
+                    )}
                 />
             )}
             {pensjonTil.svar && (
@@ -121,13 +114,9 @@ export const PensjonsperiodeOppsummering: React.FC<PensjonsperiodeOppsummeringPr
                             }
                         />
                     }
-                    søknadsvar={
-                        toggles[EFeatureToggle.SPOR_OM_MANED_IKKE_DATO]
-                            ? uppercaseFørsteBokstav(
-                                  formaterDatostringKunMåned(pensjonTil.svar, valgtLocale)
-                              )
-                            : formaterDato(pensjonTil.svar)
-                    }
+                    søknadsvar={uppercaseFørsteBokstav(
+                        formaterDatostringKunMåned(pensjonTil.svar, valgtLocale)
+                    )}
                 />
             )}
         </PeriodeOppsummering>

@@ -5,22 +5,15 @@ import { useSkjema, Valideringsstatus } from '@navikt/familie-skjema';
 
 import { useAppContext } from '../../../context/AppContext';
 import { useEøsContext } from '../../../context/EøsContext';
-import { useFeatureToggles } from '../../../context/FeatureTogglesContext';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
 import useDatovelgerFeltForSanity from '../../../hooks/useSendInnSkjemaTest/useDatovelgerForSanity';
 import { IBarnMedISøknad } from '../../../typer/barn';
-import { EFeatureToggle } from '../../../typer/feature-toggles';
 import { PersonType } from '../../../typer/personType';
 import { IPensjonsperiodeTekstinnhold } from '../../../typer/sanity/modaler/pensjonsperiode';
 import { ESanitySteg } from '../../../typer/sanity/sanity';
 import { IPensjonsperiodeFeltTyper } from '../../../typer/skjema';
-import {
-    dagenEtterDato,
-    dagensDato,
-    sisteDagDenneMåneden,
-    stringTilDate,
-} from '../../../utils/dato';
+import { dagenEtterDato, sisteDagDenneMåneden, stringTilDate } from '../../../utils/dato';
 
 import { mottarPensjonNåFeilmeldingSpråkId, pensjonslandFeilmeldingSpråkId } from './språkUtils';
 import { PensjonsperiodeSpørsmålId } from './spørsmål';
@@ -38,7 +31,6 @@ export const usePensjonSkjema = ({
     erDød,
     barn,
 }: IUsePensjonSkjemaParams) => {
-    const { toggles } = useFeatureToggles();
     const { tekster } = useAppContext();
     const { erEøsLand } = useEøsContext();
     const teksterForPersonType: IPensjonsperiodeTekstinnhold =
@@ -83,15 +75,11 @@ export const usePensjonSkjema = ({
         feilmelding: periodenErAvsluttet
             ? teksterForPersonType.startdatoFortid.feilmelding
             : teksterForPersonType.startdatoNaatid.feilmelding,
-        sluttdatoAvgrensning: toggles[EFeatureToggle.SPOR_OM_MANED_IKKE_DATO]
-            ? sisteDagDenneMåneden()
-            : dagensDato(),
+        sluttdatoAvgrensning: sisteDagDenneMåneden(),
         avhengigheter: { mottarPensjonNå },
     });
 
-    const tilPensjonperiodeSluttdatoAvgrensning = toggles[EFeatureToggle.SPOR_OM_MANED_IKKE_DATO]
-        ? sisteDagDenneMåneden()
-        : dagensDato();
+    const tilPensjonperiodeSluttdatoAvgrensning = sisteDagDenneMåneden();
 
     const pensjonTilDato = useDatovelgerFeltForSanity({
         søknadsfelt: {

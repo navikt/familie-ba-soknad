@@ -11,12 +11,10 @@ import {
 } from '@navikt/familie-skjema';
 
 import { useAppContext } from '../../../context/AppContext';
-import { useFeatureToggles } from '../../../context/FeatureTogglesContext';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
 import useDatovelgerFeltForSanity from '../../../hooks/useSendInnSkjemaTest/useDatovelgerForSanity';
 import { IBarnMedISøknad } from '../../../typer/barn';
-import { EFeatureToggle } from '../../../typer/feature-toggles';
 import { PersonType } from '../../../typer/personType';
 import { IBarnetrygdsperiodeTekstinnhold } from '../../../typer/sanity/modaler/barnetrygdperiode';
 import { IBarnetrygdperioderFeltTyper } from '../../../typer/skjema';
@@ -43,7 +41,6 @@ export interface IUsePensjonsperiodeSkjemaParams {
 }
 
 export const useBarnetrygdperiodeSkjema = (personType: PersonType, barn, erDød) => {
-    const { toggles } = useFeatureToggles();
     const { tekster } = useAppContext();
 
     const teksterForPersonType: IBarnetrygdsperiodeTekstinnhold =
@@ -81,11 +78,7 @@ export const useBarnetrygdperiodeSkjema = (personType: PersonType, barn, erDød)
         sluttdatoAvgrensning: periodenErAvsluttet ? gårsdagensDato() : dagensDato(),
     });
 
-    const tilDatoBarnetrygdperiodeSluttdatoAvgrensning = toggles[
-        EFeatureToggle.SPOR_OM_MANED_IKKE_DATO
-    ]
-        ? sisteDagDenneMåneden()
-        : dagensDato();
+    const tilDatoBarnetrygdperiodeSluttdatoAvgrensning = sisteDagDenneMåneden();
 
     const tilDatoBarnetrygdperiode = useDatovelgerFeltForSanity({
         søknadsfelt: { id: BarnetrygdperiodeSpørsmålId.tilDatoBarnetrygdperiode, svar: '' },

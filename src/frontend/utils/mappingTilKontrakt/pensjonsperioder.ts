@@ -19,7 +19,6 @@ interface PensjonsperiodeIKontraktFormatParams {
     tilRestLocaleRecord: TilRestLocaleRecord;
     tekster: IPensjonsperiodeTekstinnhold;
     barn?: IBarnMedISøknad;
-    toggleSpørOmMånedIkkeDato: boolean;
 }
 
 export const tilIPensjonsperiodeIKontraktFormat = ({
@@ -29,7 +28,6 @@ export const tilIPensjonsperiodeIKontraktFormat = ({
     tilRestLocaleRecord,
     tekster,
     barn,
-    toggleSpørOmMånedIkkeDato,
     personType,
     erDød,
 }: PensjonsperiodeIKontraktFormatParams &
@@ -78,13 +76,11 @@ export const tilIPensjonsperiodeIKontraktFormat = ({
                               barnetsNavn: barn?.navn,
                           }
                       ),
-                      verdi: toggleSpørOmMånedIkkeDato
-                          ? verdiCallbackAlleSpråk(locale =>
-                                uppercaseFørsteBokstav(
-                                    formaterDatostringKunMåned(pensjonFra.svar, locale)
-                                )
-                            )
-                          : sammeVerdiAlleSpråk(pensjonFra.svar),
+                      verdi: verdiCallbackAlleSpråk(locale =>
+                          uppercaseFørsteBokstav(
+                              formaterDatostringKunMåned(pensjonFra.svar, locale)
+                          )
+                      ),
                   }
                 : null,
             pensjonTil: pensjonTil.svar
@@ -94,13 +90,11 @@ export const tilIPensjonsperiodeIKontraktFormat = ({
                               ? tekster.sluttdatoFortid.sporsmal
                               : tekster.sluttdatoFremtid.sporsmal
                       ),
-                      verdi: toggleSpørOmMånedIkkeDato
-                          ? verdiCallbackAlleSpråk(locale =>
-                                uppercaseFørsteBokstav(
-                                    formaterDatostringKunMåned(pensjonTil.svar, locale)
-                                )
-                            )
-                          : sammeVerdiAlleSpråk(pensjonTil.svar),
+                      verdi: verdiCallbackAlleSpråk(locale =>
+                          uppercaseFørsteBokstav(
+                              formaterDatostringKunMåned(pensjonTil.svar, locale)
+                          )
+                      ),
                   }
                 : null,
         }),

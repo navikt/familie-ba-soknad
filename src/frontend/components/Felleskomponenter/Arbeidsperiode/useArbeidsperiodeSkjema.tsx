@@ -3,13 +3,11 @@ import { useFelt, useSkjema, Valideringsstatus } from '@navikt/familie-skjema';
 
 import { useAppContext } from '../../../context/AppContext';
 import { useEøsContext } from '../../../context/EøsContext';
-import { useFeatureToggles } from '../../../context/FeatureTogglesContext';
 import useDatovelgerFeltMedUkjentForSanity from '../../../hooks/useDatovelgerFeltMedUkjentForSanity';
 import useInputFelt from '../../../hooks/useInputFelt';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
 import useDatovelgerFeltForSanity from '../../../hooks/useSendInnSkjemaTest/useDatovelgerForSanity';
-import { EFeatureToggle } from '../../../typer/feature-toggles';
 import { PersonType } from '../../../typer/personType';
 import { IArbeidsperiodeTekstinnhold } from '../../../typer/sanity/modaler/arbeidsperiode';
 import { IArbeidsperioderFeltTyper } from '../../../typer/skjema';
@@ -36,7 +34,6 @@ export const useArbeidsperiodeSkjema = (
     personType: PersonType,
     erDød = false
 ) => {
-    const { toggles } = useFeatureToggles();
     const { tekster, plainTekst } = useAppContext();
     const { erEøsLand } = useEøsContext();
 
@@ -97,9 +94,7 @@ export const useArbeidsperiodeSkjema = (
         avhengigheter: { arbeidsperiodeAvsluttet, arbeidsperiodeLand },
     });
 
-    const tilArbeidsperiodeSluttdatoAvgrensning = toggles[EFeatureToggle.SPOR_OM_MANED_IKKE_DATO]
-        ? sisteDagDenneMåneden()
-        : dagensDato();
+    const tilArbeidsperiodeSluttdatoAvgrensning = sisteDagDenneMåneden();
 
     const tilDatoArbeidsperiode = useDatovelgerFeltMedUkjentForSanity({
         feltId: ArbeidsperiodeSpørsmålsId.tilDatoArbeidsperiode,
