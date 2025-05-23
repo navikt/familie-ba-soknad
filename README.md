@@ -4,6 +4,7 @@ Frontend - søknad for barnetrygd.
 
 ## Avhengigheter
 1. Node versjon >= 20
+2. NVM (https://github.com/nvm-sh/nvm)
 
 
 ## Logg inn på https://npm.pkg.github.com
@@ -18,9 +19,10 @@ Select scopes `repo` og `read:packages`
 
 ## Kjør lokalt
 
-1. `yarn install`
-2. `yarn start:dev`
-3. Kjør opp familie-baks-soknad-api
+1. `nvm use`
+2. `yarn install`
+3. `yarn start:dev`
+4. Kjør opp familie-baks-soknad-api
 
 ### Mellomlagring
 For å kjøre med mellomlagring må du ha familie-dokument kjørende (https://github.com/navikt/familie-dokument).
