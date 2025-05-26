@@ -1,11 +1,9 @@
 import React from 'react';
 
-import { Label } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import type { Felt, ISkjema } from '@navikt/familie-skjema';
 
 import { useAppContext } from '../../../context/AppContext';
-import { useFeatureToggles } from '../../../context/FeatureTogglesContext';
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { HeadingLevel } from '../../../typer/common';
 import { IEøsBarnetrygdsperiode } from '../../../typer/perioder';
@@ -16,15 +14,13 @@ import { genererPeriodeId } from '../../../utils/perioder';
 import { uppercaseFørsteBokstav } from '../../../utils/visning';
 import JaNeiSpmForSanity from '../JaNeiSpm/JaNeiSpmForSanity';
 import KomponentGruppe from '../KomponentGruppe/KomponentGruppe';
-import { LeggTilKnappForSanity } from '../LeggTilKnapp/LeggTilKnappForSanity';
+import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
 import PerioderContainer from '../PerioderContainer';
 import TekstBlock from '../Sanity/TekstBlock';
 import useModal from '../SkjemaModal/useModal';
-import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
 import { BarnetrygdperiodeModal } from './BarnetrygdperiodeModal';
 import { BarnetrygdsperiodeOppsummering } from './BarnetrygdperiodeOppsummering';
-import { barnetrygdperiodeFlereSpørsmål } from './barnetrygdperiodeSpråkUtils';
 import { BarnetrygdperiodeSpørsmålId } from './spørsmål';
 
 interface Props {
@@ -50,7 +46,6 @@ export const Barnetrygdperiode: React.FC<BarnetrygdperiodeProps> = ({
     tilhørendeJaNeiSpmFelt,
     headingLevel = '3',
 }) => {
-    const { toggles } = useFeatureToggles();
     const {
         erÅpen: barnetrygdsmodalErÅpen,
         lukkModal: lukkBarnetrygdsmodal,
@@ -98,19 +93,9 @@ export const Barnetrygdperiode: React.FC<BarnetrygdperiodeProps> = ({
                             headingLevel={headingLevel}
                         />
                     ))}
-                    {!toggles.NYE_MODAL_TEKSTER &&
-                        registrerteEøsBarnetrygdsperioder.verdi.length > 0 && (
-                            <Label as="p" spacing>
-                                <SpråkTekst
-                                    id={barnetrygdperiodeFlereSpørsmål(personType)}
-                                    values={{ barn: barn.navn }}
-                                />
-                            </Label>
-                        )}
-                    <LeggTilKnappForSanity
+                    <LeggTilKnapp
                         onClick={åpneBarnetrygdsmodal}
                         leggTilFlereTekst={
-                            toggles.NYE_MODAL_TEKSTER &&
                             registrerteEøsBarnetrygdsperioder.verdi.length > 0 &&
                             plainTekst(flerePerioder)
                         }
@@ -126,7 +111,7 @@ export const Barnetrygdperiode: React.FC<BarnetrygdperiodeProps> = ({
                         }
                     >
                         <TekstBlock block={leggTilKnapp} />
-                    </LeggTilKnappForSanity>
+                    </LeggTilKnapp>
                     {barnetrygdsmodalErÅpen && (
                         <BarnetrygdperiodeModal
                             erÅpen={barnetrygdsmodalErÅpen}

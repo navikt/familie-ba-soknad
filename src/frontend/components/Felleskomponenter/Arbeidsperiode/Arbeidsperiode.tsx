@@ -1,11 +1,9 @@
 import React from 'react';
 
-import { Label } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import type { Felt, ISkjema } from '@navikt/familie-skjema';
 
 import { useAppContext } from '../../../context/AppContext';
-import { useFeatureToggles } from '../../../context/FeatureTogglesContext';
 import { IArbeidsperiode } from '../../../typer/perioder';
 import { PeriodePersonTypeMedBarnProps, PersonType } from '../../../typer/personType';
 import { IArbeidsperiodeTekstinnhold } from '../../../typer/sanity/modaler/arbeidsperiode';
@@ -19,18 +17,14 @@ import { genererPeriodeId } from '../../../utils/perioder';
 import { uppercaseFørsteBokstav } from '../../../utils/visning';
 import JaNeiSpmForSanity from '../JaNeiSpm/JaNeiSpmForSanity';
 import KomponentGruppe from '../KomponentGruppe/KomponentGruppe';
-import { LeggTilKnappForSanity } from '../LeggTilKnapp/LeggTilKnappForSanity';
+import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
 import PerioderContainer from '../PerioderContainer';
 import TekstBlock from '../Sanity/TekstBlock';
 import useModal from '../SkjemaModal/useModal';
-import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
 import { ArbeidsperiodeModal } from './ArbeidsperiodeModal';
 import { ArbeidsperiodeOppsummering } from './ArbeidsperiodeOppsummering';
-import {
-    arbeidsperiodeFlereSpørsmål,
-    arbeidsperiodeSpørsmålDokument,
-} from './arbeidsperiodeSpråkUtils';
+import { arbeidsperiodeSpørsmålDokument } from './arbeidsperiodeSpråkUtils';
 import { ArbeidsperiodeSpørsmålsId } from './spørsmål';
 
 interface ArbeidsperiodeProps {
@@ -62,7 +56,6 @@ export const Arbeidsperiode: React.FC<Props> = ({
     barn,
 }) => {
     const { tekster, plainTekst } = useAppContext();
-    const { toggles } = useFeatureToggles();
     const {
         erÅpen: arbeidsmodalErÅpen,
         lukkModal: lukkArbeidsmodal,
@@ -112,18 +105,9 @@ export const Arbeidsperiode: React.FC<Props> = ({
                             barn={personType !== PersonType.Søker ? barn : undefined}
                         />
                     ))}
-                    {!toggles.NYE_MODAL_TEKSTER && registrerteArbeidsperioder.verdi.length > 0 && (
-                        <Label as="p" spacing>
-                            <SpråkTekst
-                                id={arbeidsperiodeFlereSpørsmål(gjelderUtlandet, personType)}
-                                values={{ barn: barn?.navn }}
-                            />
-                        </Label>
-                    )}
-                    <LeggTilKnappForSanity
+                    <LeggTilKnapp
                         onClick={åpneArbeidsmodal}
                         leggTilFlereTekst={
-                            toggles.NYE_MODAL_TEKSTER &&
                             registrerteArbeidsperioder.verdi.length > 0 &&
                             plainTekst(flerePerioder, {
                                 gjelderUtland: gjelderUtlandet,
@@ -142,7 +126,7 @@ export const Arbeidsperiode: React.FC<Props> = ({
                         }
                     >
                         <TekstBlock block={leggTilKnapp} />
-                    </LeggTilKnappForSanity>
+                    </LeggTilKnapp>
                     {arbeidsmodalErÅpen && (
                         <ArbeidsperiodeModal
                             erÅpen={arbeidsmodalErÅpen}

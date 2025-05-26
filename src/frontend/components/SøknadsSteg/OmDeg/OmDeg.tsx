@@ -1,21 +1,18 @@
 import React from 'react';
 
-import { Label } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useAppContext } from '../../../context/AppContext';
-import { useFeatureToggles } from '../../../context/FeatureTogglesContext';
 import { PersonType } from '../../../typer/personType';
 import { IUtenlandsoppholdTekstinnhold } from '../../../typer/sanity/modaler/utenlandsopphold';
 import { ESanitySteg, Typografi } from '../../../typer/sanity/sanity';
 import { uppercaseFørsteBokstav } from '../../../utils/visning';
 import JaNeiSpmForSanity from '../../Felleskomponenter/JaNeiSpm/JaNeiSpmForSanity';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
-import { LeggTilKnappForSanity } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnappForSanity';
+import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
 import PerioderContainer from '../../Felleskomponenter/PerioderContainer';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
-import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import { UtenlandsoppholdSpørsmålId } from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 import { UtenlandsoppholdModal } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsoppholdModal';
@@ -26,8 +23,6 @@ import { useOmdeg } from './useOmdeg';
 
 const OmDeg: React.FC = () => {
     const { tekster, plainTekst } = useAppContext();
-
-    const { toggles } = useFeatureToggles();
 
     const {
         erÅpen: utenlandsoppholdmodalErÅpen,
@@ -105,17 +100,10 @@ const OmDeg: React.FC = () => {
                                 personType={PersonType.Søker}
                             />
                         ))}
-                        {!toggles.NYE_MODAL_TEKSTER && utenlandsperioder.length > 0 && (
-                            <Label as="p" spacing>
-                                <SpråkTekst id={'omdeg.flereopphold.spm'} />
-                            </Label>
-                        )}
-                        <LeggTilKnappForSanity
+                        <LeggTilKnapp
                             onClick={åpneUtenlandsoppholdmodal}
                             leggTilFlereTekst={
-                                toggles.NYE_MODAL_TEKSTER &&
-                                utenlandsperioder.length > 0 &&
-                                plainTekst(flerePerioder)
+                                utenlandsperioder.length > 0 && plainTekst(flerePerioder)
                             }
                             id={UtenlandsoppholdSpørsmålId.utenlandsopphold}
                             feilmelding={
@@ -125,7 +113,7 @@ const OmDeg: React.FC = () => {
                             }
                         >
                             {<TekstBlock block={leggTilKnapp} />}
-                        </LeggTilKnappForSanity>
+                        </LeggTilKnapp>
                     </PerioderContainer>
                 )}
             </KomponentGruppe>
