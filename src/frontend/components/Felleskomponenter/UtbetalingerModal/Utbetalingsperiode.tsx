@@ -1,11 +1,9 @@
 import React from 'react';
 
-import { Label } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import type { Felt, ISkjema } from '@navikt/familie-skjema';
 
 import { useAppContext } from '../../../context/AppContext';
-import { useFeatureToggles } from '../../../context/FeatureTogglesContext';
 import { IUtbetalingsperiode } from '../../../typer/perioder';
 import { PeriodePersonTypeMedBarnProps, PersonType } from '../../../typer/personType';
 import { IAndreUtbetalingerTekstinnhold } from '../../../typer/sanity/modaler/andreUtbetalinger';
@@ -14,16 +12,12 @@ import { genererPeriodeId } from '../../../utils/perioder';
 import { uppercaseFørsteBokstav } from '../../../utils/visning';
 import JaNeiSpmForSanity from '../JaNeiSpm/JaNeiSpmForSanity';
 import KomponentGruppe from '../KomponentGruppe/KomponentGruppe';
-import { LeggTilKnappForSanity } from '../LeggTilKnapp/LeggTilKnappForSanity';
+import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
 import PerioderContainer from '../PerioderContainer';
 import TekstBlock from '../Sanity/TekstBlock';
 import useModal from '../SkjemaModal/useModal';
-import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
-import {
-    mottarEllerMottattUtbetalingApiNavn,
-    utbetalingerFlerePerioderSpmSpråkId,
-} from './språkUtils';
+import { mottarEllerMottattUtbetalingApiNavn } from './språkUtils';
 import { UtbetalingerSpørsmålId } from './spørsmål';
 import { UtbetalingerModal } from './UtbetalingerModal';
 import { UtbetalingsperiodeOppsummering } from './UtbetalingsperiodeOppsummering';
@@ -49,7 +43,6 @@ export const Utbetalingsperiode: React.FC<Props> = ({
     erDød,
     barn,
 }) => {
-    const { toggles } = useFeatureToggles();
     const { tekster, plainTekst } = useAppContext();
     const {
         erÅpen: erUtbetalingerModalÅpen,
@@ -91,21 +84,10 @@ export const Utbetalingsperiode: React.FC<Props> = ({
                             barn={barn}
                         />
                     ))}
-                    {!toggles.NYE_MODAL_TEKSTER &&
-                        registrerteUtbetalingsperioder.verdi.length > 0 && (
-                            <Label as="p" spacing>
-                                <SpråkTekst
-                                    id={utbetalingerFlerePerioderSpmSpråkId(personType)}
-                                    values={{
-                                        ...(barn && { barn: barnetsNavn }),
-                                    }}
-                                />
-                            </Label>
-                        )}
-                    <LeggTilKnappForSanity
+
+                    <LeggTilKnapp
                         onClick={åpneUtbetalingerModal}
                         leggTilFlereTekst={
-                            toggles.NYE_MODAL_TEKSTER &&
                             registrerteUtbetalingsperioder.verdi.length > 0 &&
                             plainTekst(flerePerioder, {
                                 ...(barnetsNavn && { barnetsNavn: barnetsNavn }),
@@ -121,7 +103,7 @@ export const Utbetalingsperiode: React.FC<Props> = ({
                         }
                     >
                         <TekstBlock block={teksterForPersontype.leggTilKnapp} />
-                    </LeggTilKnappForSanity>
+                    </LeggTilKnapp>
                     {erUtbetalingerModalÅpen && (
                         <UtbetalingerModal
                             erÅpen={erUtbetalingerModalÅpen}
