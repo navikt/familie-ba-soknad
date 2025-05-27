@@ -3,7 +3,6 @@ import React, { ReactNode } from 'react';
 import { BodyShort, Button, Modal, VStack } from '@navikt/ds-react';
 
 import { useAppContext } from '../../../context/AppContext';
-import { useFeatureToggles } from '../../../context/FeatureTogglesContext';
 import { FlettefeltVerdier, LocaleRecordBlock } from '../../../typer/sanity/sanity';
 import ModalContent from '../ModalContent';
 
@@ -33,7 +32,6 @@ const SkjemaModal: React.FC<{
     children,
 }) => {
     const { plainTekst } = useAppContext();
-    const { toggles } = useFeatureToggles();
 
     return (
         <Modal
@@ -52,9 +50,7 @@ const SkjemaModal: React.FC<{
             }}
         >
             <ModalContent>
-                {toggles.NYE_MODAL_TEKSTER && forklaring && (
-                    <BodyShort spacing>{forklaring}</BodyShort>
-                )}
+                <BodyShort spacing>{forklaring}</BodyShort>
                 <form id="skjema">
                     <VStack gap="10">{children}</VStack>
                 </form>

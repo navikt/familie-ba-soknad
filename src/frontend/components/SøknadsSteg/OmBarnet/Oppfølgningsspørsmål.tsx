@@ -1,11 +1,10 @@
 import React from 'react';
 
-import { Heading, Label } from '@navikt/ds-react';
+import { Heading } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import type { Felt, ISkjema } from '@navikt/familie-skjema';
 
 import { useAppContext } from '../../../context/AppContext';
-import { useFeatureToggles } from '../../../context/FeatureTogglesContext';
 import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../typer/barn';
 import { IEøsBarnetrygdsperiode, IUtenlandsperiode } from '../../../typer/perioder';
 import { PersonType } from '../../../typer/personType';
@@ -22,14 +21,13 @@ import { Barnetrygdperiode } from '../../Felleskomponenter/Barnetrygdperiode/Bar
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import { LandDropdown } from '../../Felleskomponenter/Dropdowns/LandDropdown';
 import JaNeiSpmForSanity from '../../Felleskomponenter/JaNeiSpm/JaNeiSpmForSanity';
-import { LeggTilKnappForSanity } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnappForSanity';
+import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
 import PerioderContainer from '../../Felleskomponenter/PerioderContainer';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import { SkjemaCheckboxForSanity } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckboxForSanity';
 import { SkjemaFeltInputForSanity } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInputForSanity';
 import SkjemaFieldset from '../../Felleskomponenter/SkjemaFieldset';
 import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
-import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { UtenlandsoppholdSpørsmålId } from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 import { UtenlandsoppholdModal } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsoppholdModal';
 import { UtenlandsperiodeOppsummering } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsperiodeOppsummering';
@@ -56,7 +54,6 @@ const Oppfølgningsspørsmål: React.FC<{
     registrerteEøsBarnetrygdsperioder,
 }) => {
     const { tekster, plainTekst } = useAppContext();
-    const { toggles } = useFeatureToggles();
     const {
         erÅpen: utenlandsmodalErÅpen,
         lukkModal: lukkUtenlandsmodal,
@@ -198,18 +195,10 @@ const Oppfølgningsspørsmål: React.FC<{
                                 barn={barn}
                             />
                         ))}
-                        {!toggles.NYE_MODAL_TEKSTER && utenlandsperioder.length > 0 && (
-                            <Label as="p" spacing>
-                                <SpråkTekst
-                                    id={'ombarnet.flereopphold.spm'}
-                                    values={{ barn: barn.navn }}
-                                />
-                            </Label>
-                        )}
-                        <LeggTilKnappForSanity
+
+                        <LeggTilKnapp
                             id={UtenlandsoppholdSpørsmålId.utenlandsopphold}
                             leggTilFlereTekst={
-                                toggles.NYE_MODAL_TEKSTER &&
                                 registrerteUtenlandsperioder.verdi.length > 0 &&
                                 plainTekst(flerePerioder, { barnetsNavn: barn.navn })
                             }
@@ -221,7 +210,7 @@ const Oppfølgningsspørsmål: React.FC<{
                             }
                         >
                             <TekstBlock block={leggTilKnapp} />
-                        </LeggTilKnappForSanity>
+                        </LeggTilKnapp>
                     </PerioderContainer>
                     {planleggerÅBoINorge12Mnd.erSynlig && (
                         <JaNeiSpmForSanity
