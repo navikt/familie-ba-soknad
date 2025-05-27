@@ -4,7 +4,6 @@ import { ESvar } from '@navikt/familie-form-elements';
 import type { Felt, ISkjema } from '@navikt/familie-skjema';
 
 import { useAppContext } from '../../../context/AppContext';
-import { useFeatureToggles } from '../../../context/FeatureTogglesContext';
 import { ITidligereSamboer } from '../../../typer/person';
 import { PersonType } from '../../../typer/personType';
 import { ITidligereSamoboereTekstinnhold } from '../../../typer/sanity/modaler/tidligereSamboere';
@@ -13,7 +12,7 @@ import { genererPeriodeId } from '../../../utils/perioder';
 import { uppercaseFørsteBokstav } from '../../../utils/visning';
 import JaNeiSpmForSanity from '../../Felleskomponenter/JaNeiSpm/JaNeiSpmForSanity';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
-import { LeggTilKnappForSanity } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnappForSanity';
+import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
 import PerioderContainer from '../../Felleskomponenter/PerioderContainer';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
@@ -38,7 +37,6 @@ const TidligereSamboere: React.FC<Props> = ({
     hattAnnenSamboerForSøktPeriodeFelt,
     tidligereSamboere,
 }) => {
-    const { toggles } = useFeatureToggles();
     const {
         lukkModal: lukkLeggTilSamboerModal,
         åpneModal: åpneLeggTilSamboerModal,
@@ -75,11 +73,9 @@ const TidligereSamboere: React.FC<Props> = ({
                             fjernTidligereSamboer={fjernTidligereSamboer}
                         />
                     ))}
-                    <LeggTilKnappForSanity
+                    <LeggTilKnapp
                         leggTilFlereTekst={
-                            toggles.NYE_MODAL_TEKSTER &&
-                            tidligereSamboere.verdi.length > 0 &&
-                            plainTekst(flerePerioder)
+                            tidligereSamboere.verdi.length > 0 && plainTekst(flerePerioder)
                         }
                         onClick={åpneLeggTilSamboerModal}
                         id={genererPeriodeId({
@@ -93,7 +89,7 @@ const TidligereSamboere: React.FC<Props> = ({
                         }
                     >
                         <TekstBlock block={leggTilKnapp} />
-                    </LeggTilKnappForSanity>
+                    </LeggTilKnapp>
                     {erLeggTilSamboerModalÅpen && (
                         <LeggTilSamboerModal
                             leggTilTidligereSamboer={leggTilTidligereSamboer}

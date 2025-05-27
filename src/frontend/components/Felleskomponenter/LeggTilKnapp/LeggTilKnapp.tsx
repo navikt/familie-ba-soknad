@@ -3,51 +3,50 @@ import React, { ReactNode } from 'react';
 import styled from 'styled-components';
 
 import { PlusCircleIcon } from '@navikt/aksel-icons';
-import { BodyShort, Button, ErrorMessage } from '@navikt/ds-react';
+import { BodyShort, Box, Button, ErrorMessage } from '@navikt/ds-react';
 import { ARed500 } from '@navikt/ds-tokens/dist/tokens';
-
-import { useFeatureToggles } from '../../../context/FeatureTogglesContext';
-import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
 interface Props {
     onClick: () => void | Promise<void>;
-    språkTekst: string;
     leggTilFlereTekst?: ReactNode;
-    feilmelding?: ReactNode;
+    feilmelding: ReactNode;
     id?: string;
+    children?: ReactNode;
 }
 
 const StyledButton = styled(Button)`
     && {
-        border: ${props => (props.$feilmelding ? `2px solid ${ARed500}` : 'none')};
+        outline: ${props => (props.$feilmelding ? `2px solid ${ARed500}` : 'none')};
+        outline-offset: ${props => (props.$feilmelding ? '-2px' : 'none')};
     }
 `;
 
 export const LeggTilKnapp: React.FC<Props> = ({
     onClick,
-    språkTekst,
+    children,
     leggTilFlereTekst,
     feilmelding,
     id,
 }) => {
-    const { toggles } = useFeatureToggles();
-
     return (
         <>
-            {toggles.NYE_MODAL_TEKSTER && leggTilFlereTekst && (
-                <BodyShort spacing>{leggTilFlereTekst}</BodyShort>
-            )}
+            {leggTilFlereTekst && <BodyShort spacing>{leggTilFlereTekst}</BodyShort>}
             <StyledButton
                 id={id}
+                data-testid={id}
                 variant={'tertiary'}
                 type={'button'}
                 onClick={onClick}
                 $feilmelding={!!feilmelding}
                 icon={<PlusCircleIcon aria-hidden />}
             >
-                <SpråkTekst id={språkTekst} />
+                {children}
             </StyledButton>
-            {!!feilmelding && <ErrorMessage>{feilmelding}</ErrorMessage>}
+            {!!feilmelding && (
+                <Box marginBlock="2 0">
+                    <ErrorMessage>{feilmelding}</ErrorMessage>
+                </Box>
+            )}
         </>
     );
 };
