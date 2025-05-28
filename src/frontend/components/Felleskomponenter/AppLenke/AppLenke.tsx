@@ -8,17 +8,15 @@ import { basePath } from '../../../../shared-utils/Miljø';
 import { unslash } from '../../../../shared-utils/unslash';
 import { useAppNavigationContext } from '../../../context/AppNavigationContext';
 import { ISteg } from '../../../typer/routes';
-import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
 interface Props {
     steg: ISteg;
     hash?: string;
-    språkTekstId?: string;
     returnTo?: ISteg;
     children?: ReactNode;
 }
 
-export const AppLenke: React.FC<Props> = ({ steg, hash, språkTekstId, returnTo, children }) => {
+export const AppLenke: React.FC<Props> = ({ steg, hash, returnTo, children }) => {
     const navigate = useNavigate();
     const { settKomFra } = useAppNavigationContext();
 
@@ -39,7 +37,7 @@ export const AppLenke: React.FC<Props> = ({ steg, hash, språkTekstId, returnTo,
             rel="noopener noreferrer"
             onClick={clickHandler}
         >
-            {språkTekstId ? <SpråkTekst id={språkTekstId} /> : children}
+            {children}
         </Link>
     );
 };

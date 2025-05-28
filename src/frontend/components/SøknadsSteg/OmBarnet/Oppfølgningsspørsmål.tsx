@@ -117,8 +117,6 @@ const Oppfølgningsspørsmål: React.FC<{
                             flettefelter={{ barnetsNavn: barn.navn }}
                         />
                     }
-                    legendSpråkId={'ombarnet.institusjon'}
-                    språkValues={{ navn: barn.navn }}
                 >
                     <SkjemaCheckboxForSanity
                         felt={institusjonIUtlandCheckbox}
@@ -175,8 +173,6 @@ const Oppfølgningsspørsmål: React.FC<{
                             flettefelter={{ barnetsNavn: barn.navn }}
                         />
                     }
-                    legendSpråkId={'ombarnet.opplystatbarnutlandopphold.info'}
-                    språkValues={{ navn: barn.navn }}
                 >
                     <PerioderContainer
                         tittel={uppercaseFørsteBokstav(
@@ -230,8 +226,6 @@ const Oppfølgningsspørsmål: React.FC<{
                             flettefelter={{ barnetsNavn: barn.navn }}
                         />
                     }
-                    legendSpråkId={'ombarnet.barnetrygd-eøs'}
-                    språkValues={{ navn: barn.navn }}
                 >
                     <JaNeiSpmForSanity
                         skjema={skjema}

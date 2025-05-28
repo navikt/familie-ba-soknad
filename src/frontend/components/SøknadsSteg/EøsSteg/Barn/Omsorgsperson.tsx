@@ -65,8 +65,6 @@ const Omsorgsperson: React.FC<OmsorgspersonProps> = ({ skjema, barn, periodeFunk
 
     return (
         <SkjemaFieldset
-            legendSpråkId={'eøs-om-barn.annenomsorgsperson.gjenlevende'}
-            språkValues={{ barn: barn.navn }}
             legend={plainTekst(eøsForBarnTekster.oppgittIkkeBorFastSammenMedDeg, flettefelter)}
         >
             <SkjemaFeltInputForSanity

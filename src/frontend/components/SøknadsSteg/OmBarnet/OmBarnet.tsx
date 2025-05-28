@@ -107,11 +107,7 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                 />
             )}
             {skjema.felter.borFastMedSøker.erSynlig && (
-                <SkjemaFieldset
-                    legend={plainTekst(bosted)}
-                    legendSpråkId={'ombarnet.bosted'}
-                    dynamisk
-                >
+                <SkjemaFieldset legend={plainTekst(bosted)} dynamisk>
                     {barn.andreForelderErDød?.svar !== ESvar.JA && (
                         <div>
                             <TekstBlock block={bostedInfo} typografi={Typografi.BodyShort} />
