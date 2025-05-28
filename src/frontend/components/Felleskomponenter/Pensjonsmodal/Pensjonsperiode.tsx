@@ -15,7 +15,7 @@ import {
 } from '../../../typer/skjema';
 import { genererPeriodeId } from '../../../utils/perioder';
 import { uppercaseFørsteBokstav } from '../../../utils/visning';
-import JaNeiSpmForSanity from '../JaNeiSpm/JaNeiSpmForSanity';
+import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../KomponentGruppe/KomponentGruppe';
 import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
 import PerioderContainer from '../PerioderContainer';
@@ -79,7 +79,7 @@ export const Pensjonsperiode: React.FC<Props> = ({
 
     return (
         <KomponentGruppe>
-            <JaNeiSpmForSanity
+            <JaNeiSpm
                 skjema={skjema}
                 felt={mottarEllerMottattPensjonFelt}
                 spørsmålDokument={pensjonSpørsmålDokument(

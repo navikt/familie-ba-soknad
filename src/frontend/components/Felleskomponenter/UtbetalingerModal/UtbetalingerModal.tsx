@@ -12,7 +12,7 @@ import { visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
 import { minTilDatoForPeriode } from '../../../utils/perioder';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import { LandDropdown } from '../Dropdowns/LandDropdown';
-import JaNeiSpmForSanity from '../JaNeiSpm/JaNeiSpmForSanity';
+import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import { DagIMåneden, MånedÅrVelger } from '../MånedÅrVelger/MånedÅrVelger';
 import TekstBlock from '../Sanity/TekstBlock';
 import { SkjemaCheckboxForSanity } from '../SkjemaCheckbox/SkjemaCheckboxForSanity';
@@ -95,7 +95,7 @@ export const UtbetalingerModal: React.FC<UtbetalingerModalProps> = ({
             valideringErOk={valideringErOk}
             onAvbrytCallback={nullstillSkjema}
         >
-            <JaNeiSpmForSanity
+            <JaNeiSpm
                 skjema={skjema}
                 felt={fårUtbetalingNå}
                 spørsmålDokument={teksterForPersonType.faarUtbetalingerNaa}

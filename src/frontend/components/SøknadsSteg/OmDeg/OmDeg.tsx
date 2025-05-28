@@ -7,7 +7,7 @@ import { PersonType } from '../../../typer/personType';
 import { IUtenlandsoppholdTekstinnhold } from '../../../typer/sanity/modaler/utenlandsopphold';
 import { ESanitySteg, Typografi } from '../../../typer/sanity/sanity';
 import { uppercaseFørsteBokstav } from '../../../utils/visning';
-import JaNeiSpmForSanity from '../../Felleskomponenter/JaNeiSpm/JaNeiSpmForSanity';
+import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
 import PerioderContainer from '../../Felleskomponenter/PerioderContainer';
@@ -68,13 +68,13 @@ const OmDeg: React.FC = () => {
             }}
         >
             <Personopplysninger />
-            <JaNeiSpmForSanity
+            <JaNeiSpm
                 skjema={skjema}
                 felt={skjema.felter.borPåRegistrertAdresse}
                 spørsmålDokument={borPaaRegistrertAdresse}
             />
             <KomponentGruppe>
-                <JaNeiSpmForSanity
+                <JaNeiSpm
                     skjema={skjema}
                     felt={skjema.felter.værtINorgeITolvMåneder}
                     spørsmålDokument={vaertINorgeITolvMaaneder}
@@ -118,7 +118,7 @@ const OmDeg: React.FC = () => {
                 )}
             </KomponentGruppe>
             {skjema.felter.planleggerÅBoINorgeTolvMnd.erSynlig && (
-                <JaNeiSpmForSanity
+                <JaNeiSpm
                     skjema={skjema}
                     felt={skjema.felter.planleggerÅBoINorgeTolvMnd}
                     spørsmålDokument={planleggerAaBoINorgeTolvMnd}

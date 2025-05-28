@@ -10,7 +10,7 @@ import { ITidligereSamoboereTekstinnhold } from '../../../typer/sanity/modaler/t
 import { IDinLivssituasjonFeltTyper } from '../../../typer/skjema';
 import { genererPeriodeId } from '../../../utils/perioder';
 import { uppercaseFørsteBokstav } from '../../../utils/visning';
-import JaNeiSpmForSanity from '../../Felleskomponenter/JaNeiSpm/JaNeiSpmForSanity';
+import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
 import PerioderContainer from '../../Felleskomponenter/PerioderContainer';
@@ -55,7 +55,7 @@ const TidligereSamboere: React.FC<Props> = ({
 
     return (
         <KomponentGruppe>
-            <JaNeiSpmForSanity
+            <JaNeiSpm
                 skjema={skjema}
                 felt={hattAnnenSamboerForSøktPeriodeFelt}
                 spørsmålDokument={hattAnnenSamboerForSoektPeriode}

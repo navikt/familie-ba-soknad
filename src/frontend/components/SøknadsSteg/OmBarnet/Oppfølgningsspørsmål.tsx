@@ -20,7 +20,7 @@ import { uppercaseFørsteBokstav } from '../../../utils/visning';
 import { Barnetrygdperiode } from '../../Felleskomponenter/Barnetrygdperiode/Barnetrygdperiode';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import { LandDropdown } from '../../Felleskomponenter/Dropdowns/LandDropdown';
-import JaNeiSpmForSanity from '../../Felleskomponenter/JaNeiSpm/JaNeiSpmForSanity';
+import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
 import PerioderContainer from '../../Felleskomponenter/PerioderContainer';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
@@ -209,7 +209,7 @@ const Oppfølgningsspørsmål: React.FC<{
                         </LeggTilKnapp>
                     </PerioderContainer>
                     {planleggerÅBoINorge12Mnd.erSynlig && (
-                        <JaNeiSpmForSanity
+                        <JaNeiSpm
                             skjema={skjema}
                             felt={planleggerÅBoINorge12Mnd}
                             spørsmålDokument={planlagtBoSammenhengendeINorge}
@@ -227,7 +227,7 @@ const Oppfølgningsspørsmål: React.FC<{
                         />
                     }
                 >
-                    <JaNeiSpmForSanity
+                    <JaNeiSpm
                         skjema={skjema}
                         felt={pågåendeSøknadFraAnnetEøsLand}
                         spørsmålDokument={paagaaendeSoeknadYtelse}

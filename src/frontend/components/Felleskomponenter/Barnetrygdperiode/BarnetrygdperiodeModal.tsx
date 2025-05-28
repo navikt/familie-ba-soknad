@@ -11,7 +11,7 @@ import { dagensDato, gårsdagensDato, sisteDagDenneMåneden } from '../../../uti
 import { trimWhiteSpace, visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
 import { minTilDatoForPeriode } from '../../../utils/perioder';
 import { LandDropdown } from '../Dropdowns/LandDropdown';
-import JaNeiSpmForSanity from '../JaNeiSpm/JaNeiSpmForSanity';
+import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import { DagIMåneden, MånedÅrVelger } from '../MånedÅrVelger/MånedÅrVelger';
 import TekstBlock from '../Sanity/TekstBlock';
 import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeiloppsummering';
@@ -101,7 +101,7 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
             valideringErOk={valideringErOk}
             onAvbrytCallback={nullstillSkjema}
         >
-            <JaNeiSpmForSanity
+            <JaNeiSpm
                 skjema={skjema}
                 felt={skjema.felter.mottarEøsBarnetrygdNå}
                 spørsmålDokument={teksterForModal.mottarBarnetrygdNa}

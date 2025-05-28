@@ -12,7 +12,7 @@ import { Arbeidsperiode } from '../../../Felleskomponenter/Arbeidsperiode/Arbeid
 import { Barnetrygdperiode } from '../../../Felleskomponenter/Barnetrygdperiode/Barnetrygdperiode';
 import { LandDropdown } from '../../../Felleskomponenter/Dropdowns/LandDropdown';
 import SlektsforholdDropdown from '../../../Felleskomponenter/Dropdowns/SlektsforholdDropdown';
-import JaNeiSpmForSanity from '../../../Felleskomponenter/JaNeiSpm/JaNeiSpmForSanity';
+import JaNeiSpm from '../../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import { Pensjonsperiode } from '../../../Felleskomponenter/Pensjonsmodal/Pensjonsperiode';
 import TekstBlock from '../../../Felleskomponenter/Sanity/TekstBlock';
 import { SkjemaCheckboxForSanity } from '../../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckboxForSanity';
@@ -135,13 +135,13 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
             {(skjema.felter.borMedAndreForelder.erSynlig ||
                 skjema.felter.borMedOmsorgsperson.erSynlig) && (
                 <>
-                    <JaNeiSpmForSanity
+                    <JaNeiSpm
                         skjema={skjema}
                         felt={skjema.felter.borMedAndreForelder}
                         spørsmålDokument={borMedAndreForelder}
                         flettefelter={{ barnetsNavn: barn.navn }}
                     />
-                    <JaNeiSpmForSanity
+                    <JaNeiSpm
                         skjema={skjema}
                         felt={skjema.felter.borMedOmsorgsperson}
                         spørsmålDokument={borMedOmsorgsperson}
@@ -266,7 +266,7 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                                     skjema.felter.andreForelderAndreUtbetalingsperioder
                                 }
                             />
-                            <JaNeiSpmForSanity
+                            <JaNeiSpm
                                 skjema={skjema}
                                 felt={skjema.felter.andreForelderPågåendeSøknadFraAnnetEøsLand}
                                 spørsmålDokument={paagaaendeSoeknadYtelseAndreForelder}

@@ -17,7 +17,7 @@ import { Arbeidsperiode } from '../../../Felleskomponenter/Arbeidsperiode/Arbeid
 import { Barnetrygdperiode } from '../../../Felleskomponenter/Barnetrygdperiode/Barnetrygdperiode';
 import { LandDropdown } from '../../../Felleskomponenter/Dropdowns/LandDropdown';
 import SlektsforholdDropdown from '../../../Felleskomponenter/Dropdowns/SlektsforholdDropdown';
-import JaNeiSpmForSanity from '../../../Felleskomponenter/JaNeiSpm/JaNeiSpmForSanity';
+import JaNeiSpm from '../../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import { Pensjonsperiode } from '../../../Felleskomponenter/Pensjonsmodal/Pensjonsperiode';
 import TekstBlock from '../../../Felleskomponenter/Sanity/TekstBlock';
 import { SkjemaCheckboxForSanity } from '../../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckboxForSanity';
@@ -167,7 +167,7 @@ const Omsorgsperson: React.FC<OmsorgspersonProps> = ({ skjema, barn, periodeFunk
                 barn={barn}
                 registrerteUtbetalingsperioder={skjema.felter.omsorgspersonAndreUtbetalingsperioder}
             />
-            <JaNeiSpmForSanity
+            <JaNeiSpm
                 skjema={skjema}
                 felt={skjema.felter.omsorgspersonPågåendeSøknadFraAnnetEøsLand}
                 spørsmålDokument={eøsForBarnTekster.paagaaendeSoeknadYtelseOmsorgsperson}

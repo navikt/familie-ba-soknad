@@ -8,7 +8,7 @@ import { BarnetsId } from '../../../typer/common';
 import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
 import { ESanitySteg, Typografi } from '../../../typer/sanity/sanity';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
-import JaNeiSpmForSanity from '../../Felleskomponenter/JaNeiSpm/JaNeiSpmForSanity';
+import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import { SkjemaCheckboxForSanity } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckboxForSanity';
 import SkjemaFieldset from '../../Felleskomponenter/SkjemaFieldset';
@@ -113,14 +113,14 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                             <TekstBlock block={bostedInfo} typografi={Typografi.BodyShort} />
                         </div>
                     )}
-                    <JaNeiSpmForSanity
+                    <JaNeiSpm
                         skjema={skjema}
                         felt={skjema.felter.borFastMedSøker}
                         spørsmålDokument={borBarnFastSammenMedDeg}
                         flettefelter={{ barnetsNavn: barn.navn }}
                     />
                     {skjema.felter.skriftligAvtaleOmDeltBosted.erSynlig && (
-                        <JaNeiSpmForSanity
+                        <JaNeiSpm
                             skjema={skjema}
                             felt={skjema.felter.skriftligAvtaleOmDeltBosted}
                             spørsmålDokument={deltBosted}
@@ -131,7 +131,7 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
             )}
             {skjema.felter.søkerHarBoddMedAndreForelder.erSynlig && (
                 <>
-                    <JaNeiSpmForSanity
+                    <JaNeiSpm
                         skjema={skjema}
                         felt={skjema.felter.søkerHarBoddMedAndreForelder}
                         spørsmålDokument={boddSammenMedAndreForelder}
