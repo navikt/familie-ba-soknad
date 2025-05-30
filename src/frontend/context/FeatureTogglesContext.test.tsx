@@ -5,8 +5,6 @@ import MockAdapter from 'axios-mock-adapter';
 
 import { RessursStatus } from '@navikt/familie-typer';
 
-import { EFeatureToggle } from '../typer/feature-toggles';
-
 import { preferredAxios } from './axios';
 import { FeatureTogglesProvider, useFeatureToggles } from './FeatureTogglesContext';
 import { LastRessurserProvider } from './LastRessurserContext';
@@ -15,7 +13,7 @@ describe('FeatureToggleContext', () => {
     test(`Skal hente ut alle toggles`, async () => {
         const axiosMock = new MockAdapter(preferredAxios);
         const toggles = {
-            [EFeatureToggle.BRUK_NYTT_ENDEPUNKT_FOR_INNSENDING_AV_SOKNAD]: false,
+            // [EFeatureToggle.EKSEMPEL]: false,
         };
 
         axiosMock.onGet(/\/toggles\/all/).reply(200, {
