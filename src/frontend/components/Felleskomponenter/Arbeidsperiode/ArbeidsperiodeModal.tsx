@@ -11,7 +11,7 @@ import { trimWhiteSpace, visFeiloppsummering } from '../../../utils/hjelpefunksj
 import { minTilDatoForPeriode } from '../../../utils/perioder';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import { LandDropdown } from '../Dropdowns/LandDropdown';
-import JaNeiSpmForSanity from '../JaNeiSpm/JaNeiSpmForSanity';
+import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import { DagIMåneden, MånedÅrVelger } from '../MånedÅrVelger/MånedÅrVelger';
 import TekstBlock from '../Sanity/TekstBlock';
 import { SkjemaCheckboxForSanity } from '../SkjemaCheckbox/SkjemaCheckboxForSanity';
@@ -107,7 +107,7 @@ export const ArbeidsperiodeModal: React.FC<ArbeidsperiodeModalProps> = ({
             onAvbrytCallback={nullstillSkjema}
         >
             {arbeidsperiodeAvsluttet.erSynlig && (
-                <JaNeiSpmForSanity
+                <JaNeiSpm
                     skjema={skjema}
                     felt={skjema.felter.arbeidsperiodeAvsluttet}
                     spørsmålDokument={teksterForModal.arbeidsperiodenAvsluttet}

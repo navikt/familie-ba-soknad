@@ -10,7 +10,7 @@ import { ESanitySteg } from '../../../typer/sanity/sanity';
 import { Arbeidsperiode } from '../../Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import ÅrsakDropdown from '../../Felleskomponenter/Dropdowns/ÅrsakDropdown';
-import JaNeiSpmForSanity from '../../Felleskomponenter/JaNeiSpm/JaNeiSpmForSanity';
+import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import { Pensjonsperiode } from '../../Felleskomponenter/Pensjonsmodal/Pensjonsperiode';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import Steg from '../../Felleskomponenter/Steg/Steg';
@@ -82,14 +82,14 @@ const DinLivssituasjon: React.FC = () => {
                         label={<TekstBlock block={hvorforSoekerUtvidet.sporsmal} />}
                         dynamisk
                     />
-                    <JaNeiSpmForSanity
+                    <JaNeiSpm
                         skjema={skjema}
                         felt={skjema.felter.separertEnkeSkilt}
                         spørsmålDokument={separertEnkeSkilt}
                     />
                     {skjema.felter.separertEnkeSkiltUtland.erSynlig && (
                         <>
-                            <JaNeiSpmForSanity
+                            <JaNeiSpm
                                 skjema={skjema}
                                 felt={skjema.felter.separertEnkeSkiltUtland}
                                 spørsmålDokument={separertEnkeSkiltUtland}
@@ -101,7 +101,7 @@ const DinLivssituasjon: React.FC = () => {
                             />
                         </>
                     )}
-                    <JaNeiSpmForSanity
+                    <JaNeiSpm
                         skjema={skjema}
                         felt={skjema.felter.harSamboerNå}
                         spørsmålDokument={harSamboerSpørsmålDokument}
@@ -130,7 +130,7 @@ const DinLivssituasjon: React.FC = () => {
                     />
                 </>
             )}
-            <JaNeiSpmForSanity
+            <JaNeiSpm
                 skjema={skjema}
                 felt={skjema.felter.erAsylsøker}
                 spørsmålDokument={erAsylsoeker}

@@ -6,7 +6,7 @@ import { useAppContext } from '../../../context/AppContext';
 import { barnDataKeySpørsmål } from '../../../typer/barn';
 import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
 import { ESanitySteg, Typografi } from '../../../typer/sanity/sanity';
-import JaNeiSpmForSanity from '../../Felleskomponenter/JaNeiSpm/JaNeiSpmForSanity';
+import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 
@@ -60,7 +60,7 @@ const OmBarnaDineSkjema: React.FC = () => {
                 },
             ]}
         >
-            <JaNeiSpmForSanity
+            <JaNeiSpm
                 skjema={skjema}
                 felt={skjema.felter.erNoenAvBarnaFosterbarn}
                 spørsmålDokument={fosterbarn}
@@ -72,7 +72,7 @@ const OmBarnaDineSkjema: React.FC = () => {
                 nullstillValgteBarn={skjema.felter.erNoenAvBarnaFosterbarn.verdi === ESvar.NEI}
                 visFeilmelding={skjema.visFeilmeldinger}
             />
-            <JaNeiSpmForSanity
+            <JaNeiSpm
                 skjema={skjema}
                 felt={skjema.felter.oppholderBarnSegIInstitusjon}
                 spørsmålDokument={institusjon}
@@ -89,7 +89,7 @@ const OmBarnaDineSkjema: React.FC = () => {
             />
             {skjema.felter.erBarnAdoptertFraUtland.erSynlig && (
                 <>
-                    <JaNeiSpmForSanity
+                    <JaNeiSpm
                         skjema={skjema}
                         felt={skjema.felter.erBarnAdoptertFraUtland}
                         spørsmålDokument={adoptertFraUtlandet}
@@ -109,7 +109,7 @@ const OmBarnaDineSkjema: React.FC = () => {
                         }
                         visFeilmelding={skjema.visFeilmeldinger}
                     />
-                    <JaNeiSpmForSanity
+                    <JaNeiSpm
                         skjema={skjema}
                         felt={skjema.felter.søktAsylForBarn}
                         spørsmålDokument={asyl}
@@ -125,7 +125,7 @@ const OmBarnaDineSkjema: React.FC = () => {
             )}
             {skjema.felter.barnOppholdtSegTolvMndSammenhengendeINorge.erSynlig && (
                 <>
-                    <JaNeiSpmForSanity
+                    <JaNeiSpm
                         skjema={skjema}
                         felt={skjema.felter.barnOppholdtSegTolvMndSammenhengendeINorge}
                         spørsmålDokument={sammenhengendeOppholdINorge}
@@ -143,7 +143,7 @@ const OmBarnaDineSkjema: React.FC = () => {
                         }
                         visFeilmelding={skjema.visFeilmeldinger}
                     />
-                    <JaNeiSpmForSanity
+                    <JaNeiSpm
                         skjema={skjema}
                         felt={skjema.felter.mottarBarnetrygdForBarnFraAnnetEøsland}
                         spørsmålDokument={soektYtelseEuEoes}
@@ -157,7 +157,7 @@ const OmBarnaDineSkjema: React.FC = () => {
                         }
                         visFeilmelding={skjema.visFeilmeldinger}
                     />
-                    <JaNeiSpmForSanity
+                    <JaNeiSpm
                         skjema={skjema}
                         felt={skjema.felter.erAvdødPartnerForelder}
                         spørsmålDokument={avdødPartnerForelderSpørsmålDokument(søknad, stegTekster)}
