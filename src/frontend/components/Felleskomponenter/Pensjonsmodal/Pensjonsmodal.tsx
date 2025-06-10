@@ -11,7 +11,7 @@ import { IPensjonsperiodeTekstinnhold } from '../../../typer/sanity/modaler/pens
 import { dagensDato, gårsdagensDato, sisteDagDenneMåneden } from '../../../utils/dato';
 import { visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
 import { LandDropdown } from '../Dropdowns/LandDropdown';
-import JaNeiSpmForSanity from '../JaNeiSpm/JaNeiSpmForSanity';
+import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import { DagIMåneden, MånedÅrVelger } from '../MånedÅrVelger/MånedÅrVelger';
 import TekstBlock from '../Sanity/TekstBlock';
 import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeiloppsummering';
@@ -95,7 +95,7 @@ export const PensjonModal: React.FC<Props> = ({
             onAvbrytCallback={nullstillSkjema}
         >
             {mottarPensjonNå.erSynlig && (
-                <JaNeiSpmForSanity
+                <JaNeiSpm
                     skjema={skjema}
                     felt={mottarPensjonNå}
                     spørsmålDokument={teksterForModal.faarPensjonNaa}

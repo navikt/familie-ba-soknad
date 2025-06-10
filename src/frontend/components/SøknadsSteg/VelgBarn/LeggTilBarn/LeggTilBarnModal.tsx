@@ -8,7 +8,7 @@ import { useAppContext } from '../../../../context/AppContext';
 import { ILeggTilBarnTekstinnhold } from '../../../../typer/sanity/modaler/leggTilBarn';
 import { Typografi } from '../../../../typer/sanity/sanity';
 import { visFeiloppsummering } from '../../../../utils/hjelpefunksjoner';
-import JaNeiSpmForSanity from '../../../Felleskomponenter/JaNeiSpm/JaNeiSpmForSanity';
+import JaNeiSpm from '../../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import TekstBlock from '../../../Felleskomponenter/Sanity/TekstBlock';
 import { SkjemaCheckboxForSanity } from '../../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckboxForSanity';
@@ -59,7 +59,7 @@ const LeggTilBarnModal: React.FC<{
             onAvbrytCallback={nullstillSkjema}
         >
             <KomponentGruppe>
-                <JaNeiSpmForSanity
+                <JaNeiSpm
                     skjema={skjema}
                     felt={skjema.felter.erFødt}
                     spørsmålDokument={erBarnetFoedt}

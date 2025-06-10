@@ -8,7 +8,7 @@ import { BarnetsId } from '../../../typer/common';
 import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
 import { ESanitySteg, Typografi } from '../../../typer/sanity/sanity';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
-import JaNeiSpmForSanity from '../../Felleskomponenter/JaNeiSpm/JaNeiSpmForSanity';
+import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import { SkjemaCheckboxForSanity } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckboxForSanity';
 import SkjemaFieldset from '../../Felleskomponenter/SkjemaFieldset';
@@ -107,24 +107,20 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                 />
             )}
             {skjema.felter.borFastMedSøker.erSynlig && (
-                <SkjemaFieldset
-                    legend={plainTekst(bosted)}
-                    legendSpråkId={'ombarnet.bosted'}
-                    dynamisk
-                >
+                <SkjemaFieldset legend={plainTekst(bosted)} dynamisk>
                     {barn.andreForelderErDød?.svar !== ESvar.JA && (
                         <div>
                             <TekstBlock block={bostedInfo} typografi={Typografi.BodyShort} />
                         </div>
                     )}
-                    <JaNeiSpmForSanity
+                    <JaNeiSpm
                         skjema={skjema}
                         felt={skjema.felter.borFastMedSøker}
                         spørsmålDokument={borBarnFastSammenMedDeg}
                         flettefelter={{ barnetsNavn: barn.navn }}
                     />
                     {skjema.felter.skriftligAvtaleOmDeltBosted.erSynlig && (
-                        <JaNeiSpmForSanity
+                        <JaNeiSpm
                             skjema={skjema}
                             felt={skjema.felter.skriftligAvtaleOmDeltBosted}
                             spørsmålDokument={deltBosted}
@@ -135,7 +131,7 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
             )}
             {skjema.felter.søkerHarBoddMedAndreForelder.erSynlig && (
                 <>
-                    <JaNeiSpmForSanity
+                    <JaNeiSpm
                         skjema={skjema}
                         felt={skjema.felter.søkerHarBoddMedAndreForelder}
                         spørsmålDokument={boddSammenMedAndreForelder}

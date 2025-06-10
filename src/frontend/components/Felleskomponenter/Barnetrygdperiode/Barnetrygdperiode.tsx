@@ -12,7 +12,7 @@ import { IBarnetrygdsperiodeTekstinnhold } from '../../../typer/sanity/modaler/b
 import { IEøsForBarnFeltTyper, IOmBarnetFeltTyper } from '../../../typer/skjema';
 import { genererPeriodeId } from '../../../utils/perioder';
 import { uppercaseFørsteBokstav } from '../../../utils/visning';
-import JaNeiSpmForSanity from '../JaNeiSpm/JaNeiSpmForSanity';
+import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../KomponentGruppe/KomponentGruppe';
 import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
 import PerioderContainer from '../PerioderContainer';
@@ -64,7 +64,7 @@ export const Barnetrygdperiode: React.FC<BarnetrygdperiodeProps> = ({
 
     return (
         <KomponentGruppe>
-            <JaNeiSpmForSanity
+            <JaNeiSpm
                 skjema={skjema}
                 felt={tilhørendeJaNeiSpmFelt}
                 spørsmålDokument={

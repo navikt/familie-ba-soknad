@@ -53,10 +53,7 @@ const AndreForelder: React.FC<{
     } = tekster().OM_BARNET;
 
     return (
-        <SkjemaFieldset
-            legend={plainTekst(barnetsAndreForelder)}
-            legendSpråkId={'ombarnet.andre-forelder'}
-        >
+        <SkjemaFieldset legend={plainTekst(barnetsAndreForelder)}>
             {skjema.felter.sammeForelderSomAnnetBarn.erSynlig && (
                 <SammeSomAnnetBarnRadio
                     andreBarnSomErFyltUt={andreBarnSomErFyltUt}
