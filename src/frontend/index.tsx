@@ -2,6 +2,7 @@ import React from 'react';
 
 import { shouldPolyfill } from '@formatjs/intl-numberformat/should-polyfill';
 import { registerLocale } from 'i18n-iso-countries';
+import { CookiesProvider } from 'react-cookie';
 import ReactDOM from 'react-dom';
 import { createRoot } from 'react-dom/client';
 
@@ -14,6 +15,7 @@ import MiljøProvider from './MiljøProvider';
 import { LocaleType } from './typer/common';
 import { initGrafanaFaro } from './utils/grafanaFaro';
 import { initSentry } from './utils/sentry';
+
 import '@navikt/ds-css';
 
 const polyfillLocaledata = async () => {
@@ -66,11 +68,13 @@ polyfillLocaledata().then(async () => {
 
     root.render(
         <React.StrictMode>
-            <SpråkProvider>
-                <MiljøProvider>
-                    <App />
-                </MiljøProvider>
-            </SpråkProvider>
+            <CookiesProvider>
+                <SpråkProvider>
+                    <MiljøProvider>
+                        <App />
+                    </MiljøProvider>
+                </SpråkProvider>
+            </CookiesProvider>
         </React.StrictMode>
     );
 });

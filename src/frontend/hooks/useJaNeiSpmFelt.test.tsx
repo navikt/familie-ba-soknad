@@ -3,6 +3,7 @@ import React from 'react';
 import { renderHook } from '@testing-library/react';
 import { Alpha3Code } from 'i18n-iso-countries';
 import { mock } from 'jest-mock-extended';
+import { CookiesProvider } from 'react-cookie';
 import { IntlProvider } from 'react-intl';
 
 import { ESvar } from '@navikt/familie-form-elements';
@@ -145,17 +146,19 @@ describe('useJaNeiSpmFelt', () => {
         });
 
         const wrapper = ({ children }) => (
-            <SpråkProvider>
-                <IntlProvider locale="no">
-                    <LastRessurserProvider>
-                        <InnloggetProvider>
-                            <SanityProvider>
-                                <AppProvider>{children}</AppProvider>
-                            </SanityProvider>
-                        </InnloggetProvider>
-                    </LastRessurserProvider>
-                </IntlProvider>
-            </SpråkProvider>
+            <CookiesProvider>
+                <SpråkProvider>
+                    <IntlProvider locale="no">
+                        <LastRessurserProvider>
+                            <InnloggetProvider>
+                                <SanityProvider>
+                                    <AppProvider>{children}</AppProvider>
+                                </SanityProvider>
+                            </InnloggetProvider>
+                        </LastRessurserProvider>
+                    </IntlProvider>
+                </SpråkProvider>
+            </CookiesProvider>
         );
 
         const { result } = renderHook(

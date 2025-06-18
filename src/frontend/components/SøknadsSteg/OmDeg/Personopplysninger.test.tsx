@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { render } from '@testing-library/react';
+import { CookiesProvider } from 'react-cookie';
 
 import { SpråkProvider } from '../../../context/SpråkContext';
 import { ESivilstand } from '../../../typer/kontrakt/generelle';
@@ -39,9 +40,11 @@ describe('Personopplysninger', () => {
         spyOnUseApp({ søker });
 
         const { getByText } = render(
-            <SpråkProvider>
-                <Personopplysninger />
-            </SpråkProvider>
+            <CookiesProvider>
+                <SpråkProvider>
+                    <Personopplysninger />
+                </SpråkProvider>
+            </CookiesProvider>
         );
         expect(getByText(/Testgata/)).toBeInTheDocument();
         expect(getByText(/Oslo/)).toBeInTheDocument();
@@ -60,9 +63,11 @@ describe('Personopplysninger', () => {
         spyOnUseApp({ søker });
 
         const { queryByText, queryByTestId } = render(
-            <SpråkProvider>
-                <Personopplysninger />
-            </SpråkProvider>
+            <CookiesProvider>
+                <SpråkProvider>
+                    <Personopplysninger />
+                </SpråkProvider>
+            </CookiesProvider>
         );
         expect(queryByText('12345678901')).toBeInTheDocument();
         expect(queryByTestId('adressevisning-ikke-registrert')).toBeInTheDocument();
