@@ -8,6 +8,9 @@ on:
 env:
   BASE_PATH: /familie/barnetrygd/soknad/
 
+permissions:
+  contents: read
+
 jobs:
   test:
     name: Kjør typecheck og tester
