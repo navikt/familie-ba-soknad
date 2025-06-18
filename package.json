@@ -46,7 +46,8 @@
     "moduleNameMapper": {
       "\\.(css)$": "<rootDir>/src/mockStyle.js",
       "styled-components/macro": "styled-components",
-      "^uuid$": "uuid"
+      "^uuid$": "uuid",
+      "^nanoid$": "nanoid"
     },
     "watchPlugins": [
       "jest-watch-typeahead/filename",
