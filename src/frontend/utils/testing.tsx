@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react';
 
 import { mockDeep } from 'jest-mock-extended';
+import { CookiesProvider } from 'react-cookie';
 import { IntlProvider } from 'react-intl';
 import { MemoryRouter, useLocation } from 'react-router';
 
@@ -229,6 +230,7 @@ const wrapMedDefaultProvidere = (
 ) =>
     wrapMedProvidere(
         [
+            CookiesProvider,
             SpråkProvider,
             HttpProvider,
             LastRessurserProvider,
