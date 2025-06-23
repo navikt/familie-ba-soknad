@@ -5,7 +5,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
 import { ESivilstand, ESøknadstype } from '../typer/kontrakt/generelle';
 import { initialStateSøknad, ISøknad } from '../typer/søknad';
-import { mockRoutes, TestProvidere } from '../utils/testing';
+import { TestProvidere } from '../utils/testing';
 
 import { useAppContext } from './AppContext';
 
@@ -29,7 +29,6 @@ describe('AppContext', () => {
     let hookResult: RenderHookResult<ReturnType<typeof useAppContext>, unknown>;
 
     beforeEach(() => {
-        mockRoutes();
         hookResult = renderHook(() => useAppContext(), {
             wrapper: TestProvidere,
         });

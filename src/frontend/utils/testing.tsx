@@ -30,8 +30,7 @@ import { FeatureTogglesProvider } from '../context/FeatureTogglesContext';
 import { InnloggetProvider } from '../context/InnloggetContext';
 import { LastRessurserProvider } from '../context/LastRessurserContext';
 import * as pdlRequest from '../context/pdl';
-import * as routesContext from '../context/RoutesContext';
-import { getRoutes, RoutesProvider } from '../context/RoutesContext';
+import { RoutesProvider } from '../context/RoutesContext';
 import { SanityProvider } from '../context/SanityContext';
 import { SpråkProvider } from '../context/SpråkContext';
 import { StegProvider } from '../context/StegContext';
@@ -142,16 +141,6 @@ export const mockEøs = (barnSomTriggerEøs = [], søkerTriggerEøs = false) => 
     return { useEøs, erEøsLand };
 };
 
-export const mockRoutes = () => {
-    const useRoutes = vi.spyOn(routesContext, 'useRoutesContext').mockImplementation(
-        vi.fn().mockReturnValue({
-            routes: getRoutes(),
-            hentRouteObjektForRouteEnum: vi.fn(),
-        })
-    );
-    return { useRoutes };
-};
-
 /**
  * Åpen for norsk oversettelse av funksjonsnavn
  * Denne fjerner alle console errors fra jest-output. Ikke bruk før du veit at det kun er
@@ -246,12 +235,6 @@ export const TestProvidereMedEkteTekster: React.FC<{
 export const LesUtLocation = () => {
     const location = useLocation();
     return <pre data-testid="location">{JSON.stringify(location)}</pre>;
-};
-
-export const mockedHistory: string[] = [];
-
-export const mockHistory = (newHistory: string[]) => {
-    mockedHistory.push(...newHistory);
 };
 
 export const mekkGyldigSøker = (): ISøker => {

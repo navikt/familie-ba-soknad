@@ -14,7 +14,6 @@ import { IBarnRespons } from '../../../typer/person';
 import { ISøknad } from '../../../typer/søknad';
 import {
     mekkGyldigSøker,
-    mockRoutes,
     silenceConsoleErrors,
     spyOnUseApp,
     TestProvidere,
@@ -53,7 +52,6 @@ const fraPdlSomIBarnMedISøknad: Partial<IBarnMedISøknad> = {
 
 describe('VelgBarn', () => {
     beforeEach(() => {
-        mockRoutes();
         silenceConsoleErrors();
     });
 
