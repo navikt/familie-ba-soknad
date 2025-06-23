@@ -13,7 +13,7 @@ import {
 } from '../../../typer/barn';
 import { IBarn } from '../../../typer/person';
 import { genererInitialBarnMedISøknad, genererInitiellAndreForelder } from '../../../utils/barn';
-import { mockEøs, silenceConsoleErrors, spyOnUseApp, TestProvidere } from '../../../utils/testing';
+import { mockEøs, spyOnUseApp, TestProvidere } from '../../../utils/testing';
 import { OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
 
 import { OmBarnetSpørsmålsId } from './spørsmål';
@@ -33,7 +33,6 @@ describe('useOmBarnet', () => {
     };
 
     beforeEach(() => {
-        silenceConsoleErrors();
         vi.useFakeTimers();
     });
 

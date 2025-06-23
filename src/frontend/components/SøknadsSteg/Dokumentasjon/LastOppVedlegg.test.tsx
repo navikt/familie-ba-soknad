@@ -9,7 +9,7 @@ import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
 import { ESivilstand, ESøknadstype } from '../../../typer/kontrakt/generelle';
 import { ISøker } from '../../../typer/person';
 import { initialStateSøknad } from '../../../typer/søknad';
-import { mockEøs, silenceConsoleErrors, spyOnUseApp, TestProvidere } from '../../../utils/testing';
+import { spyOnUseApp, TestProvidere } from '../../../utils/testing';
 
 import LastOppVedlegg from './LastOppVedlegg';
 
@@ -27,11 +27,6 @@ const hentAnnenDokumentasjon = (): IDokumentasjon => {
 };
 
 describe('LastOppVedlegg', () => {
-    beforeEach(() => {
-        silenceConsoleErrors();
-        mockEøs();
-    });
-
     it('Viser ikke info-tekst og checkbox knapp for ANNEN_DOKUMENTASJON', () => {
         spyOnUseApp({});
         const dokumentasjon = hentAnnenDokumentasjon();

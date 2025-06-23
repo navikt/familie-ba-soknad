@@ -9,7 +9,6 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { ESivilstand, ESøknadstype } from '../../../typer/kontrakt/generelle';
 import { ISøknad } from '../../../typer/søknad';
 import {
-    mockEøs,
     silenceConsoleErrors,
     spyOnUseApp,
     TestProvidere,
@@ -48,7 +47,6 @@ const søknad = mockDeep<ISøknad>({
 describe('DinLivssituasjon', () => {
     beforeEach(() => {
         silenceConsoleErrors();
-        mockEøs();
     });
 
     it('rendrer DinLivssituasjon steg og inneholder sidetittel', async () => {

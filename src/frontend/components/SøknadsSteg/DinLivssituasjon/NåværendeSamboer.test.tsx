@@ -8,11 +8,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { AlternativtSvarForInput } from '../../../typer/common';
 import { ESivilstand, ESøknadstype } from '../../../typer/kontrakt/generelle';
 import { ISøknad } from '../../../typer/søknad';
-import {
-    silenceConsoleErrors,
-    spyOnUseApp,
-    TestProvidereMedEkteTekster,
-} from '../../../utils/testing';
+import { spyOnUseApp, TestProvidereMedEkteTekster } from '../../../utils/testing';
 
 import DinLivssituasjon from './DinLivssituasjon';
 import { getAllNåværendeSamboerFields } from './NåværendeSamboerTestUtils';
@@ -79,10 +75,6 @@ const søknadGyldigNåværendeSamboerBase = {
 };
 
 describe('Test av nåværende samboer skjema', () => {
-    beforeEach(() => {
-        silenceConsoleErrors();
-    });
-
     it('nåværende samboer null initiell verdi', () => {
         const { container } = renderDinLivssituasjon(søknad);
         const [navn, fnr, fnrUkjent, fødselsdato, fødselsdatoUkjent, samboerFraDato] =

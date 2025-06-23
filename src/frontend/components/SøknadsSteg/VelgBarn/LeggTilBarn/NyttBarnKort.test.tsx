@@ -6,12 +6,7 @@ import { vi } from 'vitest';
 import { ESvar } from '@navikt/familie-form-elements';
 import * as fnrvalidator from '@navikt/fnrvalidator';
 
-import {
-    silenceConsoleErrors,
-    mockFeatureToggle,
-    TestProvidere,
-    spyOnUseApp,
-} from '../../../../utils/testing';
+import { TestProvidere, spyOnUseApp } from '../../../../utils/testing';
 
 import LeggTilBarnModal from './LeggTilBarnModal';
 import { NyttBarnKort } from './NyttBarnKort';
@@ -20,8 +15,6 @@ vi.mock('@navikt/fnrvalidator');
 
 describe('NyttBarnKort', () => {
     test(`Kan legge til barn`, async () => {
-        silenceConsoleErrors();
-        mockFeatureToggle();
         spyOnUseApp({ barnRegistrertManuelt: [], søker: { barn: [] } });
 
         vi.spyOn(fnrvalidator, 'idnr').mockReturnValue({ status: 'valid', type: 'fnr' });

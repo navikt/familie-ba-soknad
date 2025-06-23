@@ -11,14 +11,7 @@ import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/
 import { ESivilstand, ESøknadstype } from '../typer/kontrakt/generelle';
 import { ISøkerRespons } from '../typer/person';
 import { initialStateSøknad, ISøknad } from '../typer/søknad';
-import {
-    mockEøs,
-    mockFeatureToggle,
-    mockRoutes,
-    mockSanity,
-    silenceConsoleErrors,
-    TestProvidere,
-} from '../utils/testing';
+import { mockRoutes, TestProvidere } from '../utils/testing';
 
 import { useAppContext } from './AppContext';
 import * as PDLLasting from './pdl';
@@ -91,11 +84,7 @@ describe('AppContext', () => {
         });
 
     beforeEach(() => {
-        mockEøs();
         mockRoutes();
-        mockSanity();
-        mockFeatureToggle();
-        silenceConsoleErrors();
         hookResult = renderHook(() => useAppContext(), {
             wrapper: TestProvidere,
         });

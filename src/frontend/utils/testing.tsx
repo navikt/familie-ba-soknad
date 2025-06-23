@@ -26,14 +26,12 @@ import { AppProvider } from '../context/AppContext';
 import { AppNavigationProvider } from '../context/AppNavigationContext';
 import * as eøsContext from '../context/EøsContext';
 import { EøsProvider } from '../context/EøsContext';
-import * as featureToggleContext from '../context/FeatureTogglesContext';
 import { FeatureTogglesProvider } from '../context/FeatureTogglesContext';
 import { InnloggetProvider } from '../context/InnloggetContext';
 import { LastRessurserProvider } from '../context/LastRessurserContext';
 import * as pdlRequest from '../context/pdl';
 import * as routesContext from '../context/RoutesContext';
 import { getRoutes, RoutesProvider } from '../context/RoutesContext';
-import * as sanityContext from '../context/SanityContext';
 import { SanityProvider } from '../context/SanityContext';
 import { SpråkProvider } from '../context/SpråkContext';
 import { StegProvider } from '../context/StegContext';
@@ -123,7 +121,6 @@ export const spyOnUseApp = søknad => {
         erStegUtfyltFrafør,
         settSisteUtfylteStegIndex,
         erPåKvitteringsside,
-        axiosRequestMock,
         søknad,
     };
 };
@@ -153,26 +150,6 @@ export const mockRoutes = () => {
         })
     );
     return { useRoutes };
-};
-
-export const mockFeatureToggle = () => {
-    const useFeatureToggle = vi.spyOn(featureToggleContext, 'useFeatureToggles').mockImplementation(
-        vi.fn().mockReturnValue({
-            toggles: {
-                // [EFeatureToggle.EKSEMPEL]: false,
-            },
-        })
-    );
-    return { useFeatureToggle };
-};
-
-export const mockSanity = () => {
-    const useSanity = vi.spyOn(sanityContext, 'useSanityContext').mockImplementation(
-        vi.fn().mockReturnValue({
-            teksterRessurs: RessursStatus.SUKSESS,
-        })
-    );
-    return { useSanity };
 };
 
 /**

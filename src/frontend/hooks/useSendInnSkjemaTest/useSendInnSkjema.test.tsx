@@ -9,14 +9,11 @@ import { ESanitySivilstandApiKey } from '../../typer/sanity/sanity';
 import { hentSivilstatusSpråkId, sivilstandTilSanitySivilstandApiKey } from '../../utils/språk';
 import {
     mekkGyldigUtvidetSøknad,
-    silenceConsoleErrors,
     spyOnUseApp,
     TestProvidereMedEkteTekster,
 } from '../../utils/testing';
 import { erGyldigISøknadKontrakt } from '../../utils/typeguards';
 import { useSendInnSkjema } from '../useSendInnSkjema';
-
-silenceConsoleErrors();
 
 describe('useSendInnSkjema', () => {
     beforeEach(() => {

@@ -2,7 +2,6 @@ import { renderHook } from '@testing-library/react';
 
 import { ISøknadKontrakt } from '../../typer/kontrakt/kontrakt';
 import {
-    mockFeatureToggle,
     silenceConsoleErrors,
     spyOnUseApp,
     TestProvidereMedEkteTekster,
@@ -19,7 +18,6 @@ import { testdata5 } from './test-data/testdata5';
 describe('test konvertering fra ISøknad til ISøknadKontrakt', () => {
     beforeEach(() => {
         silenceConsoleErrors();
-        mockFeatureToggle();
     });
     it('case 1', async () => {
         const { input: iSøknad } = testdata1;

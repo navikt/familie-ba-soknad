@@ -11,7 +11,6 @@ import { ISøknad } from '../../../typer/søknad';
 import {
     LesUtLocation,
     mekkGyldigSøknad,
-    silenceConsoleErrors,
     spyOnUseApp,
     TestProvidere,
 } from '../../../utils/testing';
@@ -22,10 +21,6 @@ import { OmDegSpørsmålId } from '../OmDeg/spørsmål';
 import Oppsummering from './Oppsummering';
 
 describe('Oppsummering', () => {
-    beforeEach(() => {
-        silenceConsoleErrors();
-    });
-
     it('stopper fra å gå videre hvis søknaden har mangler', async () => {
         const søknad = mockDeep<ISøknad>({
             erAvdødPartnerForelder: {

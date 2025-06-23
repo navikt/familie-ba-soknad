@@ -4,7 +4,7 @@ import { render, waitFor } from '@testing-library/react';
 import { mockDeep } from 'vitest-mock-extended';
 
 import { ISøker } from '../../../typer/person';
-import { mockEøs, silenceConsoleErrors, spyOnUseApp, TestProvidere } from '../../../utils/testing';
+import { spyOnUseApp, TestProvidere } from '../../../utils/testing';
 
 import OmDeg from './OmDeg';
 import { OmDegSpørsmålId } from './spørsmål';
@@ -16,11 +16,6 @@ const TestKomponent = () => (
 );
 
 describe('OmDeg', () => {
-    beforeEach(() => {
-        silenceConsoleErrors();
-        mockEøs();
-    });
-
     test('Viser adressesperre-melding', async () => {
         spyOnUseApp({
             søker: mockDeep<ISøker>({

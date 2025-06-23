@@ -6,21 +6,15 @@ import { vi } from 'vitest';
 import { mockDeep } from 'vitest-mock-extended';
 
 import { ESvar } from '@navikt/familie-form-elements';
-import { byggSuksessRessurs, RessursStatus } from '@navikt/familie-typer';
 import * as fnrvalidator from '@navikt/fnrvalidator';
 
-import * as eøsContext from '../../../context/EøsContext';
-import * as pdlRequest from '../../../context/pdl';
 import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../typer/barn';
-import { ESivilstand, ESøknadstype } from '../../../typer/kontrakt/generelle';
-import { IBarnRespons, ISøkerRespons } from '../../../typer/person';
+import { ESøknadstype } from '../../../typer/kontrakt/generelle';
+import { IBarnRespons } from '../../../typer/person';
 import { ISøknad } from '../../../typer/søknad';
 import {
     mekkGyldigSøker,
-    mockEøs,
-    mockFeatureToggle,
     mockRoutes,
-    mockSanity,
     silenceConsoleErrors,
     spyOnUseApp,
     TestProvidere,
@@ -59,17 +53,7 @@ const fraPdlSomIBarnMedISøknad: Partial<IBarnMedISøknad> = {
 
 describe('VelgBarn', () => {
     beforeEach(() => {
-        vi.spyOn(eøsContext, 'useEøsContext').mockImplementation(vi.fn());
-        vi.spyOn(pdlRequest, 'hentSluttbrukerFraPdl').mockImplementation(async () => ({
-            status: RessursStatus.SUKSESS,
-            data: mockDeep<ISøkerRespons>({
-                sivilstand: { type: ESivilstand.UGIFT },
-            }),
-        }));
-        mockEøs();
         mockRoutes();
-        mockSanity();
-        mockFeatureToggle();
         silenceConsoleErrors();
     });
 
@@ -164,8 +148,7 @@ describe('VelgBarn', () => {
             søker: { barn: [fraPdl] },
             dokumentasjon: [],
         };
-        const { settSøknad, axiosRequestMock } = spyOnUseApp(søknad);
-        axiosRequestMock.mockReturnValue(byggSuksessRessurs(false));
+        const { settSøknad } = spyOnUseApp(søknad);
 
         settSøknad.mockImplementation((nySøknad: ISøknad) => {
             søknad.barnRegistrertManuelt = nySøknad.barnRegistrertManuelt;

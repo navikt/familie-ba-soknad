@@ -4,14 +4,13 @@ import { renderHook } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 
 import { RouteEnum } from '../typer/routes';
-import { mockEøs, mockFeatureToggle, spyOnUseApp } from '../utils/testing';
+import { mockEøs, spyOnUseApp } from '../utils/testing';
 
 import { RoutesProvider } from './RoutesContext';
 import { StegProvider, useStegContext } from './StegContext';
 
 describe('Steg', () => {
     beforeEach(() => {
-        mockFeatureToggle();
         mockEøs();
     });
     test(`Kan hente steg før barn er valgt`, () => {
