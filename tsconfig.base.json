@@ -2,7 +2,7 @@
   "compilerOptions": {
     "resolveJsonModule": true,
     "target": "es6",
-    "module": "es6",
+    "module": "es2022",
     "lib": ["dom", "esnext", "es6"],
     "importHelpers": true,
     "declaration": true,
