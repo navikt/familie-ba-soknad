@@ -44,12 +44,14 @@ export const handlers = [
         return HttpResponse.json(byggSuksessRessurs(50));
     }),
     http.get('/toggles/all', () => {
-        return HttpResponse.json(byggSuksessRessurs('toggle1'));
+        return HttpResponse.json(byggSuksessRessurs({}));
     }),
     http.get('api/innlogget/barnetrygd', () => {
         return HttpResponse.json(byggSuksessRessurs('Autentisert kall'));
     }),
-
+    http.delete('/dokument/soknad/barnetrygd', () => {
+        return HttpResponse.json(byggSuksessRessurs(''));
+    }),
     http.get('/dokument/soknad/barnetrygd', () => {
         return new HttpResponse(null, { status: 404 });
     }),
