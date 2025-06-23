@@ -2,9 +2,10 @@ import React from 'react';
 
 import { renderHook, waitFor } from '@testing-library/react';
 import MockAdapter from 'axios-mock-adapter';
-import { mockDeep } from 'jest-mock-extended';
 import { CookiesProvider } from 'react-cookie';
 import { IntlProvider } from 'react-intl';
+import { vi } from 'vitest';
+import { mockDeep } from 'vitest-mock-extended';
 
 import { RessursStatus } from '@navikt/familie-typer';
 
@@ -65,7 +66,7 @@ describe('EøsContext', () => {
             data: forkortetListeAvEøsLand,
         });
 
-        jest.spyOn(pdlRequest, 'hentSluttbrukerFraPdl').mockImplementation(async () => ({
+        vi.spyOn(pdlRequest, 'hentSluttbrukerFraPdl').mockImplementation(async () => ({
             status: RessursStatus.SUKSESS,
             data: mockDeep<ISøkerRespons>({
                 sivilstand: { type: ESivilstand.UGIFT },

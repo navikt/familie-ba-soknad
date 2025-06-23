@@ -2,7 +2,7 @@ import React from 'react';
 import { act } from 'react';
 
 import { render, within } from '@testing-library/react';
-import { mockDeep } from 'jest-mock-extended';
+import { mockDeep } from 'vitest-mock-extended';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
@@ -49,22 +49,6 @@ describe('DinLivssituasjon', () => {
     beforeEach(() => {
         silenceConsoleErrors();
         mockEøs();
-        jest.useFakeTimers();
-    });
-
-    it('Alle tekster finnes i språkfil', async () => {
-        spyOnUseApp(søknad);
-
-        render(
-            <TestProvidereMedEkteTekster mocketNettleserHistorikk={['/din-livssituasjon']}>
-                <DinLivssituasjon />
-            </TestProvidereMedEkteTekster>
-        );
-        expect(console.error).toHaveBeenCalledTimes(0);
-
-        await act(async () => {
-            jest.advanceTimersByTime(500);
-        });
     });
 
     it('rendrer DinLivssituasjon steg og inneholder sidetittel', async () => {

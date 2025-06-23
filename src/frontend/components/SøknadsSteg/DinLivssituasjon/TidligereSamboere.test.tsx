@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { render } from '@testing-library/react';
-import { mockDeep } from 'jest-mock-extended';
+import { mockDeep } from 'vitest-mock-extended';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
@@ -11,16 +11,6 @@ import { silenceConsoleErrors, spyOnUseApp, TestProvidere } from '../../../utils
 
 import DinLivssituasjon from './DinLivssituasjon';
 import { DinLivssituasjonSpørsmålId, TidligereSamboerSpørsmålId } from './spørsmål';
-
-jest.mock('react-router', () => ({
-    ...(jest.requireActual('react-router') as object),
-    useLocation: () => ({
-        pathname: '/din-livssituasjon',
-    }),
-    useHistory: () => ({
-        push: () => {},
-    }),
-}));
 
 const søknad = mockDeep<ISøknad>({
     søknadstype: ESøknadstype.UTVIDET,
@@ -59,7 +49,7 @@ describe('TidligereSamboere', () => {
         spyOnUseApp(søknad);
 
         const { queryByTestId } = render(
-            <TestProvidere>
+            <TestProvidere mocketNettleserHistorikk={['/din-livssituasjon']}>
                 <DinLivssituasjon />
             </TestProvidere>
         );

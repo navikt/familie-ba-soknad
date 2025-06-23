@@ -2,6 +2,7 @@ import React from 'react';
 
 import { act, renderHook, waitFor } from '@testing-library/react';
 import MockAdapter from 'axios-mock-adapter';
+import { vi } from 'vitest';
 
 import { RessursStatus } from '@navikt/familie-typer';
 
@@ -11,7 +12,7 @@ import { LastRessurserProvider, useLastRessurserContext } from './LastRessurserC
 describe('LastRessurserContext', () => {
     test(`Kan vise at ressurser laster når vi bruker axios-funksjonen til contexten`, async () => {
         // For å kunne sjekke state underveis bruker vi falske timere og delay på requesten vi mocker
-        jest.useFakeTimers();
+        vi.useFakeTimers();
         const axiosMock = new MockAdapter(preferredAxios, { delayResponse: 2000 });
 
         axiosMock.onGet(/\/testing/).reply(200, {
@@ -35,7 +36,8 @@ describe('LastRessurserContext', () => {
 
         expect(result.current.lasterRessurser()).toEqual(true);
 
-        jest.runAllTimers();
+        vi.runAllTimers();
+        vi.useRealTimers();
 
         await waitFor(() => expect(result.current.lasterRessurser()).toEqual(false));
     });

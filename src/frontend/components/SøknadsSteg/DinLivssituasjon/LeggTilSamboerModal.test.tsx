@@ -2,7 +2,7 @@ import React from 'react';
 import { act } from 'react';
 
 import { render, within } from '@testing-library/react';
-import { mockDeep } from 'jest-mock-extended';
+import { mockDeep } from 'vitest-mock-extended';
 
 import { ESvar } from '@navikt/familie-form-elements';
 

@@ -1,10 +1,11 @@
 import React from 'react';
 
 import { act, renderHook, type RenderHookResult } from '@testing-library/react';
-import { mockDeep } from 'jest-mock-extended';
-import JestMockPromise from 'jest-mock-promise';
+import { vi } from 'vitest';
+import { mockDeep } from 'vitest-mock-extended';
 
 import { ESvar } from '@navikt/familie-form-elements';
+import { type Ressurs } from '@navikt/familie-typer';
 
 import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
 import { ESivilstand, ESøknadstype } from '../typer/kontrakt/generelle';
@@ -20,6 +21,7 @@ import {
 } from '../utils/testing';
 
 import { useAppContext } from './AppContext';
+import * as PDLLasting from './pdl';
 
 const initialSøknad = initialStateSøknad();
 
@@ -37,7 +39,7 @@ const søknadEtterRespons: ISøknad = {
     },
 };
 
-jest.mock('./InnloggetContext', () => {
+vi.mock('./InnloggetContext', () => {
     return {
         __esModule: true,
         useInnloggetContext: () => ({
@@ -47,38 +49,41 @@ jest.mock('./InnloggetContext', () => {
     };
 });
 
-// Synkront promise, når det resolver kjører et par setStates som ellers ville spammet jest-warnings
-const mockResult = new JestMockPromise();
-jest.mock('./LastRessurserContext', () => {
+let mockLastRessursResolve;
+const mockLastRessursPromise = new Promise(resolve => {
+    mockLastRessursResolve = resolve;
+});
+vi.mock('./LastRessurserContext.tsx', () => {
     return {
         __esModule: true,
         useLastRessurserContext: () => ({
-            axiosRequest: () => mockResult,
+            axiosRequest: () => mockLastRessursPromise,
             lasterRessurser: () => false,
             ressurserSomLaster: [],
-            settRessurserSomLaster: jest.fn(),
-            fjernRessursSomLaster: jest.fn(),
+            settRessurserSomLaster: vi.fn(),
+            fjernRessursSomLaster: vi.fn(),
         }),
         LastRessurserProvider: ({ children }) => <>{children}</>,
     };
 });
 
-const mockSluttbrukerResult = new JestMockPromise();
-jest.mock('../context/pdl', () => {
-    return {
-        __esModule: true,
-        hentSluttbrukerFraPdl: () => mockSluttbrukerResult,
-    };
+let mockSluttbrukerResolve;
+const mockSluttbrukerPromise = new Promise(resolve => {
+    mockSluttbrukerResolve = resolve;
 });
+
+vi.spyOn(PDLLasting, 'hentSluttbrukerFraPdl').mockImplementation(
+    () => mockSluttbrukerPromise as Promise<Ressurs<ISøkerRespons>>
+);
 
 describe('AppContext', () => {
     let hookResult: RenderHookResult<ReturnType<typeof useAppContext>, unknown>;
 
     const resolveAxiosRequestTilSøkerRessurs = async () =>
-        mockResult.resolve({ status: 'SUKSESS', data: mockDeep<ISøkerRespons>() });
+        mockLastRessursResolve({ status: 'SUKSESS', data: mockDeep<ISøkerRespons>() });
 
     const resolvePdlRequestTilSøkerRessurs = async () =>
-        mockSluttbrukerResult.resolve({
+        mockSluttbrukerResolve({
             status: 'SUKSESS',
             data: mockDeep({
                 sivilstand: { type: 'UGIFT' },

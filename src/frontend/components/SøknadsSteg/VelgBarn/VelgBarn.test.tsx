@@ -1,8 +1,9 @@
 import React from 'react';
 
 import { act, fireEvent, render } from '@testing-library/react';
-import { mockDeep } from 'jest-mock-extended';
 import { DeepPartial } from 'ts-essentials';
+import { vi } from 'vitest';
+import { mockDeep } from 'vitest-mock-extended';
 
 import { ESvar } from '@navikt/familie-form-elements';
 import { byggSuksessRessurs, RessursStatus } from '@navikt/familie-typer';
@@ -28,7 +29,7 @@ import { OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
 
 import VelgBarn from './VelgBarn';
 
-jest.mock('@navikt/fnrvalidator');
+vi.mock('@navikt/fnrvalidator');
 
 const manueltRegistrert: Partial<IBarnMedISøknad> = {
     id: 'random-id-1',
@@ -58,8 +59,8 @@ const fraPdlSomIBarnMedISøknad: Partial<IBarnMedISøknad> = {
 
 describe('VelgBarn', () => {
     beforeEach(() => {
-        jest.spyOn(eøsContext, 'useEøsContext').mockImplementation(jest.fn());
-        jest.spyOn(pdlRequest, 'hentSluttbrukerFraPdl').mockImplementation(async () => ({
+        vi.spyOn(eøsContext, 'useEøsContext').mockImplementation(vi.fn());
+        vi.spyOn(pdlRequest, 'hentSluttbrukerFraPdl').mockImplementation(async () => ({
             status: RessursStatus.SUKSESS,
             data: mockDeep<ISøkerRespons>({
                 sivilstand: { type: ESivilstand.UGIFT },
@@ -155,7 +156,7 @@ describe('VelgBarn', () => {
     });
 
     test('Kan legge til, fjerne og så legge et barn til igjen', async () => {
-        jest.spyOn(fnrvalidator, 'idnr').mockReturnValue({ status: 'valid', type: 'fnr' });
+        vi.spyOn(fnrvalidator, 'idnr').mockReturnValue({ status: 'valid', type: 'fnr' });
 
         const søknad = {
             barnRegistrertManuelt: [manueltRegistrert],

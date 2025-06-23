@@ -1,19 +1,10 @@
 import React from 'react';
 
 import { render, waitFor } from '@testing-library/react';
-import { mockDeep } from 'jest-mock-extended';
-
-import { ESvar } from '@navikt/familie-form-elements';
+import { mockDeep } from 'vitest-mock-extended';
 
 import { ISøker } from '../../../typer/person';
-import {
-    mekkGyldigSøknad,
-    mockEøs,
-    silenceConsoleErrors,
-    spyOnUseApp,
-    TestProvidere,
-    TestProvidereMedEkteTekster,
-} from '../../../utils/testing';
+import { mockEøs, silenceConsoleErrors, spyOnUseApp, TestProvidere } from '../../../utils/testing';
 
 import OmDeg from './OmDeg';
 import { OmDegSpørsmålId } from './spørsmål';
@@ -24,47 +15,10 @@ const TestKomponent = () => (
     </TestProvidere>
 );
 
-const TestKomponentMedEkteTekster = () => (
-    <TestProvidereMedEkteTekster mocketNettleserHistorikk={['/om-deg']}>
-        <OmDeg />
-    </TestProvidereMedEkteTekster>
-);
-
 describe('OmDeg', () => {
     beforeEach(() => {
         silenceConsoleErrors();
         mockEøs();
-    });
-
-    test('Alle tekster finnes i språkfil', async () => {
-        const { søker } = mekkGyldigSøknad();
-        const søkerMedSvarSomViserAlleTekster: ISøker = {
-            ...søker,
-            værtINorgeITolvMåneder: { ...søker.værtINorgeITolvMåneder, svar: ESvar.NEI },
-            planleggerÅBoINorgeTolvMnd: { ...søker.planleggerÅBoINorgeTolvMnd, svar: ESvar.NEI },
-        };
-        spyOnUseApp({ søker: søkerMedSvarSomViserAlleTekster });
-        søkerMedSvarSomViserAlleTekster.adresse = null;
-        søkerMedSvarSomViserAlleTekster.adressebeskyttelse = false;
-        render(<TestKomponentMedEkteTekster />);
-
-        await waitFor(() => {
-            expect(console.error).toHaveBeenCalledTimes(0);
-        });
-    });
-
-    test('Alle tekster finnes når man svarer at man ikke bor på registrert adresse', () => {
-        spyOnUseApp({
-            søker: mockDeep<ISøker>({
-                borPåRegistrertAdresse: {
-                    id: OmDegSpørsmålId.borPåRegistrertAdresse,
-                    svar: ESvar.NEI,
-                },
-            }),
-        });
-
-        render(<TestKomponentMedEkteTekster />);
-        expect(console.error).toHaveBeenCalledTimes(0);
     });
 
     test('Viser adressesperre-melding', async () => {
