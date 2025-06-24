@@ -10,6 +10,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { HttpProvider } from '@navikt/familie-http';
 import { type Ressurs, RessursStatus } from '@navikt/familie-typer';
 
+import { hentTekstInnhold } from '../../../mocks/testdata/sanity';
 import norskeTekster from '../assets/lang/nb.json' with { type: 'json' };
 import { UtenlandsoppholdSpørsmålId } from '../components/Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 import {
@@ -40,7 +41,6 @@ import { ESivilstand, ESøknadstype, Slektsforhold } from '../typer/kontrakt/gen
 import { IKvittering } from '../typer/kvittering';
 import { IUtenlandsperiode } from '../typer/perioder';
 import { ISøker, ISøkerRespons } from '../typer/person';
-import { ITekstinnhold } from '../typer/sanity/tekstInnhold';
 import { initialStateSøknad, ISøknad } from '../typer/søknad';
 import { EUtenlandsoppholdÅrsak } from '../typer/utenlandsopphold';
 import { Årsak } from '../typer/utvidet';
@@ -107,7 +107,7 @@ export const spyOnUseApp = søknad => {
         systemetOK: () => vi.fn().mockReturnValue(true),
         systemetFeiler: vi.fn().mockReturnValue(false),
         fåttGyldigKvittering: søknad.fåttGyldigKvittering === true,
-        tekster: vi.fn().mockImplementation(() => mockDeep<ITekstinnhold>()),
+        tekster: vi.fn().mockImplementation(() => hentTekstInnhold()),
         plainTekst: vi.fn().mockReturnValue('tekst fra sanity'),
         tilRestLocaleRecord,
     });

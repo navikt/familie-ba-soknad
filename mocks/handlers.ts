@@ -2,6 +2,8 @@ import { http, HttpResponse } from 'msw';
 
 import { byggSuksessRessurs } from '@navikt/familie-typer';
 
+import { hentTekstInnhold } from './testdata/sanity';
+
 export const handlers = [
     http.get('api/personopplysning', () => {
         return HttpResponse.json(
@@ -72,5 +74,8 @@ export const handlers = [
                 NLD: 'Nederland',
             })
         );
+    }),
+    http.get('https://by26nl8j.apicdn.sanity.io/v2021-10-21/data/query/ba-production', () => {
+        return HttpResponse.json(hentTekstInnhold());
     }),
 ];
