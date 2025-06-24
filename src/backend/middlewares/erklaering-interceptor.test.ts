@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
-import { mockDeep } from 'jest-mock-extended';
 import { DeepPartial } from 'ts-essentials';
+import { vi } from 'vitest';
+import { mockDeep } from 'vitest-mock-extended';
 
 import { LocaleType } from '../../frontend/typer/common';
 import { ISøknadKontrakt } from '../../frontend/typer/kontrakt/kontrakt';
@@ -16,11 +17,11 @@ describe('erklaering-interceptor', () => {
         });
 
     const response = mockDeep<Response>({
-        status: jest.fn().mockReturnThis(),
-        send: jest.fn(),
+        status: vi.fn().mockReturnThis(),
+        send: vi.fn(),
     });
 
-    const next = jest.fn();
+    const next = vi.fn();
 
     beforeEach(() => {
         next.mockReset();

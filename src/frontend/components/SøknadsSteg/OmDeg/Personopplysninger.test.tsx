@@ -6,24 +6,13 @@ import { CookiesProvider } from 'react-cookie';
 import { SpråkProvider } from '../../../context/SpråkContext';
 import { ESivilstand } from '../../../typer/kontrakt/generelle';
 import { ISøker } from '../../../typer/person';
-import {
-    mockEøs,
-    mockFeatureToggle,
-    silenceConsoleErrors,
-    spyOnUseApp,
-    TestProvidere,
-} from '../../../utils/testing';
+import { spyOnUseApp, TestProvidere } from '../../../utils/testing';
 
 import { Personopplysninger } from './Personopplysninger';
 
 const mockedSivilstand = ESivilstand.GIFT;
 
 describe('Personopplysninger', () => {
-    beforeEach(() => {
-        mockEøs();
-        silenceConsoleErrors();
-        mockFeatureToggle();
-    });
     test('Rendrer adresse i personopplysninger', async () => {
         const søker: Partial<ISøker> = {
             adresse: {

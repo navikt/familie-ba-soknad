@@ -7,7 +7,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 
 import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../typer/barn';
 import { IBarn, IBarnRespons } from '../../../typer/person';
-import { mockEøs, silenceConsoleErrors, spyOnUseApp, TestProvidere } from '../../../utils/testing';
+import { silenceConsoleErrors, spyOnUseApp, TestProvidere } from '../../../utils/testing';
 import { OmBarnaDineSpørsmålId } from '../../SøknadsSteg/OmBarnaDine/spørsmål';
 
 import BlokkerTilbakeKnappModal from './BlokkerTilbakeKnappModal';
@@ -43,9 +43,6 @@ const fraPdlSomIBarnMedISøknad: Partial<IBarnMedISøknad> = {
 };
 
 describe('Ingen navigering tilbake til søknad fra kvitteringssiden', () => {
-    beforeEach(() => {
-        mockEøs();
-    });
     test(`Render BlokkerTilbakeKnappModal og sjekk at den virker`, async () => {
         silenceConsoleErrors();
         const søknad = {
