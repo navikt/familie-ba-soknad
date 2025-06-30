@@ -3,6 +3,8 @@ import React from 'react';
 import { act, renderHook, waitFor } from '@testing-library/react';
 import { vi } from 'vitest';
 
+import { urlMedBasePath } from '../../../mocks/utils';
+
 import { LastRessurserProvider, useLastRessurserContext } from './LastRessurserContext';
 
 describe('LastRessurserContext', () => {
@@ -19,7 +21,7 @@ describe('LastRessurserContext', () => {
 
         act(() => {
             axiosRequest<number, void>({
-                url: `/modellversjon`,
+                url: urlMedBasePath('modellversjon'),
                 påvirkerSystemLaster: true,
             });
         });

@@ -6,6 +6,7 @@ import { http, HttpResponse } from 'msw';
 import { byggSuksessRessurs } from '@navikt/familie-typer';
 
 import { server } from '../../../mocks/node';
+import { urlMedBasePath } from '../../../mocks/utils';
 
 import { FeatureTogglesProvider, useFeatureToggles } from './FeatureTogglesContext';
 import { LastRessurserProvider } from './LastRessurserContext';
@@ -17,7 +18,7 @@ describe('FeatureToggleContext', () => {
         };
 
         server.use(
-            http.get('/toggles/all', () => {
+            http.get(urlMedBasePath('toggles/all'), () => {
                 return HttpResponse.json(byggSuksessRessurs(toggles));
             })
         );

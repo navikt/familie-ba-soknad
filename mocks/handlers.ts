@@ -2,9 +2,8 @@ import { http, HttpResponse } from 'msw';
 
 import { byggSuksessRessurs } from '@navikt/familie-typer';
 
-import { basePath } from '../src/shared-utils/Miljø';
-
 import { hentTekstInnhold } from './testdata/sanity';
+import { urlMedBasePath } from './utils';
 
 export const handlers = [
     http.get(urlMedBasePath('api/personopplysning'), () => {
@@ -81,7 +80,3 @@ export const handlers = [
         return HttpResponse.json(hentTekstInnhold());
     }),
 ];
-
-function urlMedBasePath(path) {
-    return basePath + path;
-}

@@ -6,6 +6,7 @@ import { http, HttpResponse } from 'msw';
 import { RessursStatus } from '@navikt/familie-typer';
 
 import { server } from '../../../mocks/node';
+import { urlMedBasePath } from '../../../mocks/utils';
 import { InnloggetStatus } from '../utils/autentisering';
 
 import { InnloggetProvider, useInnloggetContext } from './InnloggetContext';
@@ -29,7 +30,7 @@ describe('innloggetContext', () => {
 
     test(`Skal vise info når brukeren ikke er autentisert`, async () => {
         server.use(
-            http.get('api/innlogget/barnetrygd', () => {
+            http.get(urlMedBasePath('api/innlogget/barnetrygd'), () => {
                 return HttpResponse.json({
                     status: RessursStatus.IKKE_TILGANG,
                 });
