@@ -2,7 +2,7 @@ import { http, HttpResponse } from 'msw';
 
 import { byggSuksessRessurs } from '@navikt/familie-typer';
 
-import { hentTekstInnhold } from './testdata/sanity';
+import { hentTekstInnhold } from './testdata/sanity/sanity';
 import { urlMedBasePath } from './utils';
 
 export const handlers = [
