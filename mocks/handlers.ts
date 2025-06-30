@@ -2,10 +2,12 @@ import { http, HttpResponse } from 'msw';
 
 import { byggSuksessRessurs } from '@navikt/familie-typer';
 
+import { basePath } from '../src/shared-utils/Miljø';
+
 import { hentTekstInnhold } from './testdata/sanity';
 
 export const handlers = [
-    http.get('api/personopplysning', () => {
+    http.get(urlMedBasePath('api/personopplysning'), () => {
         return HttpResponse.json(
             byggSuksessRessurs({
                 ident: '23058518298',
@@ -42,29 +44,29 @@ export const handlers = [
             })
         );
     }),
-    http.get('/modellversjon', () => {
+    http.get(urlMedBasePath('modellversjon'), () => {
         return HttpResponse.json(byggSuksessRessurs(50));
     }),
-    http.get('/toggles/all', () => {
+    http.get(urlMedBasePath('toggles/all'), () => {
         return HttpResponse.json(byggSuksessRessurs({}));
     }),
-    http.get('api/innlogget/barnetrygd', () => {
+    http.get(urlMedBasePath('api/innlogget/barnetrygd'), () => {
         return HttpResponse.json(byggSuksessRessurs('Autentisert kall'));
     }),
-    http.delete('/dokument/soknad/barnetrygd', () => {
+    http.delete(urlMedBasePath('dokument/soknad/barnetrygd'), () => {
         return HttpResponse.json(byggSuksessRessurs(''));
     }),
-    http.get('/dokument/soknad/barnetrygd', () => {
+    http.get(urlMedBasePath('dokument/soknad/barnetrygd'), () => {
         return new HttpResponse(null, { status: 404 });
     }),
-    http.get('/api/kontoregister/hent-kontonr', () => {
+    http.get(urlMedBasePath('api/kontoregister/hent-kontonr'), () => {
         return HttpResponse.json(
             byggSuksessRessurs({
                 kontonummer: '815.493.00',
             })
         );
     }),
-    http.get('/api/kodeverk/eos-land', () => {
+    http.get(urlMedBasePath('api/kodeverk/eos-land'), () => {
         return HttpResponse.json(
             byggSuksessRessurs({
                 BEL: 'Belgia',
@@ -79,3 +81,7 @@ export const handlers = [
         return HttpResponse.json(hentTekstInnhold());
     }),
 ];
+
+function urlMedBasePath(path) {
+    return basePath + path;
+}
