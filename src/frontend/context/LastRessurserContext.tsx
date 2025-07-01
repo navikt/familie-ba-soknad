@@ -36,12 +36,12 @@ const LastRessurserContext = createContext<LastRessurserContext | undefined>(und
 
 export function LastRessurserProvider(props: PropsWithChildren) {
     const [ressurserSomLaster, settRessurserSomLaster] = useState<string[]>([]);
-    const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const timerRefs = useRef<Array<ReturnType<typeof setTimeout>>>([]);
 
     useEffect(() => {
         return () => {
-            if (timerRef.current) {
-                clearTimeout(timerRef.current);
+            for (const id of timerRefs.current) {
+                clearTimeout(id);
             }
         };
     }, []);
@@ -86,12 +86,13 @@ export function LastRessurserProvider(props: PropsWithChildren) {
     };
 
     const fjernRessursSomLaster = (ressursId: string) => {
-        timerRef.current = setTimeout(() => {
-            settRessurserSomLaster((prevState: string[]) => {
-                return prevState.filter((ressurs: string) => ressurs !== ressursId);
-            });
-            timerRef.current = null;
-        }, 300);
+        timerRefs.current.push(
+            setTimeout(() => {
+                settRessurserSomLaster((prevState: string[]) => {
+                    return prevState.filter((ressurs: string) => ressurs !== ressursId);
+                });
+            }, 300)
+        );
     };
 
     async function wrapMedSystemetLaster<T>(callback: () => T | Promise<T>): Promise<T> {
