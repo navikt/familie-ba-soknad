@@ -1,4 +1,11 @@
-import React, { createContext, PropsWithChildren, useContext, useState } from 'react';
+import React, {
+    createContext,
+    PropsWithChildren,
+    useContext,
+    useEffect,
+    useRef,
+    useState,
+} from 'react';
 
 import { AxiosError, type AxiosRequestConfig, type AxiosResponse } from 'axios';
 
@@ -29,6 +36,15 @@ const LastRessurserContext = createContext<LastRessurserContext | undefined>(und
 
 export function LastRessurserProvider(props: PropsWithChildren) {
     const [ressurserSomLaster, settRessurserSomLaster] = useState<string[]>([]);
+    const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+    useEffect(() => {
+        return () => {
+            if (timerRef.current) {
+                clearTimeout(timerRef.current);
+            }
+        };
+    }, []);
 
     const axiosRequest: AxiosRequest = async <T, D>(
         config: AxiosRequestConfig & {
@@ -70,10 +86,11 @@ export function LastRessurserProvider(props: PropsWithChildren) {
     };
 
     const fjernRessursSomLaster = (ressursId: string) => {
-        setTimeout(() => {
+        timerRef.current = setTimeout(() => {
             settRessurserSomLaster((prevState: string[]) => {
                 return prevState.filter((ressurs: string) => ressurs !== ressursId);
             });
+            timerRef.current = null;
         }, 300);
     };
 
