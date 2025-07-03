@@ -46,8 +46,6 @@ describe('innloggetContext', () => {
 
         expect(result.current.innloggetStatus).toEqual(InnloggetStatus.IKKE_VERIFISERT);
 
-        server.resetHandlers();
-
         await waitFor(() => expect(result.current.innloggetStatus).toEqual(InnloggetStatus.FEILET));
     });
 });

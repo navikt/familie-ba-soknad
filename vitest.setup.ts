@@ -1,7 +1,6 @@
 import '@testing-library/jest-dom/vitest';
-import { afterEach } from 'vitest';
 
-import * as decorator from '@navikt/nav-dekoratoren-moduler';
+import { afterAll, afterEach, beforeAll } from 'vitest';
 
 import { server } from './mocks/node.js';
 

@@ -30,8 +30,6 @@ describe('FeatureToggleContext', () => {
         );
         const { result } = renderHook(() => useFeatureToggles(), { wrapper });
 
-        server.resetHandlers();
-
         await waitFor(() => expect(result.current.toggles).toEqual(toggles));
     });
 });
