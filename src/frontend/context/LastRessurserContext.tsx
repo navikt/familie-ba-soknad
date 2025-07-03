@@ -30,7 +30,11 @@ const LastRessurserContext = createContext<LastRessurserContext | undefined>(und
 
 export function LastRessurserProvider(props: PropsWithChildren) {
     const [ressurserSomLaster, settRessurserSomLaster] = useState<string[]>([]);
-    const { timeoutUnmountHandler, requestUnmountHandler } = useUnmountCleanup();
+    const {
+        registerTimeoutUnmountHandler,
+        registerRequestUnmountHandler,
+        removeRequestUnmountHandler,
+    } = useUnmountCleanup();
 
     const axiosRequest: AxiosRequest = async <T, D>(
         config: AxiosRequestConfig & {
@@ -45,7 +49,7 @@ export function LastRessurserProvider(props: PropsWithChildren) {
         }
 
         const controller = new AbortController();
-        requestUnmountHandler(controller);
+        registerRequestUnmountHandler(controller);
 
         return preferredAxios
             .request({ signal: controller.signal, ...config })
@@ -55,6 +59,7 @@ export function LastRessurserProvider(props: PropsWithChildren) {
                     fjernRessursSomLaster(ressursId);
                 }
 
+                removeRequestUnmountHandler(controller);
                 return håndterApiRessurs(responsRessurs);
             })
             .catch((error: AxiosError<ApiRessurs<T>>) => {
@@ -87,7 +92,7 @@ export function LastRessurserProvider(props: PropsWithChildren) {
                 return prevState.filter((ressurs: string) => ressurs !== ressursId);
             });
         }, 300);
-        timeoutUnmountHandler(timer);
+        registerTimeoutUnmountHandler(timer);
     };
 
     async function wrapMedSystemetLaster<T>(callback: () => T | Promise<T>): Promise<T> {

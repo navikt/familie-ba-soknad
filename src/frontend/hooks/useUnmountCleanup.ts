@@ -1,15 +1,19 @@
 import { useEffect, useRef } from 'react';
 
 export function useUnmountCleanup() {
-    const timerRefs = useRef<Array<ReturnType<typeof setTimeout>>>([]);
-    const abortRequestRefs = useRef<Array<AbortController>>([]);
+    const timerRefs = useRef<Set<ReturnType<typeof setTimeout>>>(new Set());
+    const abortRequestRefs = useRef<Set<AbortController>>(new Set());
 
-    function timeoutUnmountHandler(timeout: ReturnType<typeof setTimeout>) {
-        timerRefs.current.push(timeout);
+    function registerTimeoutUnmountHandler(timeout: ReturnType<typeof setTimeout>) {
+        timerRefs.current.add(timeout);
     }
 
-    function requestUnmountHandler(controller: AbortController) {
-        abortRequestRefs.current.push(controller);
+    function registerRequestUnmountHandler(controller: AbortController) {
+        abortRequestRefs.current.add(controller);
+    }
+
+    function removeRequestUnmountHandler(controller: AbortController) {
+        abortRequestRefs.current.delete(controller);
     }
 
     useEffect(() => {
@@ -25,5 +29,9 @@ export function useUnmountCleanup() {
         };
     }, []);
 
-    return { timeoutUnmountHandler, requestUnmountHandler };
+    return {
+        registerTimeoutUnmountHandler,
+        registerRequestUnmountHandler,
+        removeRequestUnmountHandler,
+    };
 }
