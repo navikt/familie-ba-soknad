@@ -1,6 +1,7 @@
 import { act } from 'react';
 
 import { renderHook } from '@testing-library/react';
+import { vi } from 'vitest';
 
 import { ESivilstand } from '../../typer/kontrakt/generelle';
 import { ISøknadKontrakt } from '../../typer/kontrakt/kontrakt';
@@ -8,18 +9,20 @@ import { ESanitySivilstandApiKey } from '../../typer/sanity/sanity';
 import { hentSivilstatusSpråkId, sivilstandTilSanitySivilstandApiKey } from '../../utils/språk';
 import {
     mekkGyldigUtvidetSøknad,
-    silenceConsoleErrors,
     spyOnUseApp,
     TestProvidereMedEkteTekster,
 } from '../../utils/testing';
 import { erGyldigISøknadKontrakt } from '../../utils/typeguards';
 import { useSendInnSkjema } from '../useSendInnSkjema';
 
-silenceConsoleErrors();
-
 describe('useSendInnSkjema', () => {
     beforeEach(() => {
-        jest.useFakeTimers();
+        vi.useFakeTimers();
+    });
+
+    afterEach(() => {
+        vi.clearAllTimers();
+        vi.useRealTimers();
     });
 
     it('mapper til gyldig utvidet kontrakt', async () => {
@@ -31,7 +34,7 @@ describe('useSendInnSkjema', () => {
         const [_, formatert]: [boolean, ISøknadKontrakt] = await result.current.sendInnSkjema();
         expect(erGyldigISøknadKontrakt(formatert)).toBeTruthy();
         await act(async () => {
-            jest.advanceTimersByTime(500);
+            vi.advanceTimersByTime(500);
         });
     });
 

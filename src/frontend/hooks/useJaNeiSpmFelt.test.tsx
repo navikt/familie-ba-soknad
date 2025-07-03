@@ -2,9 +2,8 @@ import React from 'react';
 
 import { renderHook } from '@testing-library/react';
 import { Alpha3Code } from 'i18n-iso-countries';
-import { mock } from 'jest-mock-extended';
-import { CookiesProvider } from 'react-cookie';
 import { IntlProvider } from 'react-intl';
+import { mock } from 'vitest-mock-extended';
 
 import { ESvar } from '@navikt/familie-form-elements';
 import { type Felt, Valideringsstatus } from '@navikt/familie-skjema';
@@ -17,6 +16,7 @@ import { SanityProvider } from '../context/SanityContext';
 import { SpråkProvider } from '../context/SpråkContext';
 import { ISODateString } from '../typer/common';
 import { ISøknadSpørsmål } from '../typer/spørsmål';
+import { CookiesProviderMedLocale } from '../utils/testing';
 
 import useJaNeiSpmFelt, { erRelevanteAvhengigheterValidert } from './useJaNeiSpmFelt';
 
@@ -146,7 +146,7 @@ describe('useJaNeiSpmFelt', () => {
         });
 
         const wrapper = ({ children }) => (
-            <CookiesProvider>
+            <CookiesProviderMedLocale>
                 <SpråkProvider>
                     <IntlProvider locale="no">
                         <LastRessurserProvider>
@@ -158,7 +158,7 @@ describe('useJaNeiSpmFelt', () => {
                         </LastRessurserProvider>
                     </IntlProvider>
                 </SpråkProvider>
-            </CookiesProvider>
+            </CookiesProviderMedLocale>
         );
 
         const { result } = renderHook(

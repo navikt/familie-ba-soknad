@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { act, render, within } from '@testing-library/react';
+import { vi } from 'vitest';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
@@ -15,7 +16,7 @@ describe('LeggTilBarnModal', () => {
 
         const { getByTestId } = render(
             <TestProvidere>
-                <LeggTilBarnModal erÅpen={true} lukkModal={jest.fn()} />
+                <LeggTilBarnModal erÅpen={true} lukkModal={vi.fn()} />
             </TestProvidere>
         );
 

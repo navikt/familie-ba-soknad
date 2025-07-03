@@ -1,10 +1,8 @@
 import React from 'react';
 
 import { renderHook, waitFor } from '@testing-library/react';
-import MockAdapter from 'axios-mock-adapter';
-import { mockDeep } from 'jest-mock-extended';
-import { CookiesProvider } from 'react-cookie';
-import { IntlProvider } from 'react-intl';
+import { vi } from 'vitest';
+import { mockDeep } from 'vitest-mock-extended';
 
 import { RessursStatus } from '@navikt/familie-typer';
 
@@ -14,58 +12,21 @@ import {
     mekkGyldigSøker,
     mekkGyldigUtenlandsoppholdEøs,
     mekkGyldigUtenlandsoppholdIkkeEøs,
+    TestProvidere,
 } from '../utils/testing';
 
-import { AppProvider } from './AppContext';
-import { preferredAxios } from './axios';
 import { EøsProvider, useEøsContext } from './EøsContext';
-import { InnloggetProvider } from './InnloggetContext';
-import { LastRessurserProvider } from './LastRessurserContext';
 import * as pdlRequest from './pdl';
-import { SanityProvider } from './SanityContext';
-import { SpråkProvider } from './SpråkContext';
 
 describe('EøsContext', () => {
-    const forkortetListeAvEøsLand = {
-        BEL: 'Belgia',
-        DNK: 'Danmark',
-        CHE: 'Sveits',
-        IRL: 'Irland',
-        NLD: 'Nederland',
-    };
-
     const wrapper = ({ children }) => (
-        <CookiesProvider>
-            <SpråkProvider>
-                <LastRessurserProvider>
-                    <InnloggetProvider>
-                        <SanityProvider>
-                            <IntlProvider locale="no">
-                                <AppProvider>
-                                    <EøsProvider>{children}</EøsProvider>
-                                </AppProvider>
-                            </IntlProvider>
-                        </SanityProvider>
-                    </InnloggetProvider>
-                </LastRessurserProvider>
-            </SpråkProvider>
-        </CookiesProvider>
+        <TestProvidere>
+            <EøsProvider>{children}</EøsProvider>
+        </TestProvidere>
     );
 
     beforeEach(() => {
-        const axiosMock = new MockAdapter(preferredAxios);
-
-        axiosMock.onGet(/\/api\/innlogget/).reply(200, {
-            status: RessursStatus.SUKSESS,
-            data: 'Autentisert kall',
-        });
-
-        axiosMock.onGet(/\/kodeverk\/eos-land/).reply(200, {
-            status: RessursStatus.SUKSESS,
-            data: forkortetListeAvEøsLand,
-        });
-
-        jest.spyOn(pdlRequest, 'hentSluttbrukerFraPdl').mockImplementation(async () => ({
+        vi.spyOn(pdlRequest, 'hentSluttbrukerFraPdl').mockImplementation(async () => ({
             status: RessursStatus.SUKSESS,
             data: mockDeep<ISøkerRespons>({
                 sivilstand: { type: ESivilstand.UGIFT },

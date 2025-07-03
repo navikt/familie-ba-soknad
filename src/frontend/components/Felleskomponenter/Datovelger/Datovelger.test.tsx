@@ -2,8 +2,8 @@ import React from 'react';
 
 import { act, render, renderHook } from '@testing-library/react';
 import { formatISO } from 'date-fns';
-import { mockDeep } from 'jest-mock-extended';
-import { IntlProvider } from 'react-intl';
+import { vi } from 'vitest';
+import { mockDeep } from 'vitest-mock-extended';
 
 import { type ISkjema, useFelt } from '@navikt/familie-skjema';
 
@@ -27,8 +27,6 @@ class ResizeObserver {
     }
 }
 
-const IntlProviderMedLocale = ({ children }) => <IntlProvider locale="nb">{children}</IntlProvider>;
-
 describe('Datovelger', () => {
     beforeEach(() => {
         spyOnUseApp({});
@@ -38,23 +36,20 @@ describe('Datovelger', () => {
     test('Datovelger kan begrenses av annen fra om med datovelger', () => {
         const {
             result: { current },
-        } = renderHook(
-            () => {
-                const fraOgMed = useFelt<ISODateString>({
-                    verdi: '2021-09-10',
-                    feltId: 'fra-og-med',
-                });
-                const tilOgMed = useFelt<ISODateString>({
-                    verdi: '2021-09-10',
-                    feltId: 'til-og-med',
-                });
-                return {
-                    fraOgMed,
-                    tilOgMed,
-                };
-            },
-            { wrapper: IntlProviderMedLocale }
-        );
+        } = renderHook(() => {
+            const fraOgMed = useFelt<ISODateString>({
+                verdi: '2021-09-10',
+                feltId: 'fra-og-med',
+            });
+            const tilOgMed = useFelt<ISODateString>({
+                verdi: '2021-09-10',
+                feltId: 'til-og-med',
+            });
+            return {
+                fraOgMed,
+                tilOgMed,
+            };
+        });
 
         const skjemaMock = mockDeep<ISkjema<SkjemaFeltTyper, string>>({
             visFeilmeldinger: true,
@@ -83,21 +78,18 @@ describe('Datovelger', () => {
     });
 
     it('kan avgrenses frem i tid', () => {
-        jest.spyOn(datoUtils, 'dagensDato').mockReturnValue(new Date('2021-09-10'));
+        vi.spyOn(datoUtils, 'dagensDato').mockReturnValue(new Date('2021-09-10'));
         const {
             result: { current },
-        } = renderHook(
-            () => {
-                const tilOgMed = useFelt<ISODateString>({
-                    verdi: formatISO(dagensDato()),
-                    feltId: 'til-og-med',
-                });
-                return {
-                    tilOgMed,
-                };
-            },
-            { wrapper: IntlProviderMedLocale }
-        );
+        } = renderHook(() => {
+            const tilOgMed = useFelt<ISODateString>({
+                verdi: formatISO(dagensDato()),
+                feltId: 'til-og-med',
+            });
+            return {
+                tilOgMed,
+            };
+        });
 
         const skjemaMock = mockDeep<ISkjema<SkjemaFeltTyper, string>>({
             visFeilmeldinger: true,

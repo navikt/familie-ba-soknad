@@ -1,21 +1,22 @@
 import React from 'react';
 
 import { render } from '@testing-library/react';
-import { mockDeep } from 'jest-mock-extended';
+import { vi } from 'vitest';
+import { mockDeep } from 'vitest-mock-extended';
 
 import { IDokumentasjon } from '../../../typer/dokumentasjon';
 import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
 import { ESivilstand, ESøknadstype } from '../../../typer/kontrakt/generelle';
 import { ISøker } from '../../../typer/person';
-import { mockEøs, silenceConsoleErrors, spyOnUseApp, TestProvidere } from '../../../utils/testing';
+import { initialStateSøknad } from '../../../typer/søknad';
+import { spyOnUseApp, TestProvidere } from '../../../utils/testing';
 
 import LastOppVedlegg from './LastOppVedlegg';
 
 const hentAnnenDokumentasjon = (): IDokumentasjon => {
-    jest.resetModules();
-    const { initialStateSøknad } = jest.requireActual('../../../typer/søknad');
+    const søknad = initialStateSøknad();
 
-    const dokumentasjon = initialStateSøknad(false).dokumentasjon.find(
+    const dokumentasjon = søknad.dokumentasjon.find(
         dok => dok.dokumentasjonsbehov === Dokumentasjonsbehov.ANNEN_DOKUMENTASJON
     );
 
@@ -26,16 +27,10 @@ const hentAnnenDokumentasjon = (): IDokumentasjon => {
 };
 
 describe('LastOppVedlegg', () => {
-    beforeEach(() => {
-        silenceConsoleErrors();
-        jest.resetModules();
-        mockEøs();
-    });
-
     it('Viser ikke info-tekst og checkbox knapp for ANNEN_DOKUMENTASJON', () => {
         spyOnUseApp({});
         const dokumentasjon = hentAnnenDokumentasjon();
-        const oppdaterDokumentasjon = jest.fn();
+        const oppdaterDokumentasjon = vi.fn();
 
         const { getByTestId, queryByTestId } = render(
             <TestProvidere>
@@ -59,27 +54,20 @@ describe('LastOppVedlegg', () => {
         });
         spyOnUseApp({ søker, søknadstype: ESøknadstype.UTVIDET });
 
-        jest.spyOn(window, 'location', 'get').mockReturnValue({
-            ...window.location,
-            pathname: '/utvidet/',
-        });
+        const dokumentasjon = hentAnnenDokumentasjon();
+        const oppdaterDokumentasjon = vi.fn();
 
-        return import('../../../typer/søknad').then(() => {
-            const dokumentasjon = hentAnnenDokumentasjon();
-            const oppdaterDokumentasjon = jest.fn();
+        const { getByTestId, queryByTestId } = render(
+            <TestProvidere mocketNettleserHistorikk={['/utvidet/']}>
+                <LastOppVedlegg
+                    dokumentasjon={dokumentasjon}
+                    oppdaterDokumentasjon={oppdaterDokumentasjon}
+                />
+            </TestProvidere>
+        );
 
-            const { getByTestId, queryByTestId } = render(
-                <TestProvidere>
-                    <LastOppVedlegg
-                        dokumentasjon={dokumentasjon}
-                        oppdaterDokumentasjon={oppdaterDokumentasjon}
-                    />
-                </TestProvidere>
-            );
-
-            expect(queryByTestId('dokumentasjon-er-sendt-inn-checkboks')).not.toBeInTheDocument();
-            expect(queryByTestId('dokumentasjonsbeskrivelse')).not.toBeInTheDocument();
-            expect(getByTestId('dokumentopplaster')).toBeInTheDocument();
-        });
+        expect(queryByTestId('dokumentasjon-er-sendt-inn-checkboks')).not.toBeInTheDocument();
+        expect(queryByTestId('dokumentasjonsbeskrivelse')).not.toBeInTheDocument();
+        expect(getByTestId('dokumentopplaster')).toBeInTheDocument();
     });
 });

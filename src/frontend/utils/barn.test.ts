@@ -1,5 +1,6 @@
-import { mockDeep } from 'jest-mock-extended';
 import { DeepPartial } from 'ts-essentials';
+import { vi } from 'vitest';
+import * as vitestMockExtended from 'vitest-mock-extended';
 
 import { ESvar } from '@navikt/familie-form-elements';
 import type { Felt, ISkjema } from '@navikt/familie-skjema';
@@ -14,9 +15,11 @@ import { IOmBarnaDineFeltTyper } from '../typer/skjema';
 import { ISøknad } from '../typer/søknad';
 
 describe('genererSvarForSpørsmålBarn', () => {
-    const mockBarn = mockDeep<IBarnMedISøknad>({ id: 'random-id' });
-    const mockFeltSomInkludererBarn = mockDeep<Felt<string[]>>({ verdi: ['random-id'] });
-    const mockFeltSomIkkeInkludererBarn = mockDeep<Felt<string[]>>({
+    const mockBarn = vitestMockExtended.mockDeep<IBarnMedISøknad>({ id: 'random-id' });
+    const mockFeltSomInkludererBarn = vitestMockExtended.mockDeep<Felt<string[]>>({
+        verdi: ['random-id'],
+    });
+    const mockFeltSomIkkeInkludererBarn = vitestMockExtended.mockDeep<Felt<string[]>>({
         verdi: ['random-id-1', 'random-id-2'],
     });
 
@@ -29,8 +32,7 @@ describe('genererSvarForSpørsmålBarn', () => {
 });
 
 describe('genererOppdaterteBarn', () => {
-    const { objectContaining } = expect;
-    const mockSøknad = mockDeep<ISøknad>({
+    const mockSøknad = vitestMockExtended.mockDeep<ISøknad>({
         barnInkludertISøknaden: [
             {
                 id: 'random-id',
@@ -47,7 +49,7 @@ describe('genererOppdaterteBarn', () => {
         ],
     });
 
-    const mockSkjema = mockDeep<ISkjema<IOmBarnaDineFeltTyper, string>>({
+    const mockSkjema = vitestMockExtended.mockDeep<ISkjema<IOmBarnaDineFeltTyper, string>>({
         felter: {
             hvemErFosterbarn: { verdi: ['random-id'] },
             hvemErSøktAsylFor: { verdi: ['random-id'] },
@@ -77,21 +79,21 @@ describe('genererOppdaterteBarn', () => {
     });
 
     test('Returner objekt med barn, med forventede verdier', () => {
-        expect(genererOppdaterteBarn(mockSøknad, mockSkjema, _barn => false, jest.fn())).toEqual([
-            objectContaining<DeepPartial<IBarnMedISøknad>>({
+        expect(genererOppdaterteBarn(mockSøknad, mockSkjema, _barn => false, vi.fn())).toEqual([
+            expect.objectContaining<DeepPartial<IBarnMedISøknad>>({
                 id: 'random-id',
-                erFosterbarn: objectContaining({ svar: 'JA' }),
-                erAsylsøker: objectContaining({ svar: 'JA' }),
-                erAdoptertFraUtland: objectContaining({ svar: 'NEI' }),
-                oppholderSegIInstitusjon: objectContaining({ svar: 'NEI' }),
-                boddMindreEnn12MndINorge: objectContaining({ svar: 'NEI' }),
-                barnetrygdFraAnnetEøsland: objectContaining({ svar: 'JA' }),
-                institusjonsnavn: objectContaining({ svar: '' }),
-                institusjonsadresse: objectContaining({ svar: '' }),
-                institusjonspostnummer: objectContaining({ svar: '' }),
-                institusjonOppholdStartdato: objectContaining({ svar: '' }),
-                institusjonOppholdSluttdato: objectContaining({ svar: '' }),
-                planleggerÅBoINorge12Mnd: objectContaining({ svar: null }),
+                erFosterbarn: expect.objectContaining({ svar: 'JA' }),
+                erAsylsøker: expect.objectContaining({ svar: 'JA' }),
+                erAdoptertFraUtland: expect.objectContaining({ svar: 'NEI' }),
+                oppholderSegIInstitusjon: expect.objectContaining({ svar: 'NEI' }),
+                boddMindreEnn12MndINorge: expect.objectContaining({ svar: 'NEI' }),
+                barnetrygdFraAnnetEøsland: expect.objectContaining({ svar: 'JA' }),
+                institusjonsnavn: expect.objectContaining({ svar: '' }),
+                institusjonsadresse: expect.objectContaining({ svar: '' }),
+                institusjonspostnummer: expect.objectContaining({ svar: '' }),
+                institusjonOppholdStartdato: expect.objectContaining({ svar: '' }),
+                institusjonOppholdSluttdato: expect.objectContaining({ svar: '' }),
+                planleggerÅBoINorge12Mnd: expect.objectContaining({ svar: null }),
             }),
         ]);
     });

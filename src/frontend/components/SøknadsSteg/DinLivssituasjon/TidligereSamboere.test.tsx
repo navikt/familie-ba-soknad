@@ -1,26 +1,16 @@
 import React from 'react';
 
 import { render } from '@testing-library/react';
-import { mockDeep } from 'jest-mock-extended';
+import { mockDeep } from 'vitest-mock-extended';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { ESivilstand, ESøknadstype } from '../../../typer/kontrakt/generelle';
 import { ISøknad } from '../../../typer/søknad';
-import { silenceConsoleErrors, spyOnUseApp, TestProvidere } from '../../../utils/testing';
+import { spyOnUseApp, TestProvidere } from '../../../utils/testing';
 
 import DinLivssituasjon from './DinLivssituasjon';
 import { DinLivssituasjonSpørsmålId, TidligereSamboerSpørsmålId } from './spørsmål';
-
-jest.mock('react-router', () => ({
-    ...(jest.requireActual('react-router') as object),
-    useLocation: () => ({
-        pathname: '/din-livssituasjon',
-    }),
-    useHistory: () => ({
-        push: () => {},
-    }),
-}));
 
 const søknad = mockDeep<ISøknad>({
     søknadstype: ESøknadstype.UTVIDET,
@@ -52,14 +42,11 @@ const søknad = mockDeep<ISøknad>({
 });
 
 describe('TidligereSamboere', () => {
-    beforeEach(() => {
-        silenceConsoleErrors();
-    });
     it('"Når ble samboerforholdet avsluttet?" skal ikke vises dersom man ikke har tidligere samboere', () => {
         spyOnUseApp(søknad);
 
         const { queryByTestId } = render(
-            <TestProvidere>
+            <TestProvidere mocketNettleserHistorikk={['/din-livssituasjon']}>
                 <DinLivssituasjon />
             </TestProvidere>
         );

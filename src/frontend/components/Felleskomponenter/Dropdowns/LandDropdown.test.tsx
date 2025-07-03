@@ -2,7 +2,7 @@ import React from 'react';
 
 import { render } from '@testing-library/react';
 import { Alpha3Code } from 'i18n-iso-countries';
-import { mockDeep } from 'jest-mock-extended';
+import { mockDeep } from 'vitest-mock-extended';
 
 import type { Felt, ISkjema } from '@navikt/familie-skjema';
 
@@ -18,7 +18,6 @@ import { LandDropdown } from './LandDropdown';
 
 describe('LandDropdown', () => {
     beforeEach(() => {
-        jest.useFakeTimers();
         spyOnUseApp({});
         silenceConsoleErrors();
     });
