@@ -1,6 +1,6 @@
-import React, { ReactNode } from 'react';
+import React, { PropsWithChildren, ReactNode } from 'react';
 
-import { CookiesProvider } from 'react-cookie';
+import { Cookies, CookiesProvider } from 'react-cookie';
 import { IntlProvider } from 'react-intl';
 import { MemoryRouter, useLocation } from 'react-router';
 import { vi } from 'vitest';
@@ -124,6 +124,13 @@ export const spyOnUseApp = søknad => {
     };
 };
 
+export function CookiesProviderMedLocale(props: PropsWithChildren) {
+    const cookies = new Cookies();
+    cookies.set('decorator-language', 'nb');
+
+    return <CookiesProvider cookies={cookies}>{props.children}</CookiesProvider>;
+}
+
 export const mockEøs = (barnSomTriggerEøs = [], søkerTriggerEøs = false) => {
     const erEøsLand = vi.fn();
 
@@ -195,7 +202,7 @@ const wrapMedDefaultProvidere = (
 ) =>
     wrapMedProvidere(
         [
-            CookiesProvider,
+            CookiesProviderMedLocale,
             SpråkProvider,
             HttpProvider,
             LastRessurserProvider,

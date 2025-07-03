@@ -1,12 +1,11 @@
 import React from 'react';
 
 import { render } from '@testing-library/react';
-import { CookiesProvider } from 'react-cookie';
 
 import { SpråkProvider } from '../../../context/SpråkContext';
 import { ESivilstand } from '../../../typer/kontrakt/generelle';
 import { ISøker } from '../../../typer/person';
-import { spyOnUseApp, TestProvidere } from '../../../utils/testing';
+import { CookiesProviderMedLocale, spyOnUseApp, TestProvidere } from '../../../utils/testing';
 
 import { Personopplysninger } from './Personopplysninger';
 
@@ -29,11 +28,11 @@ describe('Personopplysninger', () => {
         spyOnUseApp({ søker });
 
         const { getByText } = render(
-            <CookiesProvider>
+            <CookiesProviderMedLocale>
                 <SpråkProvider>
                     <Personopplysninger />
                 </SpråkProvider>
-            </CookiesProvider>
+            </CookiesProviderMedLocale>
         );
         expect(getByText(/Testgata/)).toBeInTheDocument();
         expect(getByText(/Oslo/)).toBeInTheDocument();
@@ -52,11 +51,11 @@ describe('Personopplysninger', () => {
         spyOnUseApp({ søker });
 
         const { queryByText, queryByTestId } = render(
-            <CookiesProvider>
+            <CookiesProviderMedLocale>
                 <SpråkProvider>
                     <Personopplysninger />
                 </SpråkProvider>
-            </CookiesProvider>
+            </CookiesProviderMedLocale>
         );
         expect(queryByText('12345678901')).toBeInTheDocument();
         expect(queryByTestId('adressevisning-ikke-registrert')).toBeInTheDocument();
