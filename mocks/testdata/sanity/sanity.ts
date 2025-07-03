@@ -14,7 +14,7 @@ import { omDegTekstinnhold } from './sider/omDeg';
 import { oppsummeringTekstinnhold } from './sider/oppsummering';
 import { velgBarnTekstinnhold } from './sider/velgBarn';
 
-export function hentTekstInnhold(): ITekstinnhold {
+export function mockTekstInnhold(): ITekstinnhold {
     return {
         [ESanitySteg.FORSIDE]: forsideTekstinnhold,
         [ESanitySteg.OM_DEG]: omDegTekstinnhold,

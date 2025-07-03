@@ -10,7 +10,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { HttpProvider } from '@navikt/familie-http';
 import { type Ressurs, RessursStatus } from '@navikt/familie-typer';
 
-import { hentTekstInnhold } from '../../../mocks/testdata/sanity/sanity';
+import { mockTekstInnhold } from '../../../mocks/testdata/sanity/sanity';
 import norskeTekster from '../assets/lang/nb.json' with { type: 'json' };
 import { UtenlandsoppholdSpørsmålId } from '../components/Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 import {
@@ -107,7 +107,7 @@ export const spyOnUseApp = søknad => {
         systemetOK: () => vi.fn().mockReturnValue(true),
         systemetFeiler: vi.fn().mockReturnValue(false),
         fåttGyldigKvittering: søknad.fåttGyldigKvittering === true,
-        tekster: vi.fn().mockImplementation(() => hentTekstInnhold()),
+        tekster: vi.fn().mockImplementation(() => mockTekstInnhold()),
         plainTekst: vi.fn().mockReturnValue('tekst fra sanity'),
         tilRestLocaleRecord,
     });
