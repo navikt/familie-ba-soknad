@@ -1,14 +1,16 @@
-import React, { ReactNode } from 'react';
+import React, { PropsWithChildren, ReactNode } from 'react';
 
-import { mockDeep } from 'jest-mock-extended';
-import { CookiesProvider } from 'react-cookie';
+import { Cookies, CookiesProvider } from 'react-cookie';
 import { IntlProvider } from 'react-intl';
 import { MemoryRouter, useLocation } from 'react-router';
+import { vi } from 'vitest';
+import { mockDeep } from 'vitest-mock-extended';
 
 import { ESvar } from '@navikt/familie-form-elements';
 import { HttpProvider } from '@navikt/familie-http';
 import { type Ressurs, RessursStatus } from '@navikt/familie-typer';
 
+import { mockTekstInnhold } from '../../../mocks/testdata/sanity/sanity';
 import norskeTekster from '../assets/lang/nb.json' with { type: 'json' };
 import { UtenlandsoppholdSpørsmålId } from '../components/Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 import {
@@ -25,14 +27,11 @@ import { AppProvider } from '../context/AppContext';
 import { AppNavigationProvider } from '../context/AppNavigationContext';
 import * as eøsContext from '../context/EøsContext';
 import { EøsProvider } from '../context/EøsContext';
-import * as featureToggleContext from '../context/FeatureTogglesContext';
 import { FeatureTogglesProvider } from '../context/FeatureTogglesContext';
 import { InnloggetProvider } from '../context/InnloggetContext';
 import { LastRessurserProvider } from '../context/LastRessurserContext';
 import * as pdlRequest from '../context/pdl';
-import * as routesContext from '../context/RoutesContext';
-import { getRoutes, RoutesProvider } from '../context/RoutesContext';
-import * as sanityContext from '../context/SanityContext';
+import { RoutesProvider } from '../context/RoutesContext';
 import { SanityProvider } from '../context/SanityContext';
 import { SpråkProvider } from '../context/SpråkContext';
 import { StegProvider } from '../context/StegContext';
@@ -42,38 +41,37 @@ import { ESivilstand, ESøknadstype, Slektsforhold } from '../typer/kontrakt/gen
 import { IKvittering } from '../typer/kvittering';
 import { IUtenlandsperiode } from '../typer/perioder';
 import { ISøker, ISøkerRespons } from '../typer/person';
-import { ITekstinnhold } from '../typer/sanity/tekstInnhold';
 import { initialStateSøknad, ISøknad } from '../typer/søknad';
 import { EUtenlandsoppholdÅrsak } from '../typer/utenlandsopphold';
 import { Årsak } from '../typer/utvidet';
 
 import { genererInitialBarnMedISøknad } from './barn';
 
-jest.mock('../context/pdl');
+vi.mock('../context/pdl');
 
 export const spyOnUseApp = søknad => {
-    jest.spyOn(pdlRequest, 'hentSluttbrukerFraPdl').mockImplementation(async () => ({
+    vi.spyOn(pdlRequest, 'hentSluttbrukerFraPdl').mockImplementation(async () => ({
         status: RessursStatus.SUKSESS,
         data: mockDeep<ISøkerRespons>({ sivilstand: { type: ESivilstand.UGIFT }, ...søknad.søker }),
     }));
-    const tilRestLocaleRecord = jest.fn();
-    const settSøknad = jest.fn();
-    const erPåKvitteringsside = jest.fn().mockImplementation(() => false);
-    const erStegUtfyltFrafør = jest.fn().mockImplementation(() => true);
-    const settSisteUtfylteStegIndex = jest.fn();
+    const tilRestLocaleRecord = vi.fn();
+    const settSøknad = vi.fn();
+    const erPåKvitteringsside = vi.fn().mockImplementation(() => false);
+    const erStegUtfyltFrafør = vi.fn().mockImplementation(() => true);
+    const settSisteUtfylteStegIndex = vi.fn();
     const innsendingStatus = mockDeep<Ressurs<IKvittering>>({
         status: RessursStatus.IKKE_HENTET,
     });
-    const settInnsendingStatus = jest.fn();
-    const axiosRequestMock = jest
+    const settInnsendingStatus = vi.fn();
+    const axiosRequestMock = vi
         .fn()
         .mockImplementation(
             (): Promise<Ressurs<unknown>> =>
                 Promise.resolve({ status: RessursStatus.SUKSESS, data: {} })
         );
     const erUtvidet = søknad.søknadstype === 'UTVIDET';
-    const settNåværendeRoute = jest.fn();
-    const mellomlagre = jest.fn();
+    const settNåværendeRoute = vi.fn();
+    const mellomlagre = vi.fn();
     const sluttbruker = { status: RessursStatus.SUKSESS, data: { navn: '' } };
 
     søknad.barnInkludertISøknaden = søknad.barnInkludertISøknaden ?? [];
@@ -85,10 +83,10 @@ export const spyOnUseApp = søknad => {
     søknad.dokumentasjon = søknad.dokumentasjon ?? [];
     søknad.søknadstype = søknad.søknadstype ?? ESøknadstype.ORDINÆR;
 
-    const settEøsLand = jest.fn();
+    const settEøsLand = vi.fn();
     const eøsLand = { status: RessursStatus.SUKSESS, data: ['BEL', 'AFG', 'NLD', 'NOR'] };
 
-    const useAppMock = jest.fn().mockReturnValue({
+    const useAppMock = vi.fn().mockReturnValue({
         søknad,
         settSisteUtfylteStegIndex,
         erStegUtfyltFrafør,
@@ -105,16 +103,16 @@ export const spyOnUseApp = søknad => {
         settEøsLand,
         eøsLand,
         relevateDokumentasjoner: [],
-        systemetLaster: jest.fn().mockReturnValue(false),
-        systemetOK: () => jest.fn().mockReturnValue(true),
-        systemetFeiler: jest.fn().mockReturnValue(false),
+        systemetLaster: vi.fn().mockReturnValue(false),
+        systemetOK: () => vi.fn().mockReturnValue(true),
+        systemetFeiler: vi.fn().mockReturnValue(false),
         fåttGyldigKvittering: søknad.fåttGyldigKvittering === true,
-        tekster: jest.fn().mockImplementation(() => mockDeep<ITekstinnhold>()),
-        plainTekst: jest.fn().mockReturnValue('tekst fra sanity'),
+        tekster: vi.fn().mockImplementation(() => mockTekstInnhold()),
+        plainTekst: vi.fn().mockReturnValue('tekst fra sanity'),
         tilRestLocaleRecord,
     });
 
-    jest.spyOn(appContext, 'useAppContext').mockImplementation(useAppMock);
+    vi.spyOn(appContext, 'useAppContext').mockImplementation(useAppMock);
 
     return {
         useAppMock,
@@ -122,58 +120,32 @@ export const spyOnUseApp = søknad => {
         erStegUtfyltFrafør,
         settSisteUtfylteStegIndex,
         erPåKvitteringsside,
-        axiosRequestMock,
         søknad,
     };
 };
 
-export const mockEøs = (barnSomTriggerEøs = [], søkerTriggerEøs = false) => {
-    const erEøsLand = jest.fn();
+export function CookiesProviderMedLocale(props: PropsWithChildren) {
+    const cookies = new Cookies();
+    cookies.set('decorator-language', 'nb');
 
-    const useEøs = jest.spyOn(eøsContext, 'useEøsContext').mockImplementation(
-        jest.fn().mockReturnValue({
+    return <CookiesProvider cookies={cookies}>{props.children}</CookiesProvider>;
+}
+
+export const mockEøs = (barnSomTriggerEøs = [], søkerTriggerEøs = false) => {
+    const erEøsLand = vi.fn();
+
+    const useEøs = vi.spyOn(eøsContext, 'useEøsContext').mockImplementation(
+        vi.fn().mockReturnValue({
             erEøsLand,
             barnSomTriggerEøs,
-            settBarnSomTriggerEøs: jest.fn(),
-            settSøkerTriggerEøs: jest.fn(),
-            skalTriggeEøsForBarn: jest.fn().mockReturnValue(false),
-            skalTriggeEøsForSøker: jest.fn().mockReturnValue(false),
+            settBarnSomTriggerEøs: vi.fn(),
+            settSøkerTriggerEøs: vi.fn(),
+            skalTriggeEøsForBarn: vi.fn().mockReturnValue(false),
+            skalTriggeEøsForSøker: vi.fn().mockReturnValue(false),
             søkerTriggerEøs,
         })
     );
     return { useEøs, erEøsLand };
-};
-
-export const mockRoutes = () => {
-    const useRoutes = jest.spyOn(routesContext, 'useRoutesContext').mockImplementation(
-        jest.fn().mockReturnValue({
-            routes: getRoutes(),
-            hentRouteObjektForRouteEnum: jest.fn(),
-        })
-    );
-    return { useRoutes };
-};
-
-export const mockFeatureToggle = () => {
-    const useFeatureToggle = jest
-        .spyOn(featureToggleContext, 'useFeatureToggles')
-        .mockImplementation(
-            jest.fn().mockReturnValue({
-                toggles: {
-                    // [EFeatureToggle.EKSEMPEL]: false,
-                },
-            })
-        );
-    return { useFeatureToggle };
-};
-
-export const mockSanity = () => {
-    const useSanity = jest.spyOn(sanityContext, 'useSanityContext').mockImplementation(
-        jest.fn().mockReturnValue({
-            teksterRessurs: RessursStatus.SUKSESS,
-        })
-    );
-    return { useSanity };
 };
 
 /**
@@ -182,8 +154,8 @@ export const mockSanity = () => {
  * oversettelsesfeil igjen. Mulig vi heller burde mocke noe i intl.
  */
 export const silenceConsoleErrors = () => {
-    jest.spyOn(console, 'error');
-    jest.spyOn(global.console, 'error').mockImplementation(() => {
+    vi.spyOn(console, 'error');
+    vi.spyOn(global.console, 'error').mockImplementation(() => {
         // Shut up about the missing translations;
     });
 };
@@ -230,7 +202,7 @@ const wrapMedDefaultProvidere = (
 ) =>
     wrapMedProvidere(
         [
-            CookiesProvider,
+            CookiesProviderMedLocale,
             SpråkProvider,
             HttpProvider,
             LastRessurserProvider,
@@ -270,12 +242,6 @@ export const TestProvidereMedEkteTekster: React.FC<{
 export const LesUtLocation = () => {
     const location = useLocation();
     return <pre data-testid="location">{JSON.stringify(location)}</pre>;
-};
-
-export const mockedHistory: string[] = [];
-
-export const mockHistory = (newHistory: string[]) => {
-    mockedHistory.push(...newHistory);
 };
 
 export const mekkGyldigSøker = (): ISøker => {

@@ -1,40 +1,27 @@
 import React from 'react';
 
 import { act, fireEvent, render, waitFor, within } from '@testing-library/react';
+import { vi } from 'vitest';
 
 import { ESvar } from '@navikt/familie-form-elements';
 import * as fnrvalidator from '@navikt/fnrvalidator';
 
-import {
-    silenceConsoleErrors,
-    mockFeatureToggle,
-    TestProvidere,
-    spyOnUseApp,
-} from '../../../../utils/testing';
+import { TestProvidere, spyOnUseApp } from '../../../../utils/testing';
 
 import LeggTilBarnModal from './LeggTilBarnModal';
 import { NyttBarnKort } from './NyttBarnKort';
 
-jest.mock('@navikt/fnrvalidator');
-
-jest.mock('react-router', () => ({
-    ...(jest.requireActual('react-router') as object),
-    useLocation: () => ({
-        pathname: 'localhost:3000/velg-barn/',
-    }),
-}));
+vi.mock('@navikt/fnrvalidator');
 
 describe('NyttBarnKort', () => {
     test(`Kan legge til barn`, async () => {
-        silenceConsoleErrors();
-        mockFeatureToggle();
         spyOnUseApp({ barnRegistrertManuelt: [], søker: { barn: [] } });
 
-        jest.spyOn(fnrvalidator, 'idnr').mockReturnValue({ status: 'valid', type: 'fnr' });
+        vi.spyOn(fnrvalidator, 'idnr').mockReturnValue({ status: 'valid', type: 'fnr' });
         const åpen: number[] = [];
 
         const { getByRole, getByTestId, rerender } = render(
-            <TestProvidere>
+            <TestProvidere mocketNettleserHistorikk={['localhost:3000/velg-barn/']}>
                 <NyttBarnKort
                     onLeggTilBarn={() => {
                         åpen.push(1);

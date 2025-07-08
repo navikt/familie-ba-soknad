@@ -1,18 +1,14 @@
 import React from 'react';
 
 import { act, getAllByText, getByTestId, render } from '@testing-library/react';
-import { mockDeep } from 'jest-mock-extended';
+import { mockDeep } from 'vitest-mock-extended';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { AlternativtSvarForInput } from '../../../typer/common';
 import { ESivilstand, ESøknadstype } from '../../../typer/kontrakt/generelle';
 import { ISøknad } from '../../../typer/søknad';
-import {
-    silenceConsoleErrors,
-    spyOnUseApp,
-    TestProvidereMedEkteTekster,
-} from '../../../utils/testing';
+import { spyOnUseApp, TestProvidereMedEkteTekster } from '../../../utils/testing';
 
 import DinLivssituasjon from './DinLivssituasjon';
 import { getAllNåværendeSamboerFields } from './NåværendeSamboerTestUtils';
@@ -22,21 +18,12 @@ const renderDinLivssituasjon = søknad => {
     const søknadMock = mockDeep<ISøknad>(søknad);
     spyOnUseApp(søknadMock);
     return render(
-        <TestProvidereMedEkteTekster>
+        <TestProvidereMedEkteTekster mocketNettleserHistorikk={['/din-livssituasjon']}>
             <DinLivssituasjon />
         </TestProvidereMedEkteTekster>
     );
 };
 
-jest.mock('react-router', () => ({
-    ...(jest.requireActual('react-router') as object),
-    useLocation: () => ({
-        pathname: '/din-livssituasjon',
-    }),
-    useHistory: () => ({
-        push: () => {},
-    }),
-}));
 const søknad = {
     søknadstype: ESøknadstype.UTVIDET,
     barnInkludertISøknaden: [
@@ -88,10 +75,6 @@ const søknadGyldigNåværendeSamboerBase = {
 };
 
 describe('Test av nåværende samboer skjema', () => {
-    beforeEach(() => {
-        silenceConsoleErrors();
-    });
-
     it('nåværende samboer null initiell verdi', () => {
         const { container } = renderDinLivssituasjon(søknad);
         const [navn, fnr, fnrUkjent, fødselsdato, fødselsdatoUkjent, samboerFraDato] =

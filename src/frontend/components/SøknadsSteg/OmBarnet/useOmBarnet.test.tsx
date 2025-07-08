@@ -2,6 +2,7 @@ import { act } from 'react';
 
 import { renderHook } from '@testing-library/react';
 import { DeepPartial } from 'ts-essentials';
+import { vi } from 'vitest';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
@@ -12,7 +13,7 @@ import {
 } from '../../../typer/barn';
 import { IBarn } from '../../../typer/person';
 import { genererInitialBarnMedISøknad, genererInitiellAndreForelder } from '../../../utils/barn';
-import { mockEøs, silenceConsoleErrors, spyOnUseApp, TestProvidere } from '../../../utils/testing';
+import { mockEøs, spyOnUseApp, TestProvidere } from '../../../utils/testing';
 import { OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
 
 import { OmBarnetSpørsmålsId } from './spørsmål';
@@ -32,8 +33,11 @@ describe('useOmBarnet', () => {
     };
 
     beforeEach(() => {
-        silenceConsoleErrors();
-        jest.useFakeTimers();
+        vi.useFakeTimers();
+    });
+
+    afterEach(() => {
+        vi.useRealTimers();
     });
 
     it('Setter institusjonsfelter til tomme strenger hvis barnet ikke bor på institusjon', async () => {
@@ -80,7 +84,7 @@ describe('useOmBarnet', () => {
         expect(institusjonOppholdSluttdato.erSynlig).toEqual(false);
 
         await act(async () => {
-            jest.advanceTimersByTime(500);
+            vi.advanceTimersByTime(500);
         });
     });
 
@@ -114,7 +118,7 @@ describe('useOmBarnet', () => {
         expect(planleggerÅBoINorge12Mnd.erSynlig).toEqual(false);
 
         await act(async () => {
-            jest.advanceTimersByTime(500);
+            vi.advanceTimersByTime(500);
         });
     });
 
@@ -162,7 +166,7 @@ describe('useOmBarnet', () => {
         expect(andreForelderFnr.erSynlig).toEqual(false);
 
         await act(async () => {
-            jest.advanceTimersByTime(500);
+            vi.advanceTimersByTime(500);
         });
     });
 });

@@ -1,25 +1,19 @@
 import React from 'react';
 
 import { act, fireEvent, render } from '@testing-library/react';
-import { mockDeep } from 'jest-mock-extended';
 import { DeepPartial } from 'ts-essentials';
+import { vi } from 'vitest';
+import { mockDeep } from 'vitest-mock-extended';
 
 import { ESvar } from '@navikt/familie-form-elements';
-import { byggSuksessRessurs, RessursStatus } from '@navikt/familie-typer';
 import * as fnrvalidator from '@navikt/fnrvalidator';
 
-import * as eøsContext from '../../../context/EøsContext';
-import * as pdlRequest from '../../../context/pdl';
 import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../typer/barn';
-import { ESivilstand, ESøknadstype } from '../../../typer/kontrakt/generelle';
-import { IBarnRespons, ISøkerRespons } from '../../../typer/person';
+import { ESøknadstype } from '../../../typer/kontrakt/generelle';
+import { IBarnRespons } from '../../../typer/person';
 import { ISøknad } from '../../../typer/søknad';
 import {
     mekkGyldigSøker,
-    mockEøs,
-    mockFeatureToggle,
-    mockRoutes,
-    mockSanity,
     silenceConsoleErrors,
     spyOnUseApp,
     TestProvidere,
@@ -28,7 +22,7 @@ import { OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
 
 import VelgBarn from './VelgBarn';
 
-jest.mock('@navikt/fnrvalidator');
+vi.mock('@navikt/fnrvalidator');
 
 const manueltRegistrert: Partial<IBarnMedISøknad> = {
     id: 'random-id-1',
@@ -58,17 +52,6 @@ const fraPdlSomIBarnMedISøknad: Partial<IBarnMedISøknad> = {
 
 describe('VelgBarn', () => {
     beforeEach(() => {
-        jest.spyOn(eøsContext, 'useEøsContext').mockImplementation(jest.fn());
-        jest.spyOn(pdlRequest, 'hentSluttbrukerFraPdl').mockImplementation(async () => ({
-            status: RessursStatus.SUKSESS,
-            data: mockDeep<ISøkerRespons>({
-                sivilstand: { type: ESivilstand.UGIFT },
-            }),
-        }));
-        mockEøs();
-        mockRoutes();
-        mockSanity();
-        mockFeatureToggle();
         silenceConsoleErrors();
     });
 
@@ -155,7 +138,7 @@ describe('VelgBarn', () => {
     });
 
     test('Kan legge til, fjerne og så legge et barn til igjen', async () => {
-        jest.spyOn(fnrvalidator, 'idnr').mockReturnValue({ status: 'valid', type: 'fnr' });
+        vi.spyOn(fnrvalidator, 'idnr').mockReturnValue({ status: 'valid', type: 'fnr' });
 
         const søknad = {
             barnRegistrertManuelt: [manueltRegistrert],
@@ -163,8 +146,7 @@ describe('VelgBarn', () => {
             søker: { barn: [fraPdl] },
             dokumentasjon: [],
         };
-        const { settSøknad, axiosRequestMock } = spyOnUseApp(søknad);
-        axiosRequestMock.mockReturnValue(byggSuksessRessurs(false));
+        const { settSøknad } = spyOnUseApp(søknad);
 
         settSøknad.mockImplementation((nySøknad: ISøknad) => {
             søknad.barnRegistrertManuelt = nySøknad.barnRegistrertManuelt;

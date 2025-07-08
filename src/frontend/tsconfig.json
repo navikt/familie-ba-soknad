@@ -10,7 +10,7 @@
     "noEmit": true,
     "jsx": "react-jsx",
   },
-  "exclude": ["../../node_modules", "../../dist", "../../build", "../backend", "../webpack", "../jest-setup.ts"],
+  "exclude": ["../../node_modules", "../../dist", "../../build", "../backend", "../webpack", "../vitest.setup.ts"],
   "lib": [
     "es2015",
     "esnext"

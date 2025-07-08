@@ -1,50 +1,47 @@
 import React from 'react';
 
 import { renderHook } from '@testing-library/react';
-import { MemoryRouter } from 'react-router';
 
 import { RouteEnum } from '../typer/routes';
-import { mockEøs, mockFeatureToggle, spyOnUseApp } from '../utils/testing';
+import { genererInitialBarnMedISøknad } from '../utils/barn';
+import { spyOnUseApp, TestProvidere } from '../utils/testing';
 
-import { RoutesProvider } from './RoutesContext';
 import { StegProvider, useStegContext } from './StegContext';
 
 describe('Steg', () => {
-    beforeEach(() => {
-        mockFeatureToggle();
-        mockEøs();
+    const generertBarn = genererInitialBarnMedISøknad({
+        id: '123',
+        ident: '123',
+        navn: 'Jens',
+        borMedSøker: true,
+        alder: '1',
+        adressebeskyttelse: false,
     });
+
     test(`Kan hente steg før barn er valgt`, () => {
         spyOnUseApp({
             barnInkludertISøknaden: [],
         });
 
         const wrapper = ({ children }) => (
-            <RoutesProvider>
-                <MemoryRouter initialEntries={['/om-barnet/barn/1']}>
-                    <StegProvider>{children}</StegProvider>
-                </MemoryRouter>
-            </RoutesProvider>
+            <TestProvidere mocketNettleserHistorikk={['/om-barnet/barn/1']}>
+                <StegProvider>{children}</StegProvider>
+            </TestProvidere>
         );
         const { result } = renderHook(() => useStegContext(), { wrapper });
         expect(result.current.steg.length).toEqual(9);
     });
 
     test(`Kan hente neste steg fra forsiden`, () => {
+        const barn = { ...generertBarn };
         spyOnUseApp({
-            barnInkludertISøknaden: [
-                {
-                    navn: 'Jens',
-                },
-            ],
+            barnInkludertISøknaden: [barn],
         });
 
         const wrapper = ({ children }) => (
-            <RoutesProvider>
-                <MemoryRouter initialEntries={['/']}>
-                    <StegProvider>{children}</StegProvider>
-                </MemoryRouter>
-            </RoutesProvider>
+            <TestProvidere mocketNettleserHistorikk={['/']}>
+                <StegProvider>{children}</StegProvider>
+            </TestProvidere>
         );
         const { result } = renderHook(() => useStegContext(), { wrapper });
         const nesteSteg = result.current.hentNesteSteg();
@@ -52,20 +49,16 @@ describe('Steg', () => {
     });
 
     test(`Kan hente neste steg når inneværende route er eneste barn`, () => {
+        const barn = { ...generertBarn };
+
         spyOnUseApp({
-            barnInkludertISøknaden: [
-                {
-                    navn: 'Jens',
-                },
-            ],
+            barnInkludertISøknaden: [barn],
         });
 
         const wrapper = ({ children }) => (
-            <RoutesProvider>
-                <MemoryRouter initialEntries={['/om-barnet/barn/1']}>
-                    <StegProvider>{children}</StegProvider>
-                </MemoryRouter>
-            </RoutesProvider>
+            <TestProvidere mocketNettleserHistorikk={['/om-barnet/barn/1']}>
+                <StegProvider>{children}</StegProvider>
+            </TestProvidere>
         );
         const { result } = renderHook(() => useStegContext(), { wrapper });
         const nesteRoute = result.current.hentNesteSteg();
@@ -73,20 +66,16 @@ describe('Steg', () => {
     });
 
     test(`Kan hente forrige steg når inneværende steg er eneste barn`, () => {
+        const barn = { ...generertBarn };
+
         spyOnUseApp({
-            barnInkludertISøknaden: [
-                {
-                    navn: 'Jens',
-                },
-            ],
+            barnInkludertISøknaden: [barn],
         });
 
         const wrapper = ({ children }) => (
-            <RoutesProvider>
-                <MemoryRouter initialEntries={['/om-barnet/barn/1']}>
-                    <StegProvider>{children}</StegProvider>
-                </MemoryRouter>
-            </RoutesProvider>
+            <TestProvidere mocketNettleserHistorikk={['/om-barnet/barn/1']}>
+                <StegProvider>{children}</StegProvider>
+            </TestProvidere>
         );
         const { result } = renderHook(() => useStegContext(), { wrapper });
         const nesteRoute = result.current.hentNesteSteg();
@@ -94,20 +83,15 @@ describe('Steg', () => {
     });
 
     test(`Label til steg om barnet skal inneholde barnets navn`, () => {
+        const barn = { ...generertBarn };
         spyOnUseApp({
-            barnInkludertISøknaden: [
-                {
-                    navn: 'Jens',
-                },
-            ],
+            barnInkludertISøknaden: [barn],
         });
 
         const wrapper = ({ children }) => (
-            <RoutesProvider>
-                <MemoryRouter initialEntries={['/om-barnet/barn/1']}>
-                    <StegProvider>{children}</StegProvider>
-                </MemoryRouter>
-            </RoutesProvider>
+            <TestProvidere mocketNettleserHistorikk={['/om-barnet/barn/1']}>
+                <StegProvider>{children}</StegProvider>
+            </TestProvidere>
         );
         const { result } = renderHook(() => useStegContext(), { wrapper });
 
@@ -117,22 +101,15 @@ describe('Steg', () => {
     });
 
     test(`Kan navigere til om-barna og barn/2 dersom det er to barn`, () => {
+        const barn1 = { ...generertBarn };
+        const barn2 = { ...generertBarn, navn: 'Line' };
         spyOnUseApp({
-            barnInkludertISøknaden: [
-                {
-                    navn: 'Jens',
-                },
-                {
-                    navn: 'Line',
-                },
-            ],
+            barnInkludertISøknaden: [barn1, barn2],
         });
         const wrapper = ({ children }) => (
-            <RoutesProvider>
-                <MemoryRouter initialEntries={['/om-barnet/barn/1']}>
-                    <StegProvider>{children}</StegProvider>
-                </MemoryRouter>
-            </RoutesProvider>
+            <TestProvidere mocketNettleserHistorikk={['/om-barnet/barn/1']}>
+                <StegProvider>{children}</StegProvider>
+            </TestProvidere>
         );
 
         const { result } = renderHook(() => useStegContext(), { wrapper });
@@ -142,22 +119,16 @@ describe('Steg', () => {
     });
 
     test(`Kan navigere mellom tilbake til barn/1 eller til oppsummering dersom det er to barn`, () => {
+        const barn1 = { ...generertBarn };
+        const barn2 = { ...generertBarn, navn: 'Line' };
+
         spyOnUseApp({
-            barnInkludertISøknaden: [
-                {
-                    navn: 'Jens',
-                },
-                {
-                    navn: 'Line',
-                },
-            ],
+            barnInkludertISøknaden: [barn1, barn2],
         });
         const wrapper = ({ children }) => (
-            <RoutesProvider>
-                <MemoryRouter initialEntries={['/om-barnet/barn/1', '/om-barnet/barn/2']}>
-                    <StegProvider>{children}</StegProvider>
-                </MemoryRouter>
-            </RoutesProvider>
+            <TestProvidere mocketNettleserHistorikk={['/om-barnet/barn/1', '/om-barnet/barn/2']}>
+                <StegProvider>{children}</StegProvider>
+            </TestProvidere>
         );
 
         const { result } = renderHook(() => useStegContext(), { wrapper });

@@ -2,7 +2,7 @@ import React from 'react';
 import { act } from 'react';
 
 import { render, waitFor } from '@testing-library/react';
-import { mockDeep } from 'jest-mock-extended';
+import { mockDeep } from 'vitest-mock-extended';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
@@ -11,7 +11,6 @@ import { ISøknad } from '../../../typer/søknad';
 import {
     LesUtLocation,
     mekkGyldigSøknad,
-    silenceConsoleErrors,
     spyOnUseApp,
     TestProvidere,
 } from '../../../utils/testing';
@@ -22,10 +21,6 @@ import { OmDegSpørsmålId } from '../OmDeg/spørsmål';
 import Oppsummering from './Oppsummering';
 
 describe('Oppsummering', () => {
-    beforeEach(() => {
-        silenceConsoleErrors();
-    });
-
     it('stopper fra å gå videre hvis søknaden har mangler', async () => {
         const søknad = mockDeep<ISøknad>({
             erAvdødPartnerForelder: {

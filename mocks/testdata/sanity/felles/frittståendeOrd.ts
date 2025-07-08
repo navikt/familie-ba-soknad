@@ -1,0 +1,32 @@
+import { IFrittståendeOrdTekstinnhold } from '../../../../src/frontend/typer/sanity/tekstInnhold';
+import { lagLocaleRecordString } from '../lagSanityObjekter';
+
+export const frittståendeOrdTekstinnhold: IFrittståendeOrdTekstinnhold = {
+    i: lagLocaleRecordString(),
+    utenfor: lagLocaleRecordString(),
+    barn: lagLocaleRecordString(),
+    navn: lagLocaleRecordString(),
+    utlandet: lagLocaleRecordString(),
+    norge: lagLocaleRecordString(),
+    ja: lagLocaleRecordString(),
+    nei: lagLocaleRecordString(),
+    jegVetIkke: lagLocaleRecordString(),
+    barnetrygd: lagLocaleRecordString(),
+    skjult: lagLocaleRecordString(),
+    av: lagLocaleRecordString(),
+    steg: lagLocaleRecordString(),
+    visAlleSteg: lagLocaleRecordString(),
+    skjulAlleSteg: lagLocaleRecordString(),
+    fra: lagLocaleRecordString(),
+    utenlandsopphold: lagLocaleRecordString(),
+    arbeidsperioder: lagLocaleRecordString(),
+    pensjonsperioder: lagLocaleRecordString(),
+    tidligereSamboere: lagLocaleRecordString(),
+    barnetrygdperioder: lagLocaleRecordString(),
+    utbetalingsperioder: lagLocaleRecordString(),
+    vedlegg: lagLocaleRecordString(),
+    vedleggMedFeil: lagLocaleRecordString(),
+    slipp: lagLocaleRecordString(),
+    eller: lagLocaleRecordString(),
+    og: lagLocaleRecordString(),
+};
