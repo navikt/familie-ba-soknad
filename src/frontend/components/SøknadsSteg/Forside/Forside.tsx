@@ -5,10 +5,8 @@ import { setAvailableLanguages } from '@navikt/nav-dekoratoren-moduler';
 
 import Miljø from '../../../../shared-utils/Miljø';
 import { useAppContext } from '../../../context/AppContext';
-import useFørsteRender from '../../../hooks/useFørsteRender';
 import { RouteEnum } from '../../../typer/routes';
 import { ESanitySteg, Typografi } from '../../../typer/sanity/sanity';
-import { logSidevisningBarnetrygd } from '../../../utils/amplitude';
 import InnholdContainer from '../../Felleskomponenter/InnholdContainer/InnholdContainer';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 
@@ -16,9 +14,7 @@ import BekreftelseOgStartSoknad from './BekreftelseOgStartSoknad';
 import { FortsettPåSøknad } from './FortsettPåSøknad';
 
 const Forside: React.FC = () => {
-    const { mellomlagretVerdi, søknad, settNåværendeRoute, tekster, plainTekst } = useAppContext();
-
-    useFørsteRender(() => logSidevisningBarnetrygd(`${RouteEnum.Forside}`, søknad.søknadstype));
+    const { mellomlagretVerdi, settNåværendeRoute, tekster, plainTekst } = useAppContext();
 
     useEffect(() => {
         settNåværendeRoute(RouteEnum.Forside);

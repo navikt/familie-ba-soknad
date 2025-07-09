@@ -10,15 +10,9 @@ import { setAvailableLanguages } from '@navikt/nav-dekoratoren-moduler';
 import { useAppContext } from '../../../context/AppContext';
 import { useAppNavigationContext } from '../../../context/AppNavigationContext';
 import { useStegContext } from '../../../context/StegContext';
-import useFørsteRender from '../../../hooks/useFørsteRender';
 import { RouteEnum } from '../../../typer/routes';
 import { LocaleRecordBlock } from '../../../typer/sanity/sanity';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
-import {
-    logKlikkGåVidere,
-    logSidevisningBarnetrygd,
-    logSkjemaStegFullført,
-} from '../../../utils/amplitude';
 import { visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
 import InnholdContainer from '../InnholdContainer/InnholdContainer';
 import TekstBlock from '../Sanity/TekstBlock';
@@ -63,7 +57,6 @@ const Steg: React.FC<ISteg> = ({
         gåTilbakeTilStart,
         settNåværendeRoute,
         modellVersjonOppdatert,
-        søknad,
         tekster,
         plainTekst,
     } = useAppContext();
@@ -82,7 +75,6 @@ const Steg: React.FC<ISteg> = ({
     const formProgressSteg = useFormProgressSteg();
 
     const nyesteNåværendeRoute: RouteEnum = hentNåværendeSteg().route;
-    useFørsteRender(() => logSidevisningBarnetrygd(nyesteNåværendeRoute, søknad.søknadstype));
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -119,13 +111,11 @@ const Steg: React.FC<ISteg> = ({
         if (komFra) {
             settKomFra(undefined);
         }
-        logSkjemaStegFullført(hentNåværendeStegIndex() + 1, søknad.søknadstype);
         navigate(målPath);
     };
 
     const håndterGåVidere = event => {
         event.preventDefault();
-        logKlikkGåVidere(hentNåværendeStegIndex() + 1, søknad.søknadstype);
         if (skjema) {
             if (skjema.validerFelterOgVisFeilmelding()) {
                 skjema.settSøknadsdataCallback();
