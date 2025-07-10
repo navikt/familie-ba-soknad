@@ -7,7 +7,6 @@ import { useEøsContext } from '../../../context/EøsContext';
 import { useStegContext } from '../../../context/StegContext';
 import { ESøknadstype } from '../../../typer/kontrakt/generelle';
 import { ISteg } from '../../../typer/routes';
-import { logFortsettPåSøknad, logSkjemaStartet } from '../../../utils/amplitude';
 
 export enum BekreftelseStatus {
     NORMAL = 'NORMAL',
@@ -78,7 +77,6 @@ export const useBekreftelseOgStartSoknad = (): {
             );
             settSøkerTriggerEøs(søker.triggetEøs);
             settGjenpprettetFraMellomlagring(true);
-            logFortsettPåSøknad(mellomlagretVerdi.søknad.søknadstype);
         } else {
             navigate(nesteRoute.path);
         }
@@ -100,7 +98,6 @@ export const useBekreftelseOgStartSoknad = (): {
             if (!erStegUtfyltFrafør(nåværendeStegIndex)) {
                 settSisteUtfylteStegIndex(nåværendeStegIndex);
             }
-            logSkjemaStartet(søknadstype);
             navigate(nesteRoute.path);
         } else {
             if (søknadstype === undefined) {
