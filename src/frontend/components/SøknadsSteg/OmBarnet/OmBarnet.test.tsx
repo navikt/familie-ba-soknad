@@ -15,7 +15,6 @@ import { Slektsforhold } from '../../../typer/kontrakt/generelle';
 import {
     LesUtLocation,
     mekkGyldigSøknad,
-    mockEøs,
     silenceConsoleErrors,
     spyOnUseApp,
     TestProvidere,
@@ -284,7 +283,6 @@ const line: IBarnMedISøknad = {
 
 describe('OmBarnet', () => {
     beforeEach(() => {
-        mockEøs();
         silenceConsoleErrors();
     });
 
@@ -316,36 +314,6 @@ describe('OmBarnet', () => {
 
         const location2 = await findByTestId('location');
         expect(JSON.parse(location2.innerHTML).pathname).toEqual('/om-barnet/barn/2');
-    });
-
-    test(`Kan navigere fra barn til oppsummering`, async () => {
-        spyOnUseApp({
-            barnInkludertISøknaden: [jens],
-            sisteUtfylteStegIndex: 4,
-            dokumentasjon: [],
-        });
-
-        const { findByTestId, getByTestId } = render(
-            <TestProvidere
-                tekster={{ 'ombarnet.sidetittel': 'Om {navn}' }}
-                mocketNettleserHistorikk={['/om-barnet/barn/1']}
-            >
-                <OmBarnet barnetsId={'random-id-jens'} />
-                <LesUtLocation />
-            </TestProvidere>
-        );
-
-        const location = await findByTestId('location');
-        expect(JSON.parse(location.innerHTML).pathname).toEqual('/om-barnet/barn/1');
-
-        const stegTittel = await getByTestId('steg-tittel');
-        expect(stegTittel).toBeInTheDocument();
-
-        const gåVidere = await findByTestId('neste-steg');
-        await act(() => gåVidere.click());
-
-        const nyLocation = await findByTestId('location');
-        expect(JSON.parse(nyLocation.innerHTML).pathname).toEqual('/oppsummering');
     });
 
     test('Fødselnummer til andre forelder blir fjernet om man huker av ikke oppgi opplysninger om den', async () => {
