@@ -8,12 +8,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 
 import { ESivilstand, ESøknadstype } from '../../../typer/kontrakt/generelle';
 import { ISøknad } from '../../../typer/søknad';
-import {
-    silenceConsoleErrors,
-    spyOnUseApp,
-    TestProvidere,
-    TestProvidereMedEkteTekster,
-} from '../../../utils/testing';
+import { silenceConsoleErrors, spyOnUseApp, TestProvidere } from '../../../utils/testing';
 
 import DinLivssituasjon from './DinLivssituasjon';
 import { DinLivssituasjonSpørsmålId } from './spørsmål';
@@ -53,9 +48,9 @@ describe('DinLivssituasjon', () => {
         spyOnUseApp(søknad);
 
         const { findByTestId } = render(
-            <TestProvidereMedEkteTekster>
+            <TestProvidere>
                 <DinLivssituasjon />
-            </TestProvidereMedEkteTekster>
+            </TestProvidere>
         );
         expect(await findByTestId('steg-tittel')).toBeInTheDocument();
     });
@@ -64,9 +59,9 @@ describe('DinLivssituasjon', () => {
         spyOnUseApp(søknad);
 
         const { findByTestId, getByTestId } = render(
-            <TestProvidereMedEkteTekster>
+            <TestProvidere>
                 <DinLivssituasjon />
-            </TestProvidereMedEkteTekster>
+            </TestProvidere>
         );
         const gåVidere = await findByTestId('neste-steg');
         act(() => gåVidere.click());
@@ -92,23 +87,19 @@ describe('DinLivssituasjon', () => {
     });
 
     it('Viser spørsmål harSamboerNå', async () => {
-        spyOnUseApp(søknad);
-
         const { findByTestId } = render(
-            <TestProvidereMedEkteTekster>
+            <TestProvidere>
                 <DinLivssituasjon />
-            </TestProvidereMedEkteTekster>
+            </TestProvidere>
         );
         expect(await findByTestId('har-samboer-nå')).toBeDefined();
     });
 
     it('Viser feilmelding med spørsmål tittel når ikke utfylt', async () => {
-        spyOnUseApp(søknad);
-
         const { findByTestId, getByTestId } = render(
-            <TestProvidereMedEkteTekster>
+            <TestProvidere>
                 <DinLivssituasjon />
-            </TestProvidereMedEkteTekster>
+            </TestProvidere>
         );
         const gåVidere = await findByTestId('neste-steg');
         act(() => gåVidere.click());
@@ -121,12 +112,10 @@ describe('DinLivssituasjon', () => {
     });
 
     it('Viser riktige feilmeldinger ved ingen utfylte felt av nåværende samboer', async () => {
-        spyOnUseApp(søknad);
-
         const { findByTestId, getByTestId } = render(
-            <TestProvidereMedEkteTekster>
+            <TestProvidere>
                 <DinLivssituasjon />
-            </TestProvidereMedEkteTekster>
+            </TestProvidere>
         );
 
         const harSamboerNåSpmFieldset: HTMLElement = await findByTestId(
