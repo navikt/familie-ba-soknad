@@ -7,18 +7,12 @@ import { mockDeep } from 'vitest-mock-extended';
 import type { Felt, ISkjema } from '@navikt/familie-skjema';
 
 import { SkjemaFeltTyper } from '../../../typer/skjema';
-import {
-    mockEøs,
-    silenceConsoleErrors,
-    spyOnUseApp,
-    TestProvidereMedEkteTekster,
-} from '../../../utils/testing';
+import { mockEøs, silenceConsoleErrors, TestProvidere } from '../../../utils/testing';
 
 import { LandDropdown } from './LandDropdown';
 
 describe('LandDropdown', () => {
     beforeEach(() => {
-        spyOnUseApp({});
         silenceConsoleErrors();
     });
 
@@ -31,9 +25,9 @@ describe('LandDropdown', () => {
         const skjema = mockDeep<ISkjema<SkjemaFeltTyper, string>>();
 
         const { findAllByRole } = render(
-            <TestProvidereMedEkteTekster>
+            <TestProvidere>
                 <LandDropdown felt={felt} skjema={skjema} />
-            </TestProvidereMedEkteTekster>
+            </TestProvidere>
         );
 
         const options = await findAllByRole('option');
@@ -54,9 +48,9 @@ describe('LandDropdown', () => {
         const skjema = mockDeep<ISkjema<SkjemaFeltTyper, string>>();
 
         const { findAllByRole } = render(
-            <TestProvidereMedEkteTekster>
+            <TestProvidere>
                 <LandDropdown felt={felt} skjema={skjema} kunEøs />
-            </TestProvidereMedEkteTekster>
+            </TestProvidere>
         );
 
         const options = await findAllByRole('option');

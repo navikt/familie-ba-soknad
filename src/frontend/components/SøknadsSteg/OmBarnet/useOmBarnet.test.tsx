@@ -1,8 +1,5 @@
-import { act } from 'react';
-
 import { renderHook } from '@testing-library/react';
 import { DeepPartial } from 'ts-essentials';
-import { vi } from 'vitest';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
@@ -13,16 +10,13 @@ import {
 } from '../../../typer/barn';
 import { IBarn } from '../../../typer/person';
 import { genererInitialBarnMedISøknad, genererInitiellAndreForelder } from '../../../utils/barn';
-import { mockEøs, spyOnUseApp, TestProvidere } from '../../../utils/testing';
+import { spyOnUseApp, TestProvidere } from '../../../utils/testing';
 import { OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
 
 import { OmBarnetSpørsmålsId } from './spørsmål';
 import { useOmBarnet } from './useOmBarnet';
 
 describe('useOmBarnet', () => {
-    beforeEach(() => {
-        mockEøs();
-    });
     const barnFraPdl: IBarn = {
         id: 'random-id-1',
         navn: 'Barn Barnessen',
@@ -31,14 +25,6 @@ describe('useOmBarnet', () => {
         alder: null,
         adressebeskyttelse: false,
     };
-
-    beforeEach(() => {
-        vi.useFakeTimers();
-    });
-
-    afterEach(() => {
-        vi.useRealTimers();
-    });
 
     it('Setter institusjonsfelter til tomme strenger hvis barnet ikke bor på institusjon', async () => {
         const barn: Partial<IBarnMedISøknad> = {
@@ -82,10 +68,6 @@ describe('useOmBarnet', () => {
         expect(institusjonspostnummer.erSynlig).toEqual(false);
         expect(institusjonOppholdStartdato.erSynlig).toEqual(false);
         expect(institusjonOppholdSluttdato.erSynlig).toEqual(false);
-
-        await act(async () => {
-            vi.advanceTimersByTime(500);
-        });
     });
 
     it('Setter opphold i Norge-felter til tomme dersom barnet har oppholdt seg i Norge siste 12 mnd', async () => {
@@ -116,10 +98,6 @@ describe('useOmBarnet', () => {
 
         expect(planleggerÅBoINorge12Mnd.verdi).toEqual(null);
         expect(planleggerÅBoINorge12Mnd.erSynlig).toEqual(false);
-
-        await act(async () => {
-            vi.advanceTimersByTime(500);
-        });
     });
 
     it('Fjerner at man skal oppgi andre foreldrens fødselsnummer når man ikke vil oppgi personopplysninger', async () => {
@@ -164,9 +142,5 @@ describe('useOmBarnet', () => {
         expect(andreForelderKanIkkeGiOpplysninger.erSynlig).toEqual(true);
         expect(andreForelderKanIkkeGiOpplysninger.verdi).toEqual(ESvar.JA);
         expect(andreForelderFnr.erSynlig).toEqual(false);
-
-        await act(async () => {
-            vi.advanceTimersByTime(500);
-        });
     });
 });

@@ -30,7 +30,6 @@ import { EøsProvider } from '../context/EøsContext';
 import { FeatureTogglesProvider } from '../context/FeatureTogglesContext';
 import { InnloggetProvider } from '../context/InnloggetContext';
 import { LastRessurserProvider } from '../context/LastRessurserContext';
-import * as pdlRequest from '../context/pdl';
 import { RoutesProvider } from '../context/RoutesContext';
 import { SanityProvider } from '../context/SanityContext';
 import { SpråkProvider } from '../context/SpråkContext';
@@ -40,20 +39,14 @@ import { AlternativtSvarForInput, LocaleType } from '../typer/common';
 import { ESivilstand, ESøknadstype, Slektsforhold } from '../typer/kontrakt/generelle';
 import { IKvittering } from '../typer/kvittering';
 import { IUtenlandsperiode } from '../typer/perioder';
-import { ISøker, ISøkerRespons } from '../typer/person';
+import { ISøker } from '../typer/person';
 import { initialStateSøknad, ISøknad } from '../typer/søknad';
 import { EUtenlandsoppholdÅrsak } from '../typer/utenlandsopphold';
 import { Årsak } from '../typer/utvidet';
 
 import { genererInitialBarnMedISøknad } from './barn';
 
-vi.mock('../context/pdl');
-
 export const spyOnUseApp = søknad => {
-    vi.spyOn(pdlRequest, 'hentSluttbrukerFraPdl').mockImplementation(async () => ({
-        status: RessursStatus.SUKSESS,
-        data: mockDeep<ISøkerRespons>({ sivilstand: { type: ESivilstand.UGIFT }, ...søknad.søker }),
-    }));
     const tilRestLocaleRecord = vi.fn();
     const settSøknad = vi.fn();
     const erPåKvitteringsside = vi.fn().mockImplementation(() => false);

@@ -2,11 +2,9 @@ import React from 'react';
 
 import { render } from '@testing-library/react';
 import { vi } from 'vitest';
-import { mockDeep } from 'vitest-mock-extended';
 
-import { ISøknad } from '../../../typer/søknad';
 import * as hjelpefunksjoner from '../../../utils/hjelpefunksjoner';
-import { spyOnUseApp, TestProvidereMedEkteTekster } from '../../../utils/testing';
+import { TestProvidereMedEkteTekster } from '../../../utils/testing';
 
 import { TilfeldigBarnIkon } from './TilfeldigBarnIkon';
 
@@ -39,7 +37,6 @@ describe('TilfeldigBarnIkon', () => {
 
     it('kan låse barnikon mellom rerenders med prop', () => {
         const spy = vi.spyOn(hjelpefunksjoner, 'randomIntFraIntervall');
-        spyOnUseApp(mockDeep<ISøknad>({ barnInkludertISøknaden: [{ id: '1' }, { id: '2' }] }));
 
         const { rerender } = render(
             <TestProvidereMedEkteTekster>

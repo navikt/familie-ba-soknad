@@ -1,7 +1,4 @@
-import { act } from 'react';
-
 import { renderHook } from '@testing-library/react';
-import { vi } from 'vitest';
 
 import { ESivilstand } from '../../typer/kontrakt/generelle';
 import { ISøknadKontrakt } from '../../typer/kontrakt/kontrakt';
@@ -16,15 +13,6 @@ import { erGyldigISøknadKontrakt } from '../../utils/typeguards';
 import { useSendInnSkjema } from '../useSendInnSkjema';
 
 describe('useSendInnSkjema', () => {
-    beforeEach(() => {
-        vi.useFakeTimers();
-    });
-
-    afterEach(() => {
-        vi.clearAllTimers();
-        vi.useRealTimers();
-    });
-
     it('mapper til gyldig utvidet kontrakt', async () => {
         const iSøknad = mekkGyldigUtvidetSøknad();
         spyOnUseApp(iSøknad);
@@ -33,9 +21,6 @@ describe('useSendInnSkjema', () => {
         });
         const [_, formatert]: [boolean, ISøknadKontrakt] = await result.current.sendInnSkjema();
         expect(erGyldigISøknadKontrakt(formatert)).toBeTruthy();
-        await act(async () => {
-            vi.advanceTimersByTime(500);
-        });
     });
 
     it('Kan mappe sivilstandenum til språktekster', () => {
