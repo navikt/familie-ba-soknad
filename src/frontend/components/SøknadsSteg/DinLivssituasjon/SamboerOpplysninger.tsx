@@ -8,6 +8,7 @@ import { AlternativtSvarForInput } from '../../../typer/common';
 import { ITidligereSamboer } from '../../../typer/person';
 import { ITidligereSamoboereTekstinnhold } from '../../../typer/sanity/modaler/tidligereSamboere';
 import { formaterDato } from '../../../utils/dato';
+import { formaterFnr } from '../../../utils/visning';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import { OppsummeringFelt } from '../Oppsummering/OppsummeringFelt';
 
@@ -37,7 +38,7 @@ const SamboerOpplysninger: React.FC<{
                                 block={teksterForModal.foedselsnummerEllerDNummer.checkboxLabel}
                             />
                         ) : (
-                            samboer.ident.svar
+                            formaterFnr(samboer.ident.svar)
                         )}
                     </OppsummeringFelt>
                     {samboer.fødselsdato.svar && (

@@ -14,6 +14,7 @@ import { ESanitySteg } from '../../../../typer/sanity/sanity';
 import { genererAdresseVisning } from '../../../../utils/adresse';
 import { landkodeTilSpråk } from '../../../../utils/språk';
 import { jaNeiSvarTilSpråkId } from '../../../../utils/spørsmål';
+import { formaterFnr } from '../../../../utils/visning';
 import TekstBlock from '../../../Felleskomponenter/Sanity/TekstBlock';
 import { UtenlandsperiodeOppsummering } from '../../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsperiodeOppsummering';
 import { useOmdeg } from '../../OmDeg/useOmdeg';
@@ -51,7 +52,7 @@ const OmDegOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
             />
             <OppsummeringFelt
                 tittel={plainTekst(omDegTekster.ident)}
-                søknadsvar={søknad.søker.ident}
+                søknadsvar={formaterFnr(søknad.søker.ident)}
             />
             <OppsummeringFelt
                 tittel={plainTekst(omDegTekster.statsborgerskap)}

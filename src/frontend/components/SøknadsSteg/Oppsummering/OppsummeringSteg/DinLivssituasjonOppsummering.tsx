@@ -14,6 +14,7 @@ import { PersonType } from '../../../../typer/personType';
 import { RouteEnum } from '../../../../typer/routes';
 import { formaterDato } from '../../../../utils/dato';
 import { hentÅrsak } from '../../../../utils/språk';
+import { formaterFnr } from '../../../../utils/visning';
 import { ArbeidsperiodeOppsummering } from '../../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeOppsummering';
 import { PensjonsperiodeOppsummering } from '../../../Felleskomponenter/Pensjonsmodal/PensjonsperiodeOppsummering';
 import TekstBlock from '../../../Felleskomponenter/Sanity/TekstBlock';
@@ -45,7 +46,7 @@ const SamboerOppsummering: React.FC<{ samboer: ISamboer | ITidligereSamboer }> =
                                 ? formatMessage({
                                       id: samboerSpråkIder.fnrUkjent,
                                   })
-                                : samboer.ident.svar
+                                : formaterFnr(samboer.ident.svar)
                         }
                     />
                     {samboer.fødselsdato.svar && (
