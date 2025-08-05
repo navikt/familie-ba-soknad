@@ -221,6 +221,13 @@ export interface IBarnetrygdperioderFeltTyper {
     tilDatoBarnetrygdperiode: ISODateString;
     månedligBeløp: string;
 }
+
+export interface ISvalbardPeriodeFeltTyper {
+    fraDatoSvalbardOpphold: ISODateString;
+    tilDatoSvalbardOpphold: ISODateString;
+    tilDatoSvalbardOppholdUkjent: ESvar;
+}
+
 export type SkjemaFeltTyper =
     | IOmDegFeltTyper
     | IVelgBarnFeltTyper
@@ -235,4 +242,5 @@ export type SkjemaFeltTyper =
     | IEøsForBarnFeltTyper
     | IUtbetalingerFeltTyper
     | IArbeidsperioderFeltTyper
-    | IBarnetrygdperioderFeltTyper;
+    | IBarnetrygdperioderFeltTyper
+    | ISvalbardPeriodeFeltTyper;

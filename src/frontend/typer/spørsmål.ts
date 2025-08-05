@@ -1,6 +1,7 @@
 import { ArbeidsperiodeSpørsmålsId } from '../components/Felleskomponenter/Arbeidsperiode/spørsmål';
 import { BarnetrygdperiodeSpørsmålId } from '../components/Felleskomponenter/Barnetrygdperiode/spørsmål';
 import { PensjonsperiodeSpørsmålId } from '../components/Felleskomponenter/Pensjonsmodal/spørsmål';
+import { SvalbardOppholdSpørsmålId } from '../components/Felleskomponenter/SvalbardOppholdModal.tsx/spørsmål';
 import { UtbetalingerSpørsmålId } from '../components/Felleskomponenter/UtbetalingerModal/spørsmål';
 import { UtenlandsoppholdSpørsmålId } from '../components/Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 import {
@@ -29,7 +30,8 @@ export type SpørsmålId =
     | BarnetrygdperiodeSpørsmålId
     | PensjonsperiodeSpørsmålId
     | EøsSøkerSpørsmålId
-    | EøsBarnSpørsmålId;
+    | EøsBarnSpørsmålId
+    | SvalbardOppholdSpørsmålId;
 
 export interface ISøknadSpørsmål<T> {
     id: SpørsmålId;

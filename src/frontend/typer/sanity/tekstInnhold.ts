@@ -15,6 +15,7 @@ import { IBarnetrygdsperiodeTekstinnhold } from './modaler/barnetrygdperiode';
 import { ILeggTilBarnTekstinnhold } from './modaler/leggTilBarn';
 import { IPensjonsperiodeTekstinnhold } from './modaler/pensjonsperiode';
 import { IStartPåNyttModal } from './modaler/startPåNytt';
+import { ISvalbardOppholdTekstinnhold } from './modaler/svalbardOpphold';
 import { ITidligereSamoboereTekstinnhold } from './modaler/tidligereSamboere';
 import { IUtenlandsoppholdTekstinnhold } from './modaler/utenlandsopphold';
 import {
@@ -157,6 +158,7 @@ export interface IModalerTekstinnhold {
         barn: IUtenlandsoppholdTekstinnhold;
         andreForelder: IUtenlandsoppholdTekstinnhold;
     };
+    svalbardOpphold: ISvalbardOppholdTekstinnhold;
     startPåNytt: IStartPåNyttModal;
     leggTilBarn: ILeggTilBarnTekstinnhold;
 }
