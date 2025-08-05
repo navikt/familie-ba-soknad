@@ -76,6 +76,12 @@ const OmDegOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                     søknadsvar={søknad.søker.borPåRegistrertAdresse.svar}
                 />
             )}
+            {søknad.søker.borPåSvalbard.svar && (
+                <OppsummeringFelt
+                    tittel={<TekstBlock block={omDegTekster.borPaaSvalbard.sporsmal} />}
+                    søknadsvar={søknad.søker.borPåSvalbard.svar}
+                />
+            )}
             <OppsummeringFelt
                 tittel={<TekstBlock block={omDegTekster.vaertINorgeITolvMaaneder.sporsmal} />}
                 søknadsvar={søknad.søker.værtINorgeITolvMåneder.svar}

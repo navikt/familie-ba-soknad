@@ -49,6 +49,7 @@ export interface ISøker extends Omit<ISøkerRespons, 'barn'> {
     barn: IBarn[];
     triggetEøs: boolean;
     borPåRegistrertAdresse: ISøknadSpørsmål<ESvar | null>;
+    borPåSvalbard: ISøknadSpørsmål<ESvar | null>;
     værtINorgeITolvMåneder: ISøknadSpørsmål<ESvar | null>;
     utenlandsperioder: IUtenlandsperiode[];
     planleggerÅBoINorgeTolvMnd: ISøknadSpørsmål<ESvar | null>;

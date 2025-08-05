@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { Alert } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useAppContext } from '../../../context/AppContext';
@@ -50,8 +51,10 @@ const OmDeg: React.FC = () => {
         omDegTittel,
         omDegGuide,
         borPaaRegistrertAdresse,
+        borPaaSvalbard,
         vaertINorgeITolvMaaneder,
         planleggerAaBoINorgeTolvMnd,
+        personopplysningerAlert,
     } = stegTekster;
 
     const frittståendeOrdTekster = tekster().FELLES.frittståendeOrd;
@@ -68,11 +71,25 @@ const OmDeg: React.FC = () => {
             }}
         >
             <Personopplysninger />
-            <JaNeiSpm
-                skjema={skjema}
-                felt={skjema.felter.borPåRegistrertAdresse}
-                spørsmålDokument={borPaaRegistrertAdresse}
-            />
+            <KomponentGruppe>
+                <JaNeiSpm
+                    skjema={skjema}
+                    felt={skjema.felter.borPåRegistrertAdresse}
+                    spørsmålDokument={borPaaRegistrertAdresse}
+                />
+                {skjema.felter.borPåRegistrertAdresse.verdi === ESvar.NEI && (
+                    <Alert variant="warning">
+                        <TekstBlock block={personopplysningerAlert} />
+                    </Alert>
+                )}
+            </KomponentGruppe>
+            {skjema.felter.borPåSvalbard.erSynlig && (
+                <JaNeiSpm
+                    skjema={skjema}
+                    felt={skjema.felter.borPåSvalbard}
+                    spørsmålDokument={borPaaSvalbard}
+                />
+            )}
             <KomponentGruppe>
                 <JaNeiSpm
                     skjema={skjema}

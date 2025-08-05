@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { ESvar } from '@navikt/familie-form-elements';
-import { feil, type ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
+import { feil, type FeltState, type ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
 import { useAppContext } from '../../../context/AppContext';
 import { useEøsContext } from '../../../context/EøsContext';
@@ -46,6 +46,24 @@ export const useOmdeg = (): {
         feilmelding: teksterForSteg.borPaaRegistrertAdresse.feilmelding,
         feilmeldingSpråkId: 'omdeg.borpådenneadressen.feilmelding',
         skalSkjules: !søker.adresse || søker.adressebeskyttelse,
+    });
+
+    const borPåSvalbard = useFelt<ESvar | null>({
+        feltId: søker.borPåSvalbard.id,
+        verdi: borPåRegistrertAdresse.verdi === ESvar.JA ? null : søker.borPåSvalbard.svar,
+        valideringsfunksjon: (felt: FeltState<ESvar | null>) => {
+            return felt.verdi !== null
+                ? ok(felt)
+                : feil(felt, plainTekst(teksterForSteg.borPaaSvalbard.feilmelding));
+        },
+        skalFeltetVises: avhengigheter => {
+            return (
+                avhengigheter &&
+                avhengigheter.borPåRegistrertAdresse &&
+                avhengigheter.borPåRegistrertAdresse.verdi === ESvar.NEI
+            );
+        },
+        avhengigheter: { borPåRegistrertAdresse },
     });
 
     const værtINorgeITolvMåneder = useJaNeiSpmFelt({
@@ -137,6 +155,10 @@ export const useOmdeg = (): {
             ...søker.borPåRegistrertAdresse,
             svar: skjema.felter.borPåRegistrertAdresse.verdi,
         },
+        borPåSvalbard: {
+            ...søker.borPåSvalbard,
+            svar: skjema.felter.borPåSvalbard.verdi,
+        },
         værtINorgeITolvMåneder: {
             ...søker.værtINorgeITolvMåneder,
             svar: skjema.felter.værtINorgeITolvMåneder.verdi,
@@ -179,6 +201,7 @@ export const useOmdeg = (): {
     >({
         felter: {
             borPåRegistrertAdresse,
+            borPåSvalbard,
             værtINorgeITolvMåneder,
             planleggerÅBoINorgeTolvMnd,
             registrerteUtenlandsperioder,

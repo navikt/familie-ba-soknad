@@ -74,6 +74,10 @@ export const initialStateSøknad = (): ISøknad => {
                 id: OmDegSpørsmålId.borPåRegistrertAdresse,
                 svar: null,
             },
+            borPåSvalbard: {
+                id: OmDegSpørsmålId.borPåSvalbard,
+                svar: null,
+            },
             værtINorgeITolvMåneder: {
                 id: OmDegSpørsmålId.værtINorgeITolvMåneder,
                 svar: null,

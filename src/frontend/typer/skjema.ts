@@ -104,6 +104,7 @@ export interface IOmBarnetFeltTyper {
 
 export interface IOmDegFeltTyper {
     borPåRegistrertAdresse: ESvar | null;
+    borPåSvalbard: ESvar | null;
     værtINorgeITolvMåneder: ESvar | null;
     planleggerÅBoINorgeTolvMnd: ESvar | null;
     registrerteUtenlandsperioder: IUtenlandsperiode[];
