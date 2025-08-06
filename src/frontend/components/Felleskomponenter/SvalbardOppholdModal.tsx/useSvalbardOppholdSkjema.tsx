@@ -47,6 +47,7 @@ export const useSvalbardOppholdSkjema = () => {
         felter: {
             fraDatoSvalbardOpphold: fraDato,
             tilDatoSvalbardOpphold: tilDato,
+            tilDatoSvalbardOppholdUkjent: tilDatoUkjent,
         },
         skjemanavn: 'svalbardOpphold',
     });
