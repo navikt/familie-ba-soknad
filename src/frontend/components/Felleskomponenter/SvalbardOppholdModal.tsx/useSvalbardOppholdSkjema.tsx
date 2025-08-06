@@ -8,7 +8,7 @@ import useDatovelgerFeltMedUkjentForSanity from '../../../hooks/useDatovelgerFel
 import useDatovelgerFeltForSanity from '../../../hooks/useSendInnSkjemaTest/useDatovelgerForSanity';
 import { ISvalbardOppholdTekstinnhold } from '../../../typer/sanity/modaler/svalbardOpphold';
 import { ESanitySteg } from '../../../typer/sanity/sanity';
-import { ISvalbardPeriodeFeltTyper } from '../../../typer/skjema';
+import { ISvalbardOppholdPeriodeFeltTyper } from '../../../typer/skjema';
 import { dagensDato } from '../../../utils/dato';
 
 import { SvalbardOppholdSpørsmålId } from './spørsmål';
@@ -45,13 +45,13 @@ export const useSvalbardOppholdSkjema = () => {
         nullstillVedAvhengighetEndring: false,
     });
 
-    const skjema = useSkjema<ISvalbardPeriodeFeltTyper, 'string'>({
+    const skjema = useSkjema<ISvalbardOppholdPeriodeFeltTyper, 'string'>({
         felter: {
             fraDatoSvalbardOpphold: fraDato,
             tilDatoSvalbardOpphold: tilDato,
             tilDatoSvalbardOppholdUkjent: tilDatoUkjent,
         },
-        skjemanavn: 'utenlandsopphold',
+        skjemanavn: 'svalbardOpphold',
     });
 
     return {

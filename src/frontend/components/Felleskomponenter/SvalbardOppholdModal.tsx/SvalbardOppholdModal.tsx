@@ -28,14 +28,14 @@ import SkjemaModal from '../SkjemaModal/SkjemaModal';
 interface Props {
     erÅpen: boolean;
     lukkModal: () => void;
-    onLeggTilSvalbardPeriode: (periode: ISvarbardPeriode) => void;
+    onLeggTilSvalbardOppholdPeriode: (periode: ISvarbardPeriode) => void;
     forklaring?: string;
 }
 
 export const SvalbardOppholdModal: React.FC<Props> = ({
     erÅpen,
     lukkModal,
-    onLeggTilSvalbardPeriode,
+    onLeggTilSvalbardOppholdPeriode,
     forklaring = undefined,
 }) => {
     const { tekster, plainTekst } = useAppContext();

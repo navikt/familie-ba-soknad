@@ -222,7 +222,7 @@ export interface IBarnetrygdperioderFeltTyper {
     månedligBeløp: string;
 }
 
-export interface ISvalbardPeriodeFeltTyper {
+export interface ISvalbardOppholdPeriodeFeltTyper {
     fraDatoSvalbardOpphold: ISODateString;
     tilDatoSvalbardOpphold: ISODateString;
     tilDatoSvalbardOppholdUkjent: ESvar;
@@ -243,4 +243,4 @@ export type SkjemaFeltTyper =
     | IUtbetalingerFeltTyper
     | IArbeidsperioderFeltTyper
     | IBarnetrygdperioderFeltTyper
-    | ISvalbardPeriodeFeltTyper;
+    | ISvalbardOppholdPeriodeFeltTyper;
