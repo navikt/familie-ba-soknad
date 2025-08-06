@@ -14,6 +14,7 @@ import { IBarnetrygdsperiodeTekstinnhold } from '../typer/sanity/modaler/barnetr
 import { ILeggTilBarnTekstinnhold } from '../typer/sanity/modaler/leggTilBarn';
 import { IPensjonsperiodeTekstinnhold } from '../typer/sanity/modaler/pensjonsperiode';
 import { IStartPåNyttModal } from '../typer/sanity/modaler/startPåNytt';
+import { ISvalbardOppholdTekstinnhold } from '../typer/sanity/modaler/svalbardOpphold';
 import { ITidligereSamoboereTekstinnhold } from '../typer/sanity/modaler/tidligereSamboere';
 import { IUtenlandsoppholdTekstinnhold } from '../typer/sanity/modaler/utenlandsopphold';
 import {
@@ -137,6 +138,9 @@ const strukturertInnholdForModaler = (dokumenter: SanityDokument[]): IModalerTek
             barn: utenlandsopphold(SanityPersonType.BARN),
             andreForelder: utenlandsopphold(SanityPersonType.ANDRE_FORELDER),
         },
+        svalbardOpphold: strukturerInnholdForModal(
+            SanityModalPrefix.SVALBARD_OPPHOLD
+        ) as ISvalbardOppholdTekstinnhold,
         leggTilBarn: strukturerInnholdForModal(
             SanityModalPrefix.LEGG_TIL_BARN
         ) as ILeggTilBarnTekstinnhold,

@@ -41,6 +41,7 @@ export enum SanityModalPrefix {
     UTENLANDSOPPHOLD = 'MODAL_UTENLANDSOPPHOLD',
     START_PAA_NYTT = 'MODAL_START_PAA_NYTT',
     LEGG_TIL_BARN = 'MODAL_LEGG_TIL_BARN',
+    SVALBARD_OPPHOLD = 'MODAL_SVALBARD_OPPHOLD',
 }
 
 export interface ITekstinnhold {

@@ -1,5 +1,5 @@
 import { ESvar } from '@navikt/familie-form-elements';
-import { type FeltState, useFelt, useSkjema } from '@navikt/familie-skjema';
+import { useFelt, useSkjema } from '@navikt/familie-skjema';
 
 import { useAppContext } from '../../../context/AppContext';
 import useDatovelgerFeltMedUkjentForSanity from '../../../hooks/useDatovelgerFeltMedUkjentForSanity';
