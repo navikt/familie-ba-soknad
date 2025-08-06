@@ -69,6 +69,7 @@ export const initialStateSøknad = (): ISøknad => {
                 postnummer: '',
                 poststed: '',
             },
+            svalbardOppholdPerioder: [],
             utenlandsperioder: [],
             borPåRegistrertAdresse: {
                 id: OmDegSpørsmålId.borPåRegistrertAdresse,

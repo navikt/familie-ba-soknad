@@ -15,12 +15,14 @@ import PerioderContainer from '../../Felleskomponenter/PerioderContainer';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
 import Steg from '../../Felleskomponenter/Steg/Steg';
+import { SvalbardOppholdSpørsmålId } from '../../Felleskomponenter/SvalbardOppholdModal.tsx/spørsmål';
 import { UtenlandsoppholdSpørsmålId } from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 import { UtenlandsoppholdModal } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsoppholdModal';
 import { UtenlandsperiodeOppsummering } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsperiodeOppsummering';
 
 import { Personopplysninger } from './Personopplysninger';
 import { useOmdeg } from './useOmdeg';
+import { SvalbardOppholdPeriodeOppsummering } from '../../Felleskomponenter/SvalbardOppholdModal.tsx/SvalbardOppholdPeriodeOppsummering';
 
 const OmDeg: React.FC = () => {
     const { tekster, plainTekst } = useAppContext();
@@ -36,6 +38,9 @@ const OmDeg: React.FC = () => {
         validerFelterOgVisFeilmelding,
         valideringErOk,
         oppdaterSøknad,
+        leggTilSvalbardOppholdPeriode,
+        fjernSvalbardOppholdPeriode,
+        svalbardOppholdPerioder,
         leggTilUtenlandsperiode,
         fjernUtenlandsperiode,
         utenlandsperioder,
@@ -84,11 +89,42 @@ const OmDeg: React.FC = () => {
                 )}
             </KomponentGruppe>
             {skjema.felter.borPåSvalbard.erSynlig && (
-                <JaNeiSpm
-                    skjema={skjema}
-                    felt={skjema.felter.borPåSvalbard}
-                    spørsmålDokument={borPaaSvalbard}
-                />
+                <>
+                    <JaNeiSpm
+                        skjema={skjema}
+                        felt={skjema.felter.borPåSvalbard}
+                        spørsmålDokument={borPaaSvalbard}
+                    />
+                    {skjema.felter.borPåSvalbard.verdi === ESvar.JA && (
+                        <PerioderContainer tittel={'Tittel test'}>
+                            {svalbardOppholdPerioder.map((periode, index) => (
+                                <SvalbardOppholdPeriodeOppsummering
+                                    key={index}
+                                    periode={periode}
+                                    nummer={index + 1}
+                                    fjernPeriodeCallback={fjernSvalbardOppholdPeriode}
+                                />
+                            ))}
+                            <LeggTilKnapp
+                                onClick={åpneSvalbardOppholdModal}
+                                leggTilFlereTekst={
+                                    svalbardOppholdPerioder.length > 0 && 'Flere perioder test'
+                                }
+                                id={SvalbardOppholdSpørsmålId.svalbardOpphold}
+                                feilmelding={
+                                    skjema.felter.registrerteSvalbardOppholdPerioder.erSynlig &&
+                                    skjema.felter.registrerteSvalbardOppholdPerioder.feilmelding &&
+                                    skjema.visFeilmeldinger &&
+                                    // <TekstBlock block={leggTilFeilmelding} />
+                                    'Feilmelding test'
+                                }
+                            >
+                                {/* {<TekstBlock block={leggTilKnapp} />} */}
+                                Legg til knapp
+                            </LeggTilKnapp>
+                        </PerioderContainer>
+                    )}
+                </>
             )}
             <KomponentGruppe>
                 <JaNeiSpm

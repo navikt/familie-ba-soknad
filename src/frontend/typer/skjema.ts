@@ -15,6 +15,7 @@ import {
     IArbeidsperiode,
     IEøsBarnetrygdsperiode,
     IPensjonsperiode,
+    ISvalbardOppholdPeriode,
     IUtbetalingsperiode,
     IUtenlandsperiode,
 } from './perioder';
@@ -105,6 +106,7 @@ export interface IOmBarnetFeltTyper {
 export interface IOmDegFeltTyper {
     borPåRegistrertAdresse: ESvar | null;
     borPåSvalbard: ESvar | null;
+    registrerteSvalbardOppholdPerioder: ISvalbardOppholdPeriode[];
     værtINorgeITolvMåneder: ESvar | null;
     planleggerÅBoINorgeTolvMnd: ESvar | null;
     registrerteUtenlandsperioder: IUtenlandsperiode[];
