@@ -3,9 +3,7 @@ import React from 'react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useAppContext } from '../../../context/AppContext';
-import { IBarnMedISøknad } from '../../../typer/barn';
-import { ISvarbardPeriode, IUtenlandsperiode } from '../../../typer/perioder';
-import { PersonType } from '../../../typer/personType';
+import { ISvalbardOppholdPeriode } from '../../../typer/perioder';
 import { IUtenlandsoppholdTekstinnhold } from '../../../typer/sanity/modaler/utenlandsopphold';
 import { ESanitySteg } from '../../../typer/sanity/sanity';
 import { EUtenlandsoppholdÅrsak } from '../../../typer/utenlandsopphold';
@@ -28,7 +26,7 @@ import SkjemaModal from '../SkjemaModal/SkjemaModal';
 interface Props {
     erÅpen: boolean;
     lukkModal: () => void;
-    onLeggTilSvalbardOppholdPeriode: (periode: ISvarbardPeriode) => void;
+    onLeggTilSvalbardOppholdPeriode: (periode: ISvalbardOppholdPeriode) => void;
     forklaring?: string;
 }
 

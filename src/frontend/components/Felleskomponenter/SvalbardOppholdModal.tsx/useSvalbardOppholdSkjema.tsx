@@ -1,5 +1,3 @@
-import { useEffect } from 'react';
-
 import { ESvar } from '@navikt/familie-form-elements';
 import { type FeltState, useFelt, useSkjema } from '@navikt/familie-skjema';
 
