@@ -1,25 +1,18 @@
 import React from 'react';
 
-import { ESvar } from '@navikt/familie-form-elements';
-
 import { useAppContext } from '../../../context/AppContext';
 import { useSpråkContext } from '../../../context/SpråkContext';
-import { IPensjonsperiode, ISvalbardOppholdPeriode } from '../../../typer/perioder';
-import { PeriodePersonTypeMedBarnProps, PersonType } from '../../../typer/personType';
-import { formaterDatostringKunMåned } from '../../../utils/dato';
-import { landkodeTilSpråk } from '../../../utils/språk';
-import { formaterMånedMedUkjent, uppercaseFørsteBokstav } from '../../../utils/visning';
+import { ISvalbardOppholdPeriode } from '../../../typer/perioder';
+import { formaterMånedMedUkjent } from '../../../utils/visning';
 import { OppsummeringFelt } from '../../SøknadsSteg/Oppsummering/OppsummeringFelt';
 import PeriodeOppsummering from '../PeriodeOppsummering/PeriodeOppsummering';
 import TekstBlock from '../Sanity/TekstBlock';
 
-interface Props {
+interface SvalbardOppholdPeriodeOppsummeringProps {
     svalbardOppholdPeriode: ISvalbardOppholdPeriode;
     nummer: number;
     fjernPeriodeCallback?: (svalbardOppholdPeriode: ISvalbardOppholdPeriode) => void;
 }
-
-type SvalbardOppholdPeriodeOppsummeringProps = Props & PeriodePersonTypeMedBarnProps;
 
 export const SvalbardOppholdPeriodeOppsummering: React.FC<
     SvalbardOppholdPeriodeOppsummeringProps
