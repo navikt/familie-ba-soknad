@@ -225,7 +225,6 @@ export interface IBarnetrygdperioderFeltTyper {
 export interface ISvalbardOppholdPeriodeFeltTyper {
     fraDatoSvalbardOpphold: ISODateString;
     tilDatoSvalbardOpphold: ISODateString;
-    tilDatoSvalbardOppholdUkjent: ESvar;
 }
 
 export type SkjemaFeltTyper =

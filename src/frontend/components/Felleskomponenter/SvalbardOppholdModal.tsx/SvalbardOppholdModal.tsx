@@ -23,6 +23,10 @@ import { SkjemaCheckboxForSanity } from '../SkjemaCheckbox/SkjemaCheckboxForSani
 import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeiloppsummering';
 import SkjemaModal from '../SkjemaModal/SkjemaModal';
 
+import { useSvalbardOppholdSkjema } from './useSvalbardOppholdSkjema';
+import { ISvalbardOppholdTekstinnhold } from '../../../typer/sanity/modaler/svalbardOpphold';
+import { SvalbardOppholdSpørsmålId } from './spørsmål';
+
 interface Props {
     erÅpen: boolean;
     lukkModal: () => void;
@@ -38,42 +42,24 @@ export const SvalbardOppholdModal: React.FC<Props> = ({
 }) => {
     const { tekster, plainTekst } = useAppContext();
     const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } =
-        useUtenlandsoppholdSkjema({
-            personType,
-            barn,
-        });
+        useSvalbardOppholdSkjema();
 
-    const teksterForPersonType: IUtenlandsoppholdTekstinnhold =
-        tekster()[ESanitySteg.FELLES].modaler.utenlandsopphold[personType];
+    const teksterForModal: ISvalbardOppholdTekstinnhold =
+        tekster()[ESanitySteg.FELLES].modaler.svalbardOpphold;
 
     const onLeggTil = () => {
         if (!validerFelterOgVisFeilmelding()) {
             return false;
         }
-        onLeggTilUtenlandsperiode({
-            utenlandsoppholdÅrsak: {
-                id: UtenlandsoppholdSpørsmålId.årsakUtenlandsopphold,
-                svar: skjema.felter.utenlandsoppholdÅrsak.verdi as EUtenlandsoppholdÅrsak,
+        onLeggTilSvalbardOppholdPeriode({
+            fraDatoSvalbardOpphold: {
+                id: SvalbardOppholdSpørsmålId.fraDato,
+                svar: skjema.felter.fraDatoSvalbardOpphold.verdi,
             },
-            oppholdsland: {
-                id: UtenlandsoppholdSpørsmålId.landUtenlandsopphold,
-                svar: skjema.felter.oppholdsland.verdi,
+            tilDatoSvalbardOpphold: {
+                id: SvalbardOppholdSpørsmålId.tilDato,
+                svar: skjema.felter.tilDatoSvalbardOpphold.verdi,
             },
-            ...(skjema.felter.oppholdslandFraDato.erSynlig && {
-                oppholdslandFraDato: {
-                    id: UtenlandsoppholdSpørsmålId.fraDatoUtenlandsopphold,
-                    svar: skjema.felter.oppholdslandFraDato.verdi,
-                },
-            }),
-            ...(skjema.felter.oppholdslandTilDato.erSynlig && {
-                oppholdslandTilDato: {
-                    id: UtenlandsoppholdSpørsmålId.tilDatoUtenlandsopphold,
-                    svar: svarForSpørsmålMedUkjent(
-                        skjema.felter.oppholdslandTilDatoUkjent,
-                        skjema.felter.oppholdslandTilDato
-                    ),
-                },
-            }),
         });
 
         lukkModal();
@@ -83,11 +69,10 @@ export const SvalbardOppholdModal: React.FC<Props> = ({
     return (
         <SkjemaModal
             erÅpen={erÅpen}
-            tittel={teksterForPersonType.tittel}
-            flettefelter={{ barnetsNavn: barn?.navn }}
+            tittel={teksterForModal.tittel}
             forklaring={forklaring}
             onSubmitCallback={onLeggTil}
-            submitKnappTekst={<TekstBlock block={teksterForPersonType.leggTilKnapp} />}
+            submitKnappTekst={<TekstBlock block={teksterForModal.leggTilKnapp} />}
             lukkModal={lukkModal}
             valideringErOk={valideringErOk}
             onAvbrytCallback={nullstillSkjema}
