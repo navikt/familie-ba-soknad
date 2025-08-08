@@ -101,6 +101,7 @@ const OmDeg: React.FC = () => {
                             registrerteSvalbardOppholdPerioder={
                                 skjema.felter.registrerteSvalbardOppholdPerioder
                             }
+                            personType={PersonType.Søker}
                         />
                     )}
                 </>

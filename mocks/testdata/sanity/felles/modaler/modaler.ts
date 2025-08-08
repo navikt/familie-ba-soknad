@@ -39,7 +39,10 @@ export const modalerTekstinnhold: IModalerTekstinnhold = {
         barn: utenlandsoppholdTekstinnhold,
         andreForelder: utenlandsoppholdTekstinnhold,
     },
-    svalbardOpphold: svalbardOppholdTekstinnhold,
+    svalbardOpphold: {
+        søker: svalbardOppholdTekstinnhold,
+        barn: svalbardOppholdTekstinnhold,
+    },
     startPåNytt: startPåNytt,
     leggTilBarn: leggTilBarnTekstinnhold,
 };

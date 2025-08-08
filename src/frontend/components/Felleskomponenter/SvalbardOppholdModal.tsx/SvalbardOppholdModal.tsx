@@ -15,27 +15,32 @@ import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeilopps
 import SkjemaModal from '../SkjemaModal/SkjemaModal';
 
 import { SvalbardOppholdSpørsmålId } from './spørsmål';
-import { useSvalbardOppholdSkjema } from './useSvalbardOppholdSkjema';
+import {
+    useSvalbardOppholdSkjema,
+    useSvalbardOppholdSkjemaProps,
+} from './useSvalbardOppholdSkjema';
 
-interface Props {
+interface SvalbardOppholdModalProps extends useSvalbardOppholdSkjemaProps {
     erÅpen: boolean;
     lukkModal: () => void;
     onLeggTilSvalbardOppholdPeriode: (periode: ISvalbardOppholdPeriode) => void;
     forklaring?: string;
 }
 
-export const SvalbardOppholdModal: React.FC<Props> = ({
+export const SvalbardOppholdModal: React.FC<SvalbardOppholdModalProps> = ({
     erÅpen,
     lukkModal,
     onLeggTilSvalbardOppholdPeriode,
     forklaring = undefined,
+    personType,
+    barn,
 }) => {
     const { tekster, plainTekst } = useAppContext();
     const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } =
-        useSvalbardOppholdSkjema();
+        useSvalbardOppholdSkjema({ personType, barn });
 
     const teksterForModal: ISvalbardOppholdTekstinnhold =
-        tekster()[ESanitySteg.FELLES].modaler.svalbardOpphold;
+        tekster()[ESanitySteg.FELLES].modaler.svalbardOpphold[personType];
 
     const onLeggTil = () => {
         if (!validerFelterOgVisFeilmelding()) {

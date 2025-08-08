@@ -4,6 +4,7 @@ import type { Felt, ISkjema } from '@navikt/familie-skjema';
 
 import { useAppContext } from '../../../context/AppContext';
 import { ISvalbardOppholdPeriode } from '../../../typer/perioder';
+import { PeriodePersonTypeMedBarnProps } from '../../../typer/personType';
 import { ISvalbardOppholdTekstinnhold } from '../../../typer/sanity/modaler/svalbardOpphold';
 import { IOmDegFeltTyper } from '../../../typer/skjema';
 import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
@@ -21,16 +22,21 @@ interface SvalbardOppholdPeriodeProps {
     registrerteSvalbardOppholdPerioder: Felt<ISvalbardOppholdPeriode[]>;
 }
 
-export const SvalbardOppholdPeriode: React.FC<SvalbardOppholdPeriodeProps> = ({
+type Props = SvalbardOppholdPeriodeProps & PeriodePersonTypeMedBarnProps;
+
+export const SvalbardOppholdPeriode: React.FC<Props> = ({
     skjema,
     leggTilSvalbardOppholdPeriode,
     fjernSvalbardOppholdPeriode,
     registrerteSvalbardOppholdPerioder,
+    personType,
+    barn,
 }) => {
     const { tekster, plainTekst } = useAppContext();
     const { erÅpen, lukkModal, åpneModal } = useModal();
 
-    const teksterForModal: ISvalbardOppholdTekstinnhold = tekster().FELLES.modaler.svalbardOpphold;
+    const teksterForModal: ISvalbardOppholdTekstinnhold =
+        tekster().FELLES.modaler.svalbardOpphold[personType];
     const { flerePerioder, leggTilKnapp, leggTilPeriodeForklaring } = teksterForModal;
 
     return (
@@ -41,6 +47,8 @@ export const SvalbardOppholdPeriode: React.FC<SvalbardOppholdPeriodeProps> = ({
                     svalbardOppholdPeriode={periode}
                     fjernPeriodeCallback={fjernSvalbardOppholdPeriode}
                     nummer={index + 1}
+                    personType={personType}
+                    barn={barn}
                 />
             ))}
             <LeggTilKnapp
@@ -62,6 +70,8 @@ export const SvalbardOppholdPeriode: React.FC<SvalbardOppholdPeriodeProps> = ({
                     lukkModal={lukkModal}
                     onLeggTilSvalbardOppholdPeriode={leggTilSvalbardOppholdPeriode}
                     forklaring={plainTekst(leggTilPeriodeForklaring)}
+                    personType={personType}
+                    barn={barn}
                 />
             )}
         </PerioderContainer>

@@ -109,6 +109,12 @@ const strukturertInnholdForModaler = (dokumenter: SanityDokument[]): IModalerTek
             personType
         ) as IUtenlandsoppholdTekstinnhold;
 
+    const svalbardOpphold = (personType: SanityPersonType) =>
+        strukturerInnholdForModal(
+            SanityModalPrefix.SVALBARD_OPPHOLD,
+            personType
+        ) as ISvalbardOppholdTekstinnhold;
+
     return {
         arbeidsperiode: {
             søker: arbeidsperiode(SanityPersonType.SOKER),
@@ -138,9 +144,10 @@ const strukturertInnholdForModaler = (dokumenter: SanityDokument[]): IModalerTek
             barn: utenlandsopphold(SanityPersonType.BARN),
             andreForelder: utenlandsopphold(SanityPersonType.ANDRE_FORELDER),
         },
-        svalbardOpphold: strukturerInnholdForModal(
-            SanityModalPrefix.SVALBARD_OPPHOLD
-        ) as ISvalbardOppholdTekstinnhold,
+        svalbardOpphold: {
+            søker: svalbardOpphold(SanityPersonType.SOKER),
+            barn: svalbardOpphold(SanityPersonType.BARN),
+        },
         leggTilBarn: strukturerInnholdForModal(
             SanityModalPrefix.LEGG_TIL_BARN
         ) as ILeggTilBarnTekstinnhold,

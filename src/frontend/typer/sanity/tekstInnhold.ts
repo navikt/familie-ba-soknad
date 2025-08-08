@@ -159,7 +159,10 @@ export interface IModalerTekstinnhold {
         barn: IUtenlandsoppholdTekstinnhold;
         andreForelder: IUtenlandsoppholdTekstinnhold;
     };
-    svalbardOpphold: ISvalbardOppholdTekstinnhold;
+    svalbardOpphold: {
+        søker: ISvalbardOppholdTekstinnhold;
+        barn: ISvalbardOppholdTekstinnhold;
+    };
     startPåNytt: IStartPåNyttModal;
     leggTilBarn: ILeggTilBarnTekstinnhold;
 }

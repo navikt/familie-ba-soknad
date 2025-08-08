@@ -47,7 +47,7 @@ export const useOmdeg = (): {
     const { skalTriggeEøsForSøker, søkerTriggerEøs, settSøkerTriggerEøs } = useEøsContext();
     const teksterForSteg: IOmDegTekstinnhold = tekster()[ESanitySteg.OM_DEG];
     const teksterForSvalbardOpphold: ISvalbardOppholdTekstinnhold =
-        tekster()[ESanitySteg.FELLES].modaler.svalbardOpphold;
+        tekster()[ESanitySteg.FELLES].modaler.svalbardOpphold.søker;
     const teksterForUtenlandsopphold: IUtenlandsoppholdTekstinnhold =
         tekster()[ESanitySteg.FELLES].modaler.utenlandsopphold.søker;
 
