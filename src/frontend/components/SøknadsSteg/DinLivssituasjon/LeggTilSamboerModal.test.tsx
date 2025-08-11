@@ -8,7 +8,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 
 import { ESøknadstype } from '../../../typer/kontrakt/generelle';
 import { ISøknad } from '../../../typer/søknad';
-import { spyOnUseApp, TestProvidereMedEkteTekster } from '../../../utils/testing';
+import { spyOnUseApp, TestProvidere } from '../../../utils/testing';
 
 import DinLivssituasjon from './DinLivssituasjon';
 import { DinLivssituasjonSpørsmålId } from './spørsmål';
@@ -43,9 +43,9 @@ describe('LeggTilSamboerModal', () => {
         spyOnUseApp(søknad);
 
         const { getByTestId, findByTestId } = render(
-            <TestProvidereMedEkteTekster mocketNettleserHistorikk={['/din-livssituasjon']}>
+            <TestProvidere mocketNettleserHistorikk={['/din-livssituasjon']}>
                 <DinLivssituasjon />
-            </TestProvidereMedEkteTekster>
+            </TestProvidere>
         );
 
         const hattAnnenSamboerSpørsmål = await findByTestId('hatt-annen-samboer-i-perioden');
