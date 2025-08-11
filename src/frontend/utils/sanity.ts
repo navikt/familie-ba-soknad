@@ -111,7 +111,7 @@ const strukturertInnholdForModaler = (dokumenter: SanityDokument[]): IModalerTek
 
     const svalbardOpphold = (personType: SanityPersonType) =>
         strukturerInnholdForModal(
-            SanityModalPrefix.SVALBARD_OPPHOLD,
+            SanityModalPrefix.SVALBARDOPPHOLD,
             personType
         ) as ISvalbardOppholdTekstinnhold;
 
