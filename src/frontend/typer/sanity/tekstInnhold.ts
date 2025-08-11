@@ -201,6 +201,7 @@ export interface IKanIkkeBrukeSoeknadTekstinnhold {
 export interface IHjelpeteksterForInputTekstInnhold {
     datoformatHjelpetekst: LocaleRecordBlock;
     datoformatPlaceholder: LocaleRecordBlock;
+    manedformatHjelpetekst: LocaleRecordBlock;
     manedformatPlaceholder: LocaleRecordBlock;
     velgLandPlaceholder: LocaleRecordBlock;
 }

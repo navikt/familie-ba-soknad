@@ -8,7 +8,7 @@ import { ISvalbardOppholdTekstinnhold } from '../../../typer/sanity/modaler/sval
 import { ESanitySteg } from '../../../typer/sanity/sanity';
 import { dagensDato } from '../../../utils/dato';
 import { visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
-import Datovelger from '../Datovelger/Datovelger';
+import { DagIMåneden, MånedÅrVelger } from '../MånedÅrVelger/MånedÅrVelger';
 import TekstBlock from '../Sanity/TekstBlock';
 import { SkjemaCheckboxForSanity } from '../SkjemaCheckbox/SkjemaCheckboxForSanity';
 import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeiloppsummering';
@@ -72,21 +72,19 @@ export const SvalbardOppholdModal: React.FC<SvalbardOppholdModalProps> = ({
             valideringErOk={valideringErOk}
             onAvbrytCallback={nullstillSkjema}
         >
-            <Datovelger
+            <MånedÅrVelger
                 felt={skjema.felter.fraDatoSvalbardOpphold}
                 label={<TekstBlock block={teksterForModal.startdato.sporsmal} />}
-                skjema={skjema}
-                avgrensMaxDato={dagensDato()} // FIXME:
+                tidligsteValgbareMåned={dagensDato()} // FIXME:
+                dagIMåneden={DagIMåneden.FØRSTE_DAG} // FIXME:
             />
             <div>
-                <Datovelger
+                <MånedÅrVelger
                     felt={skjema.felter.tilDatoSvalbardOpphold}
                     label={<TekstBlock block={teksterForModal.sluttdato.sporsmal} />}
-                    skjema={skjema}
-                    avgrensMinDato={dagensDato()} // FIXME:
-                    avgrensMaxDato={dagensDato()} // FIXME:
-                    tilhørendeFraOgMedFelt={skjema.felter.fraDatoSvalbardOpphold}
+                    senesteValgbareMåned={dagensDato()} // FIXME:
                     disabled={skjema.felter.tilDatoSvalbardOppholdUkjent.verdi === ESvar.JA}
+                    dagIMåneden={DagIMåneden.FØRSTE_DAG} // FIXME:
                 />
                 <SkjemaCheckboxForSanity
                     felt={skjema.felter.tilDatoSvalbardOppholdUkjent}
