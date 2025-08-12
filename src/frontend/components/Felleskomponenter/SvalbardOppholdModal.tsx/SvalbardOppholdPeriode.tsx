@@ -4,7 +4,7 @@ import type { Felt, ISkjema } from '@navikt/familie-skjema';
 
 import { useAppContext } from '../../../context/AppContext';
 import { ISvalbardOppholdPeriode } from '../../../typer/perioder';
-import { PeriodePersonTypeMedBarnProps } from '../../../typer/personType';
+import { PersonType } from '../../../typer/personType';
 import { ISvalbardOppholdTekstinnhold } from '../../../typer/sanity/modaler/svalbardOpphold';
 import { IOmDegFeltTyper } from '../../../typer/skjema';
 import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
@@ -20,17 +20,15 @@ interface SvalbardOppholdPeriodeProps {
     leggTilSvalbardOppholdPeriode: (periode: ISvalbardOppholdPeriode) => void;
     fjernSvalbardOppholdPeriode: (periode: ISvalbardOppholdPeriode) => void;
     registrerteSvalbardOppholdPerioder: Felt<ISvalbardOppholdPeriode[]>;
+    personType: PersonType;
 }
 
-type Props = SvalbardOppholdPeriodeProps & PeriodePersonTypeMedBarnProps;
-
-export const SvalbardOppholdPeriode: React.FC<Props> = ({
+export const SvalbardOppholdPeriode: React.FC<SvalbardOppholdPeriodeProps> = ({
     skjema,
     leggTilSvalbardOppholdPeriode,
     fjernSvalbardOppholdPeriode,
     registrerteSvalbardOppholdPerioder,
     personType,
-    barn,
 }) => {
     const { tekster, plainTekst } = useAppContext();
     const { erÅpen, lukkModal, åpneModal } = useModal();
@@ -48,7 +46,6 @@ export const SvalbardOppholdPeriode: React.FC<Props> = ({
                     fjernPeriodeCallback={fjernSvalbardOppholdPeriode}
                     nummer={index + 1}
                     personType={personType}
-                    barn={barn}
                 />
             ))}
             <LeggTilKnapp
@@ -71,7 +68,6 @@ export const SvalbardOppholdPeriode: React.FC<Props> = ({
                     onLeggTilSvalbardOppholdPeriode={leggTilSvalbardOppholdPeriode}
                     forklaring={plainTekst(leggTilPeriodeForklaring)}
                     personType={personType}
-                    barn={barn}
                 />
             )}
         </PerioderContainer>

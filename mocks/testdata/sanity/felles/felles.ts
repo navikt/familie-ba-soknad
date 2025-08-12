@@ -23,6 +23,7 @@ const kanIkkeBrukeSoeknadTekstinnhold: IKanIkkeBrukeSoeknadTekstinnhold = {
 const hjelpeteksterForInputTekstInnhold: IHjelpeteksterForInputTekstInnhold = {
     datoformatHjelpetekst: lagLocaleRecordBlock(),
     datoformatPlaceholder: lagLocaleRecordBlock(),
+    manedformatHjelpetekst: lagLocaleRecordBlock(),
     manedformatPlaceholder: lagLocaleRecordBlock(),
     velgLandPlaceholder: lagLocaleRecordBlock(),
 };

@@ -3,23 +3,22 @@ import React from 'react';
 import { useAppContext } from '../../../context/AppContext';
 import { useSpråkContext } from '../../../context/SpråkContext';
 import { ISvalbardOppholdPeriode } from '../../../typer/perioder';
-import { PeriodePersonTypeMedBarnProps } from '../../../typer/personType';
+import { PersonType } from '../../../typer/personType';
 import { formaterMånedMedUkjent } from '../../../utils/visning';
 import { OppsummeringFelt } from '../../SøknadsSteg/Oppsummering/OppsummeringFelt';
 import PeriodeOppsummering from '../PeriodeOppsummering/PeriodeOppsummering';
 import TekstBlock from '../Sanity/TekstBlock';
 
-interface Props {
+interface SvalbardOppholdPeriodeOppsummeringProps {
     svalbardOppholdPeriode: ISvalbardOppholdPeriode;
     nummer: number;
     fjernPeriodeCallback?: (svalbardOppholdPeriode: ISvalbardOppholdPeriode) => void;
+    personType: PersonType;
 }
-
-type SvalbardOppholdPeriodeOppsummeringProps = Props & PeriodePersonTypeMedBarnProps;
 
 export const SvalbardOppholdPeriodeOppsummering: React.FC<
     SvalbardOppholdPeriodeOppsummeringProps
-> = ({ svalbardOppholdPeriode, nummer, fjernPeriodeCallback = undefined, personType, barn }) => {
+> = ({ svalbardOppholdPeriode, nummer, fjernPeriodeCallback = undefined, personType }) => {
     const { tekster, plainTekst } = useAppContext();
     const { valgtLocale } = useSpråkContext();
     const teksterForModal = tekster().FELLES.modaler.svalbardOpphold[personType];

@@ -6,7 +6,6 @@ import { useAppContext } from '../../../context/AppContext';
 import { ISvalbardOppholdPeriode } from '../../../typer/perioder';
 import { ISvalbardOppholdTekstinnhold } from '../../../typer/sanity/modaler/svalbardOpphold';
 import { ESanitySteg } from '../../../typer/sanity/sanity';
-import { dagensDato } from '../../../utils/dato';
 import { visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
 import { DagIMåneden, MånedÅrVelger } from '../MånedÅrVelger/MånedÅrVelger';
 import TekstBlock from '../Sanity/TekstBlock';
@@ -33,11 +32,10 @@ export const SvalbardOppholdModal: React.FC<SvalbardOppholdModalProps> = ({
     onLeggTilSvalbardOppholdPeriode,
     forklaring = undefined,
     personType,
-    barn,
 }) => {
     const { tekster, plainTekst } = useAppContext();
     const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } =
-        useSvalbardOppholdSkjema({ personType, barn });
+        useSvalbardOppholdSkjema({ personType });
 
     const teksterForModal: ISvalbardOppholdTekstinnhold =
         tekster()[ESanitySteg.FELLES].modaler.svalbardOpphold[personType];
