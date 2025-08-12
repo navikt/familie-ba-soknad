@@ -17,4 +17,6 @@ export const svalbardOppholdTekstinnhold: ISvalbardOppholdTekstinnhold = {
     oppsummeringstittel: lagLocaleRecordBlock(),
     lesMerTittel: lagLocaleRecordBlock(),
     lesMerInnhold: lagLocaleRecordBlock(),
+    fremtidigeOppholdTittel: lagLocaleRecordBlock(),
+    fremtidigeOppholdInnhold: lagLocaleRecordBlock(),
 };

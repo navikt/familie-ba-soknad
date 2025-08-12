@@ -101,6 +101,9 @@ export const SvalbardOppholdModal: React.FC<SvalbardOppholdModalProps> = ({
                     label={plainTekst(teksterForModal.sluttdato.checkboxLabel)}
                 />
             </div>
+            <ReadMore header={<TekstBlock block={teksterForModal.fremtidigeOppholdTittel} />}>
+                <TekstBlock block={teksterForModal.fremtidigeOppholdInnhold} />
+            </ReadMore>
             {visFeiloppsummering(skjema) && <SkjemaFeiloppsummering skjema={skjema} />}
         </SkjemaModal>
     );

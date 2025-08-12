@@ -12,4 +12,6 @@ export interface ISvalbardOppholdTekstinnhold {
     oppsummeringstittel: LocaleRecordBlock;
     lesMerTittel: LocaleRecordBlock;
     lesMerInnhold: LocaleRecordBlock;
+    fremtidigeOppholdTittel: LocaleRecordBlock;
+    fremtidigeOppholdInnhold: LocaleRecordBlock;
 }
