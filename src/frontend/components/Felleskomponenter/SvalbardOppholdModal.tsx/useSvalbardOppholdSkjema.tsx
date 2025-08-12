@@ -9,7 +9,8 @@ import { PersonType } from '../../../typer/personType';
 import { ISvalbardOppholdTekstinnhold } from '../../../typer/sanity/modaler/svalbardOpphold';
 import { ESanitySteg } from '../../../typer/sanity/sanity';
 import { ISvalbardOppholdPeriodeFeltTyper } from '../../../typer/skjema';
-import { dagensDato } from '../../../utils/dato';
+import { gårsdagensDato } from '../../../utils/dato';
+import { minTilDatoForPeriode } from '../../../utils/perioder';
 
 import { SvalbardOppholdSpørsmålId } from './spørsmål';
 
@@ -30,7 +31,8 @@ export const useSvalbardOppholdSkjema = ({ personType, barn }: useSvalbardOpphol
         },
         skalFeltetVises: true,
         feilmelding: teksterForModal.startdato.feilmelding,
-        sluttdatoAvgrensning: dagensDato(), // FIXME:
+        // sluttdatoAvgrensning: dagensDato(), // FIXME:
+        sluttdatoAvgrensning: gårsdagensDato(),
     });
 
     const tilDatoUkjent = useFelt<ESvar>({
@@ -44,8 +46,9 @@ export const useSvalbardOppholdSkjema = ({ personType, barn }: useSvalbardOpphol
         vetIkkeCheckbox: tilDatoUkjent,
         feilmelding: teksterForModal.sluttdato.feilmelding,
         skalFeltetVises: true,
-        sluttdatoAvgrensning: dagensDato(), // FIXME:
-        startdatoAvgrensning: dagensDato(), // FIXME:
+        // sluttdatoAvgrensning: dagensDato(), // FIXME:
+        // startdatoAvgrensning: dagensDato(), // FIXME:
+        startdatoAvgrensning: minTilDatoForPeriode(false, fraDato.verdi),
         avhengigheter: { fraDato },
         nullstillVedAvhengighetEndring: false,
     });

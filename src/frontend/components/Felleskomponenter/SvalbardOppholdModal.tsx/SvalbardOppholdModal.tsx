@@ -75,16 +75,16 @@ export const SvalbardOppholdModal: React.FC<SvalbardOppholdModalProps> = ({
             <MånedÅrVelger
                 felt={skjema.felter.fraDatoSvalbardOpphold}
                 label={<TekstBlock block={teksterForModal.startdato.sporsmal} />}
-                tidligsteValgbareMåned={dagensDato()} // FIXME:
+                // tidligsteValgbareMåned={dagensDato()} // FIXME:
                 dagIMåneden={DagIMåneden.FØRSTE_DAG} // FIXME:
             />
             <div>
                 <MånedÅrVelger
                     felt={skjema.felter.tilDatoSvalbardOpphold}
                     label={<TekstBlock block={teksterForModal.sluttdato.sporsmal} />}
-                    senesteValgbareMåned={dagensDato()} // FIXME:
+                    // senesteValgbareMåned={dagensDato()} // FIXME:
                     disabled={skjema.felter.tilDatoSvalbardOppholdUkjent.verdi === ESvar.JA}
-                    dagIMåneden={DagIMåneden.FØRSTE_DAG} // FIXME:
+                    dagIMåneden={DagIMåneden.SISTE_DAG} // FIXME:
                 />
                 <SkjemaCheckboxForSanity
                     felt={skjema.felter.tilDatoSvalbardOppholdUkjent}
