@@ -92,14 +92,10 @@ export const useOmdeg = (): {
         },
     });
 
-    // useEffect(() => {
-    //     registrerteUtenlandsperioder.validerOgSettFelt(utenlandsperioder);
-
-    //     const oppdatertSøker = genererOppdatertSøker();
-    //     if (skalTriggeEøsForSøker(oppdatertSøker) !== søkerTriggerEøs) {
-    //         settSøkerTriggerEøs(prevState => !prevState);
-    //     }
-    // }, [værtINorgeITolvMåneder, utenlandsperioder]);
+    useEffect(() => {
+        registrerteSvalbardOppholdPerioder.validerOgSettFelt(svalbardOppholdPerioder);
+        genererOppdatertSøker();
+    }, [borPåSvalbard, svalbardOppholdPerioder]);
 
     const leggTilSvalbardOppholdPeriode = (periode: ISvalbardOppholdPeriode) => {
         settSvalbardOppholdPerioder(prevState => prevState.concat(periode));
@@ -194,8 +190,7 @@ export const useOmdeg = (): {
 
     const genererOppdatertSøker = () => ({
         ...søker,
-        svalbardOppholdPerioder:
-            borPåSvalbard.verdi === ESvar.JA ? registrerteSvalbardOppholdPerioder.verdi : [],
+        svalbardOppholdPerioder: borPåSvalbard.verdi === ESvar.JA ? svalbardOppholdPerioder : [],
         utenlandsperioder: værtINorgeITolvMåneder.verdi === ESvar.NEI ? utenlandsperioder : [],
         idNummer: filtrerteRelevanteIdNummer(),
         borPåRegistrertAdresse: {

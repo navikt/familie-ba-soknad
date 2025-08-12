@@ -7,6 +7,7 @@ import { ISvalbardOppholdPeriode } from '../../../typer/perioder';
 import { ISvalbardOppholdTekstinnhold } from '../../../typer/sanity/modaler/svalbardOpphold';
 import { ESanitySteg } from '../../../typer/sanity/sanity';
 import { visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
+import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import { DagIMåneden, MånedÅrVelger } from '../MånedÅrVelger/MånedÅrVelger';
 import TekstBlock from '../Sanity/TekstBlock';
 import { SkjemaCheckboxForSanity } from '../SkjemaCheckbox/SkjemaCheckboxForSanity';
@@ -40,6 +41,9 @@ export const SvalbardOppholdModal: React.FC<SvalbardOppholdModalProps> = ({
     const teksterForModal: ISvalbardOppholdTekstinnhold =
         tekster()[ESanitySteg.FELLES].modaler.svalbardOpphold[personType];
 
+    const { fraDatoSvalbardOpphold, tilDatoSvalbardOpphold, tilDatoSvalbardOppholdUkjent } =
+        skjema.felter;
+
     const onLeggTil = () => {
         if (!validerFelterOgVisFeilmelding()) {
             return false;
@@ -47,11 +51,13 @@ export const SvalbardOppholdModal: React.FC<SvalbardOppholdModalProps> = ({
         onLeggTilSvalbardOppholdPeriode({
             fraDatoSvalbardOpphold: {
                 id: SvalbardOppholdSpørsmålId.fraDato,
-                svar: skjema.felter.fraDatoSvalbardOpphold.verdi,
+                svar: fraDatoSvalbardOpphold.erSynlig ? fraDatoSvalbardOpphold.verdi : '',
             },
             tilDatoSvalbardOpphold: {
                 id: SvalbardOppholdSpørsmålId.tilDato,
-                svar: skjema.felter.tilDatoSvalbardOpphold.verdi,
+                svar: tilDatoSvalbardOpphold.erSynlig
+                    ? svarForSpørsmålMedUkjent(tilDatoSvalbardOppholdUkjent, tilDatoSvalbardOpphold)
+                    : '',
             },
         });
 
@@ -74,6 +80,7 @@ export const SvalbardOppholdModal: React.FC<SvalbardOppholdModalProps> = ({
                 felt={skjema.felter.fraDatoSvalbardOpphold}
                 label={<TekstBlock block={teksterForModal.startdato.sporsmal} />}
                 // tidligsteValgbareMåned={dagensDato()} // FIXME:
+                visFeilmeldinger={skjema.visFeilmeldinger}
                 dagIMåneden={DagIMåneden.FØRSTE_DAG} // FIXME:
             />
             <div>
@@ -81,8 +88,9 @@ export const SvalbardOppholdModal: React.FC<SvalbardOppholdModalProps> = ({
                     felt={skjema.felter.tilDatoSvalbardOpphold}
                     label={<TekstBlock block={teksterForModal.sluttdato.sporsmal} />}
                     // senesteValgbareMåned={dagensDato()} // FIXME:
-                    disabled={skjema.felter.tilDatoSvalbardOppholdUkjent.verdi === ESvar.JA}
+                    visFeilmeldinger={skjema.visFeilmeldinger}
                     dagIMåneden={DagIMåneden.SISTE_DAG} // FIXME:
+                    disabled={skjema.felter.tilDatoSvalbardOppholdUkjent.verdi === ESvar.JA}
                 />
                 <SkjemaCheckboxForSanity
                     felt={skjema.felter.tilDatoSvalbardOppholdUkjent}

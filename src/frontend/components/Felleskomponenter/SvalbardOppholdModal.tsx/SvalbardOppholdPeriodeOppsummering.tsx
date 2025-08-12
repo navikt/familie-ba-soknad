@@ -4,7 +4,8 @@ import { useAppContext } from '../../../context/AppContext';
 import { useSpråkContext } from '../../../context/SpråkContext';
 import { ISvalbardOppholdPeriode } from '../../../typer/perioder';
 import { PersonType } from '../../../typer/personType';
-import { formaterMånedMedUkjent } from '../../../utils/visning';
+import { formaterDatostringKunMåned } from '../../../utils/dato';
+import { formaterMånedMedUkjent, uppercaseFørsteBokstav } from '../../../utils/visning';
 import { OppsummeringFelt } from '../../SøknadsSteg/Oppsummering/OppsummeringFelt';
 import PeriodeOppsummering from '../PeriodeOppsummering/PeriodeOppsummering';
 import TekstBlock from '../Sanity/TekstBlock';
@@ -21,6 +22,8 @@ export const SvalbardOppholdPeriodeOppsummering: React.FC<
 > = ({ svalbardOppholdPeriode, nummer, fjernPeriodeCallback = undefined, personType }) => {
     const { tekster, plainTekst } = useAppContext();
     const { valgtLocale } = useSpråkContext();
+    const { fraDatoSvalbardOpphold, tilDatoSvalbardOpphold } = svalbardOppholdPeriode;
+
     const teksterForModal = tekster().FELLES.modaler.svalbardOpphold[personType];
 
     return (
@@ -41,12 +44,14 @@ export const SvalbardOppholdPeriodeOppsummering: React.FC<
         >
             <OppsummeringFelt
                 tittel={<TekstBlock block={teksterForModal.startdato.sporsmal} />}
-                søknadsvar={svalbardOppholdPeriode.fraDatoSvalbardOpphold.svar}
+                søknadsvar={uppercaseFørsteBokstav(
+                    formaterDatostringKunMåned(fraDatoSvalbardOpphold.svar, valgtLocale)
+                )}
             />
             <OppsummeringFelt
                 tittel={<TekstBlock block={teksterForModal.sluttdato.sporsmal} />}
                 søknadsvar={formaterMånedMedUkjent(
-                    svalbardOppholdPeriode.tilDatoSvalbardOpphold.svar,
+                    tilDatoSvalbardOpphold.svar,
                     plainTekst(teksterForModal.sluttdato.checkboxLabel),
                     valgtLocale
                 )}

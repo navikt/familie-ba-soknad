@@ -45,5 +45,5 @@ export interface IEøsBarnetrygdsperiode {
 
 export interface ISvalbardOppholdPeriode {
     fraDatoSvalbardOpphold: ISøknadSpørsmål<ISODateString>;
-    tilDatoSvalbardOpphold: ISøknadSpørsmål<ISODateString | ''>;
+    tilDatoSvalbardOpphold: ISøknadSpørsmål<DatoMedUkjent | ''>;
 }
