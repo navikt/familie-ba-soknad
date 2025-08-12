@@ -15,4 +15,6 @@ export const svalbardOppholdTekstinnhold: ISvalbardOppholdTekstinnhold = {
     startdato: lagSanitySpørsmålDokument(),
     sluttdato: lagSanitySpørsmålDokument(),
     oppsummeringstittel: lagLocaleRecordBlock(),
+    lesMerTittel: lagLocaleRecordBlock(),
+    lesMerInnhold: lagLocaleRecordBlock(),
 };

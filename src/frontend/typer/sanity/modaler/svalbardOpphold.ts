@@ -10,4 +10,6 @@ export interface ISvalbardOppholdTekstinnhold {
     startdato: ISanitySpørsmålDokument;
     sluttdato: ISanitySpørsmålDokument;
     oppsummeringstittel: LocaleRecordBlock;
+    lesMerTittel: LocaleRecordBlock;
+    lesMerInnhold: LocaleRecordBlock;
 }

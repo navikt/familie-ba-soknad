@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { ReadMore } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useAppContext } from '../../../context/AppContext';
@@ -76,6 +77,9 @@ export const SvalbardOppholdModal: React.FC<SvalbardOppholdModalProps> = ({
             valideringErOk={valideringErOk}
             onAvbrytCallback={nullstillSkjema}
         >
+            <ReadMore header={<TekstBlock block={teksterForModal.lesMerTittel} />}>
+                <TekstBlock block={teksterForModal.lesMerInnhold} />
+            </ReadMore>
             <MånedÅrVelger
                 felt={skjema.felter.fraDatoSvalbardOpphold}
                 label={<TekstBlock block={teksterForModal.startdato.sporsmal} />}
