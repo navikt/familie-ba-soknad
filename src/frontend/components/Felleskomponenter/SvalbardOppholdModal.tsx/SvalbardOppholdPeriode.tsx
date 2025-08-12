@@ -35,10 +35,10 @@ export const SvalbardOppholdPeriode: React.FC<SvalbardOppholdPeriodeProps> = ({
 
     const teksterForModal: ISvalbardOppholdTekstinnhold =
         tekster().FELLES.modaler.svalbardOpphold[personType];
-    const { flerePerioder, leggTilKnapp, leggTilPeriodeForklaring } = teksterForModal;
+    const { tittel, flerePerioder, leggTilKnapp, leggTilPeriodeForklaring } = teksterForModal;
 
     return (
-        <PerioderContainer tittel={'Tittel test'}>
+        <PerioderContainer tittel={plainTekst(tittel)}>
             {registrerteSvalbardOppholdPerioder.verdi.map((periode, index) => (
                 <SvalbardOppholdPeriodeOppsummering
                     key={`svalbardOppholdPeriode-${index}`}
