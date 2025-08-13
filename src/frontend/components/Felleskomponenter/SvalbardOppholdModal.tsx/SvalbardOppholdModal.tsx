@@ -7,7 +7,9 @@ import { useAppContext } from '../../../context/AppContext';
 import { ISvalbardOppholdPeriode } from '../../../typer/perioder';
 import { ISvalbardOppholdTekstinnhold } from '../../../typer/sanity/modaler/svalbardOpphold';
 import { ESanitySteg } from '../../../typer/sanity/sanity';
+import { dagensDato } from '../../../utils/dato';
 import { visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
+import { minTilDatoForPeriode } from '../../../utils/perioder';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import { DagIMåneden, MånedÅrVelger } from '../MånedÅrVelger/MånedÅrVelger';
 import TekstBlock from '../Sanity/TekstBlock';
@@ -83,17 +85,20 @@ export const SvalbardOppholdModal: React.FC<SvalbardOppholdModalProps> = ({
             <MånedÅrVelger
                 felt={skjema.felter.fraDatoSvalbardOpphold}
                 label={<TekstBlock block={teksterForModal.startdato.sporsmal} />}
-                // tidligsteValgbareMåned={dagensDato()} // FIXME:
+                senesteValgbareMåned={dagensDato()}
                 visFeilmeldinger={skjema.visFeilmeldinger}
-                dagIMåneden={DagIMåneden.FØRSTE_DAG} // FIXME:
+                dagIMåneden={DagIMåneden.FØRSTE_DAG}
             />
             <div>
                 <MånedÅrVelger
                     felt={skjema.felter.tilDatoSvalbardOpphold}
                     label={<TekstBlock block={teksterForModal.sluttdato.sporsmal} />}
-                    // senesteValgbareMåned={dagensDato()} // FIXME:
+                    tidligsteValgbareMåned={minTilDatoForPeriode(
+                        false,
+                        skjema.felter.fraDatoSvalbardOpphold.verdi
+                    )}
                     visFeilmeldinger={skjema.visFeilmeldinger}
-                    dagIMåneden={DagIMåneden.SISTE_DAG} // FIXME:
+                    dagIMåneden={DagIMåneden.SISTE_DAG}
                     disabled={skjema.felter.tilDatoSvalbardOppholdUkjent.verdi === ESvar.JA}
                 />
                 <SkjemaCheckboxForSanity

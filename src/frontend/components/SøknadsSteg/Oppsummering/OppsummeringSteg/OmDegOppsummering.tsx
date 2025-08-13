@@ -16,6 +16,7 @@ import { landkodeTilSpråk } from '../../../../utils/språk';
 import { jaNeiSvarTilSpråkId } from '../../../../utils/spørsmål';
 import { formaterFnr } from '../../../../utils/visning';
 import TekstBlock from '../../../Felleskomponenter/Sanity/TekstBlock';
+import { SvalbardOppholdPeriodeOppsummering } from '../../../Felleskomponenter/SvalbardOppholdModal.tsx/SvalbardOppholdPeriodeOppsummering';
 import { UtenlandsperiodeOppsummering } from '../../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsperiodeOppsummering';
 import { useOmdeg } from '../../OmDeg/useOmdeg';
 import { OppsummeringFelt } from '../OppsummeringFelt';
@@ -82,6 +83,14 @@ const OmDegOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                     søknadsvar={søknad.søker.borPåSvalbard.svar}
                 />
             )}
+            {søknad.søker.svalbardOppholdPerioder.map((periode, index) => (
+                <SvalbardOppholdPeriodeOppsummering
+                    key={index}
+                    svalbardOppholdPeriode={periode}
+                    nummer={index + 1}
+                    personType={PersonType.Søker}
+                />
+            ))}
             <OppsummeringFelt
                 tittel={<TekstBlock block={omDegTekster.vaertINorgeITolvMaaneder.sporsmal} />}
                 søknadsvar={søknad.søker.værtINorgeITolvMåneder.svar}
