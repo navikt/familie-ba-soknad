@@ -151,11 +151,18 @@ const OmDeg: React.FC = () => {
                 )}
             </KomponentGruppe>
             {skjema.felter.planleggerÅBoINorgeTolvMnd.erSynlig && (
-                <JaNeiSpm
-                    skjema={skjema}
-                    felt={skjema.felter.planleggerÅBoINorgeTolvMnd}
-                    spørsmålDokument={planleggerAaBoINorgeTolvMnd}
-                />
+                <KomponentGruppe>
+                    <JaNeiSpm
+                        skjema={skjema}
+                        felt={skjema.felter.planleggerÅBoINorgeTolvMnd}
+                        spørsmålDokument={planleggerAaBoINorgeTolvMnd}
+                    />
+                    {skjema.felter.planleggerÅBoINorgeTolvMnd.verdi === ESvar.NEI && (
+                        <Alert variant="info">
+                            <TekstBlock block={planleggerAaBoINorgeTolvMnd.alert} />
+                        </Alert>
+                    )}
+                </KomponentGruppe>
             )}
             {utenlandsoppholdmodalErÅpen && (
                 <UtenlandsoppholdModal
