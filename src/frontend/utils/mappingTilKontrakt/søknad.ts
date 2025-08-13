@@ -38,6 +38,7 @@ import {
 import { idNummerTilISøknadsfelt } from './idNummer';
 import { tilIPensjonsperiodeIKontraktFormat } from './pensjonsperioder';
 import { samboerISøknadKontraktFormat } from './samboer';
+import { svalbardOppholdPeriodeTilISøknadsfelt } from './svalbardOppholdPeriode';
 import { tidligereSamboerISøknadKontraktFormat } from './tidligereSamboer';
 import { utenlandsperiodeTilISøknadsfelt } from './utenlandsperiode';
 
@@ -73,6 +74,7 @@ export const dataISøknadKontraktFormat = (
         barn,
         utvidet,
         adressebeskyttelse,
+        svalbardOppholdPerioder,
         utenlandsperioder,
         // Nye felter under utvikling av EØS full
         andreUtbetalingsperioder,
@@ -112,6 +114,14 @@ export const dataISøknadKontraktFormat = (
             ),
             adresse: søknadsfelt('pdf.søker.adresse.label', sammeVerdiAlleSpråk(adresse)),
             adressebeskyttelse: søker.adressebeskyttelse,
+            svalbardOppholdPerioder: svalbardOppholdPerioder.map((periode, index) =>
+                svalbardOppholdPeriodeTilISøknadsfelt({
+                    svalbardOppholdPeriode: periode,
+                    periodeNummer: index + 1,
+                    tekster: fellesTekster.modaler.svalbardOpphold[PersonType.Søker],
+                    tilRestLocaleRecord,
+                })
+            ),
             utenlandsperioder: utenlandsperioder.map((periode, index) =>
                 utenlandsperiodeTilISøknadsfelt({
                     utenlandperiode: periode,
