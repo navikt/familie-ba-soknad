@@ -87,7 +87,7 @@ const OmDeg: React.FC = () => {
                 )}
             </KomponentGruppe>
             {skjema.felter.borPåSvalbard.erSynlig && (
-                <>
+                <KomponentGruppe>
                     <JaNeiSpm
                         skjema={skjema}
                         felt={skjema.felter.borPåSvalbard}
@@ -104,7 +104,7 @@ const OmDeg: React.FC = () => {
                             personType={PersonType.Søker}
                         />
                     )}
-                </>
+                </KomponentGruppe>
             )}
             <KomponentGruppe>
                 <JaNeiSpm
