@@ -1349,15 +1349,15 @@
     debug "^4.3.1"
     minimatch "^3.1.2"
 
-"@eslint/config-helpers@^0.3.0":
-  version "0.3.0"
-  resolved "https://registry.npmjs.org/@eslint/config-helpers/-/config-helpers-0.3.0.tgz#3e09a90dfb87e0005c7694791e58e97077271286"
-  integrity sha512-ViuymvFmcJi04qdZeDc2whTHryouGcDlaxPqarTD0ZE10ISpxGUVZGZDx4w01upyIynL3iu6IXH2bS1NhclQMw==
+"@eslint/config-helpers@^0.3.1":
+  version "0.3.1"
+  resolved "https://registry.npmjs.org/@eslint/config-helpers/-/config-helpers-0.3.1.tgz#d316e47905bd0a1a931fa50e669b9af4104d1617"
+  integrity sha512-xR93k9WhrDYpXHORXpxVL5oHj3Era7wo6k/Wd8/IsQNnZUTzkGS29lyn3nAT05v6ltUuTFVCCYDEGfy2Or/sPA==
 
-"@eslint/core@^0.15.0", "@eslint/core@^0.15.1":
-  version "0.15.1"
-  resolved "https://registry.npmjs.org/@eslint/core/-/core-0.15.1.tgz#d530d44209cbfe2f82ef86d6ba08760196dd3b60"
-  integrity sha512-bkOp+iumZCCbt1K1CmWf0R9pM5yKpDv+ZXtvSyQpudrI9kuFLp+bM2WOPXImuD/ceQuaa8f5pj93Y7zyECIGNA==
+"@eslint/core@^0.15.2":
+  version "0.15.2"
+  resolved "https://registry.npmjs.org/@eslint/core/-/core-0.15.2.tgz#59386327d7862cc3603ebc7c78159d2dcc4a868f"
+  integrity sha512-78Md3/Rrxh83gCxoUc0EiciuOHsIITzLy53m3d9UyiW8y9Dj2D29FeETqyKA+BRK76tnTp6RXWb3pCay8Oyomg==
   dependencies:
     "@types/json-schema" "^7.0.15"
 
@@ -1376,22 +1376,22 @@
     minimatch "^3.1.2"
     strip-json-comments "^3.1.1"
 
-"@eslint/js@9.32.0", "@eslint/js@^9.25.1":
-  version "9.32.0"
-  resolved "https://registry.npmjs.org/@eslint/js/-/js-9.32.0.tgz#a02916f58bd587ea276876cb051b579a3d75d091"
-  integrity sha512-BBpRFZK3eX6uMLKz8WxFOBIFFcGFJ/g8XuwjTHCqHROSIsopI+ddn/d5Cfh36+7+e5edVS8dbSHnBNhrLEX0zg==
+"@eslint/js@9.33.0", "@eslint/js@^9.25.1":
+  version "9.33.0"
+  resolved "https://registry.npmjs.org/@eslint/js/-/js-9.33.0.tgz#475c92fdddab59b8b8cab960e3de2564a44bf368"
+  integrity sha512-5K1/mKhWaMfreBGJTwval43JJmkip0RmM+3+IuqupeSKNC/Th2Kc7ucaq5ovTSra/OOKB9c58CGSz3QMVbWt0A==
 
 "@eslint/object-schema@^2.1.6":
   version "2.1.6"
   resolved "https://registry.npmjs.org/@eslint/object-schema/-/object-schema-2.1.6.tgz#58369ab5b5b3ca117880c0f6c0b0f32f6950f24f"
   integrity sha512-RBMg5FRL0I0gs51M/guSAj5/e14VQ4tpZnQNWwuDT66P14I43ItmPfIZRhO9fUVIPOAQXU47atlywZ/czoqFPA==
 
-"@eslint/plugin-kit@^0.3.4":
-  version "0.3.4"
-  resolved "https://registry.npmjs.org/@eslint/plugin-kit/-/plugin-kit-0.3.4.tgz#c6b9f165e94bf4d9fdd493f1c028a94aaf5fc1cc"
-  integrity sha512-Ul5l+lHEcw3L5+k8POx6r74mxEYKG5kOb6Xpy2gCRW6zweT6TEhAf8vhxGgjhqrd/VO/Dirhsb+1hNpD1ue9hw==
+"@eslint/plugin-kit@^0.3.5":
+  version "0.3.5"
+  resolved "https://registry.npmjs.org/@eslint/plugin-kit/-/plugin-kit-0.3.5.tgz#fd8764f0ee79c8ddab4da65460c641cefee017c5"
+  integrity sha512-Z5kJ+wU3oA7MMIqVR9tyZRtjYPr4OC004Q4Rw7pgOKUOKkJfZ3O24nz3WYfGRpMDNmcOi3TwQOmgm7B7Tpii0w==
   dependencies:
-    "@eslint/core" "^0.15.1"
+    "@eslint/core" "^0.15.2"
     levn "^0.4.1"
 
 "@floating-ui/core@^1.4.2":
@@ -2196,110 +2196,110 @@
     event-source-polyfill "1.0.31"
     eventsource "2.0.2"
 
-"@sentry-internal/browser-utils@10.2.0":
-  version "10.2.0"
-  resolved "https://registry.npmjs.org/@sentry-internal/browser-utils/-/browser-utils-10.2.0.tgz#cfba85af992467542baaafb91fcee32a797c21b4"
-  integrity sha512-h4t2VGjBGcTb5dX96k1jqkEMFMi31PPZv/fdDgxhO+JvcoFJfwzCxM0xafzJ54usLYOOdNGFE64Mw1wE3JIbkA==
+"@sentry-internal/browser-utils@10.5.0":
+  version "10.5.0"
+  resolved "https://registry.npmjs.org/@sentry-internal/browser-utils/-/browser-utils-10.5.0.tgz#bf56b0c3e77bbc26b23bea302976ec60a1bded18"
+  integrity sha512-4KIJdEj/8Ip9yqJleVSFe68r/U5bn5o/lYUwnFNEnDNxmpUbOlr7x3DXYuRFi1sfoMUxK9K1DrjnBkR7YYF00g==
   dependencies:
-    "@sentry/core" "10.2.0"
+    "@sentry/core" "10.5.0"
 
-"@sentry-internal/feedback@10.2.0":
-  version "10.2.0"
-  resolved "https://registry.npmjs.org/@sentry-internal/feedback/-/feedback-10.2.0.tgz#f209e36207366573c4db3087927eedf8a01086a3"
-  integrity sha512-rSYbp5ixqAYQLfU9icaF+kiWDHoIhV2VJRJOxz4jQWbtnwPBrExqqsbVQPXoMm2fFuUIPiNCfjadgTS5jD7VEw==
+"@sentry-internal/feedback@10.5.0":
+  version "10.5.0"
+  resolved "https://registry.npmjs.org/@sentry-internal/feedback/-/feedback-10.5.0.tgz#53f7b78e4320f09d49eb40052f81a6f815e267bc"
+  integrity sha512-x79P4VZwUxb1EGZb9OQ5EEgrDWFCUlrbzHBwV/oocQA5Ss1SFz5u6cP5Ak7yJtILiJtdGzAyAoQOy4GKD13D4Q==
   dependencies:
-    "@sentry/core" "10.2.0"
+    "@sentry/core" "10.5.0"
 
-"@sentry-internal/replay-canvas@10.2.0":
-  version "10.2.0"
-  resolved "https://registry.npmjs.org/@sentry-internal/replay-canvas/-/replay-canvas-10.2.0.tgz#46c998457ee6a4a0b09f6a8da82f64738d22452f"
-  integrity sha512-FeoA4oi4/5kIgJMFfwu4fop/K4SRPZt5ndFmwuuCBVBMHkHN4+v1Um3ajJDK1IwwE2J2HDQUuUxrC53N7nc/hw==
+"@sentry-internal/replay-canvas@10.5.0":
+  version "10.5.0"
+  resolved "https://registry.npmjs.org/@sentry-internal/replay-canvas/-/replay-canvas-10.5.0.tgz#fbefe5431391fb3c066ad372bcb2298e334e96e2"
+  integrity sha512-5nrRKd5swefd9+sFXFZ/NeL3bz/VxBls3ubAQ3afak15FikkSyHq3oKRKpMOtDsiYKXE3Bc0y3rF5A+y3OXjIA==
   dependencies:
-    "@sentry-internal/replay" "10.2.0"
-    "@sentry/core" "10.2.0"
+    "@sentry-internal/replay" "10.5.0"
+    "@sentry/core" "10.5.0"
 
-"@sentry-internal/replay@10.2.0":
-  version "10.2.0"
-  resolved "https://registry.npmjs.org/@sentry-internal/replay/-/replay-10.2.0.tgz#f81e919c9af0f1528a37c43cb7a7546c5d4cbb2a"
-  integrity sha512-UWy8VVU6pUHCPENsZAfUkrMxMx/d/khs6m5CAfe6LQKlI2mf5vR0uXtFH+tJE9lOpyqwFF/7qapVUb6xnaqT7Q==
+"@sentry-internal/replay@10.5.0":
+  version "10.5.0"
+  resolved "https://registry.npmjs.org/@sentry-internal/replay/-/replay-10.5.0.tgz#7c53f574daa483cf143ede26aea498ded673687c"
+  integrity sha512-Dp4coE/nPzhFrYH3iVrpVKmhNJ1m/jGXMEDBCNg3wJZRszI41Hrj0jCAM0Y2S3Q4IxYOmFYaFbGtVpAznRyOHg==
   dependencies:
-    "@sentry-internal/browser-utils" "10.2.0"
-    "@sentry/core" "10.2.0"
+    "@sentry-internal/browser-utils" "10.5.0"
+    "@sentry/core" "10.5.0"
 
-"@sentry/babel-plugin-component-annotate@4.0.2":
-  version "4.0.2"
-  resolved "https://registry.npmjs.org/@sentry/babel-plugin-component-annotate/-/babel-plugin-component-annotate-4.0.2.tgz#7c8eb80a38b5e6b4c4cea4c391d07581020c91e4"
-  integrity sha512-Nr/VamvpQs6w642EI5t+qaCUGnVEro0qqk+S8XO1gc8qSdpc8kkZJFnUk7ozAr+ljYWGfVgWXrxI9lLiriLsRA==
+"@sentry/babel-plugin-component-annotate@4.1.0":
+  version "4.1.0"
+  resolved "https://registry.npmjs.org/@sentry/babel-plugin-component-annotate/-/babel-plugin-component-annotate-4.1.0.tgz#6e7168f5fa59f53ac4b68e3f79c5fd54adc13f2e"
+  integrity sha512-UkcnqC7Bp9ODyoBN7BKcRotd1jz/I2vyruE/qjNfRC7UnP+jIRItUWYaXxQPON1fTw+N+egKdByk0M1y2OPv/Q==
 
-"@sentry/browser@10.2.0":
-  version "10.2.0"
-  resolved "https://registry.npmjs.org/@sentry/browser/-/browser-10.2.0.tgz#11219dd0bf50b9a16e1e07a84fe516d1643f62d7"
-  integrity sha512-p9LzAkmkaVClY3pCjOARjWGNyf89iT/2Z8cxF2GVirbztOlkgfjTDvQUTFWz0jP7RJcOdy+To7y1WQ1Z468zhg==
+"@sentry/browser@10.5.0":
+  version "10.5.0"
+  resolved "https://registry.npmjs.org/@sentry/browser/-/browser-10.5.0.tgz#0a76918386ec10c13a851a62555e82ee61260dbe"
+  integrity sha512-o5pEJeZ/iZ7Fmaz2sIirThfnmSVNiP5ZYhacvcDi0qc288TmBbikCX3fXxq3xiSkhXfe1o5QIbNyovzfutyuVw==
   dependencies:
-    "@sentry-internal/browser-utils" "10.2.0"
-    "@sentry-internal/feedback" "10.2.0"
-    "@sentry-internal/replay" "10.2.0"
-    "@sentry-internal/replay-canvas" "10.2.0"
-    "@sentry/core" "10.2.0"
+    "@sentry-internal/browser-utils" "10.5.0"
+    "@sentry-internal/feedback" "10.5.0"
+    "@sentry-internal/replay" "10.5.0"
+    "@sentry-internal/replay-canvas" "10.5.0"
+    "@sentry/core" "10.5.0"
 
-"@sentry/bundler-plugin-core@4.0.2":
-  version "4.0.2"
-  resolved "https://registry.npmjs.org/@sentry/bundler-plugin-core/-/bundler-plugin-core-4.0.2.tgz#2e106ac564d2e4e83e8dbc84f1e84f4eed1d6dde"
-  integrity sha512-LeARs8qHhEw19tk+KZd9DDV+Rh/UeapIH0+C09fTmff9p8Y82Cj89pEQ2a1rdUiF/oYIjQX45vnZscB7ra42yw==
+"@sentry/bundler-plugin-core@4.1.0":
+  version "4.1.0"
+  resolved "https://registry.npmjs.org/@sentry/bundler-plugin-core/-/bundler-plugin-core-4.1.0.tgz#c1b2f7a890a44e5ac5decc984a133aacf6147dd4"
+  integrity sha512-/5XBtCF6M+9frEXrrvfSWOdOC2q6I1L7oY7qbUVegNkp3kYVGihNZZnJIXGzo9rmwnA0IV7jI3o0pF/HDRqPeA==
   dependencies:
     "@babel/core" "^7.18.5"
-    "@sentry/babel-plugin-component-annotate" "4.0.2"
-    "@sentry/cli" "^2.49.0"
+    "@sentry/babel-plugin-component-annotate" "4.1.0"
+    "@sentry/cli" "^2.51.0"
     dotenv "^16.3.1"
     find-up "^5.0.0"
     glob "^9.3.2"
     magic-string "0.30.8"
     unplugin "1.0.1"
 
-"@sentry/cli-darwin@2.50.2":
-  version "2.50.2"
-  resolved "https://registry.npmjs.org/@sentry/cli-darwin/-/cli-darwin-2.50.2.tgz#fcf924fcc02cfa54748ff07a380334e533635c74"
-  integrity sha512-0Pjpl0vQqKhwuZm19z6AlEF+ds3fJg1KWabv8WzGaSc/fwxMEwjFwOZj+IxWBJPV578cXXNvB39vYjjpCH8j7A==
+"@sentry/cli-darwin@2.51.1":
+  version "2.51.1"
+  resolved "https://registry.npmjs.org/@sentry/cli-darwin/-/cli-darwin-2.51.1.tgz#3a1db065651893f72dad3a502b2d7c2f5e6a7dd8"
+  integrity sha512-R1u8IQdn/7Rr8sf6bVVr0vJT4OqwCFdYsS44Y3OoWGVJW2aAQTWRJOTlV4ueclVLAyUQzmgBjfR8AtiUhd/M5w==
 
-"@sentry/cli-linux-arm64@2.50.2":
-  version "2.50.2"
-  resolved "https://registry.npmjs.org/@sentry/cli-linux-arm64/-/cli-linux-arm64-2.50.2.tgz#ac9e6dba42095832bac8084abab4b86fdd2956f3"
-  integrity sha512-03Cj215M3IdoHAwevCxm5oOm9WICFpuLR05DQnODFCeIUsGvE1pZsc+Gm0Ky/ZArq2PlShBJTpbHvXbCUka+0w==
+"@sentry/cli-linux-arm64@2.51.1":
+  version "2.51.1"
+  resolved "https://registry.npmjs.org/@sentry/cli-linux-arm64/-/cli-linux-arm64-2.51.1.tgz#b4c957a06bafc13623c48971eadb0cff7d3662a3"
+  integrity sha512-nvA/hdhsw4bKLhslgbBqqvETjXwN1FVmwHLOrRvRcejDO6zeIKUElDiL5UOjGG0NC+62AxyNw5ri8Wzp/7rg9Q==
 
-"@sentry/cli-linux-arm@2.50.2":
-  version "2.50.2"
-  resolved "https://registry.npmjs.org/@sentry/cli-linux-arm/-/cli-linux-arm-2.50.2.tgz#835acd53ca83f6be9fc0d3d85a3cd4c694051bce"
-  integrity sha512-jzFwg9AeeuFAFtoCcyaDEPG05TU02uOy1nAX09c1g7FtsyQlPcbhI94JQGmnPzdRjjDmORtwIUiVZQrVTkDM7w==
+"@sentry/cli-linux-arm@2.51.1":
+  version "2.51.1"
+  resolved "https://registry.npmjs.org/@sentry/cli-linux-arm/-/cli-linux-arm-2.51.1.tgz#f761d0c58d27be503471cee4ffc41875a7d9430b"
+  integrity sha512-Klro17OmSSKOOSaxVKBBNPXet2+HrIDZUTSp8NRl4LQsIubdc1S/aQ79cH/g52Muwzpl3aFwPxyXw+46isfEgA==
 
-"@sentry/cli-linux-i686@2.50.2":
-  version "2.50.2"
-  resolved "https://registry.npmjs.org/@sentry/cli-linux-i686/-/cli-linux-i686-2.50.2.tgz#72f0e4bc1c515754aa11225efce711a24fb53524"
-  integrity sha512-J+POvB34uVyHbIYF++Bc/OCLw+gqKW0H/y/mY7rRZCiocgpk266M4NtsOBl6bEaurMx1D+BCIEjr4nc01I/rqA==
+"@sentry/cli-linux-i686@2.51.1":
+  version "2.51.1"
+  resolved "https://registry.npmjs.org/@sentry/cli-linux-i686/-/cli-linux-i686-2.51.1.tgz#62baaf83c5995e478186289a45315d0acd5bd3bf"
+  integrity sha512-jp4TmR8VXBdT9dLo6mHniQHN0xKnmJoPGVz9h9VDvO2Vp/8o96rBc555D4Am5wJOXmfuPlyjGcmwHlB3+kQRWw==
 
-"@sentry/cli-linux-x64@2.50.2":
-  version "2.50.2"
-  resolved "https://registry.npmjs.org/@sentry/cli-linux-x64/-/cli-linux-x64-2.50.2.tgz#d06f8ffd65871b1373a0d2228ab254d9456a615c"
-  integrity sha512-81yQVRLj8rnuHoYcrM7QbOw8ubA3weiMdPtTxTim1s6WExmPgnPTKxLCr9xzxGJxFdYo3xIOhtf5JFpUX/3j4A==
+"@sentry/cli-linux-x64@2.51.1":
+  version "2.51.1"
+  resolved "https://registry.npmjs.org/@sentry/cli-linux-x64/-/cli-linux-x64-2.51.1.tgz#0010fe24ad8ef492a917c12feb351ba768e72603"
+  integrity sha512-JuLt0MXM2KHNFmjqXjv23sly56mJmUQzGBWktkpY3r+jE08f5NLKPd5wQ6W/SoLXGIOKnwLz0WoUg7aBVyQdeQ==
 
-"@sentry/cli-win32-arm64@2.50.2":
-  version "2.50.2"
-  resolved "https://registry.npmjs.org/@sentry/cli-win32-arm64/-/cli-win32-arm64-2.50.2.tgz#4bd7a140367c17f77d621903cfe0914232108657"
-  integrity sha512-QjentLGvpibgiZlmlV9ifZyxV73lnGH6pFZWU5wLeRiaYKxWtNrrHpVs+HiWlRhkwQ0mG1/S40PGNgJ20DJ3gA==
+"@sentry/cli-win32-arm64@2.51.1":
+  version "2.51.1"
+  resolved "https://registry.npmjs.org/@sentry/cli-win32-arm64/-/cli-win32-arm64-2.51.1.tgz#0894f9a91e6ecb3021ca09fe644f995ff4ff826d"
+  integrity sha512-PiwjTdIFDazTQCTyDCutiSkt4omggYSKnO3HE1+LDjElsFrWY9pJs4fU3D40WAyE2oKu0MarjNH/WxYGdqEAlg==
 
-"@sentry/cli-win32-i686@2.50.2":
-  version "2.50.2"
-  resolved "https://registry.npmjs.org/@sentry/cli-win32-i686/-/cli-win32-i686-2.50.2.tgz#1eb997cf780c396446cdd8e63c6d4309894465e8"
-  integrity sha512-UkBIIzkQkQ1UkjQX8kHm/+e7IxnEhK6CdgSjFyNlxkwALjDWHJjMztevqAPz3kv4LdM6q1MxpQ/mOqXICNhEGg==
+"@sentry/cli-win32-i686@2.51.1":
+  version "2.51.1"
+  resolved "https://registry.npmjs.org/@sentry/cli-win32-i686/-/cli-win32-i686-2.51.1.tgz#6a6c6402cdce4fd038716b2c1e0bfa788b54f3e9"
+  integrity sha512-TMvZZpeiI2HmrDFNVQ0uOiTuYKvjEGOZdmUxe3WlhZW82A/2Oka7sQ24ljcOovbmBOj5+fjCHRUMYvLMCWiysA==
 
-"@sentry/cli-win32-x64@2.50.2":
-  version "2.50.2"
-  resolved "https://registry.npmjs.org/@sentry/cli-win32-x64/-/cli-win32-x64-2.50.2.tgz#1d0c106125b6dc87f3a598ac02519c699f17a6c0"
-  integrity sha512-tE27pu1sRRub1Jpmemykv3QHddBcyUk39Fsvv+n4NDpQyMgsyVPcboxBZyby44F0jkpI/q3bUH2tfCB1TYDNLg==
+"@sentry/cli-win32-x64@2.51.1":
+  version "2.51.1"
+  resolved "https://registry.npmjs.org/@sentry/cli-win32-x64/-/cli-win32-x64-2.51.1.tgz#d361e37146c9269d40c37459271a6c2cfa1fa8a6"
+  integrity sha512-v2hreYUPPTNK1/N7+DeX7XBN/zb7p539k+2Osf0HFyVBaoUC3Y3+KBwSf4ASsnmgTAK7HCGR+X0NH1vP+icw4w==
 
-"@sentry/cli@^2.49.0":
-  version "2.50.2"
-  resolved "https://registry.npmjs.org/@sentry/cli/-/cli-2.50.2.tgz#9fb90f2ae6648fc0104f0ca7f528d2e19ee0ecae"
-  integrity sha512-m1L9shxutF3WHSyNld6Y1vMPoXfEyQhoRh1V3SYSdl+4AB40U+zr2sRzFa2OPm7XP4zYNaWuuuHLkY/iHITs8Q==
+"@sentry/cli@^2.51.0":
+  version "2.51.1"
+  resolved "https://registry.npmjs.org/@sentry/cli/-/cli-2.51.1.tgz#c6bdc6025e8f600e44fc76f8274c369aeb5d4df4"
+  integrity sha512-FU+54kNcKJABU0+ekvtnoXHM9zVrDe1zXVFbQT7mS0On0m1P0zFRGdzbnWe2XzpzuEAJXtK6aog/W+esRU9AIA==
   dependencies:
     https-proxy-agent "^5.0.0"
     node-fetch "^2.6.7"
@@ -2307,40 +2307,40 @@
     proxy-from-env "^1.1.0"
     which "^2.0.2"
   optionalDependencies:
-    "@sentry/cli-darwin" "2.50.2"
-    "@sentry/cli-linux-arm" "2.50.2"
-    "@sentry/cli-linux-arm64" "2.50.2"
-    "@sentry/cli-linux-i686" "2.50.2"
-    "@sentry/cli-linux-x64" "2.50.2"
-    "@sentry/cli-win32-arm64" "2.50.2"
-    "@sentry/cli-win32-i686" "2.50.2"
-    "@sentry/cli-win32-x64" "2.50.2"
+    "@sentry/cli-darwin" "2.51.1"
+    "@sentry/cli-linux-arm" "2.51.1"
+    "@sentry/cli-linux-arm64" "2.51.1"
+    "@sentry/cli-linux-i686" "2.51.1"
+    "@sentry/cli-linux-x64" "2.51.1"
+    "@sentry/cli-win32-arm64" "2.51.1"
+    "@sentry/cli-win32-i686" "2.51.1"
+    "@sentry/cli-win32-x64" "2.51.1"
 
-"@sentry/core@10.2.0":
-  version "10.2.0"
-  resolved "https://registry.npmjs.org/@sentry/core/-/core-10.2.0.tgz#854f036914c718c664fbd54eef6dfdc9db0f44d1"
-  integrity sha512-2QOuo2B26oReum9CxizK+c96FlV5oI6nsNjKgIYfrT+BTAAR3OlD/pzfJtxo3ydYzfU33Zdtu9XTWvhEAlHeZQ==
+"@sentry/core@10.5.0":
+  version "10.5.0"
+  resolved "https://registry.npmjs.org/@sentry/core/-/core-10.5.0.tgz#191fa6f08020858903496dfad188d48c7cd55061"
+  integrity sha512-jTJ8NhZSKB2yj3QTVRXfCCngQzAOLThQUxCl9A7Mv+XF10tP7xbH/88MVQ5WiOr2IzcmrB9r2nmUe36BnMlLjA==
 
 "@sentry/core@^8.50.0":
   version "8.55.0"
   resolved "https://registry.npmjs.org/@sentry/core/-/core-8.55.0.tgz#4964920229fcf649237ef13b1533dfc4b9f6b22e"
   integrity sha512-6g7jpbefjHYs821Z+EBJ8r4Z7LT5h80YSWRJaylGS4nW5W5Z2KXzpdnyFarv37O7QjauzVC2E+PABmpkw5/JGA==
 
-"@sentry/react@^10.2.0":
-  version "10.2.0"
-  resolved "https://registry.npmjs.org/@sentry/react/-/react-10.2.0.tgz#c4d1ffcb6a73e48e053987d3e8ed030623a96fa8"
-  integrity sha512-zx4qhmoECluvNgPLiFBG0CgzkE3PQrWSVEvPkA/9emNREL6x31VVz38F4BTZiRqnhRLoMgRLrIUg0A6OjcGmoA==
+"@sentry/react@^10.5.0":
+  version "10.5.0"
+  resolved "https://registry.npmjs.org/@sentry/react/-/react-10.5.0.tgz#e4b57c04a4ce66a8cb6c3b86838f262038574da3"
+  integrity sha512-UHanvg+oIAvE/Hm76QCCdxYgb+tIuF0JszQoROApl5C5RxRfJJcU643pASQs6BDvrtxbuMQ/AHTacLTYpsn0cg==
   dependencies:
-    "@sentry/browser" "10.2.0"
-    "@sentry/core" "10.2.0"
+    "@sentry/browser" "10.5.0"
+    "@sentry/core" "10.5.0"
     hoist-non-react-statics "^3.3.2"
 
-"@sentry/webpack-plugin@^4.0.2":
-  version "4.0.2"
-  resolved "https://registry.npmjs.org/@sentry/webpack-plugin/-/webpack-plugin-4.0.2.tgz#be90c73145d8001bc72c73e4eab83d2b1a28d330"
-  integrity sha512-UklVtG7Iiw+AvcL0PfiiyW/u3XT+joDAMDvWbx90rFhVSU10ENW5AV5y4pC41qChqEu3P1eBFdaSxg+kdLeqvw==
+"@sentry/webpack-plugin@^4.1.0":
+  version "4.1.0"
+  resolved "https://registry.npmjs.org/@sentry/webpack-plugin/-/webpack-plugin-4.1.0.tgz#e95e2dcd10e71dc8c3a16ba5cad9153f5e78c3bc"
+  integrity sha512-YqfDfyGAuT/9YW1kgAPfD7kGUKQCh1E5co+qMdToxi/Mz4xsWJY02rFS5GrJixYktYJfSMze8NiRr89yJMxYHw==
   dependencies:
-    "@sentry/bundler-plugin-core" "4.0.2"
+    "@sentry/bundler-plugin-core" "4.1.0"
     unplugin "1.0.1"
     uuid "^9.0.0"
 
@@ -5539,19 +5539,19 @@ eslint-visitor-keys@^4.2.1:
   resolved "https://registry.npmjs.org/eslint-visitor-keys/-/eslint-visitor-keys-4.2.1.tgz#4cfea60fe7dd0ad8e816e1ed026c1d5251b512c1"
   integrity sha512-Uhdk5sfqcee/9H/rCOJikYz67o0a2Tw2hGRPOG2Y1R2dg7brRe1uG0yaNQDHu+TO/uQPF/5eCapvYSmHUjt7JQ==
 
-eslint@^9.32.0:
-  version "9.32.0"
-  resolved "https://registry.npmjs.org/eslint/-/eslint-9.32.0.tgz#4ea28df4a8dbc454e1251e0f3aed4bcf4ce50a47"
-  integrity sha512-LSehfdpgMeWcTZkWZVIJl+tkZ2nuSkyyB9C27MZqFWXuph7DvaowgcTvKqxvpLW1JZIk8PN7hFY3Rj9LQ7m7lg==
+eslint@^9.33.0:
+  version "9.33.0"
+  resolved "https://registry.npmjs.org/eslint/-/eslint-9.33.0.tgz#cc186b3d9eb0e914539953d6a178a5b413997b73"
+  integrity sha512-TS9bTNIryDzStCpJN93aC5VRSW3uTx9sClUn4B87pwiCaJh220otoI0X8mJKr+VcPtniMdN8GKjlwgWGUv5ZKA==
   dependencies:
     "@eslint-community/eslint-utils" "^4.2.0"
     "@eslint-community/regexpp" "^4.12.1"
     "@eslint/config-array" "^0.21.0"
-    "@eslint/config-helpers" "^0.3.0"
-    "@eslint/core" "^0.15.0"
+    "@eslint/config-helpers" "^0.3.1"
+    "@eslint/core" "^0.15.2"
     "@eslint/eslintrc" "^3.3.1"
-    "@eslint/js" "9.32.0"
-    "@eslint/plugin-kit" "^0.3.4"
+    "@eslint/js" "9.33.0"
+    "@eslint/plugin-kit" "^0.3.5"
     "@humanfs/node" "^0.16.6"
     "@humanwhocodes/module-importer" "^1.0.1"
     "@humanwhocodes/retry" "^0.4.2"
