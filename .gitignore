@@ -8,3 +8,9 @@ dist/
 .DS_Store
 secure.log
 secure1.log
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
