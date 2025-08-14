@@ -967,7 +967,7 @@ export const testdata3: TilKontraktTestData = {
                     verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
                 },
                 borPåSvalbard: {
-                    id: {
+                    label: {
                         en: 'Do you live in Svalbard?',
                         nb: 'Bor du på Svalbard?',
                         nn: 'Bur du på Svalbard?',
