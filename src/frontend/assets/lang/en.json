@@ -602,6 +602,8 @@
   "omdeg.borpådenneadressen.spm": "Do you live at this address?",
   "omdeg.borpådenneadressen.spm.tilleggsinfo": "You are registered with a blocked address. You can answer Yes to this question, and continue the digital application.",
   "omdeg.borpådenneadressen.spm.tilleggsinfo-ukjent": "You are not registered with a residential address in Norway. You can answer Yes to this question, and continue the digital application.",
+  "omdeg.borpåsvalbard.spm": "Do you live on Svalbard?",
+  "omdeg.borpåsvalbard.feilmelding": "You must state if you live on Svalbard in order to be able to proceed",
   "omdeg.du-kan-ikke-søke.feilmelding": "If you do not live at an address registered in the Norwegian National Registry (<bokmål>folkeregisteret</bokmål>), you must use a PDF/paper application form to apply.",
   "omdeg.endre-opplysninger.lenke": "https://www.skatteetaten.no/en/person/national-registry/change/",
   "omdeg.endre-opplysninger.lenketekst": "Change information in the National Registry (opens in a new window)",
