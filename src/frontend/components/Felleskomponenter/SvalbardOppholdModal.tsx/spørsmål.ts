@@ -1,6 +1,6 @@
 export enum SvalbardOppholdSpørsmålId {
-    fraDato = 'fra-dato-svalbard-opphold',
-    tilDato = 'til-dato-svalbard-opphold',
-    tilDatoUkjent = 'til-dato-svalbard-opphold-ukjent',
+    fraDatoSvalbardOpphold = 'fra-dato-svalbard-opphold',
+    tilDatoSvalbardOpphold = 'til-dato-svalbard-opphold',
+    tilDatoSvalbardOppholdUkjent = 'til-dato-svalbard-opphold-ukjent',
     svalbardOpphold = 'svalbard-opphold',
 }

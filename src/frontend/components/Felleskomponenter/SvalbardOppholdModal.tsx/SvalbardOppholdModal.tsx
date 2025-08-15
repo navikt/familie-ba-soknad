@@ -53,11 +53,11 @@ export const SvalbardOppholdModal: React.FC<SvalbardOppholdModalProps> = ({
         }
         onLeggTilSvalbardOppholdPeriode({
             fraDatoSvalbardOpphold: {
-                id: SvalbardOppholdSpørsmålId.fraDato,
+                id: SvalbardOppholdSpørsmålId.fraDatoSvalbardOpphold,
                 svar: fraDatoSvalbardOpphold.erSynlig ? fraDatoSvalbardOpphold.verdi : '',
             },
             tilDatoSvalbardOpphold: {
-                id: SvalbardOppholdSpørsmålId.tilDato,
+                id: SvalbardOppholdSpørsmålId.tilDatoSvalbardOpphold,
                 svar: tilDatoSvalbardOpphold.erSynlig
                     ? svarForSpørsmålMedUkjent(tilDatoSvalbardOppholdUkjent, tilDatoSvalbardOpphold)
                     : '',

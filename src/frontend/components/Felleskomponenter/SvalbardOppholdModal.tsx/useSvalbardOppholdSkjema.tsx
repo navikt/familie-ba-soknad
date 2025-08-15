@@ -22,40 +22,37 @@ export const useSvalbardOppholdSkjema = ({ personType }: useSvalbardOppholdSkjem
     const teksterForModal: ISvalbardOppholdTekstinnhold =
         tekster()[ESanitySteg.FELLES].modaler.svalbardOpphold[personType];
 
-    const fraDato = useDatovelgerFeltForSanity({
+    const fraDatoSvalbardOpphold = useDatovelgerFeltForSanity({
         søknadsfelt: {
-            id: SvalbardOppholdSpørsmålId.fraDato,
+            id: SvalbardOppholdSpørsmålId.fraDatoSvalbardOpphold,
             svar: '',
         },
         skalFeltetVises: true,
         feilmelding: teksterForModal.startdato.feilmelding,
-        // sluttdatoAvgrensning: dagensDato(), // FIXME:
         sluttdatoAvgrensning: gårsdagensDato(),
     });
 
-    const tilDatoUkjent = useFelt<ESvar>({
+    const tilDatoSvalbardOppholdUkjent = useFelt<ESvar>({
         verdi: ESvar.NEI,
-        feltId: SvalbardOppholdSpørsmålId.tilDatoUkjent,
+        feltId: SvalbardOppholdSpørsmålId.tilDatoSvalbardOppholdUkjent,
     });
 
-    const tilDato = useDatovelgerFeltMedUkjentForSanity({
-        feltId: SvalbardOppholdSpørsmålId.tilDato,
+    const tilDatoSvalbardOpphold = useDatovelgerFeltMedUkjentForSanity({
+        feltId: SvalbardOppholdSpørsmålId.tilDatoSvalbardOpphold,
         initiellVerdi: '',
-        vetIkkeCheckbox: tilDatoUkjent,
+        vetIkkeCheckbox: tilDatoSvalbardOppholdUkjent,
         feilmelding: teksterForModal.sluttdato.feilmelding,
         skalFeltetVises: true,
-        // sluttdatoAvgrensning: dagensDato(), // FIXME:
-        // startdatoAvgrensning: dagensDato(), // FIXME:
-        startdatoAvgrensning: minTilDatoForPeriode(false, fraDato.verdi),
-        avhengigheter: { fraDato },
+        startdatoAvgrensning: minTilDatoForPeriode(false, fraDatoSvalbardOpphold.verdi),
+        avhengigheter: { fraDatoSvalbardOpphold },
         nullstillVedAvhengighetEndring: false,
     });
 
     const skjema = useSkjema<ISvalbardOppholdPeriodeFeltTyper, 'string'>({
         felter: {
-            fraDatoSvalbardOpphold: fraDato,
-            tilDatoSvalbardOpphold: tilDato,
-            tilDatoSvalbardOppholdUkjent: tilDatoUkjent,
+            fraDatoSvalbardOpphold,
+            tilDatoSvalbardOpphold,
+            tilDatoSvalbardOppholdUkjent,
         },
         skjemanavn: 'svalbardOpphold',
     });

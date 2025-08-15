@@ -24,8 +24,8 @@ export interface IKontraktTidligereSamboer extends IKontraktNåværendeSamboer {
 }
 
 export interface ISvalbardOppholdPeriodeIKontraktFormat {
-    tilDato: ISøknadsfelt<string>;
-    fraDato: ISøknadsfelt<string | undefined>;
+    tilDatoSvalbardOpphold: ISøknadsfelt<string>;
+    fraDatoSvalbardOpphold: ISøknadsfelt<string | undefined>;
 }
 
 export interface IUtenlandsperiodeIKontraktFormat {

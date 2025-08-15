@@ -25,11 +25,11 @@ export const svalbardOppholdPeriodeTilISøknadsfelt = ({
             antall: periodeNummer.toString(),
         }),
         verdi: sammeVerdiAlleSpråk({
-            fraDato: {
+            fraDatoSvalbardOpphold: {
                 label: tilRestLocaleRecord(tekster.startdato.sporsmal),
                 verdi: sammeVerdiAlleSpråk(svalbardOppholdPeriode.fraDatoSvalbardOpphold.svar),
             },
-            tilDato: {
+            tilDatoSvalbardOpphold: {
                 label: tilRestLocaleRecord(tekster.sluttdato.sporsmal),
                 verdi: sammeVerdiAlleSpråkEllerUkjent(
                     tilRestLocaleRecord,
