@@ -1815,10 +1815,10 @@
   dependencies:
     typescript "^5.4.2"
 
-"@navikt/nav-dekoratoren-moduler@^3.2.0":
-  version "3.2.1"
-  resolved "https://npm.pkg.github.com/download/@navikt/nav-dekoratoren-moduler/3.2.1/b015c4cef955b8f145ae63d1d7243a141d4b6237#b015c4cef955b8f145ae63d1d7243a141d4b6237"
-  integrity sha512-M5RO9/EcEprCteb+LKhBG5AVagNnUbqTKeURs0/Kde9YouOMQvMJyWA+kFuPT9dPLqSrAj3sJe8o7sVpdXEr1g==
+"@navikt/nav-dekoratoren-moduler@^3.4.0":
+  version "3.4.0"
+  resolved "https://npm.pkg.github.com/download/@navikt/nav-dekoratoren-moduler/3.4.0/e368316e1b7d6e0fb7f15fbd087c34400a7208f3#e368316e1b7d6e0fb7f15fbd087c34400a7208f3"
+  integrity sha512-dAD2TDjadqt7kdR8pZ421q6lqqfnFfNg8AuRpWFQ7Bd3lML29/oipe/d+g/vQwaLH4aVTDIpGX8nVrR/g2NXfA==
   dependencies:
     js-cookie "^3.0.5"
 
