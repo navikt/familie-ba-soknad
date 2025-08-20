@@ -57,7 +57,7 @@ describe('Personopplysninger', () => {
                 </SpråkProvider>
             </CookiesProviderMedLocale>
         );
-        expect(queryByText('12345678901')).toBeInTheDocument();
+        expect(queryByText('123456 78901')).toBeInTheDocument();
         expect(queryByTestId('adressevisning-ikke-registrert')).toBeInTheDocument();
     });
 
