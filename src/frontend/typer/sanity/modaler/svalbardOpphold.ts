@@ -14,4 +14,5 @@ export interface ISvalbardOppholdTekstinnhold {
     lesMerInnhold: LocaleRecordBlock;
     fremtidigeOppholdTittel: LocaleRecordBlock;
     fremtidigeOppholdInnhold: LocaleRecordBlock;
+    meldFraOmFlyttingAlert: LocaleRecordBlock;
 }

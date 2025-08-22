@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ReadMore } from '@navikt/ds-react';
+import { Alert, ReadMore } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useAppContext } from '../../../context/AppContext';
@@ -106,6 +106,9 @@ export const SvalbardOppholdModal: React.FC<SvalbardOppholdModalProps> = ({
                     label={plainTekst(teksterForModal.sluttdato.checkboxLabel)}
                 />
             </div>
+            <Alert variant="warning">
+                <TekstBlock block={teksterForModal.meldFraOmFlyttingAlert} />
+            </Alert>
             <ReadMore header={<TekstBlock block={teksterForModal.fremtidigeOppholdTittel} />}>
                 <TekstBlock block={teksterForModal.fremtidigeOppholdInnhold} />
             </ReadMore>
