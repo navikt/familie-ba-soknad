@@ -2167,10 +2167,10 @@
   resolved "https://registry.npmjs.org/@rtsao/scc/-/scc-1.1.0.tgz#927dd2fae9bc3361403ac2c7a00c32ddce9ad7e8"
   integrity sha512-zt6OdqaDoOnJ1ZYsCYGt9YmWzDXl4vQdKTyJev62gFhRGKdx7mcT54V9KIjg+d2wi9EXsPvAPKe7i7WjfVWB8g==
 
-"@sanity/client@^7.8.1":
-  version "7.8.1"
-  resolved "https://registry.npmjs.org/@sanity/client/-/client-7.8.1.tgz#e7f17c17b93ed21fd764a29253b25798423ec40a"
-  integrity sha512-jz/IizNHGrss7BG+wFzhI2l2f2avayM4dsBcxKRW4T3HSP4MP7T3oA6vgSDRX1N6KfQfFVILNq6bBE0ut8cHUA==
+"@sanity/client@^7.9.0":
+  version "7.9.0"
+  resolved "https://registry.npmjs.org/@sanity/client/-/client-7.9.0.tgz#7a0459e7bebc8b2e3a8871e5d53209f5adcbf88a"
+  integrity sha512-CTkelmFDylaIXw8M76GkkfJyYd/f9NFcsLwhuLU0NOqNcnwqlTqUWyy6MY7h5IJC9IJbDttZeRhMwnc/WGcLXg==
   dependencies:
     "@sanity/eventsource" "^5.0.2"
     get-it "^8.6.9"
