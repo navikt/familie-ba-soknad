@@ -23,6 +23,11 @@ export interface IKontraktTidligereSamboer extends IKontraktNåværendeSamboer {
     samboerTilDato: ISøknadsfelt<ISODateString>;
 }
 
+export interface ISvalbardOppholdPeriodeIKontraktFormat {
+    tilDatoSvalbardOpphold: ISøknadsfelt<string>;
+    fraDatoSvalbardOpphold: ISøknadsfelt<string | undefined>;
+}
+
 export interface IUtenlandsperiodeIKontraktFormat {
     utenlandsoppholdÅrsak: ISøknadsfelt<string>;
     oppholdsland: ISøknadsfelt<string>;

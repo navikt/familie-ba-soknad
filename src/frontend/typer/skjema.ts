@@ -15,6 +15,7 @@ import {
     IArbeidsperiode,
     IEøsBarnetrygdsperiode,
     IPensjonsperiode,
+    ISvalbardOppholdPeriode,
     IUtbetalingsperiode,
     IUtenlandsperiode,
 } from './perioder';
@@ -104,6 +105,8 @@ export interface IOmBarnetFeltTyper {
 
 export interface IOmDegFeltTyper {
     borPåRegistrertAdresse: ESvar | null;
+    borPåSvalbard: ESvar | null;
+    registrerteSvalbardOppholdPerioder: ISvalbardOppholdPeriode[];
     værtINorgeITolvMåneder: ESvar | null;
     planleggerÅBoINorgeTolvMnd: ESvar | null;
     registrerteUtenlandsperioder: IUtenlandsperiode[];
@@ -220,6 +223,13 @@ export interface IBarnetrygdperioderFeltTyper {
     tilDatoBarnetrygdperiode: ISODateString;
     månedligBeløp: string;
 }
+
+export interface ISvalbardOppholdPeriodeFeltTyper {
+    fraDatoSvalbardOpphold: ISODateString;
+    tilDatoSvalbardOpphold: ISODateString;
+    tilDatoSvalbardOppholdUkjent: ESvar;
+}
+
 export type SkjemaFeltTyper =
     | IOmDegFeltTyper
     | IVelgBarnFeltTyper
@@ -234,4 +244,5 @@ export type SkjemaFeltTyper =
     | IEøsForBarnFeltTyper
     | IUtbetalingerFeltTyper
     | IArbeidsperioderFeltTyper
-    | IBarnetrygdperioderFeltTyper;
+    | IBarnetrygdperioderFeltTyper
+    | ISvalbardOppholdPeriodeFeltTyper;

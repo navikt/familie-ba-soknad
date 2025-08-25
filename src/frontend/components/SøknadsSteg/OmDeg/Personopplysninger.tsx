@@ -9,6 +9,7 @@ import { useSpråkContext } from '../../../context/SpråkContext';
 import { ESanitySteg } from '../../../typer/sanity/sanity';
 import { genererAdresseVisning } from '../../../utils/adresse';
 import { landkodeTilSpråk, sivilstandTilSanitySivilstandApiKey } from '../../../utils/språk';
+import { formaterFnr } from '../../../utils/visning';
 
 export const Personopplysninger: React.FC = () => {
     const { valgtLocale } = useSpråkContext();
@@ -35,7 +36,7 @@ export const Personopplysninger: React.FC = () => {
         <>
             <div>
                 <BodyShort weight="semibold">{plainTekst(ident)}</BodyShort>
-                <BodyShort>{søker.ident}</BodyShort>
+                <BodyShort>{formaterFnr(søker.ident)}</BodyShort>
             </div>
             <div>
                 <BodyShort weight="semibold">{plainTekst(statsborgerskap)}</BodyShort>

@@ -7,6 +7,7 @@ import { ESivilstand, IAdresse } from './kontrakt/generelle';
 import {
     IArbeidsperiode,
     IPensjonsperiode,
+    ISvalbardOppholdPeriode,
     IUtbetalingsperiode,
     IUtenlandsperiode,
 } from './perioder';
@@ -49,6 +50,8 @@ export interface ISøker extends Omit<ISøkerRespons, 'barn'> {
     barn: IBarn[];
     triggetEøs: boolean;
     borPåRegistrertAdresse: ISøknadSpørsmål<ESvar | null>;
+    borPåSvalbard: ISøknadSpørsmål<ESvar | null>;
+    svalbardOppholdPerioder: ISvalbardOppholdPeriode[];
     værtINorgeITolvMåneder: ISøknadSpørsmål<ESvar | null>;
     utenlandsperioder: IUtenlandsperiode[];
     planleggerÅBoINorgeTolvMnd: ISøknadSpørsmål<ESvar | null>;

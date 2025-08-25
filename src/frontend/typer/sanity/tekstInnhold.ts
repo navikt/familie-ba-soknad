@@ -15,6 +15,7 @@ import { IBarnetrygdsperiodeTekstinnhold } from './modaler/barnetrygdperiode';
 import { ILeggTilBarnTekstinnhold } from './modaler/leggTilBarn';
 import { IPensjonsperiodeTekstinnhold } from './modaler/pensjonsperiode';
 import { IStartPåNyttModal } from './modaler/startPåNytt';
+import { ISvalbardOppholdTekstinnhold } from './modaler/svalbardOpphold';
 import { ITidligereSamoboereTekstinnhold } from './modaler/tidligereSamboere';
 import { IUtenlandsoppholdTekstinnhold } from './modaler/utenlandsopphold';
 import {
@@ -40,6 +41,7 @@ export enum SanityModalPrefix {
     UTENLANDSOPPHOLD = 'MODAL_UTENLANDSOPPHOLD',
     START_PAA_NYTT = 'MODAL_START_PAA_NYTT',
     LEGG_TIL_BARN = 'MODAL_LEGG_TIL_BARN',
+    SVALBARDOPPHOLD = 'MODAL_SVALBARDOPPHOLD',
 }
 
 export interface ITekstinnhold {
@@ -157,6 +159,10 @@ export interface IModalerTekstinnhold {
         barn: IUtenlandsoppholdTekstinnhold;
         andreForelder: IUtenlandsoppholdTekstinnhold;
     };
+    svalbardOpphold: {
+        søker: ISvalbardOppholdTekstinnhold;
+        barn: ISvalbardOppholdTekstinnhold;
+    };
     startPåNytt: IStartPåNyttModal;
     leggTilBarn: ILeggTilBarnTekstinnhold;
 }
@@ -195,6 +201,7 @@ export interface IKanIkkeBrukeSoeknadTekstinnhold {
 export interface IHjelpeteksterForInputTekstInnhold {
     datoformatHjelpetekst: LocaleRecordBlock;
     datoformatPlaceholder: LocaleRecordBlock;
+    manedformatHjelpetekst: LocaleRecordBlock;
     manedformatPlaceholder: LocaleRecordBlock;
     velgLandPlaceholder: LocaleRecordBlock;
 }

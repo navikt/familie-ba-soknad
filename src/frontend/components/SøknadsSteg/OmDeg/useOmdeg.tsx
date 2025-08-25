@@ -1,20 +1,22 @@
 import { useEffect, useState } from 'react';
 
 import { ESvar } from '@navikt/familie-form-elements';
-import { feil, type ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
+import { feil, type FeltState, type ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
 import { useAppContext } from '../../../context/AppContext';
 import { useEøsContext } from '../../../context/EøsContext';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import { AlternativtSvarForInput } from '../../../typer/common';
-import { IUtenlandsperiode } from '../../../typer/perioder';
+import { ISvalbardOppholdPeriode, IUtenlandsperiode } from '../../../typer/perioder';
 import { IIdNummer } from '../../../typer/person';
+import { ISvalbardOppholdTekstinnhold } from '../../../typer/sanity/modaler/svalbardOpphold';
 import { IUtenlandsoppholdTekstinnhold } from '../../../typer/sanity/modaler/utenlandsopphold';
 import { ESanitySteg } from '../../../typer/sanity/sanity';
 import { IOmDegFeltTyper } from '../../../typer/skjema';
 import { nullstilteEøsFelterForBarn } from '../../../utils/barn';
 import { nullstilteEøsFelterForSøker } from '../../../utils/søker';
 import { flyttetPermanentFraNorge } from '../../../utils/utenlandsopphold';
+import { SvalbardOppholdSpørsmålId } from '../../Felleskomponenter/SvalbardOppholdModal.tsx/spørsmål';
 import { UtenlandsoppholdSpørsmålId } from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 import { idNummerLandMedPeriodeType, PeriodeType } from '../EøsSteg/idnummerUtils';
 
@@ -26,6 +28,9 @@ export const useOmdeg = (): {
     valideringErOk: () => boolean;
     oppdaterSøknad: () => void;
     validerAlleSynligeFelter: () => void;
+    leggTilSvalbardOppholdPeriode: (periode: ISvalbardOppholdPeriode) => void;
+    fjernSvalbardOppholdPeriode: (periodeSomSkalFjernes: ISvalbardOppholdPeriode) => void;
+    svalbardOppholdPerioder: ISvalbardOppholdPeriode[];
     leggTilUtenlandsperiode: (periode: IUtenlandsperiode) => void;
     fjernUtenlandsperiode: (periode: IUtenlandsperiode) => void;
     utenlandsperioder: IUtenlandsperiode[];
@@ -33,11 +38,16 @@ export const useOmdeg = (): {
     const { søknad, settSøknad, tekster, plainTekst } = useAppContext();
     const { erEøsLand } = useEøsContext();
     const søker = søknad.søker;
+    const [svalbardOppholdPerioder, settSvalbardOppholdPerioder] = useState<
+        ISvalbardOppholdPeriode[]
+    >(søker.svalbardOppholdPerioder);
     const [utenlandsperioder, settUtenlandsperioder] = useState<IUtenlandsperiode[]>(
         søker.utenlandsperioder
     );
     const { skalTriggeEøsForSøker, søkerTriggerEøs, settSøkerTriggerEøs } = useEøsContext();
     const teksterForSteg: IOmDegTekstinnhold = tekster()[ESanitySteg.OM_DEG];
+    const teksterForSvalbardOpphold: ISvalbardOppholdTekstinnhold =
+        tekster()[ESanitySteg.FELLES].modaler.svalbardOpphold.søker;
     const teksterForUtenlandsopphold: IUtenlandsoppholdTekstinnhold =
         tekster()[ESanitySteg.FELLES].modaler.utenlandsopphold.søker;
 
@@ -47,6 +57,55 @@ export const useOmdeg = (): {
         feilmeldingSpråkId: 'omdeg.borpådenneadressen.feilmelding',
         skalSkjules: !søker.adresse || søker.adressebeskyttelse,
     });
+
+    const borPåSvalbard = useFelt<ESvar | null>({
+        feltId: søker.borPåSvalbard.id,
+        verdi: borPåRegistrertAdresse.verdi === ESvar.JA ? null : søker.borPåSvalbard.svar,
+        valideringsfunksjon: (felt: FeltState<ESvar | null>) => {
+            return felt.verdi !== null
+                ? ok(felt)
+                : feil(felt, plainTekst(teksterForSteg.borPaaSvalbard.feilmelding));
+        },
+        skalFeltetVises: avhengigheter => {
+            return (
+                avhengigheter &&
+                avhengigheter.borPåRegistrertAdresse &&
+                avhengigheter.borPåRegistrertAdresse.verdi === ESvar.NEI
+            );
+        },
+        avhengigheter: { borPåRegistrertAdresse },
+    });
+
+    const registrerteSvalbardOppholdPerioder = useFelt<ISvalbardOppholdPeriode[]>({
+        feltId: SvalbardOppholdSpørsmålId.svalbardOpphold,
+        verdi: svalbardOppholdPerioder,
+        avhengigheter: {
+            borPåSvalbard,
+        },
+        valideringsfunksjon: felt => {
+            return felt.verdi.length
+                ? ok(felt)
+                : feil(felt, plainTekst(teksterForSvalbardOpphold.leggTilFeilmelding));
+        },
+        skalFeltetVises: avhengigheter => {
+            return avhengigheter.borPåSvalbard.verdi === ESvar.JA;
+        },
+    });
+
+    useEffect(() => {
+        registrerteSvalbardOppholdPerioder.validerOgSettFelt(svalbardOppholdPerioder);
+        genererOppdatertSøker();
+    }, [borPåSvalbard, svalbardOppholdPerioder]);
+
+    const leggTilSvalbardOppholdPeriode = (periode: ISvalbardOppholdPeriode) => {
+        settSvalbardOppholdPerioder(prevState => prevState.concat(periode));
+    };
+
+    const fjernSvalbardOppholdPeriode = (periodeSomSkalFjernes: ISvalbardOppholdPeriode) => {
+        settSvalbardOppholdPerioder(prevState =>
+            prevState.filter(periode => periode !== periodeSomSkalFjernes)
+        );
+    };
 
     const værtINorgeITolvMåneder = useJaNeiSpmFelt({
         søknadsfelt: søker.værtINorgeITolvMåneder,
@@ -131,11 +190,16 @@ export const useOmdeg = (): {
 
     const genererOppdatertSøker = () => ({
         ...søker,
+        svalbardOppholdPerioder: borPåSvalbard.verdi === ESvar.JA ? svalbardOppholdPerioder : [],
         utenlandsperioder: værtINorgeITolvMåneder.verdi === ESvar.NEI ? utenlandsperioder : [],
         idNummer: filtrerteRelevanteIdNummer(),
         borPåRegistrertAdresse: {
             ...søker.borPåRegistrertAdresse,
             svar: skjema.felter.borPåRegistrertAdresse.verdi,
+        },
+        borPåSvalbard: {
+            ...søker.borPåSvalbard,
+            svar: skjema.felter.borPåSvalbard.verdi,
         },
         værtINorgeITolvMåneder: {
             ...søker.værtINorgeITolvMåneder,
@@ -179,6 +243,8 @@ export const useOmdeg = (): {
     >({
         felter: {
             borPåRegistrertAdresse,
+            borPåSvalbard,
+            registrerteSvalbardOppholdPerioder,
             værtINorgeITolvMåneder,
             planleggerÅBoINorgeTolvMnd,
             registrerteUtenlandsperioder,
@@ -192,6 +258,9 @@ export const useOmdeg = (): {
         validerAlleSynligeFelter,
         valideringErOk,
         oppdaterSøknad,
+        leggTilSvalbardOppholdPeriode,
+        fjernSvalbardOppholdPeriode,
+        svalbardOppholdPerioder,
         leggTilUtenlandsperiode,
         fjernUtenlandsperiode,
         utenlandsperioder,

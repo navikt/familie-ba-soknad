@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { formatISO, lastDayOfMonth } from 'date-fns';
 
-import { MonthPicker, useMonthpicker } from '@navikt/ds-react';
+import { BodyShort, MonthPicker, useMonthpicker } from '@navikt/ds-react';
 import type { Felt } from '@navikt/familie-skjema';
 
 import { useAppContext } from '../../../context/AppContext';
@@ -54,7 +54,8 @@ export const MånedÅrVelger: React.FC<MånedÅrVelgerProps> = ({
     const { tekster, plainTekst } = useAppContext();
     const [error, setError] = useState<Feilmelding | undefined>(undefined);
 
-    const { manedformatPlaceholder } = tekster().FELLES.hjelpeteksterForInput;
+    const { manedformatHjelpetekst, manedformatPlaceholder } =
+        tekster().FELLES.hjelpeteksterForInput;
 
     const formateringsfeilmeldinger = tekster()[ESanitySteg.FELLES].formateringsfeilmeldinger;
 
@@ -112,6 +113,7 @@ export const MånedÅrVelger: React.FC<MånedÅrVelgerProps> = ({
             <MonthPicker.Input
                 {...inputProps}
                 label={label}
+                description={<BodyShort>{plainTekst(manedformatHjelpetekst)}</BodyShort>}
                 placeholder={plainTekst(manedformatPlaceholder)}
                 disabled={disabled}
                 error={

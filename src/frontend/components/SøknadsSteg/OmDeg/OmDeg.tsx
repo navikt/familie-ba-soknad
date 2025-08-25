@@ -1,8 +1,10 @@
 import React from 'react';
 
+import { Alert } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useAppContext } from '../../../context/AppContext';
+import { useFeatureToggles } from '../../../context/FeatureTogglesContext';
 import { PersonType } from '../../../typer/personType';
 import { IUtenlandsoppholdTekstinnhold } from '../../../typer/sanity/modaler/utenlandsopphold';
 import { ESanitySteg, Typografi } from '../../../typer/sanity/sanity';
@@ -14,6 +16,7 @@ import PerioderContainer from '../../Felleskomponenter/PerioderContainer';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
 import Steg from '../../Felleskomponenter/Steg/Steg';
+import { SvalbardOppholdPeriode } from '../../Felleskomponenter/SvalbardOppholdModal.tsx/SvalbardOppholdPeriode';
 import { UtenlandsoppholdSpørsmålId } from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 import { UtenlandsoppholdModal } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsoppholdModal';
 import { UtenlandsperiodeOppsummering } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsperiodeOppsummering';
@@ -22,6 +25,7 @@ import { Personopplysninger } from './Personopplysninger';
 import { useOmdeg } from './useOmdeg';
 
 const OmDeg: React.FC = () => {
+    const { toggles } = useFeatureToggles();
     const { tekster, plainTekst } = useAppContext();
 
     const {
@@ -35,6 +39,8 @@ const OmDeg: React.FC = () => {
         validerFelterOgVisFeilmelding,
         valideringErOk,
         oppdaterSøknad,
+        leggTilSvalbardOppholdPeriode,
+        fjernSvalbardOppholdPeriode,
         leggTilUtenlandsperiode,
         fjernUtenlandsperiode,
         utenlandsperioder,
@@ -50,8 +56,10 @@ const OmDeg: React.FC = () => {
         omDegTittel,
         omDegGuide,
         borPaaRegistrertAdresse,
+        borPaaSvalbard,
         vaertINorgeITolvMaaneder,
         planleggerAaBoINorgeTolvMnd,
+        personopplysningerAlert,
     } = stegTekster;
 
     const frittståendeOrdTekster = tekster().FELLES.frittståendeOrd;
@@ -68,11 +76,38 @@ const OmDeg: React.FC = () => {
             }}
         >
             <Personopplysninger />
-            <JaNeiSpm
-                skjema={skjema}
-                felt={skjema.felter.borPåRegistrertAdresse}
-                spørsmålDokument={borPaaRegistrertAdresse}
-            />
+            <KomponentGruppe>
+                <JaNeiSpm
+                    skjema={skjema}
+                    felt={skjema.felter.borPåRegistrertAdresse}
+                    spørsmålDokument={borPaaRegistrertAdresse}
+                />
+                {skjema.felter.borPåRegistrertAdresse.verdi === ESvar.NEI && (
+                    <Alert variant="warning">
+                        <TekstBlock block={personopplysningerAlert} />
+                    </Alert>
+                )}
+            </KomponentGruppe>
+            {toggles.SPM_OM_SVALBARD && skjema.felter.borPåSvalbard.erSynlig && (
+                <KomponentGruppe>
+                    <JaNeiSpm
+                        skjema={skjema}
+                        felt={skjema.felter.borPåSvalbard}
+                        spørsmålDokument={borPaaSvalbard}
+                    />
+                    {skjema.felter.borPåSvalbard.verdi === ESvar.JA && (
+                        <SvalbardOppholdPeriode
+                            skjema={skjema}
+                            leggTilSvalbardOppholdPeriode={leggTilSvalbardOppholdPeriode}
+                            fjernSvalbardOppholdPeriode={fjernSvalbardOppholdPeriode}
+                            registrerteSvalbardOppholdPerioder={
+                                skjema.felter.registrerteSvalbardOppholdPerioder
+                            }
+                            personType={PersonType.Søker}
+                        />
+                    )}
+                </KomponentGruppe>
+            )}
             <KomponentGruppe>
                 <JaNeiSpm
                     skjema={skjema}
@@ -118,11 +153,18 @@ const OmDeg: React.FC = () => {
                 )}
             </KomponentGruppe>
             {skjema.felter.planleggerÅBoINorgeTolvMnd.erSynlig && (
-                <JaNeiSpm
-                    skjema={skjema}
-                    felt={skjema.felter.planleggerÅBoINorgeTolvMnd}
-                    spørsmålDokument={planleggerAaBoINorgeTolvMnd}
-                />
+                <KomponentGruppe>
+                    <JaNeiSpm
+                        skjema={skjema}
+                        felt={skjema.felter.planleggerÅBoINorgeTolvMnd}
+                        spørsmålDokument={planleggerAaBoINorgeTolvMnd}
+                    />
+                    {skjema.felter.planleggerÅBoINorgeTolvMnd.verdi === ESvar.NEI && (
+                        <Alert variant="info">
+                            <TekstBlock block={planleggerAaBoINorgeTolvMnd.alert} />
+                        </Alert>
+                    )}
+                </KomponentGruppe>
             )}
             {utenlandsoppholdmodalErÅpen && (
                 <UtenlandsoppholdModal

@@ -602,6 +602,8 @@
   "omdeg.borpådenneadressen.spm": "Bur du på denne adressa?",
   "omdeg.borpådenneadressen.spm.tilleggsinfo": "Du er registrert med adressesperre. Du kan svare Ja på dette spørsmålet, og fortsette med den digitale søknaden.",
   "omdeg.borpådenneadressen.spm.tilleggsinfo-ukjent": "Du er ikkje registrert med bustadsadresse i Noreg. Du kan svare Ja på dette spørsmålet, og fortsette med den digitale søknaden.",
+  "omdeg.borpåsvalbard.spm": "Bur du på Svalbard?",
+  "omdeg.borpåsvalbard.feilmelding": "Du må oppgi om du bur på Svalbard for å gå videre",
   "omdeg.du-kan-ikke-søke.feilmelding": "Du må bruke PDF/papir-skjema for å søke dersom du ikkje bur på folkeregistrert adresse.",
   "omdeg.endre-opplysninger.lenke": "https://www.skatteetaten.no/nn/person/folkeregister/endre/",
   "omdeg.endre-opplysninger.lenketekst": "Endre opplysningar i folkeregisteret (åpnes i nytt vindauge)",

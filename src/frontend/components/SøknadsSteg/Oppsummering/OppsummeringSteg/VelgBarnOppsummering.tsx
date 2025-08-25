@@ -6,6 +6,7 @@ import { useAppContext } from '../../../../context/AppContext';
 import { useRoutesContext } from '../../../../context/RoutesContext';
 import { RouteEnum } from '../../../../typer/routes';
 import { hentBostedSpråkId } from '../../../../utils/språk';
+import { formaterFnr } from '../../../../utils/visning';
 import TekstBlock from '../../../Felleskomponenter/Sanity/TekstBlock';
 import { VelgBarnSpørsmålId, velgBarnSpørsmålSpråkId } from '../../VelgBarn/spørsmål';
 import { useVelgBarn } from '../../VelgBarn/useVelgBarn';
@@ -52,7 +53,7 @@ const VelgBarnOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                             />
                             <OppsummeringFelt
                                 tittel={<TekstBlock block={velgBarnTekster.foedselsnummerLabel} />}
-                                søknadsvar={barn.ident}
+                                søknadsvar={formaterFnr(barn.ident)}
                             />
                             {!søknad.barnRegistrertManuelt.find(
                                 barnRegistrertManuelt => barnRegistrertManuelt.ident === barn.ident

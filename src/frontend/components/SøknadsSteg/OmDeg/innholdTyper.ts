@@ -9,6 +9,7 @@ export interface IOmDegTekstinnhold {
     omDegGuide: LocaleRecordBlock;
     skjermetAdresse: LocaleRecordString;
     borPaaRegistrertAdresse: ISanitySpørsmålDokument;
+    borPaaSvalbard: ISanitySpørsmålDokument;
     vaertINorgeITolvMaaneder: ISanitySpørsmålDokument;
     planleggerAaBoINorgeTolvMnd: ISanitySpørsmålDokument;
     adresse: LocaleRecordString;
@@ -17,4 +18,5 @@ export interface IOmDegTekstinnhold {
     statsborgerskap: LocaleRecordString;
     ikkeRegistrertAdresse: LocaleRecordString;
     soekerAdressesperre: LocaleRecordString;
+    personopplysningerAlert: LocaleRecordBlock;
 }

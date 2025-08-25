@@ -4,7 +4,7 @@ export const testdata5: TilKontraktTestData = {
     input: {
         søknadstype: 'UTVIDET',
         erEøs: true,
-        kontraktVersjon: '9',
+        kontraktVersjon: '10',
         antallEøsSteg: 2,
         barnInkludertISøknaden: [
             {
@@ -479,10 +479,15 @@ export const testdata5: TilKontraktTestData = {
                 bostedskommune: null,
                 poststed: 'HAMAR',
             },
+            svalbardOppholdPerioder: [],
             utenlandsperioder: [],
             borPåRegistrertAdresse: {
                 id: 'bor-på-registrert-adresse',
                 svar: 'JA',
+            },
+            borPåSvalbard: {
+                id: 'bor-på-svalbard',
+                svar: null,
             },
             værtINorgeITolvMåneder: {
                 id: 'søker-vært-i-norge-sammenhengende-tolv-måneder',
@@ -602,7 +607,7 @@ export const testdata5: TilKontraktTestData = {
     },
     output: {
         søknadstype: 'UTVIDET',
-        kontraktVersjon: 9,
+        kontraktVersjon: 10,
         antallEøsSteg: 2,
         søker: {
             harEøsSteg: true,
@@ -663,6 +668,7 @@ export const testdata5: TilKontraktTestData = {
                 },
             },
             adressebeskyttelse: false,
+            svalbardOppholdPerioder: [],
             utenlandsperioder: [],
             idNummer: [],
             spørsmål: {
@@ -673,6 +679,14 @@ export const testdata5: TilKontraktTestData = {
                         nn: 'Bur du på denne adressa?',
                     },
                     verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
+                },
+                borPåSvalbard: {
+                    label: {
+                        en: 'Do you live in Svalbard?',
+                        nb: 'Bor du på Svalbard?',
+                        nn: 'Bur du på Svalbard?',
+                    },
+                    verdi: { nb: null, nn: null, en: null },
                 },
                 værtINorgeITolvMåneder: {
                     label: {

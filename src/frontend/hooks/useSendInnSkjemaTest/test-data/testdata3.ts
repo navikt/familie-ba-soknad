@@ -4,7 +4,7 @@ export const testdata3: TilKontraktTestData = {
     input: {
         søknadstype: 'ORDINÆR',
         erEøs: true,
-        kontraktVersjon: '9',
+        kontraktVersjon: '10',
         antallEøsSteg: 0,
         barnInkludertISøknaden: [
             {
@@ -435,6 +435,7 @@ export const testdata3: TilKontraktTestData = {
                 bostedskommune: null,
                 poststed: 'HAMAR',
             },
+            svalbardOppholdPerioder: [],
             utenlandsperioder: [
                 {
                     utenlandsoppholdÅrsak: {
@@ -468,6 +469,10 @@ export const testdata3: TilKontraktTestData = {
             borPåRegistrertAdresse: {
                 id: 'bor-på-registrert-adresse',
                 svar: 'JA',
+            },
+            borPåSvalbard: {
+                id: 'bor-på-svalbard',
+                svar: null,
             },
             værtINorgeITolvMåneder: {
                 id: 'søker-vært-i-norge-sammenhengende-tolv-måneder',
@@ -577,7 +582,7 @@ export const testdata3: TilKontraktTestData = {
     },
     output: {
         søknadstype: 'ORDINÆR',
-        kontraktVersjon: 9,
+        kontraktVersjon: 10,
         antallEøsSteg: 3,
         søker: {
             harEøsSteg: true,
@@ -638,6 +643,7 @@ export const testdata3: TilKontraktTestData = {
                 },
             },
             adressebeskyttelse: false,
+            svalbardOppholdPerioder: [],
             utenlandsperioder: [
                 {
                     label: {
@@ -959,6 +965,14 @@ export const testdata3: TilKontraktTestData = {
                         nn: 'Bur du på denne adressa?',
                     },
                     verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
+                },
+                borPåSvalbard: {
+                    label: {
+                        en: 'Do you live in Svalbard?',
+                        nb: 'Bor du på Svalbard?',
+                        nn: 'Bur du på Svalbard?',
+                    },
+                    verdi: { nb: null, nn: null, en: null },
                 },
                 værtINorgeITolvMåneder: {
                     label: {
