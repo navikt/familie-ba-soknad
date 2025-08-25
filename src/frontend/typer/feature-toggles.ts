@@ -19,5 +19,5 @@ export const defaultFeatureToggleValues: EAllFeatureToggles = {
         acc[featureToggle] = false;
         return acc;
     }, {} as EAllFeatureToggles),
-    ...{ [EFeatureToggle.SPM_OM_SVALBARD]: true },
+    ...{ [EFeatureToggle.SPM_OM_SVALBARD]: false },
 };
