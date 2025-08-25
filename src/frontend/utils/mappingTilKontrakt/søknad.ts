@@ -114,14 +114,16 @@ export const dataISøknadKontraktFormat = (
             ),
             adresse: søknadsfelt('pdf.søker.adresse.label', sammeVerdiAlleSpråk(adresse)),
             adressebeskyttelse: søker.adressebeskyttelse,
-            svalbardOppholdPerioder: svalbardOppholdPerioder.map((periode, index) =>
-                svalbardOppholdPeriodeTilISøknadsfelt({
-                    svalbardOppholdPeriode: periode,
-                    periodeNummer: index + 1,
-                    tekster: fellesTekster.modaler.svalbardOpphold[PersonType.Søker],
-                    tilRestLocaleRecord,
-                })
-            ),
+            svalbardOppholdPerioder: svalbardOppholdPerioder
+                ? svalbardOppholdPerioder.map((periode, index) =>
+                      svalbardOppholdPeriodeTilISøknadsfelt({
+                          svalbardOppholdPeriode: periode,
+                          periodeNummer: index + 1,
+                          tekster: fellesTekster.modaler.svalbardOpphold[PersonType.Søker],
+                          tilRestLocaleRecord,
+                      })
+                  )
+                : [],
             utenlandsperioder: utenlandsperioder.map((periode, index) =>
                 utenlandsperiodeTilISøknadsfelt({
                     utenlandperiode: periode,
