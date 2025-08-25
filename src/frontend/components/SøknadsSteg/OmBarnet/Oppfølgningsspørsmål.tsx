@@ -1,10 +1,11 @@
 import React from 'react';
 
-import { Heading } from '@navikt/ds-react';
+import { BodyShort, Heading } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import type { Felt, ISkjema } from '@navikt/familie-skjema';
 
 import { useAppContext } from '../../../context/AppContext';
+import { useFeatureToggles } from '../../../context/FeatureTogglesContext';
 import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../typer/barn';
 import {
     IEøsBarnetrygdsperiode,
@@ -109,6 +110,8 @@ const Oppfølgningsspørsmål: React.FC<{
         tekster().FELLES.modaler.utenlandsopphold.barn;
     const { leggTilKnapp, flerePerioder, leggTilPeriodeForklaring } = teksterForModal;
 
+    const { toggles } = useFeatureToggles();
+
     const frittståendeOrdTekster = tekster().FELLES.frittståendeOrd;
 
     return (
@@ -178,29 +181,32 @@ const Oppfølgningsspørsmål: React.FC<{
                 </SkjemaFieldset>
             )}
             {/* TODO: Legg til barn[...].svar === ESvar.JA && ... */}
-            <SkjemaFieldset
-                legend={
-                    <TekstBlock
-                        block={opplystBoddPaaSvalbard}
-                        flettefelter={{ barnetsNavn: barn.navn }}
-                    />
-                }
-            >
-                <TekstBlock
-                    block={naarBoddPaaSvalbard.sporsmal}
-                    flettefelter={{ barnetsNavn: barn.navn }}
-                />
-                <SvalbardOppholdPeriode
-                    skjema={skjema}
-                    leggTilSvalbardOppholdPeriode={leggTilSvalbardOppholdPeriode}
-                    fjernSvalbardOppholdPeriode={fjernSvalbardOppholdPeriode}
-                    registrerteSvalbardOppholdPerioder={
-                        skjema.felter.registrerteSvalbardOppholdPerioder
+            {toggles.SPM_OM_SVALBARD && (
+                <SkjemaFieldset
+                    legend={
+                        <TekstBlock
+                            block={opplystBoddPaaSvalbard}
+                            flettefelter={{ barnetsNavn: barn.navn }}
+                        />
                     }
-                    personType={PersonType.Barn}
-                    barn={barn}
-                />
-            </SkjemaFieldset>
+                >
+                    <div>
+                        <BodyShort spacing>
+                            {plainTekst(naarBoddPaaSvalbard.sporsmal, { barnetsNavn: barn.navn })}
+                        </BodyShort>
+                        <SvalbardOppholdPeriode
+                            skjema={skjema}
+                            leggTilSvalbardOppholdPeriode={leggTilSvalbardOppholdPeriode}
+                            fjernSvalbardOppholdPeriode={fjernSvalbardOppholdPeriode}
+                            registrerteSvalbardOppholdPerioder={
+                                skjema.felter.registrerteSvalbardOppholdPerioder
+                            }
+                            personType={PersonType.Barn}
+                            barn={barn}
+                        />
+                    </div>
+                </SkjemaFieldset>
+            )}
             {barn[barnDataKeySpørsmål.boddMindreEnn12MndINorge].svar === ESvar.JA && (
                 <SkjemaFieldset
                     legend={

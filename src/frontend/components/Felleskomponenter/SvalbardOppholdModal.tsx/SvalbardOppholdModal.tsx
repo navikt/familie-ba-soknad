@@ -5,6 +5,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 
 import { useAppContext } from '../../../context/AppContext';
 import { ISvalbardOppholdPeriode } from '../../../typer/perioder';
+import { PeriodePersonTypeMedBarnProps } from '../../../typer/personType';
 import { ISvalbardOppholdTekstinnhold } from '../../../typer/sanity/modaler/svalbardOpphold';
 import { ESanitySteg } from '../../../typer/sanity/sanity';
 import { dagensDato } from '../../../utils/dato';
@@ -23,12 +24,14 @@ import {
     useSvalbardOppholdSkjemaProps,
 } from './useSvalbardOppholdSkjema';
 
-interface SvalbardOppholdModalProps extends useSvalbardOppholdSkjemaProps {
+interface Props extends useSvalbardOppholdSkjemaProps {
     erÅpen: boolean;
     lukkModal: () => void;
     onLeggTilSvalbardOppholdPeriode: (periode: ISvalbardOppholdPeriode) => void;
     forklaring?: string;
 }
+
+type SvalbardOppholdModalProps = Props & PeriodePersonTypeMedBarnProps;
 
 export const SvalbardOppholdModal: React.FC<SvalbardOppholdModalProps> = ({
     erÅpen,
@@ -36,6 +39,7 @@ export const SvalbardOppholdModal: React.FC<SvalbardOppholdModalProps> = ({
     onLeggTilSvalbardOppholdPeriode,
     forklaring = undefined,
     personType,
+    barn,
 }) => {
     const { tekster, plainTekst } = useAppContext();
     const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } =
@@ -106,9 +110,14 @@ export const SvalbardOppholdModal: React.FC<SvalbardOppholdModalProps> = ({
                     label={plainTekst(teksterForModal.sluttdato.checkboxLabel)}
                 />
             </div>
-            <Alert variant="warning">
-                <TekstBlock block={teksterForModal.meldFraOmFlyttingAlert} />
-            </Alert>
+            {skjema.felter.tilDatoSvalbardOppholdUkjent.verdi === ESvar.JA && (
+                <Alert variant="warning">
+                    <TekstBlock
+                        block={teksterForModal.meldFraOmFlyttingAlert}
+                        flettefelter={{ barnetsNavn: barn?.navn }}
+                    />
+                </Alert>
+            )}
             <ReadMore header={<TekstBlock block={teksterForModal.fremtidigeOppholdTittel} />}>
                 <TekstBlock block={teksterForModal.fremtidigeOppholdInnhold} />
             </ReadMore>

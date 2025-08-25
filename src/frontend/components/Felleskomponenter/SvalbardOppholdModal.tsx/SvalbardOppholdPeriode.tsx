@@ -70,8 +70,9 @@ export const SvalbardOppholdPeriode: React.FC<SvalbardOppholdPeriodeProps> = ({
                     erÅpen={erÅpen}
                     lukkModal={lukkModal}
                     onLeggTilSvalbardOppholdPeriode={leggTilSvalbardOppholdPeriode}
-                    forklaring={plainTekst(leggTilPeriodeForklaring)}
+                    forklaring={plainTekst(leggTilPeriodeForklaring, { barnetsNavn: barn?.navn })}
                     personType={personType}
+                    barn={barn}
                 />
             )}
         </PerioderContainer>
