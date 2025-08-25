@@ -186,7 +186,10 @@ const Oppfølgningsspørsmål: React.FC<{
                     />
                 }
             >
-                <TekstBlock block={naarBoddPaaSvalbard.sporsmal} />
+                <TekstBlock
+                    block={naarBoddPaaSvalbard.sporsmal}
+                    flettefelter={{ barnetsNavn: barn.navn }}
+                />
                 <SvalbardOppholdPeriode
                     skjema={skjema}
                     leggTilSvalbardOppholdPeriode={leggTilSvalbardOppholdPeriode}
