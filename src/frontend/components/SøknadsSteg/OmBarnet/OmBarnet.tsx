@@ -29,6 +29,9 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
         oppdaterSøknad,
         barn,
         andreBarnSomErFyltUt,
+        leggTilSvalbardOppholdPeriode,
+        fjernSvalbardOppholdPeriode,
+        svalbardOppholdPerioder,
         leggTilUtenlandsperiode,
         fjernUtenlandsperiode,
         utenlandsperioder,
@@ -88,6 +91,9 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
             <Oppfølgningsspørsmål
                 barn={barn}
                 skjema={skjema}
+                leggTilSvalbardOppholdPeriode={leggTilSvalbardOppholdPeriode}
+                fjernSvalbardOppholdPeriode={fjernSvalbardOppholdPeriode}
+                svalbardOppholdPerioder={svalbardOppholdPerioder}
                 leggTilUtenlandsperiode={leggTilUtenlandsperiode}
                 fjernUtenlandsperiode={fjernUtenlandsperiode}
                 utenlandsperioder={utenlandsperioder}

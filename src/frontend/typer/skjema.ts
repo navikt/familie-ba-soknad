@@ -100,6 +100,7 @@ export interface IOmBarnetFeltTyper {
     søkerHarBoddMedAndreForelder: ESvar | null;
     borMedAndreForelderCheckbox: ESvar;
     søkerFlyttetFraAndreForelderDato: ISODateString;
+    registrerteSvalbardOppholdPerioder: ISvalbardOppholdPeriode[];
     registrerteUtenlandsperioder: IUtenlandsperiode[];
 }
 

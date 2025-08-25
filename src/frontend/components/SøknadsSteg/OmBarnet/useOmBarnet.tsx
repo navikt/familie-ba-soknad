@@ -26,6 +26,7 @@ import {
     IArbeidsperiode,
     IEøsBarnetrygdsperiode,
     IPensjonsperiode,
+    ISvalbardOppholdPeriode,
     IUtenlandsperiode,
 } from '../../../typer/perioder';
 import { IIdNummer } from '../../../typer/person';
@@ -33,6 +34,7 @@ import { PersonType } from '../../../typer/personType';
 import { IArbeidsperiodeTekstinnhold } from '../../../typer/sanity/modaler/arbeidsperiode';
 import { IBarnetrygdsperiodeTekstinnhold } from '../../../typer/sanity/modaler/barnetrygdperiode';
 import { IPensjonsperiodeTekstinnhold } from '../../../typer/sanity/modaler/pensjonsperiode';
+import { ISvalbardOppholdTekstinnhold } from '../../../typer/sanity/modaler/svalbardOpphold';
 import { IUtenlandsoppholdTekstinnhold } from '../../../typer/sanity/modaler/utenlandsopphold';
 import { ESanitySteg } from '../../../typer/sanity/sanity';
 import { IFormateringsfeilmeldingerTekstinnhold } from '../../../typer/sanity/tekstInnhold';
@@ -60,6 +62,7 @@ import { ArbeidsperiodeSpørsmålsId } from '../../Felleskomponenter/Arbeidsperi
 import { BarnetrygdperiodeSpørsmålId } from '../../Felleskomponenter/Barnetrygdperiode/spørsmål';
 import { PensjonsperiodeSpørsmålId } from '../../Felleskomponenter/Pensjonsmodal/spørsmål';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
+import { SvalbardOppholdSpørsmålId } from '../../Felleskomponenter/SvalbardOppholdModal.tsx/spørsmål';
 import { UtenlandsoppholdSpørsmålId } from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 import { idNummerLand } from '../EøsSteg/idnummerUtils';
 
@@ -78,6 +81,9 @@ export const useOmBarnet = (
     oppdaterSøknad: () => void;
     andreBarnSomErFyltUt: IBarnMedISøknad[];
     validerAlleSynligeFelter: () => void;
+    leggTilSvalbardOppholdPeriode: (periode: ISvalbardOppholdPeriode) => void;
+    fjernSvalbardOppholdPeriode: (periode: ISvalbardOppholdPeriode) => void;
+    svalbardOppholdPerioder: ISvalbardOppholdPeriode[];
     leggTilUtenlandsperiode: (periode: IUtenlandsperiode) => void;
     fjernUtenlandsperiode: (periode: IUtenlandsperiode) => void;
     utenlandsperioder: IUtenlandsperiode[];
@@ -98,6 +104,8 @@ export const useOmBarnet = (
         tekster()[ESanitySteg.FELLES].modaler.barnetrygdsperiode.søker;
     const teksterForPensjonsperiode: IPensjonsperiodeTekstinnhold =
         tekster()[ESanitySteg.FELLES].modaler.pensjonsperiode.andreForelder;
+    const teksterForSvalbardOpphold: ISvalbardOppholdTekstinnhold =
+        tekster()[ESanitySteg.FELLES].modaler.svalbardOpphold.søker;
     const teksterForUtenlandsopphold: IUtenlandsoppholdTekstinnhold =
         tekster()[ESanitySteg.FELLES].modaler.utenlandsopphold.søker;
     const teksterForFormateringsfeilmeldinger: IFormateringsfeilmeldingerTekstinnhold =
@@ -109,6 +117,10 @@ export const useOmBarnet = (
     if (!gjeldendeBarn) {
         throw new TypeError('Kunne ikke finne barn som skulle være her');
     }
+
+    const [svalbardOppholdPerioder, settSvalbardOppholdPerioder] = useState<
+        ISvalbardOppholdPeriode[]
+    >(gjeldendeBarn.svalbardOppholdPerioder);
 
     const [utenlandsperioder, settUtenlandsperioder] = useState<IUtenlandsperiode[]>(
         gjeldendeBarn.utenlandsperioder
@@ -217,6 +229,34 @@ export const useOmBarnet = (
         avhengigheter: { institusjonOppholdStartdato },
         nullstillVedAvhengighetEndring: false,
     });
+
+    /*---SVALBARDOPPHOLD---*/
+    // TODO: Legg til toggle
+    // TODO: Legg til skalFeltetVises
+    const registrerteSvalbardOppholdPerioder = useFelt<ISvalbardOppholdPeriode[]>({
+        feltId: SvalbardOppholdSpørsmålId.svalbardOpphold,
+        verdi: gjeldendeBarn.svalbardOppholdPerioder,
+        valideringsfunksjon: felt => {
+            return felt.verdi.length
+                ? ok(felt)
+                : feil(felt, plainTekst(teksterForSvalbardOpphold.leggTilFeilmelding));
+        },
+        skalFeltetVises: () => true,
+    });
+
+    useEffect(() => {
+        registrerteSvalbardOppholdPerioder.validerOgSettFelt(svalbardOppholdPerioder);
+    }, [svalbardOppholdPerioder]);
+
+    const leggTilSvalbardOppholdPeriode = (periode: ISvalbardOppholdPeriode) => {
+        settSvalbardOppholdPerioder(prevState => prevState.concat(periode));
+    };
+
+    const fjernSvalbardOppholdPeriode = (periodeSomSkalFjernes: ISvalbardOppholdPeriode) => {
+        settSvalbardOppholdPerioder(prevState =>
+            prevState.filter(periode => periode !== periodeSomSkalFjernes)
+        );
+    };
 
     /*---UTENLANDSOPPHOLD---*/
     const registrerteUtenlandsperioder = useFelt<IUtenlandsperiode[]>({
@@ -592,6 +632,7 @@ export const useOmBarnet = (
             institusjonOppholdStartdato,
             institusjonOppholdSluttdato,
             institusjonOppholdSluttVetIkke,
+            registrerteSvalbardOppholdPerioder,
             registrerteUtenlandsperioder,
             planleggerÅBoINorge12Mnd,
             pågåendeSøknadFraAnnetEøsLand,
@@ -768,6 +809,7 @@ export const useOmBarnet = (
             mottarEllerMottokEøsBarnetrygd.verdi === ESvar.JA
                 ? registrerteEøsBarnetrygdsperioder.verdi
                 : [];
+        const svalbardOppholdPerioder = registrerteSvalbardOppholdPerioder.verdi;
         const utenlandsperioder = registrerteUtenlandsperioder.verdi;
 
         const borMedOmsorgsperson = {
@@ -786,13 +828,16 @@ export const useOmBarnet = (
         return {
             ...barn,
             idNummer: filtrerteRelevanteIdNummerForBarn(
-                { eøsBarnetrygdsperioder, utenlandsperioder },
+                { eøsBarnetrygdsperioder, svalbardOppholdPerioder, utenlandsperioder },
                 pågåendeSøknadFraAnnetEøsLand.verdi,
                 pågåendeSøknadHvilketLand.verdi,
                 barn,
                 erEøsLand
             ),
             barnErFyltUt: true,
+            // TODO: Legg til "skalFeltetVises"
+            // svalbardOppholdPerioder: skalFeltetVises(...) ? svalbardOppholdPerioder : [],
+            svalbardOppholdPerioder: svalbardOppholdPerioder,
             utenlandsperioder: skalFeltetVises(barnDataKeySpørsmål.boddMindreEnn12MndINorge)
                 ? utenlandsperioder
                 : [],
@@ -982,6 +1027,9 @@ export const useOmBarnet = (
         barn: gjeldendeBarn,
         andreBarnSomErFyltUt,
         validerAlleSynligeFelter,
+        leggTilSvalbardOppholdPeriode,
+        fjernSvalbardOppholdPeriode,
+        svalbardOppholdPerioder,
         leggTilUtenlandsperiode,
         fjernUtenlandsperiode,
         utenlandsperioder,
