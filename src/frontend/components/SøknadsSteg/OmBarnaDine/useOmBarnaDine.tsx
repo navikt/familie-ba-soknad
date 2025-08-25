@@ -138,6 +138,13 @@ export const useOmBarnaDine = (): {
         avhengighet: erAvdødPartnerForelder,
     });
 
+    const barnBoddPåSvalbard = useJaNeiSpmFelt({
+        søknadsfelt: søknad.barnBoddPåSvalbard,
+        feilmelding: teksterForSteg.boddPaaSvalbard.feilmelding,
+        feilmeldingSpråkId: 'ombarna.boddPaaSvalbard.feilmelding',
+        skalSkjules: søknad.søker.borPåSvalbard.svar === ESvar.NEI,
+    });
+
     useEffect(() => {
         const oppdaterteBarn = genererOppdaterteBarn(
             søknad,
@@ -205,6 +212,10 @@ export const useOmBarnaDine = (): {
                 ...søknad.mottarBarnetrygdForBarnFraAnnetEøsland,
                 svar: mottarBarnetrygdForBarnFraAnnetEøsland.verdi,
             },
+            barnBoddPåSvalbard: {
+                ...søknad.barnBoddPåSvalbard,
+                svar: barnBoddPåSvalbard.verdi,
+            },
             erAvdødPartnerForelder: {
                 ...søknad.erAvdødPartnerForelder,
                 svar: erAvdødPartnerForelder.verdi,
@@ -251,6 +262,7 @@ export const useOmBarnaDine = (): {
             hvemOppholderSegIInstitusjon,
             hvemBarnetrygdFraAnnetEøsland,
             hvemTolvMndSammenhengendeINorge,
+            barnBoddPåSvalbard,
             hvemErSøktAsylFor,
             hvemAvdødPartner,
         },

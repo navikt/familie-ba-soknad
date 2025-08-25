@@ -37,6 +37,7 @@ const OmBarnaDineSkjema: React.FC = () => {
         soektYtelseEuEoes,
         hvemSoektYtelse,
         hvemAvBarnaAvdoedPartner,
+        boddPaaSvalbard,
     } = stegTekster;
 
     return (
@@ -172,6 +173,19 @@ const OmBarnaDineSkjema: React.FC = () => {
                         visFeilmelding={skjema.visFeilmeldinger}
                     />
                 </>
+            )}
+            {skjema.felter.barnBoddPåSvalbard.erSynlig && (
+                <JaNeiSpm
+                    skjema={skjema}
+                    felt={skjema.felter.barnBoddPåSvalbard}
+                    spørsmålDokument={boddPaaSvalbard}
+                    tilleggsinfo={
+                        <TekstBlock
+                            block={boddPaaSvalbard.beskrivelse}
+                            typografi={Typografi.BodyShort}
+                        />
+                    }
+                />
             )}
         </Steg>
     );

@@ -128,6 +128,12 @@ const OmBarnaOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                     )}
                 </>
             )}
+            {søknad.barnBoddPåSvalbard.svar && (
+                <OppsummeringFelt
+                    tittel={<TekstBlock block={omBarnaTekster.boddPaaSvalbard.sporsmal} />}
+                    søknadsvar={søknad.barnBoddPåSvalbard.svar}
+                />
+            )}
         </Oppsummeringsbolk>
     );
 };
