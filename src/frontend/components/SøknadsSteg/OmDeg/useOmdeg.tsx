@@ -5,6 +5,7 @@ import { feil, type FeltState, type ISkjema, ok, useFelt, useSkjema } from '@nav
 
 import { useAppContext } from '../../../context/AppContext';
 import { useEøsContext } from '../../../context/EøsContext';
+import { useFeatureToggles } from '../../../context/FeatureTogglesContext';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import { AlternativtSvarForInput } from '../../../typer/common';
 import { ISvalbardOppholdPeriode, IUtenlandsperiode } from '../../../typer/perioder';
@@ -21,6 +22,7 @@ import { UtenlandsoppholdSpørsmålId } from '../../Felleskomponenter/Utenlandso
 import { idNummerLandMedPeriodeType, PeriodeType } from '../EøsSteg/idnummerUtils';
 
 import { IOmDegTekstinnhold } from './innholdTyper';
+import { OmDegSpørsmålId } from './spørsmål';
 
 export const useOmdeg = (): {
     skjema: ISkjema<IOmDegFeltTyper, string>;
@@ -50,6 +52,7 @@ export const useOmdeg = (): {
         tekster()[ESanitySteg.FELLES].modaler.svalbardOpphold.søker;
     const teksterForUtenlandsopphold: IUtenlandsoppholdTekstinnhold =
         tekster()[ESanitySteg.FELLES].modaler.utenlandsopphold.søker;
+    const { toggles } = useFeatureToggles();
 
     const borPåRegistrertAdresse = useJaNeiSpmFelt({
         søknadsfelt: søker.borPåRegistrertAdresse,
@@ -59,10 +62,13 @@ export const useOmdeg = (): {
     });
 
     const borPåSvalbard = useFelt<ESvar | null>({
-        feltId: søker.borPåSvalbard.id,
-        verdi: borPåRegistrertAdresse.verdi === ESvar.JA ? null : søker.borPåSvalbard.svar,
+        feltId: OmDegSpørsmålId.borPåSvalbard,
+        verdi:
+            !toggles.SPM_OM_SVALBARD || borPåRegistrertAdresse.verdi === ESvar.JA
+                ? null
+                : søker.borPåSvalbard.svar,
         valideringsfunksjon: (felt: FeltState<ESvar | null>) => {
-            return felt.verdi !== null
+            return !toggles.SPM_OM_SVALBARD || felt.verdi !== null
                 ? ok(felt)
                 : feil(felt, plainTekst(teksterForSteg.borPaaSvalbard.feilmelding));
         },
@@ -78,12 +84,12 @@ export const useOmdeg = (): {
 
     const registrerteSvalbardOppholdPerioder = useFelt<ISvalbardOppholdPeriode[]>({
         feltId: SvalbardOppholdSpørsmålId.svalbardOpphold,
-        verdi: svalbardOppholdPerioder,
+        verdi: toggles.SPM_OM_SVALBARD ? svalbardOppholdPerioder : [],
         avhengigheter: {
             borPåSvalbard,
         },
         valideringsfunksjon: felt => {
-            return felt.verdi.length
+            return !toggles.SPM_OM_SVALBARD || felt.verdi.length
                 ? ok(felt)
                 : feil(felt, plainTekst(teksterForSvalbardOpphold.leggTilFeilmelding));
         },
