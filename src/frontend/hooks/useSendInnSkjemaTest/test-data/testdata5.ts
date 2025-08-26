@@ -20,6 +20,7 @@ export const testdata5: TilKontraktTestData = {
                 },
                 harEøsSteg: false,
                 barnErFyltUt: true,
+                svalbardOppholdPerioder: [],
                 utenlandsperioder: [],
                 eøsBarnetrygdsperioder: [],
                 idNummer: [],
@@ -181,6 +182,7 @@ export const testdata5: TilKontraktTestData = {
                 adressebeskyttelse: false,
                 barnErFyltUt: true,
                 harEøsSteg: false,
+                svalbardOppholdPerioder: [],
                 utenlandsperioder: [
                     {
                         utenlandsoppholdÅrsak: {
@@ -964,6 +966,7 @@ export const testdata5: TilKontraktTestData = {
                     label: { en: 'Age', nb: 'Alder', nn: 'Alder' },
                     verdi: { en: '13 years', nb: '13 år', nn: '13 år' },
                 },
+                svalbardOppholdPerioder: [],
                 utenlandsperioder: [],
                 eøsBarnetrygdsperioder: [],
                 idNummer: [],
@@ -1236,6 +1239,7 @@ export const testdata5: TilKontraktTestData = {
                     label: { en: 'Age', nb: 'Alder', nn: 'Alder' },
                     verdi: { en: '12 years', nb: '12 år', nn: '12 år' },
                 },
+                svalbardOppholdPerioder: [],
                 utenlandsperioder: [
                     {
                         label: {
