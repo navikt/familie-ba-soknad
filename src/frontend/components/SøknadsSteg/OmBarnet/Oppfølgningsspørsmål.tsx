@@ -180,33 +180,35 @@ const Oppfølgningsspørsmål: React.FC<{
                     </div>
                 </SkjemaFieldset>
             )}
-            {/* TODO: Legg til barn[...].svar === ESvar.JA && ... */}
-            {toggles.SPM_OM_SVALBARD && (
-                <SkjemaFieldset
-                    legend={
-                        <TekstBlock
-                            block={opplystBoddPaaSvalbard}
-                            flettefelter={{ barnetsNavn: barn.navn }}
-                        />
-                    }
-                >
-                    <div>
-                        <BodyShort spacing>
-                            {plainTekst(naarBoddPaaSvalbard.sporsmal, { barnetsNavn: barn.navn })}
-                        </BodyShort>
-                        <SvalbardOppholdPeriode
-                            skjema={skjema}
-                            leggTilSvalbardOppholdPeriode={leggTilSvalbardOppholdPeriode}
-                            fjernSvalbardOppholdPeriode={fjernSvalbardOppholdPeriode}
-                            registrerteSvalbardOppholdPerioder={
-                                skjema.felter.registrerteSvalbardOppholdPerioder
-                            }
-                            personType={PersonType.Barn}
-                            barn={barn}
-                        />
-                    </div>
-                </SkjemaFieldset>
-            )}
+            {toggles.SPM_OM_SVALBARD &&
+                barn[barnDataKeySpørsmål.harBoddPåSvalbard].svar === ESvar.JA && (
+                    <SkjemaFieldset
+                        legend={
+                            <TekstBlock
+                                block={opplystBoddPaaSvalbard}
+                                flettefelter={{ barnetsNavn: barn.navn }}
+                            />
+                        }
+                    >
+                        <div>
+                            <BodyShort spacing>
+                                {plainTekst(naarBoddPaaSvalbard.sporsmal, {
+                                    barnetsNavn: barn.navn,
+                                })}
+                            </BodyShort>
+                            <SvalbardOppholdPeriode
+                                skjema={skjema}
+                                leggTilSvalbardOppholdPeriode={leggTilSvalbardOppholdPeriode}
+                                fjernSvalbardOppholdPeriode={fjernSvalbardOppholdPeriode}
+                                registrerteSvalbardOppholdPerioder={
+                                    skjema.felter.registrerteSvalbardOppholdPerioder
+                                }
+                                personType={PersonType.Barn}
+                                barn={barn}
+                            />
+                        </div>
+                    </SkjemaFieldset>
+                )}
             {barn[barnDataKeySpørsmål.boddMindreEnn12MndINorge].svar === ESvar.JA && (
                 <SkjemaFieldset
                     legend={

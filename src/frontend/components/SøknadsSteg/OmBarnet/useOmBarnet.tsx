@@ -231,7 +231,6 @@ export const useOmBarnet = (
     });
 
     /*---SVALBARDOPPHOLD---*/
-    // TODO: Legg til skalFeltetVises
     const registrerteSvalbardOppholdPerioder = useFelt<ISvalbardOppholdPeriode[]>({
         feltId: SvalbardOppholdSpørsmålId.svalbardOpphold,
         verdi: gjeldendeBarn.svalbardOppholdPerioder,
@@ -240,7 +239,7 @@ export const useOmBarnet = (
                 ? ok(felt)
                 : feil(felt, plainTekst(teksterForSvalbardOpphold.leggTilFeilmelding));
         },
-        skalFeltetVises: () => true,
+        skalFeltetVises: () => skalFeltetVises(barnDataKeySpørsmål.harBoddPåSvalbard),
     });
 
     useEffect(() => {
@@ -834,9 +833,9 @@ export const useOmBarnet = (
                 erEøsLand
             ),
             barnErFyltUt: true,
-            // TODO: Legg til "skalFeltetVises"
-            // svalbardOppholdPerioder: skalFeltetVises(...) ? svalbardOppholdPerioder : [],
-            svalbardOppholdPerioder: svalbardOppholdPerioder,
+            svalbardOppholdPerioder: skalFeltetVises(barnDataKeySpørsmål.harBoddPåSvalbard)
+                ? svalbardOppholdPerioder
+                : [],
             utenlandsperioder: skalFeltetVises(barnDataKeySpørsmål.boddMindreEnn12MndINorge)
                 ? utenlandsperioder
                 : [],
