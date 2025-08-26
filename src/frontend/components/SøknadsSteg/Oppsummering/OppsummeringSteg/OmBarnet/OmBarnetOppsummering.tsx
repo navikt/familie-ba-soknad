@@ -122,35 +122,36 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                     />
                 </>
             )}
-            {toggles.SPM_OM_SVALBARD && (
-                <>
-                    <OppsummeringFelt
-                        tittel={
-                            <TekstBlock
-                                block={omBarnetTekster.opplystBoddPaaSvalbard}
-                                flettefelter={{ barnetsNavn: barn.navn }}
-                            />
-                        }
-                    />
-                    <OppsummeringFelt
-                        tittel={
-                            <TekstBlock
-                                block={omBarnetTekster.naarBoddPaaSvalbard.sporsmal}
-                                flettefelter={{ barnetsNavn: barn.navn }}
-                            />
-                        }
-                    />
-                    {barn.svalbardOppholdPerioder.map((periode, index) => (
-                        <SvalbardOppholdPeriodeOppsummering
-                            key={index}
-                            svalbardOppholdPeriode={periode}
-                            nummer={index + 1}
-                            personType={PersonType.Barn}
-                            barn={barn}
+            {toggles.SPM_OM_SVALBARD &&
+                barn[barnDataKeySpørsmål.harBoddPåSvalbard].svar === ESvar.JA && (
+                    <>
+                        <OppsummeringFelt
+                            tittel={
+                                <TekstBlock
+                                    block={omBarnetTekster.opplystBoddPaaSvalbard}
+                                    flettefelter={{ barnetsNavn: barn.navn }}
+                                />
+                            }
                         />
-                    ))}
-                </>
-            )}
+                        <OppsummeringFelt
+                            tittel={
+                                <TekstBlock
+                                    block={omBarnetTekster.naarBoddPaaSvalbard.sporsmal}
+                                    flettefelter={{ barnetsNavn: barn.navn }}
+                                />
+                            }
+                        />
+                        {barn.svalbardOppholdPerioder.map((periode, index) => (
+                            <SvalbardOppholdPeriodeOppsummering
+                                key={index}
+                                svalbardOppholdPeriode={periode}
+                                nummer={index + 1}
+                                personType={PersonType.Barn}
+                                barn={barn}
+                            />
+                        ))}
+                    </>
+                )}
             {barn[barnDataKeySpørsmål.boddMindreEnn12MndINorge].svar === ESvar.JA && (
                 <>
                     <OppsummeringFelt
