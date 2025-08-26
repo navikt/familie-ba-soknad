@@ -259,6 +259,10 @@ export const genererOppdaterteBarn = (
                 ...barn[barnDataKeySpørsmål.pågåendeSøknadHvilketLand],
                 svar: pågåendeSøknadHvilketLand,
             },
+            [barnDataKeySpørsmål.harBoddPåSvalbard]: {
+                ...barn[barnDataKeySpørsmål.harBoddPåSvalbard],
+                svar: genererSvarForSpørsmålBarn(barn, skjema.felter.hvemHarBoddPåSvalbard),
+            },
             [barnDataKeySpørsmål.adresse]: {
                 ...barn[barnDataKeySpørsmål.adresse],
                 svar:

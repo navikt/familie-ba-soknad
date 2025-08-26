@@ -67,6 +67,8 @@ export interface IOmBarnaDineFeltTyper {
     hvemErAdoptertFraUtland: BarnetsId[];
     hvemBarnetrygdFraAnnetEøsland: BarnetsId[];
     hvemTolvMndSammenhengendeINorge: BarnetsId[];
+    harNoenAvBarnaBoddPåSvalbard: ESvar | null;
+    hvemHarBoddPåSvalbard: BarnetsId[];
     hvemErSøktAsylFor: BarnetsId[];
     hvemAvdødPartner: BarnetsId[];
 }
