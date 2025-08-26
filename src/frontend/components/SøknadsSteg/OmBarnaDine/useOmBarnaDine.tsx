@@ -142,7 +142,7 @@ export const useOmBarnaDine = (): {
         søknadsfelt: søknad.harNoenAvBarnaBoddPåSvalbard,
         feilmelding: teksterForSteg.boddPaaSvalbard.feilmelding,
         feilmeldingSpråkId: 'ombarna.boddPaaSvalbard.feilmelding',
-        skalSkjules: søknad.søker.borPåSvalbard.svar === ESvar.NEI,
+        skalSkjules: søknad.søker.borPåSvalbard.svar !== ESvar.JA,
     });
 
     const hvemHarBoddPåSvalbard = useBarnCheckboxFelt({
