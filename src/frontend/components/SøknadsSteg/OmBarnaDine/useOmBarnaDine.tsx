@@ -138,8 +138,8 @@ export const useOmBarnaDine = (): {
         avhengighet: erAvdødPartnerForelder,
     });
 
-    const barnBoddPåSvalbard = useJaNeiSpmFelt({
-        søknadsfelt: søknad.barnBoddPåSvalbard,
+    const harNoenAvBarnaBoddPåSvalbard = useJaNeiSpmFelt({
+        søknadsfelt: søknad.harNoenAvBarnaBoddPåSvalbard,
         feilmelding: teksterForSteg.boddPaaSvalbard.feilmelding,
         feilmeldingSpråkId: 'ombarna.boddPaaSvalbard.feilmelding',
         skalSkjules: søknad.søker.borPåSvalbard.svar === ESvar.NEI,
@@ -149,7 +149,7 @@ export const useOmBarnaDine = (): {
         datafeltNavn: barnDataKeySpørsmål.harBoddPåSvalbard,
         feilmelding: teksterForSteg.hvemBoddPaaSvalbard.feilmelding,
         feilmeldingSpråkId: 'ombarna.boddPaaSvalbard.hvem.feilmelding',
-        avhengighet: barnBoddPåSvalbard,
+        avhengighet: harNoenAvBarnaBoddPåSvalbard,
     });
 
     useEffect(() => {
@@ -219,9 +219,9 @@ export const useOmBarnaDine = (): {
                 ...søknad.mottarBarnetrygdForBarnFraAnnetEøsland,
                 svar: mottarBarnetrygdForBarnFraAnnetEøsland.verdi,
             },
-            barnBoddPåSvalbard: {
-                ...søknad.barnBoddPåSvalbard,
-                svar: barnBoddPåSvalbard.verdi,
+            harNoenAvBarnaBoddPåSvalbard: {
+                ...søknad.harNoenAvBarnaBoddPåSvalbard,
+                svar: harNoenAvBarnaBoddPåSvalbard.verdi,
             },
             erAvdødPartnerForelder: {
                 ...søknad.erAvdødPartnerForelder,
@@ -269,7 +269,7 @@ export const useOmBarnaDine = (): {
             hvemOppholderSegIInstitusjon,
             hvemBarnetrygdFraAnnetEøsland,
             hvemTolvMndSammenhengendeINorge,
-            barnBoddPåSvalbard,
+            harNoenAvBarnaBoddPåSvalbard,
             hvemHarBoddPåSvalbard,
             hvemErSøktAsylFor,
             hvemAvdødPartner,

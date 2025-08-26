@@ -241,7 +241,7 @@ export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => 
             svar: null,
         },
         [barnDataKeySpørsmål.harBoddPåSvalbard]: {
-            id: OmBarnaDineSpørsmålId.barnBoddPåSvalbard,
+            id: OmBarnaDineSpørsmålId.harNoenAvBarnaBoddPåSvalbard,
             svar: null,
         },
         [barnDataKeySpørsmål.adresse]: {

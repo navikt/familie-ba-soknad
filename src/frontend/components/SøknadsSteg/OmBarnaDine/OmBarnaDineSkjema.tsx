@@ -175,11 +175,11 @@ const OmBarnaDineSkjema: React.FC = () => {
                     />
                 </>
             )}
-            {skjema.felter.barnBoddPåSvalbard.erSynlig && (
+            {skjema.felter.harNoenAvBarnaBoddPåSvalbard.erSynlig && (
                 <>
                     <JaNeiSpm
                         skjema={skjema}
-                        felt={skjema.felter.barnBoddPåSvalbard}
+                        felt={skjema.felter.harNoenAvBarnaBoddPåSvalbard}
                         spørsmålDokument={boddPaaSvalbard}
                         tilleggsinfo={
                             <TekstBlock
@@ -193,7 +193,9 @@ const OmBarnaDineSkjema: React.FC = () => {
                         legendTekst={<TekstBlock block={hvemBoddPaaSvalbard.sporsmal} />}
                         skjemafelt={skjema.felter.hvemHarBoddPåSvalbard}
                         søknadsdatafelt={barnDataKeySpørsmål.harBoddPåSvalbard}
-                        nullstillValgteBarn={skjema.felter.barnBoddPåSvalbard.verdi === ESvar.NEI}
+                        nullstillValgteBarn={
+                            skjema.felter.harNoenAvBarnaBoddPåSvalbard.verdi === ESvar.NEI
+                        }
                         visFeilmelding={skjema.visFeilmeldinger}
                     />
                 </>
