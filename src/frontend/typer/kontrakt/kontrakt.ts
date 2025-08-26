@@ -59,6 +59,7 @@ export interface ISøknadIKontraktBarn {
     registrertBostedType: ISøknadsfelt<ERegistrertBostedType>;
     alder: ISøknadsfelt<string> | null;
     spørsmål: SpørsmålMap;
+    svalbardOppholdPerioder: ISøknadsfelt<ISvalbardOppholdPeriodeIKontraktFormat>[];
     utenlandsperioder: ISøknadsfelt<IUtenlandsperiodeIKontraktFormat>[];
     omsorgsperson: IOmsorgspersonIKontraktFormat | null;
     andreForelder: IAndreForelderIKontraktFormat | null;
