@@ -40,6 +40,7 @@ export interface ISøknad {
     erAvdødPartnerForelder: ISøknadSpørsmål<ESvar | null>;
     barnOppholdtSegTolvMndSammenhengendeINorge: ISøknadSpørsmål<ESvar | null>;
     mottarBarnetrygdForBarnFraAnnetEøsland: ISøknadSpørsmål<ESvar | null>;
+    harNoenAvBarnaBoddPåSvalbard: ISøknadSpørsmål<ESvar | null>;
     dokumentasjon: IDokumentasjon[];
 }
 
@@ -172,6 +173,10 @@ export const initialStateSøknad = (): ISøknad => {
         },
         mottarBarnetrygdForBarnFraAnnetEøsland: {
             id: OmBarnaDineSpørsmålId.mottarBarnetrygdForBarnFraAnnetEøsland,
+            svar: null,
+        },
+        harNoenAvBarnaBoddPåSvalbard: {
+            id: OmBarnaDineSpørsmålId.harNoenAvBarnaBoddPåSvalbard,
             svar: null,
         },
         erAvdødPartnerForelder: {

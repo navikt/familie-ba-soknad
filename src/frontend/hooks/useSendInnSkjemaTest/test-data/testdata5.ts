@@ -163,6 +163,10 @@ export const testdata5: TilKontraktTestData = {
                     id: 'bor-barnet-fast-med-deg',
                     svar: 'JA',
                 },
+                harBoddPåSvalbard: {
+                    id: 'hvem-bodd-på-svalbard',
+                    svar: null,
+                },
             },
             {
                 id: 'c766c4f4-f319-482b-aba3-7e732d518a39',
@@ -602,6 +606,10 @@ export const testdata5: TilKontraktTestData = {
         },
         erAvdødPartnerForelder: {
             id: 'er-folkeregistrert-avdød-ektefelle-forelder',
+            svar: null,
+        },
+        harNoenAvBarnaBoddPåSvalbard: {
+            id: 'har-noen-av-barna-bodd-på-svalbard',
             svar: null,
         },
     },

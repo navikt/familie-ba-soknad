@@ -127,6 +127,10 @@ const mockBarnMedISøknad = {
         id: EøsBarnSpørsmålId.borMedOmsorgsperson,
         svar: ESvar.NEI,
     },
+    [barnDataKeySpørsmål.harBoddPåSvalbard]: {
+        id: OmBarnaDineSpørsmålId.hvemBoddePåSvalbard,
+        svar: ESvar.NEI,
+    },
     andreForelder: {
         kanIkkeGiOpplysninger: {
             id: OmBarnetSpørsmålsId.andreForelderKanIkkeGiOpplysninger,

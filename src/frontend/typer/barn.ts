@@ -46,6 +46,7 @@ export enum barnDataKeySpørsmål {
     pågåendeSøknadHvilketLand = 'pågåendeSøknadHvilketLand',
     mottarEllerMottokEøsBarnetrygd = 'mottarEllerMottokEøsBarnetrygd',
     andreForelderErDød = 'andreForelderErDød',
+    harBoddPåSvalbard = 'harBoddPåSvalbard',
     oppholderSegIInstitusjon = 'oppholderSegIInstitusjon',
     institusjonIUtland = 'institusjonIUtland',
     institusjonsnavn = 'institusjonsnavn',
@@ -131,6 +132,7 @@ export interface IBarnMedISøknad extends IBarn {
     [barnDataKeySpørsmål.søkersSlektsforholdSpesifisering]: ISøknadSpørsmål<string>;
     [barnDataKeySpørsmål.borMedAndreForelder]: ISøknadSpørsmål<ESvar | null>;
     [barnDataKeySpørsmål.borMedOmsorgsperson]: ISøknadSpørsmål<ESvar | null>;
+    [barnDataKeySpørsmål.harBoddPåSvalbard]: ISøknadSpørsmål<ESvar | null>;
     [barnDataKeySpørsmål.adresse]: ISøknadSpørsmål<string | AlternativtSvarForInput.UKJENT>;
 }
 
