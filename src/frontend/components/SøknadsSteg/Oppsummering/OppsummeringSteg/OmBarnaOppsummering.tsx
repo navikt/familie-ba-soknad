@@ -129,10 +129,20 @@ const OmBarnaOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                 </>
             )}
             {søknad.barnBoddPåSvalbard.svar && (
-                <OppsummeringFelt
-                    tittel={<TekstBlock block={omBarnaTekster.boddPaaSvalbard.sporsmal} />}
-                    søknadsvar={søknad.barnBoddPåSvalbard.svar}
-                />
+                <>
+                    <OppsummeringFelt
+                        tittel={<TekstBlock block={omBarnaTekster.boddPaaSvalbard.sporsmal} />}
+                        søknadsvar={søknad.barnBoddPåSvalbard.svar}
+                    />
+                    {søknad.barnBoddPåSvalbard.svar === ESvar.JA && (
+                        <OppsummeringFelt
+                            tittel={
+                                <TekstBlock block={omBarnaTekster.hvemBoddPaaSvalbard.sporsmal} />
+                            }
+                            søknadsvar={genererListeMedBarn(barnDataKeySpørsmål.harBoddPåSvalbard)}
+                        />
+                    )}
+                </>
             )}
         </Oppsummeringsbolk>
     );

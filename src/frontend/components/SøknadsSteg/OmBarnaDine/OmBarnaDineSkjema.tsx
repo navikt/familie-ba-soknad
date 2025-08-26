@@ -38,6 +38,7 @@ const OmBarnaDineSkjema: React.FC = () => {
         hvemSoektYtelse,
         hvemAvBarnaAvdoedPartner,
         boddPaaSvalbard,
+        hvemBoddPaaSvalbard,
     } = stegTekster;
 
     return (
@@ -175,17 +176,27 @@ const OmBarnaDineSkjema: React.FC = () => {
                 </>
             )}
             {skjema.felter.barnBoddPåSvalbard.erSynlig && (
-                <JaNeiSpm
-                    skjema={skjema}
-                    felt={skjema.felter.barnBoddPåSvalbard}
-                    spørsmålDokument={boddPaaSvalbard}
-                    tilleggsinfo={
-                        <TekstBlock
-                            block={boddPaaSvalbard.beskrivelse}
-                            typografi={Typografi.BodyShort}
-                        />
-                    }
-                />
+                <>
+                    <JaNeiSpm
+                        skjema={skjema}
+                        felt={skjema.felter.barnBoddPåSvalbard}
+                        spørsmålDokument={boddPaaSvalbard}
+                        tilleggsinfo={
+                            <TekstBlock
+                                block={boddPaaSvalbard.beskrivelse}
+                                typografi={Typografi.BodyShort}
+                            />
+                        }
+                    />
+
+                    <HvilkeBarnCheckboxGruppe
+                        legendTekst={<TekstBlock block={hvemBoddPaaSvalbard.sporsmal} />}
+                        skjemafelt={skjema.felter.hvemHarBoddPåSvalbard}
+                        søknadsdatafelt={barnDataKeySpørsmål.harBoddPåSvalbard}
+                        nullstillValgteBarn={skjema.felter.barnBoddPåSvalbard.verdi === ESvar.NEI}
+                        visFeilmelding={skjema.visFeilmeldinger}
+                    />
+                </>
             )}
         </Steg>
     );

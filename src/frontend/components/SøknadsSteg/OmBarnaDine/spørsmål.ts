@@ -12,6 +12,7 @@ export enum OmBarnaDineSpørsmålId {
     mottarBarnetrygdForBarnFraAnnetEøsland = 'barnetrygd-fra-annet-eøsland',
     hvemBarnetrygdFraAnnetEøsland = 'hvem-mottar-barnetrygd-eøsland',
     barnBoddPåSvalbard = 'barn-bodd-på-svalbard',
+    hvemBoddePåSvalbard = 'hvem-bodd-på-svalbard',
     erOppgittAvdødPartnerForelder = 'er-oppgitt-avdød-partner-forelder',
     erFolkeregAvdødEktefelleForelder = 'er-folkeregistrert-avdød-ektefelle-forelder',
     erFolkeregAvdødPartnerForelder = 'er-folkeregistrert-avdød-partner-forelder',
@@ -34,6 +35,7 @@ export const omBarnaDineSpørsmålSpråkId: Record<OmBarnaDineSpørsmålId, stri
         'ombarna.barnetrygd-eøs-fortid.spm',
     [OmBarnaDineSpørsmålId.hvemBarnetrygdFraAnnetEøsland]: 'ombarna.barnetrygd-eøs-fortid.hvem.spm',
     [OmBarnaDineSpørsmålId.barnBoddPåSvalbard]: 'ombarna.barn-bodd-på-svalbard.spm',
+    [OmBarnaDineSpørsmålId.hvemBoddePåSvalbard]: 'ombarna.boddPaaSvalbard.hvem',
     [OmBarnaDineSpørsmålId.erOppgittAvdødPartnerForelder]: 'ombarna.enkeenkemann.oppgitt.spm',
     [OmBarnaDineSpørsmålId.erFolkeregAvdødEktefelleForelder]:
         'ombarna.enkeenkemann.folkeregisteret-enke.spm',

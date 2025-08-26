@@ -145,6 +145,13 @@ export const useOmBarnaDine = (): {
         skalSkjules: søknad.søker.borPåSvalbard.svar === ESvar.NEI,
     });
 
+    const hvemHarBoddPåSvalbard = useBarnCheckboxFelt({
+        datafeltNavn: barnDataKeySpørsmål.harBoddPåSvalbard,
+        feilmelding: teksterForSteg.hvemBoddPaaSvalbard.feilmelding,
+        feilmeldingSpråkId: 'ombarna.boddPaaSvalbard.hvem.feilmelding',
+        avhengighet: barnBoddPåSvalbard,
+    });
+
     useEffect(() => {
         const oppdaterteBarn = genererOppdaterteBarn(
             søknad,
@@ -263,6 +270,7 @@ export const useOmBarnaDine = (): {
             hvemBarnetrygdFraAnnetEøsland,
             hvemTolvMndSammenhengendeINorge,
             barnBoddPåSvalbard,
+            hvemHarBoddPåSvalbard,
             hvemErSøktAsylFor,
             hvemAvdødPartner,
         },
