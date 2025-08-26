@@ -244,7 +244,7 @@ export const dataISøknadKontraktFormat = (
             ),
             harNoenAvBarnaBoddPåSvalbard: søknadsfelt(
                 språktekstIdFraSpørsmålId(OmBarnaDineSpørsmålId.harNoenAvBarnaBoddPåSvalbard),
-                sammeVerdiAlleSpråk(søknad.erNoenAvBarnaFosterbarn.svar)
+                sammeVerdiAlleSpråk(søknad.harNoenAvBarnaBoddPåSvalbard.svar)
             ),
             lestOgForståttBekreftelse: søknadsfelt(
                 'forside.bekreftelsesboks.brødtekst',

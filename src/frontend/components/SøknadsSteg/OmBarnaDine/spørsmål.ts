@@ -34,7 +34,7 @@ export const omBarnaDineSpørsmålSpråkId: Record<OmBarnaDineSpørsmålId, stri
     [OmBarnaDineSpørsmålId.mottarBarnetrygdForBarnFraAnnetEøsland]:
         'ombarna.barnetrygd-eøs-fortid.spm',
     [OmBarnaDineSpørsmålId.hvemBarnetrygdFraAnnetEøsland]: 'ombarna.barnetrygd-eøs-fortid.hvem.spm',
-    [OmBarnaDineSpørsmålId.harNoenAvBarnaBoddPåSvalbard]: 'ombarna.barn-bodd-på-svalbard.spm',
+    [OmBarnaDineSpørsmålId.harNoenAvBarnaBoddPåSvalbard]: 'ombarna.boddPaaSvalbard',
     [OmBarnaDineSpørsmålId.hvemBoddePåSvalbard]: 'ombarna.boddPaaSvalbard.hvem',
     [OmBarnaDineSpørsmålId.erOppgittAvdødPartnerForelder]: 'ombarna.enkeenkemann.oppgitt.spm',
     [OmBarnaDineSpørsmålId.erFolkeregAvdødEktefelleForelder]:
