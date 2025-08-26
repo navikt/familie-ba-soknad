@@ -5,7 +5,6 @@ import { feil, type FeltState, type ISkjema, ok, useFelt, useSkjema } from '@nav
 
 import { useAppContext } from '../../../context/AppContext';
 import { useEøsContext } from '../../../context/EøsContext';
-import { useFeatureToggles } from '../../../context/FeatureTogglesContext';
 import useDatovelgerFeltMedUkjentForSanity from '../../../hooks/useDatovelgerFeltMedUkjentForSanity';
 import useInputFelt from '../../../hooks/useInputFelt';
 import useInputFeltMedUkjent from '../../../hooks/useInputFeltMedUkjent';
@@ -111,7 +110,6 @@ export const useOmBarnet = (
         tekster()[ESanitySteg.FELLES].modaler.utenlandsopphold.søker;
     const teksterForFormateringsfeilmeldinger: IFormateringsfeilmeldingerTekstinnhold =
         tekster()[ESanitySteg.FELLES].formateringsfeilmeldinger;
-    const { toggles } = useFeatureToggles();
 
     const søker = søknad.søker;
     const gjeldendeBarn = søknad.barnInkludertISøknaden.find(barn => barn.id === barnetsUuid);
@@ -238,7 +236,7 @@ export const useOmBarnet = (
         feltId: SvalbardOppholdSpørsmålId.svalbardOpphold,
         verdi: gjeldendeBarn.svalbardOppholdPerioder,
         valideringsfunksjon: felt => {
-            return !toggles.SPM_OM_SVALBARD || felt.verdi.length
+            return felt.verdi.length
                 ? ok(felt)
                 : feil(felt, plainTekst(teksterForSvalbardOpphold.leggTilFeilmelding));
         },
