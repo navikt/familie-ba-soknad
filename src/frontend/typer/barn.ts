@@ -9,6 +9,7 @@ import {
     IArbeidsperiode,
     IEøsBarnetrygdsperiode,
     IPensjonsperiode,
+    ISvalbardOppholdPeriode,
     IUtbetalingsperiode,
     IUtenlandsperiode,
 } from './perioder';
@@ -99,6 +100,7 @@ export interface IAndreForelder {
 
 export interface IBarnMedISøknad extends IBarn {
     barnErFyltUt: boolean;
+    svalbardOppholdPerioder: ISvalbardOppholdPeriode[];
     utenlandsperioder: IUtenlandsperiode[];
     eøsBarnetrygdsperioder: IEøsBarnetrygdsperiode[];
     idNummer: IIdNummer[];

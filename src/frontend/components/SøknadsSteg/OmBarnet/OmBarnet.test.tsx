@@ -28,6 +28,7 @@ import { OmBarnetSpørsmålsId } from './spørsmål';
 const mockBarnMedISøknad = {
     barnErFyltUt: true,
     triggetEøs: true,
+    svalbardOppholdPerioder: [],
     utenlandsperioder: [],
     eøsBarnetrygdsperioder: [],
     idNummer: [],

@@ -55,6 +55,11 @@ export const genererOppdaterteBarn = (
             skjema.felter.hvemOppholderSegIInstitusjon
         );
 
+        const harBoddPåSvalbard: ESvar = genererSvarForSpørsmålBarn(
+            barn,
+            skjema.felter.hvemHarBoddPåSvalbard
+        );
+
         const boddMindreEnn12MndINorge: ESvar = genererSvarForSpørsmålBarn(
             barn,
             skjema.felter.hvemTolvMndSammenhengendeINorge
@@ -74,6 +79,8 @@ export const genererOppdaterteBarn = (
             skjema.felter.hvemErFosterbarn
         );
 
+        const svalbardOppholdPerioder =
+            harBoddPåSvalbard === ESvar.JA ? barn.svalbardOppholdPerioder : [];
         const utenlandsperioder =
             boddMindreEnn12MndINorge === ESvar.JA ? barn.utenlandsperioder : [];
         const eøsBarnetrygdsperioder =
@@ -127,12 +134,13 @@ export const genererOppdaterteBarn = (
         const oppdatertBarn = {
             ...barn,
             idNummer: filtrerteRelevanteIdNummerForBarn(
-                { eøsBarnetrygdsperioder, utenlandsperioder },
+                { eøsBarnetrygdsperioder, svalbardOppholdPerioder, utenlandsperioder },
                 pågåendeSøknadFraAnnetEøsLand,
                 pågåendeSøknadHvilketLand,
                 barn,
                 erEøsLand
             ),
+            svalbardOppholdPerioder,
             utenlandsperioder,
             eøsBarnetrygdsperioder,
             andreForelder:

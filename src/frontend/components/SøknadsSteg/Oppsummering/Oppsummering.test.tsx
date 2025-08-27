@@ -38,6 +38,7 @@ describe('Oppsummering', () => {
                     institusjonsadresse: { id: OmBarnetSpørsmålsId.institusjonsadresse, svar: '' },
                     erFosterbarn: { id: OmBarnaDineSpørsmålId.hvemErFosterbarn, svar: ESvar.JA },
                     andreForelder: null,
+                    svalbardOppholdPerioder: [],
                     utenlandsperioder: [],
                     triggetEøs: false,
                 },

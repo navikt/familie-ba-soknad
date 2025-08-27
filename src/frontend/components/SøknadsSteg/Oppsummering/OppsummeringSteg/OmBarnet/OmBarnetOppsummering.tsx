@@ -3,6 +3,7 @@ import React from 'react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useAppContext } from '../../../../../context/AppContext';
+import { useFeatureToggles } from '../../../../../context/FeatureTogglesContext';
 import { useSpråkContext } from '../../../../../context/SpråkContext';
 import { useStegContext } from '../../../../../context/StegContext';
 import {
@@ -16,6 +17,7 @@ import { landkodeTilSpråk } from '../../../../../utils/språk';
 import { formaterDatoMedUkjent } from '../../../../../utils/visning';
 import { BarnetrygdsperiodeOppsummering } from '../../../../Felleskomponenter/Barnetrygdperiode/BarnetrygdperiodeOppsummering';
 import TekstBlock from '../../../../Felleskomponenter/Sanity/TekstBlock';
+import { SvalbardOppholdPeriodeOppsummering } from '../../../../Felleskomponenter/SvalbardOppholdModal.tsx/SvalbardOppholdPeriodeOppsummering';
 import { UtenlandsperiodeOppsummering } from '../../../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsperiodeOppsummering';
 import { useOmBarnet } from '../../../OmBarnet/useOmBarnet';
 import { OppsummeringFelt } from '../../OppsummeringFelt';
@@ -36,6 +38,7 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
     const { valgtLocale } = useSpråkContext();
     const omBarnetTekster = tekster().OM_BARNET;
     const omBarnetHook = useOmBarnet(barn.id);
+    const { toggles } = useFeatureToggles();
 
     return (
         <Oppsummeringsbolk
@@ -119,6 +122,36 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                     />
                 </>
             )}
+            {toggles.SPM_OM_SVALBARD &&
+                barn[barnDataKeySpørsmål.harBoddPåSvalbard].svar === ESvar.JA && (
+                    <>
+                        <OppsummeringFelt
+                            tittel={
+                                <TekstBlock
+                                    block={omBarnetTekster.opplystBoddPaaSvalbard}
+                                    flettefelter={{ barnetsNavn: barn.navn }}
+                                />
+                            }
+                        />
+                        <OppsummeringFelt
+                            tittel={
+                                <TekstBlock
+                                    block={omBarnetTekster.naarBoddPaaSvalbard.sporsmal}
+                                    flettefelter={{ barnetsNavn: barn.navn }}
+                                />
+                            }
+                        />
+                        {barn.svalbardOppholdPerioder.map((periode, index) => (
+                            <SvalbardOppholdPeriodeOppsummering
+                                key={index}
+                                svalbardOppholdPeriode={periode}
+                                nummer={index + 1}
+                                personType={PersonType.Barn}
+                                barn={barn}
+                            />
+                        ))}
+                    </>
+                )}
             {barn[barnDataKeySpørsmål.boddMindreEnn12MndINorge].svar === ESvar.JA && (
                 <>
                     <OppsummeringFelt
