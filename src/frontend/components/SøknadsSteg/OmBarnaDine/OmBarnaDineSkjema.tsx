@@ -3,6 +3,7 @@ import React from 'react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useAppContext } from '../../../context/AppContext';
+import { useFeatureToggles } from '../../../context/FeatureTogglesContext';
 import { barnDataKeySpørsmål } from '../../../typer/barn';
 import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
 import { ESanitySteg, Typografi } from '../../../typer/sanity/sanity';
@@ -17,6 +18,7 @@ import { avdødPartnerForelderSpørsmålDokument } from './utils';
 const OmBarnaDineSkjema: React.FC = () => {
     const { skjema, validerFelterOgVisFeilmelding, valideringErOk, oppdaterSøknad } =
         useOmBarnaDine();
+    const { toggles } = useFeatureToggles();
 
     const { søknad, tekster } = useAppContext();
 
@@ -175,7 +177,7 @@ const OmBarnaDineSkjema: React.FC = () => {
                     />
                 </>
             )}
-            {skjema.felter.harNoenAvBarnaBoddPåSvalbard.erSynlig && (
+            {toggles.SPM_OM_SVALBARD && skjema.felter.harNoenAvBarnaBoddPåSvalbard.erSynlig && (
                 <>
                     <JaNeiSpm
                         skjema={skjema}
