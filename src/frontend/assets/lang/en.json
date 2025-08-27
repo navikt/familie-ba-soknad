@@ -589,6 +589,8 @@
   "ombarnet.trygdbeløp.info": "Enter the amount in local currency",
   "ombarnet.trygdbeløp.spm": "Amount each month for {barn}",
   "ombarnet.undertittel": "Child {x} of {antall}",
+  "ombarnet.opplystBoddPaaSvalbard": "You have stated that {navn} lives or has lived with you in Svalbard.",
+  "ombarnet.naarBoddPaaSvalbard": "When did {navn} live in Svalbard?",
   "omdeg.adresse.feilmelding": "You must state your adress registered in the Norwegian National Registry (<bokmål>folkeregisteret</bokmål>) in order to be able to proceed",
   "omdeg.adresse.spm": "What is your address registered in the Norwegian National Registry (<bokmål>folkeregisteret</bokmål>)?",
   "omdeg.annensamboer.feilmelding": "You must state whether you have had a cohabiting partner earlier during the period for which you are applying for child benefit in order to be able to proceed",
