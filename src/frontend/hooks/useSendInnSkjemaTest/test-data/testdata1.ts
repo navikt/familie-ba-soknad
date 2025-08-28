@@ -19,6 +19,7 @@ export const testdata1: TilKontraktTestData = {
                 },
                 adressebeskyttelse: true,
                 barnErFyltUt: true,
+                svalbardOppholdPerioder: [],
                 utenlandsperioder: [],
                 eøsBarnetrygdsperioder: [],
                 idNummer: [],
@@ -162,6 +163,10 @@ export const testdata1: TilKontraktTestData = {
                 borFastMedSøker: {
                     id: 'bor-barnet-fast-med-deg',
                     svar: 'NEI',
+                },
+                harBoddPåSvalbard: {
+                    id: 'hvem-bodd-på-svalbard',
+                    svar: null,
                 },
             },
         ],
@@ -385,6 +390,10 @@ export const testdata1: TilKontraktTestData = {
             id: 'er-folkeregistrert-avdød-ektefelle-forelder',
             svar: null,
         },
+        harNoenAvBarnaBoddPåSvalbard: {
+            id: 'har-noen-av-barna-bodd-på-svalbard',
+            svar: null,
+        },
     },
     output: {
         søknadstype: 'ORDINÆR',
@@ -545,6 +554,7 @@ export const testdata1: TilKontraktTestData = {
                     label: { en: 'Age', nb: 'Alder', nn: 'Alder' },
                     verdi: { en: '13 years', nb: '13 år', nn: '13 år' },
                 },
+                svalbardOppholdPerioder: [],
                 utenlandsperioder: [],
                 eøsBarnetrygdsperioder: [],
                 idNummer: [],

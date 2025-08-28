@@ -37,6 +37,7 @@ describe('genererOppdaterteBarn', () => {
             {
                 id: 'random-id',
                 idNummer: [],
+                svalbardOppholdPerioder: [],
                 utenlandsperioder: [],
                 eøsBarnetrygdsperioder: [],
                 institusjonsnavn: { svar: 'Narvesen' },

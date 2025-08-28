@@ -3,6 +3,7 @@ import React from 'react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useAppContext } from '../../../context/AppContext';
+import { useFeatureToggles } from '../../../context/FeatureTogglesContext';
 import { barnDataKeySpørsmål } from '../../../typer/barn';
 import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
 import { ESanitySteg, Typografi } from '../../../typer/sanity/sanity';
@@ -17,6 +18,7 @@ import { avdødPartnerForelderSpørsmålDokument } from './utils';
 const OmBarnaDineSkjema: React.FC = () => {
     const { skjema, validerFelterOgVisFeilmelding, valideringErOk, oppdaterSøknad } =
         useOmBarnaDine();
+    const { toggles } = useFeatureToggles();
 
     const { søknad, tekster } = useAppContext();
 
@@ -37,6 +39,8 @@ const OmBarnaDineSkjema: React.FC = () => {
         soektYtelseEuEoes,
         hvemSoektYtelse,
         hvemAvBarnaAvdoedPartner,
+        boddPaaSvalbard,
+        hvemBoddPaaSvalbard,
     } = stegTekster;
 
     return (
@@ -168,6 +172,31 @@ const OmBarnaDineSkjema: React.FC = () => {
                         søknadsdatafelt={barnDataKeySpørsmål.andreForelderErDød}
                         nullstillValgteBarn={
                             skjema.felter.erAvdødPartnerForelder.verdi === ESvar.NEI
+                        }
+                        visFeilmelding={skjema.visFeilmeldinger}
+                    />
+                </>
+            )}
+            {toggles.SPM_OM_SVALBARD && skjema.felter.harNoenAvBarnaBoddPåSvalbard.erSynlig && (
+                <>
+                    <JaNeiSpm
+                        skjema={skjema}
+                        felt={skjema.felter.harNoenAvBarnaBoddPåSvalbard}
+                        spørsmålDokument={boddPaaSvalbard}
+                        tilleggsinfo={
+                            <TekstBlock
+                                block={boddPaaSvalbard.beskrivelse}
+                                typografi={Typografi.BodyShort}
+                            />
+                        }
+                    />
+
+                    <HvilkeBarnCheckboxGruppe
+                        legendTekst={<TekstBlock block={hvemBoddPaaSvalbard.sporsmal} />}
+                        skjemafelt={skjema.felter.hvemHarBoddPåSvalbard}
+                        søknadsdatafelt={barnDataKeySpørsmål.harBoddPåSvalbard}
+                        nullstillValgteBarn={
+                            skjema.felter.harNoenAvBarnaBoddPåSvalbard.verdi === ESvar.NEI
                         }
                         visFeilmelding={skjema.visFeilmeldinger}
                     />

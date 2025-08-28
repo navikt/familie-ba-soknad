@@ -67,6 +67,8 @@ export interface IOmBarnaDineFeltTyper {
     hvemErAdoptertFraUtland: BarnetsId[];
     hvemBarnetrygdFraAnnetEøsland: BarnetsId[];
     hvemTolvMndSammenhengendeINorge: BarnetsId[];
+    harNoenAvBarnaBoddPåSvalbard: ESvar | null;
+    hvemHarBoddPåSvalbard: BarnetsId[];
     hvemErSøktAsylFor: BarnetsId[];
     hvemAvdødPartner: BarnetsId[];
 }
@@ -100,6 +102,7 @@ export interface IOmBarnetFeltTyper {
     søkerHarBoddMedAndreForelder: ESvar | null;
     borMedAndreForelderCheckbox: ESvar;
     søkerFlyttetFraAndreForelderDato: ISODateString;
+    registrerteSvalbardOppholdPerioder: ISvalbardOppholdPeriode[];
     registrerteUtenlandsperioder: IUtenlandsperiode[];
 }
 

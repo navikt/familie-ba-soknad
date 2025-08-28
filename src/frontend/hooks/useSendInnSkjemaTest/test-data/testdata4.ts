@@ -20,6 +20,7 @@ export const testdata4: TilKontraktTestData = {
                 borMedSøker: false,
                 adressebeskyttelse: true,
                 barnErFyltUt: true,
+                svalbardOppholdPerioder: [],
                 utenlandsperioder: [],
                 andreForelder: null,
                 triggetEøs: true,
@@ -103,6 +104,7 @@ export const testdata4: TilKontraktTestData = {
                 harEøsSteg: false,
                 eøsBarnetrygdsperioder: [],
                 idNummer: [],
+                svalbardOppholdPerioder: [],
                 utenlandsperioder: [
                     {
                         utenlandsoppholdÅrsak: {
@@ -262,6 +264,10 @@ export const testdata4: TilKontraktTestData = {
                 borFastMedSøker: {
                     id: 'bor-barnet-fast-med-deg',
                     svar: 'NEI',
+                },
+                harBoddPåSvalbard: {
+                    id: 'hvem-bodd-på-svalbard',
+                    svar: null,
                 },
             },
         ],
@@ -529,6 +535,10 @@ export const testdata4: TilKontraktTestData = {
         },
         erAvdødPartnerForelder: {
             id: 'er-folkeregistrert-avdød-ektefelle-forelder',
+            svar: null,
+        },
+        harNoenAvBarnaBoddPåSvalbard: {
+            id: 'har-noen-av-barna-bodd-på-svalbard',
             svar: null,
         },
     },
@@ -1073,6 +1083,7 @@ export const testdata4: TilKontraktTestData = {
                     label: { en: 'Age', nb: 'Alder', nn: 'Alder' },
                     verdi: { en: '13 years', nb: '13 år', nn: '13 år' },
                 },
+                svalbardOppholdPerioder: [],
                 utenlandsperioder: [],
                 eøsBarnetrygdsperioder: [],
                 idNummer: [],
@@ -1199,6 +1210,7 @@ export const testdata4: TilKontraktTestData = {
                     label: { en: 'Age', nb: 'Alder', nn: 'Alder' },
                     verdi: { en: '12 years', nb: '12 år', nn: '12 år' },
                 },
+                svalbardOppholdPerioder: [],
                 utenlandsperioder: [
                     {
                         label: {

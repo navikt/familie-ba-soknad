@@ -244,6 +244,10 @@ export const dataISøknadKontraktFormat = (
                 språktekstIdFraSpørsmålId(søknad.erAvdødPartnerForelder.id),
                 sammeVerdiAlleSpråk(søknad.erAvdødPartnerForelder.svar)
             ),
+            harNoenAvBarnaBoddPåSvalbard: søknadsfelt(
+                språktekstIdFraSpørsmålId(OmBarnaDineSpørsmålId.harNoenAvBarnaBoddPåSvalbard),
+                sammeVerdiAlleSpråk(søknad.harNoenAvBarnaBoddPåSvalbard.svar)
+            ),
             lestOgForståttBekreftelse: søknadsfelt(
                 'forside.bekreftelsesboks.brødtekst',
                 søknad.lestOgForståttBekreftelse
@@ -271,6 +275,8 @@ const lokaleTekster = (): Record<string, Record<LocaleType, string>> => {
         'ombarnet.institusjon',
         'ombarnet.opplystatbarnutlandopphold.info',
         'ombarnet.barnetrygd-eøs',
+        'ombarnet.opplystBoddPaaSvalbard',
+        'ombarnet.naarBoddPaaSvalbard',
         'omdeg.annensamboer.spm',
         'omdeg.personopplysninger.adressesperre.alert',
         'omdeg.personopplysninger.ikke-registrert.alert',

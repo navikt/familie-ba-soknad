@@ -28,6 +28,7 @@ import { OmBarnetSpørsmålsId } from './spørsmål';
 const mockBarnMedISøknad = {
     barnErFyltUt: true,
     triggetEøs: true,
+    svalbardOppholdPerioder: [],
     utenlandsperioder: [],
     eøsBarnetrygdsperioder: [],
     idNummer: [],
@@ -124,6 +125,10 @@ const mockBarnMedISøknad = {
     },
     [barnDataKeySpørsmål.borMedOmsorgsperson]: {
         id: EøsBarnSpørsmålId.borMedOmsorgsperson,
+        svar: ESvar.NEI,
+    },
+    [barnDataKeySpørsmål.harBoddPåSvalbard]: {
+        id: OmBarnaDineSpørsmålId.hvemBoddePåSvalbard,
         svar: ESvar.NEI,
     },
     andreForelder: {

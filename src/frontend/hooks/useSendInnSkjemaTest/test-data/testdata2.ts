@@ -19,6 +19,7 @@ export const testdata2: TilKontraktTestData = {
                 },
                 adressebeskyttelse: true,
                 barnErFyltUt: true,
+                svalbardOppholdPerioder: [],
                 utenlandsperioder: [
                     {
                         utenlandsoppholdÅrsak: {
@@ -135,6 +136,7 @@ export const testdata2: TilKontraktTestData = {
                     id: 'barnets-adresse',
                 },
                 barnErFyltUt: true,
+                svalbardOppholdPerioder: [],
                 utenlandsperioder: [
                     {
                         utenlandsoppholdÅrsak: {
@@ -223,6 +225,10 @@ export const testdata2: TilKontraktTestData = {
                 borFastMedSøker: {
                     id: 'bor-barnet-fast-med-deg',
                     svar: 'NEI',
+                },
+                harBoddPåSvalbard: {
+                    id: 'hvem-bodd-på-svalbard',
+                    svar: null,
                 },
             },
         ],
@@ -602,6 +608,10 @@ export const testdata2: TilKontraktTestData = {
         },
         erAvdødPartnerForelder: {
             id: 'er-folkeregistrert-avdød-ektefelle-forelder',
+            svar: null,
+        },
+        harNoenAvBarnaBoddPåSvalbard: {
+            id: 'har-noen-av-barna-bodd-på-svalbard',
             svar: null,
         },
     },
@@ -1743,6 +1753,7 @@ export const testdata2: TilKontraktTestData = {
                     label: { en: 'Age', nb: 'Alder', nn: 'Alder' },
                     verdi: { en: '13 years', nb: '13 år', nn: '13 år' },
                 },
+                svalbardOppholdPerioder: [],
                 utenlandsperioder: [
                     {
                         label: {
@@ -2136,6 +2147,7 @@ export const testdata2: TilKontraktTestData = {
                     label: { en: 'Age', nb: 'Alder', nn: 'Alder' },
                     verdi: { en: '12 years', nb: '12 år', nn: '12 år' },
                 },
+                svalbardOppholdPerioder: [],
                 utenlandsperioder: [
                     {
                         label: {

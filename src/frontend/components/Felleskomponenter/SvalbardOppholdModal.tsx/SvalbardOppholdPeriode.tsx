@@ -4,9 +4,9 @@ import type { Felt, ISkjema } from '@navikt/familie-skjema';
 
 import { useAppContext } from '../../../context/AppContext';
 import { ISvalbardOppholdPeriode } from '../../../typer/perioder';
-import { PersonType } from '../../../typer/personType';
+import { PeriodePersonTypeMedBarnProps, PersonType } from '../../../typer/personType';
 import { ISvalbardOppholdTekstinnhold } from '../../../typer/sanity/modaler/svalbardOpphold';
-import { IOmDegFeltTyper } from '../../../typer/skjema';
+import { IOmBarnetFeltTyper, IOmDegFeltTyper } from '../../../typer/skjema';
 import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
 import PerioderContainer from '../PerioderContainer';
 import TekstBlock from '../Sanity/TekstBlock';
@@ -15,13 +15,15 @@ import useModal from '../SkjemaModal/useModal';
 import { SvalbardOppholdModal } from './SvalbardOppholdModal';
 import { SvalbardOppholdPeriodeOppsummering } from './SvalbardOppholdPeriodeOppsummering';
 
-interface SvalbardOppholdPeriodeProps {
-    skjema: ISkjema<IOmDegFeltTyper, string>;
+interface Props {
+    skjema: ISkjema<IOmDegFeltTyper | IOmBarnetFeltTyper, string>;
     leggTilSvalbardOppholdPeriode: (periode: ISvalbardOppholdPeriode) => void;
     fjernSvalbardOppholdPeriode: (periode: ISvalbardOppholdPeriode) => void;
     registrerteSvalbardOppholdPerioder: Felt<ISvalbardOppholdPeriode[]>;
     personType: PersonType;
 }
+
+type SvalbardOppholdPeriodeProps = Props & PeriodePersonTypeMedBarnProps;
 
 export const SvalbardOppholdPeriode: React.FC<SvalbardOppholdPeriodeProps> = ({
     skjema,
@@ -29,6 +31,7 @@ export const SvalbardOppholdPeriode: React.FC<SvalbardOppholdPeriodeProps> = ({
     fjernSvalbardOppholdPeriode,
     registrerteSvalbardOppholdPerioder,
     personType,
+    barn,
 }) => {
     const { tekster, plainTekst } = useAppContext();
     const { erÅpen, lukkModal, åpneModal } = useModal();
@@ -46,6 +49,7 @@ export const SvalbardOppholdPeriode: React.FC<SvalbardOppholdPeriodeProps> = ({
                     fjernPeriodeCallback={fjernSvalbardOppholdPeriode}
                     nummer={index + 1}
                     personType={personType}
+                    barn={barn}
                 />
             ))}
             <LeggTilKnapp
@@ -66,8 +70,9 @@ export const SvalbardOppholdPeriode: React.FC<SvalbardOppholdPeriodeProps> = ({
                     erÅpen={erÅpen}
                     lukkModal={lukkModal}
                     onLeggTilSvalbardOppholdPeriode={leggTilSvalbardOppholdPeriode}
-                    forklaring={plainTekst(leggTilPeriodeForklaring)}
+                    forklaring={plainTekst(leggTilPeriodeForklaring, { barnetsNavn: barn?.navn })}
                     personType={personType}
+                    barn={barn}
                 />
             )}
         </PerioderContainer>
