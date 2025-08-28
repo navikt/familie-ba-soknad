@@ -28,6 +28,13 @@ export const useOmBarnaDine = (): {
     const { skalTriggeEøsForBarn, barnSomTriggerEøs, settBarnSomTriggerEøs, erEøsLand } =
         useEøsContext();
 
+    const skalNullstilleSvalbardfelter =
+        søknad.søker.borPåSvalbard.svar !== ESvar.JA &&
+        (søknad.harNoenAvBarnaBoddPåSvalbard.svar ||
+            søknad.barnInkludertISøknaden.find(
+                barn => barn[barnDataKeySpørsmål.harBoddPåSvalbard].svar === ESvar.JA
+            ));
+
     const teksterForSteg = tekster().OM_BARNA;
 
     const erNoenAvBarnaFosterbarn = useJaNeiSpmFelt({
@@ -178,6 +185,15 @@ export const useOmBarnaDine = (): {
             }
         });
     }, [hvemBarnetrygdFraAnnetEøsland]);
+
+    useEffect(() => {
+        if (skalNullstilleSvalbardfelter) {
+            harNoenAvBarnaBoddPåSvalbard.validerOgSettFelt(null);
+            hvemHarBoddPåSvalbard.validerOgSettFelt([]);
+
+            oppdaterSøknad();
+        }
+    }, [søknad.søker.borPåSvalbard]);
 
     const oppdaterSøknad = () => {
         const oppdaterteBarn = genererOppdaterteBarn(

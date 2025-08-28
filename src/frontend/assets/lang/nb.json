@@ -589,6 +589,8 @@
   "ombarnet.trygdbeløp.info": "Oppgi beløpet i lokal valuta",
   "ombarnet.trygdbeløp.spm": "Beløp hver måned for {barn}",
   "ombarnet.undertittel": "Barn {x} av {antall}",
+  "ombarnet.opplystBoddPaaSvalbard": "Du har opplyst at {navn} bor eller har bodd sammen med deg på Svalbard.",
+  "ombarnet.naarBoddPaaSvalbard": "Når bodde {navn} på Svalbard?",
   "omdeg.adresse.feilmelding": "Du må oppgi din folkeregistrerte adresse for å gå videre",
   "omdeg.adresse.spm": "Hva er din folkeregistrerte adresse?",
   "omdeg.annensamboer.feilmelding": "Du må oppgi om du har hatt samboer tidligere i perioden du søker barnetrygd for for å gå videre",

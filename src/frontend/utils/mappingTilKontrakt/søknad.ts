@@ -275,6 +275,8 @@ const lokaleTekster = (): Record<string, Record<LocaleType, string>> => {
         'ombarnet.institusjon',
         'ombarnet.opplystatbarnutlandopphold.info',
         'ombarnet.barnetrygd-eøs',
+        'ombarnet.opplystBoddPaaSvalbard',
+        'ombarnet.naarBoddPaaSvalbard',
         'omdeg.annensamboer.spm',
         'omdeg.personopplysninger.adressesperre.alert',
         'omdeg.personopplysninger.ikke-registrert.alert',
