@@ -7,24 +7,12 @@ import { OmDegSpørsmålId } from '../components/SøknadsSteg/OmDeg/spørsmål';
 import { genererInitiellDokumentasjon } from '../utils/dokumentasjon';
 
 import { IBarnMedISøknad } from './barn';
-import { INøkkelPar } from './common';
 import { IDokumentasjon } from './dokumentasjon';
 import { Dokumentasjonsbehov } from './kontrakt/dokumentasjon';
 import { ESivilstand, ESøknadstype } from './kontrakt/generelle';
 import { IBarn, ISøker } from './person';
 import { ISøknadSpørsmål } from './spørsmål';
 import { Årsak } from './utvidet';
-
-export const søknadstyper: INøkkelPar = {
-    ORDINÆR: {
-        id: 330007,
-        navn: 'Ordinær barnetrygd',
-    },
-    UTVIDET: {
-        id: 330009,
-        navn: 'Utvidet barnetrygd',
-    },
-};
 
 export interface ISøknad {
     søknadstype: ESøknadstype;
