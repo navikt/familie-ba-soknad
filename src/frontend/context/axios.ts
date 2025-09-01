@@ -49,7 +49,7 @@ export const loggFeil = (error?: AxiosError, feilmelding?: string): void => {
     );
 };
 
-export const apiLoggFeil = (melding: string) => {
+const apiLoggFeil = (melding: string) => {
     if (!['development', 'test'].find(env => env === process.env.NODE_ENV)) {
         console.log(melding);
     }

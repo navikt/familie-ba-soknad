@@ -21,7 +21,7 @@ import { OmBarnaDineSpørsmålId } from './spørsmål';
 export const genererSvarForSpørsmålBarn = (barn: IBarnMedISøknad, felt: Felt<string[]>): ESvar =>
     felt.verdi.includes(barn.id) ? ESvar.JA : ESvar.NEI;
 
-export const genererSvarForOppfølgningspørsmålBarn = (
+const genererSvarForOppfølgningspørsmålBarn = (
     svarPåGrunnSpørsmål,
     søknadsfelt,
     nullstillingsVerdi
