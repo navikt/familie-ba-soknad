@@ -1,6 +1,6 @@
 import { modellVersjon } from './modellversjon';
 
-interface miljøProps {
+interface MiljøProps {
     sanityDataset: string;
     soknadApiProxyUrl: string;
     soknadApiUrl: string;
@@ -37,7 +37,7 @@ export const erAnsattUrl = () => {
 
 export const erLokalt = () => !erProd() && !erDev();
 
-const miljø = (): miljøProps => {
+const miljø = (): MiljøProps => {
     if (erDev()) {
         return {
             sanityDataset: 'ba-production',
