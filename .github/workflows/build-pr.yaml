@@ -5,9 +5,6 @@ on:
     branches-ignore:
       - main
 
-env:
-  BASE_PATH: /familie/barnetrygd/soknad/
-
 permissions:
   contents: read
 
@@ -50,7 +47,6 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           SENTRY_RELEASE: ${{ github.sha }}
-          BASE_PATH: ${{ env.BASE_PATH }}
         run: |
           yarn --prefer-offline --frozen-lockfile
           yarn build

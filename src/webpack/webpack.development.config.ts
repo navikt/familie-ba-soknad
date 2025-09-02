@@ -4,9 +4,9 @@ import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 import webpack from 'webpack';
 import { CustomizeRule, mergeWithRules } from 'webpack-merge';
 
-import baseConfig from './webpack.common.config';
+import { basePath } from '../shared-utils/Miljø';
 
-const basePath = process.env.BASE_PATH ?? '/';
+import baseConfig from './webpack.common.config';
 const devConfig: webpack.Configuration = mergeWithRules({
     module: {
         rules: {

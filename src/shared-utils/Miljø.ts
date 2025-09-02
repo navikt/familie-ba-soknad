@@ -12,7 +12,7 @@ interface MiljøProps {
     port: number;
 }
 
-export const basePath = process.env.BASE_PATH ?? '/';
+export const basePath = '/barnetrygd/soknad/';
 
 export const erProd = () => {
     if (typeof window === 'undefined') {

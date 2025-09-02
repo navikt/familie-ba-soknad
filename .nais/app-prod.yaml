@@ -62,8 +62,6 @@ spec:
   tokenx:
     enabled: true
   env:
-    - name: BASE_PATH
-      value: /barnetrygd/soknad/
     - name: ENV
       value: prod
   secureLogs:
