@@ -3,7 +3,7 @@ import { AxiosError } from 'axios';
 
 import { RessursStatus } from '@navikt/familie-typer';
 
-import Miljø from '../../shared-utils/Miljø';
+import Miljø from '../../shared-utils/miljø';
 import { erModellMismatchResponsRessurs } from '../../shared-utils/modellversjon';
 import { useAppContext } from '../context/AppContext';
 import { useFeatureToggles } from '../context/FeatureTogglesContext';

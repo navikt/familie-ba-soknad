@@ -9,7 +9,7 @@ import {
     type FileRejectionReason,
 } from '@navikt/ds-react';
 
-import Miljø from '../../../../../shared-utils/Miljø';
+import Miljø from '../../../../../shared-utils/miljø';
 import { EFiltyper, IDokumentasjon, IVedlegg } from '../../../../typer/dokumentasjon';
 import { Dokumentasjonsbehov } from '../../../../typer/kontrakt/dokumentasjon';
 import { PlainTekst } from '../../../../typer/sanity/sanity';

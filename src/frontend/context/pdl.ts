@@ -1,6 +1,6 @@
 import { type Ressurs } from '@navikt/familie-typer';
 
-import Miljø from '../../shared-utils/Miljø';
+import Miljø from '../../shared-utils/miljø';
 import { ISøkerRespons } from '../typer/person';
 
 export const hentSluttbrukerFraPdl = (axiosRequest): Promise<Ressurs<ISøkerRespons>> => {

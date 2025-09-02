@@ -9,7 +9,7 @@ import {
     byggFeiletRessurs,
 } from '@navikt/familie-typer';
 
-import Miljø from '../../../shared-utils/Miljø';
+import Miljø from '../../../shared-utils/miljø';
 import { useAppContext } from '../../context/AppContext';
 
 const Helse: React.FC = () => {

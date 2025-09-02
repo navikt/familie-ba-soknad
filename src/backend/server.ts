@@ -7,7 +7,7 @@ import express from 'express';
 import { logInfo } from '@navikt/familie-logging';
 
 import { cspString } from '../csp';
-import Miljø, { BASE_PATH } from '../shared-utils/Miljø';
+import Miljø, { BASE_PATH } from '../shared-utils/miljø';
 
 import { expressToggleInterceptor } from './middlewares/feature-toggles';
 import { konfigurerIndex, konfigurerIndexFallback } from './routes';
