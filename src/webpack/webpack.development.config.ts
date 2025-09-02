@@ -4,7 +4,7 @@ import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 import webpack from 'webpack';
 import { CustomizeRule, mergeWithRules } from 'webpack-merge';
 
-import { basePath } from '../shared-utils/Miljø';
+import { BASE_PATH } from '../shared-utils/Miljø';
 
 import baseConfig from './webpack.common.config';
 const devConfig: webpack.Configuration = mergeWithRules({
@@ -23,7 +23,7 @@ const devConfig: webpack.Configuration = mergeWithRules({
     output: {
         filename: '[name].js',
         path: path.resolve(process.cwd(), 'dist/'),
-        publicPath: basePath,
+        publicPath: BASE_PATH,
         pathinfo: false,
     },
     devtool: 'eval-source-map',
@@ -33,24 +33,24 @@ const devConfig: webpack.Configuration = mergeWithRules({
         client: {
             overlay: true,
         },
-        open: [basePath],
+        open: [BASE_PATH],
         historyApiFallback: {
-            index: basePath,
+            index: BASE_PATH,
         },
         proxy: [
             {
                 context: [
-                    `${basePath}modellversjon`,
-                    `${basePath}api`,
-                    `${basePath}dokument`,
-                    `${basePath}toggles`,
-                    `${basePath}konverter`,
+                    `${BASE_PATH}modellversjon`,
+                    `${BASE_PATH}api`,
+                    `${BASE_PATH}dokument`,
+                    `${BASE_PATH}toggles`,
+                    `${BASE_PATH}konverter`,
                 ],
                 target: 'http://localhost:55554',
             },
         ],
         static: {
-            publicPath: basePath,
+            publicPath: BASE_PATH,
         },
     },
     plugins: [new ReactRefreshWebpackPlugin()],

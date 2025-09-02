@@ -12,7 +12,7 @@ import {
     RessursStatus,
 } from '@navikt/familie-typer';
 
-import Miljø, { basePath } from '../../shared-utils/Miljø';
+import Miljø, { BASE_PATH } from '../../shared-utils/Miljø';
 import { DinLivssituasjonSpørsmålId } from '../components/SøknadsSteg/DinLivssituasjon/spørsmål';
 import { useDebounce } from '../hooks/useDebounce/useDebounce';
 import { LocaleType } from '../typer/common';
@@ -107,7 +107,7 @@ export function AppProvider(props: PropsWithChildren) {
             return;
         } else {
             axiosRequest<number, void>({
-                url: `${basePath}modellversjon`,
+                url: `${BASE_PATH}modellversjon`,
             }).then(data =>
                 settSisteModellVersjon(prevState => hentDataFraRessurs(data) ?? prevState)
             );

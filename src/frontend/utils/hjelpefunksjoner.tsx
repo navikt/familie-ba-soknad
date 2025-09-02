@@ -1,6 +1,6 @@
 import { type ISkjema, Valideringsstatus } from '@navikt/familie-skjema';
 
-import { basePath } from '../../shared-utils/Miljø';
+import { BASE_PATH } from '../../shared-utils/Miljø';
 import { SkjemaFeltTyper } from '../typer/skjema';
 
 export const randomIntFraIntervall = (min, max) => {
@@ -25,4 +25,4 @@ export const visFeiloppsummering = (skjema: ISkjema<SkjemaFeltTyper, string>): b
  * å støtte utvidet søknad er basepath for react-routeren og login-redirect, derfor gjør vi dette her.
  */
 export const routerBasePath = () =>
-    window.location.pathname.includes('utvidet') ? basePath + 'utvidet' : basePath + 'ordinaer';
+    window.location.pathname.includes('utvidet') ? BASE_PATH + 'utvidet' : BASE_PATH + 'ordinaer';

@@ -12,7 +12,7 @@ interface MiljøProps {
     port: number;
 }
 
-export const basePath = '/barnetrygd/soknad/';
+export const BASE_PATH = '/barnetrygd/soknad/';
 
 export const erProd = () => {
     if (typeof window === 'undefined') {
@@ -41,37 +41,37 @@ const Miljø = (): MiljøProps => {
     if (erDev()) {
         return {
             sanityDataset: 'ba-production',
-            soknadApiProxyUrl: `https://familie-ba-soknad.${erAnsattUrl() ? 'ansatt' : 'intern'}.dev.nav.no${basePath}api`,
+            soknadApiProxyUrl: `https://familie-ba-soknad.${erAnsattUrl() ? 'ansatt' : 'intern'}.dev.nav.no${BASE_PATH}api`,
             soknadApiUrl: `http://familie-baks-soknad-api/api`,
-            dokumentProxyUrl: `https://familie-ba-soknad.${erAnsattUrl() ? 'ansatt' : 'intern'}.dev.nav.no${basePath}dokument`,
+            dokumentProxyUrl: `https://familie-ba-soknad.${erAnsattUrl() ? 'ansatt' : 'intern'}.dev.nav.no${BASE_PATH}dokument`,
             dokumentUrl: 'http://familie-dokument/familie/dokument/api', //Vil uansett gå til bucket "familievedlegg" enn så lenge
             modellVersjon: modellVersjon,
-            wonderwallUrl: `https://familie-ba-soknad.${erAnsattUrl() ? 'ansatt' : 'intern'}.dev.nav.no${basePath}oauth2/login?redirect=`,
-            oauthCallbackUri: `https://familie-ba-soknad.${erAnsattUrl() ? 'ansatt' : 'intern'}.dev.nav.no${basePath}oauth2/callback`,
+            wonderwallUrl: `https://familie-ba-soknad.${erAnsattUrl() ? 'ansatt' : 'intern'}.dev.nav.no${BASE_PATH}oauth2/login?redirect=`,
+            oauthCallbackUri: `https://familie-ba-soknad.${erAnsattUrl() ? 'ansatt' : 'intern'}.dev.nav.no${BASE_PATH}oauth2/callback`,
             port: 9000,
         };
     } else if (erProd()) {
         return {
             sanityDataset: 'ba-production',
-            soknadApiProxyUrl: `https://www.nav.no${basePath}api`,
+            soknadApiProxyUrl: `https://www.nav.no${BASE_PATH}api`,
             soknadApiUrl: `http://familie-baks-soknad-api/api`,
-            dokumentProxyUrl: `https://www.nav.no${basePath}dokument`,
+            dokumentProxyUrl: `https://www.nav.no${BASE_PATH}dokument`,
             dokumentUrl: 'http://familie-dokument/familie/dokument/api', //Vil uansett gå til bucket "familievedlegg" enn så lenge,
             modellVersjon: modellVersjon,
-            wonderwallUrl: `https://www.nav.no${basePath}oauth2/login?redirect=`,
-            oauthCallbackUri: `https://www.nav.no${basePath}oauth2/callback`,
+            wonderwallUrl: `https://www.nav.no${BASE_PATH}oauth2/login?redirect=`,
+            oauthCallbackUri: `https://www.nav.no${BASE_PATH}oauth2/callback`,
             port: 9000,
         };
     } else {
         return {
             sanityDataset: 'ba-production',
-            soknadApiProxyUrl: `http://localhost:3000${basePath}api`,
+            soknadApiProxyUrl: `http://localhost:3000${BASE_PATH}api`,
             soknadApiUrl: 'http://localhost:8080/api',
-            dokumentProxyUrl: `http://localhost:3000${basePath}dokument`,
+            dokumentProxyUrl: `http://localhost:3000${BASE_PATH}dokument`,
             dokumentUrl: `http://localhost:8082/familie/dokument/api`,
             modellVersjon: modellVersjon,
             wonderwallUrl: '',
-            oauthCallbackUri: `http://localhost:3000${basePath}`,
+            oauthCallbackUri: `http://localhost:3000${BASE_PATH}`,
             port: 55554,
         };
     }
