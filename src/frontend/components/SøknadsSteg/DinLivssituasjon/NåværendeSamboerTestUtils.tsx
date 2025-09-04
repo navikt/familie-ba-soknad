@@ -1,8 +1,5 @@
-import { prettyDOM, queryByAttribute } from '@testing-library/react';
+import { queryByAttribute } from '@testing-library/react';
 
-export const consoleLog = (element?: HTMLElement) => {
-    console.log(prettyDOM(element, 10000000));
-};
 const getById = queryByAttribute.bind(null, 'id');
 const getNavn = (container: Element) =>
     getById(container as HTMLElement, 'utvidet-nåværende-samboer-navn') as HTMLInputElement;

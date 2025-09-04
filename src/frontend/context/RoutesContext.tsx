@@ -2,10 +2,10 @@ import React, { createContext, PropsWithChildren, useContext } from 'react';
 
 import { RouteEnum } from '../typer/routes';
 
-export const omBarnetBasePath = 'om-barnet';
-export const eøsBarnBasePath = 'eøs-barn';
+const omBarnetBasePath = 'om-barnet';
+const eøsBarnBasePath = 'eøs-barn';
 
-export const getRoutes = () => {
+const getRoutes = () => {
     return [
         { path: '/', label: 'Forside', route: RouteEnum.Forside },
         { path: '/om-deg', label: 'Om deg', route: RouteEnum.OmDeg },
@@ -55,7 +55,7 @@ interface Route {
     route: RouteEnum;
 }
 
-export interface RoutesContext {
+interface RoutesContext {
     routes: Array<Route>;
     hentRouteObjektForRouteEnum: (RouteEnum) => Route;
 }

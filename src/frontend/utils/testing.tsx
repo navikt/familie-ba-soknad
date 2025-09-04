@@ -153,7 +153,7 @@ export const silenceConsoleErrors = () => {
     });
 };
 
-export const wrapMedProvidere = (
+const wrapMedProvidere = (
     // eslint-disable-next-line
     providerComponents: React.FC<any>[],
     mocketNettleserHistorikk: string[],
