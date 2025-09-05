@@ -3,7 +3,6 @@ import React from 'react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useAppContext } from '../../../../context/AppContext';
-import { useFeatureToggles } from '../../../../context/FeatureTogglesContext';
 import { useRoutesContext } from '../../../../context/RoutesContext';
 import { barnDataKeySpørsmål } from '../../../../typer/barn';
 import { RouteEnum } from '../../../../typer/routes';
@@ -23,7 +22,6 @@ const OmBarnaOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
     const { hentRouteObjektForRouteEnum } = useRoutesContext();
     const omBarnaTekster = tekster().OM_BARNA;
     const omBarnaDineHook = useOmBarnaDine();
-    const { toggles } = useFeatureToggles();
 
     const genererListeMedBarn = (søknadDatafelt: barnDataKeySpørsmål) =>
         søknad.barnInkludertISøknaden
@@ -130,7 +128,7 @@ const OmBarnaOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                     )}
                 </>
             )}
-            {toggles.SPM_OM_SVALBARD && søknad.harNoenAvBarnaBoddPåSvalbard.svar && (
+            {søknad.harNoenAvBarnaBoddPåSvalbard.svar && (
                 <>
                     <OppsummeringFelt
                         tittel={<TekstBlock block={omBarnaTekster.boddPaaSvalbard.sporsmal} />}

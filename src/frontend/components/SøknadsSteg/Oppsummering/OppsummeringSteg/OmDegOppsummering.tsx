@@ -6,7 +6,6 @@ import { useIntl } from 'react-intl';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useAppContext } from '../../../../context/AppContext';
-import { useFeatureToggles } from '../../../../context/FeatureTogglesContext';
 import { useRoutesContext } from '../../../../context/RoutesContext';
 import { useSpråkContext } from '../../../../context/SpråkContext';
 import { PersonType } from '../../../../typer/personType';
@@ -35,7 +34,6 @@ const OmDegOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
     const { hentRouteObjektForRouteEnum } = useRoutesContext();
     const omDegHook = useOmdeg();
     const forsidetekster = tekster()[ESanitySteg.FORSIDE];
-    const { toggles } = useFeatureToggles();
 
     return (
         <Oppsummeringsbolk
@@ -79,24 +77,20 @@ const OmDegOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                     søknadsvar={søknad.søker.borPåRegistrertAdresse.svar}
                 />
             )}
-            {toggles.SPM_OM_SVALBARD && (
-                <>
-                    {søknad.søker.borPåSvalbard.svar && (
-                        <OppsummeringFelt
-                            tittel={<TekstBlock block={omDegTekster.borPaaSvalbard.sporsmal} />}
-                            søknadsvar={søknad.søker.borPåSvalbard.svar}
-                        />
-                    )}
-                    {søknad.søker.svalbardOppholdPerioder.map((periode, index) => (
-                        <SvalbardOppholdPeriodeOppsummering
-                            key={index}
-                            svalbardOppholdPeriode={periode}
-                            nummer={index + 1}
-                            personType={PersonType.Søker}
-                        />
-                    ))}
-                </>
+            {søknad.søker.borPåSvalbard.svar && (
+                <OppsummeringFelt
+                    tittel={<TekstBlock block={omDegTekster.borPaaSvalbard.sporsmal} />}
+                    søknadsvar={søknad.søker.borPåSvalbard.svar}
+                />
             )}
+            {søknad.søker.svalbardOppholdPerioder.map((periode, index) => (
+                <SvalbardOppholdPeriodeOppsummering
+                    key={index}
+                    svalbardOppholdPeriode={periode}
+                    nummer={index + 1}
+                    personType={PersonType.Søker}
+                />
+            ))}
             <OppsummeringFelt
                 tittel={<TekstBlock block={omDegTekster.vaertINorgeITolvMaaneder.sporsmal} />}
                 søknadsvar={søknad.søker.værtINorgeITolvMåneder.svar}

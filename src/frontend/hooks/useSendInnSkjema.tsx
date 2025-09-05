@@ -6,7 +6,6 @@ import { RessursStatus } from '@navikt/familie-typer';
 import miljø from '../../shared-utils/miljø';
 import { erModellMismatchResponsRessurs } from '../../shared-utils/modellversjon';
 import { useAppContext } from '../context/AppContext';
-import { useFeatureToggles } from '../context/FeatureTogglesContext';
 import { useSpråkContext } from '../context/SpråkContext';
 import { ISøknadKontrakt } from '../typer/kontrakt/kontrakt';
 import { dataISøknadKontraktFormat } from '../utils/mappingTilKontrakt/søknad';
@@ -26,11 +25,10 @@ export const useSendInnSkjema = (): {
     } = useAppContext();
     const { soknadApiProxyUrl } = miljø();
     const { valgtLocale } = useSpråkContext();
-    const { toggles } = useFeatureToggles();
 
     const sendInnSkjema = async (): Promise<[boolean, ISøknadKontrakt]> => {
         settInnsendingStatus({ status: RessursStatus.HENTER });
-        const kontraktVersjon = toggles.SPM_OM_SVALBARD ? 10 : 9;
+        const kontraktVersjon = 10;
 
         try {
             const formatert: ISøknadKontrakt = dataISøknadKontraktFormat(
