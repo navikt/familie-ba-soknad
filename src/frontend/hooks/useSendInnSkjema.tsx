@@ -3,7 +3,7 @@ import { AxiosError } from 'axios';
 
 import { RessursStatus } from '@navikt/familie-typer';
 
-import Miljø from '../../shared-utils/Miljø';
+import miljø from '../../shared-utils/miljø';
 import { erModellMismatchResponsRessurs } from '../../shared-utils/modellversjon';
 import { useAppContext } from '../context/AppContext';
 import { useFeatureToggles } from '../context/FeatureTogglesContext';
@@ -24,7 +24,7 @@ export const useSendInnSkjema = (): {
         tilRestLocaleRecord,
         plainTekst,
     } = useAppContext();
-    const { soknadApiProxyUrl } = Miljø();
+    const { soknadApiProxyUrl } = miljø();
     const { valgtLocale } = useSpråkContext();
     const { toggles } = useFeatureToggles();
 

@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { Accordion, GuidePanel, Heading } from '@navikt/ds-react';
 import { setAvailableLanguages } from '@navikt/nav-dekoratoren-moduler';
 
-import Miljø from '../../../../shared-utils/Miljø';
+import miljø from '../../../../shared-utils/miljø';
 import { useAppContext } from '../../../context/AppContext';
 import { RouteEnum } from '../../../typer/routes';
 import { ESanitySteg, Typografi } from '../../../typer/sanity/sanity';
@@ -30,7 +30,7 @@ const Forside: React.FC = () => {
     };
 
     const kanFortsettePåSøknad =
-        mellomlagretVerdi && mellomlagretVerdi.modellVersjon === Miljø().modellVersjon;
+        mellomlagretVerdi && mellomlagretVerdi.modellVersjon === miljø().modellVersjon;
 
     const forsidetekster = tekster()[ESanitySteg.FORSIDE];
 

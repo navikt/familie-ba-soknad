@@ -9,7 +9,7 @@ import {
     byggFeiletRessurs,
 } from '@navikt/familie-typer';
 
-import Miljø from '../../../shared-utils/Miljø';
+import miljø from '../../../shared-utils/miljø';
 import { useAppContext } from '../../context/AppContext';
 
 const Helse: React.FC = () => {
@@ -18,7 +18,7 @@ const Helse: React.FC = () => {
     const [helseApi, settHelseApi] = useState(byggTomRessurs<string>());
     const [helseMottak, settHelseMottak] = useState(byggTomRessurs<string>());
     const [helsePdl, settHelsePdl] = useState(byggTomRessurs<string>());
-    const { soknadApiProxyUrl } = Miljø();
+    const { soknadApiProxyUrl } = miljø();
 
     useEffect(() => {
         settHelseApi(byggHenterRessurs());
