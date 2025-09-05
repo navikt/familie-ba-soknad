@@ -25,7 +25,7 @@ const StyledBodyLong = styled(BodyLong)`
     }
 `;
 
-export function TypografiWrapper({ typografi, style, children }: Props) {
+function TypografiWrapper({ typografi, style, children }: Props) {
     switch (typografi) {
         case Typografi.StegHeadingH1:
             return (

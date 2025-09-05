@@ -125,7 +125,7 @@ export const genererInitiellAndreForelder = (
     };
 };
 
-export const hentAlder = (dato: string): string => {
+const hentAlder = (dato: string): string => {
     const idag = new Date();
     const fødselsdato = new Date(dato);
     let alder = idag.getFullYear() - fødselsdato.getFullYear();
@@ -275,7 +275,7 @@ export const mapBarnResponsTilBarn = (barn: IBarnRespons[], intl): IBarn[] => {
     }));
 };
 
-export const barnetsNavnValue = (barn: IBarnRespons, intl: IntlShape): string => {
+const barnetsNavnValue = (barn: IBarnRespons, intl: IntlShape): string => {
     return barn.navn
         ? barn.navn
         : intl.formatMessage(

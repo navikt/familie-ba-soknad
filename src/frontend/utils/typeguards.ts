@@ -14,12 +14,11 @@ import {
     ISøknadKontraktSøker,
     ISøknadKontrakt,
 } from '../typer/kontrakt/kontrakt';
-import { ISamboer, ITidligereSamboer } from '../typer/person';
 
-export const erGyldigIKontraktNåværendeSamboer = (input): input is IKontraktNåværendeSamboer =>
+const erGyldigIKontraktNåværendeSamboer = (input): input is IKontraktNåværendeSamboer =>
     !!(input && input.navn && input.ident && input.fødselsdato && input.samboerFraDato);
 
-export const erGyldigNåværendeSamboer = (
+const erGyldigNåværendeSamboer = (
     harSamboerNå: ISøknadsfelt<string>,
     nåværendeSamboer: ISøknadsfelt<IKontraktNåværendeSamboer> | null
 ): boolean => {
@@ -35,16 +34,10 @@ export const erGyldigNåværendeSamboer = (
     );
 };
 
-export const erTidligereSamboer = (
-    samboer: ISamboer | ITidligereSamboer
-): samboer is ITidligereSamboer => {
-    return 'samboerTilDato' in samboer;
-};
-
-export const erGyldigIKontraktTidligereSamboer = (input): input is IKontraktTidligereSamboer =>
+const erGyldigIKontraktTidligereSamboer = (input): input is IKontraktTidligereSamboer =>
     !!(input && input.samboerTilDato && erGyldigIKontraktNåværendeSamboer(input));
 
-export const erGyldigTidligereSamboere = (input: ISøknadKontraktSøker): boolean =>
+const erGyldigTidligereSamboere = (input: ISøknadKontraktSøker): boolean =>
     input &&
     input.tidligereSamboere &&
     Array.isArray(input.tidligereSamboere) &&
@@ -54,7 +47,7 @@ export const erGyldigTidligereSamboere = (input: ISøknadKontraktSøker): boolea
         )
         .reduce((prev, curr) => !!(prev && curr), true);
 
-export const erGyldigISøknadKontraktSøker = (input): input is ISøknadKontraktSøker =>
+const erGyldigISøknadKontraktSøker = (input): input is ISøknadKontraktSøker =>
     'harEøsSteg' in input &&
     'ident' in input &&
     'navn' in input &&
@@ -76,9 +69,7 @@ export const erGyldigISøknadKontraktSøker = (input): input is ISøknadKontrakt
     erGyldigTidligereSamboere(input) &&
     erGyldigNåværendeSamboer(input?.spørsmål?.harSamboerNå, input.nåværendeSamboer);
 
-export const erGyldigISøknadKontraktOmsorgsperson = (
-    input
-): input is IOmsorgspersonIKontraktFormat =>
+const erGyldigISøknadKontraktOmsorgsperson = (input): input is IOmsorgspersonIKontraktFormat =>
     input === null ||
     (input &&
         'navn' in input &&
@@ -101,9 +92,7 @@ export const erGyldigISøknadKontraktOmsorgsperson = (
         'barnetrygdFraEøs' in input &&
         'eøsBarnetrygdsperioder' in input);
 
-export const erGyldigISøknadKontraktAndreForelder = (
-    input
-): input is IAndreForelderIKontraktFormat =>
+const erGyldigISøknadKontraktAndreForelder = (input): input is IAndreForelderIKontraktFormat =>
     input === null ||
     (input &&
         'kanIkkeGiOpplysninger' in input &&
@@ -129,12 +118,12 @@ export const erGyldigISøknadKontraktAndreForelder = (
         'utvidet' in input &&
         erGyldigISøknadKontraktAndreForelderUtvidet(input.utvidet));
 
-export const erGyldigISøknadKontraktAndreForelderUtvidet = (
+const erGyldigISøknadKontraktAndreForelderUtvidet = (
     input
 ): input is IAndreForelderUtvidetIKontraktFormat =>
     input && 'søkerHarBoddMedAndreForelder' in input && 'søkerFlyttetFraAndreForelderDato' in input;
 
-export const erGyldigISøknadsKontraktBarn = (input): input is ISøknadIKontraktBarn =>
+const erGyldigISøknadsKontraktBarn = (input): input is ISøknadIKontraktBarn =>
     input &&
     'harEøsSteg' in input &&
     'ident' in input &&
@@ -150,17 +139,15 @@ export const erGyldigISøknadsKontraktBarn = (input): input is ISøknadIKontrakt
     erGyldigISøknadKontraktOmsorgsperson(input.omsorgsperson) &&
     erGyldigISøknadKontraktAndreForelder(input.andreForelder);
 
-export const erGyldigISøknadKontraktBarnListe = (input): input is ISøknadIKontraktBarn[] =>
+const erGyldigISøknadKontraktBarnListe = (input): input is ISøknadIKontraktBarn[] =>
     input &&
     Array.isArray(input) &&
     input.map(erGyldigISøknadsKontraktBarn).reduce((prev, curr) => !!(prev && curr), true);
 
-export const erGyldigISøknadKontraktDokumentasjon = (
-    input
-): input is ISøknadKontraktDokumentasjon =>
+const erGyldigISøknadKontraktDokumentasjon = (input): input is ISøknadKontraktDokumentasjon =>
     input.dokumentasjonsbehov && input.harSendtInn !== undefined && input.opplastedeVedlegg;
 
-export const erGyldigDokumentasjon = (input): input is ISøknadKontraktDokumentasjon[] =>
+const erGyldigDokumentasjon = (input): input is ISøknadKontraktDokumentasjon[] =>
     input &&
     Array.isArray(input) &&
     input.map(erGyldigISøknadKontraktDokumentasjon).reduce((prev, curr) => !!(prev && curr), true);

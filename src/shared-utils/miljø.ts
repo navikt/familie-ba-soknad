@@ -28,7 +28,7 @@ export const erDev = () => {
     return window.location.hostname.indexOf('dev') > -1;
 };
 
-export const erAnsattUrl = () => {
+const erAnsattUrl = () => {
     if (typeof window === 'undefined') {
         return false;
     }
