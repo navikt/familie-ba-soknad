@@ -49,7 +49,7 @@ export const dataISøknadKontraktFormat = (
         antallEøsSteg: antallEøsSteg(søknad.søker, barnInkludertISøknaden),
         søker: søkerIKontraktFormat(søknad, tekster, tilRestLocaleRecord),
         barn: barnInkludertISøknaden.map(barn =>
-            barnISøknadsFormat(barn, søknad.søker, valgtSpråk, tekster, tilRestLocaleRecord)
+            barnISøknadsFormat(barn, søknad.søker, tekster, tilRestLocaleRecord)
         ),
         spørsmål: {
             erNoenAvBarnaFosterbarn: søknadsfeltForSanity(

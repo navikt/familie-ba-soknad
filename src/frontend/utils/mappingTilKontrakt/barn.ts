@@ -7,7 +7,6 @@ import {
     omBarnetSpørsmålSpråkId,
 } from '../../components/SøknadsSteg/OmBarnet/spørsmål';
 import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../typer/barn';
-import { LocaleType } from '../../typer/common';
 import { ERegistrertBostedType, TilRestLocaleRecord } from '../../typer/kontrakt/generelle';
 import { ISøknadIKontraktBarn } from '../../typer/kontrakt/kontrakt';
 import { ISøker } from '../../typer/person';
@@ -33,7 +32,6 @@ import { utenlandsperiodeTilISøknadsfelt } from './utenlandsperiode';
 export const barnISøknadsFormat = (
     barn: IBarnMedISøknad,
     søker: ISøker,
-    valgtSpråk: LocaleType,
     tekster: ITekstinnhold,
     tilRestLocaleRecord: TilRestLocaleRecord
 ): ISøknadIKontraktBarn => {
@@ -132,21 +130,14 @@ export const barnISøknadsFormat = (
         ),
         idNummer: idNummer.map(idnummerObj =>
             idNummerTilISøknadsfelt(
+                tilRestLocaleRecord,
                 idnummerObj,
-                eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.idNummer],
-                eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.idNummerUkjent],
-                valgtSpråk,
+                tekster.EØS_FOR_BARN.idNummerBarn,
                 navn
             )
         ),
         andreForelder: andreForelder
-            ? andreForelderTilISøknadsfelt(
-                  andreForelder,
-                  barn,
-                  valgtSpråk,
-                  tilRestLocaleRecord,
-                  tekster
-              )
+            ? andreForelderTilISøknadsfelt(andreForelder, barn, tilRestLocaleRecord, tekster)
             : null,
 
         omsorgsperson: omsorgsperson

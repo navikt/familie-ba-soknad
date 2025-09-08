@@ -1,5 +1,3 @@
-import { Alpha3Code } from 'i18n-iso-countries';
-
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { ISODateString, LocaleType } from '../common';
