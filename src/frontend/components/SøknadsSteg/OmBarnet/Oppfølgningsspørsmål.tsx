@@ -5,7 +5,6 @@ import { ESvar } from '@navikt/familie-form-elements';
 import type { Felt, ISkjema } from '@navikt/familie-skjema';
 
 import { useAppContext } from '../../../context/AppContext';
-import { useFeatureToggles } from '../../../context/FeatureTogglesContext';
 import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../typer/barn';
 import {
     IEøsBarnetrygdsperiode,
@@ -110,8 +109,6 @@ const Oppfølgningsspørsmål: React.FC<{
         tekster().FELLES.modaler.utenlandsopphold.barn;
     const { leggTilKnapp, flerePerioder, leggTilPeriodeForklaring } = teksterForModal;
 
-    const { toggles } = useFeatureToggles();
-
     const frittståendeOrdTekster = tekster().FELLES.frittståendeOrd;
 
     return (
@@ -180,35 +177,34 @@ const Oppfølgningsspørsmål: React.FC<{
                     </div>
                 </SkjemaFieldset>
             )}
-            {toggles.SPM_OM_SVALBARD &&
-                barn[barnDataKeySpørsmål.harBoddPåSvalbard].svar === ESvar.JA && (
-                    <SkjemaFieldset
-                        legend={
-                            <TekstBlock
-                                block={opplystBoddPaaSvalbard}
-                                flettefelter={{ barnetsNavn: barn.navn }}
-                            />
-                        }
-                    >
-                        <div>
-                            <BodyShort spacing>
-                                {plainTekst(naarBoddPaaSvalbard.sporsmal, {
-                                    barnetsNavn: barn.navn,
-                                })}
-                            </BodyShort>
-                            <SvalbardOppholdPeriode
-                                skjema={skjema}
-                                leggTilSvalbardOppholdPeriode={leggTilSvalbardOppholdPeriode}
-                                fjernSvalbardOppholdPeriode={fjernSvalbardOppholdPeriode}
-                                registrerteSvalbardOppholdPerioder={
-                                    skjema.felter.registrerteSvalbardOppholdPerioder
-                                }
-                                personType={PersonType.Barn}
-                                barn={barn}
-                            />
-                        </div>
-                    </SkjemaFieldset>
-                )}
+            {barn[barnDataKeySpørsmål.harBoddPåSvalbard].svar === ESvar.JA && (
+                <SkjemaFieldset
+                    legend={
+                        <TekstBlock
+                            block={opplystBoddPaaSvalbard}
+                            flettefelter={{ barnetsNavn: barn.navn }}
+                        />
+                    }
+                >
+                    <div>
+                        <BodyShort spacing>
+                            {plainTekst(naarBoddPaaSvalbard.sporsmal, {
+                                barnetsNavn: barn.navn,
+                            })}
+                        </BodyShort>
+                        <SvalbardOppholdPeriode
+                            skjema={skjema}
+                            leggTilSvalbardOppholdPeriode={leggTilSvalbardOppholdPeriode}
+                            fjernSvalbardOppholdPeriode={fjernSvalbardOppholdPeriode}
+                            registrerteSvalbardOppholdPerioder={
+                                skjema.felter.registrerteSvalbardOppholdPerioder
+                            }
+                            personType={PersonType.Barn}
+                            barn={barn}
+                        />
+                    </div>
+                </SkjemaFieldset>
+            )}
             {barn[barnDataKeySpørsmål.boddMindreEnn12MndINorge].svar === ESvar.JA && (
                 <SkjemaFieldset
                     legend={
