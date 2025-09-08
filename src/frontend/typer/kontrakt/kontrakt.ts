@@ -130,7 +130,7 @@ export interface IArbeidsperiodeIKontraktFormat {
 }
 
 export interface IIdNummerIKontraktFormat {
-    land: ISøknadsfelt<Alpha3Code>;
+    land: ISøknadsfelt<string>;
     idNummer: ISøknadsfelt<string>;
 }
 

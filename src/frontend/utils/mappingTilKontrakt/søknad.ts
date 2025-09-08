@@ -39,6 +39,7 @@ import { idNummerTilISøknadsfelt } from './idNummer';
 import { tilIPensjonsperiodeIKontraktFormat } from './pensjonsperioder';
 import { samboerISøknadKontraktFormat } from './samboer';
 import { svalbardOppholdPeriodeTilISøknadsfelt } from './svalbardOppholdPeriode';
+import { søkerIKontraktFormat } from './søker';
 import { tidligereSamboerISøknadKontraktFormat } from './tidligereSamboer';
 import { utenlandsperiodeTilISøknadsfelt } from './utenlandsperiode';
 
@@ -97,117 +98,7 @@ export const dataISøknadKontraktFormat = (
         søknadstype: søknad.søknadstype,
         kontraktVersjon: kontraktVersjon,
         antallEøsSteg: antallEøsSteg(søker, barnInkludertISøknaden),
-        søker: {
-            harEøsSteg:
-                triggetEøs || !!barnInkludertISøknaden.filter(barn => barn.triggetEøs).length,
-            navn: søknadsfelt('pdf.søker.navn.label', sammeVerdiAlleSpråk(navn)),
-            ident: søknadsfelt('pdf.søker.ident.label', sammeVerdiAlleSpråk(ident)),
-            sivilstand: søknadsfelt(
-                'pdf.søker.sivilstand.label',
-                sammeVerdiAlleSpråk(sivilstand.type)
-            ),
-            statsborgerskap: søknadsfelt(
-                'pdf.søker.statsborgerskap.label',
-                verdiCallbackAlleSpråk(locale =>
-                    statsborgerskap.map(objekt => landkodeTilSpråk(objekt.landkode, locale))
-                )
-            ),
-            adresse: søknadsfelt('pdf.søker.adresse.label', sammeVerdiAlleSpråk(adresse)),
-            adressebeskyttelse: søker.adressebeskyttelse,
-            svalbardOppholdPerioder: svalbardOppholdPerioder
-                ? svalbardOppholdPerioder.map((periode, index) =>
-                      svalbardOppholdPeriodeTilISøknadsfelt({
-                          svalbardOppholdPeriode: periode,
-                          periodeNummer: index + 1,
-                          tekster: fellesTekster.modaler.svalbardOpphold[PersonType.Søker],
-                          tilRestLocaleRecord,
-                      })
-                  )
-                : [],
-            utenlandsperioder: utenlandsperioder.map((periode, index) =>
-                utenlandsperiodeTilISøknadsfelt({
-                    utenlandperiode: periode,
-                    periodeNummer: index + 1,
-                    tekster: fellesTekster.modaler.utenlandsopphold[PersonType.Søker],
-                    tilRestLocaleRecord,
-                })
-            ),
-            idNummer: idNummer.map(idnummerObj =>
-                idNummerTilISøknadsfelt(
-                    idnummerObj,
-                    eøsSøkerSpørsmålSpråkId[EøsSøkerSpørsmålId.idNummer],
-                    eøsSøkerSpørsmålSpråkId[EøsSøkerSpørsmålId.idNummerUkjent],
-                    valgtSpråk
-                )
-            ),
-            spørsmål: {
-                ...spørmålISøknadsFormat(typetSøkerSpørsmål, undefined, tekster),
-                ...spørmålISøknadsFormat(typetUtvidaSpørsmål, undefined, tekster),
-            },
-            tidligereSamboere: tidligereSamboere.map(samboer =>
-                tidligereSamboerISøknadKontraktFormat({
-                    tekster: fellesTekster.modaler.tidligereSamboere.søker,
-                    tilRestLocaleRecord,
-                    samboer,
-                })
-            ),
-            nåværendeSamboer: nåværendeSamboer
-                ? samboerISøknadKontraktFormat({
-                      tekster: fellesTekster.modaler.tidligereSamboere.søker,
-                      tilRestLocaleRecord,
-                      samboer: nåværendeSamboer,
-                  })
-                : null,
-            arbeidsperioderUtland: arbeidsperioderUtland.map((periode, index) =>
-                tilIArbeidsperiodeIKontraktFormat({
-                    periode,
-                    periodeNummer: index + 1,
-                    gjelderUtlandet: true,
-                    tilRestLocaleRecord,
-                    tekster: tekster.FELLES.modaler.arbeidsperiode.søker,
-                    personType: PersonType.Søker,
-                })
-            ),
-            arbeidsperioderNorge: arbeidsperioderNorge.map((periode, index) =>
-                tilIArbeidsperiodeIKontraktFormat({
-                    periode,
-                    periodeNummer: index + 1,
-                    gjelderUtlandet: false,
-                    tilRestLocaleRecord,
-                    tekster: tekster.FELLES.modaler.arbeidsperiode.søker,
-                    personType: PersonType.Søker,
-                })
-            ),
-            pensjonsperioderUtland: pensjonsperioderUtland.map((periode, index) =>
-                tilIPensjonsperiodeIKontraktFormat({
-                    periode,
-                    periodeNummer: index + 1,
-                    gjelderUtlandet: true,
-                    tilRestLocaleRecord,
-                    tekster: tekster.FELLES.modaler.pensjonsperiode.søker,
-                    personType: PersonType.Søker,
-                })
-            ),
-            pensjonsperioderNorge: pensjonsperioderNorge.map((periode, index) =>
-                tilIPensjonsperiodeIKontraktFormat({
-                    periode,
-                    periodeNummer: index + 1,
-                    gjelderUtlandet: false,
-                    tilRestLocaleRecord,
-                    tekster: tekster.FELLES.modaler.pensjonsperiode.søker,
-                    personType: PersonType.Søker,
-                })
-            ),
-            andreUtbetalingsperioder: andreUtbetalingsperioder.map((periode, index) =>
-                tilIAndreUtbetalingsperioderIKontraktFormat({
-                    periode,
-                    periodeNummer: index + 1,
-                    tilRestLocaleRecord,
-                    tekster: tekster.FELLES.modaler.andreUtbetalinger.søker,
-                    personType: PersonType.Søker,
-                })
-            ),
-        },
+        søker: søkerIKontraktFormat(søknad, tekster, tilRestLocaleRecord),
         barn: barnInkludertISøknaden.map(barn =>
             barnISøknadsFormat(barn, søker, valgtSpråk, tekster, tilRestLocaleRecord)
         ),

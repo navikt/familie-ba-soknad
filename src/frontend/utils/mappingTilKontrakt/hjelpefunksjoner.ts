@@ -10,7 +10,11 @@ import {
     SpørsmålMap as KontraktpørsmålMap,
     TilRestLocaleRecord,
 } from '../../typer/kontrakt/generelle';
-import { FlettefeltVerdier, LocaleRecordBlock } from '../../typer/sanity/sanity';
+import {
+    FlettefeltVerdier,
+    LocaleRecordBlock,
+    LocaleRecordString,
+} from '../../typer/sanity/sanity';
 import { ITekstinnhold } from '../../typer/sanity/tekstInnhold';
 import { ISøknadSpørsmål, SpørsmålId, ISøknadSpørsmålMap } from '../../typer/spørsmål';
 import { Årsak } from '../../typer/utvidet';
@@ -19,6 +23,40 @@ import { språkIndexListe } from '../spørsmål';
 import { isAlpha3Code } from '../typeguards';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
+export const søknadsfeltHof =
+    (tilRestLocaleRecord: TilRestLocaleRecord) =>
+    <T>(
+        labelLocaleRecord: LocaleRecordString | LocaleRecordBlock | undefined,
+        svar: Record<LocaleType, T>,
+        flettefelter?: FlettefeltVerdier
+    ): ISøknadsfelt<T> => {
+        if (!labelLocaleRecord) {
+            throw Error('Mangler tekst fra Sanity som burde vært implementert');
+        }
+        return { label: tilRestLocaleRecord(labelLocaleRecord, flettefelter), verdi: svar };
+    };
+
+export const søknadsfeltForESvarHof =
+    (tilRestLocaleRecord: TilRestLocaleRecord) =>
+    (
+        spørsmål: LocaleRecordBlock,
+        svar: ESvar | null,
+        flettefelter?: FlettefeltVerdier
+    ): ISøknadsfelt<ESvar> => {
+        const søknadsfelt = søknadsfeltHof(tilRestLocaleRecord);
+        if (!svar) {
+            throw Error(`Svar for ${spørsmål.nb} kan ikke være null`);
+        }
+        return søknadsfelt(spørsmål, sammeVerdiAlleSpråk(svar), flettefelter);
+    };
+
+export const nullableSøknadsfeltForESvarHof =
+    (tilRestLocaleRecord: TilRestLocaleRecord) =>
+    (spørsmål: LocaleRecordBlock, svar: ESvar | null, flettefelter?: FlettefeltVerdier) => {
+        const søknadsfelt = søknadsfeltHof(tilRestLocaleRecord);
+        return svar ? søknadsfelt(spørsmål, sammeVerdiAlleSpråk(svar), flettefelter) : null;
+    };
 
 export const søknadsfelt = <T>(
     labelTekstId: string,
