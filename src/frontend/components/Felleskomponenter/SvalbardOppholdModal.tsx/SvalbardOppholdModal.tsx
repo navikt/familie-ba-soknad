@@ -119,7 +119,10 @@ export const SvalbardOppholdModal: React.FC<SvalbardOppholdModalProps> = ({
                 </Alert>
             )}
             <ReadMore header={<TekstBlock block={teksterForModal.fremtidigeOppholdTittel} />}>
-                <TekstBlock block={teksterForModal.fremtidigeOppholdInnhold} />
+                <TekstBlock
+                    block={teksterForModal.fremtidigeOppholdInnhold}
+                    flettefelter={{ barnetsNavn: barn?.navn }}
+                />
             </ReadMore>
             {visFeiloppsummering(skjema) && <SkjemaFeiloppsummering skjema={skjema} />}
         </SkjemaModal>
