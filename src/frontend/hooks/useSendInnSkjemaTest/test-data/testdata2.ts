@@ -1003,7 +1003,7 @@ export const testdata2: TilKontraktTestData = {
                 },
                 borPåSvalbard: {
                     label: {
-                        en: 'Do you live in Svalbard?',
+                        en: 'Do you live on Svalbard?',
                         nb: 'Bor du på Svalbard?',
                         nn: 'Bur du på Svalbard?',
                     },
