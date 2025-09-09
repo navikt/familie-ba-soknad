@@ -55,7 +55,8 @@ export const SvalbardOppholdPeriode: React.FC<SvalbardOppholdPeriodeProps> = ({
             <LeggTilKnapp
                 onClick={åpneModal}
                 leggTilFlereTekst={
-                    registrerteSvalbardOppholdPerioder.verdi.length > 0 && plainTekst(flerePerioder)
+                    registrerteSvalbardOppholdPerioder.verdi.length > 0 &&
+                    plainTekst(flerePerioder, { barnetsNavn: barn?.navn })
                 }
                 feilmelding={
                     registrerteSvalbardOppholdPerioder.erSynlig &&
