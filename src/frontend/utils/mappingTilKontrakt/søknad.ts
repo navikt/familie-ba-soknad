@@ -114,7 +114,7 @@ export const dataISøknadKontraktFormat = (
                 }),
                 {}
             ),
-            ...teksterFraSanity(tekster, tilRestLocaleRecord),
+            ...teksterFraSanity(tekster, tilRestLocaleRecord, søknad.barnInkludertISøknaden),
         },
         originalSpråk: valgtSpråk,
     };
@@ -156,42 +156,54 @@ export const dataISøknadKontraktFormat = (
 
 const teksterFraSanity = (
     tekster: ITekstinnhold,
-    tilRestLocaleRecord: TilRestLocaleRecord
+    tilRestLocaleRecord: TilRestLocaleRecord,
+    barnInkludertISøknaden: IBarnMedISøknad[]
 ): Record<string, Record<LocaleType, string>> => {
-    return [
-        tekster.VELG_BARN.registrertMedAdressesperre,
-        tekster.OM_BARNET.opplystFosterbarn,
-        tekster.OM_BARNET.opplystInstitusjon,
-        tekster.OM_BARNET.opplystBarnOppholdUtenforNorge,
-        tekster.OM_BARNET.opplystFaarHarFaattEllerSoektYtelse,
-        tekster.OM_BARNET.opplystBoddPaaSvalbard,
-        tekster.OM_BARNET.naarBoddPaaSvalbard.sporsmal,
-        tekster.DIN_LIVSSITUASJON.hattAnnenSamboerForSoektPeriode.sporsmal,
+    const sanityDokumenterMedBarnFlettefelt = new Set<string>([
+        tekster.OM_BARNET.opplystFosterbarn.api_navn,
+        tekster.OM_BARNET.opplystInstitusjon.api_navn,
+        tekster.OM_BARNET.opplystBarnOppholdUtenforNorge.api_navn,
+        tekster.OM_BARNET.opplystFaarHarFaattEllerSoektYtelse.api_navn,
+        tekster.OM_BARNET.opplystBoddPaaSvalbard.api_navn,
+        tekster.OM_BARNET.naarBoddPaaSvalbard.sporsmal.api_navn,
+        tekster.OM_BARNET.barnetsAndreForelder.api_navn,
+        tekster.OM_BARNET.omBarnetTittel.api_navn,
+        tekster.OM_BARNET.bosted.api_navn,
+        tekster.EØS_FOR_BARN.eoesForBarnTittel.api_navn,
+    ]);
+
+    const baseDokumenter: (LocaleRecordBlock | LocaleRecordString)[] = [
+        tekster.OM_DEG.omDegTittel,
         tekster.OM_DEG.soekerAdressesperre,
         tekster.OM_DEG.ikkeRegistrertAdresse,
-        tekster.OM_BARNET.barnetsAndreForelder,
+        tekster.OM_DEG.skjermetAdresse,
+        tekster.DIN_LIVSSITUASJON.dinLivssituasjonTittel,
+        tekster.DIN_LIVSSITUASJON.hattAnnenSamboerForSoektPeriode.sporsmal,
+        tekster.VELG_BARN.registrertMedAdressesperre,
         tekster.VELG_BARN.velgBarnTittel,
         tekster.VELG_BARN.registrertPaaAdressenDin,
         tekster.VELG_BARN.ikkeRegistrertPaaAdressenDin,
-        tekster.OM_BARNET.omBarnetTittel,
-        tekster.OM_DEG.omDegTittel,
-        tekster.OM_BARNET.bosted,
         tekster.OM_BARNA.omBarnaTittel,
         tekster.FELLES.frittståendeOrd.soeker,
         tekster.FELLES.frittståendeOrd.vedlegg,
         tekster.DOKUMENTASJON.sendtInnTidligere,
-        tekster.DIN_LIVSSITUASJON.dinLivssituasjonTittel,
         tekster.EØS_FOR_SØKER.eoesForSoekerTittel,
-        tekster.EØS_FOR_BARN.eoesForBarnTittel,
-        tekster.OM_DEG.skjermetAdresse,
         ...Object.values(ESvar).map(svar =>
             jaNeiSvarTilSpråkIdForSanity(svar, tekster.FELLES.frittståendeOrd)
         ),
-    ].reduce(
-        (map, sanityDok: LocaleRecordBlock | LocaleRecordString) => ({
-            ...map,
-            [sanityDok.api_navn]: tilRestLocaleRecord(sanityDok, {}),
-        }),
-        {}
-    );
+    ];
+
+    return baseDokumenter.reduce<Record<string, Record<LocaleType, string>>>((acc, sanityDok) => {
+        if (sanityDokumenterMedBarnFlettefelt.has(sanityDok.api_navn)) {
+            barnInkludertISøknaden.forEach(barn => {
+                const key = `${sanityDok.api_navn}__${barn.id}`;
+                acc[key] = tilRestLocaleRecord(sanityDok, {
+                    barnetsNavn: barn.navn,
+                });
+            });
+        } else {
+            acc[sanityDok.api_navn] = tilRestLocaleRecord(sanityDok, {});
+        }
+        return acc;
+    }, {});
 };
