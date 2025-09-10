@@ -136,7 +136,7 @@ export const søkerIKontraktFormat = (
             // utvidet
             årsak: søknadsfelt(
                 dinLivssituasjonTekster.hvorforSoekerUtvidet.sporsmal,
-                hentÅrsak(årsak.svar, dinLivssituasjonTekster)
+                sammeVerdiAlleSpråk(hentÅrsak(årsak.svar, dinLivssituasjonTekster))
             ),
             separertEnkeSkilt: nullableSøknadsfeltForESvar(
                 dinLivssituasjonTekster.separertEnkeSkiltUtland.sporsmal,
@@ -146,15 +146,15 @@ export const søkerIKontraktFormat = (
                 dinLivssituasjonTekster.separertEnkeSkiltUtland.sporsmal,
                 separertEnkeSkiltUtland.svar
             ),
-            separertEnkeSkiltDato: søknadsfelt(
+            separertEnkeSkiltDato: nullableSøknadsfeltForESvar(
                 dinLivssituasjonTekster.separertEnkeSkiltDato.sporsmal,
-                separertEnkeSkiltDato.svar
+                sammeVerdiAlleSpråk(separertEnkeSkiltDato.svar)
             ),
-            harSamboerNå: nullableSøknadsfeltForESvar(
+            harSamboerNå: søknadsfeltForESvar(
                 dinLivssituasjonTekster.harSamboerNaa.sporsmal,
                 harSamboerNå.svar
             ),
-            hattAnnenSamboerForSøktPeriode: nullableSøknadsfeltForESvar(
+            hattAnnenSamboerForSøktPeriode: søknadsfeltForESvar(
                 dinLivssituasjonTekster.hattAnnenSamboerForSoektPeriode.sporsmal,
                 hattAnnenSamboerForSøktPeriode.svar
             ),
