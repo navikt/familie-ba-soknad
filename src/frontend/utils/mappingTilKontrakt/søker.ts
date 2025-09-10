@@ -2,15 +2,15 @@ import { TilRestLocaleRecord } from '../../typer/kontrakt/generelle';
 import { ISøknadKontraktSøker } from '../../typer/kontrakt/kontrakt';
 import { PersonType } from '../../typer/personType';
 import { ITekstinnhold } from '../../typer/sanity/tekstInnhold';
-import { ISøknadSpørsmålMap } from '../../typer/spørsmål';
 import { ISøknad } from '../../typer/søknad';
-import { landkodeTilSpråk } from '../språk';
+import { hentÅrsak, landkodeTilSpråk } from '../språk';
 
 import { tilIAndreUtbetalingsperioderIKontraktFormat } from './andreUtbetalingsperioder';
 import { tilIArbeidsperiodeIKontraktFormat } from './arbeidsperioder';
 import {
+    nullableSøknadsfeltForESvarHof,
     sammeVerdiAlleSpråk,
-    spørmålISøknadsFormat,
+    søknadsfeltForESvarHof,
     søknadsfeltHof,
     verdiCallbackAlleSpråk,
 } from './hjelpefunksjoner';
@@ -43,18 +43,40 @@ export const søkerIKontraktFormat = (
         andreUtbetalingsperioder,
         idNummer,
         triggetEøs,
-        ...søkerSpørsmål
+        //
+        borPåRegistrertAdresse,
+        borPåSvalbard,
+        værtINorgeITolvMåneder,
+        planleggerÅBoINorgeTolvMnd,
+        erAsylsøker,
+        arbeidIUtlandet,
+        mottarUtenlandspensjon,
+        arbeidINorge,
+        pensjonNorge,
+        andreUtbetalinger,
+        //
     } = søker;
 
     const { spørsmål: utvidaSpørsmål, tidligereSamboere, nåværendeSamboer } = utvidet;
 
+    //
+    const {
+        årsak,
+        separertEnkeSkilt,
+        separertEnkeSkiltUtland,
+        separertEnkeSkiltDato,
+        harSamboerNå,
+        hattAnnenSamboerForSøktPeriode,
+    } = utvidaSpørsmål;
+    //
+
     const fellesTekster = tekster.FELLES;
     const omDegTekster = tekster.OM_DEG;
+    const dinLivssituasjonTekster = tekster.DIN_LIVSSITUASJON;
 
     const søknadsfelt = søknadsfeltHof(tilRestLocaleRecord);
-
-    const typetSøkerSpørsmål: ISøknadSpørsmålMap = søkerSpørsmål as unknown as ISøknadSpørsmålMap;
-    const typetUtvidaSpørsmål: ISøknadSpørsmålMap = utvidaSpørsmål as unknown as ISøknadSpørsmålMap;
+    const søknadsfeltForESvar = søknadsfeltForESvarHof(tilRestLocaleRecord);
+    const nullableSøknadsfeltForESvar = nullableSøknadsfeltForESvarHof(tilRestLocaleRecord);
 
     return {
         harEøsSteg: triggetEøs || !!barnInkludertISøknaden.filter(barn => barn.triggetEøs).length,
@@ -69,6 +91,74 @@ export const søkerIKontraktFormat = (
         ),
         adresse: søknadsfelt(omDegTekster.adresse, sammeVerdiAlleSpråk(adresse)),
         adressebeskyttelse: søker.adressebeskyttelse,
+        spørsmål: {
+            // ordinær
+            borPåRegistrertAdresse: søknadsfeltForESvar(
+                omDegTekster.borPaaRegistrertAdresse.sporsmal,
+                borPåRegistrertAdresse.svar
+            ),
+            borPåSvalbard: nullableSøknadsfeltForESvar(
+                omDegTekster.borPaaSvalbard.sporsmal,
+                borPåSvalbard.svar
+            ),
+            værtINorgeITolvMåneder: søknadsfeltForESvar(
+                omDegTekster.vaertINorgeITolvMaaneder.sporsmal,
+                værtINorgeITolvMåneder.svar
+            ),
+            planleggerÅBoINorgeTolvMnd: nullableSøknadsfeltForESvar(
+                omDegTekster.planleggerAaBoINorgeTolvMnd.sporsmal,
+                planleggerÅBoINorgeTolvMnd.svar
+            ),
+            erAsylsøker: søknadsfeltForESvar(
+                dinLivssituasjonTekster.erAsylsoeker.sporsmal,
+                erAsylsøker.svar
+            ),
+            arbeidIUtlandet: søknadsfeltForESvar(
+                dinLivssituasjonTekster.arbeidUtenforNorge.sporsmal,
+                arbeidIUtlandet.svar
+            ),
+            mottarUtenlandspensjon: søknadsfeltForESvar(
+                dinLivssituasjonTekster.pensjonUtland.sporsmal,
+                mottarUtenlandspensjon.svar
+            ),
+            arbeidINorge: nullableSøknadsfeltForESvar(
+                tekster.EØS_FOR_SØKER.arbeidNorge.sporsmal,
+                arbeidINorge.svar
+            ),
+            pensjonNorge: nullableSøknadsfeltForESvar(
+                tekster.EØS_FOR_SØKER.pensjonNorge.sporsmal,
+                pensjonNorge.svar
+            ),
+            andreUtbetalinger: nullableSøknadsfeltForESvar(
+                tekster.EØS_FOR_SØKER.utbetalinger.sporsmal,
+                andreUtbetalinger.svar
+            ),
+            // utvidet
+            årsak: søknadsfelt(
+                dinLivssituasjonTekster.hvorforSoekerUtvidet.sporsmal,
+                hentÅrsak(årsak.svar, dinLivssituasjonTekster)
+            ),
+            separertEnkeSkilt: nullableSøknadsfeltForESvar(
+                dinLivssituasjonTekster.separertEnkeSkiltUtland.sporsmal,
+                separertEnkeSkilt.svar
+            ),
+            separertEnkeSkiltUtland: nullableSøknadsfeltForESvar(
+                dinLivssituasjonTekster.separertEnkeSkiltUtland.sporsmal,
+                separertEnkeSkiltUtland.svar
+            ),
+            separertEnkeSkiltDato: søknadsfelt(
+                dinLivssituasjonTekster.separertEnkeSkiltDato.sporsmal,
+                separertEnkeSkiltDato.svar
+            ),
+            harSamboerNå: nullableSøknadsfeltForESvar(
+                dinLivssituasjonTekster.harSamboerNaa.sporsmal,
+                harSamboerNå.svar
+            ),
+            hattAnnenSamboerForSøktPeriode: nullableSøknadsfeltForESvar(
+                dinLivssituasjonTekster.hattAnnenSamboerForSoektPeriode.sporsmal,
+                hattAnnenSamboerForSøktPeriode.svar
+            ),
+        },
         svalbardOppholdPerioder: svalbardOppholdPerioder.map((periode, index) =>
             svalbardOppholdPeriodeTilISøknadsfelt({
                 svalbardOppholdPeriode: periode,
@@ -92,10 +182,6 @@ export const søkerIKontraktFormat = (
                 tekster.EØS_FOR_BARN.idNummerAndreForelder
             )
         ),
-        spørsmål: {
-            ...spørmålISøknadsFormat(typetSøkerSpørsmål, undefined, tekster),
-            ...spørmålISøknadsFormat(typetUtvidaSpørsmål, undefined, tekster),
-        },
         tidligereSamboere: tidligereSamboere.map(samboer =>
             tidligereSamboerISøknadKontraktFormat({
                 tekster: fellesTekster.modaler.tidligereSamboere.søker,
