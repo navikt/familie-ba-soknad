@@ -1984,13 +1984,6 @@
     "@portabletext/toolkit" "^3.0.1"
     "@portabletext/types" "^2.0.15"
 
-"@portabletext/toolkit@^2.0.8":
-  version "2.0.16"
-  resolved "https://registry.npmjs.org/@portabletext/toolkit/-/toolkit-2.0.16.tgz#dbeff7ae2d86b3b6bb0e4ea586f5f65b91e51451"
-  integrity sha512-aBvnD8MscoAlEIuZBn0Aksd+oCuoMGFOT3CtHIgRBaac0Vu4YnnMUF45xo/B/T5vmwWcnDXoJEJdn+SKDg1m+A==
-  dependencies:
-    "@portabletext/types" "^2.0.13"
-
 "@portabletext/toolkit@^3.0.1":
   version "3.0.1"
   resolved "https://registry.npmjs.org/@portabletext/toolkit/-/toolkit-3.0.1.tgz#67b3252a0d7191b72614282eaf45b7106fda771a"
@@ -1998,7 +1991,7 @@
   dependencies:
     "@portabletext/types" "^2.0.15"
 
-"@portabletext/types@^2.0.13", "@portabletext/types@^2.0.15", "@portabletext/types@^2.0.6":
+"@portabletext/types@^2.0.15", "@portabletext/types@^2.0.6":
   version "2.0.15"
   resolved "https://registry.npmjs.org/@portabletext/types/-/types-2.0.15.tgz#afc1231fd66965d777c6233aea79abfaf8716351"
   integrity sha512-2e6i2gSQsrA/5OL5Gm4/9bxB9MNO73Fa47zj+0mT93xkoQUCGCWX5fZh1YBJ86hszaRYlqvqG08oULxvvPPp/Q==
