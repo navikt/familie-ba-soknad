@@ -173,12 +173,23 @@ const teksterFraSanity = (
     ]);
 
     const baseDokumenter: (LocaleRecordBlock | LocaleRecordString)[] = [
+        // Med flettefelt for "barnetsNavn"
+        tekster.OM_BARNET.opplystFosterbarn,
+        tekster.OM_BARNET.opplystInstitusjon,
+        tekster.OM_BARNET.opplystBarnOppholdUtenforNorge,
+        tekster.OM_BARNET.opplystFaarHarFaattEllerSoektYtelse,
+        tekster.OM_BARNET.opplystBoddPaaSvalbard,
+        tekster.OM_BARNET.naarBoddPaaSvalbard.sporsmal,
+        tekster.OM_BARNET.barnetsAndreForelder,
+        tekster.OM_BARNET.omBarnetTittel,
+        tekster.OM_BARNET.bosted,
+        tekster.EØS_FOR_BARN.eoesForBarnTittel,
+        // Uten flettefelt
         tekster.OM_DEG.omDegTittel,
         tekster.OM_DEG.soekerAdressesperre,
         tekster.OM_DEG.ikkeRegistrertAdresse,
         tekster.OM_DEG.skjermetAdresse,
         tekster.DIN_LIVSSITUASJON.dinLivssituasjonTittel,
-        tekster.DIN_LIVSSITUASJON.hattAnnenSamboerForSoektPeriode.sporsmal,
         tekster.VELG_BARN.registrertMedAdressesperre,
         tekster.VELG_BARN.velgBarnTittel,
         tekster.VELG_BARN.registrertPaaAdressenDin,
@@ -196,7 +207,7 @@ const teksterFraSanity = (
     return baseDokumenter.reduce<Record<string, Record<LocaleType, string>>>((acc, sanityDok) => {
         if (sanityDokumenterMedBarnFlettefelt.has(sanityDok.api_navn)) {
             barnInkludertISøknaden.forEach(barn => {
-                const key = `${sanityDok.api_navn}__${barn.id}`;
+                const key = sanityDok.api_navn;
                 acc[key] = tilRestLocaleRecord(sanityDok, {
                     barnetsNavn: barn.navn,
                 });
