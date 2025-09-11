@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { ReadMore } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useAppContext } from '../../../context/AppContext';
@@ -11,7 +12,6 @@ import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import { SkjemaCheckboxForSanity } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckboxForSanity';
-import SkjemaFieldset from '../../Felleskomponenter/SkjemaFieldset';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 
 import AndreForelder from './AndreForelder';
@@ -47,12 +47,14 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
     const {
         omBarnetTittel,
         omBarnetGuide,
-        bosted,
-        bostedInfo,
         borBarnFastSammenMedDeg,
         deltBosted,
         boddSammenMedAndreForelder,
         naarFlyttetFraAndreForelder,
+        boFastSammenMedInformasjonTittel,
+        boFastSammenMedInformasjon,
+        skriftligAvtaleOmDeltBostedInformasjonTittel,
+        skriftligAvtaleOmDeltBostedInformasjon,
     } = stegTekster;
 
     return barn ? (
@@ -113,27 +115,41 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                 />
             )}
             {skjema.felter.borFastMedSøker.erSynlig && (
-                <SkjemaFieldset legend={plainTekst(bosted)} dynamisk>
-                    {barn.andreForelderErDød?.svar !== ESvar.JA && (
-                        <div>
-                            <TekstBlock block={bostedInfo} typografi={Typografi.BodyShort} />
-                        </div>
-                    )}
-                    <JaNeiSpm
-                        skjema={skjema}
-                        felt={skjema.felter.borFastMedSøker}
-                        spørsmålDokument={borBarnFastSammenMedDeg}
-                        flettefelter={{ barnetsNavn: barn.navn }}
-                    />
-                    {skjema.felter.skriftligAvtaleOmDeltBosted.erSynlig && (
+                <>
+                    <div>
                         <JaNeiSpm
                             skjema={skjema}
-                            felt={skjema.felter.skriftligAvtaleOmDeltBosted}
-                            spørsmålDokument={deltBosted}
+                            felt={skjema.felter.borFastMedSøker}
+                            spørsmålDokument={borBarnFastSammenMedDeg}
                             flettefelter={{ barnetsNavn: barn.navn }}
                         />
+
+                        <ReadMore header={plainTekst(boFastSammenMedInformasjonTittel)}>
+                            <TekstBlock
+                                block={boFastSammenMedInformasjon}
+                                typografi={Typografi.BodyLong}
+                            />
+                        </ReadMore>
+                    </div>
+                    {skjema.felter.skriftligAvtaleOmDeltBosted.erSynlig && (
+                        <div>
+                            <JaNeiSpm
+                                skjema={skjema}
+                                felt={skjema.felter.skriftligAvtaleOmDeltBosted}
+                                spørsmålDokument={deltBosted}
+                                flettefelter={{ barnetsNavn: barn.navn }}
+                            />
+                            <ReadMore
+                                header={plainTekst(skriftligAvtaleOmDeltBostedInformasjonTittel)}
+                            >
+                                <TekstBlock
+                                    block={skriftligAvtaleOmDeltBostedInformasjon}
+                                    typografi={Typografi.BodyLong}
+                                />
+                            </ReadMore>
+                        </div>
                     )}
-                </SkjemaFieldset>
+                </>
             )}
             {skjema.felter.søkerHarBoddMedAndreForelder.erSynlig && (
                 <>

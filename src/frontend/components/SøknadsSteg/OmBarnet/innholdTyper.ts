@@ -34,12 +34,14 @@ export interface IOmBarnetTekstinnhold {
     pensjonUtlandAndreForelder: ISanitySpørsmålDokument;
     boddSammenMedAndreForelder: ISanitySpørsmålDokument;
     naarFlyttetFraAndreForelder: ISanitySpørsmålDokument;
-    bosted: LocaleRecordString;
-    bostedInfo: LocaleRecordBlock;
     borBarnFastSammenMedDeg: ISanitySpørsmålDokument;
     deltBosted: ISanitySpørsmålDokument;
     faarEllerHarFaattYtelseFraAnnetLand: ISanitySpørsmålDokument;
     arbeidUtenforNorgeAndreForelderGjenlevende: ISanitySpørsmålDokument;
     opplystBoddPaaSvalbard: LocaleRecordBlock;
     naarBoddPaaSvalbard: ISanitySpørsmålDokument;
+    boFastSammenMedInformasjonTittel: LocaleRecordString;
+    boFastSammenMedInformasjon: LocaleRecordBlock;
+    skriftligAvtaleOmDeltBostedInformasjonTittel: LocaleRecordString;
+    skriftligAvtaleOmDeltBostedInformasjon: LocaleRecordBlock;
 }
