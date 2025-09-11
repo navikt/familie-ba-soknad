@@ -114,7 +114,41 @@ export const dataISøknadKontraktFormat = (
                 }),
                 {}
             ),
-            ...teksterFraSanity(tekster, tilRestLocaleRecord),
+            ...[
+                tekster.OM_DEG.omDegTittel,
+                tekster.OM_DEG.soekerAdressesperre,
+                tekster.OM_DEG.ikkeRegistrertAdresse,
+                tekster.OM_DEG.skjermetAdresse,
+                tekster.DIN_LIVSSITUASJON.dinLivssituasjonTittel,
+                tekster.VELG_BARN.registrertMedAdressesperre,
+                tekster.VELG_BARN.velgBarnTittel,
+                tekster.VELG_BARN.registrertPaaAdressenDin,
+                tekster.VELG_BARN.ikkeRegistrertPaaAdressenDin,
+                tekster.OM_BARNA.omBarnaTittel,
+                tekster.OM_BARNET.opplystFosterbarn,
+                tekster.OM_BARNET.opplystInstitusjon,
+                tekster.OM_BARNET.opplystBarnOppholdUtenforNorge,
+                tekster.OM_BARNET.opplystFaarHarFaattEllerSoektYtelse,
+                tekster.OM_BARNET.opplystBoddPaaSvalbard,
+                tekster.OM_BARNET.naarBoddPaaSvalbard.sporsmal,
+                tekster.OM_BARNET.barnetsAndreForelder,
+                tekster.OM_BARNET.omBarnetTittel,
+                tekster.OM_BARNET.bosted,
+                tekster.EØS_FOR_BARN.eoesForBarnTittel,
+                tekster.FELLES.frittståendeOrd.soeker,
+                tekster.FELLES.frittståendeOrd.vedlegg,
+                tekster.DOKUMENTASJON.sendtInnTidligere,
+                tekster.EØS_FOR_SØKER.eoesForSoekerTittel,
+                ...Object.values(ESvar).map(svar =>
+                    jaNeiSvarTilSpråkIdForSanity(svar, tekster.FELLES.frittståendeOrd)
+                ),
+            ].reduce(
+                (map, sanityDok: LocaleRecordBlock | LocaleRecordString) => ({
+                    ...map,
+                    [sanityDok.api_navn]: tilRestLocaleRecord(sanityDok, { barnetsNavn: '{navn}' }),
+                }),
+                {}
+            ),
         },
         originalSpråk: valgtSpråk,
     };
@@ -153,46 +187,3 @@ export const dataISøknadKontraktFormat = (
 //         ...Object.values(ESvar).map(jaNeiSvarTilSpråkId),
 //     ].reduce((map, tekstId) => ({ ...map, [tekstId]: hentUformaterteTekster(tekstId) }), {});
 // };
-
-const teksterFraSanity = (
-    tekster: ITekstinnhold,
-    tilRestLocaleRecord: TilRestLocaleRecord
-): Record<string, Record<LocaleType, string>> => {
-    const dokumenter: (LocaleRecordBlock | LocaleRecordString)[] = [
-        tekster.OM_DEG.omDegTittel,
-        tekster.OM_DEG.soekerAdressesperre,
-        tekster.OM_DEG.ikkeRegistrertAdresse,
-        tekster.OM_DEG.skjermetAdresse,
-        tekster.DIN_LIVSSITUASJON.dinLivssituasjonTittel,
-        tekster.VELG_BARN.registrertMedAdressesperre,
-        tekster.VELG_BARN.velgBarnTittel,
-        tekster.VELG_BARN.registrertPaaAdressenDin,
-        tekster.VELG_BARN.ikkeRegistrertPaaAdressenDin,
-        tekster.OM_BARNA.omBarnaTittel,
-        tekster.OM_BARNET.opplystFosterbarn,
-        tekster.OM_BARNET.opplystInstitusjon,
-        tekster.OM_BARNET.opplystBarnOppholdUtenforNorge,
-        tekster.OM_BARNET.opplystFaarHarFaattEllerSoektYtelse,
-        tekster.OM_BARNET.opplystBoddPaaSvalbard,
-        tekster.OM_BARNET.naarBoddPaaSvalbard.sporsmal,
-        tekster.OM_BARNET.barnetsAndreForelder,
-        tekster.OM_BARNET.omBarnetTittel,
-        tekster.OM_BARNET.bosted,
-        tekster.EØS_FOR_BARN.eoesForBarnTittel,
-        tekster.FELLES.frittståendeOrd.soeker,
-        tekster.FELLES.frittståendeOrd.vedlegg,
-        tekster.DOKUMENTASJON.sendtInnTidligere,
-        tekster.EØS_FOR_SØKER.eoesForSoekerTittel,
-        ...Object.values(ESvar).map(svar =>
-            jaNeiSvarTilSpråkIdForSanity(svar, tekster.FELLES.frittståendeOrd)
-        ),
-    ];
-
-    return dokumenter.reduce(
-        (map, sanityDok: LocaleRecordBlock | LocaleRecordString) => ({
-            ...map,
-            [sanityDok.api_navn]: tilRestLocaleRecord(sanityDok, { barnetsNavn: '{navn}' }),
-        }),
-        {}
-    );
-};
