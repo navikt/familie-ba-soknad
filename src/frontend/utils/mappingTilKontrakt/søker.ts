@@ -78,6 +78,79 @@ export const søkerIKontraktFormat = (
     const søknadsfeltForESvar = søknadsfeltForESvarHof(tilRestLocaleRecord);
     const nullableSøknadsfeltForESvar = nullableSøknadsfeltForESvarHof(tilRestLocaleRecord);
 
+    const spørsmål = {
+        // ordinær
+        borPåRegistrertAdresse: søknadsfeltForESvar(
+            omDegTekster.borPaaRegistrertAdresse.sporsmal,
+            borPåRegistrertAdresse.svar
+        ),
+        borPåSvalbard: nullableSøknadsfeltForESvar(
+            omDegTekster.borPaaSvalbard.sporsmal,
+            borPåSvalbard.svar
+        ),
+        værtINorgeITolvMåneder: søknadsfeltForESvar(
+            omDegTekster.vaertINorgeITolvMaaneder.sporsmal,
+            værtINorgeITolvMåneder.svar
+        ),
+        planleggerÅBoINorgeTolvMnd: nullableSøknadsfeltForESvar(
+            omDegTekster.planleggerAaBoINorgeTolvMnd.sporsmal,
+            planleggerÅBoINorgeTolvMnd.svar
+        ),
+        erAsylsøker: søknadsfeltForESvar(
+            dinLivssituasjonTekster.erAsylsoeker.sporsmal,
+            erAsylsøker.svar
+        ),
+        arbeidIUtlandet: søknadsfeltForESvar(
+            dinLivssituasjonTekster.arbeidUtenforNorge.sporsmal,
+            arbeidIUtlandet.svar
+        ),
+        mottarUtenlandspensjon: søknadsfeltForESvar(
+            dinLivssituasjonTekster.pensjonUtland.sporsmal,
+            mottarUtenlandspensjon.svar
+        ),
+        arbeidINorge: nullableSøknadsfeltForESvar(
+            tekster.EØS_FOR_SØKER.arbeidNorge.sporsmal,
+            arbeidINorge.svar
+        ),
+        pensjonNorge: nullableSøknadsfeltForESvar(
+            tekster.EØS_FOR_SØKER.pensjonNorge.sporsmal,
+            pensjonNorge.svar
+        ),
+        andreUtbetalinger: nullableSøknadsfeltForESvar(
+            tekster.EØS_FOR_SØKER.utbetalinger.sporsmal,
+            andreUtbetalinger.svar
+        ),
+        // utvidet
+        årsak: søknadsfelt(
+            dinLivssituasjonTekster.hvorforSoekerUtvidet.sporsmal,
+            sammeVerdiAlleSpråk(hentÅrsak(årsak.svar, dinLivssituasjonTekster))
+        ),
+        separertEnkeSkilt: nullableSøknadsfeltForESvar(
+            dinLivssituasjonTekster.separertEnkeSkiltUtland.sporsmal,
+            separertEnkeSkilt.svar
+        ),
+        separertEnkeSkiltUtland: nullableSøknadsfeltForESvar(
+            dinLivssituasjonTekster.separertEnkeSkiltUtland.sporsmal,
+            separertEnkeSkiltUtland.svar
+        ),
+        separertEnkeSkiltDato: søknadsfelt(
+            dinLivssituasjonTekster.separertEnkeSkiltDato.sporsmal,
+            sammeVerdiAlleSpråk(separertEnkeSkiltDato.svar)
+        ),
+        harSamboerNå: nullableSøknadsfeltForESvar(
+            dinLivssituasjonTekster.harSamboerNaa.sporsmal,
+            harSamboerNå.svar
+        ),
+        hattAnnenSamboerForSøktPeriode: nullableSøknadsfeltForESvar(
+            dinLivssituasjonTekster.hattAnnenSamboerForSoektPeriode.sporsmal,
+            hattAnnenSamboerForSøktPeriode.svar
+        ),
+    };
+
+    const spørsmålUtenNullFelter = Object.fromEntries(
+        Object.entries(spørsmål).filter(([, value]) => value !== null)
+    ) as typeof spørsmål;
+
     return {
         harEøsSteg: triggetEøs || !!barnInkludertISøknaden.filter(barn => barn.triggetEøs).length,
         navn: søknadsfelt(omDegTekster.navn, sammeVerdiAlleSpråk(navn)),
@@ -91,74 +164,7 @@ export const søkerIKontraktFormat = (
         ),
         adresse: søknadsfelt(omDegTekster.adresse, sammeVerdiAlleSpråk(adresse)),
         adressebeskyttelse: søker.adressebeskyttelse,
-        spørsmål: {
-            // ordinær
-            borPåRegistrertAdresse: søknadsfeltForESvar(
-                omDegTekster.borPaaRegistrertAdresse.sporsmal,
-                borPåRegistrertAdresse.svar
-            ),
-            borPåSvalbard: nullableSøknadsfeltForESvar(
-                omDegTekster.borPaaSvalbard.sporsmal,
-                borPåSvalbard.svar
-            ),
-            værtINorgeITolvMåneder: søknadsfeltForESvar(
-                omDegTekster.vaertINorgeITolvMaaneder.sporsmal,
-                værtINorgeITolvMåneder.svar
-            ),
-            planleggerÅBoINorgeTolvMnd: nullableSøknadsfeltForESvar(
-                omDegTekster.planleggerAaBoINorgeTolvMnd.sporsmal,
-                planleggerÅBoINorgeTolvMnd.svar
-            ),
-            erAsylsøker: søknadsfeltForESvar(
-                dinLivssituasjonTekster.erAsylsoeker.sporsmal,
-                erAsylsøker.svar
-            ),
-            arbeidIUtlandet: søknadsfeltForESvar(
-                dinLivssituasjonTekster.arbeidUtenforNorge.sporsmal,
-                arbeidIUtlandet.svar
-            ),
-            mottarUtenlandspensjon: søknadsfeltForESvar(
-                dinLivssituasjonTekster.pensjonUtland.sporsmal,
-                mottarUtenlandspensjon.svar
-            ),
-            arbeidINorge: nullableSøknadsfeltForESvar(
-                tekster.EØS_FOR_SØKER.arbeidNorge.sporsmal,
-                arbeidINorge.svar
-            ),
-            pensjonNorge: nullableSøknadsfeltForESvar(
-                tekster.EØS_FOR_SØKER.pensjonNorge.sporsmal,
-                pensjonNorge.svar
-            ),
-            andreUtbetalinger: nullableSøknadsfeltForESvar(
-                tekster.EØS_FOR_SØKER.utbetalinger.sporsmal,
-                andreUtbetalinger.svar
-            ),
-            // utvidet
-            årsak: søknadsfelt(
-                dinLivssituasjonTekster.hvorforSoekerUtvidet.sporsmal,
-                sammeVerdiAlleSpråk(hentÅrsak(årsak.svar, dinLivssituasjonTekster))
-            ),
-            separertEnkeSkilt: nullableSøknadsfeltForESvar(
-                dinLivssituasjonTekster.separertEnkeSkiltUtland.sporsmal,
-                separertEnkeSkilt.svar
-            ),
-            separertEnkeSkiltUtland: nullableSøknadsfeltForESvar(
-                dinLivssituasjonTekster.separertEnkeSkiltUtland.sporsmal,
-                separertEnkeSkiltUtland.svar
-            ),
-            separertEnkeSkiltDato: nullableSøknadsfeltForESvar(
-                dinLivssituasjonTekster.separertEnkeSkiltDato.sporsmal,
-                sammeVerdiAlleSpråk(separertEnkeSkiltDato.svar)
-            ),
-            harSamboerNå: søknadsfeltForESvar(
-                dinLivssituasjonTekster.harSamboerNaa.sporsmal,
-                harSamboerNå.svar
-            ),
-            hattAnnenSamboerForSøktPeriode: søknadsfeltForESvar(
-                dinLivssituasjonTekster.hattAnnenSamboerForSoektPeriode.sporsmal,
-                hattAnnenSamboerForSøktPeriode.svar
-            ),
-        },
+        spørsmål: spørsmålUtenNullFelter,
         svalbardOppholdPerioder: svalbardOppholdPerioder.map((periode, index) =>
             svalbardOppholdPeriodeTilISøknadsfelt({
                 svalbardOppholdPeriode: periode,
