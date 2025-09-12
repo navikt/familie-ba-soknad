@@ -130,7 +130,7 @@ export const dataISøknadKontraktFormat = (
                 tekster.OM_BARNET.opplystBarnOppholdUtenforNorge,
                 tekster.OM_BARNET.opplystFaarHarFaattEllerSoektYtelse,
                 tekster.OM_BARNET.opplystBoddPaaSvalbard,
-                tekster.OM_BARNET.naarBoddPaaSvalbard.sporsmal,
+                tekster.OM_BARNET.naarBoddPaaSvalbardSpm,
                 tekster.OM_BARNET.barnetsAndreForelder,
                 tekster.OM_BARNET.omBarnetTittel,
                 tekster.OM_BARNET.bosted,

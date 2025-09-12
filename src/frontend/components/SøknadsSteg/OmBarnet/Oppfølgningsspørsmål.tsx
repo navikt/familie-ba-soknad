@@ -97,7 +97,7 @@ const Oppfølgningsspørsmål: React.FC<{
         institusjonSluttdato,
         institusjonUkjentSluttCheckbox,
         opplystBoddPaaSvalbard,
-        naarBoddPaaSvalbard,
+        naarBoddPaaSvalbardSpm,
         opplystBarnOppholdUtenforNorge,
         planlagtBoSammenhengendeINorge,
         opplystFaarHarFaattEllerSoektYtelse,
@@ -188,7 +188,7 @@ const Oppfølgningsspørsmål: React.FC<{
                 >
                     <div>
                         <BodyShort spacing>
-                            {plainTekst(naarBoddPaaSvalbard.sporsmal, {
+                            {plainTekst(naarBoddPaaSvalbardSpm, {
                                 barnetsNavn: barn.navn,
                             })}
                         </BodyShort>

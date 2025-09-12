@@ -133,7 +133,7 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                     <OppsummeringFelt
                         tittel={
                             <TekstBlock
-                                block={omBarnetTekster.naarBoddPaaSvalbard.sporsmal}
+                                block={omBarnetTekster.naarBoddPaaSvalbardSpm}
                                 flettefelter={{ barnetsNavn: barn.navn }}
                             />
                         }

@@ -41,5 +41,5 @@ export interface IOmBarnetTekstinnhold {
     faarEllerHarFaattYtelseFraAnnetLand: ISanitySpørsmålDokument;
     arbeidUtenforNorgeAndreForelderGjenlevende: ISanitySpørsmålDokument;
     opplystBoddPaaSvalbard: LocaleRecordBlock;
-    naarBoddPaaSvalbard: ISanitySpørsmålDokument;
+    naarBoddPaaSvalbardSpm: LocaleRecordBlock;
 }
