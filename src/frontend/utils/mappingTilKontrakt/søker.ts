@@ -3,7 +3,7 @@ import { ISøknadKontraktSøker } from '../../typer/kontrakt/kontrakt';
 import { PersonType } from '../../typer/personType';
 import { ITekstinnhold } from '../../typer/sanity/tekstInnhold';
 import { ISøknad } from '../../typer/søknad';
-import { hentÅrsak, landkodeTilSpråk, sivilstandTilSanitySivilstandApiKey } from '../språk';
+import { landkodeTilSpråk } from '../språk';
 
 import { tilIAndreUtbetalingsperioderIKontraktFormat } from './andreUtbetalingsperioder';
 import { tilIArbeidsperiodeIKontraktFormat } from './arbeidsperioder';
@@ -121,10 +121,10 @@ export const søkerIKontraktFormat = (
             andreUtbetalinger.svar
         ),
         // utvidet
-        årsak: søknadsfelt(
-            dinLivssituasjonTekster.hvorforSoekerUtvidet.sporsmal,
-            sammeVerdiAlleSpråk(hentÅrsak(årsak.svar, dinLivssituasjonTekster))
-        ),
+        // årsak: søknadsfelt(
+        //     dinLivssituasjonTekster.hvorforSoekerUtvidet.sporsmal,
+        //     sammeVerdiAlleSpråk(hentÅrsak(årsak.svar, dinLivssituasjonTekster))
+        // ),
         separertEnkeSkilt: nullableSøknadsfeltForESvar(
             dinLivssituasjonTekster.separertEnkeSkiltUtland.sporsmal,
             separertEnkeSkilt.svar
@@ -133,10 +133,10 @@ export const søkerIKontraktFormat = (
             dinLivssituasjonTekster.separertEnkeSkiltUtland.sporsmal,
             separertEnkeSkiltUtland.svar
         ),
-        separertEnkeSkiltDato: søknadsfelt(
-            dinLivssituasjonTekster.separertEnkeSkiltDato.sporsmal,
-            sammeVerdiAlleSpråk(separertEnkeSkiltDato.svar)
-        ),
+        // separertEnkeSkiltDato: søknadsfelt(
+        //     dinLivssituasjonTekster.separertEnkeSkiltDato.sporsmal,
+        //     sammeVerdiAlleSpråk(separertEnkeSkiltDato.svar)
+        // ),
         harSamboerNå: nullableSøknadsfeltForESvar(
             dinLivssituasjonTekster.harSamboerNaa.sporsmal,
             harSamboerNå.svar
@@ -155,12 +155,7 @@ export const søkerIKontraktFormat = (
         harEøsSteg: triggetEøs || !!barnInkludertISøknaden.filter(barn => barn.triggetEøs).length,
         navn: søknadsfelt(omDegTekster.navn, sammeVerdiAlleSpråk(navn)),
         ident: søknadsfelt(omDegTekster.ident, sammeVerdiAlleSpråk(ident)),
-        sivilstand: søknadsfelt(
-            omDegTekster.sivilstatus,
-            fellesTekster.frittståendeOrd[
-                sivilstandTilSanitySivilstandApiKey(søker.sivilstand.type)
-            ]
-        ),
+        sivilstand: søknadsfelt(omDegTekster.sivilstatus, sammeVerdiAlleSpråk(sivilstand.type)),
         statsborgerskap: søknadsfelt(
             omDegTekster.statsborgerskap,
             verdiCallbackAlleSpråk(locale =>

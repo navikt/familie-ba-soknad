@@ -145,7 +145,11 @@ export const dataISøknadKontraktFormat = (
             ].reduce(
                 (map, sanityDok: LocaleRecordBlock | LocaleRecordString) => ({
                     ...map,
-                    [sanityDok.api_navn]: tilRestLocaleRecord(sanityDok, { barnetsNavn: '{navn}' }),
+                    [sanityDok.api_navn]: tilRestLocaleRecord(sanityDok, {
+                        barnetsNavn: '{navn}',
+                        antall: '{antall}',
+                        totalAntall: '{totalAntall}',
+                    }),
                 }),
                 {}
             ),
