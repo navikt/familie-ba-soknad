@@ -3,7 +3,7 @@ import { ISøknadKontraktSøker } from '../../typer/kontrakt/kontrakt';
 import { PersonType } from '../../typer/personType';
 import { ITekstinnhold } from '../../typer/sanity/tekstInnhold';
 import { ISøknad } from '../../typer/søknad';
-import { hentÅrsak, landkodeTilSpråk } from '../språk';
+import { hentÅrsak, landkodeTilSpråk, sivilstandTilSanitySivilstandApiKey } from '../språk';
 
 import { tilIAndreUtbetalingsperioderIKontraktFormat } from './andreUtbetalingsperioder';
 import { tilIArbeidsperiodeIKontraktFormat } from './arbeidsperioder';
@@ -155,7 +155,12 @@ export const søkerIKontraktFormat = (
         harEøsSteg: triggetEøs || !!barnInkludertISøknaden.filter(barn => barn.triggetEøs).length,
         navn: søknadsfelt(omDegTekster.navn, sammeVerdiAlleSpråk(navn)),
         ident: søknadsfelt(omDegTekster.ident, sammeVerdiAlleSpråk(ident)),
-        sivilstand: søknadsfelt(omDegTekster.sivilstatus, sammeVerdiAlleSpråk(sivilstand.type)),
+        sivilstand: søknadsfelt(
+            omDegTekster.sivilstatus,
+            fellesTekster.frittståendeOrd[
+                sivilstandTilSanitySivilstandApiKey(søker.sivilstand.type)
+            ]
+        ),
         statsborgerskap: søknadsfelt(
             omDegTekster.statsborgerskap,
             verdiCallbackAlleSpråk(locale =>
