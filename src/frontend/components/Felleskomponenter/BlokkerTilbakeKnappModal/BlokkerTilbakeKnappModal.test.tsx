@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { act, render, waitFor } from '@testing-library/react';
+import { act, screen, render, waitFor } from '@testing-library/react';
 import { useNavigate } from 'react-router';
 
 import { ESvar } from '@navikt/familie-form-elements';
@@ -10,7 +10,7 @@ import { IBarn, IBarnRespons } from '../../../typer/person';
 import { silenceConsoleErrors, spyOnUseApp, TestProvidere } from '../../../utils/testing';
 import { OmBarnaDineSpørsmålId } from '../../SøknadsSteg/OmBarnaDine/spørsmål';
 
-import BlokkerTilbakeKnappModal from './BlokkerTilbakeKnappModal';
+import { BlokkerTilbakeKnappModal } from './BlokkerTilbakeKnappModal';
 
 const manueltRegistrert: Partial<IBarn> = {
     ident: '12345',
@@ -69,7 +69,7 @@ describe('Ingen navigering tilbake til søknad fra kvitteringssiden', () => {
             );
         };
 
-        const { getByText, findByTestId } = render(
+        const { findByTestId } = render(
             <TestProvidere mocketNettleserHistorikk={['/dokumentasjon', '/kvittering']}>
                 <BlokkerTilbakeKnappModal />
                 <Tilbakeknapp />
@@ -81,7 +81,7 @@ describe('Ingen navigering tilbake til søknad fra kvitteringssiden', () => {
             tilbakeknapp.click();
         });
 
-        const infoTekst = await waitFor(() => getByText(/felles.blokkerTilbakeKnapp.modal.tekst/));
+        const infoTekst = await waitFor(() => screen.getByTestId('blokker-tilbakeknapp-tekst'));
 
         expect(infoTekst).toBeInTheDocument();
     });

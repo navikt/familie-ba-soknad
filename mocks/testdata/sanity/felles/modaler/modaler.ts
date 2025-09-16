@@ -3,6 +3,7 @@ import { IModalerTekstinnhold } from '../../../../../src/frontend/typer/sanity/t
 import { andreUtbetalingerTekstinnhold } from './andreUtbetalinger';
 import { arbeidsperiodeTekstinnhold } from './arbeidsperiode';
 import { barnetrygdsperiodeTekstinnhold } from './barnetrygdperiode';
+import { blokkerTilbakeknapp } from './blokkerTilbakeknapp';
 import { leggTilBarnTekstinnhold } from './leggTilBarn';
 import { pensjonsperiodeTekstinnhold } from './pensjonsperiode';
 import { startPåNytt } from './startPåNytt';
@@ -45,4 +46,5 @@ export const modalerTekstinnhold: IModalerTekstinnhold = {
     },
     startPåNytt: startPåNytt,
     leggTilBarn: leggTilBarnTekstinnhold,
+    blokkerTilbakeknapp: blokkerTilbakeknapp,
 };
