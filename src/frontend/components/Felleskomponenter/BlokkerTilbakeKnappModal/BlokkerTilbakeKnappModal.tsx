@@ -36,7 +36,7 @@ export function BlokkerTilbakeKnappModal() {
             </ModalContent>
             <Modal.Footer>
                 <Button onClick={håndterAvbryt}>{plainTekst(avbryt)}</Button>
-                <Box marginBlock="space-12 0" as="span">
+                <Box marginBlock="space-12 0" as="span" data-testid="blokker-tilbakeknapp-tekst">
                     <TekstBlock block={tilDittNav} typografi={Typografi.BodyShort} />
                 </Box>
             </Modal.Footer>
