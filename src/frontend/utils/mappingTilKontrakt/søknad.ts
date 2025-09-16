@@ -157,6 +157,9 @@ export const dataISøknadKontraktFormat = (
                 }),
                 {}
             ),
+            'hattAnnenSamboerForSoektPeriode.sporsmal': tilRestLocaleRecord(
+                tekster.DIN_LIVSSITUASJON.hattAnnenSamboerForSoektPeriode.sporsmal
+            ),
         },
         originalSpråk: valgtSpråk,
     };
