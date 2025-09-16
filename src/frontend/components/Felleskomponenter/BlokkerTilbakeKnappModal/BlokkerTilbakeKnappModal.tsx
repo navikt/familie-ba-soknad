@@ -1,23 +1,22 @@
 import React from 'react';
 
-import { useIntl } from 'react-intl';
-import styled from 'styled-components';
+import { Box, Button, Modal } from '@navikt/ds-react';
 
-import { BodyLong, Button, Modal } from '@navikt/ds-react';
-
+import { useAppContext } from '../../../context/AppContext';
 import { useAppNavigationContext } from '../../../context/AppNavigationContext';
-import EksternLenke from '../EksternLenke/EksternLenke';
+import { IBlokkerTilbakeknappTekstinnhold } from '../../../typer/sanity/modaler/blokkerTilbakeknapp';
+import { Typografi } from '../../../typer/sanity/sanity';
 import ModalContent from '../ModalContent';
-import SpråkTekst from '../SpråkTekst/SpråkTekst';
+import TekstBlock from '../Sanity/TekstBlock';
 
-const StyledEksternLenke = styled(EksternLenke)`
-    margin-right: 1rem;
-`;
-
-const BlokkerTilbakeKnappModal = () => {
+export function BlokkerTilbakeKnappModal() {
     const { visBlokkerTilbakeKnappModal, settVisBlokkerTilbakeKnappModal } =
         useAppNavigationContext();
-    const { formatMessage } = useIntl();
+    const { tekster, plainTekst } = useAppContext();
+
+    const teksterForModal: IBlokkerTilbakeknappTekstinnhold =
+        tekster().FELLES.modaler.blokkerTilbakeknapp;
+    const { tittel, tekst, tilDittNav, avbryt } = teksterForModal;
 
     const håndterAvbryt = () => {
         settVisBlokkerTilbakeKnappModal(false);
@@ -28,27 +27,19 @@ const BlokkerTilbakeKnappModal = () => {
             onClose={() => settVisBlokkerTilbakeKnappModal(false)}
             open={visBlokkerTilbakeKnappModal}
             header={{
-                heading: formatMessage({ id: 'felles.blokkerTilbakeKnapp.modal.tittel' }),
+                heading: plainTekst(tittel),
                 size: 'medium',
             }}
         >
             <ModalContent>
-                <BodyLong>
-                    <SpråkTekst id={'felles.blokkerTilbakeKnapp.modal.tekst'} />
-                </BodyLong>
+                <TekstBlock block={tekst} typografi={Typografi.BodyLong} />
             </ModalContent>
             <Modal.Footer>
-                <Button onClick={håndterAvbryt}>
-                    <SpråkTekst id={'felles.blokkerTilbakeKnapp.modal.avbrytKnapp'} />
-                </Button>
-                <StyledEksternLenke
-                    lenkeSpråkId={'kvittering.dinesaker.lenke'}
-                    lenkeTekstSpråkId={'felles.blokkerTilbakeKnapp.modal.tilDittNavKnapp'}
-                    target="_blank"
-                />
+                <Button onClick={håndterAvbryt}>{plainTekst(avbryt)}</Button>
+                <Box marginBlock="space-12 0" as="span">
+                    <TekstBlock block={tilDittNav} typografi={Typografi.BodyShort} />
+                </Box>
             </Modal.Footer>
         </Modal>
     );
-};
-
-export default BlokkerTilbakeKnappModal;
+}

@@ -10,7 +10,7 @@ import { IBarn, IBarnRespons } from '../../../typer/person';
 import { silenceConsoleErrors, spyOnUseApp, TestProvidere } from '../../../utils/testing';
 import { OmBarnaDineSpørsmålId } from '../../SøknadsSteg/OmBarnaDine/spørsmål';
 
-import BlokkerTilbakeKnappModal from './BlokkerTilbakeKnappModal';
+import { BlokkerTilbakeKnappModal } from './BlokkerTilbakeKnappModal';
 
 const manueltRegistrert: Partial<IBarn> = {
     ident: '12345',

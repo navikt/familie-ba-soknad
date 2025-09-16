@@ -11,6 +11,7 @@ import { LocaleType } from '../typer/common';
 import { IAndreUtbetalingerTekstinnhold } from '../typer/sanity/modaler/andreUtbetalinger';
 import { IArbeidsperiodeTekstinnhold } from '../typer/sanity/modaler/arbeidsperiode';
 import { IBarnetrygdsperiodeTekstinnhold } from '../typer/sanity/modaler/barnetrygdperiode';
+import { IBlokkerTilbakeknappTekstinnhold } from '../typer/sanity/modaler/blokkerTilbakeknapp';
 import { ILeggTilBarnTekstinnhold } from '../typer/sanity/modaler/leggTilBarn';
 import { IPensjonsperiodeTekstinnhold } from '../typer/sanity/modaler/pensjonsperiode';
 import { IStartPåNyttModal } from '../typer/sanity/modaler/startPåNytt';
@@ -154,6 +155,9 @@ const strukturertInnholdForModaler = (dokumenter: SanityDokument[]): IModalerTek
         startPåNytt: strukturerInnholdForModal(
             SanityModalPrefix.START_PAA_NYTT
         ) as IStartPåNyttModal,
+        blokkerTilbakeknapp: strukturerInnholdForModal(
+            SanityModalPrefix.BLOKKER_TILBAKEKNAPP
+        ) as IBlokkerTilbakeknappTekstinnhold,
     };
 };
 
