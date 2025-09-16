@@ -137,7 +137,11 @@ export const dataISøknadKontraktFormat = (
                 tekster.EØS_FOR_BARN.eoesForBarnTittel,
                 tekster.FELLES.frittståendeOrd.soeker,
                 tekster.FELLES.frittståendeOrd.vedlegg,
+                tekster.FELLES.modaler.tidligereSamboere.søker.oppsummeringstittel,
                 tekster.DOKUMENTASJON.sendtInnTidligere,
+                tekster.DOKUMENTASJON.lastetOppAntall,
+                tekster.DOKUMENTASJON.vedleggXavY,
+                tekster.DOKUMENTASJON.listeOverVedlegg,
                 tekster.EØS_FOR_SØKER.eoesForSoekerTittel,
                 ...Object.values(ESvar).map(svar =>
                     jaNeiSvarTilSpråkIdForSanity(svar, tekster.FELLES.frittståendeOrd)

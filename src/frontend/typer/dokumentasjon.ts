@@ -31,6 +31,9 @@ export enum TittelSanityApiNavn {
     meklingsattestTittel = 'meklingsattestTittel',
     dokumentasjonPaaSeparasjonSkilsmisseEllerDoedsfallTittel = 'dokumentasjonPaaSeparasjonSkilsmisseEllerDoedsfallTittel',
     vedtakOmOppholdstillatelseTittel = 'vedtakOmOppholdstillatelseTittel',
+    lastetOppAntall = 'lastetOppAntall',
+    vedleggXavY = 'vedleggXavY',
+    listeOverVedlegg = 'listeOverVedlegg',
 }
 
 export const dokumentasjonsbehovTilTittelSanityApiNavn = (

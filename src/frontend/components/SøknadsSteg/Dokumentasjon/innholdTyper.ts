@@ -72,6 +72,9 @@ export type IDokumentasjonTekstinnhold = {
     [TittelSanityApiNavn.meklingsattestTittel]: LocaleRecordBlock;
     [TittelSanityApiNavn.dokumentasjonPaaSeparasjonSkilsmisseEllerDoedsfallTittel]: LocaleRecordBlock;
     [TittelSanityApiNavn.vedtakOmOppholdstillatelseTittel]: LocaleRecordBlock;
+    [TittelSanityApiNavn.lastetOppAntall]: LocaleRecordBlock;
+    [TittelSanityApiNavn.vedleggXavY]: LocaleRecordBlock;
+    [TittelSanityApiNavn.listeOverVedlegg]: LocaleRecordBlock;
 } & {
     // Vedlegg - beskrivelser
     [BeskrivelseSanityApiNavn.dokumentasjonPaaSeparasjonSkilsmisseEllerDoedsfall]: LocaleRecordBlock;
