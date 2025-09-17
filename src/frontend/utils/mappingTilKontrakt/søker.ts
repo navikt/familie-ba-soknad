@@ -3,7 +3,7 @@ import { ISøknadKontraktSøker } from '../../typer/kontrakt/kontrakt';
 import { PersonType } from '../../typer/personType';
 import { ITekstinnhold } from '../../typer/sanity/tekstInnhold';
 import { ISøknad } from '../../typer/søknad';
-import { landkodeTilSpråk } from '../språk';
+import { hentÅrsak, landkodeTilSpråk } from '../språk';
 
 import { tilIAndreUtbetalingsperioderIKontraktFormat } from './andreUtbetalingsperioder';
 import { tilIArbeidsperiodeIKontraktFormat } from './arbeidsperioder';
@@ -43,7 +43,6 @@ export const søkerIKontraktFormat = (
         andreUtbetalingsperioder,
         idNummer,
         triggetEøs,
-        //
         borPåRegistrertAdresse,
         borPåSvalbard,
         værtINorgeITolvMåneder,
@@ -54,12 +53,10 @@ export const søkerIKontraktFormat = (
         arbeidINorge,
         pensjonNorge,
         andreUtbetalinger,
-        //
     } = søker;
 
     const { spørsmål: utvidaSpørsmål, tidligereSamboere, nåværendeSamboer } = utvidet;
 
-    //
     const {
         årsak,
         separertEnkeSkilt,
@@ -68,7 +65,6 @@ export const søkerIKontraktFormat = (
         harSamboerNå,
         hattAnnenSamboerForSøktPeriode,
     } = utvidaSpørsmål;
-    //
 
     const fellesTekster = tekster.FELLES;
     const omDegTekster = tekster.OM_DEG;
@@ -121,10 +117,12 @@ export const søkerIKontraktFormat = (
             andreUtbetalinger.svar
         ),
         // utvidet
-        // årsak: søknadsfelt(
-        //     dinLivssituasjonTekster.hvorforSoekerUtvidet.sporsmal,
-        //     sammeVerdiAlleSpråk(hentÅrsak(årsak.svar, dinLivssituasjonTekster))
-        // ),
+        årsak: årsak.svar
+            ? søknadsfelt(
+                  dinLivssituasjonTekster.hvorforSoekerUtvidet.sporsmal,
+                  hentÅrsak(årsak.svar, dinLivssituasjonTekster)
+              )
+            : null,
         separertEnkeSkilt: nullableSøknadsfeltForESvar(
             dinLivssituasjonTekster.separertEnkeSkiltUtland.sporsmal,
             separertEnkeSkilt.svar
@@ -133,10 +131,12 @@ export const søkerIKontraktFormat = (
             dinLivssituasjonTekster.separertEnkeSkiltUtland.sporsmal,
             separertEnkeSkiltUtland.svar
         ),
-        // separertEnkeSkiltDato: søknadsfelt(
-        //     dinLivssituasjonTekster.separertEnkeSkiltDato.sporsmal,
-        //     sammeVerdiAlleSpråk(separertEnkeSkiltDato.svar)
-        // ),
+        separertEnkeSkiltDato: separertEnkeSkiltDato.svar
+            ? søknadsfelt(
+                  dinLivssituasjonTekster.separertEnkeSkiltDato.sporsmal,
+                  sammeVerdiAlleSpråk(separertEnkeSkiltDato.svar)
+              )
+            : null,
         harSamboerNå: nullableSøknadsfeltForESvar(
             dinLivssituasjonTekster.harSamboerNaa.sporsmal,
             harSamboerNå.svar
