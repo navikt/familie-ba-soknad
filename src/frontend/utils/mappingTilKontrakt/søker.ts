@@ -1,4 +1,8 @@
-import { TilRestLocaleRecord } from '../../typer/kontrakt/generelle';
+import {
+    filtrertSpørsmålUtenNull,
+    SpørsmålMapMedNull,
+    TilRestLocaleRecord,
+} from '../../typer/kontrakt/generelle';
 import { ISøknadKontraktSøker } from '../../typer/kontrakt/kontrakt';
 import { PersonType } from '../../typer/personType';
 import { ITekstinnhold } from '../../typer/sanity/tekstInnhold';
@@ -74,7 +78,7 @@ export const søkerIKontraktFormat = (
     const søknadsfeltForESvar = søknadsfeltForESvarHof(tilRestLocaleRecord);
     const nullableSøknadsfeltForESvar = nullableSøknadsfeltForESvarHof(tilRestLocaleRecord);
 
-    const spørsmål = {
+    const spørsmål: SpørsmålMapMedNull = {
         // ordinær
         borPåRegistrertAdresse: søknadsfeltForESvar(
             omDegTekster.borPaaRegistrertAdresse.sporsmal,
@@ -147,10 +151,6 @@ export const søkerIKontraktFormat = (
         ),
     };
 
-    // const spørsmålUtenNullFelter = Object.fromEntries(
-    //     Object.entries(spørsmål).filter(([, value]) => value !== null)
-    // );
-
     return {
         harEøsSteg: triggetEøs || !!barnInkludertISøknaden.filter(barn => barn.triggetEøs).length,
         navn: søknadsfelt(omDegTekster.navn, sammeVerdiAlleSpråk(navn)),
@@ -164,8 +164,7 @@ export const søkerIKontraktFormat = (
         ),
         adresse: søknadsfelt(omDegTekster.adresse, sammeVerdiAlleSpråk(adresse)),
         adressebeskyttelse: søker.adressebeskyttelse,
-        // spørsmål: spørsmålUtenNullFelter,
-        spørsmål: spørsmål,
+        spørsmål: filtrertSpørsmålUtenNull(spørsmål),
         svalbardOppholdPerioder: svalbardOppholdPerioder.map((periode, index) =>
             svalbardOppholdPeriodeTilISøknadsfelt({
                 svalbardOppholdPeriode: periode,
