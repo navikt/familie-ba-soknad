@@ -185,7 +185,7 @@ export const søkerIKontraktFormat = (
             idNummerTilISøknadsfelt(
                 tilRestLocaleRecord,
                 idnummerObj,
-                tekster.EØS_FOR_BARN.idNummerAndreForelder
+                tekster.EØS_FOR_SØKER.idNummer
             )
         ),
         tidligereSamboere: tidligereSamboere.map(samboer =>
