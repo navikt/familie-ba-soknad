@@ -45,4 +45,5 @@ export const omBarnetTekstinnhold: IOmBarnetTekstinnhold = {
     skriftligAvtaleOmDeltBostedInformasjonTittel: lagLocaleRecordString(),
     skriftligAvtaleOmDeltBostedInformasjon: lagLocaleRecordBlock(),
     naarBoddPaaSvalbardSpm: lagLocaleRecordBlock(),
+    bosted: lagLocaleRecordString(),
 };

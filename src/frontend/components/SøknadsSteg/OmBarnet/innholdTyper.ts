@@ -44,4 +44,5 @@ export interface IOmBarnetTekstinnhold {
     skriftligAvtaleOmDeltBostedInformasjonTittel: LocaleRecordString;
     skriftligAvtaleOmDeltBostedInformasjon: LocaleRecordBlock;
     naarBoddPaaSvalbardSpm: LocaleRecordBlock;
+    bosted: LocaleRecordString;
 }
