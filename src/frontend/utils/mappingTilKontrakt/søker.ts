@@ -147,9 +147,9 @@ export const søkerIKontraktFormat = (
         ),
     };
 
-    const spørsmålUtenNullFelter = Object.fromEntries(
-        Object.entries(spørsmål).filter(([, value]) => value !== null)
-    ) as typeof spørsmål;
+    // const spørsmålUtenNullFelter = Object.fromEntries(
+    //     Object.entries(spørsmål).filter(([, value]) => value !== null)
+    // );
 
     return {
         harEøsSteg: triggetEøs || !!barnInkludertISøknaden.filter(barn => barn.triggetEøs).length,
@@ -164,7 +164,8 @@ export const søkerIKontraktFormat = (
         ),
         adresse: søknadsfelt(omDegTekster.adresse, sammeVerdiAlleSpråk(adresse)),
         adressebeskyttelse: søker.adressebeskyttelse,
-        spørsmål: spørsmålUtenNullFelter,
+        // spørsmål: spørsmålUtenNullFelter,
+        spørsmål: spørsmål,
         svalbardOppholdPerioder: svalbardOppholdPerioder.map((periode, index) =>
             svalbardOppholdPeriodeTilISøknadsfelt({
                 svalbardOppholdPeriode: periode,
