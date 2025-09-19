@@ -45,12 +45,8 @@ const AndreForelder: React.FC<{
         annetBarn => annetBarn.id === skjema.felter.sammeForelderSomAnnetBarn.verdi
     );
 
-    const {
-        barnetsAndreForelder,
-        navnAndreForelder,
-        foedselsnummerDnummerAndreForelder,
-        foedselsdatoAndreForelder,
-    } = tekster().OM_BARNET;
+    const { barnetsAndreForelder, navnAndreForelder, foedselsnummerDnummerAndreForelder, foedselsdatoAndreForelder } =
+        tekster().OM_BARNET;
 
     return (
         <SkjemaFieldset legend={plainTekst(barnetsAndreForelder)}>
@@ -62,17 +58,14 @@ const AndreForelder: React.FC<{
                 />
             )}
             {!skjema.felter.sammeForelderSomAnnetBarn.erSynlig ||
-            skjema.felter.sammeForelderSomAnnetBarn.verdi ===
-                AlternativtSvarForInput.ANNEN_FORELDER ? (
+            skjema.felter.sammeForelderSomAnnetBarn.verdi === AlternativtSvarForInput.ANNEN_FORELDER ? (
                 <>
                     <div>
                         <SkjemaFeltInputForSanity
                             felt={skjema.felter.andreForelderNavn}
                             visFeilmeldinger={skjema.visFeilmeldinger}
                             label={<TekstBlock block={navnAndreForelder.sporsmal} />}
-                            disabled={
-                                skjema.felter.andreForelderKanIkkeGiOpplysninger.verdi === ESvar.JA
-                            }
+                            disabled={skjema.felter.andreForelderKanIkkeGiOpplysninger.verdi === ESvar.JA}
                         />
                         <SkjemaCheckboxForSanity
                             felt={skjema.felter.andreForelderKanIkkeGiOpplysninger}
@@ -84,20 +77,12 @@ const AndreForelder: React.FC<{
                             <SkjemaFeltInputForSanity
                                 felt={skjema.felter.andreForelderFnr}
                                 visFeilmeldinger={skjema.visFeilmeldinger}
-                                label={
-                                    <TekstBlock
-                                        block={foedselsnummerDnummerAndreForelder.sporsmal}
-                                    />
-                                }
+                                label={<TekstBlock block={foedselsnummerDnummerAndreForelder.sporsmal} />}
                                 disabled={skjema.felter.andreForelderFnrUkjent.verdi === ESvar.JA}
                             />
                             <SkjemaCheckboxForSanity
                                 felt={skjema.felter.andreForelderFnrUkjent}
-                                label={
-                                    <TekstBlock
-                                        block={foedselsnummerDnummerAndreForelder.checkboxLabel}
-                                    />
-                                }
+                                label={<TekstBlock block={foedselsnummerDnummerAndreForelder.checkboxLabel} />}
                             />
                         </div>
                     )}
@@ -108,16 +93,12 @@ const AndreForelder: React.FC<{
                                 skjema={skjema}
                                 label={<TekstBlock block={foedselsdatoAndreForelder.sporsmal} />}
                                 avgrensMaxDato={dagensDato()}
-                                disabled={
-                                    skjema.felter.andreForelderFødselsdatoUkjent.verdi === ESvar.JA
-                                }
+                                disabled={skjema.felter.andreForelderFødselsdatoUkjent.verdi === ESvar.JA}
                                 strategy={'absolute'}
                             />
                             <SkjemaCheckboxForSanity
                                 felt={skjema.felter.andreForelderFødselsdatoUkjent}
-                                label={
-                                    <TekstBlock block={foedselsdatoAndreForelder.checkboxLabel} />
-                                }
+                                label={<TekstBlock block={foedselsdatoAndreForelder.checkboxLabel} />}
                             />
                         </div>
                     )}
@@ -125,33 +106,25 @@ const AndreForelder: React.FC<{
                         <>
                             <Arbeidsperiode
                                 skjema={skjema}
-                                arbeiderEllerArbeidetFelt={
-                                    skjema.felter.andreForelderArbeidUtlandet
-                                }
+                                arbeiderEllerArbeidetFelt={skjema.felter.andreForelderArbeidUtlandet}
                                 leggTilArbeidsperiode={leggTilArbeidsperiode}
                                 fjernArbeidsperiode={fjernArbeidsperiode}
                                 gjelderUtlandet
                                 personType={PersonType.AndreForelder}
                                 barn={barn}
                                 erDød={barn.andreForelderErDød.svar === ESvar.JA}
-                                registrerteArbeidsperioder={
-                                    skjema.felter.andreForelderArbeidsperioderUtland
-                                }
+                                registrerteArbeidsperioder={skjema.felter.andreForelderArbeidsperioderUtland}
                             />
                             <Pensjonsperiode
                                 skjema={skjema}
-                                mottarEllerMottattPensjonFelt={
-                                    skjema.felter.andreForelderPensjonUtland
-                                }
+                                mottarEllerMottattPensjonFelt={skjema.felter.andreForelderPensjonUtland}
                                 leggTilPensjonsperiode={leggTilPensjonsperiode}
                                 fjernPensjonsperiode={fjernPensjonsperiode}
                                 gjelderUtlandet={true}
                                 personType={PersonType.AndreForelder}
                                 erDød={barn.andreForelderErDød.svar === ESvar.JA}
                                 barn={barn}
-                                registrertePensjonsperioder={
-                                    skjema.felter.andreForelderPensjonsperioderUtland
-                                }
+                                registrertePensjonsperioder={skjema.felter.andreForelderPensjonsperioderUtland}
                             />
                         </>
                     )}
@@ -160,10 +133,7 @@ const AndreForelder: React.FC<{
                 barnMedSammeForelder?.andreForelder && (
                     <FormSummary>
                         <FormSummary.Header>{plainTekst(barnetsAndreForelder)}</FormSummary.Header>
-                        <AndreForelderOppsummering
-                            barn={barn}
-                            andreForelder={barnMedSammeForelder.andreForelder}
-                        />
+                        <AndreForelderOppsummering barn={barn} andreForelder={barnMedSammeForelder.andreForelder} />
                     </FormSummary>
                 )
             )}

@@ -1,7 +1,4 @@
-import {
-    EøsBarnSpørsmålId,
-    eøsBarnSpørsmålSpråkId,
-} from '../../components/SøknadsSteg/EøsSteg/Barn/spørsmål';
+import { EøsBarnSpørsmålId, eøsBarnSpørsmålSpråkId } from '../../components/SøknadsSteg/EøsSteg/Barn/spørsmål';
 import { IBarnMedISøknad } from '../../typer/barn';
 import { Slektsforhold, TilRestLocaleRecord } from '../../typer/kontrakt/generelle';
 import { IOmsorgspersonIKontraktFormat } from '../../typer/kontrakt/kontrakt';
@@ -175,12 +172,8 @@ export const omsorgspersonTilISøknadsfelt = (
         ),
         pågåendeSøknadHvilketLand: pågåendeSøknadHvilketLand.svar
             ? søknadsfeltBarn(
-                  språktekstIdFraSpørsmålId(
-                      EøsBarnSpørsmålId.omsorgspersonPågåendeSøknadHvilketLand
-                  ),
-                  verdiCallbackAlleSpråk(locale =>
-                      landkodeTilSpråk(pågåendeSøknadHvilketLand.svar, locale)
-                  ),
+                  språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.omsorgspersonPågåendeSøknadHvilketLand),
+                  verdiCallbackAlleSpråk(locale => landkodeTilSpråk(pågåendeSøknadHvilketLand.svar, locale)),
                   barn
               )
             : null,

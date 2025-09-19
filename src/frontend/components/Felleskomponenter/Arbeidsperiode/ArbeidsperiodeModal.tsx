@@ -40,11 +40,13 @@ export const ArbeidsperiodeModal: React.FC<ArbeidsperiodeModalProps> = ({
     forklaring = undefined,
 }) => {
     const { tekster, plainTekst } = useAppContext();
-    const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } =
-        useArbeidsperiodeSkjema(gjelderUtlandet, personType, erDød);
+    const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } = useArbeidsperiodeSkjema(
+        gjelderUtlandet,
+        personType,
+        erDød
+    );
 
-    const teksterForModal: IArbeidsperiodeTekstinnhold =
-        tekster().FELLES.modaler.arbeidsperiode[personType];
+    const teksterForModal: IArbeidsperiodeTekstinnhold = tekster().FELLES.modaler.arbeidsperiode[personType];
 
     const {
         arbeidsperiodeAvsluttet,
@@ -62,9 +64,7 @@ export const ArbeidsperiodeModal: React.FC<ArbeidsperiodeModalProps> = ({
         onLeggTilArbeidsperiode({
             arbeidsperiodeAvsluttet: {
                 id: ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet,
-                svar: arbeidsperiodeAvsluttet.erSynlig
-                    ? (arbeidsperiodeAvsluttet.verdi as ESvar)
-                    : null,
+                svar: arbeidsperiodeAvsluttet.erSynlig ? (arbeidsperiodeAvsluttet.verdi as ESvar) : null,
             },
             arbeidsperiodeland: {
                 id: ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand,
@@ -91,8 +91,7 @@ export const ArbeidsperiodeModal: React.FC<ArbeidsperiodeModalProps> = ({
     };
 
     const periodenErAvsluttet =
-        arbeidsperiodeAvsluttet.verdi === ESvar.JA ||
-        (personType === PersonType.AndreForelder && erDød);
+        arbeidsperiodeAvsluttet.verdi === ESvar.JA || (personType === PersonType.AndreForelder && erDød);
 
     return (
         <SkjemaModal
@@ -163,9 +162,7 @@ export const ArbeidsperiodeModal: React.FC<ArbeidsperiodeModalProps> = ({
                             periodenErAvsluttet,
                             skjema.felter.fraDatoArbeidsperiode.verdi
                         )}
-                        senesteValgbareMåned={
-                            periodenErAvsluttet ? sisteDagDenneMåneden() : undefined
-                        }
+                        senesteValgbareMåned={periodenErAvsluttet ? sisteDagDenneMåneden() : undefined}
                         felt={skjema.felter.tilDatoArbeidsperiode}
                         visFeilmeldinger={skjema.visFeilmeldinger}
                         dagIMåneden={DagIMåneden.SISTE_DAG}

@@ -54,8 +54,7 @@ export const MånedÅrVelger: React.FC<MånedÅrVelgerProps> = ({
     const { tekster, plainTekst } = useAppContext();
     const [error, setError] = useState<Feilmelding | undefined>(undefined);
 
-    const { manedformatHjelpetekst, manedformatPlaceholder } =
-        tekster().FELLES.hjelpeteksterForInput;
+    const { manedformatHjelpetekst, manedformatPlaceholder } = tekster().FELLES.hjelpeteksterForInput;
 
     const formateringsfeilmeldinger = tekster()[ESanitySteg.FELLES].formateringsfeilmeldinger;
 
@@ -85,9 +84,7 @@ export const MånedÅrVelger: React.FC<MånedÅrVelgerProps> = ({
                 if (dagIMåneden === DagIMåneden.FØRSTE_DAG) {
                     felt.validerOgSettFelt(formatISO(dato, { representation: 'date' }));
                 } else {
-                    felt.validerOgSettFelt(
-                        formatISO(lastDayOfMonth(dato), { representation: 'date' })
-                    );
+                    felt.validerOgSettFelt(formatISO(lastDayOfMonth(dato), { representation: 'date' }));
                 }
             }
         },

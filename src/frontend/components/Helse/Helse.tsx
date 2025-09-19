@@ -75,9 +75,7 @@ const renderHelse = (ressurs: Ressurs<string>, tjeneste: string) => {
     return (
         <div className={'helse__tjeneste'}>
             <BodyShort>{`Svar fra ${tjeneste}:`}</BodyShort>
-            {ressurs.status === RessursStatus.SUKSESS && (
-                <BodyShort children={`suksess (${ressurs.data})`} />
-            )}
+            {ressurs.status === RessursStatus.SUKSESS && <BodyShort children={`suksess (${ressurs.data})`} />}
             {ressurs.status === RessursStatus.HENTER && <Loader />}
             {ressurs.status === RessursStatus.FEILET && (
                 <BodyShort children={`feilet (${ressurs.frontendFeilmelding})`} />

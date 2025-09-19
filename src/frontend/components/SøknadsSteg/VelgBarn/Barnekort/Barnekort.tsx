@@ -49,12 +49,7 @@ const Divider = styled.hr`
     background-color: ${AGrayalpha200};
 `;
 
-const Barnekort: React.FC<IBarnekortProps> = ({
-    barn,
-    velgBarnCallback,
-    barnSomSkalVæreMed,
-    fjernBarnCallback,
-}) => {
+const Barnekort: React.FC<IBarnekortProps> = ({ barn, velgBarnCallback, barnSomSkalVæreMed, fjernBarnCallback }) => {
     const { plainTekst, tekster } = useAppContext();
     const {
         søknad: { barnRegistrertManuelt },
@@ -93,17 +88,10 @@ const Barnekort: React.FC<IBarnekortProps> = ({
                     </Box>
                 </Bleed>
                 <Heading level="3" size="medium">
-                    {barn.adressebeskyttelse ? (
-                        <TekstBlock block={navnErstatterForAdressesperre} />
-                    ) : (
-                        barn.navn
-                    )}
+                    {barn.adressebeskyttelse ? <TekstBlock block={navnErstatterForAdressesperre} /> : barn.navn}
                 </Heading>
                 <HGrid gap="6" columns={{ sm: 1, md: '2fr 1fr 3fr' }}>
-                    <BarnekortInfo
-                        label={<TekstBlock block={foedselsnummerLabel} />}
-                        verdi={fødselsnummerTekst}
-                    />
+                    <BarnekortInfo label={<TekstBlock block={foedselsnummerLabel} />} verdi={fødselsnummerTekst} />
                     {barn.alder && ( // Barn med undefined fødselsdato i pdl eller som søker har lagt inn selv har alder -null-
                         <BarnekortInfo
                             label={<TekstBlock block={alderLabel} />}
@@ -116,9 +104,7 @@ const Barnekort: React.FC<IBarnekortProps> = ({
                             verdi={
                                 <div
                                     data-testid={
-                                        barn.adressebeskyttelse
-                                            ? 'registrert-bosted-adressesperre'
-                                            : undefined
+                                        barn.adressebeskyttelse ? 'registrert-bosted-adressesperre' : undefined
                                     }
                                 >
                                     <TekstBlock block={hentBostedSpråkId(barn, teksterForSteg)} />

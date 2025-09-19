@@ -1,14 +1,7 @@
 import React from 'react';
 
 import { ESvar } from '@navikt/familie-form-elements';
-import {
-    feil,
-    type FeltState,
-    ok,
-    useFelt,
-    useSkjema,
-    Valideringsstatus,
-} from '@navikt/familie-skjema';
+import { feil, type FeltState, ok, useFelt, useSkjema, Valideringsstatus } from '@navikt/familie-skjema';
 
 import { useAppContext } from '../../../context/AppContext';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
@@ -18,20 +11,11 @@ import { IBarnMedISøknad } from '../../../typer/barn';
 import { PersonType } from '../../../typer/personType';
 import { IBarnetrygdsperiodeTekstinnhold } from '../../../typer/sanity/modaler/barnetrygdperiode';
 import { IBarnetrygdperioderFeltTyper } from '../../../typer/skjema';
-import {
-    dagenEtterDato,
-    dagensDato,
-    gårsdagensDato,
-    sisteDagDenneMåneden,
-    stringTilDate,
-} from '../../../utils/dato';
+import { dagenEtterDato, dagensDato, gårsdagensDato, sisteDagDenneMåneden, stringTilDate } from '../../../utils/dato';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import TekstBlock from '../Sanity/TekstBlock';
 
-import {
-    barnetrygdslandFeilmelding,
-    mottarBarnetrygdNåFeilmelding,
-} from './barnetrygdperiodeSpråkUtils';
+import { barnetrygdslandFeilmelding, mottarBarnetrygdNåFeilmelding } from './barnetrygdperiodeSpråkUtils';
 import { BarnetrygdperiodeSpørsmålId } from './spørsmål';
 
 export interface IUsePensjonsperiodeSkjemaParams {
@@ -64,16 +48,14 @@ export const useBarnetrygdperiodeSkjema = (personType: PersonType, barn, erDød)
             ? teksterForPersonType.barnetrygdLandFortid.feilmelding
             : teksterForPersonType.barnetrygdLandNatid.feilmelding,
         feilmeldingSpråkId: barnetrygdslandFeilmelding(periodenErAvsluttet, personType),
-        skalFeltetVises:
-            mottarEøsBarnetrygdNå.valideringsstatus === Valideringsstatus.OK || andreForelderErDød,
+        skalFeltetVises: mottarEøsBarnetrygdNå.valideringsstatus === Valideringsstatus.OK || andreForelderErDød,
         nullstillVedAvhengighetEndring: true,
         feilmeldingSpråkVerdier: { barn: barn.navn },
     });
 
     const fraDatoBarnetrygdperiode = useDatovelgerFeltForSanity({
         søknadsfelt: { id: BarnetrygdperiodeSpørsmålId.fraDatoBarnetrygdperiode, svar: '' },
-        skalFeltetVises:
-            mottarEøsBarnetrygdNå.valideringsstatus === Valideringsstatus.OK || andreForelderErDød,
+        skalFeltetVises: mottarEøsBarnetrygdNå.valideringsstatus === Valideringsstatus.OK || andreForelderErDød,
         feilmelding: teksterForPersonType.startdato.feilmelding,
         sluttdatoAvgrensning: periodenErAvsluttet ? gårsdagensDato() : dagensDato(),
     });
@@ -114,8 +96,7 @@ export const useBarnetrygdperiodeSkjema = (personType: PersonType, barn, erDød)
         },
 
         skalFeltetVises: avhengigheter =>
-            avhengigheter.mottarEøsBarnetrygdNå.valideringsstatus === Valideringsstatus.OK ||
-            andreForelderErDød,
+            avhengigheter.mottarEøsBarnetrygdNå.valideringsstatus === Valideringsstatus.OK || andreForelderErDød,
         avhengigheter: { mottarEøsBarnetrygdNå },
     });
 

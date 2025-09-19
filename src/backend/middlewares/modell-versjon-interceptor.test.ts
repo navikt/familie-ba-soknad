@@ -4,11 +4,7 @@ import { mockDeep } from 'vitest-mock-extended';
 
 import { type ApiRessurs, RessursStatus } from '@navikt/familie-typer';
 
-import {
-    modellMismatchMelding,
-    ModellMismatchRespons,
-    modellVersjon,
-} from '../../shared-utils/modellversjon';
+import { modellMismatchMelding, ModellMismatchRespons, modellVersjon } from '../../shared-utils/modellversjon';
 
 import { modellVersjonInterceptor } from './modell-versjon-interceptor';
 

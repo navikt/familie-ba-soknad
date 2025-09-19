@@ -50,8 +50,7 @@ export const DisabledApp: React.FC = () => {
         ]).then();
     };
 
-    const { vedlikeholdTittel, vedlikeholdBroedtekst, vedlikeholdVeileder } =
-        tekster().FELLES.vedlikeholdsarbeid;
+    const { vedlikeholdTittel, vedlikeholdBroedtekst, vedlikeholdVeileder } = tekster().FELLES.vedlikeholdsarbeid;
 
     return (
         <IntlProvider locale={valgtLocale} messages={tekster[valgtLocale]}>

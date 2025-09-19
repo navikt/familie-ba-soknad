@@ -43,9 +43,7 @@ const useInputFeltMedUkjent = ({
 
     const inputFelt = useFelt<string>({
         feltId: søknadsfelt ? søknadsfelt.id : uuidv4(),
-        verdi: søknadsfelt
-            ? trimWhiteSpace(formaterInitVerdiForInputMedUkjent(søknadsfelt.svar))
-            : '',
+        verdi: søknadsfelt ? trimWhiteSpace(formaterInitVerdiForInputMedUkjent(søknadsfelt.svar)) : '',
         valideringsfunksjon: (felt: FeltState<string>, avhengigheter): FeltState<string> => {
             const feltVerdi = trimWhiteSpace(felt.verdi);
             if (avhengigheter?.vetIkkeCheckbox?.verdi === ESvar.JA) {

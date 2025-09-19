@@ -35,26 +35,17 @@ export const ArbeidsperiodeOppsummering: React.FC<ArbeidsperiodeOppsummeringProp
 }) => {
     const { tekster, plainTekst } = useAppContext();
     const { valgtLocale } = useSpråkContext();
-    const {
-        arbeidsperiodeAvsluttet,
-        arbeidsperiodeland,
-        arbeidsgiver,
-        fraDatoArbeidsperiode,
-        tilDatoArbeidsperiode,
-    } = arbeidsperiode;
+    const { arbeidsperiodeAvsluttet, arbeidsperiodeland, arbeidsgiver, fraDatoArbeidsperiode, tilDatoArbeidsperiode } =
+        arbeidsperiode;
 
-    const teksterForModal: IArbeidsperiodeTekstinnhold =
-        tekster().FELLES.modaler.arbeidsperiode[personType];
+    const teksterForModal: IArbeidsperiodeTekstinnhold = tekster().FELLES.modaler.arbeidsperiode[personType];
 
     const periodenErAvsluttet =
-        arbeidsperiodeAvsluttet?.svar === ESvar.JA ||
-        (personType === PersonType.AndreForelder && erDød);
+        arbeidsperiodeAvsluttet?.svar === ESvar.JA || (personType === PersonType.AndreForelder && erDød);
 
     return (
         <PeriodeOppsummering
-            fjernPeriodeCallback={
-                fjernPeriodeCallback && (() => fjernPeriodeCallback(arbeidsperiode))
-            }
+            fjernPeriodeCallback={fjernPeriodeCallback && (() => fjernPeriodeCallback(arbeidsperiode))}
             fjernKnappSpråkId={'felles.fjernarbeidsperiode.knapp'}
             fjernKnappTekst={teksterForModal.fjernKnapp}
             nummer={nummer}
@@ -68,9 +59,7 @@ export const ArbeidsperiodeOppsummering: React.FC<ArbeidsperiodeOppsummeringProp
         >
             {arbeidsperiodeAvsluttet.svar && (
                 <OppsummeringFelt
-                    tittel={
-                        <TekstBlock block={teksterForModal.arbeidsperiodenAvsluttet.sporsmal} />
-                    }
+                    tittel={<TekstBlock block={teksterForModal.arbeidsperiodenAvsluttet.sporsmal} />}
                     søknadsvar={arbeidsperiodeAvsluttet.svar}
                 />
             )}

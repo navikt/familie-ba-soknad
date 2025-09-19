@@ -6,20 +6,11 @@ import type { Felt, ISkjema } from '@navikt/familie-skjema';
 
 import { useAppContext } from '../../../context/AppContext';
 import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../typer/barn';
-import {
-    IEøsBarnetrygdsperiode,
-    ISvalbardOppholdPeriode,
-    IUtenlandsperiode,
-} from '../../../typer/perioder';
+import { IEøsBarnetrygdsperiode, ISvalbardOppholdPeriode, IUtenlandsperiode } from '../../../typer/perioder';
 import { PersonType } from '../../../typer/personType';
 import { IUtenlandsoppholdTekstinnhold } from '../../../typer/sanity/modaler/utenlandsopphold';
 import { IOmBarnetFeltTyper } from '../../../typer/skjema';
-import {
-    dagensDato,
-    erSammeDatoSomDagensDato,
-    morgendagensDato,
-    stringTilDate,
-} from '../../../utils/dato';
+import { dagensDato, erSammeDatoSomDagensDato, morgendagensDato, stringTilDate } from '../../../utils/dato';
 import { uppercaseFørsteBokstav } from '../../../utils/visning';
 import { Barnetrygdperiode } from '../../Felleskomponenter/Barnetrygdperiode/Barnetrygdperiode';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
@@ -64,11 +55,7 @@ const Oppfølgningsspørsmål: React.FC<{
     registrerteEøsBarnetrygdsperioder,
 }) => {
     const { tekster, plainTekst } = useAppContext();
-    const {
-        erÅpen: utenlandsmodalErÅpen,
-        lukkModal: lukkUtenlandsmodal,
-        åpneModal: åpneUtenlandsmodal,
-    } = useModal();
+    const { erÅpen: utenlandsmodalErÅpen, lukkModal: lukkUtenlandsmodal, åpneModal: åpneUtenlandsmodal } = useModal();
 
     const {
         institusjonIUtlandCheckbox,
@@ -105,8 +92,7 @@ const Oppfølgningsspørsmål: React.FC<{
         hvilketLandYtelse,
     } = teksterForSteg;
 
-    const teksterForModal: IUtenlandsoppholdTekstinnhold =
-        tekster().FELLES.modaler.utenlandsopphold.barn;
+    const teksterForModal: IUtenlandsoppholdTekstinnhold = tekster().FELLES.modaler.utenlandsopphold.barn;
     const { leggTilKnapp, flerePerioder, leggTilPeriodeForklaring } = teksterForModal;
 
     const frittståendeOrdTekster = tekster().FELLES.frittståendeOrd;
@@ -115,20 +101,12 @@ const Oppfølgningsspørsmål: React.FC<{
         <>
             {barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA && (
                 <Heading level="4" size="xsmall">
-                    <TekstBlock
-                        block={opplystFosterbarn}
-                        flettefelter={{ barnetsNavn: barn.navn }}
-                    />
+                    <TekstBlock block={opplystFosterbarn} flettefelter={{ barnetsNavn: barn.navn }} />
                 </Heading>
             )}
             {barn[barnDataKeySpørsmål.oppholderSegIInstitusjon].svar === ESvar.JA && (
                 <SkjemaFieldset
-                    legend={
-                        <TekstBlock
-                            block={opplystInstitusjon}
-                            flettefelter={{ barnetsNavn: barn.navn }}
-                        />
-                    }
+                    legend={<TekstBlock block={opplystInstitusjon} flettefelter={{ barnetsNavn: barn.navn }} />}
                 >
                     <SkjemaCheckboxForSanity
                         felt={institusjonIUtlandCheckbox}
@@ -160,9 +138,7 @@ const Oppfølgningsspørsmål: React.FC<{
                         <Datovelger
                             felt={institusjonOppholdSluttdato}
                             avgrensMinDato={
-                                erSammeDatoSomDagensDato(
-                                    stringTilDate(institusjonOppholdStartdato.verdi)
-                                )
+                                erSammeDatoSomDagensDato(stringTilDate(institusjonOppholdStartdato.verdi))
                                     ? morgendagensDato()
                                     : dagensDato()
                             }
@@ -179,12 +155,7 @@ const Oppfølgningsspørsmål: React.FC<{
             )}
             {barn[barnDataKeySpørsmål.harBoddPåSvalbard].svar === ESvar.JA && (
                 <SkjemaFieldset
-                    legend={
-                        <TekstBlock
-                            block={opplystBoddPaaSvalbard}
-                            flettefelter={{ barnetsNavn: barn.navn }}
-                        />
-                    }
+                    legend={<TekstBlock block={opplystBoddPaaSvalbard} flettefelter={{ barnetsNavn: barn.navn }} />}
                 >
                     <div>
                         <BodyShort spacing>
@@ -196,9 +167,7 @@ const Oppfølgningsspørsmål: React.FC<{
                             skjema={skjema}
                             leggTilSvalbardOppholdPeriode={leggTilSvalbardOppholdPeriode}
                             fjernSvalbardOppholdPeriode={fjernSvalbardOppholdPeriode}
-                            registrerteSvalbardOppholdPerioder={
-                                skjema.felter.registrerteSvalbardOppholdPerioder
-                            }
+                            registrerteSvalbardOppholdPerioder={skjema.felter.registrerteSvalbardOppholdPerioder}
                             personType={PersonType.Barn}
                             barn={barn}
                         />
@@ -208,10 +177,7 @@ const Oppfølgningsspørsmål: React.FC<{
             {barn[barnDataKeySpørsmål.boddMindreEnn12MndINorge].svar === ESvar.JA && (
                 <SkjemaFieldset
                     legend={
-                        <TekstBlock
-                            block={opplystBarnOppholdUtenforNorge}
-                            flettefelter={{ barnetsNavn: barn.navn }}
-                        />
+                        <TekstBlock block={opplystBarnOppholdUtenforNorge} flettefelter={{ barnetsNavn: barn.navn }} />
                     }
                 >
                     <PerioderContainer

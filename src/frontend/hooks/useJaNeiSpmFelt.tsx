@@ -3,14 +3,7 @@ import React, { ReactNode, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import { ESvar } from '@navikt/familie-form-elements';
-import {
-    feil,
-    type Felt,
-    type FeltState,
-    ok,
-    useFelt,
-    Valideringsstatus,
-} from '@navikt/familie-skjema';
+import { feil, type Felt, type FeltState, ok, useFelt, Valideringsstatus } from '@navikt/familie-skjema';
 
 import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
 import { useAppContext } from '../context/AppContext';
@@ -26,8 +19,7 @@ export interface FeltGruppe {
 export const erRelevanteAvhengigheterValidert = (avhengigheter: { [key: string]: FeltGruppe }) => {
     if (
         Object.values(avhengigheter).find(
-            feltGruppe =>
-                feltGruppe && feltGruppe.hovedSpørsmål.valideringsstatus !== Valideringsstatus.OK
+            feltGruppe => feltGruppe && feltGruppe.hovedSpørsmål.valideringsstatus !== Valideringsstatus.OK
         )
     ) {
         return false;
@@ -38,9 +30,7 @@ export const erRelevanteAvhengigheterValidert = (avhengigheter: { [key: string]:
             return false;
         } else {
             return !!feltGruppe.tilhørendeFelter.find(
-                tilhørendeFelt =>
-                    tilhørendeFelt.erSynlig &&
-                    tilhørendeFelt.valideringsstatus !== Valideringsstatus.OK
+                tilhørendeFelt => tilhørendeFelt.erSynlig && tilhørendeFelt.valideringsstatus !== Valideringsstatus.OK
             );
         }
     });

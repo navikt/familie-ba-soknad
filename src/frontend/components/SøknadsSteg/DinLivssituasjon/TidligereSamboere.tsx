@@ -44,8 +44,7 @@ const TidligereSamboere: React.FC<Props> = ({
     } = useModal();
     const { tekster, plainTekst } = useAppContext();
 
-    const teksterForModal: ITidligereSamoboereTekstinnhold =
-        tekster().FELLES.modaler.tidligereSamboere.søker;
+    const teksterForModal: ITidligereSamoboereTekstinnhold = tekster().FELLES.modaler.tidligereSamboere.søker;
     const { flerePerioder, leggTilKnapp, leggTilPeriodeForklaring } = teksterForModal;
 
     const teksterForDinLivssituasjon: IDinLivssituasjonTekstinnhold = tekster().DIN_LIVSSITUASJON;
@@ -62,9 +61,7 @@ const TidligereSamboere: React.FC<Props> = ({
             />
             {hattAnnenSamboerForSøktPeriodeFelt.verdi === ESvar.JA && (
                 <PerioderContainer
-                    tittel={uppercaseFørsteBokstav(
-                        plainTekst(frittståendeOrdTekster.tidligereSamboere)
-                    )}
+                    tittel={uppercaseFørsteBokstav(plainTekst(frittståendeOrdTekster.tidligereSamboere))}
                 >
                     {tidligereSamboere.verdi.map((samboer: ITidligereSamboer, index: number) => (
                         <SamboerOpplysninger
@@ -74,18 +71,14 @@ const TidligereSamboere: React.FC<Props> = ({
                         />
                     ))}
                     <LeggTilKnapp
-                        leggTilFlereTekst={
-                            tidligereSamboere.verdi.length > 0 && plainTekst(flerePerioder)
-                        }
+                        leggTilFlereTekst={tidligereSamboere.verdi.length > 0 && plainTekst(flerePerioder)}
                         onClick={åpneLeggTilSamboerModal}
                         id={genererPeriodeId({
                             personType: PersonType.Søker,
                             spørsmålsId: DinLivssituasjonSpørsmålId.hattAnnenSamboerForSøktPeriode,
                         })}
                         feilmelding={
-                            tidligereSamboere.erSynlig &&
-                            skjema.visFeilmeldinger &&
-                            tidligereSamboere.feilmelding
+                            tidligereSamboere.erSynlig && skjema.visFeilmeldinger && tidligereSamboere.feilmelding
                         }
                     >
                         <TekstBlock block={leggTilKnapp} />

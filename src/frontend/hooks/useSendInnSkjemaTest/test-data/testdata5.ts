@@ -422,10 +422,7 @@ export const testdata5: TilKontraktTestData = {
                 dokumentasjonsbehov: 'MEKLINGSATTEST',
                 tittelSpråkId: 'dokumentasjon.meklingsattest.vedleggtittel',
                 beskrivelseSpråkId: 'dokumentasjon.meklingsattest.informasjon',
-                gjelderForBarnId: [
-                    '786fb149-2331-4dc2-9b0e-b5f4768952d5',
-                    'c766c4f4-f319-482b-aba3-7e732d518a39',
-                ],
+                gjelderForBarnId: ['786fb149-2331-4dc2-9b0e-b5f4768952d5', 'c766c4f4-f319-482b-aba3-7e732d518a39'],
                 gjelderForSøker: false,
                 harSendtInn: false,
                 opplastedeVedlegg: [],

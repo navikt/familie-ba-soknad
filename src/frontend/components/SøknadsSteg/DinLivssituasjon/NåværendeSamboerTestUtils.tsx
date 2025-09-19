@@ -10,15 +10,9 @@ const getFnrUkjent = (container: Element) =>
 const getFødselsdato = (container: Element) =>
     getById(container as HTMLElement, 'utvidet-nåværende-samboer-fødselsdato') as HTMLInputElement;
 const getFødselsdatoUkjent = (container: Element) =>
-    getById(
-        container as HTMLElement,
-        'utvidet-nåværende-samboer-fødselsdatoUkjent'
-    ) as HTMLInputElement;
+    getById(container as HTMLElement, 'utvidet-nåværende-samboer-fødselsdatoUkjent') as HTMLInputElement;
 const getSamboerFraDato = (container: Element) =>
-    getById(
-        container as HTMLElement,
-        'utvidet-nåværende-samboer-samboerFraDato'
-    ) as HTMLInputElement;
+    getById(container as HTMLElement, 'utvidet-nåværende-samboer-samboerFraDato') as HTMLInputElement;
 export const getAllNåværendeSamboerFields = (container: Element) => {
     return [
         getNavn(container),

@@ -29,10 +29,7 @@ import { ArbeidsperiodeSpørsmålsId } from './spørsmål';
 
 interface ArbeidsperiodeProps {
     skjema: ISkjema<
-        | IDinLivssituasjonFeltTyper
-        | IOmBarnetFeltTyper
-        | IEøsForSøkerFeltTyper
-        | IEøsForBarnFeltTyper,
+        IDinLivssituasjonFeltTyper | IOmBarnetFeltTyper | IEøsForSøkerFeltTyper | IEøsForBarnFeltTyper,
         string
     >;
     leggTilArbeidsperiode: (periode: IArbeidsperiode) => void;
@@ -56,14 +53,9 @@ export const Arbeidsperiode: React.FC<Props> = ({
     barn,
 }) => {
     const { tekster, plainTekst } = useAppContext();
-    const {
-        erÅpen: arbeidsmodalErÅpen,
-        lukkModal: lukkArbeidsmodal,
-        åpneModal: åpneArbeidsmodal,
-    } = useModal();
+    const { erÅpen: arbeidsmodalErÅpen, lukkModal: lukkArbeidsmodal, åpneModal: åpneArbeidsmodal } = useModal();
 
-    const teksterForModal: IArbeidsperiodeTekstinnhold =
-        tekster().FELLES.modaler.arbeidsperiode[personType];
+    const teksterForModal: IArbeidsperiodeTekstinnhold = tekster().FELLES.modaler.arbeidsperiode[personType];
     const { flerePerioder, leggTilKnapp, leggTilPeriodeForklaring } = teksterForModal;
 
     const frittståendeOrdTekster = tekster().FELLES.frittståendeOrd;
@@ -82,12 +74,7 @@ export const Arbeidsperiode: React.FC<Props> = ({
             <JaNeiSpm
                 skjema={skjema}
                 felt={arbeiderEllerArbeidetFelt}
-                spørsmålDokument={arbeidsperiodeSpørsmålDokument(
-                    gjelderUtlandet,
-                    personType,
-                    tekster,
-                    erDød
-                )}
+                spørsmålDokument={arbeidsperiodeSpørsmålDokument(gjelderUtlandet, personType, tekster, erDød)}
                 inkluderVetIkke={personType !== PersonType.Søker}
                 flettefelter={{ barnetsNavn: barn?.navn }}
             />

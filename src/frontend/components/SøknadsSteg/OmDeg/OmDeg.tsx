@@ -44,10 +44,8 @@ const OmDeg: React.FC = () => {
         utenlandsperioder,
     } = useOmdeg();
 
-    const teksterForModal: IUtenlandsoppholdTekstinnhold =
-        tekster().FELLES.modaler.utenlandsopphold.søker;
-    const { flerePerioder, leggTilPeriodeForklaring, leggTilKnapp, leggTilFeilmelding } =
-        teksterForModal;
+    const teksterForModal: IUtenlandsoppholdTekstinnhold = tekster().FELLES.modaler.utenlandsopphold.søker;
+    const { flerePerioder, leggTilPeriodeForklaring, leggTilKnapp, leggTilFeilmelding } = teksterForModal;
 
     const stegTekster = tekster()[ESanitySteg.OM_DEG];
     const {
@@ -88,19 +86,13 @@ const OmDeg: React.FC = () => {
             </KomponentGruppe>
             {skjema.felter.borPåSvalbard.erSynlig && (
                 <KomponentGruppe>
-                    <JaNeiSpm
-                        skjema={skjema}
-                        felt={skjema.felter.borPåSvalbard}
-                        spørsmålDokument={borPaaSvalbard}
-                    />
+                    <JaNeiSpm skjema={skjema} felt={skjema.felter.borPåSvalbard} spørsmålDokument={borPaaSvalbard} />
                     {skjema.felter.borPåSvalbard.verdi === ESvar.JA && (
                         <SvalbardOppholdPeriode
                             skjema={skjema}
                             leggTilSvalbardOppholdPeriode={leggTilSvalbardOppholdPeriode}
                             fjernSvalbardOppholdPeriode={fjernSvalbardOppholdPeriode}
-                            registrerteSvalbardOppholdPerioder={
-                                skjema.felter.registrerteSvalbardOppholdPerioder
-                            }
+                            registrerteSvalbardOppholdPerioder={skjema.felter.registrerteSvalbardOppholdPerioder}
                             personType={PersonType.Søker}
                         />
                     )}
@@ -112,17 +104,12 @@ const OmDeg: React.FC = () => {
                     felt={skjema.felter.værtINorgeITolvMåneder}
                     spørsmålDokument={vaertINorgeITolvMaaneder}
                     tilleggsinfo={
-                        <TekstBlock
-                            block={vaertINorgeITolvMaaneder.beskrivelse}
-                            typografi={Typografi.BodyShort}
-                        />
+                        <TekstBlock block={vaertINorgeITolvMaaneder.beskrivelse} typografi={Typografi.BodyShort} />
                     }
                 />
                 {skjema.felter.værtINorgeITolvMåneder.verdi === ESvar.NEI && (
                     <PerioderContainer
-                        tittel={uppercaseFørsteBokstav(
-                            plainTekst(frittståendeOrdTekster.utenlandsopphold)
-                        )}
+                        tittel={uppercaseFørsteBokstav(plainTekst(frittståendeOrdTekster.utenlandsopphold))}
                     >
                         {utenlandsperioder.map((periode, index) => (
                             <UtenlandsperiodeOppsummering
@@ -135,9 +122,7 @@ const OmDeg: React.FC = () => {
                         ))}
                         <LeggTilKnapp
                             onClick={åpneUtenlandsoppholdmodal}
-                            leggTilFlereTekst={
-                                utenlandsperioder.length > 0 && plainTekst(flerePerioder)
-                            }
+                            leggTilFlereTekst={utenlandsperioder.length > 0 && plainTekst(flerePerioder)}
                             id={UtenlandsoppholdSpørsmålId.utenlandsopphold}
                             feilmelding={
                                 skjema.felter.registrerteUtenlandsperioder.erSynlig &&
