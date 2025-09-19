@@ -164,37 +164,3 @@ export const dataISøknadKontraktFormat = (
         originalSpråk: valgtSpråk,
     };
 };
-
-// const lokaleTekster = (): Record<string, Record<LocaleType, string>> => {
-//     return [
-//         'hvilkebarn.barn.bosted.adressesperre',
-//         'ombarnet.fosterbarn',
-//         'ombarnet.institusjon',
-//         'ombarnet.opplystatbarnutlandopphold.info',
-//         'ombarnet.barnetrygd-eøs',
-//         'ombarnet.opplystBoddPaaSvalbard',
-//         'ombarnet.naarBoddPaaSvalbard',
-//         'omdeg.annensamboer.spm',
-//         'omdeg.personopplysninger.adressesperre.alert',
-//         'omdeg.personopplysninger.ikke-registrert.alert',
-//         'pdf.andreforelder.seksjonstittel',
-//         'pdf.hvilkebarn.seksjonstittel',
-//         'pdf.hvilkebarn.registrert-på-adresse',
-//         'pdf.hvilkebarn.ikke-registrert-på-adresse',
-//         'pdf.ombarnet.seksjonstittel',
-//         'pdf.omdeg.seksjonstittel',
-//         'pdf.bosted.seksjonstittel',
-//         'pdf.ombarna.seksjonstittel',
-//         'pdf.søker.seksjonstittel',
-//         'pdf.vedlegg.seksjonstittel',
-//         'pdf.vedlegg.lastet-opp-antall',
-//         'pdf.vedlegg.nummerering',
-//         'dokumentasjon.har-sendt-inn.spm',
-//         'dinlivssituasjon.sidetittel',
-//         'pdf.dinlivssituasjon.tidligeresamboer.seksjonstittel',
-//         'eøs-om-deg.sidetittel',
-//         'eøs-om-barn.sidetittel',
-//         ...Object.values(ESivilstand).map(hentSivilstatusSpråkId),
-//         ...Object.values(ESvar).map(jaNeiSvarTilSpråkId),
-//     ].reduce((map, tekstId) => ({ ...map, [tekstId]: hentUformaterteTekster(tekstId) }), {});
-// };
