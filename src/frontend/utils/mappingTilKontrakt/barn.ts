@@ -2,6 +2,7 @@ import {
     EøsBarnSpørsmålId,
     eøsBarnSpørsmålSpråkId,
 } from '../../components/SøknadsSteg/EøsSteg/Barn/spørsmål';
+import { OmBarnaDineSpørsmålId } from '../../components/SøknadsSteg/OmBarnaDine/spørsmål';
 import {
     OmBarnetSpørsmålsId,
     omBarnetSpørsmålSpråkId,
@@ -13,16 +14,21 @@ import { ISøker } from '../../typer/person';
 import { PersonType } from '../../typer/personType';
 import { ITekstinnhold } from '../../typer/sanity/tekstInnhold';
 import { ISøknadSpørsmålMap } from '../../typer/spørsmål';
+import { ISøknad } from '../../typer/søknad';
 import { hentTekster } from '../språk';
 
 import { andreForelderTilISøknadsfelt } from './andreForelder';
 import { tilIEøsBarnetrygsperiodeIKontraktFormat } from './eøsBarnetrygdsperiode';
 import {
+    nullableSøknadsfeltForESvarHof,
     sammeVerdiAlleSpråk,
+    sammeVerdiAlleSpråkEllerUkjent,
     sammeVerdiAlleSpråkEllerUkjentSpråktekst,
     språktekstIdFraSpørsmålId,
     spørmålISøknadsFormat,
     søknadsfeltBarn,
+    søknadsfeltForESvarHof,
+    søknadsfeltHof,
 } from './hjelpefunksjoner';
 import { idNummerTilISøknadsfelt } from './idNummer';
 import { omsorgspersonTilISøknadsfelt } from './omsorgsperson';
@@ -31,11 +37,10 @@ import { utenlandsperiodeTilISøknadsfelt } from './utenlandsperiode';
 
 export const barnISøknadsFormat = (
     barn: IBarnMedISøknad,
-    søker: ISøker,
+    søknad: ISøknad,
     tekster: ITekstinnhold,
     tilRestLocaleRecord: TilRestLocaleRecord
 ): ISøknadIKontraktBarn => {
-    /* eslint-disable @typescript-eslint/no-unused-vars */
     const {
         id,
         barnErFyltUt,
@@ -46,7 +51,6 @@ export const barnISøknadsFormat = (
         adressebeskyttelse,
         andreForelder,
         omsorgsperson,
-        institusjonOppholdSluttdato,
         svalbardOppholdPerioder,
         utenlandsperioder,
         // Nye felter under utvikling av EØS full
@@ -54,11 +58,41 @@ export const barnISøknadsFormat = (
         idNummer,
         triggetEøs,
         adresse,
-        // resterende felter, hvor alle må være av type ISøknadSpørsmål
-        ...barnSpørsmål
+        // Nytt
+        erFosterbarn,
+        erAdoptertFraUtland,
+        pågåendeSøknadFraAnnetEøsLand,
+        pågåendeSøknadHvilketLand,
+        barnetrygdFraAnnetEøsland,
+        mottarEllerMottokEøsBarnetrygd,
+        erAsylsøker,
+        andreForelderErDød,
+        oppholderSegIInstitusjon,
+        institusjonIUtland,
+        institusjonsnavn,
+        institusjonsadresse,
+        institusjonspostnummer,
+        institusjonOppholdStartdato,
+        institusjonOppholdSluttdato,
+        boddMindreEnn12MndINorge,
+        planleggerÅBoINorge12Mnd,
+        sammeForelderSomAnnetBarnMedId,
+        søkersSlektsforhold,
+        søkersSlektsforholdSpesifisering,
+        borMedAndreForelder,
+        borMedOmsorgsperson,
+        harBoddPåSvalbard,
     } = barn;
     const fellesTekster = tekster.FELLES;
-    const typetBarnSpørsmål = barnSpørsmål as unknown as ISøknadSpørsmålMap;
+    const eøsTekster = tekster.EØS_FOR_BARN;
+    const omBarnaTekster = tekster.OM_BARNA;
+    const omBarnetTekster = tekster.OM_BARNET;
+    const leggTilBarnModalTekster = tekster.FELLES.modaler.leggTilBarn;
+    const velgBarnTekster = tekster.VELG_BARN;
+
+    const søknadsfelt = søknadsfeltHof(tilRestLocaleRecord);
+    const søknadsfeltForESvar = søknadsfeltForESvarHof(tilRestLocaleRecord);
+    const nullableSøknadsfeltForESvar = nullableSøknadsfeltForESvarHof(tilRestLocaleRecord);
 
     const registertBostedVerdi = (): ERegistrertBostedType => {
         /**
@@ -85,22 +119,31 @@ export const barnISøknadsFormat = (
         }
     };
 
+    const flettefelter = { barnetsNavn: navn };
+
     return {
-        harEøsSteg: triggetEøs || søker.triggetEøs,
-        navn: søknadsfeltBarn('pdf.barn.navn.label', sammeVerdiAlleSpråk(navn), barn),
-        ident: søknadsfeltBarn(
-            'pdf.barn.ident.label',
-            ident ? sammeVerdiAlleSpråk(ident) : hentTekster('pdf.barn.ikke-oppgitt'),
-            barn
+        harEøsSteg: triggetEøs || søknad.søker.triggetEøs,
+        // navn: søknadsfeltBarn('pdf.barn.navn.label', sammeVerdiAlleSpråk(navn), barn),
+        navn: søknadsfelt(leggTilBarnModalTekster.barnetsNavnSubtittel, sammeVerdiAlleSpråk(navn)),
+        // ident: søknadsfeltBarn(
+        //     'pdf.barn.ident.label',
+        //     ident ? sammeVerdiAlleSpråk(ident) : hentTekster('pdf.barn.ikke-oppgitt'),
+        //     barn
+        // ),
+        ident: søknadsfelt(velgBarnTekster.foedselsnummerLabel, sammeVerdiAlleSpråk(ident)),
+        // registrertBostedType: søknadsfeltBarn(
+        //     'hvilkebarn.barn.bosted',
+        //     sammeVerdiAlleSpråk(registertBostedVerdi()),
+        //     barn
+        // ),
+        registrertBostedType: søknadsfelt(
+            velgBarnTekster.registrertBostedLabel,
+            sammeVerdiAlleSpråk(registertBostedVerdi())
         ),
-        registrertBostedType: søknadsfeltBarn(
-            'hvilkebarn.barn.bosted',
-            sammeVerdiAlleSpråk(registertBostedVerdi()),
-            barn
-        ),
-        alder: alder
-            ? søknadsfeltBarn('pdf.barn.alder.label', hentTekster('felles.år', { alder }), barn)
-            : null,
+        // alder: alder
+        //     ? søknadsfeltBarn('pdf.barn.alder.label', hentTekster('felles.år', { alder }), barn)
+        //     : null,
+        alder: alder ? søknadsfelt(velgBarnTekster.alderLabel, sammeVerdiAlleSpråk(alder)) : null,
         svalbardOppholdPerioder: svalbardOppholdPerioder.map((svalbardOppholdPeriode, index) =>
             svalbardOppholdPeriodeTilISøknadsfelt({
                 svalbardOppholdPeriode,
@@ -144,30 +187,81 @@ export const barnISøknadsFormat = (
             ? omsorgspersonTilISøknadsfelt(omsorgsperson, barn, tilRestLocaleRecord, tekster)
             : null,
         spørsmål: {
-            ...spørmålISøknadsFormat(
-                typetBarnSpørsmål,
-                {
-                    navn: navn,
-                    barn: navn,
-                },
-                tekster
+            // Nytt
+            adresse: adresse.svar
+                ? søknadsfelt(
+                      eøsTekster.hvorBorBarnet.sporsmal,
+                      sammeVerdiAlleSpråkEllerUkjent(
+                          tilRestLocaleRecord,
+                          adresse.svar,
+                          eøsTekster.hvorBorBarnet.checkboxLabel
+                      ),
+                      flettefelter
+                  )
+                : null,
+            erFosterbarn: søknadsfeltForESvar(
+                omBarnaTekster.hvemFosterbarn.sporsmal,
+                erFosterbarn.svar
             ),
-            [barnDataKeySpørsmål.institusjonOppholdSluttdato]: søknadsfeltBarn(
-                språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.institusjonOppholdSluttdato),
-                sammeVerdiAlleSpråkEllerUkjentSpråktekst(
-                    institusjonOppholdSluttdato.svar,
-                    omBarnetSpørsmålSpråkId['institusjon-opphold-ukjent-sluttdato']
+            oppholderSegIInstitusjon: søknadsfeltForESvar(
+                omBarnaTekster.hvemInstitusjon.sporsmal,
+                oppholderSegIInstitusjon.svar
+            ),
+            erAdoptertFraUtland: søknadsfeltForESvar(
+                omBarnaTekster.adoptertFraUtlandet.sporsmal,
+                erAdoptertFraUtland.svar
+            ),
+            pågåendeSøknadFraAnnetEøsLand: søknadsfeltForESvar(
+                omBarnetTekster.paagaaendeSoeknadYtelse.sporsmal,
+                pågåendeSøknadFraAnnetEøsLand.svar
+            ),
+            pågåendeSøknadHvilketLand: søknadsfelt(
+                omBarnetTekster.hvilketLandYtelse.sporsmal,
+                sammeVerdiAlleSpråkEllerUkjent(
+                    tilRestLocaleRecord,
+                    pågåendeSøknadHvilketLand.svar,
+                    omBarnetTekster.hvilketLandYtelse.checkboxLabel
                 ),
-                barn
+                flettefelter
             ),
-            [barnDataKeySpørsmål.adresse]: søknadsfeltBarn(
-                språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.barnetsAdresse),
-                sammeVerdiAlleSpråkEllerUkjentSpråktekst(
-                    adresse.svar,
-                    eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.barnetsAdresseVetIkke]
-                ),
-                barn
+            barnetrygdFraAnnetEøsland: søknadsfeltForESvar(
+                omBarnetTekster.paagaaendeSoeknadYtelse.sporsmal,
+                barnetrygdFraAnnetEøsland.svar
             ),
+            mottarEllerMottokEøsBarnetrygd: søknadsfeltForESvar(
+                omBarnetTekster.faarEllerHarFaattYtelseFraAnnetLand.sporsmal,
+                mottarEllerMottokEøsBarnetrygd.svar
+            ),
+            erAsylsøker: søknadsfeltForESvar(omBarnaTekster.hvemAsyl.sporsmal, erAsylsøker.svar),
+            andreForelderErDød: nullableSøknadsfeltForESvar(
+                omBarnaTekster.hvemAvBarnaAvdoedPartner.sporsmal,
+                andreForelderErDød.svar
+            ),
+            // Gammelt
+            // ...spørmålISøknadsFormat(
+            //     typetBarnSpørsmål,
+            //     {
+            //         navn: navn,
+            //         barn: navn,
+            //     },
+            //     tekster
+            // ),
+            // [barnDataKeySpørsmål.institusjonOppholdSluttdato]: søknadsfeltBarn(
+            //     språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.institusjonOppholdSluttdato),
+            //     sammeVerdiAlleSpråkEllerUkjentSpråktekst(
+            //         institusjonOppholdSluttdato.svar,
+            //         omBarnetSpørsmålSpråkId['institusjon-opphold-ukjent-sluttdato']
+            //     ),
+            //     barn
+            // ),
+            // [barnDataKeySpørsmål.adresse]: søknadsfeltBarn(
+            //     språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.barnetsAdresse),
+            //     sammeVerdiAlleSpråkEllerUkjentSpråktekst(
+            //         adresse.svar,
+            //         eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.barnetsAdresseVetIkke]
+            //     ),
+            //     barn
+            // ),
         },
     };
 };
