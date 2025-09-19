@@ -13,11 +13,7 @@ interface IOppsummeringsFeltProps {
     children?: ReactNode;
 }
 
-export const OppsummeringFelt: React.FC<IOppsummeringsFeltProps> = ({
-    tittel,
-    søknadsvar,
-    children,
-}) => {
+export const OppsummeringFelt: React.FC<IOppsummeringsFeltProps> = ({ tittel, søknadsvar, children }) => {
     let språktekstid: boolean | string = false;
     if (søknadsvar && søknadsvar in ESvar) {
         språktekstid = jaNeiSvarTilSpråkId(søknadsvar as ESvar);
@@ -30,11 +26,7 @@ export const OppsummeringFelt: React.FC<IOppsummeringsFeltProps> = ({
             {tittel && <FormSummary.Label>{tittel}</FormSummary.Label>}
             {(søknadsvar || children) && (
                 <FormSummary.Value>
-                    {søknadsvar ? (
-                        <>{språktekstid ? <SpråkTekst id={språktekstid} /> : søknadsvar}</>
-                    ) : (
-                        children
-                    )}
+                    {søknadsvar ? <>{språktekstid ? <SpråkTekst id={språktekstid} /> : søknadsvar}</> : children}
                 </FormSummary.Value>
             )}
         </FormSummary.Answer>

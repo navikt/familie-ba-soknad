@@ -10,10 +10,7 @@ const maskeringsregler = [
 ];
 
 // Exportes kun for å kunne testes
-export const fjernPersonopplysninger = (
-    event: Sentry.ErrorEvent,
-    _hint?: Sentry.EventHint
-): Sentry.ErrorEvent => {
+export const fjernPersonopplysninger = (event: Sentry.ErrorEvent, _hint?: Sentry.EventHint): Sentry.ErrorEvent => {
     const url = event.request?.url ? maskerPersonopplysninger(event.request.url) : '';
     return {
         ...event,

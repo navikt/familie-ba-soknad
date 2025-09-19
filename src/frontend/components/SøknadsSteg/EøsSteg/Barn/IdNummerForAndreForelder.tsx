@@ -41,17 +41,12 @@ const IdNummerForAndreForelder: React.FC<{
                         <IdNummer
                             key={index}
                             lesevisning={lesevisning}
-                            spørsmålSpråkId={
-                                eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.idNummerAndreForelder]
-                            }
-                            spørsmålCheckboxSpråkId={
-                                eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.idNummerUkjent]
-                            }
+                            spørsmålSpråkId={eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.idNummerAndreForelder]}
+                            spørsmålCheckboxSpråkId={eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.idNummerUkjent]}
                             feilmeldingSpråkId={'eøs-om-barn.andreforelderidnummer.feilmelding'}
                             idNummerVerdiFraSøknad={
-                                barn.andreForelder?.idNummer.find(
-                                    verdi => verdi.land === landMedPeriodeType.land
-                                )?.idnummer
+                                barn.andreForelder?.idNummer.find(verdi => verdi.land === landMedPeriodeType.land)
+                                    ?.idnummer
                             }
                             skjema={skjema}
                             settIdNummerFelter={settIdNummerFelter}

@@ -7,9 +7,7 @@ export const formaterFnr = (fødselsnummer: string) => {
 };
 
 export const formaterDatoMedUkjent = (datoMedUkjent: DatoMedUkjent, tekstForUkjent): string => {
-    return datoMedUkjent === AlternativtSvarForInput.UKJENT
-        ? tekstForUkjent
-        : formaterDato(datoMedUkjent);
+    return datoMedUkjent === AlternativtSvarForInput.UKJENT ? tekstForUkjent : formaterDato(datoMedUkjent);
 };
 
 export const formaterMånedMedUkjent = (svar: string, vetIkkeTekst, valgtLocale: LocaleType) => {

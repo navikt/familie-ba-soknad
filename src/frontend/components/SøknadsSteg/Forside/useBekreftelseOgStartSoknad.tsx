@@ -71,9 +71,7 @@ export const useBekreftelseOgStartSoknad = (): {
             brukMellomlagretVerdi();
             settBarnForSteg(barnInkludertISøknaden);
             settBarnSomTriggerEøs(
-                barnInkludertISøknaden
-                    .filter(barn => skalTriggeEøsForBarn(barn))
-                    .map(barn => barn.id)
+                barnInkludertISøknaden.filter(barn => skalTriggeEøsForBarn(barn)).map(barn => barn.id)
             );
             settSøkerTriggerEøs(søker.triggetEøs);
             settGjenpprettetFraMellomlagring(true);
@@ -111,9 +109,7 @@ export const useBekreftelseOgStartSoknad = (): {
 
     const bekreftelseOnChange = () => {
         settBekreftelseStatus(prevState => {
-            return prevState !== BekreftelseStatus.BEKREFTET
-                ? BekreftelseStatus.BEKREFTET
-                : BekreftelseStatus.NORMAL;
+            return prevState !== BekreftelseStatus.BEKREFTET ? BekreftelseStatus.BEKREFTET : BekreftelseStatus.NORMAL;
         });
     };
     return {

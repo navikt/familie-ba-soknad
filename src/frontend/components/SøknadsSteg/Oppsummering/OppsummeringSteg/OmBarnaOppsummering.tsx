@@ -117,10 +117,7 @@ const OmBarnaOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                         <OppsummeringFelt
                             tittel={
                                 <TekstBlock
-                                    block={
-                                        avdødPartnerForelderSpørsmålDokument(søknad, omBarnaTekster)
-                                            .sporsmal
-                                    }
+                                    block={avdødPartnerForelderSpørsmålDokument(søknad, omBarnaTekster).sporsmal}
                                 />
                             }
                             søknadsvar={genererListeMedBarn(barnDataKeySpørsmål.andreForelderErDød)}
@@ -136,9 +133,7 @@ const OmBarnaOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                     />
                     {søknad.harNoenAvBarnaBoddPåSvalbard.svar === ESvar.JA && (
                         <OppsummeringFelt
-                            tittel={
-                                <TekstBlock block={omBarnaTekster.hvemBoddPaaSvalbard.sporsmal} />
-                            }
+                            tittel={<TekstBlock block={omBarnaTekster.hvemBoddPaaSvalbard.sporsmal} />}
                             søknadsvar={genererListeMedBarn(barnDataKeySpørsmål.harBoddPåSvalbard)}
                         />
                     )}

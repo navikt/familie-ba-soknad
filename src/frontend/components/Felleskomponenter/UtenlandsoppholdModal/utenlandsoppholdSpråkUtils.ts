@@ -62,10 +62,7 @@ export const hentLandFeilmelding = (
     }
 };
 
-export const hentFraDatoFeilmelding = (
-    årsak: EUtenlandsoppholdÅrsak | '',
-    tekster: IUtenlandsoppholdTekstinnhold
-) => {
+export const hentFraDatoFeilmelding = (årsak: EUtenlandsoppholdÅrsak | '', tekster: IUtenlandsoppholdTekstinnhold) => {
     switch (årsak) {
         case EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_FRA_NORGE:
             return tekster.flyttetFraNorgeDato.feilmelding;
@@ -105,31 +102,20 @@ export const hentTilDatoSpørsmål = (
     }
 };
 
-export const landFeilmeldingSpråkId = (
-    årsak: EUtenlandsoppholdÅrsak | '',
-    barn?: IBarnMedISøknad
-) => (barn ? landFeilmeldingSpråkIdsBarn[årsak] : landFeilmeldingSpråkIdsSøker[årsak]);
+export const landFeilmeldingSpråkId = (årsak: EUtenlandsoppholdÅrsak | '', barn?: IBarnMedISøknad) =>
+    barn ? landFeilmeldingSpråkIdsBarn[årsak] : landFeilmeldingSpråkIdsSøker[årsak];
 
 const landFeilmeldingSpråkIdsBarn: Record<EUtenlandsoppholdÅrsak, string> = {
-    [EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_TIL_NORGE]:
-        'ombarnet.hvilketlandflyttetfra.feilmelding',
-    [EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_FRA_NORGE]:
-        'ombarnet.hvilketlandflyttettil.feilmelding',
-    [EUtenlandsoppholdÅrsak.HAR_OPPHOLDT_SEG_UTENFOR_NORGE]:
-        'ombarnet.hvilketlandoppholdti.feilmelding',
-    [EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE]:
-        'ombarnet.hvilketlandoppholderi.feilmelding',
+    [EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_TIL_NORGE]: 'ombarnet.hvilketlandflyttetfra.feilmelding',
+    [EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_FRA_NORGE]: 'ombarnet.hvilketlandflyttettil.feilmelding',
+    [EUtenlandsoppholdÅrsak.HAR_OPPHOLDT_SEG_UTENFOR_NORGE]: 'ombarnet.hvilketlandoppholdti.feilmelding',
+    [EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE]: 'ombarnet.hvilketlandoppholderi.feilmelding',
 };
 
-export const fraDatoFeilmeldingSpråkId = (
-    årsak: EUtenlandsoppholdÅrsak | '',
-    barn?: IBarnMedISøknad
-) => {
+export const fraDatoFeilmeldingSpråkId = (årsak: EUtenlandsoppholdÅrsak | '', barn?: IBarnMedISøknad) => {
     switch (årsak) {
         case EUtenlandsoppholdÅrsak.FLYTTET_PERMANENT_FRA_NORGE:
-            return barn
-                ? 'ombarnet.nårflyttetfranorge.feilmelding'
-                : 'modal.nårflyttetfra.feilmelding';
+            return barn ? 'ombarnet.nårflyttetfranorge.feilmelding' : 'modal.nårflyttetfra.feilmelding';
         default:
             return 'felles.nårstartetoppholdet.feilmelding';
     }

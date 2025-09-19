@@ -47,17 +47,14 @@ export function StegProvider(props: PropsWithChildren) {
             switch (route.route) {
                 case RouteEnum.OmBarnet:
                     const omBarnetSteg = barnForSteg.map((_barn, index) => ({
-                        path:
-                            barnRoute?.path.replace(':number', (index + 1) as unknown as string) ??
-                            '/',
+                        path: barnRoute?.path.replace(':number', (index + 1) as unknown as string) ?? '/',
                         route: RouteEnum.OmBarnet,
                         label: route.label,
                     }));
                     return omBarnetSteg.length
                         ? omBarnetSteg
                         : {
-                              path:
-                                  barnRoute?.path.replace(':number', 1 as unknown as string) ?? '/',
+                              path: barnRoute?.path.replace(':number', 1 as unknown as string) ?? '/',
                               route: RouteEnum.OmBarnet,
                               label: route.label,
                           };
@@ -66,11 +63,7 @@ export function StegProvider(props: PropsWithChildren) {
                         ? barnInkludertISøknaden.map(barn => barn.id)
                         : barnSomTriggerEøs;
                     return barnSomSkalHaEøsSteg.map((_barnId, index) => ({
-                        path:
-                            barnEøsRoute?.path.replace(
-                                ':number',
-                                (index + 1) as unknown as string
-                            ) ?? '/',
+                        path: barnEøsRoute?.path.replace(':number', (index + 1) as unknown as string) ?? '/',
                         route: RouteEnum.EøsForBarn,
                         label: route.label,
                     }));

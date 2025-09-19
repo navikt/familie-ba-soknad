@@ -33,20 +33,14 @@ const useDatovelgerFeltMedUkjent = ({
         feltId: feltId,
         verdi: initiellVerdi,
         valideringsfunksjon: (felt: FeltState<string>, avhengigheter) => {
-            if (
-                avhengigheter &&
-                avhengigheter.vetIkkeCheckbox &&
-                avhengigheter.vetIkkeCheckbox.verdi === ESvar.JA
-            ) {
+            if (avhengigheter && avhengigheter.vetIkkeCheckbox && avhengigheter.vetIkkeCheckbox.verdi === ESvar.JA) {
                 return ok(felt);
             }
 
             const feilmeldingSpråkId = avhengigheter && avhengigheter.feilmeldingSpråkId;
-            const customStartdatoFeilmelding =
-                avhengigheter && avhengigheter.customStartdatoFeilmelding;
+            const customStartdatoFeilmelding = avhengigheter && avhengigheter.customStartdatoFeilmelding;
 
-            const startdatoAvgrensningOppdatert =
-                avhengigheter && avhengigheter.startdatoAvgrensning;
+            const startdatoAvgrensningOppdatert = avhengigheter && avhengigheter.startdatoAvgrensning;
 
             return validerDato(
                 felt,

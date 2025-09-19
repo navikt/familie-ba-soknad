@@ -4,12 +4,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 
 import { AlternativtSvarForInput } from './common';
 import { Slektsforhold } from './kontrakt/generelle';
-import {
-    IArbeidsperiode,
-    IEøsBarnetrygdsperiode,
-    IPensjonsperiode,
-    IUtbetalingsperiode,
-} from './perioder';
+import { IArbeidsperiode, IEøsBarnetrygdsperiode, IPensjonsperiode, IUtbetalingsperiode } from './perioder';
 import { ISøknadSpørsmål } from './spørsmål';
 
 export interface IOmsorgsperson {

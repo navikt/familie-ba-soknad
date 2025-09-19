@@ -8,12 +8,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 
 import { ESøknadstype } from '../../../typer/kontrakt/generelle';
 import { ISøknad } from '../../../typer/søknad';
-import {
-    LesUtLocation,
-    mekkGyldigSøknad,
-    spyOnUseApp,
-    TestProvidere,
-} from '../../../utils/testing';
+import { LesUtLocation, mekkGyldigSøknad, spyOnUseApp, TestProvidere } from '../../../utils/testing';
 import { OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
 import { OmBarnetSpørsmålsId } from '../OmBarnet/spørsmål';
 import { OmDegSpørsmålId } from '../OmDeg/spørsmål';

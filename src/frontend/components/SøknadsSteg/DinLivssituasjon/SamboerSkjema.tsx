@@ -28,8 +28,7 @@ const SamboerSkjema: React.FC<{
 }> = ({ skjema, samboerFelter, erIModal = false }) => {
     const { tekster } = useAppContext();
 
-    const teksterForModal: ITidligereSamoboereTekstinnhold =
-        tekster().FELLES.modaler.tidligereSamboere.søker;
+    const teksterForModal: ITidligereSamoboereTekstinnhold = tekster().FELLES.modaler.tidligereSamboere.søker;
 
     return (
         <>
@@ -42,17 +41,11 @@ const SamboerSkjema: React.FC<{
                 <SkjemaFeltInputForSanity
                     felt={samboerFelter.fnr}
                     visFeilmeldinger={skjema.visFeilmeldinger}
-                    label={
-                        <TekstBlock block={teksterForModal.foedselsnummerEllerDNummer.sporsmal} />
-                    }
+                    label={<TekstBlock block={teksterForModal.foedselsnummerEllerDNummer.sporsmal} />}
                     disabled={samboerFelter.fnrUkjent.verdi === ESvar.JA}
                 />
                 <SkjemaCheckboxForSanity
-                    label={
-                        <TekstBlock
-                            block={teksterForModal.foedselsnummerEllerDNummer.checkboxLabel}
-                        />
-                    }
+                    label={<TekstBlock block={teksterForModal.foedselsnummerEllerDNummer.checkboxLabel} />}
                     felt={samboerFelter.fnrUkjent}
                 />
             </div>

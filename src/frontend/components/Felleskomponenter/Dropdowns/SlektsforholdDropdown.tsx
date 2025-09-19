@@ -12,10 +12,7 @@ export interface SlektsforholdDropdownProps extends StyledDropdownProps<Slektsfo
     gjelderSøker?: boolean;
 }
 
-const SlektsforholdDropdown: React.FC<SlektsforholdDropdownProps> = ({
-    gjelderSøker = false,
-    ...props
-}) => {
+const SlektsforholdDropdown: React.FC<SlektsforholdDropdownProps> = ({ gjelderSøker = false, ...props }) => {
     const intl = useIntl();
     const aktuelleSlektsforhold = gjelderSøker
         ? muligeSlektsforhold

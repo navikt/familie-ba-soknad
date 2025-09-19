@@ -27,11 +27,9 @@ const LeggTilSamboerModal: React.FC<Props> = ({
     forklaring = undefined,
 }) => {
     const { tekster } = useAppContext();
-    const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } =
-        useTidligereSamboer();
+    const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } = useTidligereSamboer();
 
-    const teksterForModal: ITidligereSamoboereTekstinnhold =
-        tekster().FELLES.modaler.tidligereSamboere.søker;
+    const teksterForModal: ITidligereSamoboereTekstinnhold = tekster().FELLES.modaler.tidligereSamboere.søker;
 
     const onLeggTil = () => {
         if (!validerFelterOgVisFeilmelding()) {

@@ -64,9 +64,7 @@ const Omsorgsperson: React.FC<OmsorgspersonProps> = ({ skjema, barn, periodeFunk
     const flettefelter = { barnetsNavn: barn.navn };
 
     return (
-        <SkjemaFieldset
-            legend={plainTekst(eøsForBarnTekster.oppgittIkkeBorFastSammenMedDeg, flettefelter)}
-        >
+        <SkjemaFieldset legend={plainTekst(eøsForBarnTekster.oppgittIkkeBorFastSammenMedDeg, flettefelter)}>
             <SkjemaFeltInputForSanity
                 felt={skjema.felter.omsorgspersonNavn}
                 visFeilmeldinger={skjema.visFeilmeldinger}
@@ -76,9 +74,7 @@ const Omsorgsperson: React.FC<OmsorgspersonProps> = ({ skjema, barn, periodeFunk
                 <SlektsforholdDropdown
                     felt={skjema.felter.omsorgspersonSlektsforhold}
                     skjema={skjema}
-                    placeholder={plainTekst(
-                        eøsForBarnTekster.valgalternativSlektsforholdPlaceholder
-                    )}
+                    placeholder={plainTekst(eøsForBarnTekster.valgalternativSlektsforholdPlaceholder)}
                     label={
                         <TekstBlock
                             block={eøsForBarnTekster.slektsforholdOmsorgsperson.sporsmal}
@@ -191,9 +187,7 @@ const Omsorgsperson: React.FC<OmsorgspersonProps> = ({ skjema, barn, periodeFunk
             <Barnetrygdperiode
                 skjema={skjema}
                 tilhørendeJaNeiSpmFelt={skjema.felter.omsorgspersonBarnetrygdFraEøs}
-                registrerteEøsBarnetrygdsperioder={
-                    skjema.felter.omsorgspersonEøsBarnetrygdsperioder
-                }
+                registrerteEøsBarnetrygdsperioder={skjema.felter.omsorgspersonEøsBarnetrygdsperioder}
                 leggTilBarnetrygdsperiode={leggTilBarnetrygdsperiodeOmsorgsperson}
                 fjernBarnetrygdsperiode={fjernBarnetrygdsperiodeOmsorgsperson}
                 barn={barn}

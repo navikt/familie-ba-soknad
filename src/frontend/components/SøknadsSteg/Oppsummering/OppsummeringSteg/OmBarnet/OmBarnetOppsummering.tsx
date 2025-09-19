@@ -5,11 +5,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { useAppContext } from '../../../../../context/AppContext';
 import { useSpråkContext } from '../../../../../context/SpråkContext';
 import { useStegContext } from '../../../../../context/StegContext';
-import {
-    andreForelderDataKeySpørsmål,
-    barnDataKeySpørsmål,
-    IBarnMedISøknad,
-} from '../../../../../typer/barn';
+import { andreForelderDataKeySpørsmål, barnDataKeySpørsmål, IBarnMedISøknad } from '../../../../../typer/barn';
 import { PersonType } from '../../../../../typer/personType';
 import { formaterDato } from '../../../../../utils/dato';
 import { landkodeTilSpråk } from '../../../../../utils/språk';
@@ -71,48 +67,30 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                     />
                     {barn[barnDataKeySpørsmål.institusjonIUtland].svar === ESvar.JA ? (
                         <OppsummeringFelt
-                            tittel={
-                                <TekstBlock block={omBarnetTekster.institusjonIUtlandetCheckbox} />
-                            }
+                            tittel={<TekstBlock block={omBarnetTekster.institusjonIUtlandetCheckbox} />}
                         />
                     ) : (
                         <>
                             <OppsummeringFelt
-                                tittel={
-                                    <TekstBlock block={omBarnetTekster.institusjonNavn.sporsmal} />
-                                }
+                                tittel={<TekstBlock block={omBarnetTekster.institusjonNavn.sporsmal} />}
                                 søknadsvar={barn[barnDataKeySpørsmål.institusjonsnavn].svar}
                             />
                             <OppsummeringFelt
-                                tittel={
-                                    <TekstBlock
-                                        block={omBarnetTekster.institusjonAdresse.sporsmal}
-                                    />
-                                }
+                                tittel={<TekstBlock block={omBarnetTekster.institusjonAdresse.sporsmal} />}
                                 søknadsvar={barn[barnDataKeySpørsmål.institusjonsadresse].svar}
                             />
                             <OppsummeringFelt
-                                tittel={
-                                    <TekstBlock
-                                        block={omBarnetTekster.institusjonPostnummer.sporsmal}
-                                    />
-                                }
+                                tittel={<TekstBlock block={omBarnetTekster.institusjonPostnummer.sporsmal} />}
                                 søknadsvar={barn[barnDataKeySpørsmål.institusjonspostnummer].svar}
                             />
                         </>
                     )}
                     <OppsummeringFelt
-                        tittel={
-                            <TekstBlock block={omBarnetTekster.institusjonStartdato.sporsmal} />
-                        }
-                        søknadsvar={formaterDato(
-                            barn[barnDataKeySpørsmål.institusjonOppholdStartdato].svar
-                        )}
+                        tittel={<TekstBlock block={omBarnetTekster.institusjonStartdato.sporsmal} />}
+                        søknadsvar={formaterDato(barn[barnDataKeySpørsmål.institusjonOppholdStartdato].svar)}
                     />
                     <OppsummeringFelt
-                        tittel={
-                            <TekstBlock block={omBarnetTekster.institusjonSluttdato.sporsmal} />
-                        }
+                        tittel={<TekstBlock block={omBarnetTekster.institusjonSluttdato.sporsmal} />}
                         søknadsvar={formaterDatoMedUkjent(
                             barn[barnDataKeySpørsmål.institusjonOppholdSluttdato].svar,
                             <TekstBlock block={omBarnetTekster.institusjonUkjentSluttCheckbox} />
@@ -193,21 +171,13 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                     />
                     {barn[barnDataKeySpørsmål.pågåendeSøknadFraAnnetEøsLand].svar && (
                         <OppsummeringFelt
-                            tittel={
-                                <TekstBlock
-                                    block={omBarnetTekster.paagaaendeSoeknadYtelse.sporsmal}
-                                />
-                            }
-                            søknadsvar={
-                                barn[barnDataKeySpørsmål.pågåendeSøknadFraAnnetEøsLand].svar
-                            }
+                            tittel={<TekstBlock block={omBarnetTekster.paagaaendeSoeknadYtelse.sporsmal} />}
+                            søknadsvar={barn[barnDataKeySpørsmål.pågåendeSøknadFraAnnetEøsLand].svar}
                         />
                     )}
                     {barn[barnDataKeySpørsmål.pågåendeSøknadHvilketLand].svar && (
                         <OppsummeringFelt
-                            tittel={
-                                <TekstBlock block={omBarnetTekster.hvilketLandYtelse.sporsmal} />
-                            }
+                            tittel={<TekstBlock block={omBarnetTekster.hvilketLandYtelse.sporsmal} />}
                             søknadsvar={landkodeTilSpråk(
                                 barn[barnDataKeySpørsmål.pågåendeSøknadHvilketLand].svar,
                                 valgtLocale
@@ -216,16 +186,8 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                     )}
                     {barn[barnDataKeySpørsmål.mottarEllerMottokEøsBarnetrygd].svar && (
                         <OppsummeringFelt
-                            tittel={
-                                <TekstBlock
-                                    block={
-                                        omBarnetTekster.faarEllerHarFaattYtelseFraAnnetLand.sporsmal
-                                    }
-                                />
-                            }
-                            søknadsvar={
-                                barn[barnDataKeySpørsmål.mottarEllerMottokEøsBarnetrygd].svar
-                            }
+                            tittel={<TekstBlock block={omBarnetTekster.faarEllerHarFaattYtelseFraAnnetLand.sporsmal} />}
+                            søknadsvar={barn[barnDataKeySpørsmål.mottarEllerMottokEøsBarnetrygd].svar}
                         />
                     )}
                     {barn.eøsBarnetrygdsperioder.map((periode, index) => (
@@ -255,8 +217,7 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                     }
                     søknadsvar={barn[barnDataKeySpørsmål.borFastMedSøker].svar}
                 />
-                {barn.andreForelder?.[andreForelderDataKeySpørsmål.skriftligAvtaleOmDeltBosted]
-                    .svar && (
+                {barn.andreForelder?.[andreForelderDataKeySpørsmål.skriftligAvtaleOmDeltBosted].svar && (
                     <OppsummeringFelt
                         tittel={
                             <TekstBlock
@@ -264,11 +225,7 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                                 flettefelter={{ barnetsNavn: barn.navn }}
                             />
                         }
-                        søknadsvar={
-                            barn.andreForelder[
-                                andreForelderDataKeySpørsmål.skriftligAvtaleOmDeltBosted
-                            ].svar
-                        }
+                        søknadsvar={barn.andreForelder[andreForelderDataKeySpørsmål.skriftligAvtaleOmDeltBosted].svar}
                     />
                 )}
             </>

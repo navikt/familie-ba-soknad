@@ -52,9 +52,7 @@ export const tilIAndreUtbetalingsperioderIKontraktFormat = ({
                 : null,
             utbetalingLand: {
                 label: tilRestLocaleRecord(
-                    periodenErAvsluttet
-                        ? tekster.utbetalingLandFortid.sporsmal
-                        : tekster.utbetalingLandNaatid.sporsmal,
+                    periodenErAvsluttet ? tekster.utbetalingLandFortid.sporsmal : tekster.utbetalingLandNaatid.sporsmal,
                     {
                         barnetsNavn: barn?.navn,
                     }
@@ -69,13 +67,10 @@ export const tilIAndreUtbetalingsperioderIKontraktFormat = ({
             },
             utbetalingTilDato: {
                 label: tilRestLocaleRecord(
-                    periodenErAvsluttet
-                        ? tekster.sluttdatoFortid.sporsmal
-                        : tekster.sluttdatoFremtid.sporsmal
+                    periodenErAvsluttet ? tekster.sluttdatoFortid.sporsmal : tekster.sluttdatoFremtid.sporsmal
                 ),
                 verdi:
-                    utbetalingTilDato.svar === AlternativtSvarForInput.UKJENT &&
-                    tekster.sluttdatoFremtid.checkboxLabel
+                    utbetalingTilDato.svar === AlternativtSvarForInput.UKJENT && tekster.sluttdatoFremtid.checkboxLabel
                         ? tilRestLocaleRecord(tekster.sluttdatoFremtid.checkboxLabel)
                         : datoTilVerdiForKontrakt(utbetalingTilDato),
             },

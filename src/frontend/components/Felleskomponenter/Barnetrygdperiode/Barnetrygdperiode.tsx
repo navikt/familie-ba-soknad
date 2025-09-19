@@ -53,12 +53,10 @@ export const Barnetrygdperiode: React.FC<BarnetrygdperiodeProps> = ({
     } = useModal();
     const { tekster, plainTekst } = useAppContext();
 
-    const teksterForModal: IBarnetrygdsperiodeTekstinnhold =
-        tekster().FELLES.modaler.barnetrygdsperiode[personType];
+    const teksterForModal: IBarnetrygdsperiodeTekstinnhold = tekster().FELLES.modaler.barnetrygdsperiode[personType];
     const { leggTilKnapp, flerePerioder, leggTilPeriodeForklaring } = teksterForModal;
 
-    const { ytelseFraAnnetLandAndreForelder, ytelseFraAnnetLandAndreForelderGjenlevende } =
-        tekster().EØS_FOR_BARN;
+    const { ytelseFraAnnetLandAndreForelder, ytelseFraAnnetLandAndreForelderGjenlevende } = tekster().EØS_FOR_BARN;
 
     const frittståendeOrdTekster = tekster().FELLES.frittståendeOrd;
 
@@ -67,19 +65,13 @@ export const Barnetrygdperiode: React.FC<BarnetrygdperiodeProps> = ({
             <JaNeiSpm
                 skjema={skjema}
                 felt={tilhørendeJaNeiSpmFelt}
-                spørsmålDokument={
-                    erDød
-                        ? ytelseFraAnnetLandAndreForelderGjenlevende
-                        : ytelseFraAnnetLandAndreForelder
-                }
+                spørsmålDokument={erDød ? ytelseFraAnnetLandAndreForelderGjenlevende : ytelseFraAnnetLandAndreForelder}
                 flettefelter={{ barnetsNavn: barn?.navn }}
                 inkluderVetIkke={personType !== PersonType.Søker}
             />
             {tilhørendeJaNeiSpmFelt.verdi === ESvar.JA && (
                 <PerioderContainer
-                    tittel={uppercaseFørsteBokstav(
-                        plainTekst(frittståendeOrdTekster.barnetrygdperioder)
-                    )}
+                    tittel={uppercaseFørsteBokstav(plainTekst(frittståendeOrdTekster.barnetrygdperioder))}
                 >
                     {registrerteEøsBarnetrygdsperioder.verdi.map((periode, index) => (
                         <BarnetrygdsperiodeOppsummering
@@ -96,8 +88,7 @@ export const Barnetrygdperiode: React.FC<BarnetrygdperiodeProps> = ({
                     <LeggTilKnapp
                         onClick={åpneBarnetrygdsmodal}
                         leggTilFlereTekst={
-                            registrerteEøsBarnetrygdsperioder.verdi.length > 0 &&
-                            plainTekst(flerePerioder)
+                            registrerteEøsBarnetrygdsperioder.verdi.length > 0 && plainTekst(flerePerioder)
                         }
                         id={genererPeriodeId({
                             personType,

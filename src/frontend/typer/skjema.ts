@@ -3,13 +3,7 @@ import { Alpha3Code } from 'i18n-iso-countries';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { barnDataKeySpørsmål } from './barn';
-import {
-    AlternativtSvarForInput,
-    BarnetsId,
-    DatoMedUkjent,
-    ESvarMedUbesvart,
-    ISODateString,
-} from './common';
+import { AlternativtSvarForInput, BarnetsId, DatoMedUkjent, ESvarMedUbesvart, ISODateString } from './common';
 import { Slektsforhold } from './kontrakt/generelle';
 import {
     IArbeidsperiode,
@@ -175,10 +169,7 @@ export interface IVelgBarnFeltTyper {
 }
 
 export interface ILeggTilBarnTyper
-    extends Omit<
-        IBarn,
-        'borMedSøker' | 'alder' | 'navn' | 'adressebeskyttelse' | 'id' | barnDataKeySpørsmål
-    > {
+    extends Omit<IBarn, 'borMedSøker' | 'alder' | 'navn' | 'adressebeskyttelse' | 'id' | barnDataKeySpørsmål> {
     erFødt: ESvarMedUbesvart;
     fornavn: string;
     etternavn: string;

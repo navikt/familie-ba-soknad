@@ -1,11 +1,5 @@
-import {
-    EøsBarnSpørsmålId,
-    eøsBarnSpørsmålSpråkId,
-} from '../../components/SøknadsSteg/EøsSteg/Barn/spørsmål';
-import {
-    OmBarnetSpørsmålsId,
-    omBarnetSpørsmålSpråkId,
-} from '../../components/SøknadsSteg/OmBarnet/spørsmål';
+import { EøsBarnSpørsmålId, eøsBarnSpørsmålSpråkId } from '../../components/SøknadsSteg/EøsSteg/Barn/spørsmål';
+import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../../components/SøknadsSteg/OmBarnet/spørsmål';
 import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../typer/barn';
 import { LocaleType } from '../../typer/common';
 import { ERegistrertBostedType, TilRestLocaleRecord } from '../../typer/kontrakt/generelle';
@@ -100,9 +94,7 @@ export const barnISøknadsFormat = (
             sammeVerdiAlleSpråk(registertBostedVerdi()),
             barn
         ),
-        alder: alder
-            ? søknadsfeltBarn('pdf.barn.alder.label', hentTekster('felles.år', { alder }), barn)
-            : null,
+        alder: alder ? søknadsfeltBarn('pdf.barn.alder.label', hentTekster('felles.år', { alder }), barn) : null,
         svalbardOppholdPerioder: svalbardOppholdPerioder.map((svalbardOppholdPeriode, index) =>
             svalbardOppholdPeriodeTilISøknadsfelt({
                 svalbardOppholdPeriode,
@@ -140,13 +132,7 @@ export const barnISøknadsFormat = (
             )
         ),
         andreForelder: andreForelder
-            ? andreForelderTilISøknadsfelt(
-                  andreForelder,
-                  barn,
-                  valgtSpråk,
-                  tilRestLocaleRecord,
-                  tekster
-              )
+            ? andreForelderTilISøknadsfelt(andreForelder, barn, valgtSpråk, tilRestLocaleRecord, tekster)
             : null,
 
         omsorgsperson: omsorgsperson

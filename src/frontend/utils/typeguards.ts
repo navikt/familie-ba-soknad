@@ -1,11 +1,7 @@
 import { Alpha3Code, getAlpha3Codes } from 'i18n-iso-countries';
 
 import { ISøknadKontraktDokumentasjon } from '../typer/kontrakt/dokumentasjon';
-import {
-    IKontraktNåværendeSamboer,
-    IKontraktTidligereSamboer,
-    ISøknadsfelt,
-} from '../typer/kontrakt/generelle';
+import { IKontraktNåværendeSamboer, IKontraktTidligereSamboer, ISøknadsfelt } from '../typer/kontrakt/generelle';
 import {
     IAndreForelderIKontraktFormat,
     IAndreForelderUtvidetIKontraktFormat,
@@ -42,9 +38,7 @@ const erGyldigTidligereSamboere = (input: ISøknadKontraktSøker): boolean =>
     input.tidligereSamboere &&
     Array.isArray(input.tidligereSamboere) &&
     input.tidligereSamboere
-        .map(tidligereSamboerSøknadsfelt =>
-            erGyldigIKontraktTidligereSamboer(tidligereSamboerSøknadsfelt.verdi['nb'])
-        )
+        .map(tidligereSamboerSøknadsfelt => erGyldigIKontraktTidligereSamboer(tidligereSamboerSøknadsfelt.verdi['nb']))
         .reduce((prev, curr) => !!(prev && curr), true);
 
 const erGyldigISøknadKontraktSøker = (input): input is ISøknadKontraktSøker =>
@@ -118,9 +112,7 @@ const erGyldigISøknadKontraktAndreForelder = (input): input is IAndreForelderIK
         'utvidet' in input &&
         erGyldigISøknadKontraktAndreForelderUtvidet(input.utvidet));
 
-const erGyldigISøknadKontraktAndreForelderUtvidet = (
-    input
-): input is IAndreForelderUtvidetIKontraktFormat =>
+const erGyldigISøknadKontraktAndreForelderUtvidet = (input): input is IAndreForelderUtvidetIKontraktFormat =>
     input && 'søkerHarBoddMedAndreForelder' in input && 'søkerFlyttetFraAndreForelderDato' in input;
 
 const erGyldigISøknadsKontraktBarn = (input): input is ISøknadIKontraktBarn =>

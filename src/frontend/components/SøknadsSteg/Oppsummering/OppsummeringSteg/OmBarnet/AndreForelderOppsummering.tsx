@@ -38,15 +38,13 @@ const AndreForelderOppsummering: React.FC<{
 
     return (
         <>
-            {andreForelder[andreForelderDataKeySpørsmål.kanIkkeGiOpplysninger].svar ===
-            ESvar.NEI ? (
+            {andreForelder[andreForelderDataKeySpørsmål.kanIkkeGiOpplysninger].svar === ESvar.NEI ? (
                 <FormSummary.Answers>
                     {andreForelder[andreForelderDataKeySpørsmål.navn].svar && (
                         <OppsummeringFelt
                             tittel={<TekstBlock block={navnAndreForelder.sporsmal} />}
                             søknadsvar={
-                                andreForelder[andreForelderDataKeySpørsmål.navn].svar !==
-                                AlternativtSvarForInput.UKJENT
+                                andreForelder[andreForelderDataKeySpørsmål.navn].svar !== AlternativtSvarForInput.UKJENT
                                     ? andreForelder[andreForelderDataKeySpørsmål.navn].svar
                                     : plainTekst(navnAndreForelder.checkboxLabel)
                             }
@@ -54,12 +52,9 @@ const AndreForelderOppsummering: React.FC<{
                     )}
                     {andreForelder[andreForelderDataKeySpørsmål.fnr].svar && (
                         <OppsummeringFelt
-                            tittel={
-                                <TekstBlock block={foedselsnummerDnummerAndreForelder.sporsmal} />
-                            }
+                            tittel={<TekstBlock block={foedselsnummerDnummerAndreForelder.sporsmal} />}
                             søknadsvar={
-                                andreForelder[andreForelderDataKeySpørsmål.fnr].svar !==
-                                AlternativtSvarForInput.UKJENT
+                                andreForelder[andreForelderDataKeySpørsmål.fnr].svar !== AlternativtSvarForInput.UKJENT
                                     ? andreForelder[andreForelderDataKeySpørsmål.fnr].svar
                                     : plainTekst(foedselsnummerDnummerAndreForelder.checkboxLabel)
                             }
@@ -82,9 +77,7 @@ const AndreForelderOppsummering: React.FC<{
                                     flettefelter={{ barnetsNavn: barn.navn }}
                                 />
                             }
-                            søknadsvar={
-                                andreForelder[andreForelderDataKeySpørsmål.arbeidUtlandet].svar
-                            }
+                            søknadsvar={andreForelder[andreForelderDataKeySpørsmål.arbeidUtlandet].svar}
                         />
                     )}
 
@@ -108,9 +101,7 @@ const AndreForelderOppsummering: React.FC<{
                                     flettefelter={{ barnetsNavn: barn.navn }}
                                 />
                             }
-                            søknadsvar={
-                                andreForelder[andreForelderDataKeySpørsmål.pensjonUtland].svar
-                            }
+                            søknadsvar={andreForelder[andreForelderDataKeySpørsmål.pensjonUtland].svar}
                         />
                     )}
 
@@ -126,9 +117,7 @@ const AndreForelderOppsummering: React.FC<{
                         />
                     ))}
 
-                    {andreForelder.utvidet[
-                        andreForelderDataKeySpørsmål.søkerHarBoddMedAndreForelder
-                    ].svar && (
+                    {andreForelder.utvidet[andreForelderDataKeySpørsmål.søkerHarBoddMedAndreForelder].svar && (
                         <OppsummeringFelt
                             tittel={
                                 <TekstBlock
@@ -137,23 +126,17 @@ const AndreForelderOppsummering: React.FC<{
                                 />
                             }
                             søknadsvar={
-                                andreForelder.utvidet[
-                                    andreForelderDataKeySpørsmål.søkerHarBoddMedAndreForelder
-                                ].svar
+                                andreForelder.utvidet[andreForelderDataKeySpørsmål.søkerHarBoddMedAndreForelder].svar
                             }
                         />
                     )}
-                    {andreForelder.utvidet[
-                        andreForelderDataKeySpørsmål.søkerFlyttetFraAndreForelderDato
-                    ].svar && (
+                    {andreForelder.utvidet[andreForelderDataKeySpørsmål.søkerFlyttetFraAndreForelderDato].svar && (
                         <OppsummeringFelt
                             tittel={<TekstBlock block={naarFlyttetFraAndreForelder.sporsmal} />}
                             søknadsvar={(() => {
                                 const svar =
-                                    andreForelder.utvidet[
-                                        andreForelderDataKeySpørsmål
-                                            .søkerFlyttetFraAndreForelderDato
-                                    ].svar;
+                                    andreForelder.utvidet[andreForelderDataKeySpørsmål.søkerFlyttetFraAndreForelderDato]
+                                        .svar;
                                 return svar === AlternativtSvarForInput.UKJENT
                                     ? plainTekst(naarFlyttetFraAndreForelder.checkboxLabel)
                                     : formaterDato(svar);

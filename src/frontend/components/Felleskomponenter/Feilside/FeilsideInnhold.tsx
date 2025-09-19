@@ -24,8 +24,8 @@ export const FeilsideInnhold: FC = () => {
                         Beklager, noe gikk galt.
                     </Heading>
                     <BodyShort spacing>
-                        En teknisk feil på våre servere gjør at siden er utilgjengelig. Dette
-                        skyldes ikke noe du gjorde.
+                        En teknisk feil på våre servere gjør at siden er utilgjengelig. Dette skyldes ikke noe du
+                        gjorde.
                     </BodyShort>
                     <BodyShort spacing>
                         Du kan prøve å vente noen minutter og{' '}
@@ -54,8 +54,8 @@ export const FeilsideInnhold: FC = () => {
                         Beklager, noe gikk galt.
                     </Heading>
                     <BodyShort spacing>
-                        Ein teknisk feil på våre servere gjer at sida er utilgjengeleg. Dette
-                        skuldast ikkje noko du gjorde.
+                        Ein teknisk feil på våre servere gjer at sida er utilgjengeleg. Dette skuldast ikkje noko du
+                        gjorde.
                     </BodyShort>
                     <BodyShort spacing>
                         Du kan prøve å vente nokre minutt og{' '}
@@ -84,8 +84,7 @@ export const FeilsideInnhold: FC = () => {
                         Something went wrong
                     </Heading>
                     <BodyShort spacing>
-                        A technical error on our servers has made the page unavailable. This is not
-                        your fault.
+                        A technical error on our servers has made the page unavailable. This is not your fault.
                     </BodyShort>
                     <BodyShort spacing>
                         You can try to wait a few minutes and{' '}

@@ -28,9 +28,7 @@ describe('LeggTilBarnModal', () => {
         expect(erFødtJaKnapp).toBeDefined();
         act(() => erFødtJaKnapp!.click());
 
-        const fødselsnummerEllerDNummerContainer = getByTestId(
-            'fødselsnummer-eller-d-nummer-container'
-        );
+        const fødselsnummerEllerDNummerContainer = getByTestId('fødselsnummer-eller-d-nummer-container');
 
         const harIkkFnrCheckbox = within(fødselsnummerEllerDNummerContainer).getByRole('checkbox');
         act(() => harIkkFnrCheckbox.click());

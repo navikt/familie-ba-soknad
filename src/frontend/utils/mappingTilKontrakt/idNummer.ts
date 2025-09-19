@@ -25,13 +25,9 @@ export const idNummerTilISøknadsfelt = (
                 land: getName(idnummerObj.land, valgtSpråk),
                 ...(barnetsNavn && { barn: barnetsNavn }),
             }),
-            verdi: sammeVerdiAlleSpråkEllerUkjentSpråktekst(
-                idnummerObj.idnummer,
-                ukjentSvarSpråkId,
-                {
-                    land: getName(idnummerObj.land, valgtSpråk),
-                }
-            ),
+            verdi: sammeVerdiAlleSpråkEllerUkjentSpråktekst(idnummerObj.idnummer, ukjentSvarSpråkId, {
+                land: getName(idnummerObj.land, valgtSpråk),
+            }),
         },
         land: {
             label: hentTekster(spørsmålSpråkId, {

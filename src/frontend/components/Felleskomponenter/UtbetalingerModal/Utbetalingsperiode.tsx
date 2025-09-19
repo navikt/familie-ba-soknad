@@ -50,8 +50,7 @@ export const Utbetalingsperiode: React.FC<Props> = ({
         åpneModal: åpneUtbetalingerModal,
     } = useModal();
 
-    const teksterForPersontype: IAndreUtbetalingerTekstinnhold =
-        tekster().FELLES.modaler.andreUtbetalinger[personType];
+    const teksterForPersontype: IAndreUtbetalingerTekstinnhold = tekster().FELLES.modaler.andreUtbetalinger[personType];
     const { flerePerioder, leggTilPeriodeForklaring } = teksterForPersontype;
 
     const frittståendeOrdTekster = tekster().FELLES.frittståendeOrd;
@@ -69,9 +68,7 @@ export const Utbetalingsperiode: React.FC<Props> = ({
             />
             {tilhørendeJaNeiSpmFelt.verdi === ESvar.JA && (
                 <PerioderContainer
-                    tittel={uppercaseFørsteBokstav(
-                        plainTekst(frittståendeOrdTekster.utbetalingsperioder)
-                    )}
+                    tittel={uppercaseFørsteBokstav(plainTekst(frittståendeOrdTekster.utbetalingsperioder))}
                 >
                     {registrerteUtbetalingsperioder.verdi.map((utbetalingsperiode, index) => (
                         <UtbetalingsperiodeOppsummering
@@ -98,9 +95,7 @@ export const Utbetalingsperiode: React.FC<Props> = ({
                             spørsmålsId: UtbetalingerSpørsmålId.utbetalingsperioder,
                             barnetsId: barn?.id,
                         })}
-                        feilmelding={
-                            skjema.visFeilmeldinger && registrerteUtbetalingsperioder.feilmelding
-                        }
+                        feilmelding={skjema.visFeilmeldinger && registrerteUtbetalingsperioder.feilmelding}
                     >
                         <TekstBlock block={teksterForPersontype.leggTilKnapp} />
                     </LeggTilKnapp>

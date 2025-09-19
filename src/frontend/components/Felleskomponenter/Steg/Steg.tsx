@@ -41,14 +41,7 @@ interface ISteg {
     children?: ReactNode;
 }
 
-const Steg: React.FC<ISteg> = ({
-    tittel,
-    guide,
-    skjema,
-    gåVidereCallback,
-    vedleggOppsummering,
-    children,
-}) => {
+const Steg: React.FC<ISteg> = ({ tittel, guide, skjema, gåVidereCallback, vedleggOppsummering, children }) => {
     const navigate = useNavigate();
     const { erÅpen: erModellVersjonModalÅpen, åpneModal: åpneModellVersjonModal } = useModal();
     const {
@@ -60,13 +53,8 @@ const Steg: React.FC<ISteg> = ({
         tekster,
         plainTekst,
     } = useAppContext();
-    const {
-        hentNesteSteg,
-        hentForrigeSteg,
-        hentNåværendeSteg,
-        hentNåværendeStegIndex,
-        erPåKvitteringsside,
-    } = useStegContext();
+    const { hentNesteSteg, hentForrigeSteg, hentNåværendeSteg, hentNåværendeStegIndex, erPåKvitteringsside } =
+        useStegContext();
     const { komFra, settKomFra } = useAppNavigationContext();
 
     const nesteRoute = hentNesteSteg();
@@ -144,8 +132,7 @@ const Steg: React.FC<ISteg> = ({
 
     const formProgressStegOppsummeringTekst = `${plainTekst(frittståendeOrdTekster.steg)} ${hentNåværendeStegIndex()} ${plainTekst(frittståendeOrdTekster.av)} ${formProgressSteg.length}`;
 
-    const visVedleggOppsummering =
-        vedleggOppsummering && skalVedleggOppsummeringVises(vedleggOppsummering);
+    const visVedleggOppsummering = vedleggOppsummering && skalVedleggOppsummeringVises(vedleggOppsummering);
 
     return (
         <>
@@ -217,9 +204,7 @@ const Steg: React.FC<ISteg> = ({
                         )}
                     </VStack>
                 </form>
-                {erModellVersjonModalÅpen && (
-                    <ModellVersjonModal erÅpen={erModellVersjonModalÅpen} />
-                )}
+                {erModellVersjonModalÅpen && <ModellVersjonModal erÅpen={erModellVersjonModalÅpen} />}
             </InnholdContainer>
         </>
     );

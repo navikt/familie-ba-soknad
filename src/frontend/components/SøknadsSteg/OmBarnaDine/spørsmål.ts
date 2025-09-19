@@ -28,18 +28,14 @@ export const omBarnaDineSpørsmålSpråkId: Record<OmBarnaDineSpørsmålId, stri
     [OmBarnaDineSpørsmålId.hvemErAdoptertFraUtland]: 'ombarna.adoptert.hvem.spm',
     [OmBarnaDineSpørsmålId.søktAsylForBarn]: 'ombarna.asyl.spm',
     [OmBarnaDineSpørsmålId.hvemErSøktAsylFor]: 'ombarna.asyl.hvem.spm',
-    [OmBarnaDineSpørsmålId.barnOppholdtSegTolvMndSammenhengendeINorge]:
-        'ombarna.oppholdtsammenhengende.spm',
+    [OmBarnaDineSpørsmålId.barnOppholdtSegTolvMndSammenhengendeINorge]: 'ombarna.oppholdtsammenhengende.spm',
     [OmBarnaDineSpørsmålId.hvemTolvMndSammenhengendeINorge]: 'ombarna.hvemavbarnaoppholdt.spm',
-    [OmBarnaDineSpørsmålId.mottarBarnetrygdForBarnFraAnnetEøsland]:
-        'ombarna.barnetrygd-eøs-fortid.spm',
+    [OmBarnaDineSpørsmålId.mottarBarnetrygdForBarnFraAnnetEøsland]: 'ombarna.barnetrygd-eøs-fortid.spm',
     [OmBarnaDineSpørsmålId.hvemBarnetrygdFraAnnetEøsland]: 'ombarna.barnetrygd-eøs-fortid.hvem.spm',
     [OmBarnaDineSpørsmålId.harNoenAvBarnaBoddPåSvalbard]: 'ombarna.boddPaaSvalbard',
     [OmBarnaDineSpørsmålId.hvemBoddePåSvalbard]: 'ombarna.boddPaaSvalbard.hvem',
     [OmBarnaDineSpørsmålId.erOppgittAvdødPartnerForelder]: 'ombarna.enkeenkemann.oppgitt.spm',
-    [OmBarnaDineSpørsmålId.erFolkeregAvdødEktefelleForelder]:
-        'ombarna.enkeenkemann.folkeregisteret-enke.spm',
-    [OmBarnaDineSpørsmålId.erFolkeregAvdødPartnerForelder]:
-        'ombarna.enkeenkemann.folkeregisteret-gjenlevende.spm',
+    [OmBarnaDineSpørsmålId.erFolkeregAvdødEktefelleForelder]: 'ombarna.enkeenkemann.folkeregisteret-enke.spm',
+    [OmBarnaDineSpørsmålId.erFolkeregAvdødPartnerForelder]: 'ombarna.enkeenkemann.folkeregisteret-gjenlevende.spm',
     [OmBarnaDineSpørsmålId.hvemAvdødPartner]: 'ombarna.enkeenkemann.hvem.spm',
 };

@@ -52,8 +52,7 @@ export const useUtbetalingerSkjema = (personType, barn, erDød) => {
         feilmelding: periodenErAvsluttet
             ? teksterForPersontype.utbetalingLandFortid.feilmelding
             : teksterForPersontype.utbetalingLandNaatid.feilmelding,
-        skalFeltetVises:
-            fårUtbetalingNå.valideringsstatus === Valideringsstatus.OK || andreForelderErDød,
+        skalFeltetVises: fårUtbetalingNå.valideringsstatus === Valideringsstatus.OK || andreForelderErDød,
         nullstillVedAvhengighetEndring: true,
         feilmeldingSpråkVerdier: barn ? { barn: barn.navn } : undefined,
     });
@@ -63,8 +62,7 @@ export const useUtbetalingerSkjema = (personType, barn, erDød) => {
             id: UtbetalingerSpørsmålId.utbetalingFraDato,
             svar: '',
         },
-        skalFeltetVises:
-            andreForelderErDød || fårUtbetalingNå.valideringsstatus === Valideringsstatus.OK,
+        skalFeltetVises: andreForelderErDød || fårUtbetalingNå.valideringsstatus === Valideringsstatus.OK,
         feilmelding: teksterForPersontype.startdato.feilmelding,
         sluttdatoAvgrensning: periodenErAvsluttet ? gårsdagensDato() : dagensDato(),
     });
@@ -85,18 +83,13 @@ export const useUtbetalingerSkjema = (personType, barn, erDød) => {
         feilmelding: periodenErAvsluttet
             ? teksterForPersontype.sluttdatoFortid.feilmelding
             : teksterForPersontype.sluttdatoFremtid.feilmelding,
-        skalFeltetVises:
-            andreForelderErDød || fårUtbetalingNå.valideringsstatus === Valideringsstatus.OK,
-        sluttdatoAvgrensning: periodenErAvsluttet
-            ? utbetalingTilDatoSluttdatoAvgrensning
-            : undefined,
+        skalFeltetVises: andreForelderErDød || fårUtbetalingNå.valideringsstatus === Valideringsstatus.OK,
+        sluttdatoAvgrensning: periodenErAvsluttet ? utbetalingTilDatoSluttdatoAvgrensning : undefined,
         startdatoAvgrensning: minTilDatoForPeriode(periodenErAvsluttet, utbetalingFraDato.verdi),
         customStartdatoFeilmelding:
             erSammeDatoSomDagensDato(stringTilDate(utbetalingFraDato.verdi)) || periodenErAvsluttet
                 ? undefined
-                : plainTekst(
-                      tekster().FELLES.formateringsfeilmeldinger.datoKanIkkeVaereTilbakeITid
-                  ),
+                : plainTekst(tekster().FELLES.formateringsfeilmeldinger.datoKanIkkeVaereTilbakeITid),
         avhengigheter: { utbetalingFraDato },
         nullstillVedAvhengighetEndring: false,
     });

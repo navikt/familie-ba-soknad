@@ -36,8 +36,7 @@ export const SvalbardOppholdPeriode: React.FC<SvalbardOppholdPeriodeProps> = ({
     const { tekster, plainTekst } = useAppContext();
     const { erÅpen, lukkModal, åpneModal } = useModal();
 
-    const teksterForModal: ISvalbardOppholdTekstinnhold =
-        tekster().FELLES.modaler.svalbardOpphold[personType];
+    const teksterForModal: ISvalbardOppholdTekstinnhold = tekster().FELLES.modaler.svalbardOpphold[personType];
     const { tittel, flerePerioder, leggTilKnapp, leggTilPeriodeForklaring } = teksterForModal;
 
     return (

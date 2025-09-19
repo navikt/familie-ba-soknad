@@ -40,10 +40,7 @@ const useLanddropdownFelt = ({
                           avhengigheter?.feilmelding ? (
                               plainTekst(avhengigheter?.feilmelding)
                           ) : (
-                              <SpråkTekst
-                                  id={avhengigheter.feilmeldingSpråkId}
-                                  values={feilmeldingSpråkVerdier}
-                              />
+                              <SpråkTekst id={avhengigheter.feilmeldingSpråkId} values={feilmeldingSpråkVerdier} />
                           )
                       ) : (
                           ''

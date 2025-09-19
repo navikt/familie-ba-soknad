@@ -36,11 +36,9 @@ export const UtenlandsperiodeOppsummering: React.FC<UtenlandsperiodeOppsummering
 }) => {
     const { valgtLocale } = useSpråkContext();
     const { plainTekst, tekster } = useAppContext();
-    const { oppholdsland, utenlandsoppholdÅrsak, oppholdslandFraDato, oppholdslandTilDato } =
-        periode;
+    const { oppholdsland, utenlandsoppholdÅrsak, oppholdslandFraDato, oppholdslandTilDato } = periode;
     const årsak = utenlandsoppholdÅrsak.svar;
-    const teksterForPersonType: IUtenlandsoppholdTekstinnhold =
-        tekster().FELLES.modaler.utenlandsopphold[personType];
+    const teksterForPersonType: IUtenlandsoppholdTekstinnhold = tekster().FELLES.modaler.utenlandsopphold[personType];
 
     return (
         <PeriodeOppsummering

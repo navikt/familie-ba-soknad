@@ -44,9 +44,7 @@ export const PensjonsperiodeOppsummering: React.FC<PensjonsperiodeOppsummeringPr
 
     return (
         <PeriodeOppsummering
-            fjernPeriodeCallback={
-                fjernPeriodeCallback && (() => fjernPeriodeCallback(pensjonsperiode))
-            }
+            fjernPeriodeCallback={fjernPeriodeCallback && (() => fjernPeriodeCallback(pensjonsperiode))}
             fjernKnappSpråkId={'felles.fjernpensjon.knapp'}
             fjernKnappTekst={teksterForModal.fjernKnapp}
             nummer={nummer}
@@ -98,9 +96,7 @@ export const PensjonsperiodeOppsummering: React.FC<PensjonsperiodeOppsummeringPr
                             }}
                         />
                     }
-                    søknadsvar={uppercaseFørsteBokstav(
-                        formaterDatostringKunMåned(pensjonFra.svar, valgtLocale)
-                    )}
+                    søknadsvar={uppercaseFørsteBokstav(formaterDatostringKunMåned(pensjonFra.svar, valgtLocale))}
                 />
             )}
             {pensjonTil.svar && (
@@ -114,9 +110,7 @@ export const PensjonsperiodeOppsummering: React.FC<PensjonsperiodeOppsummeringPr
                             }
                         />
                     }
-                    søknadsvar={uppercaseFørsteBokstav(
-                        formaterDatostringKunMåned(pensjonTil.svar, valgtLocale)
-                    )}
+                    søknadsvar={uppercaseFørsteBokstav(formaterDatostringKunMåned(pensjonTil.svar, valgtLocale))}
                 />
             )}
         </PeriodeOppsummering>

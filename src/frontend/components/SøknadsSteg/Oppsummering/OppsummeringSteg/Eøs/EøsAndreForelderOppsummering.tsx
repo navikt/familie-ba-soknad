@@ -75,12 +75,7 @@ const EøsAndreForelderOppsummering: React.FC<{
             />
             {andreForelder.adresse.svar && (
                 <OppsummeringFelt
-                    tittel={
-                        <TekstBlock
-                            block={hvorBorAndreForelder.sporsmal}
-                            flettefelter={flettefelter}
-                        />
-                    }
+                    tittel={<TekstBlock block={hvorBorAndreForelder.sporsmal} flettefelter={flettefelter} />}
                     søknadsvar={
                         andreForelder.adresse.svar === AlternativtSvarForInput.UKJENT
                             ? plainTekst(hvorBorAndreForelder.checkboxLabel)
@@ -145,15 +140,9 @@ const EøsAndreForelderOppsummering: React.FC<{
             {andreForelder.pågåendeSøknadHvilketLand.svar && (
                 <OppsummeringFelt
                     tittel={
-                        <TekstBlock
-                            block={hvilketLandSoektYtelseAndreForelder.sporsmal}
-                            flettefelter={flettefelter}
-                        />
+                        <TekstBlock block={hvilketLandSoektYtelseAndreForelder.sporsmal} flettefelter={flettefelter} />
                     }
-                    søknadsvar={landkodeTilSpråk(
-                        andreForelder.pågåendeSøknadHvilketLand.svar,
-                        valgtLocale
-                    )}
+                    søknadsvar={landkodeTilSpråk(andreForelder.pågåendeSøknadHvilketLand.svar, valgtLocale)}
                 />
             )}
             {jaNeiSpmOppsummering({

@@ -3,11 +3,7 @@ import { DeepPartial } from 'ts-essentials';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
-import {
-    andreForelderDataKeySpørsmål,
-    barnDataKeySpørsmål,
-    IBarnMedISøknad,
-} from '../../../typer/barn';
+import { andreForelderDataKeySpørsmål, barnDataKeySpørsmål, IBarnMedISøknad } from '../../../typer/barn';
 import { IBarn } from '../../../typer/person';
 import { genererInitialBarnMedISøknad, genererInitiellAndreForelder } from '../../../utils/barn';
 import { spyOnUseApp, TestProvidere } from '../../../utils/testing';
@@ -128,11 +124,7 @@ describe('useOmBarnet', () => {
         const {
             current: {
                 skjema: {
-                    felter: {
-                        andreForelderNavn,
-                        andreForelderKanIkkeGiOpplysninger,
-                        andreForelderFnr,
-                    },
+                    felter: { andreForelderNavn, andreForelderKanIkkeGiOpplysninger, andreForelderFnr },
                 },
             },
         } = result;

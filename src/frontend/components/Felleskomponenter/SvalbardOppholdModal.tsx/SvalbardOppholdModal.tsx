@@ -19,10 +19,7 @@ import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeilopps
 import SkjemaModal from '../SkjemaModal/SkjemaModal';
 
 import { SvalbardOppholdSpørsmålId } from './spørsmål';
-import {
-    useSvalbardOppholdSkjema,
-    useSvalbardOppholdSkjemaProps,
-} from './useSvalbardOppholdSkjema';
+import { useSvalbardOppholdSkjema, useSvalbardOppholdSkjemaProps } from './useSvalbardOppholdSkjema';
 
 interface Props extends useSvalbardOppholdSkjemaProps {
     erÅpen: boolean;
@@ -42,14 +39,14 @@ export const SvalbardOppholdModal: React.FC<SvalbardOppholdModalProps> = ({
     barn,
 }) => {
     const { tekster, plainTekst } = useAppContext();
-    const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } =
-        useSvalbardOppholdSkjema({ personType });
+    const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } = useSvalbardOppholdSkjema({
+        personType,
+    });
 
     const teksterForModal: ISvalbardOppholdTekstinnhold =
         tekster()[ESanitySteg.FELLES].modaler.svalbardOpphold[personType];
 
-    const { fraDatoSvalbardOpphold, tilDatoSvalbardOpphold, tilDatoSvalbardOppholdUkjent } =
-        skjema.felter;
+    const { fraDatoSvalbardOpphold, tilDatoSvalbardOpphold, tilDatoSvalbardOppholdUkjent } = skjema.felter;
 
     const onLeggTil = () => {
         if (!validerFelterOgVisFeilmelding()) {
@@ -97,10 +94,7 @@ export const SvalbardOppholdModal: React.FC<SvalbardOppholdModalProps> = ({
                 <MånedÅrVelger
                     felt={skjema.felter.tilDatoSvalbardOpphold}
                     label={<TekstBlock block={teksterForModal.sluttdato.sporsmal} />}
-                    tidligsteValgbareMåned={minTilDatoForPeriode(
-                        false,
-                        skjema.felter.fraDatoSvalbardOpphold.verdi
-                    )}
+                    tidligsteValgbareMåned={minTilDatoForPeriode(false, skjema.felter.fraDatoSvalbardOpphold.verdi)}
                     visFeilmeldinger={skjema.visFeilmeldinger}
                     dagIMåneden={DagIMåneden.SISTE_DAG}
                     disabled={skjema.felter.tilDatoSvalbardOppholdUkjent.verdi === ESvar.JA}

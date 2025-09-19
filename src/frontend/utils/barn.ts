@@ -9,11 +9,7 @@ import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/
 import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnet/spørsmål';
 import { barnDataKeySpørsmål, IAndreForelder, IBarnMedISøknad } from '../typer/barn';
 import { tomString } from '../typer/common';
-import {
-    IEøsBarnetrygdsperiode,
-    ISvalbardOppholdPeriode,
-    IUtenlandsperiode,
-} from '../typer/perioder';
+import { IEøsBarnetrygdsperiode, ISvalbardOppholdPeriode, IUtenlandsperiode } from '../typer/perioder';
 import { IBarn, IBarnRespons, IIdNummer } from '../typer/person';
 import { ISøknad } from '../typer/søknad';
 
@@ -61,10 +57,7 @@ export const genererInitiellAndreForelder = (
         },
         skriftligAvtaleOmDeltBosted: {
             id: OmBarnetSpørsmålsId.skriftligAvtaleOmDeltBosted,
-            svar:
-                andreForelder && !andreForelderErDød
-                    ? andreForelder.skriftligAvtaleOmDeltBosted.svar
-                    : null,
+            svar: andreForelder && !andreForelderErDød ? andreForelder.skriftligAvtaleOmDeltBosted.svar : null,
         },
         arbeidNorge: {
             svar: andreForelder?.arbeidNorge.svar ?? null,
@@ -278,10 +271,7 @@ export const mapBarnResponsTilBarn = (barn: IBarnRespons[], intl): IBarn[] => {
 const barnetsNavnValue = (barn: IBarnRespons, intl: IntlShape): string => {
     return barn.navn
         ? barn.navn
-        : intl.formatMessage(
-              { id: 'felles.anonym.barn.fnr' },
-              { fødselsnummer: formaterFnr(barn.ident) }
-          );
+        : intl.formatMessage({ id: 'felles.anonym.barn.fnr' }, { fødselsnummer: formaterFnr(barn.ident) });
 };
 
 export const skalSkjuleAndreForelderFelt = (barn: IBarnMedISøknad) => {
@@ -340,9 +330,7 @@ export const filtrerteRelevanteIdNummerForBarn = (
     return barn.idNummer.filter(idNummerObj => relevanteLand.includes(idNummerObj.land));
 };
 
-export const nullstilteEøsFelterForAndreForelder = (
-    andreForelder: IAndreForelder
-): IAndreForelder => ({
+export const nullstilteEøsFelterForAndreForelder = (andreForelder: IAndreForelder): IAndreForelder => ({
     ...andreForelder,
     idNummer: [],
     pensjonNorge: {

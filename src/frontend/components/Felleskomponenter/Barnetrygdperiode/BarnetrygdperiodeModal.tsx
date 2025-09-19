@@ -19,10 +19,7 @@ import { SkjemaFeltInputForSanity } from '../SkjemaFeltInput/SkjemaFeltInputForS
 import SkjemaModal from '../SkjemaModal/SkjemaModal';
 
 import { BarnetrygdperiodeSpørsmålId } from './spørsmål';
-import {
-    IUsePensjonsperiodeSkjemaParams,
-    useBarnetrygdperiodeSkjema,
-} from './useBarnetrygdperiodeSkjema';
+import { IUsePensjonsperiodeSkjemaParams, useBarnetrygdperiodeSkjema } from './useBarnetrygdperiodeSkjema';
 
 interface Props extends IUsePensjonsperiodeSkjemaParams {
     erÅpen: boolean;
@@ -41,11 +38,13 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
     forklaring = undefined,
 }) => {
     const { tekster } = useAppContext();
-    const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } =
-        useBarnetrygdperiodeSkjema(personType, barn, erDød);
+    const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } = useBarnetrygdperiodeSkjema(
+        personType,
+        barn,
+        erDød
+    );
 
-    const teksterForModal: IBarnetrygdsperiodeTekstinnhold =
-        tekster().FELLES.modaler.barnetrygdsperiode[personType];
+    const teksterForModal: IBarnetrygdsperiodeTekstinnhold = tekster().FELLES.modaler.barnetrygdsperiode[personType];
 
     const {
         mottarEøsBarnetrygdNå,
@@ -87,8 +86,7 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
     };
 
     const periodenErAvsluttet =
-        mottarEøsBarnetrygdNå.verdi === ESvar.NEI ||
-        (personType === PersonType.AndreForelder && erDød);
+        mottarEøsBarnetrygdNå.verdi === ESvar.NEI || (personType === PersonType.AndreForelder && erDød);
 
     return (
         <SkjemaModal

@@ -33,9 +33,7 @@ export enum TittelSanityApiNavn {
     vedtakOmOppholdstillatelseTittel = 'vedtakOmOppholdstillatelseTittel',
 }
 
-export const dokumentasjonsbehovTilTittelSanityApiNavn = (
-    dokumentasjonsbehov: Dokumentasjonsbehov
-): string => {
+export const dokumentasjonsbehovTilTittelSanityApiNavn = (dokumentasjonsbehov: Dokumentasjonsbehov): string => {
     switch (dokumentasjonsbehov) {
         case Dokumentasjonsbehov.ADOPSJON_DATO:
             return TittelSanityApiNavn.bekreftelsePaaAdopsjonTittel;

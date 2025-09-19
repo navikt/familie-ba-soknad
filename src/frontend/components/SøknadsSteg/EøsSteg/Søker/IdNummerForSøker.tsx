@@ -38,13 +38,10 @@ const IdNummerForSøker: React.FC<Props> = ({ lesevisning = false, skjema, settI
                     !!landMedPeriodeType.land && (
                         <IdNummer
                             spørsmålSpråkId={eøsSøkerSpørsmålSpråkId[EøsSøkerSpørsmålId.idNummer]}
-                            spørsmålCheckboxSpråkId={
-                                eøsSøkerSpørsmålSpråkId[EøsSøkerSpørsmålId.idNummerUkjent]
-                            }
+                            spørsmålCheckboxSpråkId={eøsSøkerSpørsmålSpråkId[EøsSøkerSpørsmålId.idNummerUkjent]}
                             feilmeldingSpråkId={'eøs-om-deg.dittidnummer.feilmelding'}
                             idNummerVerdiFraSøknad={
-                                søker.idNummer.find(verdi => verdi.land === landMedPeriodeType.land)
-                                    ?.idnummer
+                                søker.idNummer.find(verdi => verdi.land === landMedPeriodeType.land)?.idnummer
                             }
                             lesevisning={lesevisning}
                             skjema={skjema}

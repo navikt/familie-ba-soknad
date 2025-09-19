@@ -123,18 +123,12 @@ const DinLivssituasjon: React.FC = () => {
                         skjema={skjema}
                         leggTilTidligereSamboer={leggTilTidligereSamboer}
                         fjernTidligereSamboer={fjernTidligereSamboer}
-                        hattAnnenSamboerForSøktPeriodeFelt={
-                            skjema.felter.hattAnnenSamboerForSøktPeriode
-                        }
+                        hattAnnenSamboerForSøktPeriodeFelt={skjema.felter.hattAnnenSamboerForSøktPeriode}
                         tidligereSamboere={skjema.felter.tidligereSamboere}
                     />
                 </>
             )}
-            <JaNeiSpm
-                skjema={skjema}
-                felt={skjema.felter.erAsylsøker}
-                spørsmålDokument={erAsylsoeker}
-            />
+            <JaNeiSpm skjema={skjema} felt={skjema.felter.erAsylsøker} spørsmålDokument={erAsylsoeker} />
             <Arbeidsperiode
                 skjema={skjema}
                 leggTilArbeidsperiode={leggTilArbeidsperiode}

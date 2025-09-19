@@ -15,10 +15,7 @@ import { IBarn } from '../typer/person';
 import { ESanitySivilstandApiKey, LocaleRecordString } from '../typer/sanity/sanity';
 import { Årsak } from '../typer/utvidet';
 
-export const hentÅrsak = (
-    årsak: Årsak,
-    tekster: IDinLivssituasjonTekstinnhold
-): LocaleRecordString => {
+export const hentÅrsak = (årsak: Årsak, tekster: IDinLivssituasjonTekstinnhold): LocaleRecordString => {
     switch (årsak) {
         case Årsak.SEPARERT:
             return tekster.valgalternativSeparert;
@@ -58,10 +55,7 @@ export const toSlektsforholdSpråkId = (slektsforhold: Slektsforhold): string =>
     }
 };
 
-export const hentSlektsforhold = (
-    slektsforhold: Slektsforhold,
-    tekster: IEøsForBarnTekstinnhold
-) => {
+export const hentSlektsforhold = (slektsforhold: Slektsforhold, tekster: IEøsForBarnTekstinnhold) => {
     switch (slektsforhold) {
         case Slektsforhold.FORELDER:
             return tekster.valgalternativForelder;
@@ -78,10 +72,7 @@ export const hentSlektsforhold = (
 
 export const landkodeTilSpråk = (landkode: Alpha3Code | '', locale: string): string => {
     const alpha3ToAlpha2Land = landkode && alpha3ToAlpha2(landkode);
-    return (
-        (alpha3ToAlpha2Land && getName(alpha3ToAlpha2Land, locale)) ??
-        AlternativtSvarForInput.UKJENT
-    );
+    return (alpha3ToAlpha2Land && getName(alpha3ToAlpha2Land, locale)) ?? AlternativtSvarForInput.UKJENT;
 };
 
 const stripSpråkfil = (språkfilInnhold: Record<string, string>): Record<string, string> => {
@@ -101,10 +92,7 @@ const texts: Record<LocaleType, Record<string, string>> = {
 
 const cache = createIntlCache();
 
-export const hentTekster = (
-    tekstId: string,
-    formatValues: object = {}
-): Record<LocaleType, string> => {
+export const hentTekster = (tekstId: string, formatValues: object = {}): Record<LocaleType, string> => {
     const map = {};
 
     for (const locale in LocaleType) {
@@ -151,9 +139,7 @@ export const hentSivilstatusSpråkId = (statuskode?: ESivilstand) => {
     }
 };
 
-export const sivilstandTilSanitySivilstandApiKey = (
-    statuskode: ESivilstand
-): ESanitySivilstandApiKey => {
+export const sivilstandTilSanitySivilstandApiKey = (statuskode: ESivilstand): ESanitySivilstandApiKey => {
     switch (statuskode) {
         case ESivilstand.UGIFT:
             return ESanitySivilstandApiKey.UGIFT;

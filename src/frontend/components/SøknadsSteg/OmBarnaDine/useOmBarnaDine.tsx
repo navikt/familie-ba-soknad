@@ -25,15 +25,12 @@ export const useOmBarnaDine = (): {
     validerAlleSynligeFelter: () => void;
 } => {
     const { søknad, settSøknad, tekster } = useAppContext();
-    const { skalTriggeEøsForBarn, barnSomTriggerEøs, settBarnSomTriggerEøs, erEøsLand } =
-        useEøsContext();
+    const { skalTriggeEøsForBarn, barnSomTriggerEøs, settBarnSomTriggerEøs, erEøsLand } = useEøsContext();
 
     const skalNullstilleSvalbardfelter =
         søknad.søker.borPåSvalbard.svar !== ESvar.JA &&
         (søknad.harNoenAvBarnaBoddPåSvalbard.svar ||
-            søknad.barnInkludertISøknaden.find(
-                barn => barn[barnDataKeySpørsmål.harBoddPåSvalbard].svar === ESvar.JA
-            ));
+            søknad.barnInkludertISøknaden.find(barn => barn[barnDataKeySpørsmål.harBoddPåSvalbard].svar === ESvar.JA));
 
     const teksterForSteg = tekster().OM_BARNA;
 
@@ -160,12 +157,7 @@ export const useOmBarnaDine = (): {
     });
 
     useEffect(() => {
-        const oppdaterteBarn = genererOppdaterteBarn(
-            søknad,
-            skjema,
-            skalTriggeEøsForBarn,
-            erEøsLand
-        );
+        const oppdaterteBarn = genererOppdaterteBarn(søknad, skjema, skalTriggeEøsForBarn, erEøsLand);
 
         oppdaterteBarn.forEach(oppdatertBarn => {
             const skalTriggeEøs = skalTriggeEøsForBarn(oppdatertBarn);
@@ -177,9 +169,7 @@ export const useOmBarnaDine = (): {
                     if (skalTriggeEøs) {
                         return prevState.concat(oppdatertBarn.id);
                     } else {
-                        return prevState.filter(
-                            barnSomTriggetEøsId => barnSomTriggetEøsId !== oppdatertBarn.id
-                        );
+                        return prevState.filter(barnSomTriggetEøsId => barnSomTriggetEøsId !== oppdatertBarn.id);
                     }
                 });
             }
@@ -196,15 +186,9 @@ export const useOmBarnaDine = (): {
     }, [søknad.søker.borPåSvalbard]);
 
     const oppdaterSøknad = () => {
-        const oppdaterteBarn = genererOppdaterteBarn(
-            søknad,
-            skjema,
-            skalTriggeEøsForBarn,
-            erEøsLand
-        );
+        const oppdaterteBarn = genererOppdaterteBarn(søknad, skjema, skalTriggeEøsForBarn, erEøsLand);
 
-        const skalNullstilleEøsForSøker =
-            !søknad.søker.triggetEøs && !oppdaterteBarn.find(barn => barn.triggetEøs);
+        const skalNullstilleEøsForSøker = !søknad.søker.triggetEøs && !oppdaterteBarn.find(barn => barn.triggetEøs);
 
         settSøknad({
             ...søknad,

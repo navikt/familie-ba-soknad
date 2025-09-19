@@ -19,12 +19,7 @@ import { IStartPåNyttModal } from './modaler/startPåNytt';
 import { ISvalbardOppholdTekstinnhold } from './modaler/svalbardOpphold';
 import { ITidligereSamoboereTekstinnhold } from './modaler/tidligereSamboere';
 import { IUtenlandsoppholdTekstinnhold } from './modaler/utenlandsopphold';
-import {
-    ESanitySteg,
-    ISanitySpørsmålDokument,
-    LocaleRecordBlock,
-    LocaleRecordString,
-} from './sanity';
+import { ESanitySteg, ISanitySpørsmålDokument, LocaleRecordBlock, LocaleRecordString } from './sanity';
 
 export enum SanityPersonType {
     ANDRE_FORELDER = 'ANDRE_FORELDER',

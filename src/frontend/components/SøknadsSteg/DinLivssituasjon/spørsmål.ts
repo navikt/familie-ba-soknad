@@ -67,8 +67,7 @@ export const tidligereSamboerSpørsmålSpråkId: Record<TidligereSamboerSpørsm�
     [TidligereSamboerSpørsmålId.tidligereSamboerFnr]: samboerSpråkIder.fnr,
     [TidligereSamboerSpørsmålId.tidligereSamboerFnrUkjent]: samboerSpråkIder.fnrUkjent,
     [TidligereSamboerSpørsmålId.tidligereSamboerFødselsdato]: samboerSpråkIder.fødselsdato,
-    [TidligereSamboerSpørsmålId.tidligereSamboerFødselsdatoUkjent]:
-        samboerSpråkIder.fødselsdatoUkjent,
+    [TidligereSamboerSpørsmålId.tidligereSamboerFødselsdatoUkjent]: samboerSpråkIder.fødselsdatoUkjent,
     [TidligereSamboerSpørsmålId.tidligereSamboerFraDato]: samboerSpråkIder.samboerFraDato,
     [TidligereSamboerSpørsmålId.tidligereSamboerTilDato]: samboerSpråkIder.samboerTilDato,
 };

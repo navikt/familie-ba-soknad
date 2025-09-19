@@ -21,18 +21,11 @@ import { OmBarnaDineSpørsmålId } from './spørsmål';
 export const genererSvarForSpørsmålBarn = (barn: IBarnMedISøknad, felt: Felt<string[]>): ESvar =>
     felt.verdi.includes(barn.id) ? ESvar.JA : ESvar.NEI;
 
-const genererSvarForOppfølgningspørsmålBarn = (
-    svarPåGrunnSpørsmål,
-    søknadsfelt,
-    nullstillingsVerdi
-) => {
+const genererSvarForOppfølgningspørsmålBarn = (svarPåGrunnSpørsmål, søknadsfelt, nullstillingsVerdi) => {
     return svarPåGrunnSpørsmål === ESvar.JA ? søknadsfelt.svar : nullstillingsVerdi;
 };
 
-export const avdødPartnerForelderSpørsmålDokument = (
-    søknad: ISøknad,
-    omBarnaTekster: IOmBarnaTekstinnhold
-) => {
+export const avdødPartnerForelderSpørsmålDokument = (søknad: ISøknad, omBarnaTekster: IOmBarnaTekstinnhold) => {
     switch (søknad.erAvdødPartnerForelder.id) {
         case OmBarnaDineSpørsmålId.erOppgittAvdødPartnerForelder:
             return omBarnaTekster.oppgittEnkeEnkemann;
@@ -55,10 +48,7 @@ export const genererOppdaterteBarn = (
             skjema.felter.hvemOppholderSegIInstitusjon
         );
 
-        const harBoddPåSvalbard: ESvar = genererSvarForSpørsmålBarn(
-            barn,
-            skjema.felter.hvemHarBoddPåSvalbard
-        );
+        const harBoddPåSvalbard: ESvar = genererSvarForSpørsmålBarn(barn, skjema.felter.hvemHarBoddPåSvalbard);
 
         const boddMindreEnn12MndINorge: ESvar = genererSvarForSpørsmålBarn(
             barn,
@@ -69,22 +59,13 @@ export const genererOppdaterteBarn = (
             barn,
             skjema.felter.hvemBarnetrygdFraAnnetEøsland
         );
-        const andreForelderErDød: ESvar = genererSvarForSpørsmålBarn(
-            barn,
-            skjema.felter.hvemAvdødPartner
-        );
+        const andreForelderErDød: ESvar = genererSvarForSpørsmålBarn(barn, skjema.felter.hvemAvdødPartner);
 
-        const erFosterbarn: ESvar = genererSvarForSpørsmålBarn(
-            barn,
-            skjema.felter.hvemErFosterbarn
-        );
+        const erFosterbarn: ESvar = genererSvarForSpørsmålBarn(barn, skjema.felter.hvemErFosterbarn);
 
-        const svalbardOppholdPerioder =
-            harBoddPåSvalbard === ESvar.JA ? barn.svalbardOppholdPerioder : [];
-        const utenlandsperioder =
-            boddMindreEnn12MndINorge === ESvar.JA ? barn.utenlandsperioder : [];
-        const eøsBarnetrygdsperioder =
-            mottarBarnetrygdFraAnnetEøsland === ESvar.JA ? barn.eøsBarnetrygdsperioder : [];
+        const svalbardOppholdPerioder = harBoddPåSvalbard === ESvar.JA ? barn.svalbardOppholdPerioder : [];
+        const utenlandsperioder = boddMindreEnn12MndINorge === ESvar.JA ? barn.utenlandsperioder : [];
+        const eøsBarnetrygdsperioder = mottarBarnetrygdFraAnnetEøsland === ESvar.JA ? barn.eøsBarnetrygdsperioder : [];
 
         const pågåendeSøknadFraAnnetEøsLand: ESvar | null = genererSvarForOppfølgningspørsmålBarn(
             mottarBarnetrygdFraAnnetEøsland,
@@ -99,13 +80,9 @@ export const genererOppdaterteBarn = (
         );
 
         const borMedAnnenForelderErIkkeRelevant = () =>
-            erFosterbarn === ESvar.JA ||
-            oppholderSegIInstitusjon === ESvar.JA ||
-            andreForelderErDød === ESvar.JA;
+            erFosterbarn === ESvar.JA || oppholderSegIInstitusjon === ESvar.JA || andreForelderErDød === ESvar.JA;
 
-        const borMedAndreForelder = borMedAnnenForelderErIkkeRelevant()
-            ? null
-            : barn.borMedAndreForelder.svar;
+        const borMedAndreForelder = borMedAnnenForelderErIkkeRelevant() ? null : barn.borMedAndreForelder.svar;
 
         const borMedOmsorgsperson: ESvar | null = skalViseBorMedOmsorgsperson(
             borMedAndreForelder,
@@ -146,10 +123,7 @@ export const genererOppdaterteBarn = (
             andreForelder:
                 erFosterbarn === ESvar.JA
                     ? null
-                    : genererInitiellAndreForelder(
-                          barn.andreForelder,
-                          andreForelderErDød === ESvar.JA
-                      ),
+                    : genererInitiellAndreForelder(barn.andreForelder, andreForelderErDød === ESvar.JA),
             omsorgsperson,
             [barnDataKeySpørsmål.borMedAndreForelder]: {
                 ...barn[barnDataKeySpørsmål.borMedAndreForelder],
@@ -275,8 +249,7 @@ export const genererOppdaterteBarn = (
                 ...barn[barnDataKeySpørsmål.adresse],
                 svar:
                     erFosterbarn === ESvar.JA ||
-                    (barn.andreForelder?.kanIkkeGiOpplysninger &&
-                        barn.borMedAndreForelder.svar === ESvar.JA)
+                    (barn.andreForelder?.kanIkkeGiOpplysninger && barn.borMedAndreForelder.svar === ESvar.JA)
                         ? barn.adresse.svar
                         : '',
             },

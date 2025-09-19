@@ -57,10 +57,7 @@ const prepareSecuredRequest = async (req: Request, applicationName: ApplicationN
         throw validation.error;
     }
 
-    const obo = await requestOboToken(
-        token,
-        `${process.env.NAIS_CLUSTER_NAME}:teamfamilie:${applicationName}`
-    );
+    const obo = await requestOboToken(token, `${process.env.NAIS_CLUSTER_NAME}:teamfamilie:${applicationName}`);
     if (obo.ok === false) {
         logError('Feil under veksling av token: ', undefined, { error: obo.error });
         throw obo.error;

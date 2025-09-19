@@ -48,8 +48,7 @@ export const useEøsForSøker = (): {
         tekster()[ESanitySteg.FELLES].modaler.arbeidsperiode.søker;
     const teksterForPensjonsperiode: IPensjonsperiodeTekstinnhold =
         tekster()[ESanitySteg.FELLES].modaler.pensjonsperiode.søker;
-    const teksterForAndreUtbetalinger =
-        tekster()[ESanitySteg.FELLES].modaler.andreUtbetalinger.søker;
+    const teksterForAndreUtbetalinger = tekster()[ESanitySteg.FELLES].modaler.andreUtbetalinger.søker;
 
     const [idNummerFelter, settIdNummerFelter] = useState<Felt<string>[]>([]);
 
@@ -154,8 +153,7 @@ export const useEøsForSøker = (): {
         ...søknad.søker,
         idNummer: idNummerFelter.map(felt => ({
             land: felt.id.split(idNummerKeyPrefix)[1] as Alpha3Code,
-            idnummer:
-                trimWhiteSpace(felt.verdi) === '' ? AlternativtSvarForInput.UKJENT : felt.verdi,
+            idnummer: trimWhiteSpace(felt.verdi) === '' ? AlternativtSvarForInput.UKJENT : felt.verdi,
         })),
         adresseISøkeperiode: {
             ...søknad.søker.adresseISøkeperiode,
@@ -167,26 +165,20 @@ export const useEøsForSøker = (): {
         },
 
         arbeidsperioderNorge:
-            skjema.felter.arbeidINorge.verdi === ESvar.JA
-                ? skjema.felter.registrerteArbeidsperioder.verdi
-                : [],
+            skjema.felter.arbeidINorge.verdi === ESvar.JA ? skjema.felter.registrerteArbeidsperioder.verdi : [],
 
         pensjonNorge: {
             ...søknad.søker.pensjonNorge,
             svar: skjema.felter.pensjonNorge.verdi,
         },
         pensjonsperioderNorge:
-            skjema.felter.pensjonNorge.verdi === ESvar.JA
-                ? skjema.felter.registrertePensjonsperioder.verdi
-                : [],
+            skjema.felter.pensjonNorge.verdi === ESvar.JA ? skjema.felter.registrertePensjonsperioder.verdi : [],
         andreUtbetalinger: {
             ...søknad.søker.andreUtbetalinger,
             svar: skjema.felter.andreUtbetalinger.verdi,
         },
         andreUtbetalingsperioder:
-            skjema.felter.andreUtbetalinger.verdi === ESvar.JA
-                ? skjema.felter.registrerteAndreUtbetalinger.verdi
-                : [],
+            skjema.felter.andreUtbetalinger.verdi === ESvar.JA ? skjema.felter.registrerteAndreUtbetalinger.verdi : [],
     });
 
     const { skjema, kanSendeSkjema, valideringErOk, validerAlleSynligeFelter } = useSkjema<

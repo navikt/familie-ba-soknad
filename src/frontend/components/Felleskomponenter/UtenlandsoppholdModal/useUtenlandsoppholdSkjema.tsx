@@ -22,21 +22,14 @@ import {
 } from '../../../utils/utenlandsopphold';
 
 import { UtenlandsoppholdSpørsmålId } from './spørsmål';
-import {
-    hentFraDatoFeilmelding,
-    hentLandFeilmelding,
-    landFeilmeldingSpråkId,
-} from './utenlandsoppholdSpråkUtils';
+import { hentFraDatoFeilmelding, hentLandFeilmelding, landFeilmeldingSpråkId } from './utenlandsoppholdSpråkUtils';
 
 export interface IUseUtenlandsoppholdSkjemaParams {
     personType: PersonType;
     barn?: IBarnMedISøknad;
 }
 
-export const useUtenlandsoppholdSkjema = ({
-    personType,
-    barn,
-}: IUseUtenlandsoppholdSkjemaParams) => {
+export const useUtenlandsoppholdSkjema = ({ personType, barn }: IUseUtenlandsoppholdSkjemaParams) => {
     const { tekster, plainTekst } = useAppContext();
     const teksterForPersontype: IUtenlandsoppholdTekstinnhold =
         tekster()[ESanitySteg.FELLES].modaler.utenlandsopphold[personType];
@@ -45,9 +38,7 @@ export const useUtenlandsoppholdSkjema = ({
         feltId: UtenlandsoppholdSpørsmålId.årsakUtenlandsopphold,
         verdi: '',
         valideringsfunksjon: (felt: FeltState<EUtenlandsoppholdÅrsak | ''>) =>
-            felt.verdi !== ''
-                ? ok(felt)
-                : feil(felt, plainTekst(teksterForPersontype.periodeBeskrivelse.feilmelding)),
+            felt.verdi !== '' ? ok(felt) : feil(felt, plainTekst(teksterForPersontype.periodeBeskrivelse.feilmelding)),
     });
 
     useEffect(() => {
@@ -80,8 +71,7 @@ export const useUtenlandsoppholdSkjema = ({
         feltId: UtenlandsoppholdSpørsmålId.tilDatoUtenlandsoppholdVetIkke,
         skalFeltetVises: avhengigheter =>
             !!avhengigheter.utenlandsoppholdÅrsak.verdi &&
-            avhengigheter.utenlandsoppholdÅrsak.verdi ===
-                EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE,
+            avhengigheter.utenlandsoppholdÅrsak.verdi === EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE,
         avhengigheter: { utenlandsoppholdÅrsak },
     });
 
@@ -100,9 +90,7 @@ export const useUtenlandsoppholdSkjema = ({
         customStartdatoFeilmelding: !harTilhørendeFomFelt(utenlandsoppholdÅrsak.verdi)
             ? utenlandsoppholdÅrsak.verdi === EUtenlandsoppholdÅrsak.OPPHOLDER_SEG_UTENFOR_NORGE
                 ? plainTekst(tekster().FELLES.formateringsfeilmeldinger.datoKanIkkeVaereTilbakeITid)
-                : plainTekst(
-                      tekster().FELLES.formateringsfeilmeldinger.datoKanIkkeVaere12MndTilbake
-                  )
+                : plainTekst(tekster().FELLES.formateringsfeilmeldinger.datoKanIkkeVaere12MndTilbake)
             : undefined,
         avhengigheter: { utenlandsoppholdÅrsak, oppholdslandFraDato },
         nullstillVedAvhengighetEndring: false,

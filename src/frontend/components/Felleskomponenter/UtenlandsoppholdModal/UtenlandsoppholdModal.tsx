@@ -25,10 +25,7 @@ import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeilopps
 import SkjemaModal from '../SkjemaModal/SkjemaModal';
 
 import { UtenlandsoppholdSpørsmålId } from './spørsmål';
-import {
-    IUseUtenlandsoppholdSkjemaParams,
-    useUtenlandsoppholdSkjema,
-} from './useUtenlandsoppholdSkjema';
+import { IUseUtenlandsoppholdSkjemaParams, useUtenlandsoppholdSkjema } from './useUtenlandsoppholdSkjema';
 import {
     hentFraDatoSpørsmål,
     hentLandSpørsmål,
@@ -53,11 +50,10 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
     forklaring = undefined,
 }) => {
     const { tekster, plainTekst } = useAppContext();
-    const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } =
-        useUtenlandsoppholdSkjema({
-            personType,
-            barn,
-        });
+    const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } = useUtenlandsoppholdSkjema({
+        personType,
+        barn,
+    });
 
     const teksterForPersonType: IUtenlandsoppholdTekstinnhold =
         tekster()[ESanitySteg.FELLES].modaler.utenlandsopphold[personType];
@@ -122,12 +118,7 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
             >
                 {Object.keys(EUtenlandsoppholdÅrsak).map((årsak, number) => (
                     <option key={number} value={årsak}>
-                        {plainTekst(
-                            hentUtenlandsoppholdÅrsak(
-                                årsak as EUtenlandsoppholdÅrsak,
-                                teksterForPersonType
-                            )
-                        )}
+                        {plainTekst(hentUtenlandsoppholdÅrsak(årsak as EUtenlandsoppholdÅrsak, teksterForPersonType))}
                     </option>
                 ))}
             </StyledDropdown>
@@ -136,10 +127,7 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
                 skjema={skjema}
                 label={
                     <TekstBlock
-                        block={hentLandSpørsmål(
-                            skjema.felter.utenlandsoppholdÅrsak.verdi,
-                            teksterForPersonType
-                        )}
+                        block={hentLandSpørsmål(skjema.felter.utenlandsoppholdÅrsak.verdi, teksterForPersonType)}
                         flettefelter={{ barnetsNavn: barn?.navn }}
                     />
                 }
@@ -151,21 +139,15 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
                     felt={skjema.felter.oppholdslandFraDato}
                     label={
                         <TekstBlock
-                            block={hentFraDatoSpørsmål(
-                                skjema.felter.utenlandsoppholdÅrsak.verdi,
-                                teksterForPersonType
-                            )}
+                            block={hentFraDatoSpørsmål(skjema.felter.utenlandsoppholdÅrsak.verdi, teksterForPersonType)}
                             flettefelter={{ barnetsNavn: barn?.navn }}
                         />
                     }
                     skjema={skjema}
-                    avgrensMaxDato={hentMaxAvgrensningPåFraDato(
-                        skjema.felter.utenlandsoppholdÅrsak.verdi
-                    )}
+                    avgrensMaxDato={hentMaxAvgrensningPåFraDato(skjema.felter.utenlandsoppholdÅrsak.verdi)}
                 />
             )}
-            {(skjema.felter.oppholdslandTilDato.erSynlig ||
-                skjema.felter.oppholdslandTilDato.erSynlig) && (
+            {(skjema.felter.oppholdslandTilDato.erSynlig || skjema.felter.oppholdslandTilDato.erSynlig) && (
                 <div>
                     {skjema.felter.oppholdslandTilDato.erSynlig && (
                         <Datovelger
@@ -180,12 +162,8 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
                                 />
                             }
                             skjema={skjema}
-                            avgrensMinDato={hentMinAvgrensningPåTilDato(
-                                skjema.felter.utenlandsoppholdÅrsak.verdi
-                            )}
-                            avgrensMaxDato={hentMaxAvgrensningPåTilDato(
-                                skjema.felter.utenlandsoppholdÅrsak.verdi
-                            )}
+                            avgrensMinDato={hentMinAvgrensningPåTilDato(skjema.felter.utenlandsoppholdÅrsak.verdi)}
+                            avgrensMaxDato={hentMaxAvgrensningPåTilDato(skjema.felter.utenlandsoppholdÅrsak.verdi)}
                             tilhørendeFraOgMedFelt={
                                 harTilhørendeFomFelt(skjema.felter.utenlandsoppholdÅrsak.verdi)
                                     ? skjema.felter.oppholdslandFraDato

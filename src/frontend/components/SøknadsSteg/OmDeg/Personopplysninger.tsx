@@ -23,14 +23,10 @@ export const Personopplysninger: React.FC = () => {
     const søker = søknad.søker;
 
     const statsborgerskapTekst = søker.statsborgerskap
-        .map((statsborgerskap: { landkode: Alpha3Code }) =>
-            landkodeTilSpråk(statsborgerskap.landkode, valgtLocale)
-        )
+        .map((statsborgerskap: { landkode: Alpha3Code }) => landkodeTilSpråk(statsborgerskap.landkode, valgtLocale))
         .join(', ');
 
-    const sivilStatusTekst = plainTekst(
-        frittståendeOrd[sivilstandTilSanitySivilstandApiKey(søker.sivilstand.type)]
-    );
+    const sivilStatusTekst = plainTekst(frittståendeOrd[sivilstandTilSanitySivilstandApiKey(søker.sivilstand.type)]);
 
     return (
         <>

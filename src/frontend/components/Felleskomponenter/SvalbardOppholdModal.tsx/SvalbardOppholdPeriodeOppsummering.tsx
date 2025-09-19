@@ -18,9 +18,13 @@ interface Props {
 
 type SvalbardOppholdPeriodeOppsummeringProps = Props & PeriodePersonTypeMedBarnProps;
 
-export const SvalbardOppholdPeriodeOppsummering: React.FC<
-    SvalbardOppholdPeriodeOppsummeringProps
-> = ({ svalbardOppholdPeriode, nummer, fjernPeriodeCallback = undefined, personType, barn }) => {
+export const SvalbardOppholdPeriodeOppsummering: React.FC<SvalbardOppholdPeriodeOppsummeringProps> = ({
+    svalbardOppholdPeriode,
+    nummer,
+    fjernPeriodeCallback = undefined,
+    personType,
+    barn,
+}) => {
     const { tekster, plainTekst } = useAppContext();
     const { valgtLocale } = useSpråkContext();
     const { fraDatoSvalbardOpphold, tilDatoSvalbardOpphold } = svalbardOppholdPeriode;
@@ -29,9 +33,7 @@ export const SvalbardOppholdPeriodeOppsummering: React.FC<
 
     return (
         <PeriodeOppsummering
-            fjernPeriodeCallback={
-                fjernPeriodeCallback && (() => fjernPeriodeCallback(svalbardOppholdPeriode))
-            }
+            fjernPeriodeCallback={fjernPeriodeCallback && (() => fjernPeriodeCallback(svalbardOppholdPeriode))}
             fjernKnappSpråkId={'felles.fjernpensjon.knapp'}
             fjernKnappTekst={teksterForModal.fjernKnapp}
             nummer={nummer}
@@ -45,10 +47,7 @@ export const SvalbardOppholdPeriodeOppsummering: React.FC<
         >
             <OppsummeringFelt
                 tittel={
-                    <TekstBlock
-                        block={teksterForModal.startdato.sporsmal}
-                        flettefelter={{ barnetsNavn: barn?.navn }}
-                    />
+                    <TekstBlock block={teksterForModal.startdato.sporsmal} flettefelter={{ barnetsNavn: barn?.navn }} />
                 }
                 søknadsvar={uppercaseFørsteBokstav(
                     formaterDatostringKunMåned(fraDatoSvalbardOpphold.svar, valgtLocale)
@@ -56,10 +55,7 @@ export const SvalbardOppholdPeriodeOppsummering: React.FC<
             />
             <OppsummeringFelt
                 tittel={
-                    <TekstBlock
-                        block={teksterForModal.sluttdato.sporsmal}
-                        flettefelter={{ barnetsNavn: barn?.navn }}
-                    />
+                    <TekstBlock block={teksterForModal.sluttdato.sporsmal} flettefelter={{ barnetsNavn: barn?.navn }} />
                 }
                 søknadsvar={formaterMånedMedUkjent(
                     tilDatoSvalbardOpphold.svar,

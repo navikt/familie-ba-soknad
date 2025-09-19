@@ -39,16 +39,14 @@ export const PensjonModal: React.FC<Props> = ({
     forklaring = undefined,
 }) => {
     const { tekster } = useAppContext();
-    const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } =
-        usePensjonSkjema({
-            gjelderUtland,
-            personType,
-            barn,
-            erDød,
-        });
+    const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } = usePensjonSkjema({
+        gjelderUtland,
+        personType,
+        barn,
+        erDød,
+    });
 
-    const teksterForModal: IPensjonsperiodeTekstinnhold =
-        tekster().FELLES.modaler.pensjonsperiode[personType];
+    const teksterForModal: IPensjonsperiodeTekstinnhold = tekster().FELLES.modaler.pensjonsperiode[personType];
 
     const { mottarPensjonNå, pensjonTilDato, pensjonFraDato, pensjonsland } = skjema.felter;
 
@@ -152,9 +150,7 @@ export const PensjonModal: React.FC<Props> = ({
                             }
                         />
                     }
-                    tidligsteValgbareMåned={
-                        pensjonFraDato.verdi !== '' ? parseISO(pensjonFraDato.verdi) : undefined
-                    }
+                    tidligsteValgbareMåned={pensjonFraDato.verdi !== '' ? parseISO(pensjonFraDato.verdi) : undefined}
                     senesteValgbareMåned={sisteDagDenneMåneden()}
                     felt={pensjonTilDato}
                     visFeilmeldinger={skjema.visFeilmeldinger}

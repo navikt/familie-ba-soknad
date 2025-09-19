@@ -27,20 +27,12 @@ const SammeSomAnnetBarnRadio: React.FC<{
     const { tekster } = useAppContext();
     const felt = skjema.felter.sammeForelderSomAnnetBarn;
     const omBarnetTekster = tekster().OM_BARNET;
-    const {
-        svaralternativSammeSomAnnenForelder,
-        svaralternativAnnenForelder,
-        hvemErBarnSinAndreForelder,
-    } = omBarnetTekster;
+    const { svaralternativSammeSomAnnenForelder, svaralternativAnnenForelder, hvemErBarnSinAndreForelder } =
+        omBarnetTekster;
 
     const radios = andreBarnSomErFyltUt
         .map(barn => ({
-            label: (
-                <TekstBlock
-                    block={svaralternativSammeSomAnnenForelder}
-                    flettefelter={{ barnetsNavn: barn.navn }}
-                />
-            ),
+            label: <TekstBlock block={svaralternativSammeSomAnnenForelder} flettefelter={{ barnetsNavn: barn.navn }} />,
             value: barn.id,
         }))
         .concat({
@@ -52,10 +44,7 @@ const SammeSomAnnetBarnRadio: React.FC<{
         <StyledRadioGroup
             {...felt.hentNavInputProps(skjema.visFeilmeldinger)}
             legend={
-                <TekstBlock
-                    block={hvemErBarnSinAndreForelder.sporsmal}
-                    flettefelter={{ barnetsNavn: barnetsNavn }}
-                />
+                <TekstBlock block={hvemErBarnSinAndreForelder.sporsmal} flettefelter={{ barnetsNavn: barnetsNavn }} />
             }
             name={OmBarnetSpørsmålsId.sammeForelderSomAnnetBarn}
             onChange={value => {

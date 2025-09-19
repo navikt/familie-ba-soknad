@@ -10,12 +10,10 @@ import ModalContent from '../ModalContent';
 import TekstBlock from '../Sanity/TekstBlock';
 
 export function BlokkerTilbakeKnappModal() {
-    const { visBlokkerTilbakeKnappModal, settVisBlokkerTilbakeKnappModal } =
-        useAppNavigationContext();
+    const { visBlokkerTilbakeKnappModal, settVisBlokkerTilbakeKnappModal } = useAppNavigationContext();
     const { tekster, plainTekst } = useAppContext();
 
-    const teksterForModal: IBlokkerTilbakeknappTekstinnhold =
-        tekster().FELLES.modaler.blokkerTilbakeknapp;
+    const teksterForModal: IBlokkerTilbakeknappTekstinnhold = tekster().FELLES.modaler.blokkerTilbakeknapp;
     const { tittel, tekst, tilDittNav, avbryt } = teksterForModal;
 
     const håndterAvbryt = () => {

@@ -25,10 +25,7 @@ export const språkIndexListe = [
     eøsSøkerSpørsmålSpråkId,
     eøsBarnSpørsmålSpråkId,
 ];
-export const svarForSpørsmålMedUkjent = (
-    vetIkkeFelt: Felt<ESvar>,
-    spørsmålFelt: Felt<string>
-): string => {
+export const svarForSpørsmålMedUkjent = (vetIkkeFelt: Felt<ESvar>, spørsmålFelt: Felt<string>): string => {
     if (!spørsmålFelt.erSynlig) {
         return '';
     } else {
@@ -37,6 +34,4 @@ export const svarForSpørsmålMedUkjent = (
 };
 
 export const jaNeiSvarTilSpråkId = (svar: ESvar) =>
-    svar === ESvar.VET_IKKE
-        ? 'felles.svaralternativ.vetikke'
-        : 'felles.svaralternativ.' + svar.toLowerCase();
+    svar === ESvar.VET_IKKE ? 'felles.svaralternativ.vetikke' : 'felles.svaralternativ.' + svar.toLowerCase();

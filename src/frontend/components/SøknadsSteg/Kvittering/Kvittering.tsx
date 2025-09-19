@@ -33,9 +33,7 @@ const Kvittering: React.FC = () => {
     const [innsendtSøknadErUtvidet, settInnsendtSøknadErUtvidet] = useState(false);
 
     const innsendtDato: Date =
-        innsendingStatus.status === RessursStatus.SUKSESS
-            ? new Date(innsendingStatus.data.mottattDato)
-            : new Date();
+        innsendingStatus.status === RessursStatus.SUKSESS ? new Date(innsendingStatus.data.mottattDato) : new Date();
 
     const klokkeslett = format(innsendtDato, 'HH:mm');
     const dato = format(innsendtDato, 'dd.MM.yy');
@@ -71,10 +69,7 @@ const Kvittering: React.FC = () => {
             </Alert>
             <VStack gap="6">
                 {allNødvendigDokumentasjonErLastetOpp.current ? (
-                    <TekstBlock
-                        block={kvitteringTekster.trengerIkkeEttersendeVedlegg}
-                        typografi={Typografi.BodyLong}
-                    />
+                    <TekstBlock block={kvitteringTekster.trengerIkkeEttersendeVedlegg} typografi={Typografi.BodyLong} />
                 ) : (
                     <Alert variant="warning">
                         <TekstBlock block={kvitteringTekster.maaEttersendeVedleggAlert} />

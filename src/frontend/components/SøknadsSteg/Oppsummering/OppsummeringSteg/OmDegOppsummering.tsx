@@ -51,10 +51,7 @@ const OmDegOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                         : formatMessage({ id: jaNeiSvarTilSpråkId(ESvar.NEI) })
                 }
             />
-            <OppsummeringFelt
-                tittel={plainTekst(omDegTekster.ident)}
-                søknadsvar={formaterFnr(søknad.søker.ident)}
-            />
+            <OppsummeringFelt tittel={plainTekst(omDegTekster.ident)} søknadsvar={formaterFnr(søknad.søker.ident)} />
             <OppsummeringFelt
                 tittel={plainTekst(omDegTekster.statsborgerskap)}
                 søknadsvar={søknad.søker.statsborgerskap
@@ -63,10 +60,7 @@ const OmDegOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                     )
                     .join(', ')}
             />
-            <OppsummeringFelt
-                tittel={plainTekst(omDegTekster.sivilstatus)}
-                søknadsvar={søknad.søker.sivilstand.type}
-            />
+            <OppsummeringFelt tittel={plainTekst(omDegTekster.sivilstatus)} søknadsvar={søknad.søker.sivilstand.type} />
             <OppsummeringFelt
                 tittel={plainTekst(omDegTekster.adresse)}
                 children={genererAdresseVisning(søknad.søker, omDegTekster, plainTekst)}
@@ -105,9 +99,7 @@ const OmDegOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
             ))}
             {søknad.søker.planleggerÅBoINorgeTolvMnd.svar && (
                 <OppsummeringFelt
-                    tittel={
-                        <TekstBlock block={omDegTekster.planleggerAaBoINorgeTolvMnd.sporsmal} />
-                    }
+                    tittel={<TekstBlock block={omDegTekster.planleggerAaBoINorgeTolvMnd.sporsmal} />}
                     søknadsvar={søknad.søker.planleggerÅBoINorgeTolvMnd.svar}
                 />
             )}

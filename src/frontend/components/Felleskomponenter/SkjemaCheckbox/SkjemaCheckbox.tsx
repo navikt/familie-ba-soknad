@@ -22,15 +22,11 @@ export const SkjemaCheckbox: React.FC<{
             <Checkbox
                 id={felt.id}
                 checked={felt.verdi === ESvar.JA}
-                onChange={event =>
-                    felt.validerOgSettFelt(event.target.checked ? ESvar.JA : ESvar.NEI)
-                }
+                onChange={event => felt.validerOgSettFelt(event.target.checked ? ESvar.JA : ESvar.NEI)}
             >
                 <SpråkTekst id={labelSpråkTekstId} values={språkVerdier} />
             </Checkbox>
-            {visFeilmeldinger && felt.feilmelding && (
-                <ErrorMessage>{felt.feilmelding}</ErrorMessage>
-            )}
+            {visFeilmeldinger && felt.feilmelding && <ErrorMessage>{felt.feilmelding}</ErrorMessage>}
         </div>
     ) : null;
 };

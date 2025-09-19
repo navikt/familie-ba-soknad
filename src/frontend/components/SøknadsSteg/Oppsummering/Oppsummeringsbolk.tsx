@@ -8,11 +8,7 @@ import type { ISkjema } from '@navikt/familie-skjema';
 import { useAppContext } from '../../../context/AppContext';
 import { useStegContext } from '../../../context/StegContext';
 import { ISteg, RouteEnum } from '../../../typer/routes';
-import {
-    FlettefeltVerdier,
-    LocaleRecordBlock,
-    LocaleRecordString,
-} from '../../../typer/sanity/sanity';
+import { FlettefeltVerdier, LocaleRecordBlock, LocaleRecordString } from '../../../typer/sanity/sanity';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
 import { AppLenke } from '../../Felleskomponenter/AppLenke/AppLenke';
 import { SkjemaFeiloppsummering } from '../../Felleskomponenter/SkjemaFeiloppsummering/SkjemaFeiloppsummering';
@@ -103,13 +99,7 @@ const Oppsummeringsbolk: React.FC<Props> = ({
             </FormSummary.Header>
             <FormSummary.Answers>
                 {children}
-                {visFeil && (
-                    <SkjemaFeiloppsummering
-                        skjema={skjema}
-                        stegMedFeil={steg}
-                        id={feilOppsummeringId}
-                    />
-                )}
+                {visFeil && <SkjemaFeiloppsummering skjema={skjema} stegMedFeil={steg} id={feilOppsummeringId} />}
             </FormSummary.Answers>
         </FormSummary>
     );

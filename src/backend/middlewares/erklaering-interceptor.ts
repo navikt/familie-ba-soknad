@@ -16,19 +16,13 @@ export const hentSpråkteksterAlleSpråk = (språknøkkel: string): Record<Local
     };
 };
 
-export const erklaeringInterceptor: RequestHandler = (
-    request: Request,
-    response: Response,
-    next: NextFunction
-) => {
+export const erklaeringInterceptor: RequestHandler = (request: Request, response: Response, next: NextFunction) => {
     const søknad: ISøknadKontrakt = request.body;
     const spmKey = 'lestOgForståttBekreftelse';
     const aksepterteSvarSpråkNøkkel = 'forside.bekreftelsesboks.erklæring.spm';
     const aksepterteSvar = Object.values(hentSpråkteksterAlleSpråk(aksepterteSvarSpråkNøkkel));
 
-    if (
-        !('spørsmål' in søknad && spmKey in søknad.spørsmål && 'verdi' in søknad.spørsmål[spmKey])
-    ) {
+    if (!('spørsmål' in søknad && spmKey in søknad.spørsmål && 'verdi' in søknad.spørsmål[spmKey])) {
         response.status(400).send(byggFeiletRessurs('Ugyldig søknadformat'));
         return;
     }
@@ -38,8 +32,6 @@ export const erklaeringInterceptor: RequestHandler = (
     if (aksepterteSvar.includes(svar.verdi[søknad.originalSpråk])) {
         next();
     } else {
-        response
-            .status(403)
-            .send(byggFeiletRessurs('Du må huke av for at du oppgir korrekte opplysninger'));
+        response.status(403).send(byggFeiletRessurs('Du må huke av for at du oppgir korrekte opplysninger'));
     }
 };
