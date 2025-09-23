@@ -4,4 +4,6 @@ WORKDIR /app
 
 COPY dist ./dist
 
+ENV NODE_OPTIONS="--disable-warning=DEP0169"
+
 CMD ["dist/server.cjs"]
