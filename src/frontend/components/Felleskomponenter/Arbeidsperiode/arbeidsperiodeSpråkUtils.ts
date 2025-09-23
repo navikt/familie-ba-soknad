@@ -2,10 +2,7 @@ import { PersonType } from '../../../typer/personType';
 import { ISanitySpørsmålDokument } from '../../../typer/sanity/sanity';
 import { ITekstinnhold } from '../../../typer/sanity/tekstInnhold';
 
-export const arbeidslandFeilmelding = (
-    periodenErAvsluttet: boolean,
-    personType: PersonType
-): string => {
+export const arbeidslandFeilmelding = (periodenErAvsluttet: boolean, personType: PersonType): string => {
     switch (personType) {
         case PersonType.AndreForelder: {
             return periodenErAvsluttet
@@ -26,9 +23,7 @@ export const arbeidslandFeilmelding = (
 };
 
 export const arbeidsperiodeOppsummeringOverskrift = (gjelderUtlandet: boolean): string =>
-    gjelderUtlandet
-        ? 'felles.flerearbeidsperioderutland.periode'
-        : 'felles.flerearbeidsperiodernorge.periode';
+    gjelderUtlandet ? 'felles.flerearbeidsperioderutland.periode' : 'felles.flerearbeidsperiodernorge.periode';
 
 export const arbeidsperiodeSpørsmålDokument = (
     gjelderUtlandet: boolean,

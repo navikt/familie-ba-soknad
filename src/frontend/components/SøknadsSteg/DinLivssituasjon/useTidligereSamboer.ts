@@ -20,8 +20,7 @@ export const useTidligereSamboer = (): {
 } => {
     const { tekster } = useAppContext();
 
-    const teksterForSøker: ITidligereSamoboereTekstinnhold =
-        tekster().FELLES.modaler.tidligereSamboere.søker;
+    const teksterForSøker: ITidligereSamoboereTekstinnhold = tekster().FELLES.modaler.tidligereSamboere.søker;
 
     const tidligereSamboerNavn = useInputFelt({
         søknadsfelt: {
@@ -89,10 +88,7 @@ export const useTidligereSamboer = (): {
         nullstillVedAvhengighetEndring: false,
     });
 
-    const { skjema, kanSendeSkjema, valideringErOk, nullstillSkjema } = useSkjema<
-        ITidligereSamboerFeltTyper,
-        string
-    >({
+    const { skjema, kanSendeSkjema, valideringErOk, nullstillSkjema } = useSkjema<ITidligereSamboerFeltTyper, string>({
         felter: {
             tidligereSamboerNavn,
             tidligereSamboerFnr,

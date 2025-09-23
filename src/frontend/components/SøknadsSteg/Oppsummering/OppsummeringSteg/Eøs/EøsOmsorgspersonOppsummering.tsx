@@ -34,15 +34,8 @@ const EøsOmsorgspersonOppsummering: React.FC<{
             )}
             {omsorgsperson.slektsforhold.svar && (
                 <OppsummeringFelt
-                    tittel={
-                        <TekstBlock
-                            block={eøsBarnTekster.slektsforhold.sporsmal}
-                            flettefelter={flettefelter}
-                        />
-                    }
-                    søknadsvar={plainTekst(
-                        hentSlektsforhold(omsorgsperson.slektsforhold.svar, eøsBarnTekster)
-                    )}
+                    tittel={<TekstBlock block={eøsBarnTekster.slektsforhold.sporsmal} flettefelter={flettefelter} />}
+                    søknadsvar={plainTekst(hentSlektsforhold(omsorgsperson.slektsforhold.svar, eøsBarnTekster))}
                 />
             )}
             {omsorgsperson.slektsforholdSpesifisering.svar && (
@@ -195,16 +188,11 @@ const EøsOmsorgspersonOppsummering: React.FC<{
                         <OppsummeringFelt
                             tittel={
                                 <TekstBlock
-                                    block={
-                                        eøsBarnTekster.hvilketLandSoektYtelseOmsorgsperson.sporsmal
-                                    }
+                                    block={eøsBarnTekster.hvilketLandSoektYtelseOmsorgsperson.sporsmal}
                                     flettefelter={flettefelter}
                                 />
                             }
-                            søknadsvar={landkodeTilSpråk(
-                                omsorgsperson.pågåendeSøknadHvilketLand.svar,
-                                valgtLocale
-                            )}
+                            søknadsvar={landkodeTilSpråk(omsorgsperson.pågåendeSøknadHvilketLand.svar, valgtLocale)}
                         />
                     )}
                 </>

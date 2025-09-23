@@ -28,8 +28,7 @@ const useDatovelgerFelt = ({
         verdi: søknadsfelt.svar,
         valideringsfunksjon: (felt, avhengigheter) => {
             const feilmeldingSpråkId = avhengigheter && avhengigheter.feilmeldingSpråkId;
-            const startdatoAvgrensningOppdatert =
-                avhengigheter && avhengigheter.startdatoAvgrensning;
+            const startdatoAvgrensningOppdatert = avhengigheter && avhengigheter.startdatoAvgrensning;
 
             return validerDato(
                 felt,

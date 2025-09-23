@@ -25,12 +25,7 @@ export interface IUsePensjonSkjemaParams {
     barn?: IBarnMedISøknad;
 }
 
-export const usePensjonSkjema = ({
-    gjelderUtland,
-    personType,
-    erDød,
-    barn,
-}: IUsePensjonSkjemaParams) => {
+export const usePensjonSkjema = ({ gjelderUtland, personType, erDød, barn }: IUsePensjonSkjemaParams) => {
     const { tekster } = useAppContext();
     const { erEøsLand } = useEøsContext();
     const teksterForPersonType: IPensjonsperiodeTekstinnhold =
@@ -59,8 +54,7 @@ export const usePensjonSkjema = ({
             : teksterForPersonType.pensjonLandNaatid.feilmelding,
         feilmeldingSpråkId: pensjonslandFeilmeldingSpråkId(personType, periodenErAvsluttet),
         skalFeltetVises:
-            (mottarPensjonNå.valideringsstatus === Valideringsstatus.OK || erAndreForelderDød) &&
-            gjelderUtland,
+            (mottarPensjonNå.valideringsstatus === Valideringsstatus.OK || erAndreForelderDød) && gjelderUtland,
         nullstillVedAvhengighetEndring: true,
     });
 

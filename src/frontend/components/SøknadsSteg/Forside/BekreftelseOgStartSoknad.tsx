@@ -47,16 +47,10 @@ const BekreftelseOgStartSoknad: React.FC = () => {
                         settSøknadstype(value);
                         settSøknadstypeFeil(false);
                     }}
-                    error={
-                        søknadstypeFeil && plainTekst(forsidetekster.soekerDuUtvidet.feilmelding)
-                    }
+                    error={søknadstypeFeil && plainTekst(forsidetekster.soekerDuUtvidet.feilmelding)}
                 >
-                    <Radio value={ESøknadstype.UTVIDET}>
-                        {plainTekst(fellestekster.frittståendeOrd.ja)}
-                    </Radio>
-                    <Radio value={ESøknadstype.ORDINÆR}>
-                        {plainTekst(fellestekster.frittståendeOrd.nei)}
-                    </Radio>
+                    <Radio value={ESøknadstype.UTVIDET}>{plainTekst(fellestekster.frittståendeOrd.ja)}</Radio>
+                    <Radio value={ESøknadstype.ORDINÆR}>{plainTekst(fellestekster.frittståendeOrd.nei)}</Radio>
                 </RadioGroup>
 
                 <ConfirmationPanel
@@ -65,28 +59,19 @@ const BekreftelseOgStartSoknad: React.FC = () => {
                     checked={bekreftelseStatus === BekreftelseStatus.BEKREFTET}
                     error={
                         bekreftelseStatus === BekreftelseStatus.FEIL && (
-                            <span role={'alert'}>
-                                {plainTekst(forsidetekster.bekreftelsesboksFeilmelding)}
-                            </span>
+                            <span role={'alert'}>{plainTekst(forsidetekster.bekreftelsesboksFeilmelding)}</span>
                         )
                     }
                 >
                     <Heading level="2" size="xsmall" spacing>
                         {plainTekst(forsidetekster.bekreftelsesboksTittel)}
                     </Heading>
-                    <TekstBlock
-                        block={forsidetekster.bekreftelsesboksBroedtekst}
-                        typografi={Typografi.BodyLong}
-                    />
+                    <TekstBlock block={forsidetekster.bekreftelsesboksBroedtekst} typografi={Typografi.BodyLong} />
                 </ConfirmationPanel>
 
                 <VStack gap="8" width={{ sm: 'fit-content' }} marginInline={{ sm: 'auto' }}>
                     <Button
-                        variant={
-                            bekreftelseStatus === BekreftelseStatus.BEKREFTET
-                                ? 'primary'
-                                : 'secondary'
-                        }
+                        variant={bekreftelseStatus === BekreftelseStatus.BEKREFTET ? 'primary' : 'secondary'}
                         type={'submit'}
                         icon={<ArrowRightIcon aria-hidden />}
                         iconPosition="right"

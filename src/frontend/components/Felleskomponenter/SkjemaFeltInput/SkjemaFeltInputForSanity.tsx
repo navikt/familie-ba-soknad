@@ -24,15 +24,7 @@ const StyledTextField = styled(TextField)<{ $fullbredde: boolean }>`
  * Henter input props fra felt, og fra props. Props overstyrer felt.
  */
 export const SkjemaFeltInputForSanity: React.FC<SkjemaFeltInputForSanityProps> = props => {
-    const {
-        felt,
-        label,
-        visFeilmeldinger,
-        description,
-        autoComplete = 'off',
-        disabled,
-        fullbredde = true,
-    } = props;
+    const { felt, label, visFeilmeldinger, description, autoComplete = 'off', disabled, fullbredde = true } = props;
     const navInputPropsFraFeltHook = felt.hentNavInputProps(visFeilmeldinger);
 
     return felt.erSynlig ? (

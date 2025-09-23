@@ -3,15 +3,7 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 
 import { ESvar } from '@navikt/familie-form-elements';
-import {
-    feil,
-    type FeltState,
-    type ISkjema,
-    ok,
-    useFelt,
-    useSkjema,
-    Valideringsstatus,
-} from '@navikt/familie-skjema';
+import { feil, type FeltState, type ISkjema, ok, useFelt, useSkjema, Valideringsstatus } from '@navikt/familie-skjema';
 
 import { useAppContext } from '../../../../context/AppContext';
 import useInputFeltMedUkjent from '../../../../hooks/useInputFeltMedUkjent';
@@ -40,15 +32,9 @@ export const useLeggTilBarn = (): {
                 case ESvar.JA:
                     return ok(felt);
                 case ESvar.NEI:
-                    return feil(
-                        felt,
-                        <SpråkTekst id={'hvilkebarn.leggtilbarn.barn-ikke-født.feilmelding'} />
-                    );
+                    return feil(felt, <SpråkTekst id={'hvilkebarn.leggtilbarn.barn-ikke-født.feilmelding'} />);
                 default:
-                    return feil(
-                        felt,
-                        <SpråkTekst id={'hvilkebarn.leggtilbarn.barnfødt.feilmelding'} />
-                    );
+                    return feil(felt, <SpråkTekst id={'hvilkebarn.leggtilbarn.barnfødt.feilmelding'} />);
             }
         },
     });
@@ -85,10 +71,7 @@ export const useLeggTilBarn = (): {
         valideringsfunksjon: felt =>
             felt.verdi === ESvar.NEI
                 ? ok(felt)
-                : feil(
-                      felt,
-                      <SpråkTekst id={'hvilkebarn.leggtilbarn.ikke-fått-fnr.feilmelding'} />
-                  ),
+                : feil(felt, <SpråkTekst id={'hvilkebarn.leggtilbarn.ikke-fått-fnr.feilmelding'} />),
         skalFeltetVises: ({ erFødt }) => erFødt.verdi === ESvar.JA,
         avhengigheter: { erFødt },
     });
@@ -104,18 +87,12 @@ export const useLeggTilBarn = (): {
         skalVises: erFødt.valideringsstatus === Valideringsstatus.OK,
         customValidering: (felt: FeltState<string>) => {
             return erBarnRegistrertFraFør(søknad, felt.verdi)
-                ? feil(
-                      felt,
-                      <SpråkTekst id={'hvilkebarn.leggtilbarn.fnr.duplikat-barn.feilmelding'} />
-                  )
+                ? feil(felt, <SpråkTekst id={'hvilkebarn.leggtilbarn.fnr.duplikat-barn.feilmelding'} />)
                 : ok(felt);
         },
     });
 
-    const { skjema, kanSendeSkjema, valideringErOk, nullstillSkjema } = useSkjema<
-        ILeggTilBarnTyper,
-        string
-    >({
+    const { skjema, kanSendeSkjema, valideringErOk, nullstillSkjema } = useSkjema<ILeggTilBarnTyper, string>({
         felter: {
             erFødt,
             fornavn,
@@ -128,9 +105,7 @@ export const useLeggTilBarn = (): {
     });
 
     const fulltNavn = () => {
-        return fornavn.verdi && etternavn.verdi
-            ? trimWhiteSpace(`${fornavn.verdi} ${etternavn.verdi}`)
-            : '';
+        return fornavn.verdi && etternavn.verdi ? trimWhiteSpace(`${fornavn.verdi} ${etternavn.verdi}`) : '';
     };
 
     const leggTilBarn = () => {
@@ -139,9 +114,7 @@ export const useLeggTilBarn = (): {
             barnRegistrertManuelt: søknad.barnRegistrertManuelt.concat([
                 {
                     id: hentUid(),
-                    navn:
-                        fulltNavn() ||
-                        intl.formatMessage({ id: 'hvilkebarn.barn.ingen-navn.placeholder' }),
+                    navn: fulltNavn() || intl.formatMessage({ id: 'hvilkebarn.barn.ingen-navn.placeholder' }),
                     ident: ident.verdi,
                     borMedSøker: undefined,
                     alder: null,

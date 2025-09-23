@@ -1,9 +1,6 @@
 import { PersonType } from '../../../typer/personType';
 
-export const barnetrygdslandFeilmelding = (
-    periodenErAvsluttet: boolean,
-    personType: PersonType
-): string => {
+export const barnetrygdslandFeilmelding = (periodenErAvsluttet: boolean, personType: PersonType): string => {
     switch (personType) {
         case PersonType.AndreForelder: {
             return periodenErAvsluttet

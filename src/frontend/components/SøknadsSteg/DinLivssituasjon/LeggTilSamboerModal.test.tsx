@@ -71,14 +71,10 @@ describe('LeggTilSamboerModal', () => {
         const feilmeldingFnr = getByTestId('feilmelding-utvidet-tidligere-samboer-fnr');
         expect(feilmeldingFnr).toBeInTheDocument();
 
-        const feilmeldingForholdStart = getByTestId(
-            'feilmelding-utvidet-tidligere-samboer-samboerFraDato'
-        );
+        const feilmeldingForholdStart = getByTestId('feilmelding-utvidet-tidligere-samboer-samboerFraDato');
         expect(feilmeldingForholdStart).toBeInTheDocument();
 
-        const feilmeldingForholdSlutt = getByTestId(
-            'feilmelding-utvidet-tidligere-samboer-samboerTilDato'
-        );
+        const feilmeldingForholdSlutt = getByTestId('feilmelding-utvidet-tidligere-samboer-samboerTilDato');
         expect(feilmeldingForholdSlutt).toBeInTheDocument();
     });
 });

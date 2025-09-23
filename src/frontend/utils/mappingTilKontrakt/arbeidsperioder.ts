@@ -32,19 +32,12 @@ export const tilIArbeidsperiodeIKontraktFormat = ({
     barn,
     personType,
     erDød,
-}: ArbeidsperiodeIKontraktFormatParams &
-    PeriodePersonTypeProps): ISøknadsfelt<IArbeidsperiodeIKontraktFormat> => {
-    const {
-        arbeidsperiodeAvsluttet,
-        arbeidsperiodeland,
-        arbeidsgiver,
-        fraDatoArbeidsperiode,
-        tilDatoArbeidsperiode,
-    } = periode;
+}: ArbeidsperiodeIKontraktFormatParams & PeriodePersonTypeProps): ISøknadsfelt<IArbeidsperiodeIKontraktFormat> => {
+    const { arbeidsperiodeAvsluttet, arbeidsperiodeland, arbeidsgiver, fraDatoArbeidsperiode, tilDatoArbeidsperiode } =
+        periode;
 
     const periodenErAvsluttet: boolean =
-        arbeidsperiodeAvsluttet?.svar === ESvar.JA ||
-        (personType === PersonType.AndreForelder && erDød);
+        arbeidsperiodeAvsluttet?.svar === ESvar.JA || (personType === PersonType.AndreForelder && erDød);
 
     const sluttdatoTekst = periodenErAvsluttet ? tekster.sluttdatoFortid : tekster.sluttdatoFremtid;
     const landTekst = periodenErAvsluttet ? tekster.hvilketLandFortid : tekster.hvilketLandNaatid;
@@ -64,9 +57,7 @@ export const tilIArbeidsperiodeIKontraktFormat = ({
             arbeidsperiodeland: arbeidsperiodeland.svar
                 ? {
                       label: tilRestLocaleRecord(landTekst.sporsmal, { barnetsNavn: barn?.navn }),
-                      verdi: verdiCallbackAlleSpråk(locale =>
-                          landkodeTilSpråk(arbeidsperiodeland.svar, locale)
-                      ),
+                      verdi: verdiCallbackAlleSpråk(locale => landkodeTilSpråk(arbeidsperiodeland.svar, locale)),
                   }
                 : null,
             arbeidsgiver: arbeidsgiver.svar

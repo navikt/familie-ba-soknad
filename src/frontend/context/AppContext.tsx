@@ -22,12 +22,7 @@ import { IKvittering } from '../typer/kvittering';
 import { IMellomlagretBarnetrygd } from '../typer/mellomlager';
 import { ISøkerRespons } from '../typer/person';
 import { RouteEnum } from '../typer/routes';
-import {
-    ESanityFlettefeltverdi,
-    ESanitySteg,
-    FlettefeltVerdier,
-    PlainTekst,
-} from '../typer/sanity/sanity';
+import { ESanityFlettefeltverdi, ESanitySteg, FlettefeltVerdier, PlainTekst } from '../typer/sanity/sanity';
 import { ITekstinnhold } from '../typer/sanity/tekstInnhold';
 import { initialStateSøknad, ISøknad } from '../typer/søknad';
 import { InnloggetStatus } from '../utils/autentisering';
@@ -108,9 +103,7 @@ export function AppProvider(props: PropsWithChildren) {
         } else {
             axiosRequest<number, void>({
                 url: `${BASE_PATH}modellversjon`,
-            }).then(data =>
-                settSisteModellVersjon(prevState => hentDataFraRessurs(data) ?? prevState)
-            );
+            }).then(data => settSisteModellVersjon(prevState => hentDataFraRessurs(data) ?? prevState));
         }
     }, [nåværendeRoute]);
 
@@ -291,8 +284,7 @@ export function AppProvider(props: PropsWithChildren) {
         });
     };
 
-    const erStegUtfyltFrafør = (nåværendeStegIndex: number) =>
-        sisteUtfylteStegIndex >= nåværendeStegIndex;
+    const erStegUtfyltFrafør = (nåværendeStegIndex: number) => sisteUtfylteStegIndex >= nåværendeStegIndex;
 
     const avbrytOgSlettSøknad = () => {
         nullstillSøknadsobjekt();
@@ -374,9 +366,7 @@ export function AppProvider(props: PropsWithChildren) {
                 if (!flettefelter?.land) {
                     throw Error('Flettefeltet land ikke sendt med');
                 }
-                return (
-                    getName(flettefelter.land, spesifikkLocale ?? valgtLocale) ?? flettefelter.land
-                );
+                return getName(flettefelter.land, spesifikkLocale ?? valgtLocale) ?? flettefelter.land;
             case ESanityFlettefeltverdi.YTELSE:
                 return plainTekst(
                     tekster()[ESanitySteg.FELLES].frittståendeOrd.barnetrygd,
@@ -402,10 +392,7 @@ export function AppProvider(props: PropsWithChildren) {
 
     const plainTekst = plainTekstHof(flettefeltTilTekst, valgtLocale);
 
-    const tilRestLocaleRecord: TilRestLocaleRecord = (
-        sanityTekst,
-        flettefelter
-    ): Record<LocaleType, string> => {
+    const tilRestLocaleRecord: TilRestLocaleRecord = (sanityTekst, flettefelter): Record<LocaleType, string> => {
         return {
             [LocaleType.en]: plainTekst(sanityTekst, flettefelter, LocaleType.en),
             [LocaleType.nn]: plainTekst(sanityTekst, flettefelter, LocaleType.nn),
