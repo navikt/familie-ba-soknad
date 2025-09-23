@@ -1,8 +1,4 @@
-import {
-    filtrertSpørsmålUtenNull,
-    SpørsmålMapMedNull,
-    TilRestLocaleRecord,
-} from '../../typer/kontrakt/generelle';
+import { filtrertSpørsmålUtenNull, SpørsmålMapMedNull, TilRestLocaleRecord } from '../../typer/kontrakt/generelle';
 import { ISøknadKontraktSøker } from '../../typer/kontrakt/kontrakt';
 import { PersonType } from '../../typer/personType';
 import { ITekstinnhold } from '../../typer/sanity/tekstInnhold';
@@ -84,10 +80,7 @@ export const søkerIKontraktFormat = (
             omDegTekster.borPaaRegistrertAdresse.sporsmal,
             borPåRegistrertAdresse.svar
         ),
-        borPåSvalbard: nullableSøknadsfeltForESvar(
-            omDegTekster.borPaaSvalbard.sporsmal,
-            borPåSvalbard.svar
-        ),
+        borPåSvalbard: nullableSøknadsfeltForESvar(omDegTekster.borPaaSvalbard.sporsmal, borPåSvalbard.svar),
         værtINorgeITolvMåneder: søknadsfeltForESvar(
             omDegTekster.vaertINorgeITolvMaaneder.sporsmal,
             værtINorgeITolvMåneder.svar
@@ -96,26 +89,14 @@ export const søkerIKontraktFormat = (
             omDegTekster.planleggerAaBoINorgeTolvMnd.sporsmal,
             planleggerÅBoINorgeTolvMnd.svar
         ),
-        erAsylsøker: søknadsfeltForESvar(
-            dinLivssituasjonTekster.erAsylsoeker.sporsmal,
-            erAsylsøker.svar
-        ),
-        arbeidIUtlandet: søknadsfeltForESvar(
-            dinLivssituasjonTekster.arbeidUtenforNorge.sporsmal,
-            arbeidIUtlandet.svar
-        ),
+        erAsylsøker: søknadsfeltForESvar(dinLivssituasjonTekster.erAsylsoeker.sporsmal, erAsylsøker.svar),
+        arbeidIUtlandet: søknadsfeltForESvar(dinLivssituasjonTekster.arbeidUtenforNorge.sporsmal, arbeidIUtlandet.svar),
         mottarUtenlandspensjon: søknadsfeltForESvar(
             dinLivssituasjonTekster.pensjonUtland.sporsmal,
             mottarUtenlandspensjon.svar
         ),
-        arbeidINorge: nullableSøknadsfeltForESvar(
-            tekster.EØS_FOR_SØKER.arbeidNorge.sporsmal,
-            arbeidINorge.svar
-        ),
-        pensjonNorge: nullableSøknadsfeltForESvar(
-            tekster.EØS_FOR_SØKER.pensjonNorge.sporsmal,
-            pensjonNorge.svar
-        ),
+        arbeidINorge: nullableSøknadsfeltForESvar(tekster.EØS_FOR_SØKER.arbeidNorge.sporsmal, arbeidINorge.svar),
+        pensjonNorge: nullableSøknadsfeltForESvar(tekster.EØS_FOR_SØKER.pensjonNorge.sporsmal, pensjonNorge.svar),
         andreUtbetalinger: nullableSøknadsfeltForESvar(
             tekster.EØS_FOR_SØKER.utbetalinger.sporsmal,
             andreUtbetalinger.svar
@@ -141,10 +122,7 @@ export const søkerIKontraktFormat = (
                   sammeVerdiAlleSpråk(separertEnkeSkiltDato.svar)
               )
             : null,
-        harSamboerNå: nullableSøknadsfeltForESvar(
-            dinLivssituasjonTekster.harSamboerNaa.sporsmal,
-            harSamboerNå.svar
-        ),
+        harSamboerNå: nullableSøknadsfeltForESvar(dinLivssituasjonTekster.harSamboerNaa.sporsmal, harSamboerNå.svar),
         hattAnnenSamboerForSøktPeriode: nullableSøknadsfeltForESvar(
             dinLivssituasjonTekster.hattAnnenSamboerForSoektPeriode.sporsmal,
             hattAnnenSamboerForSøktPeriode.svar
@@ -158,9 +136,7 @@ export const søkerIKontraktFormat = (
         sivilstand: søknadsfelt(omDegTekster.sivilstatus, sammeVerdiAlleSpråk(sivilstand.type)),
         statsborgerskap: søknadsfelt(
             omDegTekster.statsborgerskap,
-            verdiCallbackAlleSpråk(locale =>
-                statsborgerskap.map(objekt => landkodeTilSpråk(objekt.landkode, locale))
-            )
+            verdiCallbackAlleSpråk(locale => statsborgerskap.map(objekt => landkodeTilSpråk(objekt.landkode, locale)))
         ),
         adresse: søknadsfelt(omDegTekster.adresse, sammeVerdiAlleSpråk(adresse)),
         adressebeskyttelse: søker.adressebeskyttelse,
@@ -182,11 +158,7 @@ export const søkerIKontraktFormat = (
             })
         ),
         idNummer: idNummer.map(idnummerObj =>
-            idNummerTilISøknadsfelt(
-                tilRestLocaleRecord,
-                idnummerObj,
-                tekster.EØS_FOR_SØKER.idNummer
-            )
+            idNummerTilISøknadsfelt(tilRestLocaleRecord, idnummerObj, tekster.EØS_FOR_SØKER.idNummer)
         ),
         tidligereSamboere: tidligereSamboere.map(samboer =>
             tidligereSamboerISøknadKontraktFormat({
