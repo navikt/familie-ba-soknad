@@ -39,12 +39,10 @@ export const useOmdeg = (): {
     const { søknad, settSøknad, tekster, plainTekst } = useAppContext();
     const { erEøsLand } = useEøsContext();
     const søker = søknad.søker;
-    const [svalbardOppholdPerioder, settSvalbardOppholdPerioder] = useState<
-        ISvalbardOppholdPeriode[]
-    >(søker.svalbardOppholdPerioder);
-    const [utenlandsperioder, settUtenlandsperioder] = useState<IUtenlandsperiode[]>(
-        søker.utenlandsperioder
+    const [svalbardOppholdPerioder, settSvalbardOppholdPerioder] = useState<ISvalbardOppholdPeriode[]>(
+        søker.svalbardOppholdPerioder
     );
+    const [utenlandsperioder, settUtenlandsperioder] = useState<IUtenlandsperiode[]>(søker.utenlandsperioder);
     const { skalTriggeEøsForSøker, søkerTriggerEøs, settSøkerTriggerEøs } = useEøsContext();
     const teksterForSteg: IOmDegTekstinnhold = tekster()[ESanitySteg.OM_DEG];
     const teksterForSvalbardOpphold: ISvalbardOppholdTekstinnhold =
@@ -63,9 +61,7 @@ export const useOmdeg = (): {
         feltId: OmDegSpørsmålId.borPåSvalbard,
         verdi: borPåRegistrertAdresse.verdi === ESvar.JA ? null : søker.borPåSvalbard.svar,
         valideringsfunksjon: (felt: FeltState<ESvar | null>) => {
-            return felt.verdi !== null
-                ? ok(felt)
-                : feil(felt, plainTekst(teksterForSteg.borPaaSvalbard.feilmelding));
+            return felt.verdi !== null ? ok(felt) : feil(felt, plainTekst(teksterForSteg.borPaaSvalbard.feilmelding));
         },
         skalFeltetVises: avhengigheter => {
             return (
@@ -84,9 +80,7 @@ export const useOmdeg = (): {
             borPåSvalbard,
         },
         valideringsfunksjon: felt => {
-            return felt.verdi.length
-                ? ok(felt)
-                : feil(felt, plainTekst(teksterForSvalbardOpphold.leggTilFeilmelding));
+            return felt.verdi.length ? ok(felt) : feil(felt, plainTekst(teksterForSvalbardOpphold.leggTilFeilmelding));
         },
         skalFeltetVises: avhengigheter => {
             return avhengigheter.borPåSvalbard.verdi === ESvar.JA;
@@ -103,9 +97,7 @@ export const useOmdeg = (): {
     };
 
     const fjernSvalbardOppholdPeriode = (periodeSomSkalFjernes: ISvalbardOppholdPeriode) => {
-        settSvalbardOppholdPerioder(prevState =>
-            prevState.filter(periode => periode !== periodeSomSkalFjernes)
-        );
+        settSvalbardOppholdPerioder(prevState => prevState.filter(periode => periode !== periodeSomSkalFjernes));
     };
 
     const værtINorgeITolvMåneder = useJaNeiSpmFelt({
@@ -121,9 +113,7 @@ export const useOmdeg = (): {
             værtINorgeITolvMåneder,
         },
         valideringsfunksjon: felt => {
-            return felt.verdi.length
-                ? ok(felt)
-                : feil(felt, plainTekst(teksterForUtenlandsopphold.leggTilFeilmelding));
+            return felt.verdi.length ? ok(felt) : feil(felt, plainTekst(teksterForUtenlandsopphold.leggTilFeilmelding));
         },
         skalFeltetVises: avhengigheter => {
             return avhengigheter.værtINorgeITolvMåneder.verdi === ESvar.NEI;
@@ -157,26 +147,20 @@ export const useOmdeg = (): {
     };
 
     const fjernUtenlandsperiode = (periodeSomSkalFjernes: IUtenlandsperiode) => {
-        settUtenlandsperioder(prevState =>
-            prevState.filter(periode => periode !== periodeSomSkalFjernes)
-        );
+        settUtenlandsperioder(prevState => prevState.filter(periode => periode !== periodeSomSkalFjernes));
     };
 
     const gyldigVerdiPåIdNummer = (idNummerObj: IIdNummer) =>
         idNummerObj.idnummer !== AlternativtSvarForInput.UKJENT ||
-        relevanteLandMedPeriodeType().find(
-            landMedPeriode => idNummerObj.land === landMedPeriode.land
-        )?.periodeType === PeriodeType.utenlandsperiode;
+        relevanteLandMedPeriodeType().find(landMedPeriode => idNummerObj.land === landMedPeriode.land)?.periodeType ===
+            PeriodeType.utenlandsperiode;
 
     const relevanteLandMedPeriodeType = () =>
         idNummerLandMedPeriodeType(
             {
                 arbeidsperioderUtland: søker.arbeidsperioderUtland,
                 pensjonsperioderUtland: søker.pensjonsperioderUtland,
-                utenlandsperioder:
-                    værtINorgeITolvMåneder.verdi === ESvar.NEI
-                        ? registrerteUtenlandsperioder.verdi
-                        : [],
+                utenlandsperioder: værtINorgeITolvMåneder.verdi === ESvar.NEI ? registrerteUtenlandsperioder.verdi : [],
             },
             erEøsLand
         );
@@ -209,8 +193,7 @@ export const useOmdeg = (): {
         planleggerÅBoINorgeTolvMnd: {
             ...søker.planleggerÅBoINorgeTolvMnd,
             svar:
-                !flyttetPermanentFraNorge(utenlandsperioder) &&
-                værtINorgeITolvMåneder.verdi === ESvar.NEI
+                !flyttetPermanentFraNorge(utenlandsperioder) && værtINorgeITolvMåneder.verdi === ESvar.NEI
                     ? skjema.felter.planleggerÅBoINorgeTolvMnd.verdi
                     : null,
         },
@@ -219,8 +202,7 @@ export const useOmdeg = (): {
     const oppdaterSøknad = () => {
         const oppdatertSøker = genererOppdatertSøker();
         const søkerTriggetEøs = skalTriggeEøsForSøker(oppdatertSøker);
-        const harEøsSteg =
-            søkerTriggetEøs || !!søknad.barnInkludertISøknaden.find(barn => barn.triggetEøs);
+        const harEøsSteg = søkerTriggetEøs || !!søknad.barnInkludertISøknaden.find(barn => barn.triggetEøs);
 
         settSøknad({
             ...søknad,
@@ -238,10 +220,7 @@ export const useOmdeg = (): {
         });
     };
 
-    const { skjema, kanSendeSkjema, valideringErOk, validerAlleSynligeFelter } = useSkjema<
-        IOmDegFeltTyper,
-        string
-    >({
+    const { skjema, kanSendeSkjema, valideringErOk, validerAlleSynligeFelter } = useSkjema<IOmDegFeltTyper, string>({
         felter: {
             borPåRegistrertAdresse,
             borPåSvalbard,

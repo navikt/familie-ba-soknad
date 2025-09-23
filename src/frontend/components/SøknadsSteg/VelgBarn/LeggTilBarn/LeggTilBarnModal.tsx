@@ -24,8 +24,7 @@ const LeggTilBarnModal: React.FC<{
     lukkModal: () => void;
 }> = ({ erÅpen, lukkModal }) => {
     const { tekster } = useAppContext();
-    const { skjema, nullstillSkjema, valideringErOk, leggTilBarn, validerFelterOgVisFeilmelding } =
-        useLeggTilBarn();
+    const { skjema, nullstillSkjema, valideringErOk, leggTilBarn, validerFelterOgVisFeilmelding } = useLeggTilBarn();
 
     const teksterForModal: ILeggTilBarnTekstinnhold = tekster().FELLES.modaler.leggTilBarn;
     const {
@@ -59,11 +58,7 @@ const LeggTilBarnModal: React.FC<{
             onAvbrytCallback={nullstillSkjema}
         >
             <KomponentGruppe>
-                <JaNeiSpm
-                    skjema={skjema}
-                    felt={skjema.felter.erFødt}
-                    spørsmålDokument={erBarnetFoedt}
-                />
+                <JaNeiSpm skjema={skjema} felt={skjema.felter.erFødt} spørsmålDokument={erBarnetFoedt} />
                 {skjema.felter.erFødt.verdi === ESvar.NEI && (
                     <Alert variant={'warning'} inline>
                         <TekstBlock block={ikkeFoedtAlert} typografi={Typografi.BodyShort} />
@@ -72,10 +67,7 @@ const LeggTilBarnModal: React.FC<{
             </KomponentGruppe>
             {skjema.felter.erFødt.valideringsstatus === Valideringsstatus.OK && (
                 <>
-                    <Fieldset
-                        legend={<TekstBlock block={barnetsNavnSubtittel} />}
-                        aria-live="polite"
-                    >
+                    <Fieldset legend={<TekstBlock block={barnetsNavnSubtittel} />} aria-live="polite">
                         <KomponentGruppe aria-live="polite">
                             <SkjemaFeltInputForSanity
                                 felt={skjema.felter.fornavn}

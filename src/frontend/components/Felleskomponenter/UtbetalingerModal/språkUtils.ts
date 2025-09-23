@@ -2,10 +2,7 @@ import { PersonType } from '../../../typer/personType';
 import { ISanitySpørsmålDokument } from '../../../typer/sanity/sanity';
 import { ITekstinnhold } from '../../../typer/sanity/tekstInnhold';
 import { EøsBarnSpørsmålId, eøsBarnSpørsmålSpråkId } from '../../SøknadsSteg/EøsSteg/Barn/spørsmål';
-import {
-    EøsSøkerSpørsmålId,
-    eøsSøkerSpørsmålSpråkId,
-} from '../../SøknadsSteg/EøsSteg/Søker/spørsmål';
+import { EøsSøkerSpørsmålId, eøsSøkerSpørsmålSpråkId } from '../../SøknadsSteg/EøsSteg/Søker/spørsmål';
 
 import { UtbetalingerSpørsmålId } from './spørsmål';
 
@@ -27,10 +24,7 @@ export const mottarEllerMottattUtbetalingApiNavn = (
     }
 };
 
-export const mottarEllerMottattUtbetalingSpråkId = (
-    personType: PersonType,
-    erDød?: boolean
-): string => {
+export const mottarEllerMottattUtbetalingSpråkId = (personType: PersonType, erDød?: boolean): string => {
     switch (personType) {
         case PersonType.AndreForelder:
             return erDød
@@ -68,10 +62,7 @@ export const fårUtbetalingNåFeilmelding = (personType: PersonType) => {
     }
 };
 
-export const utbetalingslandFeilmelding = (
-    personType: PersonType,
-    periodenErAvsluttet: boolean
-) => {
+export const utbetalingslandFeilmelding = (personType: PersonType, periodenErAvsluttet: boolean) => {
     switch (personType) {
         case PersonType.AndreForelder:
             return periodenErAvsluttet
@@ -104,8 +95,7 @@ const utbetalingsperiodeFellesSpørsmålSpråkId = (
     [UtbetalingerSpørsmålId.utbetalingTilDato]: periodenErAvsluttet
         ? 'felles.nårstoppetutbetalingene.spm'
         : 'felles.nårstopperutbetalingene.spm',
-    [UtbetalingerSpørsmålId.utbetalingTilDatoVetIkke]:
-        'felles.vetikkenårutbetalingerstopper.sjekkboks',
+    [UtbetalingerSpørsmålId.utbetalingTilDatoVetIkke]: 'felles.vetikkenårutbetalingerstopper.sjekkboks',
 });
 
 export const utbetalingerSøkerSpørsmålSpråkId = (

@@ -18,8 +18,7 @@ const SamboerOpplysninger: React.FC<{
 }> = ({ samboer, fjernTidligereSamboer }) => {
     const { tekster } = useAppContext();
 
-    const teksterForModal: ITidligereSamoboereTekstinnhold =
-        tekster().FELLES.modaler.tidligereSamboere.søker;
+    const teksterForModal: ITidligereSamoboereTekstinnhold = tekster().FELLES.modaler.tidligereSamboere.søker;
 
     return (
         <FormSummary.Answer>
@@ -27,24 +26,16 @@ const SamboerOpplysninger: React.FC<{
                 <FormSummary.Answers>
                     <OppsummeringFelt tittel={samboer.navn.svar.toUpperCase()} />
                     <OppsummeringFelt
-                        tittel={
-                            <TekstBlock
-                                block={teksterForModal.foedselsnummerEllerDNummer.sporsmal}
-                            />
-                        }
+                        tittel={<TekstBlock block={teksterForModal.foedselsnummerEllerDNummer.sporsmal} />}
                     >
                         {samboer.ident.svar === AlternativtSvarForInput.UKJENT ? (
-                            <TekstBlock
-                                block={teksterForModal.foedselsnummerEllerDNummer.checkboxLabel}
-                            />
+                            <TekstBlock block={teksterForModal.foedselsnummerEllerDNummer.checkboxLabel} />
                         ) : (
                             formaterFnr(samboer.ident.svar)
                         )}
                     </OppsummeringFelt>
                     {samboer.fødselsdato.svar && (
-                        <OppsummeringFelt
-                            tittel={<TekstBlock block={teksterForModal.foedselsdato.sporsmal} />}
-                        >
+                        <OppsummeringFelt tittel={<TekstBlock block={teksterForModal.foedselsdato.sporsmal} />}>
                             {samboer.fødselsdato.svar === AlternativtSvarForInput.UKJENT ? (
                                 <TekstBlock block={teksterForModal.foedselsdato.checkboxLabel} />
                             ) : (
@@ -52,17 +43,11 @@ const SamboerOpplysninger: React.FC<{
                             )}
                         </OppsummeringFelt>
                     )}
-                    <OppsummeringFelt
-                        tittel={<TekstBlock block={teksterForModal.startdato.sporsmal} />}
-                    >
+                    <OppsummeringFelt tittel={<TekstBlock block={teksterForModal.startdato.sporsmal} />}>
                         {formaterDato(samboer.samboerFraDato.svar)}
                     </OppsummeringFelt>
-                    <OppsummeringFelt
-                        tittel={<TekstBlock block={teksterForModal.sluttdato.sporsmal} />}
-                    >
-                        <div data-testid={samboer.samboerTilDato.id}>
-                            {formaterDato(samboer.samboerTilDato.svar)}
-                        </div>
+                    <OppsummeringFelt tittel={<TekstBlock block={teksterForModal.sluttdato.sporsmal} />}>
+                        <div data-testid={samboer.samboerTilDato.id}>{formaterDato(samboer.samboerTilDato.svar)}</div>
                     </OppsummeringFelt>
                     <Button
                         type={'button'}

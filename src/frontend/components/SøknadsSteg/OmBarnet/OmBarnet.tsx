@@ -73,8 +73,7 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                     dokumentasjonsbehov: Dokumentasjonsbehov.BEKREFTELSE_FRA_BARNEVERN,
                 },
                 {
-                    skalVises:
-                        skjema.felter.borFastMedSøker.verdi === ESvar.JA && !barn.borMedSøker,
+                    skalVises: skjema.felter.borFastMedSøker.verdi === ESvar.JA && !barn.borMedSøker,
                     dokumentasjonsbehov: Dokumentasjonsbehov.BOR_FAST_MED_SØKER,
                     flettefeltVerdier: { barnetsNavn: barn.navn },
                 },
@@ -83,8 +82,7 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                     dokumentasjonsbehov: Dokumentasjonsbehov.AVTALE_DELT_BOSTED,
                 },
                 {
-                    skalVises:
-                        skjema.felter.borMedAndreForelderCheckbox.erSynlig && barnErUnder16År(barn),
+                    skalVises: skjema.felter.borMedAndreForelderCheckbox.erSynlig && barnErUnder16År(barn),
                     dokumentasjonsbehov: Dokumentasjonsbehov.MEKLINGSATTEST,
                 },
             ]}
@@ -125,10 +123,7 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                         />
 
                         <ReadMore header={plainTekst(boFastSammenMedInformasjonTittel)}>
-                            <TekstBlock
-                                block={boFastSammenMedInformasjon}
-                                typografi={Typografi.BodyLong}
-                            />
+                            <TekstBlock block={boFastSammenMedInformasjon} typografi={Typografi.BodyLong} />
                         </ReadMore>
                     </div>
                     {skjema.felter.skriftligAvtaleOmDeltBosted.erSynlig && (
@@ -139,9 +134,7 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                                 spørsmålDokument={deltBosted}
                                 flettefelter={{ barnetsNavn: barn.navn }}
                             />
-                            <ReadMore
-                                header={plainTekst(skriftligAvtaleOmDeltBostedInformasjonTittel)}
-                            >
+                            <ReadMore header={plainTekst(skriftligAvtaleOmDeltBostedInformasjonTittel)}>
                                 <TekstBlock
                                     block={skriftligAvtaleOmDeltBostedInformasjon}
                                     typografi={Typografi.BodyLong}
@@ -166,20 +159,14 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                                 felt={skjema.felter.søkerFlyttetFraAndreForelderDato}
                                 skjema={skjema}
                                 label={<TekstBlock block={naarFlyttetFraAndreForelder.sporsmal} />}
-                                disabled={
-                                    skjema.felter.borMedAndreForelderCheckbox.verdi === ESvar.JA
-                                }
+                                disabled={skjema.felter.borMedAndreForelderCheckbox.verdi === ESvar.JA}
                                 avgrensDatoFremITid={true}
                             />
                             {skjema.felter.borMedAndreForelderCheckbox.erSynlig && (
                                 <SkjemaCheckboxForSanity
                                     felt={skjema.felter.borMedAndreForelderCheckbox}
                                     visFeilmeldinger={skjema.visFeilmeldinger}
-                                    label={
-                                        <TekstBlock
-                                            block={naarFlyttetFraAndreForelder.checkboxLabel}
-                                        />
-                                    }
+                                    label={<TekstBlock block={naarFlyttetFraAndreForelder.checkboxLabel} />}
                                 />
                             )}
                         </div>

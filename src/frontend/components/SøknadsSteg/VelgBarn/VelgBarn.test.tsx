@@ -12,12 +12,7 @@ import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../typer/barn';
 import { ESøknadstype } from '../../../typer/kontrakt/generelle';
 import { IBarnRespons } from '../../../typer/person';
 import { ISøknad } from '../../../typer/søknad';
-import {
-    mekkGyldigSøker,
-    silenceConsoleErrors,
-    spyOnUseApp,
-    TestProvidere,
-} from '../../../utils/testing';
+import { mekkGyldigSøker, silenceConsoleErrors, spyOnUseApp, TestProvidere } from '../../../utils/testing';
 import { OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
 
 import VelgBarn from './VelgBarn';
@@ -167,9 +162,7 @@ describe('VelgBarn', () => {
 
         const leggTilKnappIModal = getByTestId('submit-knapp-i-modal');
 
-        const jaKnapp = getAllByRole('radio').find(
-            radio => radio.getAttribute('value') === ESvar.JA
-        );
+        const jaKnapp = getAllByRole('radio').find(radio => radio.getAttribute('value') === ESvar.JA);
         expect(jaKnapp).toBeDefined();
         act(() => jaKnapp!.click());
 
@@ -212,9 +205,7 @@ describe('VelgBarn', () => {
                 <VelgBarn />
             </TestProvidere>
         );
-        const checkbox: HTMLInputElement = getByTestId(
-            'søk-om-barnetrygd-for-barn-12345'
-        ) as HTMLInputElement;
+        const checkbox: HTMLInputElement = getByTestId('søk-om-barnetrygd-for-barn-12345') as HTMLInputElement;
         act(() => checkbox.click());
 
         expect(checkbox.checked).toBe(true);

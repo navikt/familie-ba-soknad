@@ -112,18 +112,12 @@ export const barnISøknadsFormat = (
 
     const spørsmål: SpørsmålMapMedNull = {
         // Om barna tekster
-        erFosterbarn: søknadsfeltForESvar(
-            omBarnaTekster.hvemFosterbarn.sporsmal,
-            erFosterbarn.svar
-        ),
+        erFosterbarn: søknadsfeltForESvar(omBarnaTekster.hvemFosterbarn.sporsmal, erFosterbarn.svar),
         oppholderSegIInstitusjon: søknadsfeltForESvar(
             omBarnaTekster.hvemInstitusjon.sporsmal,
             oppholderSegIInstitusjon.svar
         ),
-        erAdoptertFraUtland: søknadsfeltForESvar(
-            omBarnaTekster.adoptertFraUtlandet.sporsmal,
-            erAdoptertFraUtland.svar
-        ),
+        erAdoptertFraUtland: søknadsfeltForESvar(omBarnaTekster.adoptertFraUtlandet.sporsmal, erAdoptertFraUtland.svar),
         harBoddPåSvalbard: nullableSøknadsfeltForESvar(
             omBarnaTekster.hvemBoddPaaSvalbard.sporsmal,
             harBoddPåSvalbard.svar
@@ -167,16 +161,10 @@ export const barnISøknadsFormat = (
             flettefelter
         ),
         institusjonsnavn: institusjonsnavn.svar
-            ? søknadsfelt(
-                  omBarnetTekster.institusjonNavn.sporsmal,
-                  sammeVerdiAlleSpråk(institusjonsnavn.svar)
-              )
+            ? søknadsfelt(omBarnetTekster.institusjonNavn.sporsmal, sammeVerdiAlleSpråk(institusjonsnavn.svar))
             : null,
         institusjonsadresse: institusjonsadresse.svar
-            ? søknadsfelt(
-                  omBarnetTekster.institusjonAdresse.sporsmal,
-                  sammeVerdiAlleSpråk(institusjonsadresse.svar)
-              )
+            ? søknadsfelt(omBarnetTekster.institusjonAdresse.sporsmal, sammeVerdiAlleSpråk(institusjonsadresse.svar))
             : null,
         institusjonspostnummer: institusjonspostnummer.svar
             ? søknadsfelt(
@@ -229,10 +217,7 @@ export const barnISøknadsFormat = (
               )
             : null,
         søkersSlektsforhold: søkersSlektsforhold.svar
-            ? søknadsfelt(
-                  eøsTekster.slektsforhold.sporsmal,
-                  sammeVerdiAlleSpråk(søkersSlektsforhold.svar)
-              )
+            ? søknadsfelt(eøsTekster.slektsforhold.sporsmal, sammeVerdiAlleSpråk(søkersSlektsforhold.svar))
             : null,
         søkersSlektsforholdSpesifisering: søkersSlektsforholdSpesifisering.svar
             ? søknadsfelt(
@@ -326,12 +311,7 @@ export const barnISøknadsFormat = (
             })
         ),
         idNummer: idNummer.map(idnummerObj =>
-            idNummerTilISøknadsfelt(
-                tilRestLocaleRecord,
-                idnummerObj,
-                tekster.EØS_FOR_BARN.idNummerBarn,
-                navn
-            )
+            idNummerTilISøknadsfelt(tilRestLocaleRecord, idnummerObj, tekster.EØS_FOR_BARN.idNummerBarn, navn)
         ),
         andreForelder: andreForelder
             ? andreForelderTilISøknadsfelt(andreForelder, barn, tilRestLocaleRecord, tekster)

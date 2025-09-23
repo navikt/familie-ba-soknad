@@ -6,12 +6,7 @@ import { LocaleType } from '../../typer/common';
 import { ESivilstand, TilRestLocaleRecord } from '../../typer/kontrakt/generelle';
 import { ISøknadKontrakt } from '../../typer/kontrakt/kontrakt';
 import { ISøker } from '../../typer/person';
-import {
-    ESanitySivilstandApiKey,
-    LocaleRecordBlock,
-    LocaleRecordString,
-    PlainTekst,
-} from '../../typer/sanity/sanity';
+import { ESanitySivilstandApiKey, LocaleRecordBlock, LocaleRecordString, PlainTekst } from '../../typer/sanity/sanity';
 import { ITekstinnhold } from '../../typer/sanity/tekstInnhold';
 import { ISøknad } from '../../typer/søknad';
 import { erDokumentasjonRelevant } from '../dokumentasjon';
@@ -54,9 +49,7 @@ export const dataISøknadKontraktFormat = (
         kontraktVersjon: kontraktVersjon,
         antallEøsSteg: antallEøsSteg(søknad.søker, barnInkludertISøknaden),
         søker: søkerIKontraktFormat(søknad, tekster, tilRestLocaleRecord),
-        barn: barnInkludertISøknaden.map(barn =>
-            barnISøknadsFormat(barn, søknad, tekster, tilRestLocaleRecord)
-        ),
+        barn: barnInkludertISøknaden.map(barn => barnISøknadsFormat(barn, søknad, tekster, tilRestLocaleRecord)),
         spørsmål: {
             erNoenAvBarnaFosterbarn: søknadsfeltForSanity(
                 omBarnaTekster.fosterbarn.sporsmal,
@@ -99,17 +92,13 @@ export const dataISøknadKontraktFormat = (
         },
         dokumentasjon: søknad.dokumentasjon
             .filter(dok => erDokumentasjonRelevant(dok))
-            .map(dok =>
-                dokumentasjonISøknadFormat(dok, tekster, tilRestLocaleRecord, søknad, plainTekst)
-            ),
+            .map(dok => dokumentasjonISøknadFormat(dok, tekster, tilRestLocaleRecord, søknad, plainTekst)),
         teksterUtenomSpørsmål: {
             ...Object.values(ESivilstand).reduce(
                 (map, sivilstand) => ({
                     ...map,
                     [ESanitySivilstandApiKey[ESivilstand[sivilstand]]]: tilRestLocaleRecord(
-                        fellesTekster.frittståendeOrd[
-                            sivilstandTilSanitySivilstandApiKey(sivilstand)
-                        ]
+                        fellesTekster.frittståendeOrd[sivilstandTilSanitySivilstandApiKey(sivilstand)]
                     ),
                 }),
                 {}
@@ -143,9 +132,7 @@ export const dataISøknadKontraktFormat = (
                 tekster.DOKUMENTASJON.vedleggXavY,
                 tekster.DOKUMENTASJON.listeOverVedlegg,
                 tekster.EØS_FOR_SØKER.eoesForSoekerTittel,
-                ...Object.values(ESvar).map(svar =>
-                    jaNeiSvarTilSpråkIdForSanity(svar, tekster.FELLES.frittståendeOrd)
-                ),
+                ...Object.values(ESvar).map(svar => jaNeiSvarTilSpråkIdForSanity(svar, tekster.FELLES.frittståendeOrd)),
             ].reduce(
                 (map, sanityDok: LocaleRecordBlock | LocaleRecordString) => ({
                     ...map,

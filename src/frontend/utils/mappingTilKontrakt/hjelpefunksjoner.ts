@@ -10,11 +10,7 @@ import {
     SpørsmålMap as KontraktpørsmålMap,
     TilRestLocaleRecord,
 } from '../../typer/kontrakt/generelle';
-import {
-    FlettefeltVerdier,
-    LocaleRecordBlock,
-    LocaleRecordString,
-} from '../../typer/sanity/sanity';
+import { FlettefeltVerdier, LocaleRecordBlock, LocaleRecordString } from '../../typer/sanity/sanity';
 import { ITekstinnhold } from '../../typer/sanity/tekstInnhold';
 import { ISøknadSpørsmål, SpørsmålId, ISøknadSpørsmålMap } from '../../typer/spørsmål';
 import { Årsak } from '../../typer/utvidet';
@@ -39,11 +35,7 @@ export const søknadsfeltHof =
 
 export const søknadsfeltForESvarHof =
     (tilRestLocaleRecord: TilRestLocaleRecord) =>
-    (
-        spørsmål: LocaleRecordBlock,
-        svar: ESvar | null,
-        flettefelter?: FlettefeltVerdier
-    ): ISøknadsfelt<ESvar> => {
+    (spørsmål: LocaleRecordBlock, svar: ESvar | null, flettefelter?: FlettefeltVerdier): ISøknadsfelt<ESvar> => {
         const søknadsfelt = søknadsfeltHof(tilRestLocaleRecord);
         if (!svar) {
             throw Error(`Svar for ${spørsmål.nb} kan ikke være null`);
@@ -66,16 +58,13 @@ export const søknadsfelt = <T>(
     return { label: hentTekster(labelTekstId, labelMessageValues), verdi: value };
 };
 
-export const verdiCallbackAlleSpråk = <T>(
-    cb: (locale: LocaleType) => T
-): Record<LocaleType, T> => ({
+export const verdiCallbackAlleSpråk = <T>(cb: (locale: LocaleType) => T): Record<LocaleType, T> => ({
     [LocaleType.nb]: cb(LocaleType.nb),
     [LocaleType.nn]: cb(LocaleType.nn),
     [LocaleType.en]: cb(LocaleType.en),
 });
 
-export const sammeVerdiAlleSpråk = <T>(verdi: T): Record<LocaleType, T> =>
-    verdiCallbackAlleSpråk(() => verdi);
+export const sammeVerdiAlleSpråk = <T>(verdi: T): Record<LocaleType, T> => verdiCallbackAlleSpråk(() => verdi);
 
 export const sammeVerdiAlleSpråkEllerUkjent = <T>(
     tilRestLocaleRecord: TilRestLocaleRecord,
@@ -92,9 +81,7 @@ export const sammeVerdiAlleSpråkEllerUkjentSpråktekst = <T>(
     ukjentTekstid: string,
     språkVerdier: Record<string, ReactNode> = {}
 ): Record<LocaleType, T | string> =>
-    svar === AlternativtSvarForInput.UKJENT
-        ? hentTekster(ukjentTekstid, språkVerdier)
-        : sammeVerdiAlleSpråk(svar);
+    svar === AlternativtSvarForInput.UKJENT ? hentTekster(ukjentTekstid, språkVerdier) : sammeVerdiAlleSpråk(svar);
 
 export const spørmålISøknadsFormat = (
     spørsmålMap: ISøknadSpørsmålMap,
@@ -108,17 +95,12 @@ export const spørmålISøknadsFormat = (
             .map(
                 (
                     entry: [string, ISøknadSpørsmål<any>]
-                ): [
-                    string,
-                    { label: Record<LocaleType, string>; verdi: Record<LocaleType, any> },
-                ] => {
+                ): [string, { label: Record<LocaleType, string>; verdi: Record<LocaleType, any> }] => {
                     const verdi = entry[1].svar;
                     let formatertVerdi: Record<LocaleType, string>;
 
                     if (isAlpha3Code(verdi)) {
-                        formatertVerdi = verdiCallbackAlleSpråk(locale =>
-                            landkodeTilSpråk(verdi, locale)
-                        );
+                        formatertVerdi = verdiCallbackAlleSpråk(locale => landkodeTilSpråk(verdi, locale));
                     } else if (verdi in ESvar) {
                         // Slår opp språktekst i språkteksterUtenomSpørsmål i dokgen
                         formatertVerdi = sammeVerdiAlleSpråk(verdi);
@@ -132,11 +114,7 @@ export const spørmålISøknadsFormat = (
 
                     return [
                         entry[0],
-                        søknadsfelt(
-                            språktekstIdFraSpørsmålId(entry[1].id),
-                            formatertVerdi,
-                            formatMessageValues
-                        ),
+                        søknadsfelt(språktekstIdFraSpørsmålId(entry[1].id), formatertVerdi, formatMessageValues),
                     ];
                 }
             )

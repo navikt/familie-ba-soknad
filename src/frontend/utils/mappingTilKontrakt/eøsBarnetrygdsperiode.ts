@@ -41,8 +41,7 @@ export const tilIEøsBarnetrygsperiodeIKontraktFormat = ({
     } = periode;
 
     const periodenErAvsluttet =
-        mottarEøsBarnetrygdNå.svar === ESvar.NEI ||
-        (personType === PersonType.AndreForelder && erDød);
+        mottarEøsBarnetrygdNå.svar === ESvar.NEI || (personType === PersonType.AndreForelder && erDød);
 
     return {
         label: tilRestLocaleRecord(tekster.oppsummeringstittel, {
@@ -59,9 +58,7 @@ export const tilIEøsBarnetrygsperiodeIKontraktFormat = ({
                 : null,
             barnetrygdsland: {
                 label: tilRestLocaleRecord(
-                    periodenErAvsluttet
-                        ? tekster.barnetrygdLandFortid.sporsmal
-                        : tekster.barnetrygdLandNatid.sporsmal,
+                    periodenErAvsluttet ? tekster.barnetrygdLandFortid.sporsmal : tekster.barnetrygdLandNatid.sporsmal,
                     {
                         barnetsNavn: barn?.navn,
                     }

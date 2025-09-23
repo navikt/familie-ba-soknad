@@ -17,12 +17,7 @@ export const NyttBarnKort: React.FC<{ onLeggTilBarn: () => void }> = ({ onLeggTi
     return (
         <BarnekortContainer>
             <BodyShort spacing>{plainTekst(soekeForUregistrerteBarn)}</BodyShort>
-            <Button
-                type="button"
-                variant="secondary"
-                data-testid="legg-til-barn-knapp"
-                onClick={() => onLeggTilBarn()}
-            >
+            <Button type="button" variant="secondary" data-testid="legg-til-barn-knapp" onClick={() => onLeggTilBarn()}>
                 {plainTekst(leggTilKnapp)}
             </Button>
         </BarnekortContainer>

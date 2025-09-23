@@ -34,10 +34,7 @@ describe('LastOppVedlegg', () => {
 
         const { getByTestId, queryByTestId } = render(
             <TestProvidere>
-                <LastOppVedlegg
-                    dokumentasjon={dokumentasjon}
-                    oppdaterDokumentasjon={oppdaterDokumentasjon}
-                />
+                <LastOppVedlegg dokumentasjon={dokumentasjon} oppdaterDokumentasjon={oppdaterDokumentasjon} />
             </TestProvidere>
         );
 
@@ -59,10 +56,7 @@ describe('LastOppVedlegg', () => {
 
         const { getByTestId, queryByTestId } = render(
             <TestProvidere mocketNettleserHistorikk={['/utvidet/']}>
-                <LastOppVedlegg
-                    dokumentasjon={dokumentasjon}
-                    oppdaterDokumentasjon={oppdaterDokumentasjon}
-                />
+                <LastOppVedlegg dokumentasjon={dokumentasjon} oppdaterDokumentasjon={oppdaterDokumentasjon} />
             </TestProvidere>
         );
 

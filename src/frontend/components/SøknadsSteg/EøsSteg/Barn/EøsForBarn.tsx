@@ -60,8 +60,7 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
     const { søknad, tekster, plainTekst } = useAppContext();
 
     const andreBarnSomErFyltUt = søknad.barnInkludertISøknaden.filter(
-        barnISøknad =>
-            barnISøknad.barnErFyltUt && barnISøknad.id !== barn.id && !!barnISøknad.andreForelder
+        barnISøknad => barnISøknad.barnErFyltUt && barnISøknad.id !== barn.id && !!barnISøknad.andreForelder
     );
 
     const barnMedSammeForelder: IBarnMedISøknad | undefined = andreBarnSomErFyltUt.find(
@@ -86,9 +85,7 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
 
     return (
         <Steg
-            tittel={
-                <TekstBlock block={eoesForBarnTittel} flettefelter={{ barnetsNavn: barn.navn }} />
-            }
+            tittel={<TekstBlock block={eoesForBarnTittel} flettefelter={{ barnetsNavn: barn.navn }} />}
             guide={eosForBarnGuide}
             skjema={{
                 validerFelterOgVisFeilmelding,
@@ -98,11 +95,7 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
             }}
         >
             <div>
-                <SamletIdNummerForBarn
-                    barn={barn}
-                    settIdNummerFelter={settIdNummerFelterForBarn}
-                    skjema={skjema}
-                />
+                <SamletIdNummerForBarn barn={barn} settIdNummerFelter={settIdNummerFelterForBarn} skjema={skjema} />
             </div>
             {skjema.felter.søkersSlektsforhold.erSynlig && (
                 <>
@@ -110,12 +103,7 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                         felt={skjema.felter.søkersSlektsforhold}
                         skjema={skjema}
                         placeholder={plainTekst(valgalternativSlektsforholdPlaceholder)}
-                        label={
-                            <TekstBlock
-                                block={slektsforhold.sporsmal}
-                                flettefelter={{ barnetsNavn: barn.navn }}
-                            />
-                        }
+                        label={<TekstBlock block={slektsforhold.sporsmal} flettefelter={{ barnetsNavn: barn.navn }} />}
                         gjelderSøker={true}
                     />
                     {skjema.felter.søkersSlektsforholdSpesifisering.erSynlig && (
@@ -132,8 +120,7 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                     )}
                 </>
             )}
-            {(skjema.felter.borMedAndreForelder.erSynlig ||
-                skjema.felter.borMedOmsorgsperson.erSynlig) && (
+            {(skjema.felter.borMedAndreForelder.erSynlig || skjema.felter.borMedOmsorgsperson.erSynlig) && (
                 <>
                     <JaNeiSpm
                         skjema={skjema}
@@ -175,12 +162,7 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                         felt={skjema.felter.barnetsAdresse}
                         visFeilmeldinger={skjema.visFeilmeldinger}
                         description={plainTekst(hvorBorBarnet.beskrivelse)}
-                        label={
-                            <TekstBlock
-                                block={hvorBorBarnet.sporsmal}
-                                flettefelter={{ barnetsNavn: barn.navn }}
-                            />
-                        }
+                        label={<TekstBlock block={hvorBorBarnet.sporsmal} flettefelter={{ barnetsNavn: barn.navn }} />}
                         disabled={skjema.felter.barnetsAdresseVetIkke.verdi === ESvar.JA}
                     />
                     <SkjemaCheckboxForSanity
@@ -190,9 +172,7 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                 </div>
             )}
             {!skalSkjuleAndreForelderFelt(barn) && (
-                <SkjemaFieldset
-                    legend={plainTekst(subtittelAndreForelder, { barnetsNavn: barn.navn })}
-                >
+                <SkjemaFieldset legend={plainTekst(subtittelAndreForelder, { barnetsNavn: barn.navn })}>
                     {!barnMedSammeForelder ? (
                         <>
                             <IdNummerForAndreForelder
@@ -212,10 +192,7 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                                             />
                                         }
                                         description={plainTekst(hvorBorAndreForelder.beskrivelse)}
-                                        disabled={
-                                            skjema.felter.andreForelderAdresseVetIkke.verdi ===
-                                            ESvar.JA
-                                        }
+                                        disabled={skjema.felter.andreForelderAdresseVetIkke.verdi === ESvar.JA}
                                     />
                                     <SkjemaCheckboxForSanity
                                         felt={skjema.felter.andreForelderAdresseVetIkke}
@@ -228,43 +205,31 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                                 leggTilArbeidsperiode={leggTilArbeidsperiodeNorgeAndreForelder}
                                 fjernArbeidsperiode={fjernArbeidsperiodeNorgeAndreForelder}
                                 arbeiderEllerArbeidetFelt={skjema.felter.andreForelderArbeidNorge}
-                                registrerteArbeidsperioder={
-                                    skjema.felter.andreForelderArbeidsperioderNorge
-                                }
+                                registrerteArbeidsperioder={skjema.felter.andreForelderArbeidsperioderNorge}
                                 personType={PersonType.AndreForelder}
                                 erDød={barn.andreForelderErDød.svar === ESvar.JA}
                                 barn={barn}
                             />
                             <Pensjonsperiode
                                 skjema={skjema}
-                                mottarEllerMottattPensjonFelt={
-                                    skjema.felter.andreForelderPensjonNorge
-                                }
+                                mottarEllerMottattPensjonFelt={skjema.felter.andreForelderPensjonNorge}
                                 leggTilPensjonsperiode={leggTilPensjonsperiodeNorgeAndreForelder}
                                 fjernPensjonsperiode={fjernPensjonsperiodeNorgeAndreForelder}
                                 personType={PersonType.AndreForelder}
                                 erDød={barn.andreForelderErDød.svar === ESvar.JA}
                                 barn={barn}
                                 gjelderUtlandet={false}
-                                registrertePensjonsperioder={
-                                    skjema.felter.andreForelderPensjonsperioderNorge
-                                }
+                                registrertePensjonsperioder={skjema.felter.andreForelderPensjonsperioderNorge}
                             />
                             <Utbetalingsperiode
                                 skjema={skjema}
-                                tilhørendeJaNeiSpmFelt={
-                                    skjema.felter.andreForelderAndreUtbetalinger
-                                }
-                                leggTilUtbetalingsperiode={
-                                    leggTilAndreUtbetalingsperiodeAndreForelder
-                                }
+                                tilhørendeJaNeiSpmFelt={skjema.felter.andreForelderAndreUtbetalinger}
+                                leggTilUtbetalingsperiode={leggTilAndreUtbetalingsperiodeAndreForelder}
                                 fjernUtbetalingsperiode={fjernAndreUtbetalingsperiodeAndreForelder}
                                 personType={PersonType.AndreForelder}
                                 erDød={barn.andreForelderErDød.svar === ESvar.JA}
                                 barn={barn}
-                                registrerteUtbetalingsperioder={
-                                    skjema.felter.andreForelderAndreUtbetalingsperioder
-                                }
+                                registrerteUtbetalingsperioder={skjema.felter.andreForelderAndreUtbetalingsperioder}
                             />
                             <JaNeiSpm
                                 skjema={skjema}
@@ -290,9 +255,7 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                             <Barnetrygdperiode
                                 skjema={skjema}
                                 tilhørendeJaNeiSpmFelt={skjema.felter.andreForelderBarnetrygdFraEøs}
-                                registrerteEøsBarnetrygdsperioder={
-                                    skjema.felter.andreForelderEøsBarnetrygdsperioder
-                                }
+                                registrerteEøsBarnetrygdsperioder={skjema.felter.andreForelderEøsBarnetrygdsperioder}
                                 leggTilBarnetrygdsperiode={leggTilBarnetrygdsperiodeAndreForelder}
                                 fjernBarnetrygdsperiode={fjernBarnetrygdsperiodeAndreForelder}
                                 barn={barn}

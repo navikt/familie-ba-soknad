@@ -21,13 +21,7 @@ const StyledButton = styled(Button)`
     }
 `;
 
-export const LeggTilKnapp: React.FC<Props> = ({
-    onClick,
-    children,
-    leggTilFlereTekst,
-    feilmelding,
-    id,
-}) => {
+export const LeggTilKnapp: React.FC<Props> = ({ onClick, children, leggTilFlereTekst, feilmelding, id }) => {
     return (
         <>
             {leggTilFlereTekst && <BodyShort spacing>{leggTilFlereTekst}</BodyShort>}

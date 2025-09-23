@@ -29,10 +29,7 @@ import { PensjonsperiodeSpørsmålId } from './spørsmål';
 
 interface PensjonsperiodeProps {
     skjema: ISkjema<
-        | IDinLivssituasjonFeltTyper
-        | IOmBarnetFeltTyper
-        | IEøsForSøkerFeltTyper
-        | IEøsForBarnFeltTyper,
+        IDinLivssituasjonFeltTyper | IOmBarnetFeltTyper | IEøsForSøkerFeltTyper | IEøsForBarnFeltTyper,
         string
     >;
     leggTilPensjonsperiode: (periode: IPensjonsperiode) => void;
@@ -55,19 +52,14 @@ export const Pensjonsperiode: React.FC<Props> = ({
     erDød,
     barn,
 }) => {
-    const {
-        erÅpen: pensjonsmodalErÅpen,
-        lukkModal: lukkPensjonsmodal,
-        åpneModal: åpnePensjonsmodal,
-    } = useModal();
+    const { erÅpen: pensjonsmodalErÅpen, lukkModal: lukkPensjonsmodal, åpneModal: åpnePensjonsmodal } = useModal();
     const { tekster, plainTekst } = useAppContext();
 
     const pensjonsperiodeSpørsmålId = gjelderUtlandet
         ? PensjonsperiodeSpørsmålId.pensjonsperioderUtland
         : PensjonsperiodeSpørsmålId.pensjonsperioderNorge;
 
-    const teksterForModal: IPensjonsperiodeTekstinnhold =
-        tekster().FELLES.modaler.pensjonsperiode[personType];
+    const teksterForModal: IPensjonsperiodeTekstinnhold = tekster().FELLES.modaler.pensjonsperiode[personType];
     const { flerePerioder, leggTilKnapp, leggTilPeriodeForklaring } = teksterForModal;
 
     const frittståendeOrdTekster = tekster().FELLES.frittståendeOrd;
@@ -82,12 +74,7 @@ export const Pensjonsperiode: React.FC<Props> = ({
             <JaNeiSpm
                 skjema={skjema}
                 felt={mottarEllerMottattPensjonFelt}
-                spørsmålDokument={pensjonSpørsmålDokument(
-                    gjelderUtlandet,
-                    personType,
-                    tekster,
-                    erDød
-                )}
+                spørsmålDokument={pensjonSpørsmålDokument(gjelderUtlandet, personType, tekster, erDød)}
                 inkluderVetIkke={personType !== PersonType.Søker}
                 flettefelter={{ barnetsNavn: barn?.navn }}
             />

@@ -42,9 +42,7 @@ const VelgBarnOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                     <FormSummary.Value>
                         <FormSummary.Answers>
                             <OppsummeringFelt
-                                tittel={
-                                    <TekstBlock block={leggTilBarnTekster.barnetsNavnSubtittel} />
-                                }
+                                tittel={<TekstBlock block={leggTilBarnTekster.barnetsNavnSubtittel} />}
                                 søknadsvar={
                                     barn.adressebeskyttelse
                                         ? plainTekst(velgBarnTekster.registrertMedAdressesperre)
@@ -59,12 +57,8 @@ const VelgBarnOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                                 barnRegistrertManuelt => barnRegistrertManuelt.ident === barn.ident
                             ) && (
                                 <OppsummeringFelt
-                                    tittel={
-                                        <TekstBlock block={velgBarnTekster.registrertBostedLabel} />
-                                    }
-                                    søknadsvar={plainTekst(
-                                        hentBostedSpråkId(barn, velgBarnTekster)
-                                    )}
+                                    tittel={<TekstBlock block={velgBarnTekster.registrertBostedLabel} />}
+                                    søknadsvar={plainTekst(hentBostedSpråkId(barn, velgBarnTekster))}
                                 />
                             )}
                         </FormSummary.Answers>

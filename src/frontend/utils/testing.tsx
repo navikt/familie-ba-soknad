@@ -59,8 +59,7 @@ export const spyOnUseApp = søknad => {
     const axiosRequestMock = vi
         .fn()
         .mockImplementation(
-            (): Promise<Ressurs<unknown>> =>
-                Promise.resolve({ status: RessursStatus.SUKSESS, data: {} })
+            (): Promise<Ressurs<unknown>> => Promise.resolve({ status: RessursStatus.SUKSESS, data: {} })
         );
     const erUtvidet = søknad.søknadstype === 'UTVIDET';
     const settNåværendeRoute = vi.fn();
@@ -175,9 +174,7 @@ const wrapMedProvidere = (
         >
             {språkTekster ? (
                 <IntlProvider locale={LocaleType.nb} messages={språkTekster}>
-                    {resten.length
-                        ? wrapMedProvidere(resten, mocketNettleserHistorikk, children)
-                        : children}
+                    {resten.length ? wrapMedProvidere(resten, mocketNettleserHistorikk, children) : children}
                 </IntlProvider>
             ) : resten.length ? (
                 wrapMedProvidere(resten, mocketNettleserHistorikk, children)
@@ -225,11 +222,7 @@ export const TestProvidereMedEkteTekster: React.FC<{
     mocketNettleserHistorikk?: string[];
     children?: ReactNode;
 }> = ({ mocketNettleserHistorikk, children }) => (
-    <TestProvidere
-        tekster={norskeTekster}
-        children={children}
-        mocketNettleserHistorikk={mocketNettleserHistorikk}
-    />
+    <TestProvidere tekster={norskeTekster} children={children} mocketNettleserHistorikk={mocketNettleserHistorikk} />
 );
 
 export const LesUtLocation = () => {
