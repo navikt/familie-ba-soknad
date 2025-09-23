@@ -31,8 +31,8 @@ export const barnISøknadsFormat = (
     tilRestLocaleRecord: TilRestLocaleRecord
 ): ISøknadIKontraktBarn => {
     const {
-        id,
-        barnErFyltUt,
+        // id,
+        // barnErFyltUt,
         ident,
         navn,
         borMedSøker,
@@ -163,7 +163,8 @@ export const barnISøknadsFormat = (
         ),
         institusjonIUtland: søknadsfeltForESvar(
             omBarnetTekster.opplystInstitusjon,
-            institusjonIUtland.svar
+            institusjonIUtland.svar,
+            flettefelter
         ),
         institusjonsnavn: institusjonsnavn.svar
             ? søknadsfelt(
@@ -199,7 +200,6 @@ export const barnISøknadsFormat = (
                   )
               )
             : null,
-
         planleggerÅBoINorge12Mnd: nullableSøknadsfeltForESvar(
             omBarnetTekster.planlagtBoSammenhengendeINorge.sporsmal,
             planleggerÅBoINorge12Mnd.svar
