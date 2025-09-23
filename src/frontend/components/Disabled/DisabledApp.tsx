@@ -32,7 +32,7 @@ export function DisabledApp() {
                             later, or send the application on PDF/paper.
                         </BodyShort>
                         <BodyShort>
-                            <Link href="https://www.nav.no/start/soknad-barnetrygd">
+                            <Link href="https://www.nav.no/start/soknad-barnetrygd/en">
                                 Send the application on PDF/paper
                             </Link>
                         </BodyShort>
