@@ -190,7 +190,8 @@ export const barnISøknadsFormat = (
             : null,
         planleggerÅBoINorge12Mnd: nullableSøknadsfeltForESvar(
             omBarnetTekster.planlagtBoSammenhengendeINorge.sporsmal,
-            planleggerÅBoINorge12Mnd.svar
+            planleggerÅBoINorge12Mnd.svar,
+            flettefelter
         ),
         // EØS for barn tekster
         adresse: adresse.svar
