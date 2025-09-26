@@ -9,9 +9,7 @@ const finnMuligensUbrukteIder = (alleBenyttedeSpråkIder, språkfil, språkfilNa
     console.info('------------------------------------------------------------');
     console.info(`ubrukte språkId'er i ${språkfilNavn}.json: 
 `);
-    const iderSomIkkeErIBruk = Object.keys(språkfil).filter(
-        key => !alleBenyttedeSpråkIder.includes(key)
-    );
+    const iderSomIkkeErIBruk = Object.keys(språkfil).filter(key => !alleBenyttedeSpråkIder.includes(key));
     iderSomIkkeErIBruk.forEach(key => {
         console.info(`Ikke i bruk? -> ${key}`);
     });

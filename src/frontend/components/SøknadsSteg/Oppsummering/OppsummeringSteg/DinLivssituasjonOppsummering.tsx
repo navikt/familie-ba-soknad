@@ -96,29 +96,16 @@ const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
             {erUtvidet && (
                 <>
                     <OppsummeringFelt
-                        tittel={
-                            <TekstBlock
-                                block={dinLivssituasjonTekster.hvorforSoekerUtvidet.sporsmal}
-                            />
-                        }
+                        tittel={<TekstBlock block={dinLivssituasjonTekster.hvorforSoekerUtvidet.sporsmal} />}
                         søknadsvar={
                             søknad.søker.utvidet.spørsmål.årsak.svar &&
-                            plainTekst(
-                                hentÅrsak(
-                                    søknad.søker.utvidet.spørsmål.årsak.svar,
-                                    dinLivssituasjonTekster
-                                )
-                            )
+                            plainTekst(hentÅrsak(søknad.søker.utvidet.spørsmål.årsak.svar, dinLivssituasjonTekster))
                         }
                     />
                     {søknad.søker.sivilstand.type === ESivilstand.GIFT && (
                         <>
                             <OppsummeringFelt
-                                tittel={
-                                    <TekstBlock
-                                        block={dinLivssituasjonTekster.separertEnkeSkilt.sporsmal}
-                                    />
-                                }
+                                tittel={<TekstBlock block={dinLivssituasjonTekster.separertEnkeSkilt.sporsmal} />}
                                 søknadsvar={søknad.søker.utvidet.spørsmål.separertEnkeSkilt.svar}
                             />
                             {søknad.søker.utvidet.spørsmål.separertEnkeSkilt.svar === ESvar.JA && (
@@ -126,24 +113,15 @@ const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                                     <OppsummeringFelt
                                         tittel={
                                             <TekstBlock
-                                                block={
-                                                    dinLivssituasjonTekster.separertEnkeSkiltUtland
-                                                        .sporsmal
-                                                }
+                                                block={dinLivssituasjonTekster.separertEnkeSkiltUtland.sporsmal}
                                             />
                                         }
-                                        søknadsvar={
-                                            søknad.søker.utvidet.spørsmål.separertEnkeSkiltUtland
-                                                .svar
-                                        }
+                                        søknadsvar={søknad.søker.utvidet.spørsmål.separertEnkeSkiltUtland.svar}
                                     />
                                     <OppsummeringFelt
                                         tittel={
                                             <TekstBlock
-                                                block={
-                                                    dinLivssituasjonTekster.separertEnkeSkiltDato
-                                                        .sporsmal
-                                                }
+                                                block={dinLivssituasjonTekster.separertEnkeSkiltDato.sporsmal}
                                             />
                                         }
                                         søknadsvar={formaterDato(
@@ -156,9 +134,7 @@ const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                     )}
 
                     <OppsummeringFelt
-                        tittel={
-                            <TekstBlock block={dinLivssituasjonTekster.harSamboerNaa.sporsmal} />
-                        }
+                        tittel={<TekstBlock block={dinLivssituasjonTekster.harSamboerNaa.sporsmal} />}
                         søknadsvar={søknad.søker.utvidet.spørsmål.harSamboerNå.svar}
                     />
                     {søknad.søker.utvidet.nåværendeSamboer && (
@@ -166,16 +142,8 @@ const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
                     )}
 
                     <OppsummeringFelt
-                        tittel={
-                            <TekstBlock
-                                block={
-                                    dinLivssituasjonTekster.hattAnnenSamboerForSoektPeriode.sporsmal
-                                }
-                            />
-                        }
-                        søknadsvar={
-                            søknad.søker.utvidet.spørsmål.hattAnnenSamboerForSøktPeriode.svar
-                        }
+                        tittel={<TekstBlock block={dinLivssituasjonTekster.hattAnnenSamboerForSoektPeriode.sporsmal} />}
+                        søknadsvar={søknad.søker.utvidet.spørsmål.hattAnnenSamboerForSøktPeriode.svar}
                     />
                     {tidligereSamboere.map((tidligereSamboer, index) => (
                         <SamboerOppsummering key={index} samboer={tidligereSamboer} />

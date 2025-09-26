@@ -48,8 +48,7 @@ export const BarnetrygdsperiodeOppsummering: React.FC<Props> = ({
     } = barnetrygdsperiode;
 
     const periodenErAvsluttet =
-        mottarEøsBarnetrygdNå.svar === ESvar.NEI ||
-        (personType === PersonType.AndreForelder && erDød);
+        mottarEøsBarnetrygdNå.svar === ESvar.NEI || (personType === PersonType.AndreForelder && erDød);
     const { valgtLocale } = useSpråkContext();
     const { tekster } = useAppContext();
 
@@ -58,9 +57,7 @@ export const BarnetrygdsperiodeOppsummering: React.FC<Props> = ({
 
     return (
         <PeriodeOppsummering
-            fjernPeriodeCallback={
-                fjernPeriodeCallback && (() => fjernPeriodeCallback(barnetrygdsperiode))
-            }
+            fjernPeriodeCallback={fjernPeriodeCallback && (() => fjernPeriodeCallback(barnetrygdsperiode))}
             tittelSpråkId={'ombarnet.trygdandreperioder.periode'}
             fjernKnappSpråkId={'felles.fjernbarnetrygd.knapp'}
             tittel={
@@ -112,10 +109,7 @@ export const BarnetrygdsperiodeOppsummering: React.FC<Props> = ({
             )}
             <OppsummeringFelt
                 tittel={
-                    <TekstBlock
-                        block={teksterForPersonType.belopPerManed.sporsmal}
-                        flettefelter={{ barnetsNavn }}
-                    />
+                    <TekstBlock block={teksterForPersonType.belopPerManed.sporsmal} flettefelter={{ barnetsNavn }} />
                 }
                 søknadsvar={månedligBeløp.svar}
             />

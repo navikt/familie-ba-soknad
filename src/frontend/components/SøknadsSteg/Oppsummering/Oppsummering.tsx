@@ -81,9 +81,7 @@ const Oppsummering: React.FC = () => {
                     {søkerHarEøsSteg && <EøsSøkerOppsummering settFeilAnchors={settFeilAnchors} />}
                     {barnSomHarEøsSteg.map((barn, index) => {
                         const enIndeksert = index + 1;
-                        const nummer = (
-                            hentStegNummer(RouteEnum.EøsForSøker) + enIndeksert
-                        ).toString();
+                        const nummer = (hentStegNummer(RouteEnum.EøsForSøker) + enIndeksert).toString();
                         return (
                             <EøsBarnOppsummering
                                 key={`om-barnet-eøs-${index}`}

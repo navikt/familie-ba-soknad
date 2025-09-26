@@ -12,14 +12,12 @@ export function DisabledApp() {
                             Vi jobber med å forbedre siden
                         </Heading>
                         <BodyShort spacing>
-                            Denne siden er midlertidig utilgjengelig mens vi legger til nytt innhold
-                            og gjør forbedringer. Takk for tålmodigheten. Prøv gjerne igjen litt
-                            senere, eller send oss søknaden på PDF/papir.
+                            Denne siden er midlertidig utilgjengelig mens vi legger til nytt innhold og gjør og gjør
+                            forbedringer. Takk for tålmodigheten. Prøv gjerne igjen litt senere, eller send oss søknaden
+                            på PDF/papir.
                         </BodyShort>
                         <BodyShort>
-                            <Link href="https://www.nav.no/start/soknad-barnetrygd">
-                                Bruk PDF/papirskjema
-                            </Link>
+                            <Link href="https://www.nav.no/start/soknad-barnetrygd">Bruk PDF/papirskjema</Link>
                         </BodyShort>
                     </div>
                     <div>
@@ -27,9 +25,8 @@ export function DisabledApp() {
                             We’re working on this page
                         </Heading>
                         <BodyShort spacing>
-                            This page is temporarily unavailable while we add new content and
-                            improvements. Thank you for your patience. Please check back a bit
-                            later, or send the application on PDF/paper.
+                            This page is temporarily unavailable while we add new content and improvements. Thank you
+                            for your patience. Please check back a bit later, or send the application on PDF/paper.
                         </BodyShort>
                         <BodyShort>
                             <Link href="https://www.nav.no/start/soknad-barnetrygd/en">

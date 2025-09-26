@@ -1,9 +1,6 @@
 import { ESvar } from '@navikt/familie-form-elements';
 
-import {
-    EøsSøkerSpørsmålId,
-    eøsSøkerSpørsmålSpråkId,
-} from '../../components/SøknadsSteg/EøsSteg/Søker/spørsmål';
+import { EøsSøkerSpørsmålId, eøsSøkerSpørsmålSpråkId } from '../../components/SøknadsSteg/EøsSteg/Søker/spørsmål';
 import { OmBarnaDineSpørsmålId } from '../../components/SøknadsSteg/OmBarnaDine/spørsmål';
 import { IBarnMedISøknad } from '../../typer/barn';
 import { LocaleType } from '../../typer/common';
@@ -16,12 +13,7 @@ import { ITekstinnhold } from '../../typer/sanity/tekstInnhold';
 import { ISøknadSpørsmålMap } from '../../typer/spørsmål';
 import { ISøknad } from '../../typer/søknad';
 import { erDokumentasjonRelevant } from '../dokumentasjon';
-import {
-    hentSivilstatusSpråkId,
-    hentTekster,
-    hentUformaterteTekster,
-    landkodeTilSpråk,
-} from '../språk';
+import { hentSivilstatusSpråkId, hentTekster, hentUformaterteTekster, landkodeTilSpråk } from '../språk';
 import { jaNeiSvarTilSpråkId } from '../spørsmål';
 
 import { tilIAndreUtbetalingsperioderIKontraktFormat } from './andreUtbetalingsperioder';
@@ -98,14 +90,10 @@ export const dataISøknadKontraktFormat = (
         kontraktVersjon: kontraktVersjon,
         antallEøsSteg: antallEøsSteg(søker, barnInkludertISøknaden),
         søker: {
-            harEøsSteg:
-                triggetEøs || !!barnInkludertISøknaden.filter(barn => barn.triggetEøs).length,
+            harEøsSteg: triggetEøs || !!barnInkludertISøknaden.filter(barn => barn.triggetEøs).length,
             navn: søknadsfelt('pdf.søker.navn.label', sammeVerdiAlleSpråk(navn)),
             ident: søknadsfelt('pdf.søker.ident.label', sammeVerdiAlleSpråk(ident)),
-            sivilstand: søknadsfelt(
-                'pdf.søker.sivilstand.label',
-                sammeVerdiAlleSpråk(sivilstand.type)
-            ),
+            sivilstand: søknadsfelt('pdf.søker.sivilstand.label', sammeVerdiAlleSpråk(sivilstand.type)),
             statsborgerskap: søknadsfelt(
                 'pdf.søker.statsborgerskap.label',
                 verdiCallbackAlleSpråk(locale =>
@@ -225,9 +213,7 @@ export const dataISøknadKontraktFormat = (
                 sammeVerdiAlleSpråk(søknad.oppholderBarnSegIInstitusjon.svar)
             ),
             barnOppholdtSegTolvMndSammenhengendeINorge: søknadsfelt(
-                språktekstIdFraSpørsmålId(
-                    OmBarnaDineSpørsmålId.barnOppholdtSegTolvMndSammenhengendeINorge
-                ),
+                språktekstIdFraSpørsmålId(OmBarnaDineSpørsmålId.barnOppholdtSegTolvMndSammenhengendeINorge),
                 sammeVerdiAlleSpråk(søknad.barnOppholdtSegTolvMndSammenhengendeINorge.svar)
             ),
             erBarnAdoptertFraUtland: søknadsfelt(
@@ -235,9 +221,7 @@ export const dataISøknadKontraktFormat = (
                 sammeVerdiAlleSpråk(søknad.erBarnAdoptertFraUtland.svar)
             ),
             mottarBarnetrygdForBarnFraAnnetEøsland: søknadsfelt(
-                språktekstIdFraSpørsmålId(
-                    OmBarnaDineSpørsmålId.mottarBarnetrygdForBarnFraAnnetEøsland
-                ),
+                språktekstIdFraSpørsmålId(OmBarnaDineSpørsmålId.mottarBarnetrygdForBarnFraAnnetEøsland),
                 sammeVerdiAlleSpråk(søknad.mottarBarnetrygdForBarnFraAnnetEøsland.svar)
             ),
             erAvdødPartnerForelder: søknadsfelt(
@@ -257,9 +241,7 @@ export const dataISøknadKontraktFormat = (
         },
         dokumentasjon: søknad.dokumentasjon
             .filter(dok => erDokumentasjonRelevant(dok))
-            .map(dok =>
-                dokumentasjonISøknadFormat(dok, tekster, tilRestLocaleRecord, søknad, plainTekst)
-            ),
+            .map(dok => dokumentasjonISøknadFormat(dok, tekster, tilRestLocaleRecord, søknad, plainTekst)),
         teksterUtenomSpørsmål: {
             ...lokaleTekster(),
             ...teksterFraSanity(tekster, tilRestLocaleRecord),

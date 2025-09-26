@@ -15,8 +15,7 @@ import { useOmBarnaDine } from './useOmBarnaDine';
 import { avdødPartnerForelderSpørsmålDokument } from './utils';
 
 const OmBarnaDineSkjema: React.FC = () => {
-    const { skjema, validerFelterOgVisFeilmelding, valideringErOk, oppdaterSøknad } =
-        useOmBarnaDine();
+    const { skjema, validerFelterOgVisFeilmelding, valideringErOk, oppdaterSøknad } = useOmBarnaDine();
 
     const { søknad, tekster } = useAppContext();
 
@@ -62,11 +61,7 @@ const OmBarnaDineSkjema: React.FC = () => {
                 },
             ]}
         >
-            <JaNeiSpm
-                skjema={skjema}
-                felt={skjema.felter.erNoenAvBarnaFosterbarn}
-                spørsmålDokument={fosterbarn}
-            />
+            <JaNeiSpm skjema={skjema} felt={skjema.felter.erNoenAvBarnaFosterbarn} spørsmålDokument={fosterbarn} />
             <HvilkeBarnCheckboxGruppe
                 legendTekst={<TekstBlock block={hvemFosterbarn.sporsmal} />}
                 skjemafelt={skjema.felter.hvemErFosterbarn}
@@ -78,9 +73,7 @@ const OmBarnaDineSkjema: React.FC = () => {
                 skjema={skjema}
                 felt={skjema.felter.oppholderBarnSegIInstitusjon}
                 spørsmålDokument={institusjon}
-                tilleggsinfo={
-                    <TekstBlock block={institusjon.beskrivelse} typografi={Typografi.BodyShort} />
-                }
+                tilleggsinfo={<TekstBlock block={institusjon.beskrivelse} typografi={Typografi.BodyShort} />}
             />
             <HvilkeBarnCheckboxGruppe
                 legendTekst={<TekstBlock block={hvemInstitusjon.sporsmal} />}
@@ -96,26 +89,17 @@ const OmBarnaDineSkjema: React.FC = () => {
                         felt={skjema.felter.erBarnAdoptertFraUtland}
                         spørsmålDokument={adoptertFraUtlandet}
                         tilleggsinfo={
-                            <TekstBlock
-                                block={adoptertFraUtlandet.beskrivelse}
-                                typografi={Typografi.BodyShort}
-                            />
+                            <TekstBlock block={adoptertFraUtlandet.beskrivelse} typografi={Typografi.BodyShort} />
                         }
                     />
                     <HvilkeBarnCheckboxGruppe
                         legendTekst={<TekstBlock block={hvemAdoptertFraUtlandet.sporsmal} />}
                         skjemafelt={skjema.felter.hvemErAdoptertFraUtland}
                         søknadsdatafelt={barnDataKeySpørsmål.erAdoptertFraUtland}
-                        nullstillValgteBarn={
-                            skjema.felter.erBarnAdoptertFraUtland.verdi === ESvar.NEI
-                        }
+                        nullstillValgteBarn={skjema.felter.erBarnAdoptertFraUtland.verdi === ESvar.NEI}
                         visFeilmelding={skjema.visFeilmeldinger}
                     />
-                    <JaNeiSpm
-                        skjema={skjema}
-                        felt={skjema.felter.søktAsylForBarn}
-                        spørsmålDokument={asyl}
-                    />
+                    <JaNeiSpm skjema={skjema} felt={skjema.felter.søktAsylForBarn} spørsmålDokument={asyl} />
                     <HvilkeBarnCheckboxGruppe
                         legendTekst={<TekstBlock block={hvemAsyl.sporsmal} />}
                         skjemafelt={skjema.felter.hvemErSøktAsylFor}
@@ -131,17 +115,14 @@ const OmBarnaDineSkjema: React.FC = () => {
                         skjema={skjema}
                         felt={skjema.felter.barnOppholdtSegTolvMndSammenhengendeINorge}
                         spørsmålDokument={sammenhengendeOppholdINorge}
-                        tilleggsinfo={
-                            <TekstBlock block={sammenhengendeOppholdINorge.beskrivelse} />
-                        }
+                        tilleggsinfo={<TekstBlock block={sammenhengendeOppholdINorge.beskrivelse} />}
                     />
                     <HvilkeBarnCheckboxGruppe
                         legendTekst={<TekstBlock block={hvemOppholdUtenforNorge.sporsmal} />}
                         skjemafelt={skjema.felter.hvemTolvMndSammenhengendeINorge}
                         søknadsdatafelt={barnDataKeySpørsmål.boddMindreEnn12MndINorge}
                         nullstillValgteBarn={
-                            skjema.felter.barnOppholdtSegTolvMndSammenhengendeINorge.verdi ===
-                            ESvar.JA
+                            skjema.felter.barnOppholdtSegTolvMndSammenhengendeINorge.verdi === ESvar.JA
                         }
                         visFeilmelding={skjema.visFeilmeldinger}
                     />
@@ -154,9 +135,7 @@ const OmBarnaDineSkjema: React.FC = () => {
                         legendTekst={<TekstBlock block={hvemSoektYtelse.sporsmal} />}
                         skjemafelt={skjema.felter.hvemBarnetrygdFraAnnetEøsland}
                         søknadsdatafelt={barnDataKeySpørsmål.barnetrygdFraAnnetEøsland}
-                        nullstillValgteBarn={
-                            skjema.felter.mottarBarnetrygdForBarnFraAnnetEøsland.verdi === ESvar.NEI
-                        }
+                        nullstillValgteBarn={skjema.felter.mottarBarnetrygdForBarnFraAnnetEøsland.verdi === ESvar.NEI}
                         visFeilmelding={skjema.visFeilmeldinger}
                     />
                     <JaNeiSpm
@@ -168,9 +147,7 @@ const OmBarnaDineSkjema: React.FC = () => {
                         legendTekst={<TekstBlock block={hvemAvBarnaAvdoedPartner.sporsmal} />}
                         skjemafelt={skjema.felter.hvemAvdødPartner}
                         søknadsdatafelt={barnDataKeySpørsmål.andreForelderErDød}
-                        nullstillValgteBarn={
-                            skjema.felter.erAvdødPartnerForelder.verdi === ESvar.NEI
-                        }
+                        nullstillValgteBarn={skjema.felter.erAvdødPartnerForelder.verdi === ESvar.NEI}
                         visFeilmelding={skjema.visFeilmeldinger}
                     />
                 </>
@@ -182,10 +159,7 @@ const OmBarnaDineSkjema: React.FC = () => {
                         felt={skjema.felter.harNoenAvBarnaBoddPåSvalbard}
                         spørsmålDokument={boddPaaSvalbard}
                         tilleggsinfo={
-                            <TekstBlock
-                                block={boddPaaSvalbard.beskrivelse}
-                                typografi={Typografi.BodyShort}
-                            />
+                            <TekstBlock block={boddPaaSvalbard.beskrivelse} typografi={Typografi.BodyShort} />
                         }
                     />
 
@@ -193,9 +167,7 @@ const OmBarnaDineSkjema: React.FC = () => {
                         legendTekst={<TekstBlock block={hvemBoddPaaSvalbard.sporsmal} />}
                         skjemafelt={skjema.felter.hvemHarBoddPåSvalbard}
                         søknadsdatafelt={barnDataKeySpørsmål.harBoddPåSvalbard}
-                        nullstillValgteBarn={
-                            skjema.felter.harNoenAvBarnaBoddPåSvalbard.verdi === ESvar.NEI
-                        }
+                        nullstillValgteBarn={skjema.felter.harNoenAvBarnaBoddPåSvalbard.verdi === ESvar.NEI}
                         visFeilmelding={skjema.visFeilmeldinger}
                     />
                 </>

@@ -1,13 +1,7 @@
 import { ESvar } from '@navikt/familie-form-elements';
 
-import {
-    EøsBarnSpørsmålId,
-    eøsBarnSpørsmålSpråkId,
-} from '../../components/SøknadsSteg/EøsSteg/Barn/spørsmål';
-import {
-    OmBarnetSpørsmålsId,
-    omBarnetSpørsmålSpråkId,
-} from '../../components/SøknadsSteg/OmBarnet/spørsmål';
+import { EøsBarnSpørsmålId, eøsBarnSpørsmålSpråkId } from '../../components/SøknadsSteg/EøsSteg/Barn/spørsmål';
+import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../../components/SøknadsSteg/OmBarnet/spørsmål';
 import { barnDataKeySpørsmål, IAndreForelder, IBarnMedISøknad } from '../../typer/barn';
 import { LocaleType } from '../../typer/common';
 import { TilRestLocaleRecord } from '../../typer/kontrakt/generelle';
@@ -72,9 +66,7 @@ export const andreForelderTilISøknadsfelt = (
                   språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.andreForelderNavn),
                   sammeVerdiAlleSpråkEllerUkjentSpråktekst(
                       navn.svar,
-                      omBarnetSpørsmålSpråkId[
-                          OmBarnetSpørsmålsId.andreForelderKanIkkeGiOpplysninger
-                      ]
+                      omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderKanIkkeGiOpplysninger]
                   ),
                   barn
               )
@@ -114,18 +106,10 @@ export const andreForelderTilISøknadsfelt = (
               )
             : null,
         pensjonNorge: pensjonNorge.svar
-            ? søknadsfeltBarn(
-                  språktekstIdFraSpørsmålId(pensjonNorge.id),
-                  sammeVerdiAlleSpråk(pensjonNorge.svar),
-                  barn
-              )
+            ? søknadsfeltBarn(språktekstIdFraSpørsmålId(pensjonNorge.id), sammeVerdiAlleSpråk(pensjonNorge.svar), barn)
             : null,
         arbeidNorge: arbeidNorge.svar
-            ? søknadsfeltBarn(
-                  språktekstIdFraSpørsmålId(arbeidNorge.id),
-                  sammeVerdiAlleSpråk(arbeidNorge.svar),
-                  barn
-              )
+            ? søknadsfeltBarn(språktekstIdFraSpørsmålId(arbeidNorge.id), sammeVerdiAlleSpråk(arbeidNorge.svar), barn)
             : null,
         andreUtbetalinger: andreUtbetalinger.svar
             ? søknadsfeltBarn(
@@ -136,21 +120,15 @@ export const andreForelderTilISøknadsfelt = (
             : null,
         pågåendeSøknadFraAnnetEøsLand: pågåendeSøknadFraAnnetEøsLand.svar
             ? søknadsfeltBarn(
-                  språktekstIdFraSpørsmålId(
-                      EøsBarnSpørsmålId.andreForelderPågåendeSøknadFraAnnetEøsLand
-                  ),
+                  språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.andreForelderPågåendeSøknadFraAnnetEøsLand),
                   sammeVerdiAlleSpråk(pågåendeSøknadFraAnnetEøsLand.svar),
                   barn
               )
             : null,
         pågåendeSøknadHvilketLand: pågåendeSøknadHvilketLand.svar
             ? søknadsfeltBarn(
-                  språktekstIdFraSpørsmålId(
-                      EøsBarnSpørsmålId.andreForelderPågåendeSøknadHvilketLand
-                  ),
-                  verdiCallbackAlleSpråk(locale =>
-                      landkodeTilSpråk(pågåendeSøknadHvilketLand.svar, locale)
-                  ),
+                  språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.andreForelderPågåendeSøknadHvilketLand),
+                  verdiCallbackAlleSpråk(locale => landkodeTilSpråk(pågåendeSøknadHvilketLand.svar, locale)),
                   barn
               )
             : null,
@@ -188,9 +166,7 @@ export const andreForelderTilISøknadsfelt = (
                 : null,
             søkerFlyttetFraAndreForelderDato: utvidet.søkerFlyttetFraAndreForelderDato.svar
                 ? søknadsfeltBarn(
-                      språktekstIdFraSpørsmålId(
-                          OmBarnetSpørsmålsId.søkerFlyttetFraAndreForelderDato
-                      ),
+                      språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.søkerFlyttetFraAndreForelderDato),
                       sammeVerdiAlleSpråkEllerUkjentSpråktekst(
                           utvidet.søkerFlyttetFraAndreForelderDato.svar,
                           omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.søkerBorMedAndreForelder]

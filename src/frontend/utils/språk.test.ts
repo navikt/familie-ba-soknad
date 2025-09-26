@@ -29,14 +29,10 @@ describe('hentSivilstatusSpråkId', () => {
     test('Skal returnere tekstid til sivilstatus kode UOPPGITT dersom sivilstanden er ukjent', () => {
         // eslint-disable-next-line
         // @ts-ignore fordi hele poenget er at det er en ukjent verdi
-        expect(hentSivilstatusSpråkId('JEGHARKJÆRESTE')).toEqual(
-            'felles.sivilstatus.kode.UOPPGITT'
-        );
+        expect(hentSivilstatusSpråkId('JEGHARKJÆRESTE')).toEqual('felles.sivilstatus.kode.UOPPGITT');
     });
 
     test('Skal returnere tekstid til innsendt sivilstatus kode', () => {
-        expect(hentSivilstatusSpråkId(ESivilstand.GIFT)).toEqual(
-            `felles.sivilstatus.kode.${ESivilstand.GIFT}`
-        );
+        expect(hentSivilstatusSpråkId(ESivilstand.GIFT)).toEqual(`felles.sivilstatus.kode.${ESivilstand.GIFT}`);
     });
 });

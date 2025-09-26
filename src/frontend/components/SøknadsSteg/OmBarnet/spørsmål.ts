@@ -39,21 +39,17 @@ export const omBarnetSpørsmålSpråkId: Record<OmBarnetSpørsmålsId, string> =
     [OmBarnetSpørsmålsId.planleggerÅBoINorge12Mnd]: 'ombarnet.oppholdtsammenhengende.spm',
     [OmBarnetSpørsmålsId.pågåendeSøknadFraAnnetEøsLand]: 'ombarnet.pågåendesøknad.spm',
     [OmBarnetSpørsmålsId.pågåendeSøknadHvilketLand]: 'ombarnet.hvilketlandsøkt.spm',
-    [OmBarnetSpørsmålsId.mottarEllerMottokEøsBarnetrygd]:
-        'ombarnet.fårellerharsøktbarnetrygdeøs.spm',
+    [OmBarnetSpørsmålsId.mottarEllerMottokEøsBarnetrygd]: 'ombarnet.fårellerharsøktbarnetrygdeøs.spm',
     [OmBarnetSpørsmålsId.andreForelderNavn]: 'ombarnet.andre-forelder.navn.spm',
-    [OmBarnetSpørsmålsId.andreForelderKanIkkeGiOpplysninger]:
-        'ombarnet.andre-forelder.navn-ukjent.spm',
+    [OmBarnetSpørsmålsId.andreForelderKanIkkeGiOpplysninger]: 'ombarnet.andre-forelder.navn-ukjent.spm',
     [OmBarnetSpørsmålsId.andreForelderFnr]: 'felles.fødsels-eller-dnummer.label',
     [OmBarnetSpørsmålsId.andreForelderFnrUkjent]: 'ombarnet.andre-forelder.fnr-ukjent.spm',
     [OmBarnetSpørsmålsId.andreForelderFødselsdato]: 'felles.fødselsdato.label',
     [OmBarnetSpørsmålsId.andreForelderFødselsdatoUkjent]: 'felles.fødselsdato-ukjent',
     [OmBarnetSpørsmålsId.andreForelderArbeidUtlandet]: 'eøs.andre-forelder.arbeid-utland.spm',
-    [OmBarnetSpørsmålsId.andreForelderArbeidUtlandetEnke]:
-        'enkeenkemann.andreforelder-arbeidutland.spm',
+    [OmBarnetSpørsmålsId.andreForelderArbeidUtlandetEnke]: 'enkeenkemann.andreforelder-arbeidutland.spm',
     [OmBarnetSpørsmålsId.andreForelderPensjonUtland]: 'ombarnet.andreforelderpensjonutland.spm',
-    [OmBarnetSpørsmålsId.andreForelderPensjonUtlandEnke]:
-        'enkeenkemann.andre-forelder.utenlandspensjon.spm',
+    [OmBarnetSpørsmålsId.andreForelderPensjonUtlandEnke]: 'enkeenkemann.andre-forelder.utenlandspensjon.spm',
     [OmBarnetSpørsmålsId.borFastMedSøker]: 'ombarnet.bor-fast.spm',
     [OmBarnetSpørsmålsId.skriftligAvtaleOmDeltBosted]: 'ombarnet.delt-bosted.spm',
     [OmBarnetSpørsmålsId.søkerHarBoddMedAndreForelder]: 'ombarnet.boddsammenmedandreforelder.spm',
