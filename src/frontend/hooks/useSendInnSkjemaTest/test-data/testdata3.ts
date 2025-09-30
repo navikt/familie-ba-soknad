@@ -168,6 +168,34 @@ export const testdata3: TilKontraktTestData = {
                     id: 'hvem-bodd-på-svalbard',
                     svar: null,
                 },
+                pågåendeSøknadFraAnnetEøsLand: {
+                    id: 'andre-forelder-pågående-søknad',
+                    svar: null,
+                },
+                pågåendeSøknadHvilketLand: {
+                    id: 'andre-forelder-pågående-søknad-land',
+                    svar: null,
+                },
+                mottarEllerMottokEøsBarnetrygd: {
+                    id: 'mottar-eller-mottok-eøs-barnetrygd',
+                    svar: null,
+                },
+                søkersSlektsforhold: {
+                    id: 'søkers-slektsforhold',
+                    svar: null,
+                },
+                søkersSlektsforholdSpesifisering: {
+                    id: 'søkers-slektsforhold-spesifisering',
+                    svar: null,
+                },
+                borMedAndreForelder: {
+                    id: 'bor-med-andre-forelder',
+                    svar: null,
+                },
+                borMedOmsorgsperson: {
+                    id: 'bor-med-omsorgsperson',
+                    svar: null,
+                },
             },
             {
                 id: 'cc26acec-b3df-48ec-b25d-0791a85ad436',
@@ -288,6 +316,38 @@ export const testdata3: TilKontraktTestData = {
                 borFastMedSøker: {
                     id: 'bor-barnet-fast-med-deg',
                     svar: 'JA',
+                },
+                harBoddPåSvalbard: {
+                    id: 'hvem-bodd-på-svalbard',
+                    svar: null,
+                },
+                pågåendeSøknadFraAnnetEøsLand: {
+                    id: 'andre-forelder-pågående-søknad',
+                    svar: null,
+                },
+                pågåendeSøknadHvilketLand: {
+                    id: 'andre-forelder-pågående-søknad-land',
+                    svar: null,
+                },
+                mottarEllerMottokEøsBarnetrygd: {
+                    id: 'mottar-eller-mottok-eøs-barnetrygd',
+                    svar: null,
+                },
+                søkersSlektsforhold: {
+                    id: 'søkers-slektsforhold',
+                    svar: null,
+                },
+                søkersSlektsforholdSpesifisering: {
+                    id: 'søkers-slektsforhold-spesifisering',
+                    svar: null,
+                },
+                borMedAndreForelder: {
+                    id: 'bor-med-andre-forelder',
+                    svar: null,
+                },
+                borMedOmsorgsperson: {
+                    id: 'bor-med-omsorgsperson',
+                    svar: null,
                 },
             },
         ],
@@ -534,6 +594,10 @@ export const testdata3: TilKontraktTestData = {
                     harSamboerNå: {
                         id: 'har-samboer-nå-og-gift',
                         svar: 'JA',
+                    },
+                    hattAnnenSamboerForSøktPeriode: {
+                        id: 'har-hatt-annen-samboer-i-perioden',
+                        svar: null,
                     },
                 },
                 tidligereSamboere: [],
