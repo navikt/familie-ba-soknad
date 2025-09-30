@@ -123,6 +123,38 @@ export const testdata2: TilKontraktTestData = {
                     id: 'bor-barnet-fast-med-deg',
                     svar: 'NEI',
                 },
+                harBoddPåSvalbard: {
+                    id: 'hvem-bodd-på-svalbard',
+                    svar: null,
+                },
+                pågåendeSøknadFraAnnetEøsLand: {
+                    id: 'andre-forelder-pågående-søknad',
+                    svar: null,
+                },
+                pågåendeSøknadHvilketLand: {
+                    id: 'andre-forelder-pågående-søknad-land',
+                    svar: null,
+                },
+                mottarEllerMottokEøsBarnetrygd: {
+                    id: 'mottar-eller-mottok-eøs-barnetrygd',
+                    svar: null,
+                },
+                søkersSlektsforhold: {
+                    id: 'søkers-slektsforhold',
+                    svar: null,
+                },
+                søkersSlektsforholdSpesifisering: {
+                    id: 'søkers-slektsforhold-spesifisering',
+                    svar: null,
+                },
+                borMedAndreForelder: {
+                    id: 'bor-med-andre-forelder',
+                    svar: null,
+                },
+                borMedOmsorgsperson: {
+                    id: 'bor-med-omsorgsperson',
+                    svar: null,
+                },
             },
             {
                 id: 'cc26acec-b3df-48ec-b25d-0791a85ad436',
@@ -228,6 +260,34 @@ export const testdata2: TilKontraktTestData = {
                 },
                 harBoddPåSvalbard: {
                     id: 'hvem-bodd-på-svalbard',
+                    svar: null,
+                },
+                pågåendeSøknadFraAnnetEøsLand: {
+                    id: 'andre-forelder-pågående-søknad',
+                    svar: null,
+                },
+                pågåendeSøknadHvilketLand: {
+                    id: 'andre-forelder-pågående-søknad-land',
+                    svar: null,
+                },
+                mottarEllerMottokEøsBarnetrygd: {
+                    id: 'mottar-eller-mottok-eøs-barnetrygd',
+                    svar: null,
+                },
+                søkersSlektsforhold: {
+                    id: 'søkers-slektsforhold',
+                    svar: null,
+                },
+                søkersSlektsforholdSpesifisering: {
+                    id: 'søkers-slektsforhold-spesifisering',
+                    svar: null,
+                },
+                borMedAndreForelder: {
+                    id: 'bor-med-andre-forelder',
+                    svar: null,
+                },
+                borMedOmsorgsperson: {
+                    id: 'bor-med-omsorgsperson',
                     svar: null,
                 },
             },
@@ -417,6 +477,18 @@ export const testdata2: TilKontraktTestData = {
                 id: 'mottar-utenlandspensjon',
                 svar: 'JA',
             },
+            arbeidINorge: {
+                id: 'arbeid-i-norge',
+                svar: null,
+            },
+            pensjonNorge: {
+                id: 'pensjon-norge',
+                svar: null,
+            },
+            andreUtbetalinger: {
+                id: 'utbetalinger',
+                svar: null,
+            },
             pensjonsland: {
                 id: 'pensjonsland',
                 svar: 'BEL',
@@ -551,6 +623,10 @@ export const testdata2: TilKontraktTestData = {
                         id: 'har-samboer-nå-og-gift',
                         svar: 'JA',
                     },
+                    hattAnnenSamboerForSøktPeriode: {
+                        id: 'har-hatt-annen-samboer-i-perioden',
+                        svar: null,
+                    },
                 },
                 tidligereSamboere: [],
                 nåværendeSamboer: {
@@ -603,6 +679,10 @@ export const testdata2: TilKontraktTestData = {
         },
         harNoenAvBarnaBoddPåSvalbard: {
             id: 'har-noen-av-barna-bodd-på-svalbard',
+            svar: null,
+        },
+        hattAnnenSamboerForSøktPeriode: {
+            id: 'har-hatt-annen-samboer-i-perioden',
             svar: null,
         },
     },
