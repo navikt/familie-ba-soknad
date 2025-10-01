@@ -31,8 +31,6 @@ export const barnISøknadsFormat = (
     tilRestLocaleRecord: TilRestLocaleRecord
 ): ISøknadIKontraktBarn => {
     const {
-        // id,
-        // barnErFyltUt,
         ident,
         navn,
         borMedSøker,
@@ -42,12 +40,10 @@ export const barnISøknadsFormat = (
         omsorgsperson,
         svalbardOppholdPerioder,
         utenlandsperioder,
-        // Nye felter under utvikling av EØS full
         eøsBarnetrygdsperioder,
         idNummer,
         triggetEøs,
         adresse,
-        // Nytt
         erFosterbarn,
         erAdoptertFraUtland,
         pågåendeSøknadFraAnnetEøsLand,
@@ -234,55 +230,16 @@ export const barnISøknadsFormat = (
             eøsTekster.borMedOmsorgsperson.sporsmal,
             borMedOmsorgsperson.svar
         ),
-        // Gammelt
-        // ...spørmålISøknadsFormat(
-        //     typetBarnSpørsmål,
-        //     {
-        //         navn: navn,
-        //         barn: navn,
-        //     },
-        //     tekster
-        // ),
-        // [barnDataKeySpørsmål.institusjonOppholdSluttdato]: søknadsfeltBarn(
-        //     språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.institusjonOppholdSluttdato),
-        //     sammeVerdiAlleSpråkEllerUkjentSpråktekst(
-        //         institusjonOppholdSluttdato.svar,
-        //         omBarnetSpørsmålSpråkId['institusjon-opphold-ukjent-sluttdato']
-        //     ),
-        //     barn
-        // ),
-        // [barnDataKeySpørsmål.adresse]: søknadsfeltBarn(
-        //     språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.barnetsAdresse),
-        //     sammeVerdiAlleSpråkEllerUkjentSpråktekst(
-        //         adresse.svar,
-        //         eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.barnetsAdresseVetIkke]
-        //     ),
-        //     barn
-        // ),
     };
 
     return {
         harEøsSteg: triggetEøs || søknad.søker.triggetEøs,
-        // navn: søknadsfeltBarn('pdf.barn.navn.label', sammeVerdiAlleSpråk(navn), barn),
         navn: søknadsfelt(leggTilBarnModalTekster.barnetsNavnSubtittel, sammeVerdiAlleSpråk(navn)),
-        // ident: søknadsfeltBarn(
-        //     'pdf.barn.ident.label',
-        //     ident ? sammeVerdiAlleSpråk(ident) : hentTekster('pdf.barn.ikke-oppgitt'),
-        //     barn
-        // ),
         ident: søknadsfelt(velgBarnTekster.foedselsnummerLabel, sammeVerdiAlleSpråk(ident)),
-        // registrertBostedType: søknadsfeltBarn(
-        //     'hvilkebarn.barn.bosted',
-        //     sammeVerdiAlleSpråk(registertBostedVerdi()),
-        //     barn
-        // ),
         registrertBostedType: søknadsfelt(
             velgBarnTekster.registrertBostedLabel,
             sammeVerdiAlleSpråk(registertBostedVerdi())
         ),
-        // alder: alder
-        //     ? søknadsfeltBarn('pdf.barn.alder.label', hentTekster('felles.år', { alder }), barn)
-        //     : null,
         alder: alder ? søknadsfelt(velgBarnTekster.alderLabel, sammeVerdiAlleSpråk(alder)) : null,
         svalbardOppholdPerioder: svalbardOppholdPerioder.map((svalbardOppholdPeriode, index) =>
             svalbardOppholdPeriodeTilISøknadsfelt({
