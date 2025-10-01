@@ -48,8 +48,6 @@ export const genererOppdaterteBarn = (
             skjema.felter.hvemOppholderSegIInstitusjon
         );
 
-        const harBoddPåSvalbard: ESvar = genererSvarForSpørsmålBarn(barn, skjema.felter.hvemHarBoddPåSvalbard);
-
         const boddMindreEnn12MndINorge: ESvar = genererSvarForSpørsmålBarn(
             barn,
             skjema.felter.hvemTolvMndSammenhengendeINorge
@@ -63,7 +61,6 @@ export const genererOppdaterteBarn = (
 
         const erFosterbarn: ESvar = genererSvarForSpørsmålBarn(barn, skjema.felter.hvemErFosterbarn);
 
-        const svalbardOppholdPerioder = harBoddPåSvalbard === ESvar.JA ? barn.svalbardOppholdPerioder : [];
         const utenlandsperioder = boddMindreEnn12MndINorge === ESvar.JA ? barn.utenlandsperioder : [];
         const eøsBarnetrygdsperioder = mottarBarnetrygdFraAnnetEøsland === ESvar.JA ? barn.eøsBarnetrygdsperioder : [];
 
@@ -111,13 +108,12 @@ export const genererOppdaterteBarn = (
         const oppdatertBarn = {
             ...barn,
             idNummer: filtrerteRelevanteIdNummerForBarn(
-                { eøsBarnetrygdsperioder, svalbardOppholdPerioder, utenlandsperioder },
+                { eøsBarnetrygdsperioder, utenlandsperioder },
                 pågåendeSøknadFraAnnetEøsLand,
                 pågåendeSøknadHvilketLand,
                 barn,
                 erEøsLand
             ),
-            svalbardOppholdPerioder,
             utenlandsperioder,
             eøsBarnetrygdsperioder,
             andreForelder:
@@ -240,10 +236,6 @@ export const genererOppdaterteBarn = (
             [barnDataKeySpørsmål.pågåendeSøknadHvilketLand]: {
                 ...barn[barnDataKeySpørsmål.pågåendeSøknadHvilketLand],
                 svar: pågåendeSøknadHvilketLand,
-            },
-            [barnDataKeySpørsmål.harBoddPåSvalbard]: {
-                ...barn[barnDataKeySpørsmål.harBoddPåSvalbard],
-                svar: genererSvarForSpørsmålBarn(barn, skjema.felter.hvemHarBoddPåSvalbard),
             },
             [barnDataKeySpørsmål.adresse]: {
                 ...barn[barnDataKeySpørsmål.adresse],

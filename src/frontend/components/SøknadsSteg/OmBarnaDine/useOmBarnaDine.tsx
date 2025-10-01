@@ -26,12 +26,6 @@ export const useOmBarnaDine = (): {
 } => {
     const { søknad, settSøknad, tekster } = useAppContext();
     const { skalTriggeEøsForBarn, barnSomTriggerEøs, settBarnSomTriggerEøs, erEøsLand } = useEøsContext();
-
-    const skalNullstilleSvalbardfelter =
-        søknad.søker.borPåSvalbard.svar !== ESvar.JA &&
-        (søknad.harNoenAvBarnaBoddPåSvalbard.svar ||
-            søknad.barnInkludertISøknaden.find(barn => barn[barnDataKeySpørsmål.harBoddPåSvalbard].svar === ESvar.JA));
-
     const teksterForSteg = tekster().OM_BARNA;
 
     const erNoenAvBarnaFosterbarn = useJaNeiSpmFelt({
@@ -142,20 +136,6 @@ export const useOmBarnaDine = (): {
         avhengighet: erAvdødPartnerForelder,
     });
 
-    const harNoenAvBarnaBoddPåSvalbard = useJaNeiSpmFelt({
-        søknadsfelt: søknad.harNoenAvBarnaBoddPåSvalbard,
-        feilmelding: teksterForSteg.boddPaaSvalbard.feilmelding,
-        feilmeldingSpråkId: 'ombarna.boddPaaSvalbard.feilmelding',
-        skalSkjules: søknad.søker.borPåSvalbard.svar !== ESvar.JA,
-    });
-
-    const hvemHarBoddPåSvalbard = useBarnCheckboxFelt({
-        datafeltNavn: barnDataKeySpørsmål.harBoddPåSvalbard,
-        feilmelding: teksterForSteg.hvemBoddPaaSvalbard.feilmelding,
-        feilmeldingSpråkId: 'ombarna.boddPaaSvalbard.hvem.feilmelding',
-        avhengighet: harNoenAvBarnaBoddPåSvalbard,
-    });
-
     useEffect(() => {
         const oppdaterteBarn = genererOppdaterteBarn(søknad, skjema, skalTriggeEøsForBarn, erEøsLand);
 
@@ -175,15 +155,6 @@ export const useOmBarnaDine = (): {
             }
         });
     }, [hvemBarnetrygdFraAnnetEøsland]);
-
-    useEffect(() => {
-        if (skalNullstilleSvalbardfelter) {
-            harNoenAvBarnaBoddPåSvalbard.validerOgSettFelt(null);
-            hvemHarBoddPåSvalbard.validerOgSettFelt([]);
-
-            oppdaterSøknad();
-        }
-    }, [søknad.søker.borPåSvalbard]);
 
     const oppdaterSøknad = () => {
         const oppdaterteBarn = genererOppdaterteBarn(søknad, skjema, skalTriggeEøsForBarn, erEøsLand);
@@ -218,10 +189,6 @@ export const useOmBarnaDine = (): {
             mottarBarnetrygdForBarnFraAnnetEøsland: {
                 ...søknad.mottarBarnetrygdForBarnFraAnnetEøsland,
                 svar: mottarBarnetrygdForBarnFraAnnetEøsland.verdi,
-            },
-            harNoenAvBarnaBoddPåSvalbard: {
-                ...søknad.harNoenAvBarnaBoddPåSvalbard,
-                svar: harNoenAvBarnaBoddPåSvalbard.verdi,
             },
             erAvdødPartnerForelder: {
                 ...søknad.erAvdødPartnerForelder,
@@ -269,8 +236,6 @@ export const useOmBarnaDine = (): {
             hvemOppholderSegIInstitusjon,
             hvemBarnetrygdFraAnnetEøsland,
             hvemTolvMndSammenhengendeINorge,
-            harNoenAvBarnaBoddPåSvalbard,
-            hvemHarBoddPåSvalbard,
             hvemErSøktAsylFor,
             hvemAvdødPartner,
         },

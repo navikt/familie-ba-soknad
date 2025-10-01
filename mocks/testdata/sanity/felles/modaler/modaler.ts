@@ -7,7 +7,6 @@ import { blokkerTilbakeknapp } from './blokkerTilbakeknapp';
 import { leggTilBarnTekstinnhold } from './leggTilBarn';
 import { pensjonsperiodeTekstinnhold } from './pensjonsperiode';
 import { startPåNytt } from './startPåNytt';
-import { svalbardOppholdTekstinnhold } from './svalbardOpphold';
 import { tidligereSamoboereTekstinnhold } from './tidligereSamboere';
 import { utenlandsoppholdTekstinnhold } from './utenlandsopphold';
 
@@ -39,10 +38,6 @@ export const modalerTekstinnhold: IModalerTekstinnhold = {
         søker: utenlandsoppholdTekstinnhold,
         barn: utenlandsoppholdTekstinnhold,
         andreForelder: utenlandsoppholdTekstinnhold,
-    },
-    svalbardOpphold: {
-        søker: svalbardOppholdTekstinnhold,
-        barn: svalbardOppholdTekstinnhold,
     },
     startPåNytt: startPåNytt,
     leggTilBarn: leggTilBarnTekstinnhold,

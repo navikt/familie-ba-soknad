@@ -4,13 +4,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 
 import { AlternativtSvarForInput, BarnetsId, DatoMedUkjent, ISODateString } from './common';
 import { ESivilstand, IAdresse } from './kontrakt/generelle';
-import {
-    IArbeidsperiode,
-    IPensjonsperiode,
-    ISvalbardOppholdPeriode,
-    IUtbetalingsperiode,
-    IUtenlandsperiode,
-} from './perioder';
+import { IArbeidsperiode, IPensjonsperiode, IUtbetalingsperiode, IUtenlandsperiode } from './perioder';
 import { ISøknadSpørsmål } from './spørsmål';
 import { Årsak } from './utvidet';
 
@@ -50,8 +44,6 @@ export interface ISøker extends Omit<ISøkerRespons, 'barn'> {
     barn: IBarn[];
     triggetEøs: boolean;
     borPåRegistrertAdresse: ISøknadSpørsmål<ESvar | null>;
-    borPåSvalbard: ISøknadSpørsmål<ESvar | null>;
-    svalbardOppholdPerioder: ISvalbardOppholdPeriode[];
     værtINorgeITolvMåneder: ISøknadSpørsmål<ESvar | null>;
     utenlandsperioder: IUtenlandsperiode[];
     planleggerÅBoINorgeTolvMnd: ISøknadSpørsmål<ESvar | null>;

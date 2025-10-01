@@ -10,7 +10,6 @@ export const omDegTekstinnhold: IOmDegTekstinnhold = {
     omDegGuide: lagLocaleRecordBlock(),
     skjermetAdresse: lagLocaleRecordString(),
     borPaaRegistrertAdresse: lagSanitySpørsmålDokument(),
-    borPaaSvalbard: lagSanitySpørsmålDokument(),
     vaertINorgeITolvMaaneder: lagSanitySpørsmålDokument(),
     planleggerAaBoINorgeTolvMnd: lagSanitySpørsmålDokument(),
     adresse: lagLocaleRecordString(),

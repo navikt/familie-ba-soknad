@@ -42,8 +42,3 @@ export interface IEøsBarnetrygdsperiode {
     tilDatoBarnetrygdperiode: ISøknadSpørsmål<ISODateString | ''>;
     månedligBeløp: ISøknadSpørsmål<string>;
 }
-
-export interface ISvalbardOppholdPeriode {
-    fraDatoSvalbardOpphold: ISøknadSpørsmål<ISODateString>;
-    tilDatoSvalbardOpphold: ISøknadSpørsmål<DatoMedUkjent | ''>;
-}

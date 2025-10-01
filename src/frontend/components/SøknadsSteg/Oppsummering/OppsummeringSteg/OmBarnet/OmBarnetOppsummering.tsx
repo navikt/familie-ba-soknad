@@ -12,7 +12,6 @@ import { landkodeTilSpråk } from '../../../../../utils/språk';
 import { formaterDatoMedUkjent } from '../../../../../utils/visning';
 import { BarnetrygdsperiodeOppsummering } from '../../../../Felleskomponenter/Barnetrygdperiode/BarnetrygdperiodeOppsummering';
 import TekstBlock from '../../../../Felleskomponenter/Sanity/TekstBlock';
-import { SvalbardOppholdPeriodeOppsummering } from '../../../../Felleskomponenter/SvalbardOppholdModal.tsx/SvalbardOppholdPeriodeOppsummering';
 import { UtenlandsperiodeOppsummering } from '../../../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsperiodeOppsummering';
 import { useOmBarnet } from '../../../OmBarnet/useOmBarnet';
 import { OppsummeringFelt } from '../../OppsummeringFelt';
@@ -96,35 +95,6 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
                             <TekstBlock block={omBarnetTekster.institusjonUkjentSluttCheckbox} />
                         )}
                     />
-                </>
-            )}
-            {barn[barnDataKeySpørsmål.harBoddPåSvalbard].svar === ESvar.JA && (
-                <>
-                    <OppsummeringFelt
-                        tittel={
-                            <TekstBlock
-                                block={omBarnetTekster.opplystBoddPaaSvalbard}
-                                flettefelter={{ barnetsNavn: barn.navn }}
-                            />
-                        }
-                    />
-                    <OppsummeringFelt
-                        tittel={
-                            <TekstBlock
-                                block={omBarnetTekster.naarBoddPaaSvalbard.sporsmal}
-                                flettefelter={{ barnetsNavn: barn.navn }}
-                            />
-                        }
-                    />
-                    {barn.svalbardOppholdPerioder.map((periode, index) => (
-                        <SvalbardOppholdPeriodeOppsummering
-                            key={index}
-                            svalbardOppholdPeriode={periode}
-                            nummer={index + 1}
-                            personType={PersonType.Barn}
-                            barn={barn}
-                        />
-                    ))}
                 </>
             )}
             {barn[barnDataKeySpørsmål.boddMindreEnn12MndINorge].svar === ESvar.JA && (

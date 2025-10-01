@@ -52,7 +52,6 @@ const erGyldigISøknadKontraktSøker = (input): input is ISøknadKontraktSøker 
     'spørsmål' in input &&
     'tidligereSamboere' in input &&
     'nåværendeSamboer' in input &&
-    'svalbardOppholdPerioder' in input &&
     'utenlandsperioder' in input &&
     'arbeidsperioderUtland' in input &&
     'pensjonsperioderUtland' in input &&
