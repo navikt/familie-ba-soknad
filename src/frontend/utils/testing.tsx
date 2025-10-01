@@ -411,6 +411,26 @@ export const mekkGyldigSøknad = (): ISøknad => {
                     alder: null,
                     borMedSøker: true,
                 }),
+                [barnDataKeySpørsmål.erFosterbarn]: {
+                    id: OmBarnaDineSpørsmålId.hvemErFosterbarn,
+                    svar: ESvar.NEI,
+                },
+                [barnDataKeySpørsmål.oppholderSegIInstitusjon]: {
+                    id: OmBarnaDineSpørsmålId.hvemOppholderSegIInstitusjon,
+                    svar: ESvar.NEI,
+                },
+                [barnDataKeySpørsmål.erAdoptertFraUtland]: {
+                    id: OmBarnaDineSpørsmålId.hvemErAdoptertFraUtland,
+                    svar: ESvar.NEI,
+                },
+                [barnDataKeySpørsmål.erAsylsøker]: {
+                    id: OmBarnaDineSpørsmålId.hvemErSøktAsylFor,
+                    svar: ESvar.NEI,
+                },
+                [barnDataKeySpørsmål.barnetrygdFraAnnetEøsland]: {
+                    id: OmBarnaDineSpørsmålId.hvemBarnetrygdFraAnnetEøsland,
+                    svar: ESvar.NEI,
+                },
                 andreForelder: {
                     kanIkkeGiOpplysninger: {
                         id: OmBarnetSpørsmålsId.andreForelderKanIkkeGiOpplysninger,
