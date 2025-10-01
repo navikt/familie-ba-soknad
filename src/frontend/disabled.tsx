@@ -2,11 +2,12 @@ import React from 'react';
 
 import { createRoot } from 'react-dom/client';
 
+import { Box, VStack } from '@navikt/ds-react';
+
 import { DisabledApp } from './components/Disabled/DisabledApp';
-import InnholdContainer from './components/Felleskomponenter/InnholdContainer/InnholdContainer';
-import { SpråkProvider } from './context/SpråkContext';
 import { hentDekorator } from './decorator';
-import { GlobalStyle } from './Theme';
+
+import '@navikt/ds-css';
 
 hentDekorator();
 
@@ -15,11 +16,10 @@ const root = createRoot(container!);
 
 root.render(
     <React.StrictMode>
-        <InnholdContainer>
-            <GlobalStyle />
-            <SpråkProvider>
+        <Box marginBlock="10 16">
+            <VStack gap="10">
                 <DisabledApp />
-            </SpråkProvider>
-        </InnholdContainer>
+            </VStack>
+        </Box>
     </React.StrictMode>
 );
