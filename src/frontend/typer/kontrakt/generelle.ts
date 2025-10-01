@@ -4,9 +4,9 @@ import { FlettefeltVerdier, LocaleRecordBlock, LocaleRecordString } from '../san
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export type SpørsmålMap = Record<string, ISøknadsfelt<any>>;
 
-export type SpørsmålMapMedNull = Record<string, ISøknadsfelt<any> | null>;
+export type SpørsmålMapMedNullVerdier = Record<string, ISøknadsfelt<any> | null>;
 
-export const filtrertSpørsmålUtenNull = (spørsmål: SpørsmålMapMedNull): SpørsmålMap => {
+export const fjernNullVerdierFraSpørsmål = (spørsmål: SpørsmålMapMedNullVerdier): SpørsmålMap => {
     return Object.fromEntries(Object.entries(spørsmål).filter(([, value]) => value !== null)) as SpørsmålMap;
 };
 

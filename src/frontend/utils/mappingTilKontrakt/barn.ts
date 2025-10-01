@@ -1,8 +1,8 @@
 import { IBarnMedISøknad } from '../../typer/barn';
 import {
     ERegistrertBostedType,
-    filtrertSpørsmålUtenNull,
-    SpørsmålMapMedNull,
+    fjernNullVerdierFraSpørsmål,
+    SpørsmålMapMedNullVerdier,
     TilRestLocaleRecord,
 } from '../../typer/kontrakt/generelle';
 import { ISøknadIKontraktBarn } from '../../typer/kontrakt/kontrakt';
@@ -110,7 +110,7 @@ export const barnISøknadsFormat = (
 
     const flettefelter = { barnetsNavn: navn };
 
-    const spørsmål: SpørsmålMapMedNull = {
+    const spørsmål: SpørsmålMapMedNullVerdier = {
         // Om barna tekster
         erFosterbarn: søknadsfeltForESvar(omBarnaTekster.hvemFosterbarn.sporsmal, erFosterbarn.svar),
         oppholderSegIInstitusjon: søknadsfeltForESvar(
@@ -321,6 +321,6 @@ export const barnISøknadsFormat = (
         omsorgsperson: omsorgsperson
             ? omsorgspersonTilISøknadsfelt(omsorgsperson, barn, tilRestLocaleRecord, tekster)
             : null,
-        spørsmål: filtrertSpørsmålUtenNull(spørsmål),
+        spørsmål: fjernNullVerdierFraSpørsmål(spørsmål),
     };
 };
