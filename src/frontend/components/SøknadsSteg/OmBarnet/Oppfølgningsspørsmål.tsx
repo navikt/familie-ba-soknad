@@ -1,12 +1,12 @@
 import React from 'react';
 
-import { BodyShort, Heading } from '@navikt/ds-react';
+import { Heading } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import type { Felt, ISkjema } from '@navikt/familie-skjema';
 
 import { useAppContext } from '../../../context/AppContext';
 import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../typer/barn';
-import { IEøsBarnetrygdsperiode, ISvalbardOppholdPeriode, IUtenlandsperiode } from '../../../typer/perioder';
+import { IEøsBarnetrygdsperiode, IUtenlandsperiode } from '../../../typer/perioder';
 import { PersonType } from '../../../typer/personType';
 import { IUtenlandsoppholdTekstinnhold } from '../../../typer/sanity/modaler/utenlandsopphold';
 import { IOmBarnetFeltTyper } from '../../../typer/skjema';
@@ -23,7 +23,6 @@ import { SkjemaCheckboxForSanity } from '../../Felleskomponenter/SkjemaCheckbox/
 import { SkjemaFeltInputForSanity } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInputForSanity';
 import SkjemaFieldset from '../../Felleskomponenter/SkjemaFieldset';
 import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
-import { SvalbardOppholdPeriode } from '../../Felleskomponenter/SvalbardOppholdModal.tsx/SvalbardOppholdPeriode';
 import { UtenlandsoppholdSpørsmålId } from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 import { UtenlandsoppholdModal } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsoppholdModal';
 import { UtenlandsperiodeOppsummering } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsperiodeOppsummering';
@@ -33,9 +32,6 @@ import { IOmBarnetTekstinnhold } from './innholdTyper';
 const Oppfølgningsspørsmål: React.FC<{
     barn: IBarnMedISøknad;
     skjema: ISkjema<IOmBarnetFeltTyper, string>;
-    leggTilSvalbardOppholdPeriode: (periode: ISvalbardOppholdPeriode) => void;
-    fjernSvalbardOppholdPeriode: (periode: ISvalbardOppholdPeriode) => void;
-    svalbardOppholdPerioder: ISvalbardOppholdPeriode[];
     leggTilUtenlandsperiode: (periode: IUtenlandsperiode) => void;
     fjernUtenlandsperiode: (periode: IUtenlandsperiode) => void;
     utenlandsperioder: IUtenlandsperiode[];
@@ -45,8 +41,6 @@ const Oppfølgningsspørsmål: React.FC<{
 }> = ({
     barn,
     skjema,
-    leggTilSvalbardOppholdPeriode,
-    fjernSvalbardOppholdPeriode,
     leggTilUtenlandsperiode,
     fjernUtenlandsperiode,
     utenlandsperioder,
@@ -83,8 +77,6 @@ const Oppfølgningsspørsmål: React.FC<{
         institusjonStartdato,
         institusjonSluttdato,
         institusjonUkjentSluttCheckbox,
-        opplystBoddPaaSvalbard,
-        naarBoddPaaSvalbard,
         opplystBarnOppholdUtenforNorge,
         planlagtBoSammenhengendeINorge,
         opplystFaarHarFaattEllerSoektYtelse,
@@ -149,27 +141,6 @@ const Oppfølgningsspørsmål: React.FC<{
                         <SkjemaCheckboxForSanity
                             felt={institusjonOppholdSluttVetIkke}
                             label={<TekstBlock block={institusjonUkjentSluttCheckbox} />}
-                        />
-                    </div>
-                </SkjemaFieldset>
-            )}
-            {barn[barnDataKeySpørsmål.harBoddPåSvalbard].svar === ESvar.JA && (
-                <SkjemaFieldset
-                    legend={<TekstBlock block={opplystBoddPaaSvalbard} flettefelter={{ barnetsNavn: barn.navn }} />}
-                >
-                    <div>
-                        <BodyShort spacing>
-                            {plainTekst(naarBoddPaaSvalbard.sporsmal, {
-                                barnetsNavn: barn.navn,
-                            })}
-                        </BodyShort>
-                        <SvalbardOppholdPeriode
-                            skjema={skjema}
-                            leggTilSvalbardOppholdPeriode={leggTilSvalbardOppholdPeriode}
-                            fjernSvalbardOppholdPeriode={fjernSvalbardOppholdPeriode}
-                            registrerteSvalbardOppholdPerioder={skjema.felter.registrerteSvalbardOppholdPerioder}
-                            personType={PersonType.Barn}
-                            barn={barn}
                         />
                     </div>
                 </SkjemaFieldset>

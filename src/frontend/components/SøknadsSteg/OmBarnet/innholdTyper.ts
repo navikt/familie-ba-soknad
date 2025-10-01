@@ -34,8 +34,6 @@ export interface IOmBarnetTekstinnhold {
     deltBosted: ISanitySpørsmålDokument;
     faarEllerHarFaattYtelseFraAnnetLand: ISanitySpørsmålDokument;
     arbeidUtenforNorgeAndreForelderGjenlevende: ISanitySpørsmålDokument;
-    opplystBoddPaaSvalbard: LocaleRecordBlock;
-    naarBoddPaaSvalbard: ISanitySpørsmålDokument;
     boFastSammenMedInformasjonTittel: LocaleRecordString;
     boFastSammenMedInformasjon: LocaleRecordBlock;
     skriftligAvtaleOmDeltBostedInformasjonTittel: LocaleRecordString;

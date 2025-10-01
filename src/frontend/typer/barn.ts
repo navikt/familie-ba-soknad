@@ -9,7 +9,6 @@ import {
     IArbeidsperiode,
     IEøsBarnetrygdsperiode,
     IPensjonsperiode,
-    ISvalbardOppholdPeriode,
     IUtbetalingsperiode,
     IUtenlandsperiode,
 } from './perioder';
@@ -46,7 +45,6 @@ export enum barnDataKeySpørsmål {
     pågåendeSøknadHvilketLand = 'pågåendeSøknadHvilketLand',
     mottarEllerMottokEøsBarnetrygd = 'mottarEllerMottokEøsBarnetrygd',
     andreForelderErDød = 'andreForelderErDød',
-    harBoddPåSvalbard = 'harBoddPåSvalbard',
     oppholderSegIInstitusjon = 'oppholderSegIInstitusjon',
     institusjonIUtland = 'institusjonIUtland',
     institusjonsnavn = 'institusjonsnavn',
@@ -98,7 +96,6 @@ export interface IAndreForelder {
 
 export interface IBarnMedISøknad extends IBarn {
     barnErFyltUt: boolean;
-    svalbardOppholdPerioder: ISvalbardOppholdPeriode[];
     utenlandsperioder: IUtenlandsperiode[];
     eøsBarnetrygdsperioder: IEøsBarnetrygdsperiode[];
     idNummer: IIdNummer[];
@@ -130,7 +127,6 @@ export interface IBarnMedISøknad extends IBarn {
     [barnDataKeySpørsmål.søkersSlektsforholdSpesifisering]: ISøknadSpørsmål<string>;
     [barnDataKeySpørsmål.borMedAndreForelder]: ISøknadSpørsmål<ESvar | null>;
     [barnDataKeySpørsmål.borMedOmsorgsperson]: ISøknadSpørsmål<ESvar | null>;
-    [barnDataKeySpørsmål.harBoddPåSvalbard]: ISøknadSpørsmål<ESvar | null>;
     [barnDataKeySpørsmål.adresse]: ISøknadSpørsmål<string | AlternativtSvarForInput.UKJENT>;
 }
 

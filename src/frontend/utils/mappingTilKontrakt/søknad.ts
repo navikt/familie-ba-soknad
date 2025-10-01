@@ -30,7 +30,6 @@ import {
 import { idNummerTilISøknadsfelt } from './idNummer';
 import { tilIPensjonsperiodeIKontraktFormat } from './pensjonsperioder';
 import { samboerISøknadKontraktFormat } from './samboer';
-import { svalbardOppholdPeriodeTilISøknadsfelt } from './svalbardOppholdPeriode';
 import { tidligereSamboerISøknadKontraktFormat } from './tidligereSamboer';
 import { utenlandsperiodeTilISøknadsfelt } from './utenlandsperiode';
 
@@ -66,7 +65,6 @@ export const dataISøknadKontraktFormat = (
         barn,
         utvidet,
         adressebeskyttelse,
-        svalbardOppholdPerioder,
         utenlandsperioder,
         // Nye felter under utvikling av EØS full
         andreUtbetalingsperioder,
@@ -102,16 +100,6 @@ export const dataISøknadKontraktFormat = (
             ),
             adresse: søknadsfelt('pdf.søker.adresse.label', sammeVerdiAlleSpråk(adresse)),
             adressebeskyttelse: søker.adressebeskyttelse,
-            svalbardOppholdPerioder: svalbardOppholdPerioder
-                ? svalbardOppholdPerioder.map((periode, index) =>
-                      svalbardOppholdPeriodeTilISøknadsfelt({
-                          svalbardOppholdPeriode: periode,
-                          periodeNummer: index + 1,
-                          tekster: fellesTekster.modaler.svalbardOpphold[PersonType.Søker],
-                          tilRestLocaleRecord,
-                      })
-                  )
-                : [],
             utenlandsperioder: utenlandsperioder.map((periode, index) =>
                 utenlandsperiodeTilISøknadsfelt({
                     utenlandperiode: periode,
@@ -228,10 +216,6 @@ export const dataISøknadKontraktFormat = (
                 språktekstIdFraSpørsmålId(søknad.erAvdødPartnerForelder.id),
                 sammeVerdiAlleSpråk(søknad.erAvdødPartnerForelder.svar)
             ),
-            harNoenAvBarnaBoddPåSvalbard: søknadsfelt(
-                språktekstIdFraSpørsmålId(OmBarnaDineSpørsmålId.harNoenAvBarnaBoddPåSvalbard),
-                sammeVerdiAlleSpråk(søknad.harNoenAvBarnaBoddPåSvalbard.svar)
-            ),
             lestOgForståttBekreftelse: søknadsfelt(
                 'forside.bekreftelsesboks.brødtekst',
                 søknad.lestOgForståttBekreftelse
@@ -257,8 +241,6 @@ const lokaleTekster = (): Record<string, Record<LocaleType, string>> => {
         'ombarnet.institusjon',
         'ombarnet.opplystatbarnutlandopphold.info',
         'ombarnet.barnetrygd-eøs',
-        'ombarnet.opplystBoddPaaSvalbard',
-        'ombarnet.naarBoddPaaSvalbard',
         'omdeg.annensamboer.spm',
         'omdeg.personopplysninger.adressesperre.alert',
         'omdeg.personopplysninger.ikke-registrert.alert',

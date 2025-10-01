@@ -21,7 +21,6 @@ import {
 } from './hjelpefunksjoner';
 import { idNummerTilISøknadsfelt } from './idNummer';
 import { omsorgspersonTilISøknadsfelt } from './omsorgsperson';
-import { svalbardOppholdPeriodeTilISøknadsfelt } from './svalbardOppholdPeriode';
 import { utenlandsperiodeTilISøknadsfelt } from './utenlandsperiode';
 
 export const barnISøknadsFormat = (
@@ -43,7 +42,6 @@ export const barnISøknadsFormat = (
         andreForelder,
         omsorgsperson,
         institusjonOppholdSluttdato,
-        svalbardOppholdPerioder,
         utenlandsperioder,
         // Nye felter under utvikling av EØS full
         eøsBarnetrygdsperioder,
@@ -95,14 +93,6 @@ export const barnISøknadsFormat = (
             barn
         ),
         alder: alder ? søknadsfeltBarn('pdf.barn.alder.label', hentTekster('felles.år', { alder }), barn) : null,
-        svalbardOppholdPerioder: svalbardOppholdPerioder.map((svalbardOppholdPeriode, index) =>
-            svalbardOppholdPeriodeTilISøknadsfelt({
-                svalbardOppholdPeriode,
-                periodeNummer: index + 1,
-                tekster: fellesTekster.modaler.svalbardOpphold[PersonType.Barn],
-                tilRestLocaleRecord,
-            })
-        ),
         utenlandsperioder: utenlandsperioder.map((periode, index) =>
             utenlandsperiodeTilISøknadsfelt({
                 utenlandperiode: periode,
