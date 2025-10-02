@@ -51,6 +51,7 @@ export const barnISøknadsFormat = (
         barnetrygdFraAnnetEøsland,
         mottarEllerMottokEøsBarnetrygd,
         erAsylsøker,
+        borFastMedSøker,
         andreForelderErDød,
         oppholderSegIInstitusjon,
         institusjonIUtland,
@@ -128,6 +129,11 @@ export const barnISøknadsFormat = (
             boddMindreEnn12MndINorge.svar
         ),
         // Om barnet tekster
+        borFastMedSøker: nullableSøknadsfeltForESvar(
+            omBarnetTekster.borBarnFastSammenMedDeg.sporsmal,
+            borFastMedSøker.svar,
+            flettefelter
+        ),
         pågåendeSøknadFraAnnetEøsLand: nullableSøknadsfeltForESvar(
             omBarnetTekster.paagaaendeSoeknadYtelse.sporsmal,
             pågåendeSøknadFraAnnetEøsLand.svar
