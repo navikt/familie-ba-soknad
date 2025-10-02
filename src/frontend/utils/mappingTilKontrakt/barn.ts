@@ -214,21 +214,28 @@ export const barnISøknadsFormat = (
               )
             : null,
         søkersSlektsforhold: søkersSlektsforhold.svar
-            ? søknadsfelt(eøsTekster.slektsforhold.sporsmal, sammeVerdiAlleSpråk(søkersSlektsforhold.svar))
+            ? søknadsfelt(
+                  eøsTekster.slektsforhold.sporsmal,
+                  sammeVerdiAlleSpråk(søkersSlektsforhold.svar),
+                  flettefelter
+              )
             : null,
         søkersSlektsforholdSpesifisering: søkersSlektsforholdSpesifisering.svar
             ? søknadsfelt(
                   eøsTekster.hvilkenRelasjon.sporsmal,
-                  sammeVerdiAlleSpråk(søkersSlektsforholdSpesifisering.svar)
+                  sammeVerdiAlleSpråk(søkersSlektsforholdSpesifisering.svar),
+                  flettefelter
               )
             : null,
         borMedAndreForelder: nullableSøknadsfeltForESvar(
             eøsTekster.borMedAndreForelder.sporsmal,
-            borMedAndreForelder.svar
+            borMedAndreForelder.svar,
+            flettefelter
         ),
         borMedOmsorgsperson: nullableSøknadsfeltForESvar(
             eøsTekster.borMedOmsorgsperson.sporsmal,
-            borMedOmsorgsperson.svar
+            borMedOmsorgsperson.svar,
+            flettefelter
         ),
     };
 
