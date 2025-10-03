@@ -105,8 +105,6 @@ export const barnISøknadsFormat = (
         }
     };
 
-    const flettefelter = { barnetsNavn: navn };
-
     const spørsmål: SpørsmålMapMedNullVerdier = {
         // Om barna tekster
         erFosterbarn: søknadsfeltForESvar(omBarnaTekster.hvemFosterbarn.sporsmal, erFosterbarn.svar),
@@ -132,7 +130,7 @@ export const barnISøknadsFormat = (
         borFastMedSøker: nullableSøknadsfeltForESvar(
             omBarnetTekster.borBarnFastSammenMedDeg.sporsmal,
             borFastMedSøker.svar,
-            flettefelter
+            { barnetsNavn: navn }
         ),
         pågåendeSøknadFraAnnetEøsLand: nullableSøknadsfeltForESvar(
             omBarnetTekster.paagaaendeSoeknadYtelse.sporsmal,
@@ -146,7 +144,7 @@ export const barnISøknadsFormat = (
                       pågåendeSøknadHvilketLand.svar,
                       omBarnetTekster.hvilketLandYtelse.checkboxLabel
                   ),
-                  flettefelter
+                  { barnetsNavn: navn }
               )
             : null,
         barnetrygdFraAnnetEøsland: søknadsfeltForESvar(
@@ -157,11 +155,9 @@ export const barnISøknadsFormat = (
             omBarnetTekster.faarEllerHarFaattYtelseFraAnnetLand.sporsmal,
             mottarEllerMottokEøsBarnetrygd.svar
         ),
-        institusjonIUtland: søknadsfeltForESvar(
-            omBarnetTekster.opplystInstitusjon,
-            institusjonIUtland.svar,
-            flettefelter
-        ),
+        institusjonIUtland: søknadsfeltForESvar(omBarnetTekster.opplystInstitusjon, institusjonIUtland.svar, {
+            barnetsNavn: navn,
+        }),
         institusjonsnavn: institusjonsnavn.svar
             ? søknadsfelt(omBarnetTekster.institusjonNavn.sporsmal, sammeVerdiAlleSpråk(institusjonsnavn.svar))
             : null,
@@ -193,7 +189,7 @@ export const barnISøknadsFormat = (
         planleggerÅBoINorge12Mnd: nullableSøknadsfeltForESvar(
             omBarnetTekster.planlagtBoSammenhengendeINorge.sporsmal,
             planleggerÅBoINorge12Mnd.svar,
-            flettefelter
+            { barnetsNavn: navn }
         ),
         // EØS for barn tekster
         adresse: adresse.svar
@@ -204,7 +200,7 @@ export const barnISøknadsFormat = (
                       adresse.svar,
                       eøsTekster.hvorBorBarnet.checkboxLabel
                   ),
-                  flettefelter
+                  { barnetsNavn: navn }
               )
             : null,
         sammeForelderSomAnnetBarnMedId: sammeForelderSomAnnetBarnMedId.svar
@@ -216,32 +212,30 @@ export const barnISøknadsFormat = (
                       eøsTekster.idNummerAndreForelder.checkboxLabel,
                       { barnetsNavn: navn }
                   ),
-                  flettefelter
+                  { barnetsNavn: navn, land: pågåendeSøknadHvilketLand.svar }
               )
             : null,
         søkersSlektsforhold: søkersSlektsforhold.svar
-            ? søknadsfelt(
-                  eøsTekster.slektsforhold.sporsmal,
-                  sammeVerdiAlleSpråk(søkersSlektsforhold.svar),
-                  flettefelter
-              )
+            ? søknadsfelt(eøsTekster.slektsforhold.sporsmal, sammeVerdiAlleSpråk(søkersSlektsforhold.svar), {
+                  barnetsNavn: navn,
+              })
             : null,
         søkersSlektsforholdSpesifisering: søkersSlektsforholdSpesifisering.svar
             ? søknadsfelt(
                   eøsTekster.hvilkenRelasjon.sporsmal,
                   sammeVerdiAlleSpråk(søkersSlektsforholdSpesifisering.svar),
-                  flettefelter
+                  { barnetsNavn: navn }
               )
             : null,
         borMedAndreForelder: nullableSøknadsfeltForESvar(
             eøsTekster.borMedAndreForelder.sporsmal,
             borMedAndreForelder.svar,
-            flettefelter
+            { barnetsNavn: navn }
         ),
         borMedOmsorgsperson: nullableSøknadsfeltForESvar(
             eøsTekster.borMedOmsorgsperson.sporsmal,
             borMedOmsorgsperson.svar,
-            flettefelter
+            { barnetsNavn: navn }
         ),
     };
 
