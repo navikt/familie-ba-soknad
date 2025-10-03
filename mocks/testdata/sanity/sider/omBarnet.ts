@@ -40,9 +40,10 @@ export const omBarnetTekstinnhold: IOmBarnetTekstinnhold = {
     faarEllerHarFaattYtelseFraAnnetLand: lagSanitySpørsmålDokument(),
     arbeidUtenforNorgeAndreForelderGjenlevende: lagSanitySpørsmålDokument(),
     opplystBoddPaaSvalbard: lagLocaleRecordBlock(),
-    naarBoddPaaSvalbard: lagSanitySpørsmålDokument(),
     boFastSammenMedInformasjonTittel: lagLocaleRecordString(),
     boFastSammenMedInformasjon: lagLocaleRecordBlock(),
     skriftligAvtaleOmDeltBostedInformasjonTittel: lagLocaleRecordString(),
     skriftligAvtaleOmDeltBostedInformasjon: lagLocaleRecordBlock(),
+    naarBoddPaaSvalbardSpm: lagLocaleRecordBlock(),
+    bosted: lagLocaleRecordString(),
 };

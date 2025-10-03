@@ -1,5 +1,3 @@
-import { Alpha3Code } from 'i18n-iso-countries';
-
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { ISODateString, LocaleType } from '../common';
@@ -130,7 +128,7 @@ export interface IArbeidsperiodeIKontraktFormat {
 }
 
 export interface IIdNummerIKontraktFormat {
-    land: ISøknadsfelt<Alpha3Code>;
+    land: ISøknadsfelt<string>;
     idNummer: ISøknadsfelt<string>;
 }
 

@@ -23,4 +23,5 @@ vi.mock('@navikt/nav-dekoratoren-moduler', () => ({
     }),
     onLanguageSelect: vi.fn(),
     getCurrentConsent: vi.fn(),
+    setParams: vi.fn().mockResolvedValue(undefined),
 }));

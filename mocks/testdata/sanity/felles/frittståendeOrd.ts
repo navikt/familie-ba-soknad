@@ -29,4 +29,5 @@ export const frittståendeOrdTekstinnhold: IFrittståendeOrdTekstinnhold = {
     slipp: lagLocaleRecordString(),
     eller: lagLocaleRecordString(),
     og: lagLocaleRecordString(),
+    soeker: lagLocaleRecordString(),
 };

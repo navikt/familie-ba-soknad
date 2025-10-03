@@ -32,6 +32,34 @@ export const testdata4: TilKontraktTestData = {
                     id: 'hvem-er-fosterbarn',
                     svar: 'JA',
                 },
+                pågåendeSøknadFraAnnetEøsLand: {
+                    id: 'andre-forelder-pågående-søknad',
+                    svar: null,
+                },
+                pågåendeSøknadHvilketLand: {
+                    id: 'andre-forelder-pågående-søknad-land',
+                    svar: 'BEL',
+                },
+                mottarEllerMottokEøsBarnetrygd: {
+                    id: 'mottar-eller-mottok-eøs-barnetrygd',
+                    svar: null,
+                },
+                søkersSlektsforhold: {
+                    id: 'søkers-slektsforhold',
+                    svar: null,
+                },
+                søkersSlektsforholdSpesifisering: {
+                    id: 'søkers-slektsforhold-spesifisering',
+                    svar: null,
+                },
+                borMedAndreForelder: {
+                    id: 'bor-med-andre-forelder',
+                    svar: null,
+                },
+                borMedOmsorgsperson: {
+                    id: 'bor-med-omsorgsperson',
+                    svar: null,
+                },
                 erAdoptertFraUtland: {
                     id: 'hvem-er-adoptert-fra-utland',
                     svar: 'JA',
@@ -88,6 +116,10 @@ export const testdata4: TilKontraktTestData = {
                     id: 'bor-barnet-fast-med-deg',
                     svar: 'NEI',
                 },
+                harBoddPåSvalbard: {
+                    id: 'hvem-bodd-på-svalbard',
+                    svar: null,
+                },
             },
             {
                 id: 'c766c4f4-f319-482b-aba3-7e732d518a39',
@@ -143,6 +175,26 @@ export const testdata4: TilKontraktTestData = {
                     pågåendeSøknadHvilketLand: {
                         id: 'andre-forelder-pågående-søknad-land',
                         svar: 'BEL',
+                    },
+                    mottarEllerMottokEøsBarnetrygd: {
+                        id: 'mottar-eller-mottok-eøs-barnetrygd',
+                        svar: null,
+                    },
+                    søkersSlektsforhold: {
+                        id: 'søkers-slektsforhold',
+                        svar: null,
+                    },
+                    søkersSlektsforholdSpesifisering: {
+                        id: 'søkers-slektsforhold-spesifisering',
+                        svar: null,
+                    },
+                    borMedAndreForelder: {
+                        id: 'bor-med-andre-forelder',
+                        svar: null,
+                    },
+                    borMedOmsorgsperson: {
+                        id: 'bor-med-omsorgsperson',
+                        svar: null,
                     },
                     barnetrygdFraEøs: {
                         id: 'andre-forelder-barnetrygd',
@@ -208,6 +260,34 @@ export const testdata4: TilKontraktTestData = {
                 erFosterbarn: {
                     id: 'hvem-er-fosterbarn',
                     svar: 'NEI',
+                },
+                pågåendeSøknadFraAnnetEøsLand: {
+                    id: 'andre-forelder-pågående-søknad',
+                    svar: null,
+                },
+                pågåendeSøknadHvilketLand: {
+                    id: 'andre-forelder-pågående-søknad-land',
+                    svar: 'BEL',
+                },
+                mottarEllerMottokEøsBarnetrygd: {
+                    id: 'mottar-eller-mottok-eøs-barnetrygd',
+                    svar: null,
+                },
+                søkersSlektsforhold: {
+                    id: 'søkers-slektsforhold',
+                    svar: null,
+                },
+                søkersSlektsforholdSpesifisering: {
+                    id: 'søkers-slektsforhold-spesifisering',
+                    svar: null,
+                },
+                borMedAndreForelder: {
+                    id: 'bor-med-andre-forelder',
+                    svar: null,
+                },
+                borMedOmsorgsperson: {
+                    id: 'bor-med-omsorgsperson',
+                    svar: null,
                 },
                 erAdoptertFraUtland: {
                     id: 'hvem-er-adoptert-fra-utland',
@@ -463,6 +543,10 @@ export const testdata4: TilKontraktTestData = {
                     harSamboerNå: {
                         id: 'har-samboer-nå-og-gift',
                         svar: 'JA',
+                    },
+                    hattAnnenSamboerForSøktPeriode: {
+                        id: 'har-hatt-annen-samboer-i-perioden',
+                        svar: null,
                     },
                 },
                 tidligereSamboere: [
