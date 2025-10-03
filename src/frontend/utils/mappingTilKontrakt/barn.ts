@@ -62,7 +62,6 @@ export const barnISøknadsFormat = (
         institusjonOppholdSluttdato,
         boddMindreEnn12MndINorge,
         planleggerÅBoINorge12Mnd,
-        sammeForelderSomAnnetBarnMedId,
         søkersSlektsforhold,
         søkersSlektsforholdSpesifisering,
         borMedAndreForelder,
@@ -201,18 +200,6 @@ export const barnISøknadsFormat = (
                       eøsTekster.hvorBorBarnet.checkboxLabel
                   ),
                   { barnetsNavn: navn }
-              )
-            : null,
-        sammeForelderSomAnnetBarnMedId: sammeForelderSomAnnetBarnMedId.svar
-            ? søknadsfelt(
-                  eøsTekster.idNummerAndreForelder.sporsmal,
-                  sammeVerdiAlleSpråkEllerUkjent(
-                      tilRestLocaleRecord,
-                      sammeForelderSomAnnetBarnMedId.svar,
-                      eøsTekster.idNummerAndreForelder.checkboxLabel,
-                      { barnetsNavn: navn }
-                  ),
-                  { barnetsNavn: navn, land: pågåendeSøknadHvilketLand.svar }
               )
             : null,
         søkersSlektsforhold: søkersSlektsforhold.svar
