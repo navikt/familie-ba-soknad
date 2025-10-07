@@ -10,7 +10,6 @@ import {
     IAdresse,
     IKontraktNåværendeSamboer,
     IKontraktTidligereSamboer,
-    ISvalbardOppholdPeriodeIKontraktFormat,
     ISøknadsfelt,
     IUtenlandsperiodeIKontraktFormat,
     SpørsmålMap,
@@ -40,7 +39,6 @@ export interface ISøknadKontraktSøker {
     tidligereSamboere: ISøknadsfelt<IKontraktTidligereSamboer>[];
     nåværendeSamboer: ISøknadsfelt<IKontraktNåværendeSamboer> | null;
     utenlandsperioder: ISøknadsfelt<IUtenlandsperiodeIKontraktFormat>[];
-    svalbardOppholdPerioder: ISøknadsfelt<ISvalbardOppholdPeriodeIKontraktFormat>[];
     // eøs
     arbeidsperioderUtland: ISøknadsfelt<IArbeidsperiodeIKontraktFormat>[];
     pensjonsperioderUtland: ISøknadsfelt<IPensjonsperiodeIKontraktFormat>[];
@@ -57,7 +55,6 @@ export interface ISøknadIKontraktBarn {
     registrertBostedType: ISøknadsfelt<ERegistrertBostedType>;
     alder: ISøknadsfelt<string> | null;
     spørsmål: SpørsmålMap;
-    svalbardOppholdPerioder: ISøknadsfelt<ISvalbardOppholdPeriodeIKontraktFormat>[];
     utenlandsperioder: ISøknadsfelt<IUtenlandsperiodeIKontraktFormat>[];
     omsorgsperson: IOmsorgspersonIKontraktFormat | null;
     andreForelder: IAndreForelderIKontraktFormat | null;

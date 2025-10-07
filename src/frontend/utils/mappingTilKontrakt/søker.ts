@@ -21,7 +21,6 @@ import {
 import { idNummerTilISøknadsfelt } from './idNummer';
 import { tilIPensjonsperiodeIKontraktFormat } from './pensjonsperioder';
 import { samboerISøknadKontraktFormat } from './samboer';
-import { svalbardOppholdPeriodeTilISøknadsfelt } from './svalbardOppholdPeriode';
 import { tidligereSamboerISøknadKontraktFormat } from './tidligereSamboer';
 import { utenlandsperiodeTilISøknadsfelt } from './utenlandsperiode';
 
@@ -38,7 +37,6 @@ export const søkerIKontraktFormat = (
         statsborgerskap,
         adresse,
         utvidet,
-        svalbardOppholdPerioder,
         utenlandsperioder,
         arbeidsperioderUtland,
         pensjonsperioderUtland,
@@ -48,8 +46,6 @@ export const søkerIKontraktFormat = (
         idNummer,
         triggetEøs,
         borPåRegistrertAdresse,
-        borPåSvalbard,
-        værtINorgeITolvMåneder,
         planleggerÅBoINorgeTolvMnd,
         erAsylsøker,
         arbeidIUtlandet,
@@ -83,11 +79,6 @@ export const søkerIKontraktFormat = (
         borPåRegistrertAdresse: søknadsfeltForESvar(
             omDegTekster.borPaaRegistrertAdresse.sporsmal,
             borPåRegistrertAdresse.svar
-        ),
-        borPåSvalbard: nullableSøknadsfeltForESvar(omDegTekster.borPaaSvalbard.sporsmal, borPåSvalbard.svar),
-        værtINorgeITolvMåneder: søknadsfeltForESvar(
-            omDegTekster.vaertINorgeITolvMaaneder.sporsmal,
-            værtINorgeITolvMåneder.svar
         ),
         planleggerÅBoINorgeTolvMnd: nullableSøknadsfeltForESvar(
             omDegTekster.planleggerAaBoINorgeTolvMnd.sporsmal,
@@ -145,14 +136,6 @@ export const søkerIKontraktFormat = (
         adresse: søknadsfelt(omDegTekster.adresse, sammeVerdiAlleSpråk(adresse)),
         adressebeskyttelse: søker.adressebeskyttelse,
         spørsmål: fjernNullVerdierFraSpørsmål(spørsmål),
-        svalbardOppholdPerioder: svalbardOppholdPerioder.map((periode, index) =>
-            svalbardOppholdPeriodeTilISøknadsfelt({
-                svalbardOppholdPeriode: periode,
-                periodeNummer: index + 1,
-                tekster: fellesTekster.modaler.svalbardOpphold[PersonType.Søker],
-                tilRestLocaleRecord,
-            })
-        ),
         utenlandsperioder: utenlandsperioder.map((periode, index) =>
             utenlandsperiodeTilISøknadsfelt({
                 utenlandperiode: periode,
