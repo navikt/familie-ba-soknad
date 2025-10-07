@@ -8,6 +8,7 @@ import {
 export const omDegTekstinnhold: IOmDegTekstinnhold = {
     omDegTittel: lagLocaleRecordBlock(),
     omDegGuide: lagLocaleRecordBlock(),
+    navn: lagLocaleRecordString(),
     skjermetAdresse: lagLocaleRecordString(),
     borPaaRegistrertAdresse: lagSanitySpørsmålDokument(),
     borPaaSvalbard: lagSanitySpørsmålDokument(),

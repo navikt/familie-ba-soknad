@@ -168,6 +168,34 @@ export const testdata1: TilKontraktTestData = {
                     id: 'hvem-bodd-på-svalbard',
                     svar: null,
                 },
+                pågåendeSøknadFraAnnetEøsLand: {
+                    id: 'andre-forelder-pågående-søknad',
+                    svar: null,
+                },
+                pågåendeSøknadHvilketLand: {
+                    id: 'andre-forelder-pågående-søknad-land',
+                    svar: null,
+                },
+                mottarEllerMottokEøsBarnetrygd: {
+                    id: 'mottar-eller-mottok-eøs-barnetrygd',
+                    svar: null,
+                },
+                søkersSlektsforhold: {
+                    id: 'søkers-slektsforhold',
+                    svar: null,
+                },
+                søkersSlektsforholdSpesifisering: {
+                    id: 'søkers-slektsforhold-spesifisering',
+                    svar: null,
+                },
+                borMedAndreForelder: {
+                    id: 'bor-med-andre-forelder',
+                    svar: null,
+                },
+                borMedOmsorgsperson: {
+                    id: 'bor-med-omsorgsperson',
+                    svar: null,
+                },
             },
         ],
         lestOgForståttBekreftelse: true,
@@ -326,6 +354,18 @@ export const testdata1: TilKontraktTestData = {
                 id: 'mottar-utenlandspensjon',
                 svar: 'NEI',
             },
+            arbeidINorge: {
+                id: 'arbeid-i-norge',
+                svar: null,
+            },
+            pensjonNorge: {
+                id: 'pensjon-norge',
+                svar: null,
+            },
+            andreUtbetalinger: {
+                id: 'utbetalinger',
+                svar: null,
+            },
             pensjonsland: {
                 id: 'pensjonsland',
                 svar: '',
@@ -335,32 +375,6 @@ export const testdata1: TilKontraktTestData = {
             pensjonsperioderNorge: [],
             pensjonsperioderUtland: [],
             andreUtbetalingsperioder: [],
-            utvidet: {
-                spørsmål: {
-                    årsak: {
-                        id: 'årsak',
-                        svar: '',
-                    },
-                    separertEnkeSkilt: {
-                        id: 'separert-enke-skilt',
-                        svar: null,
-                    },
-                    separertEnkeSkiltUtland: {
-                        id: 'separert-enke-skilt-utland',
-                        svar: null,
-                    },
-                    separertEnkeSkiltDato: {
-                        id: 'separert-enke-skilt-dato',
-                        svar: '',
-                    },
-                    harSamboerNå: {
-                        id: 'har-samboer-nå-og-gift',
-                        svar: 'NEI',
-                    },
-                },
-                tidligereSamboere: [],
-                nåværendeSamboer: null,
-            },
         },
         erNoenAvBarnaFosterbarn: {
             id: 'er-noen-av-barna-fosterbarn',
@@ -392,6 +406,10 @@ export const testdata1: TilKontraktTestData = {
         },
         harNoenAvBarnaBoddPåSvalbard: {
             id: 'har-noen-av-barna-bodd-på-svalbard',
+            svar: null,
+        },
+        hattAnnenSamboerForSøktPeriode: {
+            id: 'har-hatt-annen-samboer-i-perioden',
             svar: null,
         },
     },

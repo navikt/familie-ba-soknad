@@ -225,6 +225,48 @@ export const TestProvidereMedEkteTekster: React.FC<{
     <TestProvidere tekster={norskeTekster} children={children} mocketNettleserHistorikk={mocketNettleserHistorikk} />
 );
 
+export const wrapMedProvidereForSanity = (
+    // eslint-disable-next-line
+    providerComponents: React.FC<any>[],
+    children?: ReactNode
+) => {
+    const [Første, ...resten] = providerComponents;
+    return (
+        <Første>
+            <IntlProvider locale={LocaleType.nb}>
+                {resten.length ? wrapMedProvidereForSanity(resten, children) : children}
+            </IntlProvider>
+        </Første>
+    );
+};
+
+const wrapMedDefaultProvidereForSanity = (children: ReactNode) =>
+    wrapMedProvidereForSanity(
+        [
+            CookiesProvider,
+            SpråkProvider,
+            HttpProvider,
+            LastRessurserProvider,
+            SanityProvider,
+            InnloggetProvider,
+            FeatureTogglesProvider,
+            AppProvider,
+            EøsProvider,
+            RoutesProvider,
+            MemoryRouter,
+            StegProvider,
+            AppNavigationProvider,
+        ],
+        children
+    );
+
+interface TestProviderPropsForSanity {
+    children?: ReactNode;
+}
+export function TestProvidereForSanity({ children }: TestProviderPropsForSanity) {
+    return wrapMedDefaultProvidereForSanity(children);
+}
+
 export const LesUtLocation = () => {
     const location = useLocation();
     return <pre data-testid="location">{JSON.stringify(location)}</pre>;
@@ -369,6 +411,26 @@ export const mekkGyldigSøknad = (): ISøknad => {
                     alder: null,
                     borMedSøker: true,
                 }),
+                [barnDataKeySpørsmål.erFosterbarn]: {
+                    id: OmBarnaDineSpørsmålId.hvemErFosterbarn,
+                    svar: ESvar.NEI,
+                },
+                [barnDataKeySpørsmål.oppholderSegIInstitusjon]: {
+                    id: OmBarnaDineSpørsmålId.hvemOppholderSegIInstitusjon,
+                    svar: ESvar.NEI,
+                },
+                [barnDataKeySpørsmål.erAdoptertFraUtland]: {
+                    id: OmBarnaDineSpørsmålId.hvemErAdoptertFraUtland,
+                    svar: ESvar.NEI,
+                },
+                [barnDataKeySpørsmål.erAsylsøker]: {
+                    id: OmBarnaDineSpørsmålId.hvemErSøktAsylFor,
+                    svar: ESvar.NEI,
+                },
+                [barnDataKeySpørsmål.barnetrygdFraAnnetEøsland]: {
+                    id: OmBarnaDineSpørsmålId.hvemBarnetrygdFraAnnetEøsland,
+                    svar: ESvar.NEI,
+                },
                 andreForelder: {
                     kanIkkeGiOpplysninger: {
                         id: OmBarnetSpørsmålsId.andreForelderKanIkkeGiOpplysninger,

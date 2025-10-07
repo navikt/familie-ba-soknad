@@ -73,6 +73,9 @@ export const dokumentasjonTekstinnhold: IDokumentasjonTekstinnhold = {
     [TittelSanityApiNavn.dokumentasjonPaaSeparasjonSkilsmisseEllerDoedsfallTittel]:
         lagLocaleRecordBlock(),
     [TittelSanityApiNavn.vedtakOmOppholdstillatelseTittel]: lagLocaleRecordBlock(),
+    [TittelSanityApiNavn.lastetOppAntall]: lagLocaleRecordBlock(),
+    [TittelSanityApiNavn.vedleggXavY]: lagLocaleRecordBlock(),
+    [TittelSanityApiNavn.listeOverVedlegg]: lagLocaleRecordBlock(),
     // Vedlegg - beskrivelser
     [BeskrivelseSanityApiNavn.dokumentasjonPaaSeparasjonSkilsmisseEllerDoedsfall]:
         lagLocaleRecordBlock(),

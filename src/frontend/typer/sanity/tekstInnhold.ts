@@ -94,6 +94,7 @@ export interface IFrittståendeOrdTekstinnhold {
     slipp: LocaleRecordString;
     eller: LocaleRecordString;
     og: LocaleRecordString;
+    soeker: LocaleRecordString;
 }
 
 export interface INavigasjonTekstinnhold {

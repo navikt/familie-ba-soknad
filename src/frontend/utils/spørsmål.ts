@@ -13,6 +13,7 @@ import { omBarnetSpørsmålSpråkId } from '../components/SøknadsSteg/OmBarnet/
 import { omDegSpørsmålSpråkId } from '../components/SøknadsSteg/OmDeg/spørsmål';
 import { velgBarnSpørsmålSpråkId } from '../components/SøknadsSteg/VelgBarn/spørsmål';
 import { AlternativtSvarForInput } from '../typer/common';
+import { IFrittståendeOrdTekstinnhold } from '../typer/sanity/tekstInnhold';
 
 export const språkIndexListe = [
     omDegSpørsmålSpråkId,
@@ -35,3 +36,14 @@ export const svarForSpørsmålMedUkjent = (vetIkkeFelt: Felt<ESvar>, spørsmålF
 
 export const jaNeiSvarTilSpråkId = (svar: ESvar) =>
     svar === ESvar.VET_IKKE ? 'felles.svaralternativ.vetikke' : 'felles.svaralternativ.' + svar.toLowerCase();
+
+export const jaNeiSvarTilSpråkIdForSanity = (svar: ESvar, tekster: IFrittståendeOrdTekstinnhold) => {
+    switch (svar) {
+        case ESvar.JA:
+            return tekster.ja;
+        case ESvar.NEI:
+            return tekster.nei;
+        case ESvar.VET_IKKE:
+            return tekster.jegVetIkke;
+    }
+};
