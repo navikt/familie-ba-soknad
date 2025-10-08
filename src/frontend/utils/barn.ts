@@ -9,7 +9,7 @@ import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/
 import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnet/spørsmål';
 import { barnDataKeySpørsmål, IAndreForelder, IBarnMedISøknad } from '../typer/barn';
 import { tomString } from '../typer/common';
-import { IEøsBarnetrygdsperiode, ISvalbardOppholdPeriode, IUtenlandsperiode } from '../typer/perioder';
+import { IEøsBarnetrygdsperiode, IUtenlandsperiode } from '../typer/perioder';
 import { IBarn, IBarnRespons, IIdNummer } from '../typer/person';
 import { ISøknad } from '../typer/søknad';
 
@@ -139,7 +139,6 @@ export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => 
     return {
         ...barn,
         barnErFyltUt: false,
-        svalbardOppholdPerioder: [],
         utenlandsperioder: [],
         eøsBarnetrygdsperioder: [],
         idNummer: [],
@@ -238,10 +237,6 @@ export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => 
             id: EøsBarnSpørsmålId.borMedOmsorgsperson,
             svar: null,
         },
-        [barnDataKeySpørsmål.harBoddPåSvalbard]: {
-            id: OmBarnaDineSpørsmålId.harNoenAvBarnaBoddPåSvalbard,
-            svar: null,
-        },
         [barnDataKeySpørsmål.adresse]: {
             id: EøsBarnSpørsmålId.barnetsAdresse,
             svar: '',
@@ -302,7 +297,6 @@ export const skalSpørreOmIdNummerForPågåendeSøknadEøsLand = (
 export const filtrerteRelevanteIdNummerForBarn = (
     perioder: {
         eøsBarnetrygdsperioder: IEøsBarnetrygdsperiode[];
-        svalbardOppholdPerioder: ISvalbardOppholdPeriode[];
         utenlandsperioder: IUtenlandsperiode[];
     },
     pågåendeSøknadFraAnnetEøsLand: ESvar | null,

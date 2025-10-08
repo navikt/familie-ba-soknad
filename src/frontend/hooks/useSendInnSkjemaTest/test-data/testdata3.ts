@@ -19,7 +19,6 @@ export const testdata3: TilKontraktTestData = {
                 },
                 adressebeskyttelse: true,
                 barnErFyltUt: true,
-                svalbardOppholdPerioder: [],
                 utenlandsperioder: [],
                 eøsBarnetrygdsperioder: [],
                 idNummer: [],
@@ -164,10 +163,6 @@ export const testdata3: TilKontraktTestData = {
                     id: 'bor-barnet-fast-med-deg',
                     svar: 'JA',
                 },
-                harBoddPåSvalbard: {
-                    id: 'hvem-bodd-på-svalbard',
-                    svar: null,
-                },
                 pågåendeSøknadFraAnnetEøsLand: {
                     id: 'andre-forelder-pågående-søknad',
                     svar: null,
@@ -209,7 +204,6 @@ export const testdata3: TilKontraktTestData = {
                 },
                 adressebeskyttelse: false,
                 barnErFyltUt: true,
-                svalbardOppholdPerioder: [],
                 utenlandsperioder: [
                     {
                         utenlandsoppholdÅrsak: {
@@ -316,10 +310,6 @@ export const testdata3: TilKontraktTestData = {
                 borFastMedSøker: {
                     id: 'bor-barnet-fast-med-deg',
                     svar: 'JA',
-                },
-                harBoddPåSvalbard: {
-                    id: 'hvem-bodd-på-svalbard',
-                    svar: null,
                 },
                 pågåendeSøknadFraAnnetEøsLand: {
                     id: 'andre-forelder-pågående-søknad',
@@ -501,7 +491,6 @@ export const testdata3: TilKontraktTestData = {
                 bostedskommune: null,
                 poststed: 'HAMAR',
             },
-            svalbardOppholdPerioder: [],
             utenlandsperioder: [
                 {
                     utenlandsoppholdÅrsak: {
@@ -535,10 +524,6 @@ export const testdata3: TilKontraktTestData = {
             borPåRegistrertAdresse: {
                 id: 'bor-på-registrert-adresse',
                 svar: 'JA',
-            },
-            borPåSvalbard: {
-                id: 'bor-på-svalbard',
-                svar: null,
             },
             værtINorgeITolvMåneder: {
                 id: 'søker-vært-i-norge-sammenhengende-tolv-måneder',
@@ -649,10 +634,6 @@ export const testdata3: TilKontraktTestData = {
             id: 'er-folkeregistrert-avdød-ektefelle-forelder',
             svar: null,
         },
-        harNoenAvBarnaBoddPåSvalbard: {
-            id: 'har-noen-av-barna-bodd-på-svalbard',
-            svar: null,
-        },
     },
     output: {
         søknadstype: 'ORDINÆR',
@@ -717,7 +698,6 @@ export const testdata3: TilKontraktTestData = {
                 },
             },
             adressebeskyttelse: false,
-            svalbardOppholdPerioder: [],
             utenlandsperioder: [
                 {
                     label: {
@@ -1040,14 +1020,6 @@ export const testdata3: TilKontraktTestData = {
                     },
                     verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
                 },
-                borPåSvalbard: {
-                    label: {
-                        en: 'Do you live on Svalbard?',
-                        nb: 'Bor du på Svalbard?',
-                        nn: 'Bur du på Svalbard?',
-                    },
-                    verdi: { nb: null, nn: null, en: null },
-                },
                 værtINorgeITolvMåneder: {
                     label: {
                         en: 'Have you stayed continuously in Norway for the last twelve months?',
@@ -1262,7 +1234,6 @@ export const testdata3: TilKontraktTestData = {
                     label: { en: 'Age', nb: 'Alder', nn: 'Alder' },
                     verdi: { en: '13 years', nb: '13 år', nn: '13 år' },
                 },
-                svalbardOppholdPerioder: [],
                 utenlandsperioder: [],
                 eøsBarnetrygdsperioder: [],
                 idNummer: [],
@@ -1496,7 +1467,6 @@ export const testdata3: TilKontraktTestData = {
                     label: { en: 'Age', nb: 'Alder', nn: 'Alder' },
                     verdi: { en: '12 years', nb: '12 år', nn: '12 år' },
                 },
-                svalbardOppholdPerioder: [],
                 utenlandsperioder: [
                     {
                         label: {

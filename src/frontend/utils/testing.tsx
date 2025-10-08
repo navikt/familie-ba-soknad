@@ -276,7 +276,6 @@ export const mekkGyldigSøker = (): ISøker => {
     return {
         ...initialStateSøknad().søker,
         sivilstand: { type: ESivilstand.UGIFT },
-        svalbardOppholdPerioder: [],
         utenlandsperioder: [],
         utvidet: {
             ...initialStateSøknad().søker.utvidet,
@@ -303,10 +302,6 @@ export const mekkGyldigSøker = (): ISøker => {
         borPåRegistrertAdresse: {
             id: OmDegSpørsmålId.borPåRegistrertAdresse,
             svar: ESvar.JA,
-        },
-        borPåSvalbard: {
-            id: OmDegSpørsmålId.borPåSvalbard,
-            svar: null,
         },
         værtINorgeITolvMåneder: {
             id: OmDegSpørsmålId.værtINorgeITolvMåneder,
@@ -396,10 +391,6 @@ export const mekkGyldigSøknad = (): ISøknad => {
         barnOppholdtSegTolvMndSammenhengendeINorge: {
             id: OmBarnaDineSpørsmålId.barnOppholdtSegTolvMndSammenhengendeINorge,
             svar: ESvar.JA,
-        },
-        harNoenAvBarnaBoddPåSvalbard: {
-            id: OmBarnaDineSpørsmålId.harNoenAvBarnaBoddPåSvalbard,
-            svar: ESvar.NEI,
         },
         barnInkludertISøknaden: [
             {

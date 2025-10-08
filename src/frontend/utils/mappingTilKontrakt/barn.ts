@@ -21,7 +21,6 @@ import {
 } from './hjelpefunksjoner';
 import { idNummerTilISøknadsfelt } from './idNummer';
 import { omsorgspersonTilISøknadsfelt } from './omsorgsperson';
-import { svalbardOppholdPeriodeTilISøknadsfelt } from './svalbardOppholdPeriode';
 import { utenlandsperiodeTilISøknadsfelt } from './utenlandsperiode';
 
 export const barnISøknadsFormat = (
@@ -38,7 +37,6 @@ export const barnISøknadsFormat = (
         adressebeskyttelse,
         andreForelder,
         omsorgsperson,
-        svalbardOppholdPerioder,
         utenlandsperioder,
         eøsBarnetrygdsperioder,
         idNummer,
@@ -66,7 +64,6 @@ export const barnISøknadsFormat = (
         søkersSlektsforholdSpesifisering,
         borMedAndreForelder,
         borMedOmsorgsperson,
-        harBoddPåSvalbard,
     } = barn;
     const fellesTekster = tekster.FELLES;
     const eøsTekster = tekster.EØS_FOR_BARN;
@@ -112,10 +109,6 @@ export const barnISøknadsFormat = (
             oppholderSegIInstitusjon.svar
         ),
         erAdoptertFraUtland: søknadsfeltForESvar(omBarnaTekster.adoptertFraUtlandet.sporsmal, erAdoptertFraUtland.svar),
-        harBoddPåSvalbard: nullableSøknadsfeltForESvar(
-            omBarnaTekster.hvemBoddPaaSvalbard.sporsmal,
-            harBoddPåSvalbard.svar
-        ),
         erAsylsøker: søknadsfeltForESvar(omBarnaTekster.hvemAsyl.sporsmal, erAsylsøker.svar),
         andreForelderErDød: nullableSøknadsfeltForESvar(
             omBarnaTekster.hvemAvBarnaAvdoedPartner.sporsmal,
@@ -235,14 +228,6 @@ export const barnISøknadsFormat = (
             sammeVerdiAlleSpråk(registertBostedVerdi())
         ),
         alder: alder ? søknadsfelt(velgBarnTekster.alderLabel, sammeVerdiAlleSpråk(alder)) : null,
-        svalbardOppholdPerioder: svalbardOppholdPerioder.map((svalbardOppholdPeriode, index) =>
-            svalbardOppholdPeriodeTilISøknadsfelt({
-                svalbardOppholdPeriode,
-                periodeNummer: index + 1,
-                tekster: fellesTekster.modaler.svalbardOpphold[PersonType.Barn],
-                tilRestLocaleRecord,
-            })
-        ),
         utenlandsperioder: utenlandsperioder.map((periode, index) =>
             utenlandsperiodeTilISøknadsfelt({
                 utenlandperiode: periode,

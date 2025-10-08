@@ -19,6 +19,4 @@ export interface IOmBarnaTekstinnhold {
     folkeregistrertEnkeEnkemann: ISanitySpørsmålDokument;
     folkeregistrertGjenlevende: ISanitySpørsmålDokument;
     hvemAvBarnaAvdoedPartner: ISanitySpørsmålDokument;
-    boddPaaSvalbard: ISanitySpørsmålDokument;
-    hvemBoddPaaSvalbard: ISanitySpørsmålDokument;
 }

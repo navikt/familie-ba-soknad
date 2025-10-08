@@ -19,7 +19,6 @@ export const testdata1: TilKontraktTestData = {
                 },
                 adressebeskyttelse: true,
                 barnErFyltUt: true,
-                svalbardOppholdPerioder: [],
                 utenlandsperioder: [],
                 eøsBarnetrygdsperioder: [],
                 idNummer: [],
@@ -163,10 +162,6 @@ export const testdata1: TilKontraktTestData = {
                 borFastMedSøker: {
                     id: 'bor-barnet-fast-med-deg',
                     svar: 'NEI',
-                },
-                harBoddPåSvalbard: {
-                    id: 'hvem-bodd-på-svalbard',
-                    svar: null,
                 },
                 pågåendeSøknadFraAnnetEøsLand: {
                     id: 'andre-forelder-pågående-søknad',
@@ -320,15 +315,10 @@ export const testdata1: TilKontraktTestData = {
                 bostedskommune: null,
                 poststed: 'HAMAR',
             },
-            svalbardOppholdPerioder: [],
             utenlandsperioder: [],
             borPåRegistrertAdresse: {
                 id: 'bor-på-registrert-adresse',
                 svar: 'JA',
-            },
-            borPåSvalbard: {
-                id: 'bor-på-svalbard',
-                svar: null,
             },
             værtINorgeITolvMåneder: {
                 id: 'søker-vært-i-norge-sammenhengende-tolv-måneder',
@@ -404,10 +394,6 @@ export const testdata1: TilKontraktTestData = {
             id: 'er-folkeregistrert-avdød-ektefelle-forelder',
             svar: null,
         },
-        harNoenAvBarnaBoddPåSvalbard: {
-            id: 'har-noen-av-barna-bodd-på-svalbard',
-            svar: null,
-        },
         hattAnnenSamboerForSøktPeriode: {
             id: 'har-hatt-annen-samboer-i-perioden',
             svar: null,
@@ -476,7 +462,6 @@ export const testdata1: TilKontraktTestData = {
                 },
             },
             adressebeskyttelse: false,
-            svalbardOppholdPerioder: [],
             utenlandsperioder: [],
             idNummer: [],
             spørsmål: {
@@ -487,14 +472,6 @@ export const testdata1: TilKontraktTestData = {
                         nn: 'Bur du på denne adressa?',
                     },
                     verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
-                },
-                borPåSvalbard: {
-                    label: {
-                        en: 'Do you live on Svalbard?',
-                        nb: 'Bor du på Svalbard?',
-                        nn: 'Bur du på Svalbard?',
-                    },
-                    verdi: { nb: null, nn: null, en: null },
                 },
                 værtINorgeITolvMåneder: {
                     label: {
@@ -572,7 +549,6 @@ export const testdata1: TilKontraktTestData = {
                     label: { en: 'Age', nb: 'Alder', nn: 'Alder' },
                     verdi: { en: '13 years', nb: '13 år', nn: '13 år' },
                 },
-                svalbardOppholdPerioder: [],
                 utenlandsperioder: [],
                 eøsBarnetrygdsperioder: [],
                 idNummer: [],

@@ -11,7 +11,6 @@ export const omDegTekstinnhold: IOmDegTekstinnhold = {
     navn: lagLocaleRecordString(),
     skjermetAdresse: lagLocaleRecordString(),
     borPaaRegistrertAdresse: lagSanitySpørsmålDokument(),
-    borPaaSvalbard: lagSanitySpørsmålDokument(),
     vaertINorgeITolvMaaneder: lagSanitySpørsmålDokument(),
     planleggerAaBoINorgeTolvMnd: lagSanitySpørsmålDokument(),
     adresse: lagLocaleRecordString(),
