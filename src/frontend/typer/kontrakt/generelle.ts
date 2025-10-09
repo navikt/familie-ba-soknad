@@ -4,6 +4,12 @@ import { FlettefeltVerdier, LocaleRecordBlock, LocaleRecordString } from '../san
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export type SpørsmålMap = Record<string, ISøknadsfelt<any>>;
 
+export type SpørsmålMapMedNullVerdier = Record<string, ISøknadsfelt<any> | null>;
+
+export const fjernNullVerdierFraSpørsmål = (spørsmål: SpørsmålMapMedNullVerdier): SpørsmålMap => {
+    return Object.fromEntries(Object.entries(spørsmål).filter(([, value]) => value !== null)) as SpørsmålMap;
+};
+
 export enum ESøknadstype {
     ORDINÆR = 'ORDINÆR',
     UTVIDET = 'UTVIDET',
@@ -21,11 +27,6 @@ export type TilRestLocaleRecord = (
 
 export interface IKontraktTidligereSamboer extends IKontraktNåværendeSamboer {
     samboerTilDato: ISøknadsfelt<ISODateString>;
-}
-
-export interface ISvalbardOppholdPeriodeIKontraktFormat {
-    tilDatoSvalbardOpphold: ISøknadsfelt<string>;
-    fraDatoSvalbardOpphold: ISøknadsfelt<string | undefined>;
 }
 
 export interface IUtenlandsperiodeIKontraktFormat {

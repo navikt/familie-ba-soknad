@@ -3,9 +3,9 @@ import { ISanitySpørsmålDokument, LocaleRecordBlock, LocaleRecordString } from
 export interface IOmDegTekstinnhold {
     omDegTittel: LocaleRecordBlock;
     omDegGuide: LocaleRecordBlock;
+    navn: LocaleRecordString;
     skjermetAdresse: LocaleRecordString;
     borPaaRegistrertAdresse: ISanitySpørsmålDokument;
-    borPaaSvalbard: ISanitySpørsmålDokument;
     vaertINorgeITolvMaaneder: ISanitySpørsmålDokument;
     planleggerAaBoINorgeTolvMnd: ISanitySpørsmålDokument;
     adresse: LocaleRecordString;

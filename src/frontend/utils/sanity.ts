@@ -15,7 +15,6 @@ import { IBlokkerTilbakeknappTekstinnhold } from '../typer/sanity/modaler/blokke
 import { ILeggTilBarnTekstinnhold } from '../typer/sanity/modaler/leggTilBarn';
 import { IPensjonsperiodeTekstinnhold } from '../typer/sanity/modaler/pensjonsperiode';
 import { IStartPåNyttModal } from '../typer/sanity/modaler/startPåNytt';
-import { ISvalbardOppholdTekstinnhold } from '../typer/sanity/modaler/svalbardOpphold';
 import { ITidligereSamoboereTekstinnhold } from '../typer/sanity/modaler/tidligereSamboere';
 import { IUtenlandsoppholdTekstinnhold } from '../typer/sanity/modaler/utenlandsopphold';
 import {
@@ -89,9 +88,6 @@ const strukturertInnholdForModaler = (dokumenter: SanityDokument[]): IModalerTek
     const utenlandsopphold = (personType: SanityPersonType) =>
         strukturerInnholdForModal(SanityModalPrefix.UTENLANDSOPPHOLD, personType) as IUtenlandsoppholdTekstinnhold;
 
-    const svalbardOpphold = (personType: SanityPersonType) =>
-        strukturerInnholdForModal(SanityModalPrefix.SVALBARDOPPHOLD, personType) as ISvalbardOppholdTekstinnhold;
-
     return {
         arbeidsperiode: {
             søker: arbeidsperiode(SanityPersonType.SOKER),
@@ -120,10 +116,6 @@ const strukturertInnholdForModaler = (dokumenter: SanityDokument[]): IModalerTek
             søker: utenlandsopphold(SanityPersonType.SOKER),
             barn: utenlandsopphold(SanityPersonType.BARN),
             andreForelder: utenlandsopphold(SanityPersonType.ANDRE_FORELDER),
-        },
-        svalbardOpphold: {
-            søker: svalbardOpphold(SanityPersonType.SOKER),
-            barn: svalbardOpphold(SanityPersonType.BARN),
         },
         leggTilBarn: strukturerInnholdForModal(SanityModalPrefix.LEGG_TIL_BARN) as ILeggTilBarnTekstinnhold,
         startPåNytt: strukturerInnholdForModal(SanityModalPrefix.START_PAA_NYTT) as IStartPåNyttModal,

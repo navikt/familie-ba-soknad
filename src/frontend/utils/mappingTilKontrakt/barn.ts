@@ -1,40 +1,35 @@
-import { EøsBarnSpørsmålId, eøsBarnSpørsmålSpråkId } from '../../components/SøknadsSteg/EøsSteg/Barn/spørsmål';
-import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../../components/SøknadsSteg/OmBarnet/spørsmål';
-import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../typer/barn';
-import { LocaleType } from '../../typer/common';
-import { ERegistrertBostedType, TilRestLocaleRecord } from '../../typer/kontrakt/generelle';
+import { IBarnMedISøknad } from '../../typer/barn';
+import {
+    ERegistrertBostedType,
+    fjernNullVerdierFraSpørsmål,
+    SpørsmålMapMedNullVerdier,
+    TilRestLocaleRecord,
+} from '../../typer/kontrakt/generelle';
 import { ISøknadIKontraktBarn } from '../../typer/kontrakt/kontrakt';
-import { ISøker } from '../../typer/person';
 import { PersonType } from '../../typer/personType';
 import { ITekstinnhold } from '../../typer/sanity/tekstInnhold';
-import { ISøknadSpørsmålMap } from '../../typer/spørsmål';
-import { hentTekster } from '../språk';
+import { ISøknad } from '../../typer/søknad';
 
 import { andreForelderTilISøknadsfelt } from './andreForelder';
 import { tilIEøsBarnetrygsperiodeIKontraktFormat } from './eøsBarnetrygdsperiode';
 import {
+    nullableSøknadsfeltForESvarHof,
     sammeVerdiAlleSpråk,
-    sammeVerdiAlleSpråkEllerUkjentSpråktekst,
-    språktekstIdFraSpørsmålId,
-    spørmålISøknadsFormat,
-    søknadsfeltBarn,
+    sammeVerdiAlleSpråkEllerUkjent,
+    søknadsfeltForESvarHof,
+    søknadsfeltHof,
 } from './hjelpefunksjoner';
 import { idNummerTilISøknadsfelt } from './idNummer';
 import { omsorgspersonTilISøknadsfelt } from './omsorgsperson';
-import { svalbardOppholdPeriodeTilISøknadsfelt } from './svalbardOppholdPeriode';
 import { utenlandsperiodeTilISøknadsfelt } from './utenlandsperiode';
 
 export const barnISøknadsFormat = (
     barn: IBarnMedISøknad,
-    søker: ISøker,
-    valgtSpråk: LocaleType,
+    søknad: ISøknad,
     tekster: ITekstinnhold,
     tilRestLocaleRecord: TilRestLocaleRecord
 ): ISøknadIKontraktBarn => {
-    /* eslint-disable @typescript-eslint/no-unused-vars */
     const {
-        id,
-        barnErFyltUt,
         ident,
         navn,
         borMedSøker,
@@ -42,19 +37,44 @@ export const barnISøknadsFormat = (
         adressebeskyttelse,
         andreForelder,
         omsorgsperson,
-        institusjonOppholdSluttdato,
-        svalbardOppholdPerioder,
         utenlandsperioder,
-        // Nye felter under utvikling av EØS full
         eøsBarnetrygdsperioder,
         idNummer,
         triggetEøs,
         adresse,
-        // resterende felter, hvor alle må være av type ISøknadSpørsmål
-        ...barnSpørsmål
+        erFosterbarn,
+        erAdoptertFraUtland,
+        pågåendeSøknadFraAnnetEøsLand,
+        pågåendeSøknadHvilketLand,
+        barnetrygdFraAnnetEøsland,
+        mottarEllerMottokEøsBarnetrygd,
+        erAsylsøker,
+        borFastMedSøker,
+        andreForelderErDød,
+        oppholderSegIInstitusjon,
+        institusjonIUtland,
+        institusjonsnavn,
+        institusjonsadresse,
+        institusjonspostnummer,
+        institusjonOppholdStartdato,
+        institusjonOppholdSluttdato,
+        boddMindreEnn12MndINorge,
+        planleggerÅBoINorge12Mnd,
+        søkersSlektsforhold,
+        søkersSlektsforholdSpesifisering,
+        borMedAndreForelder,
+        borMedOmsorgsperson,
     } = barn;
     const fellesTekster = tekster.FELLES;
-    const typetBarnSpørsmål = barnSpørsmål as unknown as ISøknadSpørsmålMap;
+    const eøsTekster = tekster.EØS_FOR_BARN;
+    const omBarnaTekster = tekster.OM_BARNA;
+    const omBarnetTekster = tekster.OM_BARNET;
+    const leggTilBarnModalTekster = tekster.FELLES.modaler.leggTilBarn;
+    const velgBarnTekster = tekster.VELG_BARN;
+
+    const søknadsfelt = søknadsfeltHof(tilRestLocaleRecord);
+    const søknadsfeltForESvar = søknadsfeltForESvarHof(tilRestLocaleRecord);
+    const nullableSøknadsfeltForESvar = nullableSøknadsfeltForESvarHof(tilRestLocaleRecord);
 
     const registertBostedVerdi = (): ERegistrertBostedType => {
         /**
@@ -81,28 +101,133 @@ export const barnISøknadsFormat = (
         }
     };
 
+    const spørsmål: SpørsmålMapMedNullVerdier = {
+        // Om barna tekster
+        erFosterbarn: søknadsfeltForESvar(omBarnaTekster.hvemFosterbarn.sporsmal, erFosterbarn.svar),
+        oppholderSegIInstitusjon: søknadsfeltForESvar(
+            omBarnaTekster.hvemInstitusjon.sporsmal,
+            oppholderSegIInstitusjon.svar
+        ),
+        erAdoptertFraUtland: søknadsfeltForESvar(omBarnaTekster.adoptertFraUtlandet.sporsmal, erAdoptertFraUtland.svar),
+        erAsylsøker: søknadsfeltForESvar(omBarnaTekster.hvemAsyl.sporsmal, erAsylsøker.svar),
+        andreForelderErDød: nullableSøknadsfeltForESvar(
+            omBarnaTekster.hvemAvBarnaAvdoedPartner.sporsmal,
+            andreForelderErDød.svar
+        ),
+        boddMindreEnn12MndINorge: nullableSøknadsfeltForESvar(
+            omBarnaTekster.hvemOppholdUtenforNorge.sporsmal,
+            boddMindreEnn12MndINorge.svar
+        ),
+        // Om barnet tekster
+        borFastMedSøker: nullableSøknadsfeltForESvar(
+            omBarnetTekster.borBarnFastSammenMedDeg.sporsmal,
+            borFastMedSøker.svar,
+            { barnetsNavn: navn }
+        ),
+        pågåendeSøknadFraAnnetEøsLand: nullableSøknadsfeltForESvar(
+            omBarnetTekster.paagaaendeSoeknadYtelse.sporsmal,
+            pågåendeSøknadFraAnnetEøsLand.svar
+        ),
+        pågåendeSøknadHvilketLand: pågåendeSøknadHvilketLand.svar
+            ? søknadsfelt(
+                  omBarnetTekster.hvilketLandYtelse.sporsmal,
+                  sammeVerdiAlleSpråkEllerUkjent(
+                      tilRestLocaleRecord,
+                      pågåendeSøknadHvilketLand.svar,
+                      omBarnetTekster.hvilketLandYtelse.checkboxLabel
+                  ),
+                  { barnetsNavn: navn }
+              )
+            : null,
+        barnetrygdFraAnnetEøsland: søknadsfeltForESvar(
+            omBarnetTekster.paagaaendeSoeknadYtelse.sporsmal,
+            barnetrygdFraAnnetEøsland.svar
+        ),
+        mottarEllerMottokEøsBarnetrygd: nullableSøknadsfeltForESvar(
+            omBarnetTekster.faarEllerHarFaattYtelseFraAnnetLand.sporsmal,
+            mottarEllerMottokEøsBarnetrygd.svar
+        ),
+        institusjonIUtland: søknadsfeltForESvar(omBarnetTekster.opplystInstitusjon, institusjonIUtland.svar, {
+            barnetsNavn: navn,
+        }),
+        institusjonsnavn: institusjonsnavn.svar
+            ? søknadsfelt(omBarnetTekster.institusjonNavn.sporsmal, sammeVerdiAlleSpråk(institusjonsnavn.svar))
+            : null,
+        institusjonsadresse: institusjonsadresse.svar
+            ? søknadsfelt(omBarnetTekster.institusjonAdresse.sporsmal, sammeVerdiAlleSpråk(institusjonsadresse.svar))
+            : null,
+        institusjonspostnummer: institusjonspostnummer.svar
+            ? søknadsfelt(
+                  omBarnetTekster.institusjonPostnummer.sporsmal,
+                  sammeVerdiAlleSpråk(institusjonspostnummer.svar)
+              )
+            : null,
+        institusjonOppholdStartdato: institusjonOppholdStartdato.svar
+            ? søknadsfelt(
+                  omBarnetTekster.institusjonStartdato.sporsmal,
+                  sammeVerdiAlleSpråk(institusjonOppholdStartdato.svar)
+              )
+            : null,
+        institusjonOppholdSluttdato: institusjonOppholdSluttdato.svar
+            ? søknadsfelt(
+                  omBarnetTekster.institusjonSluttdato.sporsmal,
+                  sammeVerdiAlleSpråkEllerUkjent(
+                      tilRestLocaleRecord,
+                      institusjonOppholdSluttdato.svar,
+                      omBarnetTekster.institusjonSluttdato.checkboxLabel
+                  )
+              )
+            : null,
+        planleggerÅBoINorge12Mnd: nullableSøknadsfeltForESvar(
+            omBarnetTekster.planlagtBoSammenhengendeINorge.sporsmal,
+            planleggerÅBoINorge12Mnd.svar,
+            { barnetsNavn: navn }
+        ),
+        // EØS for barn tekster
+        adresse: adresse.svar
+            ? søknadsfelt(
+                  eøsTekster.hvorBorBarnet.sporsmal,
+                  sammeVerdiAlleSpråkEllerUkjent(
+                      tilRestLocaleRecord,
+                      adresse.svar,
+                      eøsTekster.hvorBorBarnet.checkboxLabel
+                  ),
+                  { barnetsNavn: navn }
+              )
+            : null,
+        søkersSlektsforhold: søkersSlektsforhold.svar
+            ? søknadsfelt(eøsTekster.slektsforhold.sporsmal, sammeVerdiAlleSpråk(søkersSlektsforhold.svar), {
+                  barnetsNavn: navn,
+              })
+            : null,
+        søkersSlektsforholdSpesifisering: søkersSlektsforholdSpesifisering.svar
+            ? søknadsfelt(
+                  eøsTekster.hvilkenRelasjon.sporsmal,
+                  sammeVerdiAlleSpråk(søkersSlektsforholdSpesifisering.svar),
+                  { barnetsNavn: navn }
+              )
+            : null,
+        borMedAndreForelder: nullableSøknadsfeltForESvar(
+            eøsTekster.borMedAndreForelder.sporsmal,
+            borMedAndreForelder.svar,
+            { barnetsNavn: navn }
+        ),
+        borMedOmsorgsperson: nullableSøknadsfeltForESvar(
+            eøsTekster.borMedOmsorgsperson.sporsmal,
+            borMedOmsorgsperson.svar,
+            { barnetsNavn: navn }
+        ),
+    };
+
     return {
-        harEøsSteg: triggetEøs || søker.triggetEøs,
-        navn: søknadsfeltBarn('pdf.barn.navn.label', sammeVerdiAlleSpråk(navn), barn),
-        ident: søknadsfeltBarn(
-            'pdf.barn.ident.label',
-            ident ? sammeVerdiAlleSpråk(ident) : hentTekster('pdf.barn.ikke-oppgitt'),
-            barn
+        harEøsSteg: triggetEøs || søknad.søker.triggetEøs,
+        navn: søknadsfelt(leggTilBarnModalTekster.barnetsNavnSubtittel, sammeVerdiAlleSpråk(navn)),
+        ident: søknadsfelt(velgBarnTekster.foedselsnummerLabel, sammeVerdiAlleSpråk(ident)),
+        registrertBostedType: søknadsfelt(
+            velgBarnTekster.registrertBostedLabel,
+            sammeVerdiAlleSpråk(registertBostedVerdi())
         ),
-        registrertBostedType: søknadsfeltBarn(
-            'hvilkebarn.barn.bosted',
-            sammeVerdiAlleSpråk(registertBostedVerdi()),
-            barn
-        ),
-        alder: alder ? søknadsfeltBarn('pdf.barn.alder.label', hentTekster('felles.år', { alder }), barn) : null,
-        svalbardOppholdPerioder: svalbardOppholdPerioder.map((svalbardOppholdPeriode, index) =>
-            svalbardOppholdPeriodeTilISøknadsfelt({
-                svalbardOppholdPeriode,
-                periodeNummer: index + 1,
-                tekster: fellesTekster.modaler.svalbardOpphold[PersonType.Barn],
-                tilRestLocaleRecord,
-            })
-        ),
+        alder: alder ? søknadsfelt(velgBarnTekster.alderLabel, sammeVerdiAlleSpråk(alder)) : null,
         utenlandsperioder: utenlandsperioder.map((periode, index) =>
             utenlandsperiodeTilISøknadsfelt({
                 utenlandperiode: periode,
@@ -123,46 +248,15 @@ export const barnISøknadsFormat = (
             })
         ),
         idNummer: idNummer.map(idnummerObj =>
-            idNummerTilISøknadsfelt(
-                idnummerObj,
-                eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.idNummer],
-                eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.idNummerUkjent],
-                valgtSpråk,
-                navn
-            )
+            idNummerTilISøknadsfelt(tilRestLocaleRecord, idnummerObj, tekster.EØS_FOR_BARN.idNummerBarn, navn)
         ),
         andreForelder: andreForelder
-            ? andreForelderTilISøknadsfelt(andreForelder, barn, valgtSpråk, tilRestLocaleRecord, tekster)
+            ? andreForelderTilISøknadsfelt(andreForelder, barn, tilRestLocaleRecord, tekster)
             : null,
 
         omsorgsperson: omsorgsperson
             ? omsorgspersonTilISøknadsfelt(omsorgsperson, barn, tilRestLocaleRecord, tekster)
             : null,
-        spørsmål: {
-            ...spørmålISøknadsFormat(
-                typetBarnSpørsmål,
-                {
-                    navn: navn,
-                    barn: navn,
-                },
-                tekster
-            ),
-            [barnDataKeySpørsmål.institusjonOppholdSluttdato]: søknadsfeltBarn(
-                språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.institusjonOppholdSluttdato),
-                sammeVerdiAlleSpråkEllerUkjentSpråktekst(
-                    institusjonOppholdSluttdato.svar,
-                    omBarnetSpørsmålSpråkId['institusjon-opphold-ukjent-sluttdato']
-                ),
-                barn
-            ),
-            [barnDataKeySpørsmål.adresse]: søknadsfeltBarn(
-                språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.barnetsAdresse),
-                sammeVerdiAlleSpråkEllerUkjentSpråktekst(
-                    adresse.svar,
-                    eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.barnetsAdresseVetIkke]
-                ),
-                barn
-            ),
-        },
+        spørsmål: fjernNullVerdierFraSpørsmål(spørsmål),
     };
 };

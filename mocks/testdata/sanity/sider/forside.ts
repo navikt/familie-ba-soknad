@@ -1,9 +1,5 @@
 import { IForsideTekstinnhold } from '../../../../src/frontend/typer/sanity/tekstInnhold';
-import {
-    lagLocaleRecordString,
-    lagLocaleRecordBlock,
-    lagSanitySpørsmålDokument,
-} from '../lagSanityObjekter';
+import { lagLocaleRecordString, lagLocaleRecordBlock, lagSanitySpørsmålDokument } from '../lagSanityObjekter';
 
 export const forsideTekstinnhold: IForsideTekstinnhold = {
     bekreftelsesboksTittel: lagLocaleRecordString(),

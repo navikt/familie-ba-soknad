@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react';
 
 import { ISøknadKontrakt } from '../../typer/kontrakt/kontrakt';
-import { silenceConsoleErrors, spyOnUseApp, TestProvidereMedEkteTekster } from '../../utils/testing';
+import { silenceConsoleErrors, spyOnUseApp, TestProvidereForSanity } from '../../utils/testing';
 import { erGyldigISøknadKontrakt } from '../../utils/typeguards';
 import { useSendInnSkjema } from '../useSendInnSkjema';
 
@@ -19,7 +19,7 @@ describe('test konvertering fra ISøknad til ISøknadKontrakt', () => {
         const { input: iSøknad } = testdata1;
         spyOnUseApp(iSøknad);
         const { result } = renderHook(() => useSendInnSkjema(), {
-            wrapper: TestProvidereMedEkteTekster,
+            wrapper: TestProvidereForSanity,
         });
 
         const [_, formatert]: [boolean, ISøknadKontrakt] = await result.current.sendInnSkjema();
@@ -29,7 +29,7 @@ describe('test konvertering fra ISøknad til ISøknadKontrakt', () => {
         const { input: iSøknad } = testdata2;
         spyOnUseApp(iSøknad);
         const { result } = renderHook(() => useSendInnSkjema(), {
-            wrapper: TestProvidereMedEkteTekster,
+            wrapper: TestProvidereForSanity,
         });
 
         const [_, formatert]: [boolean, ISøknadKontrakt] = await result.current.sendInnSkjema();
@@ -39,7 +39,7 @@ describe('test konvertering fra ISøknad til ISøknadKontrakt', () => {
         const { input: iSøknad } = testdata3;
         spyOnUseApp(iSøknad);
         const { result } = renderHook(() => useSendInnSkjema(), {
-            wrapper: TestProvidereMedEkteTekster,
+            wrapper: TestProvidereForSanity,
         });
 
         const [_, formatert]: [boolean, ISøknadKontrakt] = await result.current.sendInnSkjema();
@@ -49,7 +49,7 @@ describe('test konvertering fra ISøknad til ISøknadKontrakt', () => {
         const { input: iSøknad } = testdata4;
         spyOnUseApp(iSøknad);
         const { result } = renderHook(() => useSendInnSkjema(), {
-            wrapper: TestProvidereMedEkteTekster,
+            wrapper: TestProvidereForSanity,
         });
 
         const [_, formatert]: [boolean, ISøknadKontrakt] = await result.current.sendInnSkjema();
@@ -59,7 +59,7 @@ describe('test konvertering fra ISøknad til ISøknadKontrakt', () => {
         const { input: iSøknad } = testdata5;
         spyOnUseApp(iSøknad);
         const { result } = renderHook(() => useSendInnSkjema(), {
-            wrapper: TestProvidereMedEkteTekster,
+            wrapper: TestProvidereForSanity,
         });
 
         const [_, formatert]: [boolean, ISøknadKontrakt] = await result.current.sendInnSkjema();

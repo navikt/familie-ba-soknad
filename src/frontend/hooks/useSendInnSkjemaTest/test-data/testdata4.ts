@@ -20,7 +20,6 @@ export const testdata4: TilKontraktTestData = {
                 borMedSøker: false,
                 adressebeskyttelse: true,
                 barnErFyltUt: true,
-                svalbardOppholdPerioder: [],
                 utenlandsperioder: [],
                 andreForelder: null,
                 triggetEøs: true,
@@ -31,6 +30,34 @@ export const testdata4: TilKontraktTestData = {
                 erFosterbarn: {
                     id: 'hvem-er-fosterbarn',
                     svar: 'JA',
+                },
+                pågåendeSøknadFraAnnetEøsLand: {
+                    id: 'andre-forelder-pågående-søknad',
+                    svar: null,
+                },
+                pågåendeSøknadHvilketLand: {
+                    id: 'andre-forelder-pågående-søknad-land',
+                    svar: 'BEL',
+                },
+                mottarEllerMottokEøsBarnetrygd: {
+                    id: 'mottar-eller-mottok-eøs-barnetrygd',
+                    svar: null,
+                },
+                søkersSlektsforhold: {
+                    id: 'søkers-slektsforhold',
+                    svar: null,
+                },
+                søkersSlektsforholdSpesifisering: {
+                    id: 'søkers-slektsforhold-spesifisering',
+                    svar: null,
+                },
+                borMedAndreForelder: {
+                    id: 'bor-med-andre-forelder',
+                    svar: null,
+                },
+                borMedOmsorgsperson: {
+                    id: 'bor-med-omsorgsperson',
+                    svar: null,
                 },
                 erAdoptertFraUtland: {
                     id: 'hvem-er-adoptert-fra-utland',
@@ -104,7 +131,6 @@ export const testdata4: TilKontraktTestData = {
                 harEøsSteg: false,
                 eøsBarnetrygdsperioder: [],
                 idNummer: [],
-                svalbardOppholdPerioder: [],
                 utenlandsperioder: [
                     {
                         utenlandsoppholdÅrsak: {
@@ -143,6 +169,26 @@ export const testdata4: TilKontraktTestData = {
                     pågåendeSøknadHvilketLand: {
                         id: 'andre-forelder-pågående-søknad-land',
                         svar: 'BEL',
+                    },
+                    mottarEllerMottokEøsBarnetrygd: {
+                        id: 'mottar-eller-mottok-eøs-barnetrygd',
+                        svar: null,
+                    },
+                    søkersSlektsforhold: {
+                        id: 'søkers-slektsforhold',
+                        svar: null,
+                    },
+                    søkersSlektsforholdSpesifisering: {
+                        id: 'søkers-slektsforhold-spesifisering',
+                        svar: null,
+                    },
+                    borMedAndreForelder: {
+                        id: 'bor-med-andre-forelder',
+                        svar: null,
+                    },
+                    borMedOmsorgsperson: {
+                        id: 'bor-med-omsorgsperson',
+                        svar: null,
                     },
                     barnetrygdFraEøs: {
                         id: 'andre-forelder-barnetrygd',
@@ -209,6 +255,34 @@ export const testdata4: TilKontraktTestData = {
                     id: 'hvem-er-fosterbarn',
                     svar: 'NEI',
                 },
+                pågåendeSøknadFraAnnetEøsLand: {
+                    id: 'andre-forelder-pågående-søknad',
+                    svar: null,
+                },
+                pågåendeSøknadHvilketLand: {
+                    id: 'andre-forelder-pågående-søknad-land',
+                    svar: 'BEL',
+                },
+                mottarEllerMottokEøsBarnetrygd: {
+                    id: 'mottar-eller-mottok-eøs-barnetrygd',
+                    svar: null,
+                },
+                søkersSlektsforhold: {
+                    id: 'søkers-slektsforhold',
+                    svar: null,
+                },
+                søkersSlektsforholdSpesifisering: {
+                    id: 'søkers-slektsforhold-spesifisering',
+                    svar: null,
+                },
+                borMedAndreForelder: {
+                    id: 'bor-med-andre-forelder',
+                    svar: null,
+                },
+                borMedOmsorgsperson: {
+                    id: 'bor-med-omsorgsperson',
+                    svar: null,
+                },
                 erAdoptertFraUtland: {
                     id: 'hvem-er-adoptert-fra-utland',
                     svar: 'NEI',
@@ -264,10 +338,6 @@ export const testdata4: TilKontraktTestData = {
                 borFastMedSøker: {
                     id: 'bor-barnet-fast-med-deg',
                     svar: 'NEI',
-                },
-                harBoddPåSvalbard: {
-                    id: 'hvem-bodd-på-svalbard',
-                    svar: null,
                 },
             },
         ],
@@ -399,15 +469,10 @@ export const testdata4: TilKontraktTestData = {
                 bostedskommune: null,
                 poststed: 'HAMAR',
             },
-            svalbardOppholdPerioder: [],
             utenlandsperioder: [],
             borPåRegistrertAdresse: {
                 id: 'bor-på-registrert-adresse',
                 svar: 'JA',
-            },
-            borPåSvalbard: {
-                id: 'bor-på-svalbard',
-                svar: null,
             },
             værtINorgeITolvMåneder: {
                 id: 'søker-vært-i-norge-sammenhengende-tolv-måneder',
@@ -463,6 +528,10 @@ export const testdata4: TilKontraktTestData = {
                     harSamboerNå: {
                         id: 'har-samboer-nå-og-gift',
                         svar: 'JA',
+                    },
+                    hattAnnenSamboerForSøktPeriode: {
+                        id: 'har-hatt-annen-samboer-i-perioden',
+                        svar: null,
                     },
                 },
                 tidligereSamboere: [
@@ -537,10 +606,6 @@ export const testdata4: TilKontraktTestData = {
             id: 'er-folkeregistrert-avdød-ektefelle-forelder',
             svar: null,
         },
-        harNoenAvBarnaBoddPåSvalbard: {
-            id: 'har-noen-av-barna-bodd-på-svalbard',
-            svar: null,
-        },
     },
     output: {
         søknadstype: 'UTVIDET',
@@ -605,7 +670,6 @@ export const testdata4: TilKontraktTestData = {
                 },
             },
             adressebeskyttelse: false,
-            svalbardOppholdPerioder: [],
             utenlandsperioder: [],
             idNummer: [
                 {
@@ -680,14 +744,6 @@ export const testdata4: TilKontraktTestData = {
                         nn: 'Bur du på denne adressa?',
                     },
                     verdi: { nb: 'JA', nn: 'JA', en: 'JA' },
-                },
-                borPåSvalbard: {
-                    label: {
-                        en: 'Do you live on Svalbard?',
-                        nb: 'Bor du på Svalbard?',
-                        nn: 'Bur du på Svalbard?',
-                    },
-                    verdi: { nb: null, nn: null, en: null },
                 },
                 værtINorgeITolvMåneder: {
                     label: {
@@ -1083,7 +1139,6 @@ export const testdata4: TilKontraktTestData = {
                     label: { en: 'Age', nb: 'Alder', nn: 'Alder' },
                     verdi: { en: '13 years', nb: '13 år', nn: '13 år' },
                 },
-                svalbardOppholdPerioder: [],
                 utenlandsperioder: [],
                 eøsBarnetrygdsperioder: [],
                 idNummer: [],
@@ -1210,7 +1265,6 @@ export const testdata4: TilKontraktTestData = {
                     label: { en: 'Age', nb: 'Alder', nn: 'Alder' },
                     verdi: { en: '12 years', nb: '12 år', nn: '12 år' },
                 },
-                svalbardOppholdPerioder: [],
                 utenlandsperioder: [
                     {
                         label: {
