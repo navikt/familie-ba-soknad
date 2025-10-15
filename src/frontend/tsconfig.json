@@ -9,6 +9,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
+    "moduleResolution": "Bundler"
   },
   "exclude": ["../../node_modules", "../../dist", "../../build", "../backend", "../webpack", "../vitest.setup.ts"],
   "lib": [
