@@ -8,3 +8,5 @@ dist/
 .DS_Store
 secure.log
 secure1.log
+dist_frontend
+dist_backend
