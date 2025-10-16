@@ -1,15 +1,16 @@
 {
+ "extends": "../../tsconfig.base.json",
   "compilerOptions": {
+    "lib": ["ES2022"],
+
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+
+    "outDir": "../../dist_backend",
+
     "resolveJsonModule": true,
     "noImplicitAny": false,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "target": "ES6",
-    "module": "ESNext",
-    "moduleResolution": "Node",
-    "types": [
-        "vitest/globals",
-        "@testing-library/jest-dom"
-      ],
   }
 }
