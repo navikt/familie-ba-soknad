@@ -1,4 +1,4 @@
-import { modellVersjon } from './modellversjon';
+import { modellVersjon } from './modellversjon.js';
 
 interface MiljøProps {
     sanityDataset: string;
@@ -72,7 +72,7 @@ const miljø = (): MiljøProps => {
             modellVersjon: modellVersjon,
             wonderwallUrl: '',
             oauthCallbackUri: `http://localhost:3000${BASE_PATH}`,
-            port: 55554,
+            port: 8000,
         };
     }
 };

@@ -6,17 +6,17 @@ import express from 'express';
 
 import { logInfo } from '@navikt/familie-logging';
 
-import { cspString } from '../csp';
-import miljø, { BASE_PATH } from '../shared-utils/miljø';
+import { cspString } from '../csp.js';
+import miljø, { BASE_PATH, erDev, erLokalt, erProd } from '../shared-utils/miljø.js';
 
-import { expressToggleInterceptor } from './middlewares/feature-toggles';
-import { konfigurerIndex, konfigurerIndexFallback } from './routes';
-import { konfigurerApi } from './routes/api';
-import { konfigurerAllFeatureTogglesEndpoint } from './routes/feature-toggles';
-import { konfigurerModellVersjonEndpoint } from './routes/modellversjon';
-import { konfigurerNais } from './routes/nais';
-import { konfigurerStatic } from './routes/static';
-import { initializeUnleash } from './utils/unleash';
+import { expressToggleInterceptor } from './middlewares/feature-toggles.js';
+import { konfigurerApi } from './routes/api.js';
+import { konfigurerAllFeatureTogglesEndpoint } from './routes/feature-toggles.js';
+import { konfigurerIndex, konfigurerIndexFallback } from './routes/index.js';
+import { konfigurerModellVersjonEndpoint } from './routes/modellversjon.js';
+import { konfigurerNais } from './routes/nais.js';
+import { konfigurerStatic } from './routes/static.js';
+import { initializeUnleash } from './utils/unleash.js';
 
 dotenv.config();
 
@@ -60,6 +60,9 @@ konfigurerModellVersjonEndpoint(app);
 
 konfigurerIndexFallback(app);
 
+logInfo('erLokalt(): ' + erLokalt());
+logInfo('erDev(): ' + erDev());
+logInfo('erProd(): ' + erProd());
 logInfo(`Starting server on localhost: http://localhost:${miljø().port}${BASE_PATH}`);
 
 app.listen(miljø().port);

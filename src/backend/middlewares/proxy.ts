@@ -6,9 +6,9 @@ import { v4 as uuid } from 'uuid';
 
 import { logError, logSecure } from '@navikt/familie-logging';
 
-import { erLokalt } from '../../shared-utils/miljø';
+import { erLokalt } from '../../shared-utils/miljø.js';
 
-import { AUTHORIZATION_HEADER } from './tokenProxy';
+import { AUTHORIZATION_HEADER } from './tokenProxy.js';
 
 const restream = (proxyReq: ClientRequest, req: Request, _res: Response) => {
     if (req.body) {

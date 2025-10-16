@@ -6,7 +6,7 @@ import { mockDeep } from 'vitest-mock-extended';
 import { LocaleType } from '../../frontend/typer/common';
 import { ISøknadKontrakt } from '../../frontend/typer/kontrakt/kontrakt';
 
-import { erklaeringInterceptor, hentSpråkteksterAlleSpråk } from './erklaering-interceptor';
+import { erklaeringInterceptor, hentSpråkteksterAlleSpråk } from './erklaering-interceptor.js';
 
 describe('erklaering-interceptor', () => {
     const aksepterteSvarSpråkNøkkel = 'forside.bekreftelsesboks.erklæring.spm';
