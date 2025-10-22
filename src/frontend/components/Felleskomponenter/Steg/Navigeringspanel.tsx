@@ -20,7 +20,7 @@ const Navigeringspanel: React.FC<{
 }> = ({ onAvbrytCallback, onTilbakeCallback, valideringErOk }) => {
     const { hentNesteSteg } = useStegContext();
     const nesteSteg = hentNesteSteg();
-    const { innsendingStatus, tekster, plainTekst, mellomlagretVerdi } = useAppContext();
+    const { innsendingStatus, tekster, plainTekst, datoSistLagret } = useAppContext();
     const { valgtLocale } = useSpråkContext();
     const { visStartPåNyttModal, settVisStartPåNyttModal, startPåNytt } = useBekreftelseOgStartSoknad();
 
@@ -31,9 +31,9 @@ const Navigeringspanel: React.FC<{
         <>
             <Box marginBlock="12 0">
                 <VStack gap="4">
-                    {mellomlagretVerdi?.datoSistLagret && (
+                    {datoSistLagret && (
                         <BodyShort as="div" size="small" textColor="subtle">
-                            {plainTekst(sistLagret)} {formaterDatoOgTid(mellomlagretVerdi.datoSistLagret, valgtLocale)}
+                            {plainTekst(sistLagret)} {formaterDatoOgTid(datoSistLagret, valgtLocale)}
                         </BodyShort>
                     )}
                     <HGrid gap={{ xs: '4', sm: '8 4' }} columns={{ xs: 1, sm: 2 }} width={{ sm: 'fit-content' }}>
