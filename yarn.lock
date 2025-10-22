@@ -4349,10 +4349,10 @@ crypto-browserify@^3.12.0:
     randombytes "^2.0.0"
     randomfill "^1.0.3"
 
-csp-header@^6.1.0:
-  version "6.1.0"
-  resolved "https://registry.npmjs.org/csp-header/-/csp-header-6.1.0.tgz#248e36ec8206493103fcdc75233fff222508970a"
-  integrity sha512-vtQIp6C6Pt5vd48fa3wiq3OirDG+Efo3vouLVEeJSJVe+LdpAFZw/IxV77BsDTMtVwzVT78xJ4zRykJoDx+ZeA==
+csp-header@^6.2.0:
+  version "6.2.0"
+  resolved "https://registry.npmjs.org/csp-header/-/csp-header-6.2.0.tgz#0a29c87ee65b4cbc54339f1f20d41d15bece6cb9"
+  integrity sha512-5r/zQO0nz6MGFOQWYXYGlAn2oH71D0sRpxN/F8wDHhHnHBx0N73VGLvkeXST7t/MrjC97QrsL45qZ3hsDwhTgw==
 
 css-color-keywords@^1.0.0:
   version "1.0.0"
@@ -8949,10 +8949,10 @@ queue-microtask@^1.2.2:
   resolved "https://registry.npmjs.org/queue-microtask/-/queue-microtask-1.2.3.tgz#4929228bbc724dfac43e0efb058caf7b6cfb6243"
   integrity sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==
 
-ramda@^0.31.3:
-  version "0.31.3"
-  resolved "https://registry.npmjs.org/ramda/-/ramda-0.31.3.tgz#0f54199ec99a7bd6702277d28d6bf7f93b916bb9"
-  integrity sha512-xKADKRNnqmDdX59PPKLm3gGmk1ZgNnj3k7DryqWwkamp4TJ6B36DdpyKEQ0EoEYmH2R62bV4Q+S0ym2z8N2f3Q==
+ramda@^0.32.0:
+  version "0.32.0"
+  resolved "https://registry.npmjs.org/ramda/-/ramda-0.32.0.tgz#b2116807b59b6b177af7a2ad19b14a3653570e96"
+  integrity sha512-GQWAHhxhxWBWA8oIBr1XahFVjQ9Fic6MK9ikijfd4TZHfE2+urfk+irVlR5VOn48uwMgM+loRRBJd6Yjsbc0zQ==
 
 randombytes@^2.0.0, randombytes@^2.0.1, randombytes@^2.0.5, randombytes@^2.1.0:
   version "2.1.0"
@@ -9086,10 +9086,10 @@ react-is@^17.0.1:
   resolved "https://registry.npmjs.org/react-is/-/react-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
 
-react-is@^19.1.0:
-  version "19.1.0"
-  resolved "https://registry.npmjs.org/react-is/-/react-is-19.1.0.tgz#805bce321546b7e14c084989c77022351bbdd11b"
-  integrity sha512-Oe56aUPnkHyyDxxkvqtd7KkdQP5uIUfHxd5XTb3wE9d/kRnZLmKbDB0GWk919tdQ+mxxPtG6EAs6RMT6i1qtHg==
+react-is@^19.2.0:
+  version "19.2.0"
+  resolved "https://registry.npmjs.org/react-is/-/react-is-19.2.0.tgz#ddc3b4a4e0f3336c3847f18b806506388d7b9973"
+  integrity sha512-x3Ax3kNSMIIkyVYhWPyO09bu0uttcAIoecO/um/rKGQ4EltYWVYtyiGkS/3xMynrbVQdS69Jhlv8FXUEZehlzA==
 
 react-property@2.0.2:
   version "2.0.2"
@@ -9100,6 +9100,11 @@ react-refresh@^0.17.0:
   version "0.17.0"
   resolved "https://registry.npmjs.org/react-refresh/-/react-refresh-0.17.0.tgz#b7e579c3657f23d04eccbe4ad2e58a8ed51e7e53"
   integrity sha512-z6F7K9bV85EfseRCp2bzrpyQ0Gkw1uLoCel9XBVWPg/TjRj94SkJzUTGfOa4bs7iJvBWtQG0Wq7wnI0syw3EBQ==
+
+react-refresh@^0.18.0:
+  version "0.18.0"
+  resolved "https://registry.npmjs.org/react-refresh/-/react-refresh-0.18.0.tgz#2dce97f4fe932a4d8142fa1630e475c1729c8062"
+  integrity sha512-QgT5//D3jfjJb6Gsjxv0Slpj23ip+HtOpnNgnb2S5zU3CB26G/IDPGoy4RJB42wzFE46DRsstbW6tKHoKbhAxw==
 
 react-router@^7.9.1:
   version "7.9.1"
