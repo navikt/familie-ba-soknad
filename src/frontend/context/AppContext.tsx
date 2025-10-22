@@ -169,6 +169,7 @@ export function AppProvider(props: PropsWithChildren) {
             modellVersjon: miljø().modellVersjon,
             sisteUtfylteStegIndex: sisteUtfylteStegIndex,
             locale: valgtLocale,
+            datoSistLagret: new Date().toISOString(),
         };
         axiosRequest<IMellomlagretBarnetrygd, IMellomlagretBarnetrygd>({
             url: `${miljø().dokumentProxyUrl}/soknad/barnetrygd`,
