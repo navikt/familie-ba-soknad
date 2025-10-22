@@ -24,7 +24,7 @@ const Navigeringspanel: React.FC<{
     const { valgtLocale } = useSpråkContext();
     const { visStartPåNyttModal, settVisStartPåNyttModal, startPåNytt } = useBekreftelseOgStartSoknad();
 
-    const { sendSoeknadKnapp, gaaVidereKnapp, tilbakeKnapp, fortsettSenereKnapp, slettSoeknadKnapp } =
+    const { sistLagret, sendSoeknadKnapp, gaaVidereKnapp, tilbakeKnapp, fortsettSenereKnapp, slettSoeknadKnapp } =
         tekster().FELLES.navigasjon;
 
     return (
@@ -33,7 +33,7 @@ const Navigeringspanel: React.FC<{
                 <VStack gap="4">
                     {mellomlagretVerdi?.datoSistLagret && (
                         <BodyShort as="div" size="small" textColor="subtle">
-                            Sist lagret: {formaterDatoOgTid(mellomlagretVerdi.datoSistLagret, valgtLocale)}
+                            {plainTekst(sistLagret)} {formaterDatoOgTid(mellomlagretVerdi.datoSistLagret, valgtLocale)}
                         </BodyShort>
                     )}
                     <HGrid gap={{ xs: '4', sm: '8 4' }} columns={{ xs: 1, sm: 2 }} width={{ sm: 'fit-content' }}>
