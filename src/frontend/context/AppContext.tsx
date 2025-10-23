@@ -167,13 +167,12 @@ export function AppProvider(props: PropsWithChildren) {
     }, [innloggetStatus]);
 
     const mellomlagre = () => {
-        const nåværendeDato = new Date().toISOString();
         const barnetrygd: IMellomlagretBarnetrygd = {
             søknad: søknad,
             modellVersjon: miljø().modellVersjon,
             sisteUtfylteStegIndex: sisteUtfylteStegIndex,
             locale: valgtLocale,
-            datoSistLagret: nåværendeDato,
+            datoSistLagret: new Date().toISOString(),
         };
         axiosRequest<IMellomlagretBarnetrygd, IMellomlagretBarnetrygd>({
             url: `${miljø().dokumentProxyUrl}/soknad/barnetrygd`,
@@ -185,7 +184,7 @@ export function AppProvider(props: PropsWithChildren) {
             // do nothing
         });
         settMellomlagretVerdi(barnetrygd);
-        settDatoSistLagret(nåværendeDato);
+        settDatoSistLagret(barnetrygd.datoSistLagret);
     };
 
     const {
