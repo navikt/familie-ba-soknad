@@ -6,4 +6,5 @@ export interface IMellomlagretBarnetrygd {
     sisteUtfylteStegIndex: number;
     modellVersjon: number;
     locale: LocaleType;
+    datoSistLagret: string;
 }
