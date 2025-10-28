@@ -20,6 +20,4 @@ export const omBarnaTekstinnhold: IOmBarnaTekstinnhold = {
     folkeregistrertEnkeEnkemann: lagSanitySpørsmålDokument(),
     folkeregistrertGjenlevende: lagSanitySpørsmålDokument(),
     hvemAvBarnaAvdoedPartner: lagSanitySpørsmålDokument(),
-    boddPaaSvalbard: lagSanitySpørsmålDokument(),
-    hvemBoddPaaSvalbard: lagSanitySpørsmålDokument(),
 };

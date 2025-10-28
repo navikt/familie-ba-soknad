@@ -6,7 +6,6 @@ export interface IOmDegTekstinnhold {
     navn: LocaleRecordString;
     skjermetAdresse: LocaleRecordString;
     borPaaRegistrertAdresse: ISanitySpørsmålDokument;
-    borPaaSvalbard: ISanitySpørsmålDokument;
     vaertINorgeITolvMaaneder: ISanitySpørsmålDokument;
     planleggerAaBoINorgeTolvMnd: ISanitySpørsmålDokument;
     adresse: LocaleRecordString;

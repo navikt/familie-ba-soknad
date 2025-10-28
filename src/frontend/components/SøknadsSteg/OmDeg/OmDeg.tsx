@@ -15,7 +15,6 @@ import PerioderContainer from '../../Felleskomponenter/PerioderContainer';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
 import Steg from '../../Felleskomponenter/Steg/Steg';
-import { SvalbardOppholdPeriode } from '../../Felleskomponenter/SvalbardOppholdModal.tsx/SvalbardOppholdPeriode';
 import { UtenlandsoppholdSpørsmålId } from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 import { UtenlandsoppholdModal } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsoppholdModal';
 import { UtenlandsperiodeOppsummering } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsperiodeOppsummering';
@@ -37,8 +36,6 @@ const OmDeg: React.FC = () => {
         validerFelterOgVisFeilmelding,
         valideringErOk,
         oppdaterSøknad,
-        leggTilSvalbardOppholdPeriode,
-        fjernSvalbardOppholdPeriode,
         leggTilUtenlandsperiode,
         fjernUtenlandsperiode,
         utenlandsperioder,
@@ -52,7 +49,6 @@ const OmDeg: React.FC = () => {
         omDegTittel,
         omDegGuide,
         borPaaRegistrertAdresse,
-        borPaaSvalbard,
         vaertINorgeITolvMaaneder,
         planleggerAaBoINorgeTolvMnd,
         personopplysningerAlert,
@@ -84,20 +80,6 @@ const OmDeg: React.FC = () => {
                     </Alert>
                 )}
             </KomponentGruppe>
-            {skjema.felter.borPåSvalbard.erSynlig && (
-                <KomponentGruppe>
-                    <JaNeiSpm skjema={skjema} felt={skjema.felter.borPåSvalbard} spørsmålDokument={borPaaSvalbard} />
-                    {skjema.felter.borPåSvalbard.verdi === ESvar.JA && (
-                        <SvalbardOppholdPeriode
-                            skjema={skjema}
-                            leggTilSvalbardOppholdPeriode={leggTilSvalbardOppholdPeriode}
-                            fjernSvalbardOppholdPeriode={fjernSvalbardOppholdPeriode}
-                            registrerteSvalbardOppholdPerioder={skjema.felter.registrerteSvalbardOppholdPerioder}
-                            personType={PersonType.Søker}
-                        />
-                    )}
-                </KomponentGruppe>
-            )}
             <KomponentGruppe>
                 <JaNeiSpm
                     skjema={skjema}
