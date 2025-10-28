@@ -60,6 +60,7 @@ export const initSentry = () => {
         integrations: [Sentry.browserSessionIntegration()],
         denyUrls: [
             // Chrome extensions
+            /chrome-extension:\/\//i,
             /extensions\//i,
             /^chrome:\/\//i,
             // Safari extensions
