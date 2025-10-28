@@ -76,7 +76,7 @@ export const søkerIKontraktFormat = (
 
     const spørsmål: SpørsmålMapMedNullVerdier = {
         // ordinær
-        borPåRegistrertAdresse: søknadsfeltForESvar(
+        borPåRegistrertAdresse: nullableSøknadsfeltForESvar(
             omDegTekster.borPaaRegistrertAdresse.sporsmal,
             borPåRegistrertAdresse.svar
         ),
