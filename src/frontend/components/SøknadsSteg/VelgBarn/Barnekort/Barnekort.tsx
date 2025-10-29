@@ -91,24 +91,21 @@ const Barnekort: React.FC<IBarnekortProps> = ({ barn, velgBarnCallback, barnSomS
                     {barn.adressebeskyttelse ? <TekstBlock block={navnErstatterForAdressesperre} /> : barn.navn}
                 </Heading>
                 <HGrid gap="6" columns={{ sm: 1, md: '2fr 1fr 3fr' }}>
-                    <BarnekortInfo label={<TekstBlock block={foedselsnummerLabel} />} verdi={fødselsnummerTekst} />
+                    <BarnekortInfo label={plainTekst(foedselsnummerLabel)} verdi={fødselsnummerTekst} />
                     {barn.alder && ( // Barn med undefined fødselsdato i pdl eller som søker har lagt inn selv har alder -null-
-                        <BarnekortInfo
-                            label={<TekstBlock block={alderLabel} />}
-                            verdi={`${barn.alder} ${plainTekst(aar)}`}
-                        />
+                        <BarnekortInfo label={plainTekst(alderLabel)} verdi={`${barn.alder} ${plainTekst(aar)}`} />
                     )}
                     {!erRegistrertManuelt && (
                         <BarnekortInfo
-                            label={<TekstBlock block={registrertBostedLabel} />}
+                            label={plainTekst(registrertBostedLabel)}
                             verdi={
-                                <div
+                                <span
                                     data-testid={
                                         barn.adressebeskyttelse ? 'registrert-bosted-adressesperre' : undefined
                                     }
                                 >
-                                    <TekstBlock block={hentBostedSpråkId(barn, teksterForSteg)} />
-                                </div>
+                                    {plainTekst(hentBostedSpråkId(barn, teksterForSteg))}
+                                </span>
                             }
                         />
                     )}
