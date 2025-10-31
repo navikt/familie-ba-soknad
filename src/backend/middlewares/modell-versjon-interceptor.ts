@@ -1,5 +1,6 @@
 import { RequestHandler } from 'express';
 
+import { logInfo } from '@navikt/familie-logging';
 import { type ApiRessurs, RessursStatus } from '@navikt/familie-typer';
 
 import {
@@ -19,6 +20,10 @@ export const modellVersjonInterceptor: RequestHandler = (req, res, next) => {
             stacktrace: '',
             status: RessursStatus.FEILET,
         };
+        const callId = req.headers['nav-call-id'] ?? req.headers['x-correlation-id'];
+        logInfo(
+            `Utdatert modellVersjon. Nåværende: ${modellVersjon}, versjon i request: ${requestModellVersjon}. CallID: ${callId}`
+        );
         res.status(403).send(responsBody);
     } else {
         next();
