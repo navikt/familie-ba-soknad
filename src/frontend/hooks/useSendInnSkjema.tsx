@@ -44,13 +44,16 @@ export const useSendInnSkjema = (): {
                 formatert,
                 axiosRequest,
                 `${soknadApiProxyUrl}/soknad/v${kontraktVersjon}`,
-                (res: AxiosError) => {
-                    const responseData = res.response?.data;
+                (error: AxiosError) => {
+                    const responseData = error.response?.data;
                     if (responseData && erModellMismatchResponsRessurs(responseData)) {
                         settSisteModellVersjon(responseData.data.modellVersjon);
                     } else {
                         //Denne skal feile mykt, med en custom feilmelding til brukeren. Kaster dermed ingen feil her.
-                        Sentry.captureException(new Error('Klarte ikke sende inn søknaden', { cause: res.message }));
+                        Sentry.captureException(new Error('Klarte ikke sende inn søknaden', { cause: error.message }));
+                        if (error) {
+                            Sentry.captureException(error);
+                        }
                     }
                 }
             );
