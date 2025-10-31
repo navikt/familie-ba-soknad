@@ -51,7 +51,9 @@ export const useSendInnSkjema = (): {
                     } else {
                         //Denne skal feile mykt, med en custom feilmelding til brukeren. Kaster dermed ingen feil her.
                         Sentry.captureException(new Error('Klarte ikke sende inn søknaden', { cause: error.message }));
-                        Sentry.captureException(error);
+                        if (error) {
+                            Sentry.captureException(error);
+                        }
                     }
                 }
             );
