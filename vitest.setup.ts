@@ -1,6 +1,5 @@
 import '@testing-library/jest-dom/vitest';
 import { cleanup } from '@testing-library/react';
-
 import { afterAll, afterEach, beforeAll, vi } from 'vitest';
 
 import { server } from './mocks/node.js';
@@ -24,4 +23,9 @@ vi.mock('@navikt/nav-dekoratoren-moduler', () => ({
     onLanguageSelect: vi.fn(),
     getCurrentConsent: vi.fn(),
     setParams: vi.fn().mockResolvedValue(undefined),
+}));
+
+vi.mock('@navikt/familie-logging', () => ({
+    logInfo: vi.fn(),
+    logError: vi.fn(),
 }));
