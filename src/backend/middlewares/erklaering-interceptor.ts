@@ -28,6 +28,6 @@ export const erklaeringInterceptor: RequestHandler = (request: Request, response
     if (søknad.lestOgForståttBekreftelse) {
         next();
     } else {
-        response.status(403).send(byggFeiletRessurs('Du må huke av for at du oppgir korrekte opplysninger'));
+        response.status(400).send(byggFeiletRessurs('Du må huke av for at du oppgir korrekte opplysninger'));
     }
 };

@@ -48,13 +48,13 @@ describe('erklaering-interceptor', () => {
         });
     });
 
-    it('Sender 403 hvis søker ikke har erklært riktig informasjon', () => {
+    it('Sender 400 hvis søker ikke har erklært riktig informasjon', () => {
         const reqData = {
             lestOgForståttBekreftelse: false,
         };
         erklaeringInterceptor(request(reqData), response, next);
         expect(next).not.toHaveBeenCalled();
-        expect(response.status).toHaveBeenCalledWith(403);
+        expect(response.status).toHaveBeenCalledWith(400);
         expect(response.send).toHaveBeenCalled();
     });
 
