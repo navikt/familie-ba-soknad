@@ -43,6 +43,8 @@ describe('erklaering-interceptor', () => {
             expect(next).not.toHaveBeenCalled();
             expect(response.status).toHaveBeenCalledWith(400);
             expect(response.send).toHaveBeenCalled();
+            const payload = response.send.mock.calls[0][0];
+            expect(payload.frontendFeilmelding).toBe('Ugyldig søknadformat');
             response.send.mockReset();
             response.status.mockReset().mockReturnThis();
         });
@@ -56,6 +58,8 @@ describe('erklaering-interceptor', () => {
         expect(next).not.toHaveBeenCalled();
         expect(response.status).toHaveBeenCalledWith(400);
         expect(response.send).toHaveBeenCalled();
+        const payload = response.send.mock.calls[0][0];
+        expect(payload.frontendFeilmelding).toBe('Du må huke av for at du oppgir korrekte opplysninger');
     });
 
     it('Sender videre til neste handler hvis søker har erklært riktig informasjon på noe språk', () => {

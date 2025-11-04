@@ -12,7 +12,6 @@ import { IDokumentasjon, IVedlegg } from '../../../typer/dokumentasjon';
 import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
 import { ESanitySteg, Typografi } from '../../../typer/sanity/sanity';
 import { hentRelevateDokumentasjoner } from '../../../utils/dokumentasjon';
-import { Feilside } from '../../Felleskomponenter/Feilside/Feilside';
 import PictureScanningGuide from '../../Felleskomponenter/PictureScanningGuide/PictureScanningGuide';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import Steg from '../../Felleskomponenter/Steg/Steg';
@@ -146,7 +145,11 @@ const Dokumentasjon: React.FC = () => {
                         oppdaterDokumentasjon={oppdaterDokumentasjon}
                     />
                 ))}
-                {innsendingStatus.status === RessursStatus.FEILET && <Feilside />}
+                {innsendingStatus.status === RessursStatus.FEILET && (
+                    <Alert variant="error" role="alert">
+                        {innsendingStatus.frontendFeilmelding}
+                    </Alert>
+                )}
             </VStack>
         </Steg>
     );
