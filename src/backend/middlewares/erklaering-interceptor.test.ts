@@ -50,9 +50,7 @@ describe('erklaering-interceptor', () => {
 
     it('Sender 403 hvis søker ikke har erklært riktig informasjon', () => {
         const reqData = {
-            spørsmål: {
-                lestOgForståttBekreftelse: { label: { nb: 'test' }, verdi: { nb: 'NEI' } },
-            },
+            lestOgForståttBekreftelse: false,
         };
         erklaeringInterceptor(request(reqData), response, next);
         expect(next).not.toHaveBeenCalled();
@@ -61,24 +59,14 @@ describe('erklaering-interceptor', () => {
     });
 
     it('Sender videre til neste handler hvis søker har erklært riktig informasjon på noe språk', () => {
-        const aksepterteSvar = hentSpråkteksterAlleSpråk(aksepterteSvarSpråkNøkkel);
-
-        Object.entries(aksepterteSvar).forEach(([locale, answer]) => {
-            const reqData = {
-                spørsmål: {
-                    lestOgForståttBekreftelse: {
-                        label: { [locale]: 'test' },
-                        verdi: { [locale]: answer },
-                    },
-                },
-                originalSpråk: locale as LocaleType,
-            };
-            erklaeringInterceptor(request(reqData), response, next);
-            expect(response.status).not.toHaveBeenCalled();
-            expect(response.send).not.toHaveBeenCalled();
-            expect(next).toHaveBeenCalled();
-            next.mockReset();
-        });
+        const reqData = {
+            lestOgForståttBekreftelse: true,
+        };
+        erklaeringInterceptor(request(reqData), response, next);
+        expect(response.status).not.toHaveBeenCalled();
+        expect(response.send).not.toHaveBeenCalled();
+        expect(next).toHaveBeenCalled();
+        next.mockReset();
     });
 
     it('Kan hente bekreftelsestekst for alle språk', () => {
