@@ -2,8 +2,8 @@ import React, { createContext, PropsWithChildren, useContext, useEffect, useStat
 
 import { RessursStatus } from '@navikt/familie-typer';
 
-import miljø from '../../shared-utils/miljø';
 import { autentiseringsInterceptor, InnloggetStatus } from '../utils/autentisering';
+import { soknadApiProxyUrl } from '../utils/miljø';
 
 import { useLastRessurserContext } from './LastRessurserContext';
 
@@ -17,8 +17,6 @@ export function InnloggetProvider(props: PropsWithChildren) {
     const { axiosRequest } = useLastRessurserContext();
 
     const [innloggetStatus, settInnloggetStatus] = useState<InnloggetStatus>(InnloggetStatus.IKKE_VERIFISERT);
-
-    const { soknadApiProxyUrl } = miljø();
 
     autentiseringsInterceptor();
 

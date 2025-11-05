@@ -5,10 +5,10 @@ import { Alpha3Code } from 'i18n-iso-countries';
 import { ESvar } from '@navikt/familie-form-elements';
 import { byggHenterRessurs, hentDataFraRessurs } from '@navikt/familie-typer';
 
-import miljø from '../../shared-utils/miljø';
 import { barnDataKeySpørsmål, IBarnMedISøknad } from '../typer/barn';
 import { BarnetsId } from '../typer/common';
 import { ISøker } from '../typer/person';
+import { soknadApiProxyUrl } from '../utils/miljø';
 
 import { useAppContext } from './AppContext';
 import { useLastRessurserContext } from './LastRessurserContext';
@@ -33,8 +33,6 @@ export function EøsProvider(props: PropsWithChildren) {
     const [barnSomTriggerEøs, settBarnSomTriggerEøs] = useState<BarnetsId[]>(
         søknad.barnInkludertISøknaden.filter(barn => barn.triggetEøs).map(barn => barn.id)
     );
-
-    const { soknadApiProxyUrl } = miljø();
 
     useEffect(() => {
         settEøsLand(byggHenterRessurs());

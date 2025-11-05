@@ -6,10 +6,10 @@ import express from 'express';
 
 import { logInfo } from '@navikt/familie-logging';
 
-import { cspString } from '../csp.js';
-import miljø, { BASE_PATH, erDev, erLokalt, erProd } from '../shared-utils/miljø.js';
+import { BASE_PATH } from '../shared-utils/miljø.js';
 
 import { cspString } from './csp.js';
+import { envVar, erPreprod, erLokalt, erProd } from './env.js';
 import { expressToggleInterceptor } from './middlewares/feature-toggles.js';
 import { konfigurerApi } from './routes/api.js';
 import { konfigurerAllFeatureTogglesEndpoint } from './routes/feature-toggles.js';
@@ -62,8 +62,8 @@ konfigurerModellVersjonEndpoint(app);
 konfigurerIndexFallback(app);
 
 logInfo('erLokalt(): ' + erLokalt());
-logInfo('erDev(): ' + erDev());
+logInfo('erDev(): ' + erPreprod());
 logInfo('erProd(): ' + erProd());
-logInfo(`Starting server on localhost: http://localhost:${miljø().port}${BASE_PATH}`);
+logInfo(`Starting server on localhost: http://localhost:${envVar('PORT')}${BASE_PATH}`);
 
-app.listen(miljø().port);
+app.listen(envVar('PORT'));

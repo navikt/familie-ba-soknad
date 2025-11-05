@@ -12,7 +12,8 @@ import {
     RessursStatus,
 } from '@navikt/familie-typer';
 
-import miljø, { BASE_PATH } from '../../shared-utils/miljø';
+import { BASE_PATH } from '../../shared-utils/miljø';
+import { modellVersjon } from '../../shared-utils/modellversjon';
 import { DinLivssituasjonSpørsmålId } from '../components/SøknadsSteg/DinLivssituasjon/spørsmål';
 import { useDebounce } from '../hooks/useDebounce/useDebounce';
 import { LocaleType } from '../typer/common';
@@ -27,6 +28,7 @@ import { ITekstinnhold } from '../typer/sanity/tekstInnhold';
 import { initialStateSøknad, ISøknad } from '../typer/søknad';
 import { InnloggetStatus } from '../utils/autentisering';
 import { mapBarnResponsTilBarn } from '../utils/barn';
+import { dokumentProxyUrl, soknadApiProxyUrl } from '../utils/miljø';
 import { plainTekstHof } from '../utils/sanity';
 
 import { preferredAxios } from './axios';
@@ -91,7 +93,6 @@ export function AppProvider(props: PropsWithChildren) {
     const [mellomlagretVerdi, settMellomlagretVerdi] = useState<IMellomlagretBarnetrygd>();
     const [fåttGyldigKvittering, settFåttGyldigKvittering] = useState(false);
     const [nåværendeRoute, settNåværendeRoute] = useState<RouteEnum | undefined>(undefined);
-    const { modellVersjon } = miljø();
     const [sisteModellVersjon, settSisteModellVersjon] = useState(modellVersjon);
     const modellVersjonOppdatert = sisteModellVersjon > modellVersjon;
 
@@ -166,12 +167,12 @@ export function AppProvider(props: PropsWithChildren) {
     const mellomlagre = () => {
         const barnetrygd: IMellomlagretBarnetrygd = {
             søknad: søknad,
-            modellVersjon: miljø().modellVersjon,
+            modellVersjon: modellVersjon,
             sisteUtfylteStegIndex: sisteUtfylteStegIndex,
             locale: valgtLocale,
         };
         axiosRequest<IMellomlagretBarnetrygd, IMellomlagretBarnetrygd>({
-            url: `${miljø().dokumentProxyUrl}/soknad/barnetrygd`,
+            url: `${dokumentProxyUrl}/soknad/barnetrygd`,
             method: 'post',
             withCredentials: true,
             påvirkerSystemLaster: false,
@@ -195,7 +196,7 @@ export function AppProvider(props: PropsWithChildren) {
 
     const hentOgSettMellomlagretData = () => {
         preferredAxios
-            .get(`${miljø().dokumentProxyUrl}/soknad/barnetrygd`, {
+            .get(`${dokumentProxyUrl}/soknad/barnetrygd`, {
                 withCredentials: true,
             })
             .then((response: { data?: IMellomlagretBarnetrygd }) => {
@@ -217,7 +218,7 @@ export function AppProvider(props: PropsWithChildren) {
 
     const nullstillMellomlagretVerdi = () => {
         axiosRequest<void, void>({
-            url: `${miljø().dokumentProxyUrl}/soknad/barnetrygd`,
+            url: `${dokumentProxyUrl}/soknad/barnetrygd`,
             method: 'delete',
             withCredentials: true,
             påvirkerSystemLaster: false,
@@ -227,7 +228,7 @@ export function AppProvider(props: PropsWithChildren) {
 
     const hentOgSettKontoinformasjon = () => {
         preferredAxios
-            .get(`${miljø().soknadApiProxyUrl}/kontoregister/hent-kontonr`, {
+            .get(`${soknadApiProxyUrl}/kontoregister/hent-kontonr`, {
                 withCredentials: true,
             })
             .then((response: { data?: Ressurs<IKontoinformasjon> }) => {

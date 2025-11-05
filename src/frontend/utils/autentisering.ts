@@ -1,13 +1,13 @@
 import { AxiosError } from 'axios';
 
-import miljø from '../../shared-utils/miljø';
 import { preferredAxios as axios } from '../context/axios';
 
 import { routerBasePath } from './hjelpefunksjoner';
+import { wonderwallUrl } from './miljø';
 
 const er401Feil = (error: AxiosError) => error && error.response && error.response.status === 401;
 const getLoginUrl = () => {
-    return `${miljø().wonderwallUrl}${window.location.origin}${routerBasePath()}`;
+    return `${wonderwallUrl}${window.location.origin}${routerBasePath()}`;
 };
 
 export enum InnloggetStatus {

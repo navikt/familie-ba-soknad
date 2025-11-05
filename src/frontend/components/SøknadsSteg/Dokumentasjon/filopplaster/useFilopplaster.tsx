@@ -4,10 +4,10 @@ import axios from 'axios';
 
 import { type FileAccepted, type FileObject, type FileRejected, type FileRejectionReason } from '@navikt/ds-react';
 
-import miljø from '../../../../../shared-utils/miljø';
 import { EFiltyper, IDokumentasjon, IVedlegg } from '../../../../typer/dokumentasjon';
 import { Dokumentasjonsbehov } from '../../../../typer/kontrakt/dokumentasjon';
 import { PlainTekst } from '../../../../typer/sanity/sanity';
+import { dokumentProxyUrl } from '../../../../utils/miljø';
 import { IDokumentasjonTekstinnhold } from '../innholdTyper';
 
 interface OpplastetVedlegg {
@@ -136,7 +136,7 @@ export const useFilopplaster = (
                     requestData.append('file', fil.file);
 
                     return axios
-                        .post<OpplastetVedlegg>(`${miljø().dokumentProxyUrl}/mapper/familievedlegg`, requestData, {
+                        .post<OpplastetVedlegg>(`${dokumentProxyUrl}/mapper/familievedlegg`, requestData, {
                             withCredentials: true,
                             headers: {
                                 'content-type': 'multipart/form-data',

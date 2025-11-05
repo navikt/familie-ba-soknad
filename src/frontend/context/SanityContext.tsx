@@ -4,7 +4,6 @@ import { createClient } from '@sanity/client';
 
 import { byggHenterRessurs, byggTomRessurs, type Ressurs, RessursStatus } from '@navikt/familie-typer';
 
-import miljø from '../../shared-utils/miljø';
 import { SanityDokument } from '../typer/sanity/sanity';
 import { ITekstinnhold } from '../typer/sanity/tekstInnhold';
 import { transformerTilTekstinnhold } from '../utils/sanity';
@@ -24,7 +23,7 @@ export function SanityProvider(props: PropsWithChildren) {
 
     const sanityKlient = createClient({
         projectId: 'by26nl8j',
-        dataset: miljø().sanityDataset,
+        dataset: 'ba-production',
         apiVersion: '2021-10-21',
         useCdn: true,
     });

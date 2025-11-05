@@ -1,6 +1,6 @@
 import { getWebInstrumentations, initializeFaro } from '@grafana/faro-web-sdk';
 
-import { erDev, erProd } from '../../shared-utils/miljø';
+import { erPreprod, erProd } from './miljø';
 
 enum TelemetryCollectorURL {
     prod = 'https://telemetry.nav.no/collect',
@@ -13,7 +13,7 @@ const getTelemetryCollectorURL = (): TelemetryCollectorURL => {
         return TelemetryCollectorURL.prod;
     }
 
-    if (erDev()) {
+    if (erPreprod()) {
         return TelemetryCollectorURL.dev;
     }
 
@@ -21,7 +21,7 @@ const getTelemetryCollectorURL = (): TelemetryCollectorURL => {
 };
 
 export function initGrafanaFaro() {
-    if (erDev() || erProd()) {
+    if (erPreprod() || erProd()) {
         initializeFaro({
             isolate: true,
             url: getTelemetryCollectorURL(),
