@@ -9,6 +9,7 @@ import { logInfo } from '@navikt/familie-logging';
 import { cspString } from '../csp.js';
 import miljø, { BASE_PATH, erDev, erLokalt, erProd } from '../shared-utils/miljø.js';
 
+import { cspString } from './csp.js';
 import { expressToggleInterceptor } from './middlewares/feature-toggles.js';
 import { konfigurerApi } from './routes/api.js';
 import { konfigurerAllFeatureTogglesEndpoint } from './routes/feature-toggles.js';
