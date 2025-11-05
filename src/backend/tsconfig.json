@@ -1,16 +1,15 @@
 {
- "extends": "../../tsconfig.base.json",
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
+    /* Language and Environment */
     "lib": ["ES2022"],
 
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-
+    /* Emit */
+    "importHelpers": true, // tslib dependency påkrevd
     "outDir": "../../dist_backend",
 
-    "resolveJsonModule": true,
-    "noImplicitAny": false,
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
+    /* Modules */
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext"
   }
 }

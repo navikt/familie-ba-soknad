@@ -1,32 +1,32 @@
 {
   "compilerOptions": {
+    /* Language and Environment */
     "target": "ES2022",
+    "useDefineForClassFields": true,
 
-    "resolveJsonModule": true,
-    "importHelpers": true,
-    "declaration": true,
-    "sourceMap": true,
-    "strict": true,
-    "noImplicitAny": false,
-    "strictNullChecks": true,
-    "strictFunctionTypes": true,
-    "strictPropertyInitialization": true,
-    "noImplicitThis": true,
-    "alwaysStrict": true,
-    "noImplicitReturns": false,
-    "noFallthroughCasesInSwitch": true,
-    "traceResolution": false,
-    "jsx": "react",
+    /* Interop Constraints */
     "esModuleInterop": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": false,
+    "allowSyntheticDefaultImports": true,
+
+    /* Modules */
+    "resolveJsonModule": true,
     "types": [
+      "vite/client",
       "vitest/globals",
       "@testing-library/jest-dom"
     ],
+
+    /* Type Checking */
+    "strict": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": false,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitAny": false, // Burde skrus av og korrigere feil.
+
+    /* Completeness */
+    "skipLibCheck": true,
   },
-  "exclude": [
-    "./src/**/*.test.tsx",
-    "./src/**/*.test.ts",
-    "./src/**/*.test.jsx",
-    "./src/**/*.test.js"
-  ]
 }
