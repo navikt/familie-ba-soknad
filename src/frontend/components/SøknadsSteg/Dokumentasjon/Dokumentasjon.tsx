@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { add, isBefore } from 'date-fns';
 
-import { Alert, BodyShort, Heading, VStack } from '@navikt/ds-react';
+import { Alert, BodyShort, Heading, Link, VStack } from '@navikt/ds-react';
 import { RessursStatus } from '@navikt/familie-typer';
 
 import { useAppContext } from '../../../context/AppContext';
@@ -12,6 +12,7 @@ import { IDokumentasjon, IVedlegg } from '../../../typer/dokumentasjon';
 import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
 import { ESanitySteg, Typografi } from '../../../typer/sanity/sanity';
 import { hentRelevateDokumentasjoner } from '../../../utils/dokumentasjon';
+import { Feilside } from '../../Felleskomponenter/Feilside/Feilside';
 import PictureScanningGuide from '../../Felleskomponenter/PictureScanningGuide/PictureScanningGuide';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import Steg from '../../Felleskomponenter/Steg/Steg';
@@ -147,7 +148,15 @@ const Dokumentasjon: React.FC = () => {
                 ))}
                 {innsendingStatus.status === RessursStatus.FEILET && (
                     <Alert variant="error" role="alert">
-                        {innsendingStatus.frontendFeilmelding}
+                        <BodyShort spacing>
+                            En teknisk feil har oppstått ved innsendingen av søknaden. Prøv igjen senere.
+                        </BodyShort>
+                        <BodyShort>
+                            Hvis problemet vedvarer, kan du{' '}
+                            <Link href="https://www.nav.no/fyllut/nav330007?sub=paper" target="_blank">
+                                sende søknaden i posten (åpnes i nytt vindu).
+                            </Link>
+                        </BodyShort>
                     </Alert>
                 )}
             </VStack>
