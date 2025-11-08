@@ -3,8 +3,8 @@ import { ParamsDictionary } from 'express-serve-static-core';
 
 import { byggSuksessRessurs, type Ressurs } from '@navikt/familie-typer';
 
-import { defaultFeatureToggleValues, AllFeatureToggles, ToggleKeys } from '../../common/feature-toggles.js';
 import { BASE_PATH } from '../../common/miljø.js';
+import { defaultFeatureToggleValues, AllFeatureToggles, ToggleKeys } from '../../common/typer/feature-toggles.js';
 import { isEnabled } from '../utils/unleash.js';
 
 const fetchAllFeatureTogglesHandler: RequestHandler<ParamsDictionary, Ressurs<AllFeatureToggles>> = (_, res) => {

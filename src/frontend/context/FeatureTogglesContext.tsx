@@ -2,8 +2,8 @@ import React, { createContext, PropsWithChildren, useContext, useState } from 'r
 
 import { type Ressurs, RessursStatus } from '@navikt/familie-typer';
 
-import { defaultFeatureToggleValues, AllFeatureToggles } from '../../common/feature-toggles';
 import { BASE_PATH } from '../../common/miljø';
+import { defaultFeatureToggleValues, AllFeatureToggles } from '../../common/typer/feature-toggles';
 import useFørsteRender from '../hooks/useFørsteRender';
 
 import { useLastRessurserContext } from './LastRessurserContext';
