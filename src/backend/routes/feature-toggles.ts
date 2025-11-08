@@ -3,18 +3,18 @@ import { ParamsDictionary } from 'express-serve-static-core';
 
 import { byggSuksessRessurs, type Ressurs } from '@navikt/familie-typer';
 
-import { defaultFeatureToggleValues, EAllFeatureToggles, ToggleKeys } from '../../shared-utils/feature-toggles.js';
+import { defaultFeatureToggleValues, AllFeatureToggles, ToggleKeys } from '../../shared-utils/feature-toggles.js';
 import { BASE_PATH } from '../../shared-utils/miljø.js';
 import { isEnabled } from '../utils/unleash.js';
 
-const fetchAllFeatureTogglesHandler: RequestHandler<ParamsDictionary, Ressurs<EAllFeatureToggles>> = (_, res) => {
+const fetchAllFeatureTogglesHandler: RequestHandler<ParamsDictionary, Ressurs<AllFeatureToggles>> = (_, res) => {
     const featureToggles = Object.entries(ToggleKeys).reduce((allFeatureToggles, featureToggleEntry) => {
         allFeatureToggles[featureToggleEntry[0]] = isEnabled(
             featureToggleEntry[1],
             defaultFeatureToggleValues[featureToggleEntry[0]]
         );
         return allFeatureToggles;
-    }, {} as EAllFeatureToggles);
+    }, {} as AllFeatureToggles);
     res.send(byggSuksessRessurs(featureToggles));
 };
 

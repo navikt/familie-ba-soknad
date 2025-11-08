@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express';
 
-import { EKillSwitchToggle } from '../../shared-utils/feature-toggles.js';
+import { KillSwitchToggle } from '../../shared-utils/feature-toggles.js';
 import { isEnabled } from '../utils/unleash.js';
 
 /**
@@ -13,7 +13,7 @@ export const expressToggleInterceptor: RequestHandler = (req, res, next) => {
     if (process.env.FORCE_DISABLED) {
         skalRendreDisabledApp = true;
     } else {
-        skalRendreDisabledApp = isEnabled(EKillSwitchToggle.SOKNAD);
+        skalRendreDisabledApp = isEnabled(KillSwitchToggle.SOKNAD);
     }
     if (skalRendreDisabledApp) {
         res.render('disabled.html', { LOCALE_CODE: språk ?? 'nb' });

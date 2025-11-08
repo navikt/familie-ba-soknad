@@ -2,14 +2,14 @@ import React, { createContext, PropsWithChildren, useContext, useState } from 'r
 
 import { type Ressurs, RessursStatus } from '@navikt/familie-typer';
 
-import { defaultFeatureToggleValues, EAllFeatureToggles } from '../../shared-utils/feature-toggles';
+import { defaultFeatureToggleValues, AllFeatureToggles } from '../../shared-utils/feature-toggles';
 import { BASE_PATH } from '../../shared-utils/miljø';
 import useFørsteRender from '../hooks/useFørsteRender';
 
 import { useLastRessurserContext } from './LastRessurserContext';
 
 export interface FeatureTogglesContext {
-    toggles: EAllFeatureToggles;
+    toggles: AllFeatureToggles;
 }
 
 const FeatureTogglesContext = createContext<FeatureTogglesContext | undefined>(undefined);
@@ -17,10 +17,10 @@ const FeatureTogglesContext = createContext<FeatureTogglesContext | undefined>(u
 export function FeatureTogglesProvider(props: PropsWithChildren) {
     const { axiosRequest } = useLastRessurserContext();
 
-    const [toggles, setToggles] = useState<EAllFeatureToggles>(defaultFeatureToggleValues);
+    const [toggles, setToggles] = useState<AllFeatureToggles>(defaultFeatureToggleValues);
 
     useFørsteRender(async () => {
-        const allFeatureToggles: Ressurs<EAllFeatureToggles> = await axiosRequest<EAllFeatureToggles, void>({
+        const allFeatureToggles: Ressurs<AllFeatureToggles> = await axiosRequest<AllFeatureToggles, void>({
             url: `${BASE_PATH}toggles/all`,
         });
 
