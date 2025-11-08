@@ -25,6 +25,7 @@ initializeUnleash();
 
 const app = express();
 
+// FIXME
 // webpack serve kjører på en annen port enn oss, må tillate det som origin
 if (process.env.NODE_ENV === 'development') {
     app.use(

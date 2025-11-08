@@ -41,6 +41,7 @@ I Unleash:
 2. Gi navn på ny toggle med prefix `familie-ba-soknad.`. Eks: `familie-ba-soknad.ny_toggle`
 3. Legg til `activation strategy` = `byCluster` og spesifiser `dev-gcp` og/eller `prod-gcp` (Begge dersom toggelen skal benyttes i begge miljøer)
 
+TODO: Oppdater
 I kode:
 1. Gå til fila `typer/feature-toggles.ts` og legg til ny toggle i enumen `EFeatureToggle` og registrer navnet på toggelen fra Unleash i `ToggleKeys`
 2. Dersom toggelen skal defaulte til noe annet enn false må dette legges inn i `defaultFeatureToggleValues`

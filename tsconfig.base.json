@@ -8,7 +8,7 @@
     "esModuleInterop": true,
     "isolatedModules": true,
     "verbatimModuleSyntax": false,
-    "allowSyntheticDefaultImports": true,
+    "allowSyntheticDefaultImports": true, // TODO: Fjernes?
 
     /* Modules */
     "resolveJsonModule": true,

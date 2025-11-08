@@ -18,6 +18,9 @@ import { initSentry } from './utils/sentry';
 
 import '@navikt/ds-css';
 
+// TODO: Dette burde tryne:
+hallo();
+
 const polyfillLocaledata = async () => {
     // https://github.com/formatjs/formatjs/issues/3066
     await import('@formatjs/intl-numberformat/polyfill-force');
