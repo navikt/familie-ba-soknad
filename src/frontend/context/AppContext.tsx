@@ -12,8 +12,8 @@ import {
     RessursStatus,
 } from '@navikt/familie-typer';
 
-import { BASE_PATH } from '../../shared-utils/miljø';
-import { modellVersjon } from '../../shared-utils/modellversjon';
+import { BASE_PATH } from '../../common/miljø';
+import { modellVersjon } from '../../common/modellversjon';
 import { DinLivssituasjonSpørsmålId } from '../components/SøknadsSteg/DinLivssituasjon/spørsmål';
 import { useDebounce } from '../hooks/useDebounce/useDebounce';
 import { LocaleType } from '../typer/common';

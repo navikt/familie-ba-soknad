@@ -6,7 +6,7 @@ import express from 'express';
 
 import { logInfo } from '@navikt/familie-logging';
 
-import { BASE_PATH } from '../shared-utils/miljø.js';
+import { BASE_PATH } from '../common/miljø.js';
 
 import { cspString } from './csp.js';
 import { envVar, erPreprod, erLokalt, erProd } from './env.js';

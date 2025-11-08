@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express';
 
-import { KillSwitchToggle } from '../../shared-utils/feature-toggles.js';
+import { KillSwitchToggle } from '../../common/feature-toggles.js';
 import { isEnabled } from '../utils/unleash.js';
 
 /**

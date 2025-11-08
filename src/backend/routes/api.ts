@@ -1,6 +1,6 @@
 import express, { Express, RequestHandler } from 'express';
 
-import { BASE_PATH } from '../../shared-utils/miljø.js';
+import { BASE_PATH } from '../../common/miljø.js';
 import { envVar } from '../env.js';
 import { erklaeringInterceptor } from '../middlewares/erklaering-interceptor.js';
 import { escapeBody } from '../middlewares/escape.js';

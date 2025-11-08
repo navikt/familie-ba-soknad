@@ -3,7 +3,7 @@ import { AxiosError } from 'axios';
 
 import { RessursStatus } from '@navikt/familie-typer';
 
-import { erModellMismatchResponsRessurs } from '../../shared-utils/modellversjon';
+import { erModellMismatchResponsRessurs } from '../../common/modellversjon';
 import { useAppContext } from '../context/AppContext';
 import { useSpråkContext } from '../context/SpråkContext';
 import { ISøknadKontrakt } from '../typer/kontrakt/kontrakt';
