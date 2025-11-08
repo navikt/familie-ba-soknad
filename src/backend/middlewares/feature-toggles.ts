@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express';
 
-import { EKillSwitchToggle } from '../../frontend/typer/feature-toggles.js';
+import { EKillSwitchToggle } from '../../shared-utils/feature-toggles.js';
 import { isEnabled } from '../utils/unleash.js';
 
 /**
