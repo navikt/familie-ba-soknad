@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { act, render, renderHook } from '@testing-library/react';
 import { formatISO } from 'date-fns';
 import { vi } from 'vitest';

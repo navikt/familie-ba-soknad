@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import Barn1 from '../../../assets/Barn1';
 import Barn2 from '../../../assets/Barn2';

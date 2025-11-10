@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { act, fireEvent, render, waitFor, within } from '@testing-library/react';
 import { vi } from 'vitest';
 

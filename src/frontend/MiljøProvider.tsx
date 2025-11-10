@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from 'react';
+import { PropsWithChildren } from 'react';
 
 import * as Sentry from '@sentry/react';
 import { IntlProvider } from 'react-intl';

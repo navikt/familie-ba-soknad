@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { BodyShort, Button } from '@navikt/ds-react';
 
 import { useAppContext } from '../../../../context/AppContext';

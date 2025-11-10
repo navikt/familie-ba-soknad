@@ -1,5 +1,3 @@
-import React from 'react';
-
 import styled from 'styled-components';
 
 import { PaperclipIcon, TrashFillIcon } from '@navikt/aksel-icons';

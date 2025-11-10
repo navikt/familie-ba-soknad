@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { Dokumentasjonsbehov } from '../../../../common/typer/kontrakt/dokumentasjon';

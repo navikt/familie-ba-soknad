@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Alert, Fieldset } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Valideringsstatus } from '@navikt/familie-skjema';

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Alert, Button, VStack } from '@navikt/ds-react';
 
 import { useAppContext } from '../../../context/AppContext';

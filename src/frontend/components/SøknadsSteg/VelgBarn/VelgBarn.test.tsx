@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { act, fireEvent, render } from '@testing-library/react';
 import { DeepPartial } from 'ts-essentials';
 import { vi } from 'vitest';

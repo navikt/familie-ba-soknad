@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 
 import { Alpha3Code, getAlpha3Codes, getName } from 'i18n-iso-countries';
 import { useIntl } from 'react-intl';

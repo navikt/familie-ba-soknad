@@ -1,5 +1,3 @@
-import React from 'react';
-
 import styled from 'styled-components';
 
 import { Button, Heading, Modal } from '@navikt/ds-react';

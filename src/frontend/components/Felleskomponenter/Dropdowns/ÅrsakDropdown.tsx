@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 
 import { useAppContext } from '../../../context/AppContext';
 import { muligeÅrsaker } from '../../../typer/søknad';

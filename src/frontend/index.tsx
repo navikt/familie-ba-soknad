@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { shouldPolyfill } from '@formatjs/intl-numberformat/should-polyfill';
 import { registerLocale } from 'i18n-iso-countries';
 import { CookiesProvider } from 'react-cookie';
@@ -18,9 +16,6 @@ import { initGrafanaFaro } from './utils/grafanaFaro';
 import { initSentry } from './utils/sentry';
 
 import '@navikt/ds-css';
-
-// TODO: Dette burde tryne:
-hallo();
 
 const polyfillLocaledata = async () => {
     // https://github.com/formatjs/formatjs/issues/3066

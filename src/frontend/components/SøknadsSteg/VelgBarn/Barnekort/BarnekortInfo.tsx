@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 
 import { Box, Label, BodyShort } from '@navikt/ds-react';
 

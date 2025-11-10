@@ -1,4 +1,4 @@
-import React, { createContext, PropsWithChildren, useContext, useState } from 'react';
+import { createContext, PropsWithChildren, useContext, useState } from 'react';
 
 import { AxiosError, type AxiosRequestConfig, type AxiosResponse } from 'axios';
 

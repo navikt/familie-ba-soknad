@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Alpha3Code } from 'i18n-iso-countries';
 
 import { BodyShort } from '@navikt/ds-react';

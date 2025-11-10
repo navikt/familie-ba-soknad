@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { BodyShort, FormSummary } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
