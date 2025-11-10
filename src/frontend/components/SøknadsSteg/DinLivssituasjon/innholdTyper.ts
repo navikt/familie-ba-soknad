@@ -1,4 +1,5 @@
-import { ISanitySpørsmålDokument, LocaleRecordBlock, LocaleRecordString } from '../../../typer/sanity/sanity';
+import { LocaleRecordBlock, LocaleRecordString } from '../../../../common/typer/sanity';
+import { ISanitySpørsmålDokument } from '../../../typer/sanity/sanity';
 
 export interface IDinLivssituasjonTekstinnhold {
     dinLivssituasjonTittel: LocaleRecordBlock;

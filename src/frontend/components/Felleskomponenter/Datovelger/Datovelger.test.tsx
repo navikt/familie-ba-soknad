@@ -7,7 +7,7 @@ import { mockDeep } from 'vitest-mock-extended';
 
 import { type ISkjema, useFelt } from '@navikt/familie-skjema';
 
-import { ISODateString } from '../../../typer/common';
+import { ISODateString } from '../../../../common/typer/common';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
 import * as datoUtils from '../../../utils/dato';
 import { dagensDato } from '../../../utils/dato';

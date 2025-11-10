@@ -8,13 +8,13 @@ import { mock } from 'vitest-mock-extended';
 import { ESvar } from '@navikt/familie-form-elements';
 import { type Felt, Valideringsstatus } from '@navikt/familie-skjema';
 
+import { ISODateString } from '../../common/typer/common';
 import { OmDegSpørsmålId } from '../components/SøknadsSteg/OmDeg/spørsmål';
 import { AppProvider } from '../context/AppContext';
 import { InnloggetProvider } from '../context/InnloggetContext';
 import { LastRessurserProvider } from '../context/LastRessurserContext';
 import { SanityProvider } from '../context/SanityContext';
 import { SpråkProvider } from '../context/SpråkContext';
-import { ISODateString } from '../typer/common';
 import { ISøknadSpørsmål } from '../typer/spørsmål';
 import { CookiesProviderMedLocale } from '../utils/testing';
 

@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 
 import { useNavigate } from 'react-router';
 
+import { ESøknadstype } from '../../../../common/typer/kontrakt/generelle';
 import { useAppContext } from '../../../context/AppContext';
 import { useEøsContext } from '../../../context/EøsContext';
 import { useStegContext } from '../../../context/StegContext';
-import { ESøknadstype } from '../../../typer/kontrakt/generelle';
 import { ISteg } from '../../../typer/routes';
 
 export enum BekreftelseStatus {

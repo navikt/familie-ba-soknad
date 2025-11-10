@@ -1,5 +1,7 @@
 import { ESvar } from '@navikt/familie-form-elements';
 
+import { ISODateString } from '../../common/typer/common';
+
 export interface IPar {
     id: number;
     navn: string;
@@ -21,13 +23,5 @@ export type BarnetsId = string;
 
 export type TomString = '';
 export const tomString: TomString = '';
-
-export type ISODateString = string;
-
-export enum LocaleType {
-    en = 'en',
-    nb = 'nb',
-    nn = 'nn',
-}
 
 export type HeadingLevel = '1' | '2' | '3' | '4' | '5' | '6';

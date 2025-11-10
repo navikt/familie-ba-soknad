@@ -3,8 +3,8 @@ import { DeepPartial } from 'ts-essentials';
 import { vi } from 'vitest';
 import { mockDeep } from 'vitest-mock-extended';
 
-import { LocaleType } from '../../frontend/typer/common';
-import { ISøknadKontrakt } from '../../frontend/typer/kontrakt/kontrakt';
+import { LocaleType } from '../../common/typer/common.js';
+import { ISøknadKontrakt } from '../../common/typer/kontrakt/kontrakt.js';
 
 import { erklaeringInterceptor, hentSpråkteksterAlleSpråk } from './erklaering-interceptor.js';
 

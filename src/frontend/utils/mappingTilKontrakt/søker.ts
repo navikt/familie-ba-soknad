@@ -2,8 +2,8 @@ import {
     fjernNullVerdierFraSpørsmål,
     SpørsmålMapMedNullVerdier,
     TilRestLocaleRecord,
-} from '../../typer/kontrakt/generelle';
-import { ISøknadKontraktSøker } from '../../typer/kontrakt/kontrakt';
+} from '../../../common/typer/kontrakt/generelle';
+import { ISøknadKontraktSøker } from '../../../common/typer/kontrakt/kontrakt';
 import { PersonType } from '../../typer/personType';
 import { ITekstinnhold } from '../../typer/sanity/tekstInnhold';
 import { ISøknad } from '../../typer/søknad';

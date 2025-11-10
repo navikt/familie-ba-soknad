@@ -6,8 +6,9 @@ import { Box } from '@navikt/ds-react';
 import { ESvar, JaNeiSpørsmål } from '@navikt/familie-form-elements';
 import type { Felt, ISkjema } from '@navikt/familie-skjema';
 
+import { FlettefeltVerdier } from '../../../../common/typer/sanity';
 import { useAppContext } from '../../../context/AppContext';
-import { FlettefeltVerdier, ISanitySpørsmålDokument } from '../../../typer/sanity/sanity';
+import { ISanitySpørsmålDokument } from '../../../typer/sanity/sanity';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
 import TekstBlock from '../Sanity/TekstBlock';
 

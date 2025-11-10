@@ -1,4 +1,5 @@
 import { ClientRequest } from 'http';
+import { Socket } from 'node:net';
 
 import { NextFunction, Request, RequestHandler, Response } from 'express';
 import { createProxyMiddleware } from 'http-proxy-middleware';
@@ -27,7 +28,8 @@ export const doProxy = (targetUrl: string): RequestHandler => {
         secure: true,
         on: {
             proxyReq: restream,
-            error: (err: Error, req: Request, res: Response) => {
+            // TODO: Verifiser at "| Socket" er riktig type.
+            error: (err: Error, req: Request, res: Response | Socket) => {
                 logError('Feil under proxy til apiet, se i securelog');
                 logSecure('Feil under proxy til apiet', { err, req, res });
             },

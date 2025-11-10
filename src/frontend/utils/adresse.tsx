@@ -3,9 +3,9 @@ import React from 'react';
 import { BodyShort } from '@navikt/ds-react';
 import { feil, type FeltState, ok } from '@navikt/familie-skjema';
 
+import { IAdresse } from '../../common/typer/kontrakt/generelle';
 import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
 import { IOmDegTekstinnhold } from '../components/SøknadsSteg/OmDeg/innholdTyper';
-import { IAdresse } from '../typer/kontrakt/generelle';
 import { ISøker } from '../typer/person';
 import { PlainTekst } from '../typer/sanity/sanity';
 

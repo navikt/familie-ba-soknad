@@ -8,11 +8,12 @@ import { createRoot } from 'react-dom/client';
 
 import { awaitDecoratorData } from '@navikt/nav-dekoratoren-moduler';
 
+import { LocaleType } from '../common/typer/common';
+
 import App from './App';
 import { SpråkProvider } from './context/SpråkContext';
 import { hentDekorator } from './decorator';
 import MiljøProvider from './MiljøProvider';
-import { LocaleType } from './typer/common';
 import { initGrafanaFaro } from './utils/grafanaFaro';
 import { initSentry } from './utils/sentry';
 

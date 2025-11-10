@@ -4,9 +4,9 @@ import { Alpha3Code } from 'i18n-iso-countries';
 
 import { feil, type FeltState, ok, useFelt } from '@navikt/familie-skjema';
 
+import { LocaleRecordBlock } from '../../common/typer/sanity';
 import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
 import { useAppContext } from '../context/AppContext';
-import { LocaleRecordBlock } from '../typer/sanity/sanity';
 import { ISøknadSpørsmål } from '../typer/spørsmål';
 
 const useLanddropdownFelt = ({

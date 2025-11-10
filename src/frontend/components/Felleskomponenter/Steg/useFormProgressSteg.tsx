@@ -1,7 +1,7 @@
+import { FlettefeltVerdier, LocaleRecordBlock } from '../../../../common/typer/sanity';
 import { useAppContext } from '../../../context/AppContext';
 import { useStegContext } from '../../../context/StegContext';
 import { ISteg, RouteEnum } from '../../../typer/routes';
-import { FlettefeltVerdier, LocaleRecordBlock } from '../../../typer/sanity/sanity';
 
 interface IStegMedTittel extends ISteg {
     tittel: string;

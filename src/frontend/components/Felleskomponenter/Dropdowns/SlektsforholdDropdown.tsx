@@ -2,8 +2,8 @@ import React, { ReactNode } from 'react';
 
 import { useIntl } from 'react-intl';
 
+import { Slektsforhold } from '../../../../common/typer/kontrakt/generelle';
 import { muligeSlektsforhold } from '../../../typer/barn';
-import { Slektsforhold } from '../../../typer/kontrakt/generelle';
 import { toSlektsforholdSpråkId } from '../../../utils/språk';
 
 import StyledDropdown, { StyledDropdownProps } from './StyledDropdown';

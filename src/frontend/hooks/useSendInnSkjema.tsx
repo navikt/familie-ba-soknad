@@ -4,9 +4,9 @@ import { AxiosError } from 'axios';
 import { RessursStatus } from '@navikt/familie-typer';
 
 import { erModellMismatchResponsRessurs } from '../../common/modellversjon';
+import { ISøknadKontrakt } from '../../common/typer/kontrakt/kontrakt';
 import { useAppContext } from '../context/AppContext';
 import { useSpråkContext } from '../context/SpråkContext';
-import { ISøknadKontrakt } from '../typer/kontrakt/kontrakt';
 import { dataISøknadKontraktFormat } from '../utils/mappingTilKontrakt/søknad';
 import { soknadApiProxyUrl } from '../utils/miljø';
 import { sendInn } from '../utils/sendInnSkjema';

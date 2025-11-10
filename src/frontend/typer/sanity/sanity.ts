@@ -1,7 +1,5 @@
-import { PortableTextBlock } from '@portabletext/types';
-import { Alpha3Code } from 'i18n-iso-countries';
-
-import { LocaleType } from '../common';
+import { LocaleType } from '../../../common/typer/common';
+import { FlettefeltVerdier, LocaleRecordBlock, LocaleRecordString } from '../../../common/typer/sanity';
 
 export interface SanityDokument {
     _createdAt: string;
@@ -28,16 +26,6 @@ export enum ESanitySteg {
     KVITTERING = 'KVITTERING',
     FELLES = 'FELLES',
 }
-
-export type LocaleRecordBlock = Record<LocaleType, PortableTextBlock[]> & {
-    api_navn: string;
-    [key: string]: unknown;
-};
-
-export type LocaleRecordString = Record<LocaleType, string> & {
-    api_navn: string;
-    [key: string]: unknown;
-};
 
 export enum Typografi {
     StegHeadingH1 = 'StegHeadingH1',
@@ -94,16 +82,6 @@ export enum ESanitySivilstandApiKey {
     UGIFT = 'sivilstandUgift',
     UOPPGITT = 'sivilstandUoppgitt',
 }
-
-export type FlettefeltVerdier = {
-    barnetsNavn?: string;
-    gjelderUtland?: boolean;
-    antall?: string;
-    totalAntall?: string;
-    land?: Alpha3Code | '';
-    dato?: string;
-    klokkeslett?: string;
-};
 
 export type PlainTekst = (
     localeRecord: LocaleRecordBlock | LocaleRecordString | undefined,

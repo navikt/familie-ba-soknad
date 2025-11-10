@@ -1,4 +1,4 @@
-import { LocaleRecordBlock } from '../sanity';
+import { LocaleRecordBlock } from '../../../../common/typer/sanity';
 
 export interface IBlokkerTilbakeknappTekstinnhold {
     tittel: LocaleRecordBlock;

@@ -7,7 +7,8 @@ import {
 } from '@portabletext/types';
 import { pipe } from 'ramda';
 
-import { LocaleType } from '../typer/common';
+import { LocaleType } from '../../common/typer/common';
+import { FlettefeltVerdier, LocaleRecordBlock, LocaleRecordString } from '../../common/typer/sanity';
 import { IAndreUtbetalingerTekstinnhold } from '../typer/sanity/modaler/andreUtbetalinger';
 import { IArbeidsperiodeTekstinnhold } from '../typer/sanity/modaler/arbeidsperiode';
 import { IBarnetrygdsperiodeTekstinnhold } from '../typer/sanity/modaler/barnetrygdperiode';
@@ -20,13 +21,10 @@ import { IUtenlandsoppholdTekstinnhold } from '../typer/sanity/modaler/utenlands
 import {
     ESanityFlettefeltverdi,
     ESanitySteg,
-    FlettefeltVerdier,
     formateringsfeilmeldingerPrefix,
     frittståendeOrdPrefix,
     hjelpeteksterForInputPrefix,
     kanIkkeBrukeSoeknadPrefix,
-    LocaleRecordBlock,
-    LocaleRecordString,
     modalPrefix,
     navigasjonPrefix,
     SanityDokument,

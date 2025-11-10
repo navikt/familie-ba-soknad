@@ -2,6 +2,9 @@ import { Alpha3Code, alpha3ToAlpha2, getName } from 'i18n-iso-countries';
 import reactElementToJSXString from 'react-element-to-jsx-string';
 import { createIntl, createIntlCache } from 'react-intl';
 
+import { LocaleType } from '../../common/typer/common';
+import { ESivilstand, Slektsforhold } from '../../common/typer/kontrakt/generelle';
+import { LocaleRecordString } from '../../common/typer/sanity';
 import engelsk from '../assets/lang/en.json' with { type: 'json' };
 import bokmål from '../assets/lang/nb.json' with { type: 'json' };
 import nynorsk from '../assets/lang/nn.json' with { type: 'json' };
@@ -9,10 +12,9 @@ import { innebygdeFormatterere } from '../components/Felleskomponenter/SpråkTek
 import { IDinLivssituasjonTekstinnhold } from '../components/SøknadsSteg/DinLivssituasjon/innholdTyper';
 import { IEøsForBarnTekstinnhold } from '../components/SøknadsSteg/EøsSteg/Barn/innholdTyper';
 import { IVelgBarnTekstinnhold } from '../components/SøknadsSteg/VelgBarn/innholdTyper';
-import { AlternativtSvarForInput, LocaleType } from '../typer/common';
-import { ESivilstand, Slektsforhold } from '../typer/kontrakt/generelle';
+import { AlternativtSvarForInput } from '../typer/common';
 import { IBarn } from '../typer/person';
-import { ESanitySivilstandApiKey, LocaleRecordString } from '../typer/sanity/sanity';
+import { ESanitySivilstandApiKey } from '../typer/sanity/sanity';
 import { Årsak } from '../typer/utvidet';
 
 export const hentÅrsak = (årsak: Årsak, tekster: IDinLivssituasjonTekstinnhold): LocaleRecordString => {

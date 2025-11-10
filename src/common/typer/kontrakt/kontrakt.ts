@@ -1,8 +1,8 @@
 import { ESvar } from '@navikt/familie-form-elements';
 
-import { ISODateString, LocaleType } from '../common';
+import { ISODateString, LocaleType } from '../common.js';
 
-import { ISøknadKontraktDokumentasjon } from './dokumentasjon';
+import { ISøknadKontraktDokumentasjon } from './dokumentasjon.js';
 import {
     ERegistrertBostedType,
     ESivilstand,
@@ -13,7 +13,7 @@ import {
     ISøknadsfelt,
     IUtenlandsperiodeIKontraktFormat,
     SpørsmålMap,
-} from './generelle';
+} from './generelle.js';
 
 export interface ISøknadKontrakt {
     kontraktVersjon: number;

@@ -1,7 +1,11 @@
 import { Alpha3Code, getAlpha3Codes } from 'i18n-iso-countries';
 
-import { ISøknadKontraktDokumentasjon } from '../typer/kontrakt/dokumentasjon';
-import { IKontraktNåværendeSamboer, IKontraktTidligereSamboer, ISøknadsfelt } from '../typer/kontrakt/generelle';
+import { ISøknadKontraktDokumentasjon } from '../../common/typer/kontrakt/dokumentasjon';
+import {
+    IKontraktNåværendeSamboer,
+    IKontraktTidligereSamboer,
+    ISøknadsfelt,
+} from '../../common/typer/kontrakt/generelle';
 import {
     IAndreForelderIKontraktFormat,
     IAndreForelderUtvidetIKontraktFormat,
@@ -9,7 +13,7 @@ import {
     ISøknadIKontraktBarn,
     ISøknadKontraktSøker,
     ISøknadKontrakt,
-} from '../typer/kontrakt/kontrakt';
+} from '../../common/typer/kontrakt/kontrakt';
 
 const erGyldigIKontraktNåværendeSamboer = (input): input is IKontraktNåværendeSamboer =>
     !!(input && input.navn && input.ident && input.fødselsdato && input.samboerFraDato);
