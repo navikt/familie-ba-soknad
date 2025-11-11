@@ -22,6 +22,6 @@ export const konfigurerApi = (app: Express): Express => {
         doProxy(envVar('VITE_SOKNAD_API_PROXY_URL'))
     );
 
-    app.use(`${BASE_PATH}dokument`, addCallId(), attachToken('familie-dokument'), doProxy(envVar('VITE_DOKUMENT_URL')));
+    app.use(`${BASE_PATH}dokument`, addCallId(), attachToken('familie-dokument'), doProxy(envVar('DOKUMENT_URL')));
     return app;
 };
