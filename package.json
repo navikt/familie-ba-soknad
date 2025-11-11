@@ -12,6 +12,7 @@
     "build:prod": "NODE_ENV=production yarn build:backend && yarn build:frontend --mode prod",
     "build:backend": "tsc -p src/backend/tsconfig.json",
     "build:frontend": "vite build src/frontend",
+    "clean": "rm -rf dist_frontend dist_backend",
     "test": "vitest",
     "lint": "eslint './src/**/*.{js,ts,tsx}'",
     "lint:fix": "eslint './src/**/*.{js,ts,tsx}' --fix",
