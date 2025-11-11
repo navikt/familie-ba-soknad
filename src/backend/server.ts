@@ -1,7 +1,8 @@
+import './konfigurerApp.js'; // Må importeres først
+
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-import dotenv from 'dotenv';
 import express from 'express';
 
 import { logInfo } from '@navikt/familie-logging';
@@ -18,8 +19,6 @@ import { konfigurerModellVersjonEndpoint } from './routes/modellversjon.js';
 import { konfigurerNais } from './routes/nais.js';
 import { konfigurerStatic } from './routes/static.js';
 import { initializeUnleash } from './utils/unleash.js';
-
-dotenv.config();
 
 initializeUnleash();
 
