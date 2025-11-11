@@ -24,7 +24,7 @@
     "format-all": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
     "texts:find-unused": "python3 src/scripts/finn-ubrukte-språktekster.py",
     "texts:find-missing": "node src/scripts/find-missing-text-ids.js",
-    "texts:cleanup": "src/scripts/formater-tekster.sh src/frontend/assets/lang",
+    "texts:cleanup": "src/scripts/formater-tekster.sh src/common/lang",
     "set-node-options": "NODE_OPTIONS='--import=./registerESMLoader.js --es-module-specifier-resolution=node'"
   },
   "lint-staged": {
