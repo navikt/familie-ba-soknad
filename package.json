@@ -4,8 +4,8 @@
   "scripts": {
     "start": "yarn start:backend:prod",
     "start:dev": "yarn build:backend && yarn start:backend:dev && vite dev src/frontend --mode lokal",
-    "start:backend:dev": "NODE_ENV=development ENV=lokal node dist_backend/server.js",
-    "start:backend:prod": "NODE_ENV=production ENV=prod node dist_backend/server.js",
+    "start:backend:dev": "NODE_ENV=development ENV=lokal node dist_backend/backend/server.js",
+    "start:backend:prod": "NODE_ENV=production ENV=prod node dist_backend/backend/server.js",
     "build": "yarn build:prod",
     "build:dev": "NODE_ENV=development yarn build:backend && yarn build:frontend --mode lokal",
     "build:preprod": "NODE_ENV=production yarn build:backend && yarn build:frontend --mode preprod",
