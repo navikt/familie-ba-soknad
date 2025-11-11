@@ -2,11 +2,6 @@
   "name": "familie-ba-soknad",
   "type": "module",
   "scripts": {
-    "format-all": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
-    "prettier": "prettier -l \"src/**/*.{js,jsx,ts,tsx}\"",
-    "eslint": "eslint src/",
-    "lint": "eslint src/",
-    "lint-test": "yarn prettier && yarn eslint",
     "start": "yarn start:backend:prod",
     "start:dev": "yarn build:backend && yarn start:backend:dev && vite dev src/frontend --mode lokal",
     "start:backend:dev": "NODE_ENV=development ENV=lokal node dist_backend/server.js",
@@ -17,16 +12,19 @@
     "build:prod": "NODE_ENV=production yarn build:backend && yarn build:frontend --mode prod",
     "build:backend": "tsc -p src/backend/tsconfig.json",
     "build:frontend": "vite build src/frontend",
-    "set-node-options": "NODE_OPTIONS='--import=./registerESMLoader.js --es-module-specifier-resolution=node'",
-    "test-ci": "CI=true build",
     "test": "vitest",
-    "clean": "rm -rf dist",
+    "lint": "eslint './src/**/*.{js,ts,tsx}'",
+    "lint:fix": "eslint './src/**/*.{js,ts,tsx}' --fix",
+    "prettier": "prettier --check './src/**/*.{js,jsx,ts,tsx,json,css}'",
+    "prettier:fix": "prettier --write './src/**/*.{js,jsx,ts,tsx,json,css}'",
+    "prepare": "husky",
     "typecheck": "tsc --noEmit -p src/backend/tsconfig.json && tsc --noEmit -p src/frontend/tsconfig.json",
+    "validate": "yarn typecheck && yarn lint && yarn prettier",
+    "format-all": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
     "texts:find-unused": "python3 src/scripts/finn-ubrukte-språktekster.py",
     "texts:find-missing": "node src/scripts/find-missing-text-ids.js",
     "texts:cleanup": "src/scripts/formater-tekster.sh src/frontend/assets/lang",
-    "prepare": "husky",
-    "validate": "yarn typecheck && yarn lint && yarn prettier"
+    "set-node-options": "NODE_OPTIONS='--import=./registerESMLoader.js --es-module-specifier-resolution=node'"
   },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx,css}": [
