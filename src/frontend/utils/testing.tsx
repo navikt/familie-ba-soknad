@@ -11,9 +11,9 @@ import { HttpProvider } from '@navikt/familie-http';
 import { type Ressurs, RessursStatus } from '@navikt/familie-typer';
 
 import { mockTekstInnhold } from '../../../mocks/testdata/sanity/sanity';
+import norskeTekster from '../../common/lang/nb.json' with { type: 'json' };
 import { LocaleType } from '../../common/typer/common';
 import { ESivilstand, ESøknadstype, Slektsforhold } from '../../common/typer/kontrakt/generelle';
-import norskeTekster from '../assets/lang/nb.json' with { type: 'json' };
 import { UtenlandsoppholdSpørsmålId } from '../components/Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 import {
     DinLivssituasjonSpørsmålId,

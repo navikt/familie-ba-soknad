@@ -2,11 +2,11 @@ import { Request, Response, NextFunction, RequestHandler } from 'express';
 
 import { byggFeiletRessurs } from '@navikt/familie-typer';
 
+import engelsk from '../../common/lang/en.json' with { type: 'json' };
+import bokmål from '../../common/lang/nb.json' with { type: 'json' };
+import nynorsk from '../../common/lang/nn.json' with { type: 'json' };
 import { LocaleType } from '../../common/typer/common.js';
 import { ISøknadKontrakt } from '../../common/typer/kontrakt/kontrakt.js';
-import engelsk from '../../frontend/assets/lang/en.json' with { type: 'json' };
-import bokmål from '../../frontend/assets/lang/nb.json' with { type: 'json' };
-import nynorsk from '../../frontend/assets/lang/nn.json' with { type: 'json' };
 
 export const hentSpråkteksterAlleSpråk = (språknøkkel: string): Record<LocaleType, string> => {
     return {
