@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { add, isBefore } from 'date-fns';
 
-import { Alert, BodyShort, Heading, Link, VStack } from '@navikt/ds-react';
+import { Alert, BodyShort, Heading, VStack } from '@navikt/ds-react';
 import { RessursStatus } from '@navikt/familie-typer';
 
 import { useAppContext } from '../../../context/AppContext';
@@ -147,15 +147,10 @@ const Dokumentasjon: React.FC = () => {
                 ))}
                 {innsendingStatus.status === RessursStatus.FEILET && (
                     <Alert variant="error" role="alert">
-                        <BodyShort spacing>
-                            En teknisk feil har oppstått ved innsendingen av søknaden. Prøv igjen senere.
-                        </BodyShort>
-                        <BodyShort>
-                            Hvis problemet vedvarer, kan du{' '}
-                            <Link href="https://www.nav.no/fyllut/nav330007?sub=paper" target="_blank">
-                                sende søknaden i posten (åpnes i nytt vindu).
-                            </Link>
-                        </BodyShort>
+                        <TekstBlock
+                            block={stegTekster.dokumentasjonFeilmeldingVedInnsending}
+                            typografi={Typografi.BodyLong}
+                        />
                     </Alert>
                 )}
             </VStack>

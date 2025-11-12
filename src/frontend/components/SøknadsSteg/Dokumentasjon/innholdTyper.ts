@@ -7,6 +7,9 @@ export type IDokumentasjonTekstinnhold = {
     dokumentasjonGuideVedleggskrav: LocaleRecordBlock;
     dokumentasjonGuideIngenVedleggskrav: LocaleRecordBlock;
 } & {
+    // Feilmelding ved innsending
+    dokumentasjonFeilmeldingVedInnsending: LocaleRecordBlock;
+} & {
     // Info innledning
     forLangTidDokumentasjon: LocaleRecordBlock;
     vedleggskravTittel: LocaleRecordBlock;
