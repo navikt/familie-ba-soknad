@@ -43,19 +43,23 @@ describe('erklaering-interceptor', () => {
             expect(next).not.toHaveBeenCalled();
             expect(response.status).toHaveBeenCalledWith(400);
             expect(response.send).toHaveBeenCalled();
+            const payload = response.send.mock.calls[0][0];
+            expect(payload.frontendFeilmelding).toBe('Ugyldig søknadformat: mangler "lestOgForståttBekreftelse"');
             response.send.mockReset();
             response.status.mockReset().mockReturnThis();
         });
     });
 
-    it('Sender 403 hvis søker ikke har erklært riktig informasjon', () => {
+    it('Sender 400 hvis søker ikke har erklært riktig informasjon', () => {
         const reqData = {
             lestOgForståttBekreftelse: false,
         };
         erklaeringInterceptor(request(reqData), response, next);
         expect(next).not.toHaveBeenCalled();
-        expect(response.status).toHaveBeenCalledWith(403);
+        expect(response.status).toHaveBeenCalledWith(400);
         expect(response.send).toHaveBeenCalled();
+        const payload = response.send.mock.calls[0][0];
+        expect(payload.frontendFeilmelding).toBe('Bruker har ikke huket av for at de oppgir korrekte opplysninger');
     });
 
     it('Sender videre til neste handler hvis søker har erklært riktig informasjon på noe språk', () => {

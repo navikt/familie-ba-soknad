@@ -21,13 +21,14 @@ export const erklaeringInterceptor: RequestHandler = (request: Request, response
     const lestOgForståttErklæringKey = 'lestOgForståttBekreftelse';
 
     if (!(lestOgForståttErklæringKey in søknad)) {
-        response.status(400).send(byggFeiletRessurs('Ugyldig søknadformat'));
+        response.status(400).send(byggFeiletRessurs('Ugyldig søknadformat: mangler "lestOgForståttBekreftelse"'));
         return;
     }
 
-    if (søknad.lestOgForståttBekreftelse) {
-        next();
-    } else {
-        response.status(403).send(byggFeiletRessurs('Du må huke av for at du oppgir korrekte opplysninger'));
+    if (!søknad.lestOgForståttBekreftelse) {
+        response.status(400).send(byggFeiletRessurs('Bruker har ikke huket av for at de oppgir korrekte opplysninger'));
+        return;
     }
+
+    next();
 };
