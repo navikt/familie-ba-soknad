@@ -1,61 +1,24 @@
 import React from 'react';
 
-import { shouldPolyfill } from '@formatjs/intl-numberformat/should-polyfill';
-import { registerLocale } from 'i18n-iso-countries';
 import { CookiesProvider } from 'react-cookie';
 import ReactDOM from 'react-dom';
 import { createRoot } from 'react-dom/client';
 
 import { awaitDecoratorData } from '@navikt/nav-dekoratoren-moduler';
 
-import { LocaleType } from '../common/typer/common';
-
 import App from './App';
 import { SpråkProvider } from './context/SpråkContext';
 import { hentDekorator } from './decorator';
 import MiljøProvider from './MiljøProvider';
+import { polyfillLocaleData } from './polyfillLocaleData';
 import { initGrafanaFaro } from './utils/grafanaFaro';
 import { initSentry } from './utils/sentry';
 
 import '@navikt/ds-css';
 
-// TODO: Dette burde tryne:
-hallo();
-
-const polyfillLocaledata = async () => {
-    // https://github.com/formatjs/formatjs/issues/3066
-    await import('@formatjs/intl-numberformat/polyfill-force');
-    await import('@formatjs/intl-datetimeformat/polyfill-force');
-
-    for (const locale in LocaleType) {
-        // Last ned land-navn for statsborgeskap
-        await import(
-            /* webpackInclude: /(nb|nn|en)\.json/ */
-            /* webpackChunkName: "localedata" */
-            /* webpackMode: "lazy-once" */
-            `i18n-iso-countries/langs/${locale}.json`
-        ).then(result => registerLocale(result));
-
-        if (shouldPolyfill(locale)) {
-            await import(
-                /* webpackInclude: /(nb|nn|en)\.js/ */
-                /* webpackChunkName: "localedata" */
-                /* webpackMode: "lazy-once" */
-                `@formatjs/intl-numberformat/locale-data/${locale}`
-            );
-            await import(
-                /* webpackInclude: /(nb|nn|en)\.js/ */
-                /* webpackChunkName: "localedata" */
-                /* webpackMode: "lazy-once" */
-                `@formatjs/intl-datetimeformat/locale-data/${locale}`
-            );
-        }
-    }
-};
-
 hentDekorator();
 
-polyfillLocaledata().then(async () => {
+polyfillLocaleData().then(async () => {
     initSentry();
     initGrafanaFaro();
 
