@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { Checkbox, FormSummary, VStack } from '@navikt/ds-react';
 
 import { Dokumentasjonsbehov } from '../../../../common/typer/kontrakt/dokumentasjon';

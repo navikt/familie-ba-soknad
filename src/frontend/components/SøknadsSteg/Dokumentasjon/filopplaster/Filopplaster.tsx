@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { FileUpload, Heading, List, VStack } from '@navikt/ds-react';
 
 import { Dokumentasjonsbehov } from '../../../../../common/typer/kontrakt/dokumentasjon';

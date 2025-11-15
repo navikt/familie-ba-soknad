@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 

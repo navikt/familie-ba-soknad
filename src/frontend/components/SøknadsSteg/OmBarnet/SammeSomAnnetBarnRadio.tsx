@@ -1,3 +1,5 @@
+import React from 'react';
+
 import styled from 'styled-components';
 
 import { Radio, RadioGroup } from '@navikt/ds-react';

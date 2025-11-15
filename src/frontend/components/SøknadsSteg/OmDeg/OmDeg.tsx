@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { Alert } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 

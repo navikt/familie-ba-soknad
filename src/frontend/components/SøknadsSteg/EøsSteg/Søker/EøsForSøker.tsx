@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { useAppContext } from '../../../../context/AppContext';
 import { PersonType } from '../../../../typer/personType';
 import { ESanitySteg } from '../../../../typer/sanity/sanity';

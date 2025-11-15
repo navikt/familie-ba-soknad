@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { ReadMore } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 

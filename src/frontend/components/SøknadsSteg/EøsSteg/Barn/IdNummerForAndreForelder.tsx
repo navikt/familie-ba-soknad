@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 
 import type { Felt, ISkjema } from '@navikt/familie-skjema';
 

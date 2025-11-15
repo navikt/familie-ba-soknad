@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { ESvar } from '@navikt/familie-form-elements';
 import { feil, type FeltState, ok, useFelt, useSkjema, Valideringsstatus } from '@navikt/familie-skjema';
 

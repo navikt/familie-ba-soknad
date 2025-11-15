@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { renderHook } from '@testing-library/react';
 import { Alpha3Code } from 'i18n-iso-countries';
 import { IntlProvider } from 'react-intl';

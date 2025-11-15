@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { ErrorSummary } from '@navikt/ds-react';
 import { type ISkjema, Valideringsstatus } from '@navikt/familie-skjema';
 

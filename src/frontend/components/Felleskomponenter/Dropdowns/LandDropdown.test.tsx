@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { render } from '@testing-library/react';
 import { Alpha3Code } from 'i18n-iso-countries';
 import { mockDeep } from 'vitest-mock-extended';

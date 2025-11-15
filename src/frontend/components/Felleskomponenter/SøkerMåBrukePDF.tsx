@@ -1,4 +1,4 @@
-import { FC, ReactNode } from 'react';
+import React, { FC, ReactNode } from 'react';
 
 import { Alert, Box } from '@navikt/ds-react';
 

@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { act, getAllByText, getByTestId, render } from '@testing-library/react';
 import { mockDeep } from 'vitest-mock-extended';
 

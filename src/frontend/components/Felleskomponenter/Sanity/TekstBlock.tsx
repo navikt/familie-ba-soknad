@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 
 import { PortableText } from '@portabletext/react';
 import styled from 'styled-components';

@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { createRoot } from 'react-dom/client';
 
 import { Box, VStack } from '@navikt/ds-react';

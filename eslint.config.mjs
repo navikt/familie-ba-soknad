@@ -1,9 +1,9 @@
-import js from '@eslint/js';
 import eslintConfigPrettier from 'eslint-config-prettier';
-import importPlugin from 'eslint-plugin-import';
-import jsxA11yPlugin from 'eslint-plugin-jsx-a11y';
 import prettier from 'eslint-plugin-prettier';
+import importPlugin from 'eslint-plugin-import';
 import globals from 'globals';
+import js from '@eslint/js';
+import jsxA11yPlugin from 'eslint-plugin-jsx-a11y';
 import tseslint from 'typescript-eslint';
 
 export default [
@@ -69,38 +69,6 @@ export default [
                     args: 'all',
                     argsIgnorePattern: '^_',
                     varsIgnorePattern: '^_',
-                },
-            ],
-
-            '@typescript-eslint/no-restricted-types': [
-                'error',
-                {
-                    types: {
-                        'React.FC':
-                            'Annotate the props on the parameter instead: (const X = ({ X, Y }: Props) => ...).',
-                        'React.FunctionComponent':
-                            'Annotate the props on the parameter instead: (const X = ({ X, Y }: Props) => ...).',
-                        'React.VFC':
-                            'Annotate the props on the parameter instead: (const X = ({ X, Y }: Props) => ...).',
-                    },
-                },
-            ],
-            'no-restricted-syntax': [
-                'error',
-                {
-                    // Ban default import: import React from 'react';
-                    selector: 'ImportDeclaration[source.value="react"] > ImportDefaultSpecifier[local.name="React"]',
-                    message: 'Do not default-import React; use named imports.',
-                },
-                {
-                    // Ban namespace import: import * as React from 'react';
-                    selector: 'ImportDeclaration[source.value="react"] > ImportNamespaceSpecifier',
-                    message: 'Do not namespace-import React; use named imports.',
-                },
-                {
-                    // Ban React.<member>
-                    selector: 'MemberExpression[object.name="React"]',
-                    message: 'Import this from react instead of using React.XYZ.',
                 },
             ],
 

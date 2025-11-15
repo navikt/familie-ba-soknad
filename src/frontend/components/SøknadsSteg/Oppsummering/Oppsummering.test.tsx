@@ -1,3 +1,4 @@
+import React from 'react';
 import { act } from 'react';
 
 import { render, waitFor } from '@testing-library/react';

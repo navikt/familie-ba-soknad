@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { useAppContext } from '../../../context/AppContext';
 import { ITidligereSamboer } from '../../../typer/person';
 import { ITidligereSamoboereTekstinnhold } from '../../../typer/sanity/modaler/tidligereSamboere';

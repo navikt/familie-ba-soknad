@@ -1,3 +1,4 @@
+import React from 'react';
 import { act } from 'react';
 
 import { render, within } from '@testing-library/react';

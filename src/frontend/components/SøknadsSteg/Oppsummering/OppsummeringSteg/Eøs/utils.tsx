@@ -1,3 +1,5 @@
+import React from 'react';
+
 import SpråkTekst from '../../../../Felleskomponenter/SpråkTekst/SpråkTekst';
 import { eøsBarnSpørsmålSpråkId } from '../../../EøsSteg/Barn/spørsmål';
 

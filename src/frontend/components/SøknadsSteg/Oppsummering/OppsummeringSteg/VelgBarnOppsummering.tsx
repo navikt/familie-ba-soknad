@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { FormSummary } from '@navikt/ds-react';
 
 import { useAppContext } from '../../../../context/AppContext';

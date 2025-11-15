@@ -1,4 +1,4 @@
-import { PropsWithChildren, ReactNode } from 'react';
+import React, { PropsWithChildren, ReactNode } from 'react';
 
 import styled from 'styled-components';
 

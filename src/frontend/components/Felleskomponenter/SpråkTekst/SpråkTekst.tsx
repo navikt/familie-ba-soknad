@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { FormattedMessage } from 'react-intl';
 // eslint-disable-next-line import/named
 import { Props as MessageProps } from 'react-intl/lib/src/components/message';

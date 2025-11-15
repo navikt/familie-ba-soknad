@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { act, screen, render, waitFor } from '@testing-library/react';
 import { useNavigate } from 'react-router';
 

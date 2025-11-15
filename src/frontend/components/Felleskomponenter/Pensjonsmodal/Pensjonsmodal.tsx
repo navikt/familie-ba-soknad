@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { parseISO } from 'date-fns';
 
 import { ESvar } from '@navikt/familie-form-elements';

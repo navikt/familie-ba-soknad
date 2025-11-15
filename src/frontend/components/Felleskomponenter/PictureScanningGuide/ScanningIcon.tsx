@@ -1,3 +1,5 @@
+import React from 'react';
+
 interface ScanProps {
     title?: string;
     height?: number;

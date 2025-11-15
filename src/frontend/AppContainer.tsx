@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { Alert, Box, Page } from '@navikt/ds-react';
 import { RessursStatus } from '@navikt/familie-typer';
 

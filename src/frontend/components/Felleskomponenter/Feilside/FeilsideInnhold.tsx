@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import React, { FC } from 'react';
 
 import { BodyShort, Button, Heading, Link } from '@navikt/ds-react';
 

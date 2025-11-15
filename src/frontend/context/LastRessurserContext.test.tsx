@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { act, renderHook, waitFor } from '@testing-library/react';
 
 import { urlMedBasePath } from '../../../mocks/utils';

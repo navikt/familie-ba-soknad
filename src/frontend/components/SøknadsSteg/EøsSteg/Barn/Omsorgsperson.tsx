@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { ESvar } from '@navikt/familie-form-elements';
 import type { ISkjema } from '@navikt/familie-skjema';
 

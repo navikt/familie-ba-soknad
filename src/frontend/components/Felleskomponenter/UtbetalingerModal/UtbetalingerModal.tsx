@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { ESvar } from '@navikt/familie-form-elements';
 import { Valideringsstatus } from '@navikt/familie-skjema';
 

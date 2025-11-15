@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { useAppContext } from '../../../context/AppContext';
 import { useSpråkContext } from '../../../context/SpråkContext';
 import { IUtenlandsperiode } from '../../../typer/perioder';

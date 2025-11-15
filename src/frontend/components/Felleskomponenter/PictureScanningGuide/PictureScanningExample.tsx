@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { Alert, type AlertProps, BodyShort, Label } from '@navikt/ds-react';
 
 interface Props {

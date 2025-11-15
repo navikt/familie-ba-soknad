@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { useAppContext } from '../../../../../context/AppContext';
 import { useStegContext } from '../../../../../context/StegContext';
 import { IBarnMedISøknad } from '../../../../../typer/barn';
