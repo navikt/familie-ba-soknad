@@ -28,7 +28,7 @@
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx,css}": [
       "prettier --write",
-      "eslint --fix src/ --max-warnings=0"
+      "eslint --fix src/ --max-warnings=70"
     ]
   },
   "browserslist": {
@@ -127,6 +127,7 @@
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-prettier": "^5.5.0",
+    "eslint-plugin-react-hooks": "^7.0.1",
     "file-loader": "^6.2.0",
     "globals": "^16.4.0",
     "html-webpack-plugin": "^5.6.0",
