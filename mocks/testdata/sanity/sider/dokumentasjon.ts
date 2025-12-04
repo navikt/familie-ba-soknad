@@ -1,8 +1,5 @@
 import { IDokumentasjonTekstinnhold } from '../../../../src/frontend/components/SøknadsSteg/Dokumentasjon/innholdTyper';
-import {
-    BeskrivelseSanityApiNavn,
-    TittelSanityApiNavn,
-} from '../../../../src/frontend/typer/dokumentasjon';
+import { BeskrivelseSanityApiNavn, TittelSanityApiNavn } from '../../../../src/frontend/typer/dokumentasjon';
 import { lagLocaleRecordString, lagLocaleRecordBlock } from '../lagSanityObjekter';
 
 export const dokumentasjonTekstinnhold: IDokumentasjonTekstinnhold = {
@@ -10,6 +7,8 @@ export const dokumentasjonTekstinnhold: IDokumentasjonTekstinnhold = {
     dokumentasjonGuide: lagLocaleRecordBlock(),
     dokumentasjonGuideVedleggskrav: lagLocaleRecordBlock(),
     dokumentasjonGuideIngenVedleggskrav: lagLocaleRecordBlock(),
+    // Feilmelding ved innsending
+    dokumentasjonFeilmeldingVedInnsending: lagLocaleRecordBlock(),
     // Info innledning
     forLangTidDokumentasjon: lagLocaleRecordBlock(),
     vedleggskravTittel: lagLocaleRecordBlock(),
@@ -70,15 +69,13 @@ export const dokumentasjonTekstinnhold: IDokumentasjonTekstinnhold = {
     [TittelSanityApiNavn.bekreftelseFraBarnevernetTittel]: lagLocaleRecordBlock(),
     [TittelSanityApiNavn.bekreftelsePaaAtBarnBorSammenMedDegTittel]: lagLocaleRecordBlock(),
     [TittelSanityApiNavn.meklingsattestTittel]: lagLocaleRecordBlock(),
-    [TittelSanityApiNavn.dokumentasjonPaaSeparasjonSkilsmisseEllerDoedsfallTittel]:
-        lagLocaleRecordBlock(),
+    [TittelSanityApiNavn.dokumentasjonPaaSeparasjonSkilsmisseEllerDoedsfallTittel]: lagLocaleRecordBlock(),
     [TittelSanityApiNavn.vedtakOmOppholdstillatelseTittel]: lagLocaleRecordBlock(),
     [TittelSanityApiNavn.lastetOppAntall]: lagLocaleRecordBlock(),
     [TittelSanityApiNavn.vedleggXavY]: lagLocaleRecordBlock(),
     [TittelSanityApiNavn.listeOverVedlegg]: lagLocaleRecordBlock(),
     // Vedlegg - beskrivelser
-    [BeskrivelseSanityApiNavn.dokumentasjonPaaSeparasjonSkilsmisseEllerDoedsfall]:
-        lagLocaleRecordBlock(),
+    [BeskrivelseSanityApiNavn.dokumentasjonPaaSeparasjonSkilsmisseEllerDoedsfall]: lagLocaleRecordBlock(),
     [BeskrivelseSanityApiNavn.vedtakOmOppholdstillatelse]: lagLocaleRecordBlock(),
     [BeskrivelseSanityApiNavn.bekreftelsePaaAdopsjonBarnetrygd]: lagLocaleRecordBlock(),
     [BeskrivelseSanityApiNavn.bekreftelsePaaAtBarnBorSammenMedDeg]: lagLocaleRecordBlock(),

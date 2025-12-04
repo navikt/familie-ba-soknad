@@ -1,5 +1,6 @@
 import React from 'react';
 
+import * as Sentry from '@sentry/react';
 import {
     add,
     endOfMonth,
@@ -140,7 +141,17 @@ export const validerDatoForSanity = (
 export const formaterDatostringKunMåned = (datoString: ISODateString, språk: LocaleType) =>
     format(new Date(datoString), 'MMMM yyyy', { locale: mapSpråkvalgTilDateFnsLocale(språk) });
 
-export const formaterDato = (datoString: ISODateString) => format(new Date(datoString), 'dd.MM.yyyy');
+export const formaterDato = (datoString: ISODateString) => {
+    try {
+        return format(new Date(datoString), 'dd.MM.yyyy');
+    } catch (e: unknown) {
+        const error = new Error(`Klarte ikke formatere dato ${datoString}`, {
+            cause: e instanceof Error ? e.cause : 'En ukjent feil oppstod.',
+        });
+        Sentry.captureException(error);
+        throw error;
+    }
+};
 
 export const formaterDatoKunMåned = (dato: Date, språk: LocaleType) =>
     format(dato, 'MMMM yyyy', { locale: mapSpråkvalgTilDateFnsLocale(språk) });
@@ -150,6 +161,11 @@ export const formaterDatoMedUkjent = (datoMedUkjent: DatoMedUkjent, tekstForUkje
         ? tekstForUkjent
         : format(new Date(datoMedUkjent), 'dd.MM.yyyy');
 };
+
+export const formaterDatoOgTid = (datoString: ISODateString, språk: LocaleType) =>
+    format(new Date(datoString), "dd. MMMM yyyy 'kl.' HH:mm", {
+        locale: mapSpråkvalgTilDateFnsLocale(språk),
+    });
 
 const mapSpråkvalgTilDateFnsLocale = (språkvalg: LocaleType): Locale => {
     switch (språkvalg) {

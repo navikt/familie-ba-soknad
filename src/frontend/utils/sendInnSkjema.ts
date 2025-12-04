@@ -10,7 +10,7 @@ export const sendInn = async <T>(
     formatert: T,
     axiosRequest: AxiosRequest,
     søknadApiPath: string,
-    rejectCallback?: (res: AxiosError) => void
+    rejectCallback?: (error: AxiosError) => void
 ): Promise<Ressurs<IKvittering>> =>
     await axiosRequest<IKvittering, T>({
         url: søknadApiPath,
