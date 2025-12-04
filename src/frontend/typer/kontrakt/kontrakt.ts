@@ -17,6 +17,7 @@ import {
 
 export interface ISøknadKontrakt {
     kontraktVersjon: number;
+    lestOgForståttBekreftelse: boolean;
     antallEøsSteg: number;
     søknadstype: ESøknadstype;
     søker: ISøknadKontraktSøker;

@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction, RequestHandler } from 'express';
+import { RequestHandler, Request, Response, NextFunction } from 'express';
 
 import { byggFeiletRessurs } from '@navikt/familie-typer';
 
@@ -18,20 +18,17 @@ export const hentSpråkteksterAlleSpråk = (språknøkkel: string): Record<Local
 
 export const erklaeringInterceptor: RequestHandler = (request: Request, response: Response, next: NextFunction) => {
     const søknad: ISøknadKontrakt = request.body;
-    const spmKey = 'lestOgForståttBekreftelse';
-    const aksepterteSvarSpråkNøkkel = 'forside.bekreftelsesboks.erklæring.spm';
-    const aksepterteSvar = Object.values(hentSpråkteksterAlleSpråk(aksepterteSvarSpråkNøkkel));
+    const lestOgForståttErklæringKey = 'lestOgForståttBekreftelse';
 
-    if (!('spørsmål' in søknad && spmKey in søknad.spørsmål && 'verdi' in søknad.spørsmål[spmKey])) {
-        response.status(400).send(byggFeiletRessurs('Ugyldig søknadformat'));
+    if (!(lestOgForståttErklæringKey in søknad)) {
+        response.status(400).send(byggFeiletRessurs('Ugyldig søknadformat: mangler "lestOgForståttBekreftelse"'));
         return;
     }
 
-    const svar = søknad.spørsmål[spmKey];
-
-    if (aksepterteSvar.includes(svar.verdi[søknad.originalSpråk])) {
-        next();
-    } else {
-        response.status(403).send(byggFeiletRessurs('Du må huke av for at du oppgir korrekte opplysninger'));
+    if (!søknad.lestOgForståttBekreftelse) {
+        response.status(400).send(byggFeiletRessurs('Bruker har ikke huket av for at de oppgir korrekte opplysninger'));
+        return;
     }
+
+    next();
 };

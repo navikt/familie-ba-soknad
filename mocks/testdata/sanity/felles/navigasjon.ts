@@ -12,4 +12,5 @@ export const navigasjonTekstinnhold: INavigasjonTekstinnhold = {
     sendSoeknadKnapp: lagLocaleRecordString(),
     slettSoeknadKnapp: lagLocaleRecordString(),
     fortsettSenereKnapp: lagLocaleRecordString(),
+    sistLagret: lagLocaleRecordString(),
 };

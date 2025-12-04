@@ -1,16 +1,17 @@
-import React, { ReactNode, useEffect, useState } from 'react';
+import React, { MouseEventHandler, ReactNode, useEffect, useState } from 'react';
 
-import styled from 'styled-components';
+import { useNavigate } from 'react-router';
 
 import { FormSummary } from '@navikt/ds-react';
 import type { ISkjema } from '@navikt/familie-skjema';
 
+import { BASE_PATH } from '../../../../shared-utils/miljø';
+import { unslash } from '../../../../shared-utils/unslash';
 import { useAppContext } from '../../../context/AppContext';
 import { useStegContext } from '../../../context/StegContext';
 import { ISteg, RouteEnum } from '../../../typer/routes';
 import { FlettefeltVerdier, LocaleRecordBlock, LocaleRecordString } from '../../../typer/sanity/sanity';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
-import { AppLenke } from '../../Felleskomponenter/AppLenke/AppLenke';
 import { SkjemaFeiloppsummering } from '../../Felleskomponenter/SkjemaFeiloppsummering/SkjemaFeiloppsummering';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
@@ -30,12 +31,6 @@ interface Props {
     settFeilAnchors?: React.Dispatch<React.SetStateAction<string[]>>;
     children?: ReactNode;
 }
-
-const StyledAppLenkeTekst = styled.span`
-    && {
-        white-space: nowrap;
-    }
-`;
 
 const Oppsummeringsbolk: React.FC<Props> = ({
     children,
@@ -76,6 +71,15 @@ const Oppsummeringsbolk: React.FC<Props> = ({
         }
     }, [visFeil]);
 
+    const navigate = useNavigate();
+
+    const navigerTilSteg: MouseEventHandler = event => {
+        event.preventDefault();
+        navigate({
+            pathname: steg?.path,
+        });
+    };
+
     return (
         <FormSummary>
             <FormSummary.Header>
@@ -89,18 +93,22 @@ const Oppsummeringsbolk: React.FC<Props> = ({
                         <SpråkTekst id={tittel} values={språkValues} />
                     )}
                 </FormSummary.Heading>
-                {steg && !visFeil && (
-                    <AppLenke steg={steg}>
-                        <StyledAppLenkeTekst>
-                            {plainTekst(tekster().OPPSUMMERING.endreSvarLenkeTekst)}
-                        </StyledAppLenkeTekst>
-                    </AppLenke>
-                )}
             </FormSummary.Header>
             <FormSummary.Answers>
                 {children}
                 {visFeil && <SkjemaFeiloppsummering skjema={skjema} stegMedFeil={steg} id={feilOppsummeringId} />}
             </FormSummary.Answers>
+            {steg && !visFeil && (
+                <FormSummary.Footer>
+                    <FormSummary.EditLink
+                        href={BASE_PATH + unslash(steg.path)}
+                        rel="noopener noreferrer"
+                        onClick={navigerTilSteg}
+                    >
+                        {plainTekst(tekster().OPPSUMMERING.endreSvarLenkeTekst)}
+                    </FormSummary.EditLink>
+                </FormSummary.Footer>
+            )}
         </FormSummary>
     );
 };
