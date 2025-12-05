@@ -8,6 +8,7 @@
     "module": "ESNext",
     "moduleResolution": "Node",
     "types": [
+        "node",
         "vitest/globals",
         "@testing-library/jest-dom"
       ],
