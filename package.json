@@ -62,7 +62,7 @@
     "@portabletext/toolkit": "^3.0.1",
     "@sanity/client": "^7.12.0",
     "@sentry/react": "^10.27.0",
-    "axios": "^1.12.0",
+    "axios": "^1.13.2",
     "compression": "^1.8.0",
     "concurrently": "^9.2.0",
     "cookie-parser": "^1.4.7",
