@@ -6,6 +6,7 @@
     "module": "ESNext",
     "outDir": "./build",
     "rootDir": "./src",
+    "types": ["node"]
   },
   "include": [
     "./src/backend",
