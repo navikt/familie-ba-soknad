@@ -3,7 +3,6 @@ import React, { ReactNode } from 'react';
 import { TrashFillIcon } from '@navikt/aksel-icons';
 import { Button, FormSummary } from '@navikt/ds-react';
 
-import { HeadingLevel } from '../../../typer/common';
 import { LocaleRecordBlock } from '../../../typer/sanity/sanity';
 import TekstBlock from '../Sanity/TekstBlock';
 
@@ -12,7 +11,6 @@ interface Props {
     fjernKnappTekst?: LocaleRecordBlock;
     tittel: ReactNode;
     children: ReactNode;
-    headingLevel?: HeadingLevel;
 }
 
 function PeriodeOppsummering({ fjernPeriodeCallback = undefined, fjernKnappTekst, tittel, children }: Props) {
