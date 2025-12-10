@@ -10,8 +10,8 @@ import TekstBlock from '../Sanity/TekstBlock';
 interface Props {
     fjernPeriodeCallback?: () => void;
     fjernKnappTekst?: LocaleRecordBlock;
-    tittel?: ReactNode;
-    children?: ReactNode;
+    tittel: ReactNode;
+    children: ReactNode;
     headingLevel?: HeadingLevel;
 }
 
