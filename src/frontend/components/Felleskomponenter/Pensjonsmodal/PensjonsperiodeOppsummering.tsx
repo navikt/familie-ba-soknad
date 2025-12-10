@@ -43,7 +43,6 @@ export const PensjonsperiodeOppsummering: React.FC<PensjonsperiodeOppsummeringPr
     return (
         <PeriodeOppsummering
             fjernPeriodeCallback={fjernPeriodeCallback && (() => fjernPeriodeCallback(pensjonsperiode))}
-            fjernKnappSpråkId={'felles.fjernpensjon.knapp'}
             fjernKnappTekst={teksterForModal.fjernKnapp}
             tittel={
                 <TekstBlock

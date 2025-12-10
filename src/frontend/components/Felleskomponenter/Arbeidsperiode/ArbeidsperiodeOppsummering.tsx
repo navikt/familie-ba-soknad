@@ -44,7 +44,6 @@ export const ArbeidsperiodeOppsummering: React.FC<ArbeidsperiodeOppsummeringProp
     return (
         <PeriodeOppsummering
             fjernPeriodeCallback={fjernPeriodeCallback && (() => fjernPeriodeCallback(arbeidsperiode))}
-            fjernKnappSpråkId={'felles.fjernarbeidsperiode.knapp'}
             fjernKnappTekst={teksterForModal.fjernKnapp}
             tittel={
                 <TekstBlock

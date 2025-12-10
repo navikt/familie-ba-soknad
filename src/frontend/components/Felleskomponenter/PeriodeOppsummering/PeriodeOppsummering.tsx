@@ -6,24 +6,16 @@ import { Button, FormSummary } from '@navikt/ds-react';
 import { HeadingLevel } from '../../../typer/common';
 import { LocaleRecordBlock } from '../../../typer/sanity/sanity';
 import TekstBlock from '../Sanity/TekstBlock';
-import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
 interface Props {
     fjernPeriodeCallback?: () => void;
-    fjernKnappSpråkId?: string;
     fjernKnappTekst?: LocaleRecordBlock;
     tittel?: ReactNode;
     children?: ReactNode;
     headingLevel?: HeadingLevel;
 }
 
-function PeriodeOppsummering({
-    fjernPeriodeCallback = undefined,
-    fjernKnappSpråkId,
-    fjernKnappTekst,
-    tittel,
-    children,
-}: Props) {
+function PeriodeOppsummering({ fjernPeriodeCallback = undefined, fjernKnappTekst, tittel, children }: Props) {
     return (
         <FormSummary.Answer>
             <FormSummary.Label>{tittel}</FormSummary.Label>
@@ -37,11 +29,7 @@ function PeriodeOppsummering({
                             onClick={() => fjernPeriodeCallback()}
                             icon={<TrashFillIcon aria-hidden />}
                         >
-                            {fjernKnappTekst ? (
-                                <TekstBlock block={fjernKnappTekst} />
-                            ) : (
-                                <SpråkTekst id={fjernKnappSpråkId} />
-                            )}
+                            <TekstBlock block={fjernKnappTekst} />
                         </Button>
                     )}
                 </FormSummary.Answers>
