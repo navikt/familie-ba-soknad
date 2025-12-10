@@ -14,8 +14,6 @@ import { OppsummeringFelt } from '../../SøknadsSteg/Oppsummering/OppsummeringFe
 import PeriodeOppsummering from '../PeriodeOppsummering/PeriodeOppsummering';
 import TekstBlock from '../Sanity/TekstBlock';
 
-import { arbeidsperiodeOppsummeringOverskrift } from './arbeidsperiodeSpråkUtils';
-
 interface Props {
     arbeidsperiode: IArbeidsperiode;
     nummer: number;
@@ -48,8 +46,6 @@ export const ArbeidsperiodeOppsummering: React.FC<ArbeidsperiodeOppsummeringProp
             fjernPeriodeCallback={fjernPeriodeCallback && (() => fjernPeriodeCallback(arbeidsperiode))}
             fjernKnappSpråkId={'felles.fjernarbeidsperiode.knapp'}
             fjernKnappTekst={teksterForModal.fjernKnapp}
-            nummer={nummer}
-            tittelSpråkId={arbeidsperiodeOppsummeringOverskrift(gjelderUtlandet)}
             tittel={
                 <TekstBlock
                     block={teksterForModal.oppsummeringstittel}

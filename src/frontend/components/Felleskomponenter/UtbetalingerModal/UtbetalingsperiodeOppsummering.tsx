@@ -44,8 +44,6 @@ export const UtbetalingsperiodeOppsummering: React.FC<UtbetalingsperiodeOppsumme
             fjernPeriodeCallback={fjernPeriodeCallback && (() => fjernPeriodeCallback(utbetalingsperiode))}
             fjernKnappSpråkId={'felles.fjernytelse.knapp'}
             fjernKnappTekst={teksterForPersontype.fjernKnapp}
-            nummer={nummer}
-            tittelSpråkId={'felles.flereytelser.periode'}
             tittel={
                 <TekstBlock
                     block={teksterForPersontype.oppsummeringstittel}

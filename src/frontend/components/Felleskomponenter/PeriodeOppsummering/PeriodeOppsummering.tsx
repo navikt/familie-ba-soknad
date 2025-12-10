@@ -9,30 +9,24 @@ import TekstBlock from '../Sanity/TekstBlock';
 import SpråkTekst from '../SpråkTekst/SpråkTekst';
 
 interface Props {
-    nummer: number;
     fjernPeriodeCallback?: () => void;
     fjernKnappSpråkId?: string;
     fjernKnappTekst?: LocaleRecordBlock;
-    tittelSpråkId: string;
     tittel?: ReactNode;
     children?: ReactNode;
     headingLevel?: HeadingLevel;
 }
 
 function PeriodeOppsummering({
-    nummer,
     fjernPeriodeCallback = undefined,
     fjernKnappSpråkId,
     fjernKnappTekst,
-    tittelSpråkId,
     tittel,
     children,
 }: Props) {
     return (
         <FormSummary.Answer>
-            <FormSummary.Label>
-                {tittel ? tittel : <SpråkTekst id={tittelSpråkId} values={{ x: nummer }} />}
-            </FormSummary.Label>
+            <FormSummary.Label>{tittel}</FormSummary.Label>
             <FormSummary.Value>
                 <FormSummary.Answers>
                     {children}

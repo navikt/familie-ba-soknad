@@ -58,7 +58,6 @@ export const BarnetrygdsperiodeOppsummering: React.FC<Props> = ({
     return (
         <PeriodeOppsummering
             fjernPeriodeCallback={fjernPeriodeCallback && (() => fjernPeriodeCallback(barnetrygdsperiode))}
-            tittelSpråkId={'ombarnet.trygdandreperioder.periode'}
             fjernKnappSpråkId={'felles.fjernbarnetrygd.knapp'}
             tittel={
                 <TekstBlock
@@ -66,7 +65,6 @@ export const BarnetrygdsperiodeOppsummering: React.FC<Props> = ({
                     flettefelter={{ antall: nummer.toString() }}
                 />
             }
-            nummer={nummer}
             headingLevel={headingLevel}
         >
             {mottarEøsBarnetrygdNå.svar && (
