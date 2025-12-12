@@ -12,8 +12,6 @@ import { skalSpørreOmIdNummerForPågåendeSøknadEøsLand } from '../../../../u
 import { IdNummer } from '../IdNummer';
 import { idNummerLandMedPeriodeType, PeriodeType } from '../idnummerUtils';
 
-import { EøsBarnSpørsmålId, eøsBarnSpørsmålSpråkId } from './spørsmål';
-
 const IdNummerForBarn: React.FC<{
     landAlphaCode: Alpha3Code | '';
     periodeType?: PeriodeType;
@@ -26,8 +24,6 @@ const IdNummerForBarn: React.FC<{
     return (
         <IdNummer
             lesevisning={lesevisning}
-            spørsmålSpråkId={eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.idNummer]}
-            spørsmålCheckboxSpråkId={eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.idNummerUkjent]}
             feilmeldingSpråkId={'eøs-om-barn.barnidnummer.feilmelding'}
             idNummerVerdiFraSøknad={barn.idNummer.find(verdi => verdi.land === landAlphaCode)?.idnummer}
             skjema={skjema}

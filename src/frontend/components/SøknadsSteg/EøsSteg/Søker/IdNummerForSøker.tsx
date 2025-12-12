@@ -8,8 +8,6 @@ import { IEøsForSøkerFeltTyper } from '../../../../typer/skjema';
 import { IdNummer } from '../IdNummer';
 import { idNummerLandMedPeriodeType } from '../idnummerUtils';
 
-import { EøsSøkerSpørsmålId, eøsSøkerSpørsmålSpråkId } from './spørsmål';
-
 interface Props {
     skjema: ISkjema<IEøsForSøkerFeltTyper, string>;
     settIdNummerFelter: Dispatch<SetStateAction<Felt<string>[]>>;
@@ -37,8 +35,6 @@ const IdNummerForSøker: React.FC<Props> = ({ lesevisning = false, skjema, settI
                 return (
                     !!landMedPeriodeType.land && (
                         <IdNummer
-                            spørsmålSpråkId={eøsSøkerSpørsmålSpråkId[EøsSøkerSpørsmålId.idNummer]}
-                            spørsmålCheckboxSpråkId={eøsSøkerSpørsmålSpråkId[EøsSøkerSpørsmålId.idNummerUkjent]}
                             feilmeldingSpråkId={'eøs-om-deg.dittidnummer.feilmelding'}
                             idNummerVerdiFraSøknad={
                                 søker.idNummer.find(verdi => verdi.land === landMedPeriodeType.land)?.idnummer
