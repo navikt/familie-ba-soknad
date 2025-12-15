@@ -1,8 +1,8 @@
 import { exec } from 'child_process';
 
-import en from '../frontend/assets/lang/en.json' assert { type: 'json' };
-import nb from '../frontend/assets/lang/nb.json' assert { type: 'json' };
-import nn from '../frontend/assets/lang/nn.json' assert { type: 'json' };
+import en from '../common/lang/en.json' with { type: 'json' };
+import nb from '../common/lang/nb.json' with { type: 'json' };
+import nn from '../common/lang/nn.json' with { type: 'json' };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const finnMuligensUbrukteIder = (alleBenyttedeSpråkIder, språkfil, språkfilNavn) => {
