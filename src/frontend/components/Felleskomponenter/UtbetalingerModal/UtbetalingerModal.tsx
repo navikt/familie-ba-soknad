@@ -15,7 +15,7 @@ import { LandDropdown } from '../Dropdowns/LandDropdown';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import { DagIMåneden, MånedÅrVelger } from '../MånedÅrVelger/MånedÅrVelger';
 import TekstBlock from '../Sanity/TekstBlock';
-import { SkjemaCheckboxForSanity } from '../SkjemaCheckbox/SkjemaCheckboxForSanity';
+import { SkjemaCheckbox } from '../SkjemaCheckbox/SkjemaCheckbox';
 import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeiloppsummering';
 import SkjemaModal from '../SkjemaModal/SkjemaModal';
 
@@ -142,7 +142,7 @@ export const UtbetalingerModal: React.FC<UtbetalingerModalProps> = ({
                             kanIkkeVæreFortid={!periodenErAvsluttet}
                             disabled={utbetalingTilDatoUkjent.verdi === ESvar.JA}
                         />
-                        <SkjemaCheckboxForSanity
+                        <SkjemaCheckbox
                             label={plainTekst(teksterForPersonType.sluttdatoFremtid.checkboxLabel)}
                             felt={utbetalingTilDatoUkjent}
                         />
