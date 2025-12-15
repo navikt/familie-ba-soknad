@@ -10,8 +10,6 @@ import { skalSkjuleAndreForelderFelt } from '../../../../utils/barn';
 import { IdNummer } from '../IdNummer';
 import { idNummerLandMedPeriodeType } from '../idnummerUtils';
 
-import { EøsBarnSpørsmålId, eøsBarnSpørsmålSpråkId } from './spørsmål';
-
 const IdNummerForAndreForelder: React.FC<{
     skjema: ISkjema<IEøsForBarnFeltTyper, string>;
     barn: IBarnMedISøknad;
@@ -41,8 +39,6 @@ const IdNummerForAndreForelder: React.FC<{
                         <IdNummer
                             key={index}
                             lesevisning={lesevisning}
-                            spørsmålSpråkId={eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.idNummerAndreForelder]}
-                            spørsmålCheckboxSpråkId={eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.idNummerUkjent]}
                             feilmeldingSpråkId={'eøs-om-barn.andreforelderidnummer.feilmelding'}
                             idNummerVerdiFraSøknad={
                                 barn.andreForelder?.idNummer.find(verdi => verdi.land === landMedPeriodeType.land)
