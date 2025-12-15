@@ -357,9 +357,12 @@ export const nullstilteEøsFelterForAndreForelder = (andreForelder: IAndreForeld
     adresse: { ...andreForelder.adresse, svar: '' },
 });
 
+type TomString = '';
+const tomString: TomString = '';
+
 export const nullstilteEøsFelterForBarn = (barn: IBarnMedISøknad) => ({
     idNummer: [],
-    søkersSlektsforhold: { ...barn.søkersSlektsforhold, svar: '' },
+    søkersSlektsforhold: { ...barn.søkersSlektsforhold, svar: tomString },
     søkersSlektsforholdSpesifisering: {
         ...barn.søkersSlektsforholdSpesifisering,
         svar: '',
