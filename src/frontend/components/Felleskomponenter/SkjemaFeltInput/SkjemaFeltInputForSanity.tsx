@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { TextField } from '@navikt/ds-react';
 import type { Felt } from '@navikt/familie-skjema';
 
-interface SkjemaFeltInputForSanityProps {
+interface SkjemaFeltInputProps {
     // eslint-disable-next-line
     felt: Felt<any>;
     visFeilmeldinger: boolean;
@@ -23,7 +23,7 @@ const StyledTextField = styled(TextField)<{ $fullbredde: boolean }>`
 /**
  * Henter input props fra felt, og fra props. Props overstyrer felt.
  */
-export const SkjemaFeltInputForSanity: React.FC<SkjemaFeltInputForSanityProps> = props => {
+export const SkjemaFeltInput: React.FC<SkjemaFeltInputProps> = props => {
     const { felt, label, visFeilmeldinger, description, autoComplete = 'off', disabled, fullbredde = true } = props;
     const navInputPropsFraFeltHook = felt.hentNavInputProps(visFeilmeldinger);
 

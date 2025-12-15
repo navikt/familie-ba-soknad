@@ -15,7 +15,7 @@ import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import { DagIMåneden, MånedÅrVelger } from '../MånedÅrVelger/MånedÅrVelger';
 import TekstBlock from '../Sanity/TekstBlock';
 import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeiloppsummering';
-import { SkjemaFeltInputForSanity } from '../SkjemaFeltInput/SkjemaFeltInputForSanity';
+import { SkjemaFeltInput } from '../SkjemaFeltInput/SkjemaFeltInputForSanity';
 import SkjemaModal from '../SkjemaModal/SkjemaModal';
 
 import { BarnetrygdperiodeSpørsmålId } from './spørsmål';
@@ -150,7 +150,7 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
                 />
             )}
             {månedligBeløp.erSynlig && (
-                <SkjemaFeltInputForSanity
+                <SkjemaFeltInput
                     felt={skjema.felter.månedligBeløp}
                     visFeilmeldinger={skjema.visFeilmeldinger}
                     label={

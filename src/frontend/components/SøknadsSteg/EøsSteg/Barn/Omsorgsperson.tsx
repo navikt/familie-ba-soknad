@@ -21,7 +21,7 @@ import JaNeiSpm from '../../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import { Pensjonsperiode } from '../../../Felleskomponenter/Pensjonsmodal/Pensjonsperiode';
 import TekstBlock from '../../../Felleskomponenter/Sanity/TekstBlock';
 import { SkjemaCheckboxForSanity } from '../../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckboxForSanity';
-import { SkjemaFeltInputForSanity } from '../../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInputForSanity';
+import { SkjemaFeltInput } from '../../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInputForSanity';
 import SkjemaFieldset from '../../../Felleskomponenter/SkjemaFieldset';
 import { Utbetalingsperiode } from '../../../Felleskomponenter/UtbetalingerModal/Utbetalingsperiode';
 
@@ -65,7 +65,7 @@ const Omsorgsperson: React.FC<OmsorgspersonProps> = ({ skjema, barn, periodeFunk
 
     return (
         <SkjemaFieldset legend={plainTekst(eøsForBarnTekster.oppgittIkkeBorFastSammenMedDeg, flettefelter)}>
-            <SkjemaFeltInputForSanity
+            <SkjemaFeltInput
                 felt={skjema.felter.omsorgspersonNavn}
                 visFeilmeldinger={skjema.visFeilmeldinger}
                 label={<TekstBlock block={eøsForBarnTekster.hvaHeterOmsorgspersonen.sporsmal} />}
@@ -85,7 +85,7 @@ const Omsorgsperson: React.FC<OmsorgspersonProps> = ({ skjema, barn, periodeFunk
                 />
             )}
             {skjema.felter.omsorgpersonSlektsforholdSpesifisering.erSynlig && (
-                <SkjemaFeltInputForSanity
+                <SkjemaFeltInput
                     felt={skjema.felter.omsorgpersonSlektsforholdSpesifisering}
                     visFeilmeldinger={skjema.visFeilmeldinger}
                     label={
@@ -97,7 +97,7 @@ const Omsorgsperson: React.FC<OmsorgspersonProps> = ({ skjema, barn, periodeFunk
                 />
             )}
             <div>
-                <SkjemaFeltInputForSanity
+                <SkjemaFeltInput
                     felt={skjema.felter.omsorgspersonIdNummer}
                     visFeilmeldinger={skjema.visFeilmeldinger}
                     label={<TekstBlock block={eøsForBarnTekster.idNummerOmsorgsperson.sporsmal} />}
@@ -108,7 +108,7 @@ const Omsorgsperson: React.FC<OmsorgspersonProps> = ({ skjema, barn, periodeFunk
                     label={plainTekst(eøsForBarnTekster.idNummerOmsorgsperson.checkboxLabel)}
                 />
             </div>
-            <SkjemaFeltInputForSanity
+            <SkjemaFeltInput
                 felt={skjema.felter.omsorgspersonAdresse}
                 visFeilmeldinger={skjema.visFeilmeldinger}
                 label={<TekstBlock block={eøsForBarnTekster.hvorBorOmsorgsperson.sporsmal} />}

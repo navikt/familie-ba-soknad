@@ -16,7 +16,7 @@ import { DagIMåneden, MånedÅrVelger } from '../MånedÅrVelger/MånedÅrVelge
 import TekstBlock from '../Sanity/TekstBlock';
 import { SkjemaCheckboxForSanity } from '../SkjemaCheckbox/SkjemaCheckboxForSanity';
 import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeiloppsummering';
-import { SkjemaFeltInputForSanity } from '../SkjemaFeltInput/SkjemaFeltInputForSanity';
+import { SkjemaFeltInput } from '../SkjemaFeltInput/SkjemaFeltInputForSanity';
 import SkjemaModal from '../SkjemaModal/SkjemaModal';
 
 import { ArbeidsperiodeSpørsmålsId } from './spørsmål';
@@ -130,7 +130,7 @@ export const ArbeidsperiodeModal: React.FC<ArbeidsperiodeModalProps> = ({
                 />
             )}
             {arbeidsgiver.erSynlig && (
-                <SkjemaFeltInputForSanity
+                <SkjemaFeltInput
                     felt={skjema.felter.arbeidsgiver}
                     visFeilmeldinger={skjema.visFeilmeldinger}
                     label={<TekstBlock block={teksterForModal.arbeidsgiver.sporsmal} />}

@@ -16,7 +16,7 @@ import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import { Pensjonsperiode } from '../../Felleskomponenter/Pensjonsmodal/Pensjonsperiode';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import { SkjemaCheckboxForSanity } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckboxForSanity';
-import { SkjemaFeltInputForSanity } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInputForSanity';
+import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInputForSanity';
 import SkjemaFieldset from '../../Felleskomponenter/SkjemaFieldset';
 import AndreForelderOppsummering from '../Oppsummering/OppsummeringSteg/OmBarnet/AndreForelderOppsummering';
 
@@ -61,7 +61,7 @@ const AndreForelder: React.FC<{
             skjema.felter.sammeForelderSomAnnetBarn.verdi === AlternativtSvarForInput.ANNEN_FORELDER ? (
                 <>
                     <div>
-                        <SkjemaFeltInputForSanity
+                        <SkjemaFeltInput
                             felt={skjema.felter.andreForelderNavn}
                             visFeilmeldinger={skjema.visFeilmeldinger}
                             label={<TekstBlock block={navnAndreForelder.sporsmal} />}
@@ -74,7 +74,7 @@ const AndreForelder: React.FC<{
                     </div>
                     {skjema.felter.andreForelderFnr.erSynlig && (
                         <div>
-                            <SkjemaFeltInputForSanity
+                            <SkjemaFeltInput
                                 felt={skjema.felter.andreForelderFnr}
                                 visFeilmeldinger={skjema.visFeilmeldinger}
                                 label={<TekstBlock block={foedselsnummerDnummerAndreForelder.sporsmal} />}
