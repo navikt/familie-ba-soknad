@@ -1,6 +1,6 @@
 import { type Avhengigheter, useFelt } from '@navikt/familie-skjema';
 
-import { ISODateString } from '../typer/common';
+import { ISODateString } from '../../common/typer/ISODateString';
 import { ISøknadSpørsmål } from '../typer/spørsmål';
 import { validerDato } from '../utils/dato';
 

@@ -1,5 +1,7 @@
 import { ESvar } from '@navikt/familie-form-elements';
 
+import { ISODateString } from '../../common/typer/ISODateString';
+
 export type ESvarMedUbesvart = ESvar | null;
 
 export enum AlternativtSvarForInput {
@@ -9,5 +11,3 @@ export enum AlternativtSvarForInput {
 
 export type DatoMedUkjent = ISODateString | AlternativtSvarForInput.UKJENT;
 export type BarnetsId = string;
-
-export type ISODateString = string;

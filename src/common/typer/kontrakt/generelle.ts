@@ -1,5 +1,5 @@
-import { ISODateString } from '../../../frontend/typer/common';
 import { FlettefeltVerdier, LocaleRecordBlock, LocaleRecordString } from '../../../frontend/typer/sanity/sanity';
+import { ISODateString } from '../ISODateString';
 import { LocaleType } from '../localeType';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
