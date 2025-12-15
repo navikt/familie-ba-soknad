@@ -10,7 +10,7 @@ import { IDinLivssituasjonFeltTyper, ITidligereSamboerFeltTyper } from '../../..
 import { dagensDato, gårsdagensDato } from '../../../utils/dato';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
-import { SkjemaCheckboxForSanity } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckboxForSanity';
+import { SkjemaCheckbox } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
 import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
 
 const SamboerSkjema: React.FC<{
@@ -44,7 +44,7 @@ const SamboerSkjema: React.FC<{
                     label={<TekstBlock block={teksterForModal.foedselsnummerEllerDNummer.sporsmal} />}
                     disabled={samboerFelter.fnrUkjent.verdi === ESvar.JA}
                 />
-                <SkjemaCheckboxForSanity
+                <SkjemaCheckbox
                     label={<TekstBlock block={teksterForModal.foedselsnummerEllerDNummer.checkboxLabel} />}
                     felt={samboerFelter.fnrUkjent}
                 />
@@ -59,7 +59,7 @@ const SamboerSkjema: React.FC<{
                         disabled={samboerFelter.fødselsdatoUkjent.verdi === ESvar.JA}
                         strategy={erIModal ? 'absolute' : 'fixed'}
                     />
-                    <SkjemaCheckboxForSanity
+                    <SkjemaCheckbox
                         label={<TekstBlock block={teksterForModal.foedselsdato.checkboxLabel} />}
                         felt={samboerFelter.fødselsdatoUkjent}
                     />

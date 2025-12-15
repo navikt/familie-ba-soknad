@@ -15,7 +15,7 @@ import { Arbeidsperiode } from '../../Felleskomponenter/Arbeidsperiode/Arbeidspe
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import { Pensjonsperiode } from '../../Felleskomponenter/Pensjonsmodal/Pensjonsperiode';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
-import { SkjemaCheckboxForSanity } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckboxForSanity';
+import { SkjemaCheckbox } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
 import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
 import SkjemaFieldset from '../../Felleskomponenter/SkjemaFieldset';
 import AndreForelderOppsummering from '../Oppsummering/OppsummeringSteg/OmBarnet/AndreForelderOppsummering';
@@ -67,7 +67,7 @@ const AndreForelder: React.FC<{
                             label={<TekstBlock block={navnAndreForelder.sporsmal} />}
                             disabled={skjema.felter.andreForelderKanIkkeGiOpplysninger.verdi === ESvar.JA}
                         />
-                        <SkjemaCheckboxForSanity
+                        <SkjemaCheckbox
                             felt={skjema.felter.andreForelderKanIkkeGiOpplysninger}
                             label={<TekstBlock block={navnAndreForelder.checkboxLabel} />}
                         />
@@ -80,7 +80,7 @@ const AndreForelder: React.FC<{
                                 label={<TekstBlock block={foedselsnummerDnummerAndreForelder.sporsmal} />}
                                 disabled={skjema.felter.andreForelderFnrUkjent.verdi === ESvar.JA}
                             />
-                            <SkjemaCheckboxForSanity
+                            <SkjemaCheckbox
                                 felt={skjema.felter.andreForelderFnrUkjent}
                                 label={<TekstBlock block={foedselsnummerDnummerAndreForelder.checkboxLabel} />}
                             />
@@ -96,7 +96,7 @@ const AndreForelder: React.FC<{
                                 disabled={skjema.felter.andreForelderFødselsdatoUkjent.verdi === ESvar.JA}
                                 strategy={'absolute'}
                             />
-                            <SkjemaCheckboxForSanity
+                            <SkjemaCheckbox
                                 felt={skjema.felter.andreForelderFødselsdatoUkjent}
                                 label={<TekstBlock block={foedselsdatoAndreForelder.checkboxLabel} />}
                             />

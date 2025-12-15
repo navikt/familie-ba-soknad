@@ -19,7 +19,7 @@ import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
 import PerioderContainer from '../../Felleskomponenter/PerioderContainer';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
-import { SkjemaCheckboxForSanity } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckboxForSanity';
+import { SkjemaCheckbox } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
 import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
 import SkjemaFieldset from '../../Felleskomponenter/SkjemaFieldset';
 import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
@@ -100,7 +100,7 @@ const Oppfølgningsspørsmål: React.FC<{
                 <SkjemaFieldset
                     legend={<TekstBlock block={opplystInstitusjon} flettefelter={{ barnetsNavn: barn.navn }} />}
                 >
-                    <SkjemaCheckboxForSanity
+                    <SkjemaCheckbox
                         felt={institusjonIUtlandCheckbox}
                         label={<TekstBlock block={institusjonIUtlandetCheckbox} />}
                     />
@@ -138,7 +138,7 @@ const Oppfølgningsspørsmål: React.FC<{
                             label={<TekstBlock block={institusjonSluttdato.sporsmal} />}
                             disabled={institusjonOppholdSluttVetIkke.verdi === ESvar.JA}
                         />
-                        <SkjemaCheckboxForSanity
+                        <SkjemaCheckbox
                             felt={institusjonOppholdSluttVetIkke}
                             label={<TekstBlock block={institusjonUkjentSluttCheckbox} />}
                         />

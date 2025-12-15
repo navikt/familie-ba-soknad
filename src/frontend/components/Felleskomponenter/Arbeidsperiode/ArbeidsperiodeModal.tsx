@@ -14,7 +14,7 @@ import { LandDropdown } from '../Dropdowns/LandDropdown';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
 import { DagIMåneden, MånedÅrVelger } from '../MånedÅrVelger/MånedÅrVelger';
 import TekstBlock from '../Sanity/TekstBlock';
-import { SkjemaCheckboxForSanity } from '../SkjemaCheckbox/SkjemaCheckboxForSanity';
+import { SkjemaCheckbox } from '../SkjemaCheckbox/SkjemaCheckbox';
 import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeiloppsummering';
 import { SkjemaFeltInput } from '../SkjemaFeltInput/SkjemaFeltInput';
 import SkjemaModal from '../SkjemaModal/SkjemaModal';
@@ -170,7 +170,7 @@ export const ArbeidsperiodeModal: React.FC<ArbeidsperiodeModalProps> = ({
                         kanIkkeVæreFortid={!periodenErAvsluttet}
                         disabled={skjema.felter.tilDatoArbeidsperiodeUkjent.verdi === ESvar.JA}
                     />
-                    <SkjemaCheckboxForSanity
+                    <SkjemaCheckbox
                         felt={skjema.felter.tilDatoArbeidsperiodeUkjent}
                         label={plainTekst(teksterForModal.sluttdatoFremtid.checkboxLabel)}
                     />

@@ -15,7 +15,7 @@ import SlektsforholdDropdown from '../../../Felleskomponenter/Dropdowns/Slektsfo
 import JaNeiSpm from '../../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import { Pensjonsperiode } from '../../../Felleskomponenter/Pensjonsmodal/Pensjonsperiode';
 import TekstBlock from '../../../Felleskomponenter/Sanity/TekstBlock';
-import { SkjemaCheckboxForSanity } from '../../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckboxForSanity';
+import { SkjemaCheckbox } from '../../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
 import { SkjemaFeltInput } from '../../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
 import SkjemaFieldset from '../../../Felleskomponenter/SkjemaFieldset';
 import Steg from '../../../Felleskomponenter/Steg/Steg';
@@ -165,7 +165,7 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                         label={<TekstBlock block={hvorBorBarnet.sporsmal} flettefelter={{ barnetsNavn: barn.navn }} />}
                         disabled={skjema.felter.barnetsAdresseVetIkke.verdi === ESvar.JA}
                     />
-                    <SkjemaCheckboxForSanity
+                    <SkjemaCheckbox
                         felt={skjema.felter.barnetsAdresseVetIkke}
                         label={plainTekst(hvorBorBarnet.checkboxLabel)}
                     />
@@ -194,7 +194,7 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                                         description={plainTekst(hvorBorAndreForelder.beskrivelse)}
                                         disabled={skjema.felter.andreForelderAdresseVetIkke.verdi === ESvar.JA}
                                     />
-                                    <SkjemaCheckboxForSanity
+                                    <SkjemaCheckbox
                                         felt={skjema.felter.andreForelderAdresseVetIkke}
                                         label={plainTekst(hvorBorAndreForelder.checkboxLabel)}
                                     />

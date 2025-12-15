@@ -11,7 +11,7 @@ import { visFeiloppsummering } from '../../../../utils/hjelpefunksjoner';
 import JaNeiSpm from '../../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 import TekstBlock from '../../../Felleskomponenter/Sanity/TekstBlock';
-import { SkjemaCheckboxForSanity } from '../../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckboxForSanity';
+import { SkjemaCheckbox } from '../../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
 import { SkjemaFeiloppsummering } from '../../../Felleskomponenter/SkjemaFeiloppsummering/SkjemaFeiloppsummering';
 import { SkjemaFeltInput } from '../../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
 import SkjemaModal from '../../../Felleskomponenter/SkjemaModal/SkjemaModal';
@@ -81,7 +81,7 @@ const LeggTilBarnModal: React.FC<{
                                 label={<TekstBlock block={etternavn.sporsmal} />}
                                 disabled={skjema.felter.navnetErUbestemt.verdi === ESvar.JA}
                             />
-                            <SkjemaCheckboxForSanity
+                            <SkjemaCheckbox
                                 felt={skjema.felter.navnetErUbestemt}
                                 visFeilmeldinger={skjema.visFeilmeldinger}
                                 label={<TekstBlock block={etternavn.checkboxLabel} />}
@@ -95,7 +95,7 @@ const LeggTilBarnModal: React.FC<{
                             label={<TekstBlock block={foedselsnummerEllerDNummer.sporsmal} />}
                             disabled={skjema.felter.ikkeFåttIdentChecked.verdi === ESvar.JA}
                         />
-                        <SkjemaCheckboxForSanity
+                        <SkjemaCheckbox
                             felt={skjema.felter.ikkeFåttIdentChecked}
                             visFeilmeldinger={skjema.visFeilmeldinger}
                             label={<TekstBlock block={foedselsnummerEllerDNummer.checkboxLabel} />}

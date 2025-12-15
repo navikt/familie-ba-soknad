@@ -14,7 +14,7 @@ import { ISanitySpørsmålDokument } from '../../../typer/sanity/sanity';
 import { IEøsForBarnFeltTyper, IEøsForSøkerFeltTyper } from '../../../typer/skjema';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
-import { SkjemaCheckboxForSanity } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckboxForSanity';
+import { SkjemaCheckbox } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
 import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
 import { OppsummeringFelt } from '../Oppsummering/OppsummeringFelt';
 
@@ -118,7 +118,7 @@ export const IdNummer: React.FC<{
                         disabled={idNummerUkjent.verdi === ESvar.JA}
                     />
                     {idNummerUkjent.erSynlig && (
-                        <SkjemaCheckboxForSanity
+                        <SkjemaCheckbox
                             label={plainTekst(spørsmålDokument.checkboxLabel, {
                                 land: landAlphaCode,
                             })}

@@ -11,7 +11,7 @@ import { ESanitySteg, Typografi } from '../../../typer/sanity/sanity';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
-import { SkjemaCheckboxForSanity } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckboxForSanity';
+import { SkjemaCheckbox } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 
 import AndreForelder from './AndreForelder';
@@ -157,7 +157,7 @@ const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                                 avgrensDatoFremITid={true}
                             />
                             {skjema.felter.borMedAndreForelderCheckbox.erSynlig && (
-                                <SkjemaCheckboxForSanity
+                                <SkjemaCheckbox
                                     felt={skjema.felter.borMedAndreForelderCheckbox}
                                     visFeilmeldinger={skjema.visFeilmeldinger}
                                     label={<TekstBlock block={naarFlyttetFraAndreForelder.checkboxLabel} />}
