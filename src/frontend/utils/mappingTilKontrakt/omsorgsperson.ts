@@ -1,7 +1,7 @@
+import { Slektsforhold, TilRestLocaleRecord } from '../../../common/typer/kontrakt/generelle';
+import { IOmsorgspersonIKontraktFormat } from '../../../common/typer/kontrakt/kontrakt';
 import { EøsBarnSpørsmålId, eøsBarnSpørsmålSpråkId } from '../../components/SøknadsSteg/EøsSteg/Barn/spørsmål';
 import { IBarnMedISøknad } from '../../typer/barn';
-import { Slektsforhold, TilRestLocaleRecord } from '../../typer/kontrakt/generelle';
-import { IOmsorgspersonIKontraktFormat } from '../../typer/kontrakt/kontrakt';
 import { IOmsorgsperson } from '../../typer/omsorgsperson';
 import { PersonType } from '../../typer/personType';
 import { ITekstinnhold } from '../../typer/sanity/tekstInnhold';

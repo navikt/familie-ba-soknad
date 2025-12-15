@@ -5,11 +5,11 @@ import { add, isBefore } from 'date-fns';
 import { Alert, BodyShort, Heading, VStack } from '@navikt/ds-react';
 import { RessursStatus } from '@navikt/familie-typer';
 
+import { Dokumentasjonsbehov } from '../../../../common/typer/kontrakt/dokumentasjon';
 import { useAppContext } from '../../../context/AppContext';
 import useFørsteRender from '../../../hooks/useFørsteRender';
 import { useSendInnSkjema } from '../../../hooks/useSendInnSkjema';
 import { IDokumentasjon, IVedlegg } from '../../../typer/dokumentasjon';
-import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
 import { ESanitySteg, Typografi } from '../../../typer/sanity/sanity';
 import { hentRelevateDokumentasjoner } from '../../../utils/dokumentasjon';
 import PictureScanningGuide from '../../Felleskomponenter/PictureScanningGuide/PictureScanningGuide';

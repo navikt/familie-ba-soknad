@@ -1,5 +1,5 @@
+import { ESivilstand } from '../../common/typer/kontrakt/generelle';
 import { LocaleType } from '../typer/common';
-import { ESivilstand } from '../typer/kontrakt/generelle';
 
 import { hentSivilstatusSpråkId, hentTekster, landkodeTilSpråk } from './språk';
 

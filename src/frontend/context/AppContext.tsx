@@ -13,11 +13,11 @@ import {
 } from '@navikt/familie-typer';
 
 import miljø, { BASE_PATH } from '../../common/miljø';
+import { ESivilstand, ESøknadstype, TilRestLocaleRecord } from '../../common/typer/kontrakt/generelle';
 import { DinLivssituasjonSpørsmålId } from '../components/SøknadsSteg/DinLivssituasjon/spørsmål';
 import { useDebounce } from '../hooks/useDebounce/useDebounce';
 import { LocaleType } from '../typer/common';
 import { IKontoinformasjon } from '../typer/kontoinformasjon';
-import { ESivilstand, ESøknadstype, TilRestLocaleRecord } from '../typer/kontrakt/generelle';
 import { IKvittering } from '../typer/kvittering';
 import { IMellomlagretBarnetrygd } from '../typer/mellomlager';
 import { ISøkerRespons } from '../typer/person';

@@ -2,9 +2,10 @@ import { Alpha3Code } from 'i18n-iso-countries';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
+import { Slektsforhold } from '../../common/typer/kontrakt/generelle';
+
 import { barnDataKeySpørsmål } from './barn';
 import { AlternativtSvarForInput, BarnetsId, DatoMedUkjent, ESvarMedUbesvart, ISODateString } from './common';
-import { Slektsforhold } from './kontrakt/generelle';
 import {
     IArbeidsperiode,
     IEøsBarnetrygdsperiode,

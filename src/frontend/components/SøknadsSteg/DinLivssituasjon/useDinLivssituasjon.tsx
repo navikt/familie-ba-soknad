@@ -3,6 +3,8 @@ import { useEffect } from 'react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { feil, type FeltState, type ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
+import { Dokumentasjonsbehov } from '../../../../common/typer/kontrakt/dokumentasjon';
+import { ESivilstand } from '../../../../common/typer/kontrakt/generelle';
 import { useAppContext } from '../../../context/AppContext';
 import { useEøsContext } from '../../../context/EøsContext';
 import useDatovelgerFeltMedJaNeiAvhengighet from '../../../hooks/useDatovelgerFeltMedJaNeiAvhengighet';
@@ -13,8 +15,6 @@ import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import { usePerioder } from '../../../hooks/usePerioder';
 import { barnDataKeySpørsmål } from '../../../typer/barn';
 import { AlternativtSvarForInput } from '../../../typer/common';
-import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
-import { ESivilstand } from '../../../typer/kontrakt/generelle';
 import { IArbeidsperiode, IPensjonsperiode } from '../../../typer/perioder';
 import { ISamboer, ISøker, ITidligereSamboer } from '../../../typer/person';
 import { PersonType } from '../../../typer/personType';

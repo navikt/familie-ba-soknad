@@ -1,9 +1,9 @@
 import { ESvar } from '@navikt/familie-form-elements';
 
+import { ISøknadsfelt, TilRestLocaleRecord } from '../../../common/typer/kontrakt/generelle';
+import { IUtbetalingsperiodeIKontraktFormat } from '../../../common/typer/kontrakt/kontrakt';
 import { IBarnMedISøknad } from '../../typer/barn';
 import { AlternativtSvarForInput, ISODateString } from '../../typer/common';
-import { ISøknadsfelt, TilRestLocaleRecord } from '../../typer/kontrakt/generelle';
-import { IUtbetalingsperiodeIKontraktFormat } from '../../typer/kontrakt/kontrakt';
 import { IUtbetalingsperiode } from '../../typer/perioder';
 import { PeriodePersonTypeMedBarnProps, PersonType } from '../../typer/personType';
 import { IAndreUtbetalingerTekstinnhold } from '../../typer/sanity/modaler/andreUtbetalinger';

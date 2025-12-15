@@ -1,4 +1,4 @@
-import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
+import { Dokumentasjonsbehov } from '../../../../common/typer/kontrakt/dokumentasjon';
 import { FlettefeltVerdier } from '../../../typer/sanity/sanity';
 
 export interface IVedleggOppsummering {

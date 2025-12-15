@@ -4,8 +4,8 @@ import { ArrowRightIcon } from '@navikt/aksel-icons';
 import { Button, ConfirmationPanel, Heading, Radio, RadioGroup, VStack } from '@navikt/ds-react';
 import { AGreen500, ANavRed, AOrange500 } from '@navikt/ds-tokens/dist/tokens';
 
+import { ESøknadstype } from '../../../../common/typer/kontrakt/generelle';
 import { useAppContext } from '../../../context/AppContext';
-import { ESøknadstype } from '../../../typer/kontrakt/generelle';
 import { ESanitySteg, Typografi } from '../../../typer/sanity/sanity';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';

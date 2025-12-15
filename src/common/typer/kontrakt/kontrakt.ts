@@ -1,6 +1,6 @@
 import { ESvar } from '@navikt/familie-form-elements';
 
-import { ISODateString, LocaleType } from '../common';
+import { ISODateString, LocaleType } from '../../../frontend/typer/common';
 
 import { ISøknadKontraktDokumentasjon } from './dokumentasjon';
 import {

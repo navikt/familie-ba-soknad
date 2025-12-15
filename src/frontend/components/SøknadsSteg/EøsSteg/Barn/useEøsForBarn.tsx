@@ -5,6 +5,7 @@ import { Alpha3Code } from 'i18n-iso-countries';
 import { ESvar } from '@navikt/familie-form-elements';
 import { feil, type Felt, type FeltState, type ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
+import { Slektsforhold } from '../../../../../common/typer/kontrakt/generelle';
 import { useAppContext } from '../../../../context/AppContext';
 import useInputFelt from '../../../../hooks/useInputFelt';
 import useInputFeltMedUkjent from '../../../../hooks/useInputFeltMedUkjent';
@@ -18,7 +19,6 @@ import {
     IBarnMedISøknad,
 } from '../../../../typer/barn';
 import { AlternativtSvarForInput, BarnetsId } from '../../../../typer/common';
-import { Slektsforhold } from '../../../../typer/kontrakt/generelle';
 import { IOmsorgsperson } from '../../../../typer/omsorgsperson';
 import {
     IArbeidsperiode,

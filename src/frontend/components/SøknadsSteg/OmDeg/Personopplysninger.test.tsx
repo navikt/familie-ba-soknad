@@ -2,8 +2,8 @@ import React from 'react';
 
 import { render } from '@testing-library/react';
 
+import { ESivilstand } from '../../../../common/typer/kontrakt/generelle';
 import { SpråkProvider } from '../../../context/SpråkContext';
-import { ESivilstand } from '../../../typer/kontrakt/generelle';
 import { ISøker } from '../../../typer/person';
 import { CookiesProviderMedLocale, spyOnUseApp, TestProvidere } from '../../../utils/testing';
 

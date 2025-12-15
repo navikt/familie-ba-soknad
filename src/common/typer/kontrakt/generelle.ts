@@ -1,5 +1,5 @@
-import { ISODateString, LocaleType } from '../common';
-import { FlettefeltVerdier, LocaleRecordBlock, LocaleRecordString } from '../sanity/sanity';
+import { ISODateString, LocaleType } from '../../../frontend/typer/common';
+import { FlettefeltVerdier, LocaleRecordBlock, LocaleRecordString } from '../../../frontend/typer/sanity/sanity';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export type SpørsmålMap = Record<string, ISøknadsfelt<any>>;

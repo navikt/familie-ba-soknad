@@ -6,7 +6,7 @@ import { mockDeep } from 'vitest-mock-extended';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
-import { ESøknadstype } from '../../../typer/kontrakt/generelle';
+import { ESøknadstype } from '../../../../common/typer/kontrakt/generelle';
 import { ISøknad } from '../../../typer/søknad';
 import { LesUtLocation, mekkGyldigSøknad, spyOnUseApp, TestProvidere } from '../../../utils/testing';
 import { OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';

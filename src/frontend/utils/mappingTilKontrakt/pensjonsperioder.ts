@@ -1,8 +1,8 @@
 import { ESvar } from '@navikt/familie-form-elements';
 
+import { ISøknadsfelt, TilRestLocaleRecord } from '../../../common/typer/kontrakt/generelle';
+import { IPensjonsperiodeIKontraktFormat } from '../../../common/typer/kontrakt/kontrakt';
 import { IBarnMedISøknad } from '../../typer/barn';
-import { ISøknadsfelt, TilRestLocaleRecord } from '../../typer/kontrakt/generelle';
-import { IPensjonsperiodeIKontraktFormat } from '../../typer/kontrakt/kontrakt';
 import { IPensjonsperiode } from '../../typer/perioder';
 import { PeriodePersonTypeMedBarnProps, PersonType } from '../../typer/personType';
 import { IPensjonsperiodeTekstinnhold } from '../../typer/sanity/modaler/pensjonsperiode';
