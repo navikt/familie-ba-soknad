@@ -8,7 +8,6 @@ import { idNummerLandMedPeriodeType } from '../components/SøknadsSteg/EøsSteg/
 import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
 import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnet/spørsmål';
 import { barnDataKeySpørsmål, IAndreForelder, IBarnMedISøknad } from '../typer/barn';
-import { tomString } from '../typer/common';
 import { IEøsBarnetrygdsperiode, IUtenlandsperiode } from '../typer/perioder';
 import { IBarn, IBarnRespons, IIdNummer } from '../typer/person';
 import { ISøknad } from '../typer/søknad';
@@ -360,7 +359,7 @@ export const nullstilteEøsFelterForAndreForelder = (andreForelder: IAndreForeld
 
 export const nullstilteEøsFelterForBarn = (barn: IBarnMedISøknad) => ({
     idNummer: [],
-    søkersSlektsforhold: { ...barn.søkersSlektsforhold, svar: tomString },
+    søkersSlektsforhold: { ...barn.søkersSlektsforhold, svar: '' },
     søkersSlektsforholdSpesifisering: {
         ...barn.søkersSlektsforholdSpesifisering,
         svar: '',
