@@ -20,8 +20,9 @@ import { enGB, nb, nn } from 'date-fns/locale';
 
 import { feil, type FeltState, ok } from '@navikt/familie-skjema';
 
+import { LocaleType } from '../../common/typer/localeType';
 import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
-import { AlternativtSvarForInput, DatoMedUkjent, ISODateString, LocaleType } from '../typer/common';
+import { AlternativtSvarForInput, DatoMedUkjent, ISODateString } from '../typer/common';
 import { LocaleRecordBlock, PlainTekst } from '../typer/sanity/sanity';
 import { IFormateringsfeilmeldingerTekstinnhold } from '../typer/sanity/tekstInnhold';
 

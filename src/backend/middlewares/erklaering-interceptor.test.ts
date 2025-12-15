@@ -4,7 +4,7 @@ import { vi } from 'vitest';
 import { mockDeep } from 'vitest-mock-extended';
 
 import { ISøknadKontrakt } from '../../common/typer/kontrakt/kontrakt';
-import { LocaleType } from '../../frontend/typer/common';
+import { LocaleType } from '../../common/typer/localeType';
 
 import { erklaeringInterceptor, hentSpråkteksterAlleSpråk } from './erklaering-interceptor';
 

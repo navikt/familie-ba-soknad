@@ -1,6 +1,6 @@
 import { IKontraktTidligereSamboer, ISøknadsfelt, TilRestLocaleRecord } from '../../../common/typer/kontrakt/generelle';
+import { LocaleType } from '../../../common/typer/localeType';
 import { TidligereSamboerSpørsmålId } from '../../components/SøknadsSteg/DinLivssituasjon/spørsmål';
-import { LocaleType } from '../../typer/common';
 import { ITidligereSamboer } from '../../typer/person';
 import { ITidligereSamoboereTekstinnhold } from '../../typer/sanity/modaler/tidligereSamboere';
 

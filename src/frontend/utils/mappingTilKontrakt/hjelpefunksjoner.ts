@@ -8,8 +8,9 @@ import {
     SpørsmålMap as KontraktpørsmålMap,
     TilRestLocaleRecord,
 } from '../../../common/typer/kontrakt/generelle';
+import { LocaleType } from '../../../common/typer/localeType';
 import { IBarnMedISøknad } from '../../typer/barn';
-import { AlternativtSvarForInput, LocaleType } from '../../typer/common';
+import { AlternativtSvarForInput } from '../../typer/common';
 import { FlettefeltVerdier, LocaleRecordBlock, LocaleRecordString } from '../../typer/sanity/sanity';
 import { ITekstinnhold } from '../../typer/sanity/tekstInnhold';
 import { ISøknadSpørsmål, SpørsmålId, ISøknadSpørsmålMap } from '../../typer/spørsmål';

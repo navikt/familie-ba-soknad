@@ -14,9 +14,9 @@ import {
 
 import miljø, { BASE_PATH } from '../../common/miljø';
 import { ESivilstand, ESøknadstype, TilRestLocaleRecord } from '../../common/typer/kontrakt/generelle';
+import { LocaleType } from '../../common/typer/localeType';
 import { DinLivssituasjonSpørsmålId } from '../components/SøknadsSteg/DinLivssituasjon/spørsmål';
 import { useDebounce } from '../hooks/useDebounce/useDebounce';
-import { LocaleType } from '../typer/common';
 import { IKontoinformasjon } from '../typer/kontoinformasjon';
 import { IKvittering } from '../typer/kvittering';
 import { IMellomlagretBarnetrygd } from '../typer/mellomlager';

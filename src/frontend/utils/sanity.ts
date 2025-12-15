@@ -7,7 +7,7 @@ import {
 } from '@portabletext/types';
 import { pipe } from 'ramda';
 
-import { LocaleType } from '../typer/common';
+import { LocaleType } from '../../common/typer/localeType';
 import { IAndreUtbetalingerTekstinnhold } from '../typer/sanity/modaler/andreUtbetalinger';
 import { IArbeidsperiodeTekstinnhold } from '../typer/sanity/modaler/arbeidsperiode';
 import { IBarnetrygdsperiodeTekstinnhold } from '../typer/sanity/modaler/barnetrygdperiode';

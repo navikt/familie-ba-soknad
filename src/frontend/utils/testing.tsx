@@ -13,6 +13,7 @@ import { type Ressurs, RessursStatus } from '@navikt/familie-typer';
 import { mockTekstInnhold } from '../../../mocks/testdata/sanity/sanity';
 import norskeTekster from '../../common/lang/nb.json' with { type: 'json' };
 import { ESivilstand, ESøknadstype, Slektsforhold } from '../../common/typer/kontrakt/generelle';
+import { LocaleType } from '../../common/typer/localeType';
 import { UtenlandsoppholdSpørsmålId } from '../components/Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 import {
     DinLivssituasjonSpørsmålId,
@@ -36,7 +37,7 @@ import { SanityProvider } from '../context/SanityContext';
 import { SpråkProvider } from '../context/SpråkContext';
 import { StegProvider } from '../context/StegContext';
 import { andreForelderDataKeySpørsmål, barnDataKeySpørsmål } from '../typer/barn';
-import { AlternativtSvarForInput, LocaleType } from '../typer/common';
+import { AlternativtSvarForInput } from '../typer/common';
 import { IKvittering } from '../typer/kvittering';
 import { IUtenlandsperiode } from '../typer/perioder';
 import { ISøker } from '../typer/person';
