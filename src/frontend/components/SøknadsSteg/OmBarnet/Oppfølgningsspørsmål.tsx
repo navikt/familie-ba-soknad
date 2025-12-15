@@ -20,7 +20,7 @@ import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp'
 import PerioderContainer from '../../Felleskomponenter/PerioderContainer';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import { SkjemaCheckbox } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
-import { SkjemaFeltInputForSanity } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInputForSanity';
+import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
 import SkjemaFieldset from '../../Felleskomponenter/SkjemaFieldset';
 import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
 import { UtenlandsoppholdSpørsmålId } from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
@@ -104,17 +104,17 @@ const Oppfølgningsspørsmål: React.FC<{
                         felt={institusjonIUtlandCheckbox}
                         label={<TekstBlock block={institusjonIUtlandetCheckbox} />}
                     />
-                    <SkjemaFeltInputForSanity
+                    <SkjemaFeltInput
                         felt={institusjonsnavn}
                         visFeilmeldinger={skjema.visFeilmeldinger}
                         label={<TekstBlock block={institusjonNavn.sporsmal} />}
                     />
-                    <SkjemaFeltInputForSanity
+                    <SkjemaFeltInput
                         felt={institusjonsadresse}
                         visFeilmeldinger={skjema.visFeilmeldinger}
                         label={<TekstBlock block={institusjonAdresse.sporsmal} />}
                     />
-                    <SkjemaFeltInputForSanity
+                    <SkjemaFeltInput
                         felt={institusjonspostnummer}
                         visFeilmeldinger={skjema.visFeilmeldinger}
                         label={<TekstBlock block={institusjonPostnummer.sporsmal} />}
