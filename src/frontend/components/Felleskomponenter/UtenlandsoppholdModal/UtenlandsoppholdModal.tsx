@@ -20,7 +20,7 @@ import Datovelger from '../Datovelger/Datovelger';
 import { LandDropdown } from '../Dropdowns/LandDropdown';
 import StyledDropdown from '../Dropdowns/StyledDropdown';
 import TekstBlock from '../Sanity/TekstBlock';
-import { SkjemaCheckboxForSanity } from '../SkjemaCheckbox/SkjemaCheckboxForSanity';
+import { SkjemaCheckbox } from '../SkjemaCheckbox/SkjemaCheckbox';
 import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeiloppsummering';
 import SkjemaModal from '../SkjemaModal/SkjemaModal';
 
@@ -173,7 +173,7 @@ export const UtenlandsoppholdModal: React.FC<Props> = ({
                         />
                     )}
                     {skjema.felter.oppholdslandTilDatoUkjent.erSynlig && (
-                        <SkjemaCheckboxForSanity
+                        <SkjemaCheckbox
                             felt={skjema.felter.oppholdslandTilDatoUkjent}
                             label={plainTekst(teksterForPersonType.sluttdatoFremtid.checkboxLabel)}
                         />
