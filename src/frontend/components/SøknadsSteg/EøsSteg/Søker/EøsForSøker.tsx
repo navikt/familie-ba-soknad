@@ -6,7 +6,7 @@ import { ESanitySteg } from '../../../../typer/sanity/sanity';
 import { Arbeidsperiode } from '../../../Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
 import { Pensjonsperiode } from '../../../Felleskomponenter/Pensjonsmodal/Pensjonsperiode';
 import TekstBlock from '../../../Felleskomponenter/Sanity/TekstBlock';
-import { SkjemaFeltInputForSanity } from '../../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInputForSanity';
+import { SkjemaFeltInput } from '../../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
 import Steg from '../../../Felleskomponenter/Steg/Steg';
 import { Utbetalingsperiode } from '../../../Felleskomponenter/UtbetalingerModal/Utbetalingsperiode';
 
@@ -46,7 +46,7 @@ const EøsForSøker: React.FC = () => {
         >
             <IdNummerForSøker skjema={skjema} settIdNummerFelter={settIdNummerFelter} />
             {skjema.felter.adresseISøkeperiode.erSynlig && (
-                <SkjemaFeltInputForSanity
+                <SkjemaFeltInput
                     felt={skjema.felter.adresseISøkeperiode}
                     visFeilmeldinger={skjema.visFeilmeldinger}
                     label={<TekstBlock block={stegTekster.hvorBor.sporsmal} />}

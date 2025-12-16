@@ -5,14 +5,11 @@ import styled from 'styled-components';
 import { TextField } from '@navikt/ds-react';
 import type { Felt } from '@navikt/familie-skjema';
 
-import SpråkTekst from '../SpråkTekst/SpråkTekst';
-
 interface SkjemaFeltInputProps {
     // eslint-disable-next-line
     felt: Felt<any>;
     visFeilmeldinger: boolean;
-    labelSpråkTekstId: string;
-    språkValues?: Record<string, ReactNode>;
+    label: ReactNode;
     description?: ReactNode;
     autoComplete?: 'on' | 'off';
     disabled?: boolean;
@@ -27,27 +24,19 @@ const StyledTextField = styled(TextField)<{ $fullbredde: boolean }>`
  * Henter input props fra felt, og fra props. Props overstyrer felt.
  */
 export const SkjemaFeltInput: React.FC<SkjemaFeltInputProps> = props => {
-    const {
-        felt,
-        labelSpråkTekstId,
-        visFeilmeldinger,
-        språkValues,
-        description,
-        autoComplete = 'off',
-        disabled,
-        fullbredde = true,
-    } = props;
+    const { felt, label, visFeilmeldinger, description, autoComplete = 'off', disabled, fullbredde = true } = props;
     const navInputPropsFraFeltHook = felt.hentNavInputProps(visFeilmeldinger);
 
     return felt.erSynlig ? (
         <StyledTextField
-            label={<SpråkTekst id={labelSpråkTekstId} values={språkValues} />}
+            label={label}
             description={description}
             {...navInputPropsFraFeltHook}
             maxLength={500}
             autoComplete={autoComplete}
             disabled={disabled}
             $fullbredde={fullbredde}
+            data-testid={felt.id}
         />
     ) : null;
 };
