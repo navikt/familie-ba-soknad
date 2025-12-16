@@ -5,6 +5,7 @@ import { arbeidsperiodeTekstinnhold } from './arbeidsperiode';
 import { barnetrygdsperiodeTekstinnhold } from './barnetrygdperiode';
 import { blokkerTilbakeknapp } from './blokkerTilbakeknapp';
 import { leggTilBarnTekstinnhold } from './leggTilBarn';
+import { mistetInformasjonenDinTekstinnhold } from './mistetInformasjonenDin';
 import { pensjonsperiodeTekstinnhold } from './pensjonsperiode';
 import { startPåNytt } from './startPåNytt';
 import { tidligereSamoboereTekstinnhold } from './tidligereSamboere';
@@ -41,5 +42,6 @@ export const modalerTekstinnhold: IModalerTekstinnhold = {
     },
     startPåNytt: startPåNytt,
     leggTilBarn: leggTilBarnTekstinnhold,
+    mistetInformasjonenDin: mistetInformasjonenDinTekstinnhold,
     blokkerTilbakeknapp: blokkerTilbakeknapp,
 };

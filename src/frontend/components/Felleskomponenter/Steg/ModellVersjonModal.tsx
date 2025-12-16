@@ -1,21 +1,16 @@
 import React from 'react';
 
-import { useIntl } from 'react-intl';
-import styled from 'styled-components';
+import { Alert, Box, Button, Modal } from '@navikt/ds-react';
 
-import { Alert, BodyLong, Button, Modal } from '@navikt/ds-react';
-
+import { useAppContext } from '../../../context/AppContext';
+import { Typografi } from '../../../typer/sanity/sanity';
 import ModalContent from '../ModalContent';
-import SpråkTekst from '../SpråkTekst/SpråkTekst';
-
-const StyledBodyLong = styled(BodyLong)`
-    && {
-        margin-top: 2.5rem;
-    }
-`;
+import TekstBlock from '../Sanity/TekstBlock';
 
 const ModellVersjonModal: React.FC<{ erÅpen: boolean }> = ({ erÅpen }) => {
-    const { formatMessage } = useIntl();
+    const { tekster, plainTekst } = useAppContext();
+
+    const mistetInformasjonenDinTekster = tekster().FELLES.modaler.mistetInformasjonenDin;
 
     const refresh = () => window.location.reload();
 
@@ -24,21 +19,19 @@ const ModellVersjonModal: React.FC<{ erÅpen: boolean }> = ({ erÅpen }) => {
             open={erÅpen}
             onClose={refresh}
             header={{
-                heading: formatMessage({ id: 'felles.modal.deployfeil.tittel' }),
+                heading: plainTekst(mistetInformasjonenDinTekster.tittel),
                 size: 'medium',
             }}
         >
             <ModalContent>
-                <Alert variant={'error'}>
-                    <SpråkTekst id={'felles.modal.deployfeil.error'} />
-                </Alert>
-                <StyledBodyLong>
-                    <SpråkTekst id={'felles.modal.deployfeil.info'} />
-                </StyledBodyLong>
+                <Alert variant={'error'}>{plainTekst(mistetInformasjonenDinTekster.tittel)}</Alert>
+                <Box marginBlock="10">
+                    <TekstBlock block={mistetInformasjonenDinTekster.info} typografi={Typografi.BodyLong} />
+                </Box>
             </ModalContent>
             <Modal.Footer>
                 <Button onClick={refresh}>
-                    <SpråkTekst id={'felles.modal.deployfeil.knapp'} />
+                    <TekstBlock block={mistetInformasjonenDinTekster.knapp} typografi={Typografi.BodyShort} />
                 </Button>
             </Modal.Footer>
         </Modal>
