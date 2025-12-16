@@ -42,9 +42,6 @@ export const UtenlandsperiodeOppsummering: React.FC<UtenlandsperiodeOppsummering
 
     return (
         <PeriodeOppsummering
-            nummer={nummer}
-            tittelSpråkId={'felles.leggtilutenlands.opphold'}
-            fjernKnappSpråkId={'felles.fjernutenlandsopphold.knapp'}
             fjernKnappTekst={teksterForPersonType.fjernKnapp}
             tittel={
                 <TekstBlock

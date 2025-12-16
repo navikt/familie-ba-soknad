@@ -15,7 +15,7 @@ import { IEøsForBarnFeltTyper, IEøsForSøkerFeltTyper } from '../../../typer/s
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import { SkjemaCheckbox } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
-import { SkjemaFeltInputForSanity } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInputForSanity';
+import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
 import { OppsummeringFelt } from '../Oppsummering/OppsummeringFelt';
 
 import { idNummerKeyPrefix, PeriodeType } from './idnummerUtils';
@@ -103,7 +103,7 @@ export const IdNummer: React.FC<{
                 />
             ) : (
                 <div>
-                    <SkjemaFeltInputForSanity
+                    <SkjemaFeltInput
                         felt={idNummerFelt}
                         visFeilmeldinger={skjema.visFeilmeldinger}
                         label={

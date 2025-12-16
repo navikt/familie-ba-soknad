@@ -13,7 +13,7 @@ import KomponentGruppe from '../../../Felleskomponenter/KomponentGruppe/Komponen
 import TekstBlock from '../../../Felleskomponenter/Sanity/TekstBlock';
 import { SkjemaCheckbox } from '../../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
 import { SkjemaFeiloppsummering } from '../../../Felleskomponenter/SkjemaFeiloppsummering/SkjemaFeiloppsummering';
-import { SkjemaFeltInputForSanity } from '../../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInputForSanity';
+import { SkjemaFeltInput } from '../../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
 import SkjemaModal from '../../../Felleskomponenter/SkjemaModal/SkjemaModal';
 import { SøkerMåBrukePDF } from '../../../Felleskomponenter/SøkerMåBrukePDF';
 
@@ -69,13 +69,13 @@ const LeggTilBarnModal: React.FC<{
                 <>
                     <Fieldset legend={<TekstBlock block={barnetsNavnSubtittel} />} aria-live="polite">
                         <KomponentGruppe aria-live="polite">
-                            <SkjemaFeltInputForSanity
+                            <SkjemaFeltInput
                                 felt={skjema.felter.fornavn}
                                 visFeilmeldinger={skjema.visFeilmeldinger}
                                 label={<TekstBlock block={fornavn.sporsmal} />}
                                 disabled={skjema.felter.navnetErUbestemt.verdi === ESvar.JA}
                             />
-                            <SkjemaFeltInputForSanity
+                            <SkjemaFeltInput
                                 felt={skjema.felter.etternavn}
                                 visFeilmeldinger={skjema.visFeilmeldinger}
                                 label={<TekstBlock block={etternavn.sporsmal} />}
@@ -89,7 +89,7 @@ const LeggTilBarnModal: React.FC<{
                         </KomponentGruppe>
                     </Fieldset>
                     <div aria-live="polite" data-testid="fødselsnummer-eller-d-nummer-container">
-                        <SkjemaFeltInputForSanity
+                        <SkjemaFeltInput
                             felt={skjema.felter.ident}
                             visFeilmeldinger={skjema.visFeilmeldinger}
                             label={<TekstBlock block={foedselsnummerEllerDNummer.sporsmal} />}

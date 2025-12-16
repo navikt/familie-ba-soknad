@@ -16,7 +16,7 @@ import JaNeiSpm from '../../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import { Pensjonsperiode } from '../../../Felleskomponenter/Pensjonsmodal/Pensjonsperiode';
 import TekstBlock from '../../../Felleskomponenter/Sanity/TekstBlock';
 import { SkjemaCheckbox } from '../../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
-import { SkjemaFeltInputForSanity } from '../../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInputForSanity';
+import { SkjemaFeltInput } from '../../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
 import SkjemaFieldset from '../../../Felleskomponenter/SkjemaFieldset';
 import Steg from '../../../Felleskomponenter/Steg/Steg';
 import { Utbetalingsperiode } from '../../../Felleskomponenter/UtbetalingerModal/Utbetalingsperiode';
@@ -107,7 +107,7 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                         gjelderSøker={true}
                     />
                     {skjema.felter.søkersSlektsforholdSpesifisering.erSynlig && (
-                        <SkjemaFeltInputForSanity
+                        <SkjemaFeltInput
                             felt={skjema.felter.søkersSlektsforholdSpesifisering}
                             visFeilmeldinger={skjema.visFeilmeldinger}
                             label={
@@ -158,7 +158,7 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
             )}
             {skjema.felter.barnetsAdresse.erSynlig && (
                 <div>
-                    <SkjemaFeltInputForSanity
+                    <SkjemaFeltInput
                         felt={skjema.felter.barnetsAdresse}
                         visFeilmeldinger={skjema.visFeilmeldinger}
                         description={plainTekst(hvorBorBarnet.beskrivelse)}
@@ -182,7 +182,7 @@ const EøsForBarn: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
                             />
                             {skjema.felter.andreForelderAdresse.erSynlig && (
                                 <div>
-                                    <SkjemaFeltInputForSanity
+                                    <SkjemaFeltInput
                                         felt={skjema.felter.andreForelderAdresse}
                                         visFeilmeldinger={skjema.visFeilmeldinger}
                                         label={

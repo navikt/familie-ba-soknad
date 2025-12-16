@@ -12,7 +12,7 @@ import { dagensDato, gårsdagensDato } from '../../../utils/dato';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import { SkjemaCheckbox } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
-import { SkjemaFeltInputForSanity } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInputForSanity';
+import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
 
 const SamboerSkjema: React.FC<{
     skjema: ISkjema<IDinLivssituasjonFeltTyper | ITidligereSamboerFeltTyper, string>;
@@ -33,13 +33,13 @@ const SamboerSkjema: React.FC<{
 
     return (
         <>
-            <SkjemaFeltInputForSanity
+            <SkjemaFeltInput
                 felt={samboerFelter.navn}
                 visFeilmeldinger={skjema.visFeilmeldinger}
                 label={<TekstBlock block={teksterForModal.samboerNavn.sporsmal} />}
             />
             <div>
-                <SkjemaFeltInputForSanity
+                <SkjemaFeltInput
                     felt={samboerFelter.fnr}
                     visFeilmeldinger={skjema.visFeilmeldinger}
                     label={<TekstBlock block={teksterForModal.foedselsnummerEllerDNummer.sporsmal} />}
