@@ -13,8 +13,6 @@ import { OppsummeringFelt } from '../../SøknadsSteg/Oppsummering/OppsummeringFe
 import PeriodeOppsummering from '../PeriodeOppsummering/PeriodeOppsummering';
 import TekstBlock from '../Sanity/TekstBlock';
 
-import { pensjonsperiodeOppsummeringOverskrift } from './språkUtils';
-
 interface Props {
     pensjonsperiode: IPensjonsperiode;
     nummer: number;
@@ -45,10 +43,7 @@ export const PensjonsperiodeOppsummering: React.FC<PensjonsperiodeOppsummeringPr
     return (
         <PeriodeOppsummering
             fjernPeriodeCallback={fjernPeriodeCallback && (() => fjernPeriodeCallback(pensjonsperiode))}
-            fjernKnappSpråkId={'felles.fjernpensjon.knapp'}
             fjernKnappTekst={teksterForModal.fjernKnapp}
-            nummer={nummer}
-            tittelSpråkId={pensjonsperiodeOppsummeringOverskrift(gjelderUtlandet)}
             tittel={
                 <TekstBlock
                     block={teksterForModal.oppsummeringstittel}

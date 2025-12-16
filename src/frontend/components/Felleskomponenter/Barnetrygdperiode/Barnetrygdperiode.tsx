@@ -5,7 +5,6 @@ import type { Felt, ISkjema } from '@navikt/familie-skjema';
 
 import { useAppContext } from '../../../context/AppContext';
 import { IBarnMedISøknad } from '../../../typer/barn';
-import { HeadingLevel } from '../../../typer/common';
 import { IEøsBarnetrygdsperiode } from '../../../typer/perioder';
 import { PeriodePersonTypeProps, PersonType } from '../../../typer/personType';
 import { IBarnetrygdsperiodeTekstinnhold } from '../../../typer/sanity/modaler/barnetrygdperiode';
@@ -30,7 +29,6 @@ interface Props {
     fjernBarnetrygdsperiode: (periode: IEøsBarnetrygdsperiode) => void;
     barn: IBarnMedISøknad;
     tilhørendeJaNeiSpmFelt: Felt<ESvar | null>;
-    headingLevel?: HeadingLevel;
 }
 
 type BarnetrygdperiodeProps = Props & PeriodePersonTypeProps;
@@ -44,7 +42,6 @@ export const Barnetrygdperiode: React.FC<BarnetrygdperiodeProps> = ({
     erDød,
     barn,
     tilhørendeJaNeiSpmFelt,
-    headingLevel = '3',
 }) => {
     const {
         erÅpen: barnetrygdsmodalErÅpen,
@@ -82,7 +79,6 @@ export const Barnetrygdperiode: React.FC<BarnetrygdperiodeProps> = ({
                             barnetsNavn={barn.navn}
                             personType={personType}
                             erDød={personType === PersonType.AndreForelder && erDød}
-                            headingLevel={headingLevel}
                         />
                     ))}
                     <LeggTilKnapp

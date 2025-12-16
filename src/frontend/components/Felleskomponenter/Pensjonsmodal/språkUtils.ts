@@ -35,9 +35,6 @@ export const pensjonslandFeilmeldingSpråkId = (personType, periodenErAvsluttet)
     }
 };
 
-export const pensjonsperiodeOppsummeringOverskrift = (gjelderUtlandet: boolean): string =>
-    gjelderUtlandet ? 'felles.leggtilpensjon.periode.utland' : 'felles.leggtilpensjon.periode.norge';
-
 export const pensjonSpørsmålDokument = (
     gjelderUtlandet: boolean,
     personType: PersonType,

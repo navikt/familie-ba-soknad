@@ -4,7 +4,6 @@ import { ESvar } from '@navikt/familie-form-elements';
 
 import { useAppContext } from '../../../context/AppContext';
 import { useSpråkContext } from '../../../context/SpråkContext';
-import { HeadingLevel } from '../../../typer/common';
 import { IEøsBarnetrygdsperiode } from '../../../typer/perioder';
 import { PersonType } from '../../../typer/personType';
 import { IBarnetrygdsperiodeTekstinnhold } from '../../../typer/sanity/modaler/barnetrygdperiode';
@@ -20,7 +19,6 @@ interface BarnetrygdperiodeProps {
     nummer: number;
     fjernPeriodeCallback?: (barnetrygdsperiode: IEøsBarnetrygdsperiode) => void;
     barnetsNavn: string;
-    headingLevel?: HeadingLevel;
 }
 
 type BarnetrygdperiodeOppsummeringPersonTypeProps =
@@ -37,7 +35,6 @@ export const BarnetrygdsperiodeOppsummering: React.FC<Props> = ({
     barnetsNavn,
     erDød,
     personType,
-    headingLevel = '3',
 }) => {
     const {
         mottarEøsBarnetrygdNå,
@@ -58,16 +55,12 @@ export const BarnetrygdsperiodeOppsummering: React.FC<Props> = ({
     return (
         <PeriodeOppsummering
             fjernPeriodeCallback={fjernPeriodeCallback && (() => fjernPeriodeCallback(barnetrygdsperiode))}
-            tittelSpråkId={'ombarnet.trygdandreperioder.periode'}
-            fjernKnappSpråkId={'felles.fjernbarnetrygd.knapp'}
             tittel={
                 <TekstBlock
                     block={teksterForPersonType.oppsummeringstittel}
                     flettefelter={{ antall: nummer.toString() }}
                 />
             }
-            nummer={nummer}
-            headingLevel={headingLevel}
         >
             {mottarEøsBarnetrygdNå.svar && (
                 <OppsummeringFelt

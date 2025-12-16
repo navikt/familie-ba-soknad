@@ -226,7 +226,6 @@ const Oppfølgningsspørsmål: React.FC<{
                         fjernBarnetrygdsperiode={fjernBarnetrygdsperiode}
                         barn={barn}
                         personType={PersonType.Søker}
-                        headingLevel="4"
                     />
                 </SkjemaFieldset>
             )}
