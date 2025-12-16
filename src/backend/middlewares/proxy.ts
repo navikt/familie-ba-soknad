@@ -1,7 +1,7 @@
 import { ClientRequest } from 'http';
 import { Socket } from 'node:net';
 
-import { NextFunction, Request, RequestHandler, Response } from 'express';
+import { NextFunction, Request, RequestHandler, type Response } from 'express';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import { v4 as uuid } from 'uuid';
 
