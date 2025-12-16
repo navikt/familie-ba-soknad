@@ -9,10 +9,10 @@
     "importHelpers": true, // tslib dependency påkrevd
 
     /* Modules */
-    "module": "ESNext", // FIXME
-    "moduleResolution": "Node", // FIXME
+    "module": "ESNext", // TODO: Gjøres om til NodeNext når webpack er borte
+    "moduleResolution": "Node", // TODO: Gjøres om til NodeNext når webpack er borte
     "types": [
-      "node",
+      "node", // TODO: Fjernes når webpack er borte
       "vitest/globals",
       "@testing-library/jest-dom"
     ]
