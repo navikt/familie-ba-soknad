@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { Alert, Box, Button, Modal } from '@navikt/ds-react';
+import { XMarkOctagonFillIcon } from '@navikt/aksel-icons';
+import { Button, Modal } from '@navikt/ds-react';
 
 import { useAppContext } from '../../../context/AppContext';
 import { Typografi } from '../../../typer/sanity/sanity';
@@ -21,13 +22,11 @@ const ModellVersjonModal: React.FC<{ erÅpen: boolean }> = ({ erÅpen }) => {
             header={{
                 heading: plainTekst(mistetInformasjonenDinTekster.tittel),
                 size: 'medium',
+                icon: <XMarkOctagonFillIcon color="var(--a-surface-danger)" />,
             }}
         >
             <ModalContent>
-                <Alert variant={'error'}>{plainTekst(mistetInformasjonenDinTekster.tittel)}</Alert>
-                <Box marginBlock="10">
-                    <TekstBlock block={mistetInformasjonenDinTekster.info} typografi={Typografi.BodyLong} />
-                </Box>
+                <TekstBlock block={mistetInformasjonenDinTekster.info} typografi={Typografi.BodyLong} />
             </ModalContent>
             <Modal.Footer>
                 <Button onClick={refresh}>
