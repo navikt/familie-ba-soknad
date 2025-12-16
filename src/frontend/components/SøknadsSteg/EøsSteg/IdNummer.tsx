@@ -6,11 +6,11 @@ import { v4 as uuidv4 } from 'uuid';
 import { ESvar } from '@navikt/familie-form-elements';
 import { feil, type Felt, type FeltState, type ISkjema, ok, useFelt } from '@navikt/familie-skjema';
 
+import { ISanitySpørsmålDokument } from '../../../../common/sanity';
 import { useAppContext } from '../../../context/AppContext';
 import useInputFeltMedUkjent from '../../../hooks/useInputFeltMedUkjent';
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { AlternativtSvarForInput } from '../../../typer/common';
-import { ISanitySpørsmålDokument } from '../../../typer/sanity/sanity';
 import { IEøsForBarnFeltTyper, IEøsForSøkerFeltTyper } from '../../../typer/skjema';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';

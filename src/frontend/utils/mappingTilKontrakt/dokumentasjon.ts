@@ -1,3 +1,4 @@
+import { ESanitySteg, FlettefeltVerdier, PlainTekst } from '../../../common/sanity';
 import {
     Dokumentasjonsbehov,
     ISøknadKontraktDokumentasjon,
@@ -5,7 +6,6 @@ import {
 } from '../../../common/typer/kontrakt/dokumentasjon';
 import { TilRestLocaleRecord } from '../../../common/typer/kontrakt/generelle';
 import { dokumentasjonsbehovTilTittelSanityApiNavn, IDokumentasjon, IVedlegg } from '../../typer/dokumentasjon';
-import { ESanitySteg, FlettefeltVerdier, PlainTekst } from '../../typer/sanity/sanity';
 import { IFrittståendeOrdTekstinnhold, ITekstinnhold } from '../../typer/sanity/tekstInnhold';
 import { ISøknad } from '../../typer/søknad';
 import { slåSammen } from '../slåSammen';

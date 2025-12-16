@@ -3,11 +3,11 @@ import React from 'react';
 import { BodyShort } from '@navikt/ds-react';
 import { feil, type FeltState, ok } from '@navikt/familie-skjema';
 
+import { PlainTekst } from '../../common/sanity';
 import { IAdresse } from '../../common/typer/kontrakt/generelle';
 import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
 import { IOmDegTekstinnhold } from '../components/SøknadsSteg/OmDeg/innholdTyper';
 import { ISøker } from '../typer/person';
-import { PlainTekst } from '../typer/sanity/sanity';
 
 import { trimWhiteSpace } from './hjelpefunksjoner';
 import { uppercaseFørsteBokstav } from './visning';

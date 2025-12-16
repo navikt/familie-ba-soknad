@@ -6,10 +6,10 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { feil, type Felt, type FeltState, ok, useFelt } from '@navikt/familie-skjema';
 import { idnr } from '@navikt/fnrvalidator';
 
+import { FlettefeltVerdier, LocaleRecordBlock, LocaleRecordString } from '../../common/sanity';
 import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
 import { useAppContext } from '../context/AppContext';
 import { DatoMedUkjent } from '../typer/common';
-import { FlettefeltVerdier, LocaleRecordBlock, LocaleRecordString } from '../typer/sanity/sanity';
 import { IdNummerKey } from '../typer/skjema';
 import { ISøknadSpørsmål } from '../typer/spørsmål';
 import { trimWhiteSpace } from '../utils/hjelpefunksjoner';

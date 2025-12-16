@@ -5,9 +5,9 @@ import axios from 'axios';
 import { type FileAccepted, type FileObject, type FileRejected, type FileRejectionReason } from '@navikt/ds-react';
 
 import miljø from '../../../../../common/miljø';
+import { PlainTekst } from '../../../../../common/sanity';
 import { Dokumentasjonsbehov } from '../../../../../common/typer/kontrakt/dokumentasjon';
 import { EFiltyper, IDokumentasjon, IVedlegg } from '../../../../typer/dokumentasjon';
-import { PlainTekst } from '../../../../typer/sanity/sanity';
 import { IDokumentasjonTekstinnhold } from '../innholdTyper';
 
 interface OpplastetVedlegg {

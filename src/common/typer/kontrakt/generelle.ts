@@ -1,4 +1,4 @@
-import { FlettefeltVerdier, LocaleRecordBlock, LocaleRecordString } from '../../../frontend/typer/sanity/sanity';
+import { FlettefeltVerdier, LocaleRecordBlock, LocaleRecordString } from '../../sanity';
 import { ISODateString } from '../ISODateString';
 import { LocaleType } from '../localeType';
 

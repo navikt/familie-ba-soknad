@@ -2,13 +2,13 @@ import { useEffect, useState } from 'react';
 
 import { feil, type ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
+import { ESanitySteg } from '../../../../common/sanity';
 import { useAppContext } from '../../../context/AppContext';
 import { useEøsContext } from '../../../context/EøsContext';
 import { useStegContext } from '../../../context/StegContext';
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { BarnetsId } from '../../../typer/common';
 import { IBarn } from '../../../typer/person';
-import { ESanitySteg } from '../../../typer/sanity/sanity';
 import { IVelgBarnFeltTyper } from '../../../typer/skjema';
 import { genererInitialBarnMedISøknad } from '../../../utils/barn';
 

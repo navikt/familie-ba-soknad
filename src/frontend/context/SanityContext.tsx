@@ -5,7 +5,7 @@ import { createClient } from '@sanity/client';
 import { byggHenterRessurs, byggTomRessurs, type Ressurs, RessursStatus } from '@navikt/familie-typer';
 
 import miljø from '../../common/miljø';
-import { SanityDokument } from '../typer/sanity/sanity';
+import { SanityDokument } from '../../common/sanity';
 import { ITekstinnhold } from '../typer/sanity/tekstInnhold';
 import { transformerTilTekstinnhold } from '../utils/sanity';
 

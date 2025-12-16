@@ -4,9 +4,9 @@ import { Accordion, GuidePanel, Heading } from '@navikt/ds-react';
 import { setAvailableLanguages } from '@navikt/nav-dekoratoren-moduler';
 
 import miljø from '../../../../common/miljø';
+import { ESanitySteg, Typografi } from '../../../../common/sanity';
 import { useAppContext } from '../../../context/AppContext';
 import { RouteEnum } from '../../../typer/routes';
-import { ESanitySteg, Typografi } from '../../../typer/sanity/sanity';
 import InnholdContainer from '../../Felleskomponenter/InnholdContainer/InnholdContainer';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 

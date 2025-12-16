@@ -1,5 +1,5 @@
+import { ISanitySpørsmålDokument } from '../../../../common/sanity';
 import { PersonType } from '../../../typer/personType';
-import { ISanitySpørsmålDokument } from '../../../typer/sanity/sanity';
 import { ITekstinnhold } from '../../../typer/sanity/tekstInnhold';
 
 export const arbeidslandFeilmelding = (periodenErAvsluttet: boolean, personType: PersonType): string => {

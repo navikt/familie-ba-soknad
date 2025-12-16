@@ -5,6 +5,7 @@ import { Alpha3Code } from 'i18n-iso-countries';
 import { ESvar } from '@navikt/familie-form-elements';
 import { feil, type Felt, type ISkjema, ok, useSkjema } from '@navikt/familie-skjema';
 
+import { ESanitySteg } from '../../../../../common/sanity';
 import { useAppContext } from '../../../../context/AppContext';
 import useInputFelt from '../../../../hooks/useInputFelt';
 import useJaNeiSpmFelt from '../../../../hooks/useJaNeiSpmFelt';
@@ -15,7 +16,6 @@ import { ISøker } from '../../../../typer/person';
 import { PersonType } from '../../../../typer/personType';
 import { IArbeidsperiodeTekstinnhold } from '../../../../typer/sanity/modaler/arbeidsperiode';
 import { IPensjonsperiodeTekstinnhold } from '../../../../typer/sanity/modaler/pensjonsperiode';
-import { ESanitySteg } from '../../../../typer/sanity/sanity';
 import { IEøsForSøkerFeltTyper } from '../../../../typer/skjema';
 import { valideringAdresse } from '../../../../utils/adresse';
 import { trimWhiteSpace } from '../../../../utils/hjelpefunksjoner';

@@ -2,8 +2,8 @@ import React from 'react';
 
 import { Alert, Button, VStack } from '@navikt/ds-react';
 
+import { Typografi } from '../../../../common/sanity';
 import { useAppContext } from '../../../context/AppContext';
-import { Typografi } from '../../../typer/sanity/sanity';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import { SlettSøknadenModal } from '../../Felleskomponenter/Steg/SlettSøknadenModal';
 

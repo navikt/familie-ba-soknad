@@ -5,13 +5,13 @@ import { format } from 'date-fns';
 import { Alert, VStack } from '@navikt/ds-react';
 import { RessursStatus } from '@navikt/familie-typer';
 
+import { Typografi } from '../../../../common/sanity';
 import { Dokumentasjonsbehov } from '../../../../common/typer/kontrakt/dokumentasjon';
 import { ESøknadstype } from '../../../../common/typer/kontrakt/generelle';
 import { useAppContext } from '../../../context/AppContext';
 import { useStegContext } from '../../../context/StegContext';
 import { useUxSignals } from '../../../hooks/useUxSignals';
 import { RouteEnum } from '../../../typer/routes';
-import { Typografi } from '../../../typer/sanity/sanity';
 import { erDokumentasjonRelevant } from '../../../utils/dokumentasjon';
 import { BlokkerTilbakeKnappModal } from '../../Felleskomponenter/BlokkerTilbakeKnappModal/BlokkerTilbakeKnappModal';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';

@@ -5,6 +5,7 @@ import { createIntl, createIntlCache } from 'react-intl';
 import engelsk from '../../common/lang/en.json' with { type: 'json' };
 import bokmål from '../../common/lang/nb.json' with { type: 'json' };
 import nynorsk from '../../common/lang/nn.json' with { type: 'json' };
+import { ESanitySivilstandApiKey, LocaleRecordString } from '../../common/sanity';
 import { ESivilstand, Slektsforhold } from '../../common/typer/kontrakt/generelle';
 import { LocaleType } from '../../common/typer/localeType';
 import { innebygdeFormatterere } from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -13,7 +14,6 @@ import { IEøsForBarnTekstinnhold } from '../components/SøknadsSteg/EøsSteg/Ba
 import { IVelgBarnTekstinnhold } from '../components/SøknadsSteg/VelgBarn/innholdTyper';
 import { AlternativtSvarForInput } from '../typer/common';
 import { IBarn } from '../typer/person';
-import { ESanitySivilstandApiKey, LocaleRecordString } from '../typer/sanity/sanity';
 import { Årsak } from '../typer/utvidet';
 
 export const hentÅrsak = (årsak: Årsak, tekster: IDinLivssituasjonTekstinnhold): LocaleRecordString => {

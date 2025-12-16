@@ -1,6 +1,7 @@
 import { ESvar } from '@navikt/familie-form-elements';
 import { useFelt, useSkjema, Valideringsstatus } from '@navikt/familie-skjema';
 
+import { ESanitySteg } from '../../../../common/sanity';
 import { useAppContext } from '../../../context/AppContext';
 import useDatovelgerFeltMedUkjentForSanity from '../../../hooks/useDatovelgerFeltMedUkjentForSanity';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
@@ -9,7 +10,6 @@ import useDatovelgerFeltForSanity from '../../../hooks/useSendInnSkjemaTest/useD
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { PersonType } from '../../../typer/personType';
 import { IAndreUtbetalingerTekstinnhold } from '../../../typer/sanity/modaler/andreUtbetalinger';
-import { ESanitySteg } from '../../../typer/sanity/sanity';
 import { IUtbetalingerFeltTyper } from '../../../typer/skjema';
 import {
     dagensDato,
