@@ -24,8 +24,10 @@ jobs:
         run: yarn --prefer-offline --frozen-lockfile
       - name: Kjør typecheck
         run: yarn typecheck
-      - name: Kjør prettier og eslint
-        run: yarn lint-test
+      - name: Kjør eslint
+        run: yarn lint
+      - name: Kjør prettier
+        run: yarn prettier
       - name: Kjør tester
         run: yarn test
 
