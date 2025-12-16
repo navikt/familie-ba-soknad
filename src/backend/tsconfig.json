@@ -1,4 +1,5 @@
 {
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "resolveJsonModule": true,
     "noImplicitAny": false,
@@ -7,6 +8,7 @@
     "target": "ES6",
     "module": "ESNext",
     "moduleResolution": "Node",
+    "declaration": false,
     "types": [
         "node",
         "vitest/globals",

@@ -20,6 +20,7 @@
     "traceResolution": false,
     "jsx": "react",
     "esModuleInterop": true,
+    "skipLibCheck": true,
     "types": [
       "vitest/globals",
       "@testing-library/jest-dom"
