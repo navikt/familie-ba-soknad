@@ -50,7 +50,7 @@
     "@navikt/ds-react": "^7.32.1",
     "@navikt/familie-form-elements": "^21.0.4",
     "@navikt/familie-http": "^8.0.1",
-    "@navikt/familie-logging": "^7.0.3",
+    "@navikt/familie-logging": "^7.0.4",
     "@navikt/familie-skjema": "^8.2.26",
     "@navikt/familie-typer": "^8.0.4",
     "@navikt/fnrvalidator": "^2.1.5",
