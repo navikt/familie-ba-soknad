@@ -13,6 +13,7 @@ import { IBarnMedISøknad } from '../../../typer/barn';
 import { ISteg } from '../../../typer/routes';
 import { FlettefeltVerdier, LocaleRecordBlock, LocaleRecordString } from '../../../typer/sanity/sanity';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
+import { uppercaseFørsteBokstav } from '../../../utils/visning';
 import { SkjemaFeiloppsummering } from '../../Felleskomponenter/SkjemaFeiloppsummering/SkjemaFeiloppsummering';
 
 interface IHookReturn {
@@ -27,8 +28,8 @@ interface Props {
     steg: ISteg;
     skjemaHook: IHookReturn;
     settFeilAnchors?: React.Dispatch<React.SetStateAction<string[]>>;
-    children?: ReactNode;
     barn?: IBarnMedISøknad;
+    children?: ReactNode;
 }
 
 const Oppsummeringsbolk: React.FC<Props> = ({
@@ -69,6 +70,7 @@ const Oppsummeringsbolk: React.FC<Props> = ({
         }
     }, [visFeil]);
 
+    const stegnummer = hentStegNummer(steg.route, barn);
     const navigate = useNavigate();
 
     const navigerTilSteg: MouseEventHandler = event => {
@@ -82,7 +84,7 @@ const Oppsummeringsbolk: React.FC<Props> = ({
         <FormSummary>
             <FormSummary.Header>
                 <FormSummary.Heading level="3">
-                    {`${hentStegNummer(steg.route, barn)}. ${plainTekst(tittel, flettefelter)}`}
+                    {`${stegnummer}. ${uppercaseFørsteBokstav(plainTekst(tittel, flettefelter))}`}
                 </FormSummary.Heading>
             </FormSummary.Header>
             <FormSummary.Answers>
