@@ -9,11 +9,11 @@ import { BASE_PATH } from '../../../../shared-utils/miljø';
 import { unslash } from '../../../../shared-utils/unslash';
 import { useAppContext } from '../../../context/AppContext';
 import { useStegContext } from '../../../context/StegContext';
-import { ISteg, RouteEnum } from '../../../typer/routes';
+import { IBarnMedISøknad } from '../../../typer/barn';
+import { ISteg } from '../../../typer/routes';
 import { FlettefeltVerdier, LocaleRecordBlock, LocaleRecordString } from '../../../typer/sanity/sanity';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
 import { SkjemaFeiloppsummering } from '../../Felleskomponenter/SkjemaFeiloppsummering/SkjemaFeiloppsummering';
-import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 interface IHookReturn {
     valideringErOk: () => boolean;
@@ -22,25 +22,23 @@ interface IHookReturn {
 }
 
 interface Props {
-    tittel: string;
-    språkValues?: { [key: string]: string };
-    tittelForSanity?: LocaleRecordBlock | LocaleRecordString;
+    tittelForSanity: LocaleRecordBlock | LocaleRecordString;
     flettefelter?: FlettefeltVerdier;
-    steg?: ISteg;
+    steg: ISteg;
     skjemaHook: IHookReturn;
     settFeilAnchors?: React.Dispatch<React.SetStateAction<string[]>>;
     children?: ReactNode;
+    barn?: IBarnMedISøknad;
 }
 
 const Oppsummeringsbolk: React.FC<Props> = ({
     children,
-    tittel,
-    språkValues,
     tittelForSanity,
     flettefelter,
     steg,
     skjemaHook,
     settFeilAnchors,
+    barn,
 }) => {
     const { hentStegNummer } = useStegContext();
     const { søknad, tekster, plainTekst } = useAppContext();
@@ -84,14 +82,7 @@ const Oppsummeringsbolk: React.FC<Props> = ({
         <FormSummary>
             <FormSummary.Header>
                 <FormSummary.Heading level="3">
-                    {steg?.route !== RouteEnum.OmBarnet &&
-                        steg?.route !== RouteEnum.EøsForBarn &&
-                        `${hentStegNummer(steg?.route ?? RouteEnum.OmDeg)}. `}
-                    {tittelForSanity ? (
-                        plainTekst(tittelForSanity, flettefelter)
-                    ) : (
-                        <SpråkTekst id={tittel} values={språkValues} />
-                    )}
+                    {`${hentStegNummer(steg.route, barn)}. ${plainTekst(tittelForSanity, flettefelter)}`}
                 </FormSummary.Heading>
             </FormSummary.Header>
             <FormSummary.Answers>

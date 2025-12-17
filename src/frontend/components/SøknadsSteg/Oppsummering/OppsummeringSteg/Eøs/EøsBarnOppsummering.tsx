@@ -18,10 +18,9 @@ import { tittelSpmEøsBarnOppsummering } from './utils';
 interface Props {
     settFeilAnchors: React.Dispatch<React.SetStateAction<string[]>>;
     barn: IBarnMedISøknad;
-    nummer: string;
 }
 
-const EøsBarnOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn }) => {
+const EøsBarnOppsummering: React.FC<Props> = ({ settFeilAnchors, barn }) => {
     const { hentStegObjektForBarnEøs } = useStegContext();
     const { tekster, plainTekst } = useAppContext();
     const eøsBarnTekster = tekster().EØS_FOR_BARN;
@@ -32,13 +31,12 @@ const EøsBarnOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn }
 
     return (
         <Oppsummeringsbolk
-            tittel={'eøs-om-barn.oppsummering.tittel'}
-            språkValues={{ nummer, barn: barn.navn }}
             tittelForSanity={eøsBarnTekster.eoesForBarnTittel}
             flettefelter={flettefelter}
             steg={hentStegObjektForBarnEøs(barn)}
             skjemaHook={eøsForBarnHook}
             settFeilAnchors={settFeilAnchors}
+            barn={barn}
         >
             <SamletIdNummerForBarn
                 barn={barn}
