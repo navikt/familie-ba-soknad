@@ -28,6 +28,7 @@ import { IArbeidsperiodeTekstinnhold } from '../typer/sanity/modaler/arbeidsperi
 import { IBarnetrygdsperiodeTekstinnhold } from '../typer/sanity/modaler/barnetrygdperiode';
 import { IBlokkerTilbakeknappTekstinnhold } from '../typer/sanity/modaler/blokkerTilbakeknapp';
 import { ILeggTilBarnTekstinnhold } from '../typer/sanity/modaler/leggTilBarn';
+import { IMistetInformasjonenDinModal } from '../typer/sanity/modaler/mistetInformasjonenDin';
 import { IPensjonsperiodeTekstinnhold } from '../typer/sanity/modaler/pensjonsperiode';
 import { IStartPåNyttModal } from '../typer/sanity/modaler/startPåNytt';
 import { ITidligereSamoboereTekstinnhold } from '../typer/sanity/modaler/tidligereSamboere';
@@ -119,6 +120,9 @@ const strukturertInnholdForModaler = (dokumenter: SanityDokument[]): IModalerTek
         },
         leggTilBarn: strukturerInnholdForModal(SanityModalPrefix.LEGG_TIL_BARN) as ILeggTilBarnTekstinnhold,
         startPåNytt: strukturerInnholdForModal(SanityModalPrefix.START_PAA_NYTT) as IStartPåNyttModal,
+        mistetInformasjonenDin: strukturerInnholdForModal(
+            SanityModalPrefix.MISTET_INFORMASJONEN_DIN
+        ) as IMistetInformasjonenDinModal,
         blokkerTilbakeknapp: strukturerInnholdForModal(
             SanityModalPrefix.BLOKKER_TILBAKEKNAPP
         ) as IBlokkerTilbakeknappTekstinnhold,

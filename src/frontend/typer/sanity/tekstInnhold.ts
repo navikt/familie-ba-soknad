@@ -15,6 +15,7 @@ import { IArbeidsperiodeTekstinnhold } from './modaler/arbeidsperiode';
 import { IBarnetrygdsperiodeTekstinnhold } from './modaler/barnetrygdperiode';
 import { IBlokkerTilbakeknappTekstinnhold } from './modaler/blokkerTilbakeknapp';
 import { ILeggTilBarnTekstinnhold } from './modaler/leggTilBarn';
+import { IMistetInformasjonenDinModal } from './modaler/mistetInformasjonenDin';
 import { IPensjonsperiodeTekstinnhold } from './modaler/pensjonsperiode';
 import { IStartPåNyttModal } from './modaler/startPåNytt';
 import { ITidligereSamoboereTekstinnhold } from './modaler/tidligereSamboere';
@@ -36,6 +37,7 @@ export enum SanityModalPrefix {
     UTENLANDSOPPHOLD = 'MODAL_UTENLANDSOPPHOLD',
     START_PAA_NYTT = 'MODAL_START_PAA_NYTT',
     LEGG_TIL_BARN = 'MODAL_LEGG_TIL_BARN',
+    MISTET_INFORMASJONEN_DIN = 'MODAL_MISTET_INFORMASJONEN_DIN',
     BLOKKER_TILBAKEKNAPP = 'MODAL_BLOKKER_TILBAKE_KNAPP',
 }
 
@@ -158,6 +160,7 @@ export interface IModalerTekstinnhold {
     };
     startPåNytt: IStartPåNyttModal;
     leggTilBarn: ILeggTilBarnTekstinnhold;
+    mistetInformasjonenDin: IMistetInformasjonenDinModal;
     blokkerTilbakeknapp: IBlokkerTilbakeknappTekstinnhold;
 }
 
