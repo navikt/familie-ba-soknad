@@ -11,9 +11,9 @@ import {
 } from '../../../common/typer/kontrakt/generelle';
 import { LocaleType } from '../../../common/typer/localeType';
 import { IBarnMedISøknad } from '../../typer/barn';
-import { AlternativtSvarForInput } from '../../typer/common';
 import { ITekstinnhold } from '../../typer/sanity/tekstInnhold';
 import { ISøknadSpørsmål, SpørsmålId, ISøknadSpørsmålMap } from '../../typer/spørsmål';
+import { AlternativtSvarForInput } from '../../typer/svar';
 import { Årsak } from '../../typer/utvidet';
 import { hentTekster, hentÅrsak, landkodeTilSpråk, toSlektsforholdSpråkId } from '../språk';
 import { språkIndexListe } from '../spørsmål';

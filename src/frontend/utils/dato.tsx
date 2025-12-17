@@ -24,8 +24,8 @@ import { LocaleRecordBlock, PlainTekst } from '../../common/sanity';
 import { ISODateString } from '../../common/typer/ISODateString';
 import { LocaleType } from '../../common/typer/localeType';
 import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
-import { AlternativtSvarForInput, DatoMedUkjent } from '../typer/common';
 import { IFormateringsfeilmeldingerTekstinnhold } from '../typer/sanity/tekstInnhold';
+import { AlternativtSvarForInput, DatoMedUkjent } from '../typer/svar';
 
 export const erDatoFormatGodkjent = (dato: Date) => isValid(dato);
 

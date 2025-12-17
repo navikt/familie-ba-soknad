@@ -4,9 +4,9 @@ import { ESvar } from '@navikt/familie-form-elements';
 
 import { Slektsforhold } from '../../common/typer/kontrakt/generelle';
 
-import { AlternativtSvarForInput } from './common';
 import { IArbeidsperiode, IEøsBarnetrygdsperiode, IPensjonsperiode, IUtbetalingsperiode } from './perioder';
 import { ISøknadSpørsmål } from './spørsmål';
+import { AlternativtSvarForInput } from './svar';
 
 export interface IOmsorgsperson {
     navn: ISøknadSpørsmål<string>;

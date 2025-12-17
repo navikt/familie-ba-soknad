@@ -15,7 +15,6 @@ import useInputFeltMedUkjent from '../../../hooks/useInputFeltMedUkjent';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import { usePerioder } from '../../../hooks/usePerioder';
 import { barnDataKeySpørsmål } from '../../../typer/barn';
-import { AlternativtSvarForInput } from '../../../typer/common';
 import { IArbeidsperiode, IPensjonsperiode } from '../../../typer/perioder';
 import { ISamboer, ISøker, ITidligereSamboer } from '../../../typer/person';
 import { PersonType } from '../../../typer/personType';
@@ -23,6 +22,7 @@ import { IArbeidsperiodeTekstinnhold } from '../../../typer/sanity/modaler/arbei
 import { IPensjonsperiodeTekstinnhold } from '../../../typer/sanity/modaler/pensjonsperiode';
 import { ITidligereSamoboereTekstinnhold } from '../../../typer/sanity/modaler/tidligereSamboere';
 import { IDinLivssituasjonFeltTyper } from '../../../typer/skjema';
+import { AlternativtSvarForInput } from '../../../typer/svar';
 import { Årsak } from '../../../typer/utvidet';
 import { nullstilteEøsFelterForBarn } from '../../../utils/barn';
 import { dagensDato } from '../../../utils/dato';

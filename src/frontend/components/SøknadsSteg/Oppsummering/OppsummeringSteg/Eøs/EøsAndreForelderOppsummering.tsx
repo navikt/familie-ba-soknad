@@ -12,9 +12,9 @@ import {
     IAndreForelder,
     IBarnMedISøknad,
 } from '../../../../../typer/barn';
-import { AlternativtSvarForInput } from '../../../../../typer/common';
 import { PersonType } from '../../../../../typer/personType';
 import { IEøsForBarnFeltTyper } from '../../../../../typer/skjema';
+import { AlternativtSvarForInput } from '../../../../../typer/svar';
 import { landkodeTilSpråk } from '../../../../../utils/språk';
 import { ArbeidsperiodeOppsummering } from '../../../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeOppsummering';
 import { BarnetrygdsperiodeOppsummering } from '../../../../Felleskomponenter/Barnetrygdperiode/BarnetrygdperiodeOppsummering';

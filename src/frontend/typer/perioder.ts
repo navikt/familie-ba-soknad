@@ -4,8 +4,8 @@ import { ESvar } from '@navikt/familie-form-elements';
 
 import { ISODateString } from '../../common/typer/ISODateString';
 
-import { DatoMedUkjent } from './common';
 import { ISøknadSpørsmål } from './spørsmål';
+import { DatoMedUkjent } from './svar';
 import { EUtenlandsoppholdÅrsak } from './utenlandsopphold';
 
 export interface IUtenlandsperiode {

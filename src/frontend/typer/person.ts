@@ -5,9 +5,9 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { ISODateString } from '../../common/typer/ISODateString';
 import { ESivilstand, IAdresse } from '../../common/typer/kontrakt/generelle';
 
-import { AlternativtSvarForInput, DatoMedUkjent } from './common';
 import { IArbeidsperiode, IPensjonsperiode, IUtbetalingsperiode, IUtenlandsperiode } from './perioder';
 import { ISøknadSpørsmål } from './spørsmål';
+import { AlternativtSvarForInput, DatoMedUkjent } from './svar';
 import { Årsak } from './utvidet';
 
 export interface IPerson {

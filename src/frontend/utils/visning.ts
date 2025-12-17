@@ -1,5 +1,5 @@
 import { LocaleType } from '../../common/typer/localeType';
-import { AlternativtSvarForInput, DatoMedUkjent } from '../typer/common';
+import { AlternativtSvarForInput, DatoMedUkjent } from '../typer/svar';
 
 import { formaterDato, formaterDatostringKunMåned } from './dato';
 

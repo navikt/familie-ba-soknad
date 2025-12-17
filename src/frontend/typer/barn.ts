@@ -5,7 +5,6 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { ISODateString } from '../../common/typer/ISODateString';
 import { Slektsforhold } from '../../common/typer/kontrakt/generelle';
 
-import { AlternativtSvarForInput, DatoMedUkjent } from './common';
 import { IOmsorgsperson } from './omsorgsperson';
 import {
     IArbeidsperiode,
@@ -16,6 +15,7 @@ import {
 } from './perioder';
 import { BarnetsId, IBarn, IIdNummer } from './person';
 import { ISøknadSpørsmål } from './spørsmål';
+import { AlternativtSvarForInput, DatoMedUkjent } from './svar';
 
 export enum andreForelderDataKeySpørsmål {
     kanIkkeGiOpplysninger = 'kanIkkeGiOpplysninger',

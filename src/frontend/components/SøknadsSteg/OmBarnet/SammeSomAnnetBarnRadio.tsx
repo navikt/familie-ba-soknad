@@ -7,8 +7,8 @@ import type { ISkjema } from '@navikt/familie-skjema';
 
 import { useAppContext } from '../../../context/AppContext';
 import { IBarnMedISøknad } from '../../../typer/barn';
-import { AlternativtSvarForInput } from '../../../typer/common';
 import { IOmBarnetFeltTyper } from '../../../typer/skjema';
+import { AlternativtSvarForInput } from '../../../typer/svar';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 
 import { OmBarnetSpørsmålsId } from './spørsmål';

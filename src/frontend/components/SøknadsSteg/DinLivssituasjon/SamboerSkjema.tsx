@@ -5,9 +5,9 @@ import type { Felt, ISkjema } from '@navikt/familie-skjema';
 
 import { ISODateString } from '../../../../common/typer/ISODateString';
 import { useAppContext } from '../../../context/AppContext';
-import { DatoMedUkjent } from '../../../typer/common';
 import { ITidligereSamoboereTekstinnhold } from '../../../typer/sanity/modaler/tidligereSamboere';
 import { IDinLivssituasjonFeltTyper, ITidligereSamboerFeltTyper } from '../../../typer/skjema';
+import { DatoMedUkjent } from '../../../typer/svar';
 import { dagensDato, gårsdagensDato } from '../../../utils/dato';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';

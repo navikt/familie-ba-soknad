@@ -19,7 +19,6 @@ import {
     IAndreForelder,
     IBarnMedISøknad,
 } from '../../../../typer/barn';
-import { AlternativtSvarForInput } from '../../../../typer/common';
 import { IOmsorgsperson } from '../../../../typer/omsorgsperson';
 import {
     IArbeidsperiode,
@@ -32,6 +31,7 @@ import { PersonType } from '../../../../typer/personType';
 import { IArbeidsperiodeTekstinnhold } from '../../../../typer/sanity/modaler/arbeidsperiode';
 import { IBarnetrygdsperiodeTekstinnhold } from '../../../../typer/sanity/modaler/barnetrygdperiode';
 import { IEøsForBarnFeltTyper } from '../../../../typer/skjema';
+import { AlternativtSvarForInput } from '../../../../typer/svar';
 import { valideringAdresse } from '../../../../utils/adresse';
 import { skalSkjuleAndreForelderFelt, skalViseBorMedOmsorgsperson } from '../../../../utils/barn';
 import { trimWhiteSpace } from '../../../../utils/hjelpefunksjoner';

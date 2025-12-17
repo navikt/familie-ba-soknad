@@ -12,8 +12,8 @@ import { innebygdeFormatterere } from '../components/Felleskomponenter/SpråkTek
 import { IDinLivssituasjonTekstinnhold } from '../components/SøknadsSteg/DinLivssituasjon/innholdTyper';
 import { IEøsForBarnTekstinnhold } from '../components/SøknadsSteg/EøsSteg/Barn/innholdTyper';
 import { IVelgBarnTekstinnhold } from '../components/SøknadsSteg/VelgBarn/innholdTyper';
-import { AlternativtSvarForInput } from '../typer/common';
 import { IBarn } from '../typer/person';
+import { AlternativtSvarForInput } from '../typer/svar';
 import { Årsak } from '../typer/utvidet';
 
 export const hentÅrsak = (årsak: Årsak, tekster: IDinLivssituasjonTekstinnhold): LocaleRecordString => {

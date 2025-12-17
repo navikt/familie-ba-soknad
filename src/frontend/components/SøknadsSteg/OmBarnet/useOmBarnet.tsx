@@ -21,7 +21,6 @@ import {
     IAndreForelder,
     IBarnMedISøknad,
 } from '../../../typer/barn';
-import { AlternativtSvarForInput } from '../../../typer/common';
 import { IDokumentasjon } from '../../../typer/dokumentasjon';
 import { IArbeidsperiode, IEøsBarnetrygdsperiode, IPensjonsperiode, IUtenlandsperiode } from '../../../typer/perioder';
 import { BarnetsId, IIdNummer } from '../../../typer/person';
@@ -32,6 +31,7 @@ import { IPensjonsperiodeTekstinnhold } from '../../../typer/sanity/modaler/pens
 import { IUtenlandsoppholdTekstinnhold } from '../../../typer/sanity/modaler/utenlandsopphold';
 import { IFormateringsfeilmeldingerTekstinnhold } from '../../../typer/sanity/tekstInnhold';
 import { IOmBarnetFeltTyper } from '../../../typer/skjema';
+import { AlternativtSvarForInput } from '../../../typer/svar';
 import { Årsak } from '../../../typer/utvidet';
 import { erNorskPostnummer, valideringAdresse } from '../../../utils/adresse';
 import {

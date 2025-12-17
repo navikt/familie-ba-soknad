@@ -6,7 +6,6 @@ import { ISODateString } from '../../common/typer/ISODateString';
 import { Slektsforhold } from '../../common/typer/kontrakt/generelle';
 
 import { barnDataKeySpørsmål } from './barn';
-import { AlternativtSvarForInput, DatoMedUkjent, ESvarMedUbesvart } from './common';
 import {
     IArbeidsperiode,
     IEøsBarnetrygdsperiode,
@@ -15,6 +14,7 @@ import {
     IUtenlandsperiode,
 } from './perioder';
 import { BarnetsId, IBarn, IIdNummer, ITidligereSamboer } from './person';
+import { AlternativtSvarForInput, DatoMedUkjent, ESvarMedUbesvart } from './svar';
 import { EUtenlandsoppholdÅrsak } from './utenlandsopphold';
 import { Årsak } from './utvidet';
 

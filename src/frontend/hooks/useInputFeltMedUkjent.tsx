@@ -9,9 +9,9 @@ import { idnr } from '@navikt/fnrvalidator';
 import { FlettefeltVerdier, LocaleRecordBlock, LocaleRecordString } from '../../common/sanity';
 import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
 import { useAppContext } from '../context/AppContext';
-import { DatoMedUkjent } from '../typer/common';
 import { IdNummerKey } from '../typer/skjema';
 import { ISøknadSpørsmål } from '../typer/spørsmål';
+import { DatoMedUkjent } from '../typer/svar';
 import { trimWhiteSpace } from '../utils/hjelpefunksjoner';
 import { formaterInitVerdiForInputMedUkjent } from '../utils/input';
 
