@@ -10,4 +10,3 @@ export enum AlternativtSvarForInput {
 }
 
 export type DatoMedUkjent = ISODateString | AlternativtSvarForInput.UKJENT;
-export type BarnetsId = string;

@@ -5,7 +5,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { ISODateString } from '../../common/typer/ISODateString';
 import { Slektsforhold } from '../../common/typer/kontrakt/generelle';
 
-import { AlternativtSvarForInput, BarnetsId, DatoMedUkjent } from './common';
+import { AlternativtSvarForInput, DatoMedUkjent } from './common';
 import { IOmsorgsperson } from './omsorgsperson';
 import {
     IArbeidsperiode,
@@ -14,7 +14,7 @@ import {
     IUtbetalingsperiode,
     IUtenlandsperiode,
 } from './perioder';
-import { IBarn, IIdNummer } from './person';
+import { BarnetsId, IBarn, IIdNummer } from './person';
 import { ISøknadSpørsmål } from './spørsmål';
 
 export enum andreForelderDataKeySpørsmål {

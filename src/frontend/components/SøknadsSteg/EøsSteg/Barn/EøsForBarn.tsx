@@ -5,7 +5,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { ESanitySteg } from '../../../../../common/sanity';
 import { useAppContext } from '../../../../context/AppContext';
 import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../../typer/barn';
-import { BarnetsId } from '../../../../typer/common';
+import { BarnetsId } from '../../../../typer/person';
 import { PersonType } from '../../../../typer/personType';
 import { skalSkjuleAndreForelderFelt } from '../../../../utils/barn';
 import { Arbeidsperiode } from '../../../Felleskomponenter/Arbeidsperiode/Arbeidsperiode';

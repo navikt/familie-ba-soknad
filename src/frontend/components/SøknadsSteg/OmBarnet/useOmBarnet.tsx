@@ -21,10 +21,10 @@ import {
     IAndreForelder,
     IBarnMedISøknad,
 } from '../../../typer/barn';
-import { AlternativtSvarForInput, BarnetsId } from '../../../typer/common';
+import { AlternativtSvarForInput } from '../../../typer/common';
 import { IDokumentasjon } from '../../../typer/dokumentasjon';
 import { IArbeidsperiode, IEøsBarnetrygdsperiode, IPensjonsperiode, IUtenlandsperiode } from '../../../typer/perioder';
-import { IIdNummer } from '../../../typer/person';
+import { BarnetsId, IIdNummer } from '../../../typer/person';
 import { PersonType } from '../../../typer/personType';
 import { IArbeidsperiodeTekstinnhold } from '../../../typer/sanity/modaler/arbeidsperiode';
 import { IBarnetrygdsperiodeTekstinnhold } from '../../../typer/sanity/modaler/barnetrygdperiode';

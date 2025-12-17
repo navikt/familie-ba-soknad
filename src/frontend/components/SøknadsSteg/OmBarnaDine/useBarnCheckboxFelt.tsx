@@ -6,7 +6,7 @@ import { type Avhengigheter, feil, type Felt, type FeltState, ok, useFelt } from
 import { FlettefeltVerdier, LocaleRecordBlock } from '../../../../common/sanity';
 import { useAppContext } from '../../../context/AppContext';
 import { barnDataKeySpørsmål } from '../../../typer/barn';
-import { BarnetsId } from '../../../typer/common';
+import { BarnetsId } from '../../../typer/person';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 interface IUseBarnCheckboxFeltProps {

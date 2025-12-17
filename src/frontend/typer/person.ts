@@ -5,7 +5,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { ISODateString } from '../../common/typer/ISODateString';
 import { ESivilstand, IAdresse } from '../../common/typer/kontrakt/generelle';
 
-import { AlternativtSvarForInput, BarnetsId, DatoMedUkjent } from './common';
+import { AlternativtSvarForInput, DatoMedUkjent } from './common';
 import { IArbeidsperiode, IPensjonsperiode, IUtbetalingsperiode, IUtenlandsperiode } from './perioder';
 import { ISøknadSpørsmål } from './spørsmål';
 import { Årsak } from './utvidet';
@@ -28,6 +28,8 @@ export interface ISøkerRespons extends IPerson {
     adresse: IAdresse | null;
     sivilstand: { type: ESivilstand };
 }
+
+export type BarnetsId = string;
 
 export interface IBarn extends IPerson {
     id: BarnetsId;

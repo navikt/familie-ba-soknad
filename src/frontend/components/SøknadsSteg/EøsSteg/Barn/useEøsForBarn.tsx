@@ -19,7 +19,7 @@ import {
     IAndreForelder,
     IBarnMedISøknad,
 } from '../../../../typer/barn';
-import { AlternativtSvarForInput, BarnetsId } from '../../../../typer/common';
+import { AlternativtSvarForInput } from '../../../../typer/common';
 import { IOmsorgsperson } from '../../../../typer/omsorgsperson';
 import {
     IArbeidsperiode,
@@ -27,6 +27,7 @@ import {
     IPensjonsperiode,
     IUtbetalingsperiode,
 } from '../../../../typer/perioder';
+import { BarnetsId } from '../../../../typer/person';
 import { PersonType } from '../../../../typer/personType';
 import { IArbeidsperiodeTekstinnhold } from '../../../../typer/sanity/modaler/arbeidsperiode';
 import { IBarnetrygdsperiodeTekstinnhold } from '../../../../typer/sanity/modaler/barnetrygdperiode';

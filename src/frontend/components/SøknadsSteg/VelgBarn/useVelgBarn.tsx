@@ -7,8 +7,7 @@ import { useAppContext } from '../../../context/AppContext';
 import { useEøsContext } from '../../../context/EøsContext';
 import { useStegContext } from '../../../context/StegContext';
 import { IBarnMedISøknad } from '../../../typer/barn';
-import { BarnetsId } from '../../../typer/common';
-import { IBarn } from '../../../typer/person';
+import { BarnetsId, IBarn } from '../../../typer/person';
 import { IVelgBarnFeltTyper } from '../../../typer/skjema';
 import { genererInitialBarnMedISøknad } from '../../../utils/barn';
 

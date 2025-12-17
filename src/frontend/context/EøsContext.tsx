@@ -7,8 +7,7 @@ import { byggHenterRessurs, hentDataFraRessurs } from '@navikt/familie-typer';
 
 import miljø from '../../common/miljø';
 import { barnDataKeySpørsmål, IBarnMedISøknad } from '../typer/barn';
-import { BarnetsId } from '../typer/common';
-import { ISøker } from '../typer/person';
+import { BarnetsId, ISøker } from '../typer/person';
 
 import { useAppContext } from './AppContext';
 import { useLastRessurserContext } from './LastRessurserContext';
