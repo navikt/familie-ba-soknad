@@ -31,7 +31,7 @@ const EøsBarnOppsummering: React.FC<Props> = ({ settFeilAnchors, barn }) => {
 
     return (
         <Oppsummeringsbolk
-            tittelForSanity={eøsBarnTekster.eoesForBarnTittel}
+            tittel={eøsBarnTekster.eoesForBarnTittel}
             flettefelter={flettefelter}
             steg={hentStegObjektForBarnEøs(barn)}
             skjemaHook={eøsForBarnHook}

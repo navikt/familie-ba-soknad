@@ -32,7 +32,7 @@ const OmBarnaOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
     return (
         <Oppsummeringsbolk
             steg={hentRouteObjektForRouteEnum(RouteEnum.OmBarna)}
-            tittelForSanity={omBarnaTekster.omBarnaTittel}
+            tittel={omBarnaTekster.omBarnaTittel}
             skjemaHook={omBarnaDineHook}
             settFeilAnchors={settFeilAnchors}
         >

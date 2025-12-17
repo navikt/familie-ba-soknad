@@ -34,7 +34,7 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, barn, index })
 
     return (
         <Oppsummeringsbolk
-            tittelForSanity={omBarnetTekster.omBarnetTittel}
+            tittel={omBarnetTekster.omBarnetTittel}
             flettefelter={{ barnetsNavn: barn.navn }}
             key={index}
             steg={hentStegObjektForBarn(barn)}

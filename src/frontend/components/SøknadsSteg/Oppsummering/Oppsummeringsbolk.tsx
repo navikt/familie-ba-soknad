@@ -22,7 +22,7 @@ interface IHookReturn {
 }
 
 interface Props {
-    tittelForSanity: LocaleRecordBlock | LocaleRecordString;
+    tittel: LocaleRecordBlock | LocaleRecordString;
     flettefelter?: FlettefeltVerdier;
     steg: ISteg;
     skjemaHook: IHookReturn;
@@ -33,7 +33,7 @@ interface Props {
 
 const Oppsummeringsbolk: React.FC<Props> = ({
     children,
-    tittelForSanity,
+    tittel,
     flettefelter,
     steg,
     skjemaHook,
@@ -82,7 +82,7 @@ const Oppsummeringsbolk: React.FC<Props> = ({
         <FormSummary>
             <FormSummary.Header>
                 <FormSummary.Heading level="3">
-                    {`${hentStegNummer(steg.route, barn)}. ${plainTekst(tittelForSanity, flettefelter)}`}
+                    {`${hentStegNummer(steg.route, barn)}. ${plainTekst(tittel, flettefelter)}`}
                 </FormSummary.Heading>
             </FormSummary.Header>
             <FormSummary.Answers>

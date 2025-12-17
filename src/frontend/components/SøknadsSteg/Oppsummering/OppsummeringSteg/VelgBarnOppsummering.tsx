@@ -28,7 +28,7 @@ const VelgBarnOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
     return (
         <Oppsummeringsbolk
             steg={hentRouteObjektForRouteEnum(RouteEnum.VelgBarn)}
-            tittelForSanity={velgBarnTekster.velgBarnTittel}
+            tittel={velgBarnTekster.velgBarnTittel}
             skjemaHook={velgBarnHook}
             settFeilAnchors={settFeilAnchors}
         >
