@@ -21,12 +21,11 @@ import AndreForelderOppsummering from './AndreForelderOppsummering';
 
 interface Props {
     settFeilAnchors: React.Dispatch<React.SetStateAction<string[]>>;
-    nummer: string;
     barn: IBarnMedISøknad;
     index: number;
 }
 
-const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, index }) => {
+const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, barn, index }) => {
     const { tekster, plainTekst } = useAppContext();
     const { hentStegObjektForBarn } = useStegContext();
     const { valgtLocale } = useSpråkContext();
@@ -35,14 +34,13 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, nummer, barn, 
 
     return (
         <Oppsummeringsbolk
-            tittel={'oppsummering.deltittel.ombarnet'}
-            språkValues={{ nummer, navn: barn.navn }}
-            tittelForSanity={omBarnetTekster.omBarnetTittel}
+            tittel={omBarnetTekster.omBarnetTittel}
             flettefelter={{ barnetsNavn: barn.navn }}
             key={index}
             steg={hentStegObjektForBarn(barn)}
             skjemaHook={omBarnetHook}
             settFeilAnchors={settFeilAnchors}
+            barn={barn}
         >
             {barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA && (
                 <OppsummeringFelt

@@ -88,8 +88,7 @@ const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
     return (
         <Oppsummeringsbolk
             steg={hentRouteObjektForRouteEnum(RouteEnum.DinLivssituasjon)}
-            tittel={'dinlivssituasjon.sidetittel'}
-            tittelForSanity={dinLivssituasjonTekster.dinLivssituasjonTittel}
+            tittel={dinLivssituasjonTekster.dinLivssituasjonTittel}
             skjemaHook={dinLivsituasjonHook}
             settFeilAnchors={settFeilAnchors}
         >
