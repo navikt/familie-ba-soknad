@@ -1,11 +1,11 @@
-import { IBarnMedISøknad } from '../../typer/barn';
 import {
     ERegistrertBostedType,
     fjernNullVerdierFraSpørsmål,
     SpørsmålMapMedNullVerdier,
     TilRestLocaleRecord,
-} from '../../typer/kontrakt/generelle';
-import { ISøknadIKontraktBarn } from '../../typer/kontrakt/kontrakt';
+} from '../../../common/typer/kontrakt/generelle';
+import { ISøknadIKontraktBarn } from '../../../common/typer/kontrakt/kontrakt';
+import { IBarnMedISøknad } from '../../typer/barn';
 import { PersonType } from '../../typer/personType';
 import { ITekstinnhold } from '../../typer/sanity/tekstInnhold';
 import { ISøknad } from '../../typer/søknad';

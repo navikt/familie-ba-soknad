@@ -1,12 +1,12 @@
 import { ESvar } from '@navikt/familie-form-elements';
 
+import { ESanitySivilstandApiKey, LocaleRecordBlock, LocaleRecordString, PlainTekst } from '../../../common/sanity';
+import { ESivilstand, TilRestLocaleRecord } from '../../../common/typer/kontrakt/generelle';
+import { ISøknadKontrakt } from '../../../common/typer/kontrakt/kontrakt';
+import { LocaleType } from '../../../common/typer/localeType';
 import { avdødPartnerForelderSpørsmålDokument } from '../../components/SøknadsSteg/OmBarnaDine/utils';
 import { IBarnMedISøknad } from '../../typer/barn';
-import { LocaleType } from '../../typer/common';
-import { ESivilstand, TilRestLocaleRecord } from '../../typer/kontrakt/generelle';
-import { ISøknadKontrakt } from '../../typer/kontrakt/kontrakt';
 import { ISøker } from '../../typer/person';
-import { ESanitySivilstandApiKey, LocaleRecordBlock, LocaleRecordString, PlainTekst } from '../../typer/sanity/sanity';
 import { ITekstinnhold } from '../../typer/sanity/tekstInnhold';
 import { ISøknad } from '../../typer/søknad';
 import { erDokumentasjonRelevant } from '../dokumentasjon';

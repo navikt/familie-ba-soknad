@@ -4,10 +4,10 @@ import { useNavigate } from 'react-router';
 
 import { VStack } from '@navikt/ds-react';
 
+import { ESanitySteg } from '../../../../common/sanity';
 import { useAppContext } from '../../../context/AppContext';
 import { useEøsContext } from '../../../context/EøsContext';
 import { IBarnMedISøknad } from '../../../typer/barn';
-import { ESanitySteg } from '../../../typer/sanity/sanity';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 

@@ -7,17 +7,6 @@ import {
 } from '@portabletext/types';
 import { pipe } from 'ramda';
 
-import { LocaleType } from '../typer/common';
-import { IAndreUtbetalingerTekstinnhold } from '../typer/sanity/modaler/andreUtbetalinger';
-import { IArbeidsperiodeTekstinnhold } from '../typer/sanity/modaler/arbeidsperiode';
-import { IBarnetrygdsperiodeTekstinnhold } from '../typer/sanity/modaler/barnetrygdperiode';
-import { IBlokkerTilbakeknappTekstinnhold } from '../typer/sanity/modaler/blokkerTilbakeknapp';
-import { ILeggTilBarnTekstinnhold } from '../typer/sanity/modaler/leggTilBarn';
-import { IMistetInformasjonenDinModal } from '../typer/sanity/modaler/mistetInformasjonenDin';
-import { IPensjonsperiodeTekstinnhold } from '../typer/sanity/modaler/pensjonsperiode';
-import { IStartPåNyttModal } from '../typer/sanity/modaler/startPåNytt';
-import { ITidligereSamoboereTekstinnhold } from '../typer/sanity/modaler/tidligereSamboere';
-import { IUtenlandsoppholdTekstinnhold } from '../typer/sanity/modaler/utenlandsopphold';
 import {
     ESanityFlettefeltverdi,
     ESanitySteg,
@@ -32,7 +21,18 @@ import {
     navigasjonPrefix,
     SanityDokument,
     vedlikeholdsarbeidPrefix,
-} from '../typer/sanity/sanity';
+} from '../../common/sanity';
+import { LocaleType } from '../../common/typer/localeType';
+import { IAndreUtbetalingerTekstinnhold } from '../typer/sanity/modaler/andreUtbetalinger';
+import { IArbeidsperiodeTekstinnhold } from '../typer/sanity/modaler/arbeidsperiode';
+import { IBarnetrygdsperiodeTekstinnhold } from '../typer/sanity/modaler/barnetrygdperiode';
+import { IBlokkerTilbakeknappTekstinnhold } from '../typer/sanity/modaler/blokkerTilbakeknapp';
+import { ILeggTilBarnTekstinnhold } from '../typer/sanity/modaler/leggTilBarn';
+import { IMistetInformasjonenDinModal } from '../typer/sanity/modaler/mistetInformasjonenDin';
+import { IPensjonsperiodeTekstinnhold } from '../typer/sanity/modaler/pensjonsperiode';
+import { IStartPåNyttModal } from '../typer/sanity/modaler/startPåNytt';
+import { ITidligereSamoboereTekstinnhold } from '../typer/sanity/modaler/tidligereSamboere';
+import { IUtenlandsoppholdTekstinnhold } from '../typer/sanity/modaler/utenlandsopphold';
 import {
     IFellesTekstInnhold,
     IFormateringsfeilmeldingerTekstinnhold,

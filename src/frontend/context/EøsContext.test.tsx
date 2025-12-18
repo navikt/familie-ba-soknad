@@ -6,7 +6,7 @@ import { mockDeep } from 'vitest-mock-extended';
 
 import { RessursStatus } from '@navikt/familie-typer';
 
-import { ESivilstand } from '../typer/kontrakt/generelle';
+import { ESivilstand } from '../../common/typer/kontrakt/generelle';
 import { ISøkerRespons } from '../typer/person';
 import {
     mekkGyldigSøker,

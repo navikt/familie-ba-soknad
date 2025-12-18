@@ -3,10 +3,10 @@ import React, { useEffect } from 'react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { type Avhengigheter, feil, type Felt, type FeltState, ok, useFelt } from '@navikt/familie-skjema';
 
+import { FlettefeltVerdier, LocaleRecordBlock } from '../../../../common/sanity';
 import { useAppContext } from '../../../context/AppContext';
 import { barnDataKeySpørsmål } from '../../../typer/barn';
-import { BarnetsId } from '../../../typer/common';
-import { FlettefeltVerdier, LocaleRecordBlock } from '../../../typer/sanity/sanity';
+import { BarnetsId } from '../../../typer/person';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 interface IUseBarnCheckboxFeltProps {

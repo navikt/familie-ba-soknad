@@ -2,9 +2,10 @@ import { Alpha3Code } from 'i18n-iso-countries';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
+import { ISODateString } from '../../common/typer/ISODateString';
+import { Slektsforhold } from '../../common/typer/kontrakt/generelle';
+
 import { barnDataKeySpørsmål } from './barn';
-import { AlternativtSvarForInput, BarnetsId, DatoMedUkjent, ESvarMedUbesvart, ISODateString } from './common';
-import { Slektsforhold } from './kontrakt/generelle';
 import {
     IArbeidsperiode,
     IEøsBarnetrygdsperiode,
@@ -12,7 +13,8 @@ import {
     IUtbetalingsperiode,
     IUtenlandsperiode,
 } from './perioder';
-import { IBarn, IIdNummer, ITidligereSamboer } from './person';
+import { BarnetsId, IBarn, IIdNummer, ITidligereSamboer } from './person';
+import { AlternativtSvarForInput, DatoMedUkjent, ESvarMedUbesvart } from './svar';
 import { EUtenlandsoppholdÅrsak } from './utenlandsopphold';
 import { Årsak } from './utvidet';
 

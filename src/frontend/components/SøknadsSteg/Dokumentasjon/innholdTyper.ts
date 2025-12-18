@@ -1,5 +1,5 @@
+import { LocaleRecordBlock, LocaleRecordString } from '../../../../common/sanity';
 import { BeskrivelseSanityApiNavn, TittelSanityApiNavn } from '../../../typer/dokumentasjon';
-import { LocaleRecordBlock, LocaleRecordString } from '../../../typer/sanity/sanity';
 
 export type IDokumentasjonTekstinnhold = {
     dokumentasjonTittel: LocaleRecordBlock;

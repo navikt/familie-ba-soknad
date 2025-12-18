@@ -5,12 +5,12 @@ import { useIntl } from 'react-intl';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
+import { ESanitySteg } from '../../../../../common/sanity';
 import { useAppContext } from '../../../../context/AppContext';
 import { useRoutesContext } from '../../../../context/RoutesContext';
 import { useSpråkContext } from '../../../../context/SpråkContext';
 import { PersonType } from '../../../../typer/personType';
 import { RouteEnum } from '../../../../typer/routes';
-import { ESanitySteg } from '../../../../typer/sanity/sanity';
 import { genererAdresseVisning } from '../../../../utils/adresse';
 import { landkodeTilSpråk } from '../../../../utils/språk';
 import { jaNeiSvarTilSpråkId } from '../../../../utils/spørsmål';

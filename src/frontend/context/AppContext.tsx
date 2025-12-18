@@ -12,17 +12,17 @@ import {
     RessursStatus,
 } from '@navikt/familie-typer';
 
-import miljø, { BASE_PATH } from '../../shared-utils/miljø';
+import miljø, { BASE_PATH } from '../../common/miljø';
+import { ESanityFlettefeltverdi, ESanitySteg, FlettefeltVerdier, PlainTekst } from '../../common/sanity';
+import { ESivilstand, ESøknadstype, TilRestLocaleRecord } from '../../common/typer/kontrakt/generelle';
+import { LocaleType } from '../../common/typer/localeType';
 import { DinLivssituasjonSpørsmålId } from '../components/SøknadsSteg/DinLivssituasjon/spørsmål';
 import { useDebounce } from '../hooks/useDebounce/useDebounce';
-import { LocaleType } from '../typer/common';
 import { IKontoinformasjon } from '../typer/kontoinformasjon';
-import { ESivilstand, ESøknadstype, TilRestLocaleRecord } from '../typer/kontrakt/generelle';
 import { IKvittering } from '../typer/kvittering';
 import { IMellomlagretBarnetrygd } from '../typer/mellomlager';
 import { ISøkerRespons } from '../typer/person';
 import { RouteEnum } from '../typer/routes';
-import { ESanityFlettefeltverdi, ESanitySteg, FlettefeltVerdier, PlainTekst } from '../typer/sanity/sanity';
 import { ITekstinnhold } from '../typer/sanity/tekstInnhold';
 import { initialStateSøknad, ISøknad } from '../typer/søknad';
 import { InnloggetStatus } from '../utils/autentisering';

@@ -4,9 +4,9 @@ import { Alert, Fieldset } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Valideringsstatus } from '@navikt/familie-skjema';
 
+import { Typografi } from '../../../../../common/sanity';
 import { useAppContext } from '../../../../context/AppContext';
 import { ILeggTilBarnTekstinnhold } from '../../../../typer/sanity/modaler/leggTilBarn';
-import { Typografi } from '../../../../typer/sanity/sanity';
 import { visFeiloppsummering } from '../../../../utils/hjelpefunksjoner';
 import JaNeiSpm from '../../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../../Felleskomponenter/KomponentGruppe/KomponentGruppe';

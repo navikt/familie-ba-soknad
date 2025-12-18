@@ -3,10 +3,10 @@ import React from 'react';
 import { Alert } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
+import { ESanitySteg, Typografi } from '../../../../common/sanity';
 import { useAppContext } from '../../../context/AppContext';
 import { PersonType } from '../../../typer/personType';
 import { IUtenlandsoppholdTekstinnhold } from '../../../typer/sanity/modaler/utenlandsopphold';
-import { ESanitySteg, Typografi } from '../../../typer/sanity/sanity';
 import { uppercaseFørsteBokstav } from '../../../utils/visning';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';

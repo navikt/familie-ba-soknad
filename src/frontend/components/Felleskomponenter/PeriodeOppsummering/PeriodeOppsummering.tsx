@@ -3,7 +3,7 @@ import React, { ReactNode } from 'react';
 import { TrashFillIcon } from '@navikt/aksel-icons';
 import { Button, FormSummary } from '@navikt/ds-react';
 
-import { LocaleRecordBlock } from '../../../typer/sanity/sanity';
+import { LocaleRecordBlock } from '../../../../common/sanity';
 import TekstBlock from '../Sanity/TekstBlock';
 
 interface Props {

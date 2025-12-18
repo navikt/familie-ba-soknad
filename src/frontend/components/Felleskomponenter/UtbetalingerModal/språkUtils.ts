@@ -1,5 +1,5 @@
+import { ISanitySpørsmålDokument } from '../../../../common/sanity';
 import { PersonType } from '../../../typer/personType';
-import { ISanitySpørsmålDokument } from '../../../typer/sanity/sanity';
 import { ITekstinnhold } from '../../../typer/sanity/tekstInnhold';
 import { EøsBarnSpørsmålId, eøsBarnSpørsmålSpråkId } from '../../SøknadsSteg/EøsSteg/Barn/spørsmål';
 import { EøsSøkerSpørsmålId, eøsSøkerSpørsmålSpråkId } from '../../SøknadsSteg/EøsSteg/Søker/spørsmål';

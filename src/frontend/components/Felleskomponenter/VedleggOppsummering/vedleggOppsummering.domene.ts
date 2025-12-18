@@ -1,4 +1,4 @@
-import { PlainTekst } from '../../../typer/sanity/sanity';
+import { PlainTekst } from '../../../../common/sanity';
 import { IFrittståendeOrdTekstinnhold } from '../../../typer/sanity/tekstInnhold';
 import { slåSammen } from '../../../utils/slåSammen';
 

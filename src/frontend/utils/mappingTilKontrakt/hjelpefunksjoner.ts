@@ -2,17 +2,18 @@ import { ReactNode } from 'react';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
-import { IBarnMedISøknad } from '../../typer/barn';
-import { AlternativtSvarForInput, LocaleType } from '../../typer/common';
+import { FlettefeltVerdier, LocaleRecordBlock, LocaleRecordString } from '../../../common/sanity';
 import {
     ISøknadsfelt,
     Slektsforhold,
     SpørsmålMap as KontraktpørsmålMap,
     TilRestLocaleRecord,
-} from '../../typer/kontrakt/generelle';
-import { FlettefeltVerdier, LocaleRecordBlock, LocaleRecordString } from '../../typer/sanity/sanity';
+} from '../../../common/typer/kontrakt/generelle';
+import { LocaleType } from '../../../common/typer/localeType';
+import { IBarnMedISøknad } from '../../typer/barn';
 import { ITekstinnhold } from '../../typer/sanity/tekstInnhold';
 import { ISøknadSpørsmål, SpørsmålId, ISøknadSpørsmålMap } from '../../typer/spørsmål';
+import { AlternativtSvarForInput } from '../../typer/svar';
 import { Årsak } from '../../typer/utvidet';
 import { hentTekster, hentÅrsak, landkodeTilSpråk, toSlektsforholdSpråkId } from '../språk';
 import { språkIndexListe } from '../spørsmål';

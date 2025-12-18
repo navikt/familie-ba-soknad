@@ -1,4 +1,4 @@
-import { LocaleRecordBlock } from '../../../typer/sanity/sanity';
+import { LocaleRecordBlock } from '../../../../common/sanity';
 
 export interface IVelgBarnTekstinnhold {
     velgBarnTittel: LocaleRecordBlock;

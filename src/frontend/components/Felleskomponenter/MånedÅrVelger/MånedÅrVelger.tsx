@@ -5,10 +5,10 @@ import { formatISO, lastDayOfMonth } from 'date-fns';
 import { BodyShort, MonthPicker, useMonthpicker } from '@navikt/ds-react';
 import type { Felt } from '@navikt/familie-skjema';
 
+import { ESanitySteg } from '../../../../common/sanity';
+import { ISODateString } from '../../../../common/typer/ISODateString';
 import { useAppContext } from '../../../context/AppContext';
 import { useSpråkContext } from '../../../context/SpråkContext';
-import { ISODateString } from '../../../typer/common';
-import { ESanitySteg } from '../../../typer/sanity/sanity';
 
 interface MånedÅrVelgerProps {
     tidligsteValgbareMåned?: Date;

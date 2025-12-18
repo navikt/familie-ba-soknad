@@ -3,7 +3,7 @@ import React from 'react';
 import { useAppContext } from '../../../../../context/AppContext';
 import { useStegContext } from '../../../../../context/StegContext';
 import { IBarnMedISøknad } from '../../../../../typer/barn';
-import { AlternativtSvarForInput } from '../../../../../typer/common';
+import { AlternativtSvarForInput } from '../../../../../typer/svar';
 import { hentSlektsforhold } from '../../../../../utils/språk';
 import TekstBlock from '../../../../Felleskomponenter/Sanity/TekstBlock';
 import SamletIdNummerForBarn from '../../../EøsSteg/Barn/SamletIdNummerForBarn';

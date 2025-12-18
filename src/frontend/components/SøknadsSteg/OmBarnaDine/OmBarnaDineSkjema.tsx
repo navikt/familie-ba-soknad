@@ -2,10 +2,10 @@ import React from 'react';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
+import { ESanitySteg, Typografi } from '../../../../common/sanity';
+import { Dokumentasjonsbehov } from '../../../../common/typer/kontrakt/dokumentasjon';
 import { useAppContext } from '../../../context/AppContext';
 import { barnDataKeySpørsmål } from '../../../typer/barn';
-import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
-import { ESanitySteg, Typografi } from '../../../typer/sanity/sanity';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import Steg from '../../Felleskomponenter/Steg/Steg';

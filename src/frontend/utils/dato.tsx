@@ -20,10 +20,12 @@ import { enGB, nb, nn } from 'date-fns/locale';
 
 import { feil, type FeltState, ok } from '@navikt/familie-skjema';
 
+import { LocaleRecordBlock, PlainTekst } from '../../common/sanity';
+import { ISODateString } from '../../common/typer/ISODateString';
+import { LocaleType } from '../../common/typer/localeType';
 import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
-import { AlternativtSvarForInput, DatoMedUkjent, ISODateString, LocaleType } from '../typer/common';
-import { LocaleRecordBlock, PlainTekst } from '../typer/sanity/sanity';
 import { IFormateringsfeilmeldingerTekstinnhold } from '../typer/sanity/tekstInnhold';
+import { AlternativtSvarForInput, DatoMedUkjent } from '../typer/svar';
 
 export const erDatoFormatGodkjent = (dato: Date) => isValid(dato);
 

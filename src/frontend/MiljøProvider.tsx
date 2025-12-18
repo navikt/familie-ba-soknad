@@ -5,7 +5,7 @@ import { IntlProvider } from 'react-intl';
 
 import { HttpProvider } from '@navikt/familie-http';
 
-import { tekster } from '../shared-utils/tekster';
+import { tekster } from '../common/tekster';
 
 import { Feilside } from './components/Felleskomponenter/Feilside/Feilside';
 import { FeatureTogglesProvider } from './context/FeatureTogglesContext';

@@ -6,10 +6,10 @@ import type { ISkjema } from '@navikt/familie-skjema';
 
 import { useAppContext } from '../../../context/AppContext';
 import { IBarnMedISøknad } from '../../../typer/barn';
-import { AlternativtSvarForInput } from '../../../typer/common';
 import { IArbeidsperiode, IPensjonsperiode } from '../../../typer/perioder';
 import { PersonType } from '../../../typer/personType';
 import { IOmBarnetFeltTyper } from '../../../typer/skjema';
+import { AlternativtSvarForInput } from '../../../typer/svar';
 import { dagensDato } from '../../../utils/dato';
 import { Arbeidsperiode } from '../../Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';

@@ -1,4 +1,4 @@
-import { ISanitySpørsmålDokument, LocaleRecordBlock, LocaleRecordString } from '../../../../typer/sanity/sanity';
+import { ISanitySpørsmålDokument, LocaleRecordBlock, LocaleRecordString } from '../../../../../common/sanity';
 
 export interface IEøsForBarnTekstinnhold {
     eoesForBarnTittel: LocaleRecordBlock;

@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { useSkjema, Valideringsstatus } from '@navikt/familie-skjema';
 
+import { ESanitySteg } from '../../../../common/sanity';
 import { useAppContext } from '../../../context/AppContext';
 import { useEøsContext } from '../../../context/EøsContext';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
@@ -11,7 +12,6 @@ import useDatovelgerFeltForSanity from '../../../hooks/useSendInnSkjemaTest/useD
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { PersonType } from '../../../typer/personType';
 import { IPensjonsperiodeTekstinnhold } from '../../../typer/sanity/modaler/pensjonsperiode';
-import { ESanitySteg } from '../../../typer/sanity/sanity';
 import { IPensjonsperiodeFeltTyper } from '../../../typer/skjema';
 import { dagenEtterDato, sisteDagDenneMåneden, stringTilDate } from '../../../utils/dato';
 

@@ -3,11 +3,11 @@ import React from 'react';
 import { ReadMore } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
+import { ESanitySteg, Typografi } from '../../../../common/sanity';
+import { Dokumentasjonsbehov } from '../../../../common/typer/kontrakt/dokumentasjon';
 import { useAppContext } from '../../../context/AppContext';
 import { barnDataKeySpørsmål } from '../../../typer/barn';
-import { BarnetsId } from '../../../typer/common';
-import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
-import { ESanitySteg, Typografi } from '../../../typer/sanity/sanity';
+import { BarnetsId } from '../../../typer/person';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';

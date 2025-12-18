@@ -6,7 +6,7 @@ import type { Felt } from '@navikt/familie-skjema';
 
 import { useAppContext } from '../../../context/AppContext';
 import { barnDataKeySpørsmål } from '../../../typer/barn';
-import { BarnetsId } from '../../../typer/common';
+import { BarnetsId } from '../../../typer/person';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 
 interface Props {

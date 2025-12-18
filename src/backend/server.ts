@@ -6,9 +6,9 @@ import express from 'express';
 
 import { logInfo } from '@navikt/familie-logging';
 
-import { cspString } from '../csp';
-import miljø, { BASE_PATH } from '../shared-utils/miljø';
+import miljø, { BASE_PATH } from '../common/miljø';
 
+import { cspString } from './csp';
 import { expressToggleInterceptor } from './middlewares/feature-toggles';
 import { konfigurerIndex, konfigurerIndexFallback } from './routes';
 import { konfigurerApi } from './routes/api';

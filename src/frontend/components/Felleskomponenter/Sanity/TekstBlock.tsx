@@ -5,9 +5,9 @@ import styled from 'styled-components';
 
 import { BodyLong, BodyShort, Detail, Heading, Ingress, Label } from '@navikt/ds-react';
 
+import { FlettefeltVerdier, LocaleRecordBlock, Typografi } from '../../../../common/sanity';
 import { useAppContext } from '../../../context/AppContext';
 import { useSpråkContext } from '../../../context/SpråkContext';
-import { FlettefeltVerdier, LocaleRecordBlock, Typografi } from '../../../typer/sanity/sanity';
 
 const StyledLabel = styled(Label)`
     display: block;
