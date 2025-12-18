@@ -3,7 +3,7 @@ import { BarnetrygdperiodeSpørsmålId } from '../components/Felleskomponenter/B
 import { PensjonsperiodeSpørsmålId } from '../components/Felleskomponenter/Pensjonsmodal/spørsmål';
 import { UtbetalingerSpørsmålId } from '../components/Felleskomponenter/UtbetalingerModal/spørsmål';
 import { DinLivssituasjonSpørsmålId } from '../components/SøknadsSteg/DinLivssituasjon/spørsmål';
-import { BarnetsId } from '../typer/common';
+import { BarnetsId } from '../typer/person';
 import { PersonType } from '../typer/personType';
 
 import {

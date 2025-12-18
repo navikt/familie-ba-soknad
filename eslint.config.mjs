@@ -1,10 +1,10 @@
+import js from '@eslint/js';
 import eslintConfigPrettier from 'eslint-config-prettier';
-import prettier from 'eslint-plugin-prettier';
 import importPlugin from 'eslint-plugin-import';
+import jsxA11yPlugin from 'eslint-plugin-jsx-a11y';
+import prettier from 'eslint-plugin-prettier';
 import reactHooks from 'eslint-plugin-react-hooks';
 import globals from 'globals';
-import js from '@eslint/js';
-import jsxA11yPlugin from 'eslint-plugin-jsx-a11y';
 import tseslint from 'typescript-eslint';
 
 export default [
@@ -125,6 +125,62 @@ export default [
                     ],
 
                     pathGroupsExcludedImportTypes: ['builtin'],
+                },
+            ],
+        },
+    },
+    {
+        files: ['src/frontend/**/*'],
+        rules: {
+            'import/no-restricted-paths': [
+                'error',
+                {
+                    zones: [
+                        {
+                            target: './src/frontend',
+                            from: './src/backend',
+                            message: 'Frontend skal ikke importere fra backend',
+                        },
+                    ],
+                },
+            ],
+        },
+    },
+    {
+        files: ['src/backend/**/*'],
+        rules: {
+            'import/no-restricted-paths': [
+                'error',
+                {
+                    zones: [
+                        {
+                            target: './src/backend',
+                            from: './src/frontend',
+                            message: 'Backend skal ikke importere fra frontend',
+                        },
+                    ],
+                },
+            ],
+        },
+    },
+    {
+        files: ['src/common/**/*'],
+        rules: {
+            'import/no-restricted-paths': [
+                'error',
+                {
+                    zones: [
+                        {
+                            target: './src/common',
+                            from: './src/frontend',
+                            message: 'Common skal ikke importere fra frontend',
+                        },
+                        {
+                            target: './src/common',
+                            from: './src/backend',
+                            message: 'Common skal ikke importere fra backend',
+                        },
+                    ],
                 },
             ],
         },

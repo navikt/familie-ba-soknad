@@ -1,6 +1,6 @@
 import { AxiosError } from 'axios';
 
-import miljø from '../../shared-utils/miljø';
+import miljø from '../../common/miljø';
 import { preferredAxios as axios } from '../context/axios';
 
 import { routerBasePath } from './hjelpefunksjoner';

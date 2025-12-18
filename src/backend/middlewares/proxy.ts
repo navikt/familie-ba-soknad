@@ -1,12 +1,14 @@
 import { ClientRequest } from 'http';
+import { Socket } from 'node:net';
 
-import { NextFunction, Request, RequestHandler, Response } from 'express';
+import { NextFunction, Request, RequestHandler, type Response } from 'express';
+import { ProxyTargetUrl } from 'http-proxy';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import { v4 as uuid } from 'uuid';
 
-import { logError, logSecure } from '@navikt/familie-logging';
+import { logError } from '@navikt/familie-logging';
 
-import { erLokalt } from '../../shared-utils/miljø';
+import { erLokalt } from '../../common/miljø';
 
 import { AUTHORIZATION_HEADER } from './tokenProxy';
 
@@ -27,9 +29,8 @@ export const doProxy = (targetUrl: string): RequestHandler => {
         secure: true,
         on: {
             proxyReq: restream,
-            error: (err: Error, req: Request, res: Response) => {
-                logError('Feil under proxy til apiet, se i securelog');
-                logSecure('Feil under proxy til apiet', { err, req, res });
+            error: (err: Error, _req: Request, _res: Response | Socket, proxyTargetUrl?: ProxyTargetUrl) => {
+                logError('Feil under proxy til apiet', err, { proxyTargetUrl });
             },
         },
     });

@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { feil, type FeltState, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
+import { ESanitySteg } from '../../../../common/sanity';
 import { useAppContext } from '../../../context/AppContext';
 import useDatovelgerFeltMedUkjentForSanity from '../../../hooks/useDatovelgerFeltMedUkjentForSanity';
 import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
@@ -10,7 +11,6 @@ import useDatovelgerFeltForSanity from '../../../hooks/useSendInnSkjemaTest/useD
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { PersonType } from '../../../typer/personType';
 import { IUtenlandsoppholdTekstinnhold } from '../../../typer/sanity/modaler/utenlandsopphold';
-import { ESanitySteg } from '../../../typer/sanity/sanity';
 import { IUtenlandsoppholdFeltTyper } from '../../../typer/skjema';
 import { EUtenlandsoppholdÅrsak } from '../../../typer/utenlandsopphold';
 import { dagenEtterDato, stringTilDate } from '../../../utils/dato';

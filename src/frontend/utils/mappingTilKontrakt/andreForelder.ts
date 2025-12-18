@@ -1,10 +1,10 @@
 import { ESvar } from '@navikt/familie-form-elements';
 
+import { TilRestLocaleRecord } from '../../../common/typer/kontrakt/generelle';
+import { IAndreForelderIKontraktFormat } from '../../../common/typer/kontrakt/kontrakt';
 import { EøsBarnSpørsmålId, eøsBarnSpørsmålSpråkId } from '../../components/SøknadsSteg/EøsSteg/Barn/spørsmål';
 import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../../components/SøknadsSteg/OmBarnet/spørsmål';
 import { barnDataKeySpørsmål, IAndreForelder, IBarnMedISøknad } from '../../typer/barn';
-import { TilRestLocaleRecord } from '../../typer/kontrakt/generelle';
-import { IAndreForelderIKontraktFormat } from '../../typer/kontrakt/kontrakt';
 import { PersonType } from '../../typer/personType';
 import { ITekstinnhold } from '../../typer/sanity/tekstInnhold';
 import { landkodeTilSpråk } from '../språk';

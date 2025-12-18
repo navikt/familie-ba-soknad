@@ -2,8 +2,8 @@ import React, { ReactNode } from 'react';
 
 import { BodyShort, Button, Modal, VStack } from '@navikt/ds-react';
 
+import { FlettefeltVerdier, LocaleRecordBlock } from '../../../../common/sanity';
 import { useAppContext } from '../../../context/AppContext';
-import { FlettefeltVerdier, LocaleRecordBlock } from '../../../typer/sanity/sanity';
 import ModalContent from '../ModalContent';
 
 const SkjemaModal: React.FC<{

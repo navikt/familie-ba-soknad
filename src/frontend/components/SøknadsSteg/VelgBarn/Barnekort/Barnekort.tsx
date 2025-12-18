@@ -13,9 +13,9 @@ import {
     AGrayalpha200,
 } from '@navikt/ds-tokens/dist/tokens';
 
+import { ESanitySteg } from '../../../../../common/sanity';
 import { useAppContext } from '../../../../context/AppContext';
 import { IBarn } from '../../../../typer/person';
-import { ESanitySteg } from '../../../../typer/sanity/sanity';
 import { hentBostedSpråkId } from '../../../../utils/språk';
 import { formaterFnr, uppercaseFørsteBokstav } from '../../../../utils/visning';
 import TekstBlock from '../../../Felleskomponenter/Sanity/TekstBlock';

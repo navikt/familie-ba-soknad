@@ -4,9 +4,9 @@ import { TrashFillIcon } from '@navikt/aksel-icons';
 import { Button, FormSummary } from '@navikt/ds-react';
 
 import { useAppContext } from '../../../context/AppContext';
-import { AlternativtSvarForInput } from '../../../typer/common';
 import { ITidligereSamboer } from '../../../typer/person';
 import { ITidligereSamoboereTekstinnhold } from '../../../typer/sanity/modaler/tidligereSamboere';
+import { AlternativtSvarForInput } from '../../../typer/svar';
 import { formaterDato } from '../../../utils/dato';
 import { formaterFnr } from '../../../utils/visning';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';

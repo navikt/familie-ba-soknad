@@ -1,7 +1,7 @@
 import React from 'react';
 
+import { ESanitySteg } from '../../../../common/sanity';
 import { useAppContext } from '../../../context/AppContext';
-import { ESanitySteg } from '../../../typer/sanity/sanity';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
 import Steg from '../../Felleskomponenter/Steg/Steg';

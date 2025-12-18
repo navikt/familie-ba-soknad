@@ -12,8 +12,8 @@ import { omBarnaDineSpørsmålSpråkId } from '../components/SøknadsSteg/OmBarn
 import { omBarnetSpørsmålSpråkId } from '../components/SøknadsSteg/OmBarnet/spørsmål';
 import { omDegSpørsmålSpråkId } from '../components/SøknadsSteg/OmDeg/spørsmål';
 import { velgBarnSpørsmålSpråkId } from '../components/SøknadsSteg/VelgBarn/spørsmål';
-import { AlternativtSvarForInput } from '../typer/common';
 import { IFrittståendeOrdTekstinnhold } from '../typer/sanity/tekstInnhold';
+import { AlternativtSvarForInput } from '../typer/svar';
 
 export const språkIndexListe = [
     omDegSpørsmålSpråkId,

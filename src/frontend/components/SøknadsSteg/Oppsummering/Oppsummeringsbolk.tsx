@@ -5,12 +5,12 @@ import { useNavigate } from 'react-router';
 import { FormSummary } from '@navikt/ds-react';
 import type { ISkjema } from '@navikt/familie-skjema';
 
-import { BASE_PATH } from '../../../../shared-utils/miljø';
-import { unslash } from '../../../../shared-utils/unslash';
+import { BASE_PATH } from '../../../../common/miljø';
+import { FlettefeltVerdier, LocaleRecordBlock, LocaleRecordString } from '../../../../common/sanity';
+import { unslash } from '../../../../common/unslash';
 import { useAppContext } from '../../../context/AppContext';
 import { useStegContext } from '../../../context/StegContext';
 import { ISteg, RouteEnum } from '../../../typer/routes';
-import { FlettefeltVerdier, LocaleRecordBlock, LocaleRecordString } from '../../../typer/sanity/sanity';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
 import { SkjemaFeiloppsummering } from '../../Felleskomponenter/SkjemaFeiloppsummering/SkjemaFeiloppsummering';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';

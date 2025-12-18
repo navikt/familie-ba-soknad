@@ -5,6 +5,8 @@ import { Alpha3Code } from 'i18n-iso-countries';
 import { ESvar } from '@navikt/familie-form-elements';
 import { feil, type Felt, type FeltState, type ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
+import { ESanitySteg } from '../../../../../common/sanity';
+import { Slektsforhold } from '../../../../../common/typer/kontrakt/generelle';
 import { useAppContext } from '../../../../context/AppContext';
 import useInputFelt from '../../../../hooks/useInputFelt';
 import useInputFeltMedUkjent from '../../../../hooks/useInputFeltMedUkjent';
@@ -17,8 +19,6 @@ import {
     IAndreForelder,
     IBarnMedISøknad,
 } from '../../../../typer/barn';
-import { AlternativtSvarForInput, BarnetsId } from '../../../../typer/common';
-import { Slektsforhold } from '../../../../typer/kontrakt/generelle';
 import { IOmsorgsperson } from '../../../../typer/omsorgsperson';
 import {
     IArbeidsperiode,
@@ -26,11 +26,12 @@ import {
     IPensjonsperiode,
     IUtbetalingsperiode,
 } from '../../../../typer/perioder';
+import { BarnetsId } from '../../../../typer/person';
 import { PersonType } from '../../../../typer/personType';
 import { IArbeidsperiodeTekstinnhold } from '../../../../typer/sanity/modaler/arbeidsperiode';
 import { IBarnetrygdsperiodeTekstinnhold } from '../../../../typer/sanity/modaler/barnetrygdperiode';
-import { ESanitySteg } from '../../../../typer/sanity/sanity';
 import { IEøsForBarnFeltTyper } from '../../../../typer/skjema';
+import { AlternativtSvarForInput } from '../../../../typer/svar';
 import { valideringAdresse } from '../../../../utils/adresse';
 import { skalSkjuleAndreForelderFelt, skalViseBorMedOmsorgsperson } from '../../../../utils/barn';
 import { trimWhiteSpace } from '../../../../utils/hjelpefunksjoner';

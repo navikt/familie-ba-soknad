@@ -1,8 +1,8 @@
 import { type Avhengigheter, useFelt } from '@navikt/familie-skjema';
 
+import { LocaleRecordBlock } from '../../../common/sanity';
+import { ISODateString } from '../../../common/typer/ISODateString';
 import { useAppContext } from '../../context/AppContext';
-import { ISODateString } from '../../typer/common';
-import { LocaleRecordBlock } from '../../typer/sanity/sanity';
 import { ISøknadSpørsmål } from '../../typer/spørsmål';
 import { validerDatoForSanity } from '../../utils/dato';
 

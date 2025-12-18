@@ -1,8 +1,8 @@
 import { renderHook } from '@testing-library/react';
 
-import { ESivilstand } from '../../typer/kontrakt/generelle';
-import { ISøknadKontrakt } from '../../typer/kontrakt/kontrakt';
-import { ESanitySivilstandApiKey } from '../../typer/sanity/sanity';
+import { ESanitySivilstandApiKey } from '../../../common/sanity';
+import { ESivilstand } from '../../../common/typer/kontrakt/generelle';
+import { ISøknadKontrakt } from '../../../common/typer/kontrakt/kontrakt';
 import { hentSivilstatusSpråkId, sivilstandTilSanitySivilstandApiKey } from '../../utils/språk';
 import { mekkGyldigUtvidetSøknad, spyOnUseApp, TestProvidereMedEkteTekster } from '../../utils/testing';
 import { erGyldigISøknadKontrakt } from '../../utils/typeguards';

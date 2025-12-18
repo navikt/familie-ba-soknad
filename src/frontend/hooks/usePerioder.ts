@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { type Avhengigheter, useFelt } from '@navikt/familie-skjema';
 import { type ValiderFelt } from '@navikt/familie-skjema/dist/typer';
 
-import { BarnetsId } from '../typer/common';
+import { BarnetsId } from '../typer/person';
 import { PersonType } from '../typer/personType';
 import { SpørsmålId } from '../typer/spørsmål';
 

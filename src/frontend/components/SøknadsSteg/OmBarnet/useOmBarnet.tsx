@@ -3,6 +3,9 @@ import React, { useEffect, useState } from 'react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { feil, type FeltState, type ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
 
+import { ESanitySteg } from '../../../../common/sanity';
+import { Dokumentasjonsbehov } from '../../../../common/typer/kontrakt/dokumentasjon';
+import { ESivilstand, ESøknadstype } from '../../../../common/typer/kontrakt/generelle';
 import { useAppContext } from '../../../context/AppContext';
 import { useEøsContext } from '../../../context/EøsContext';
 import useDatovelgerFeltMedUkjentForSanity from '../../../hooks/useDatovelgerFeltMedUkjentForSanity';
@@ -18,20 +21,17 @@ import {
     IAndreForelder,
     IBarnMedISøknad,
 } from '../../../typer/barn';
-import { AlternativtSvarForInput, BarnetsId } from '../../../typer/common';
 import { IDokumentasjon } from '../../../typer/dokumentasjon';
-import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
-import { ESivilstand, ESøknadstype } from '../../../typer/kontrakt/generelle';
 import { IArbeidsperiode, IEøsBarnetrygdsperiode, IPensjonsperiode, IUtenlandsperiode } from '../../../typer/perioder';
-import { IIdNummer } from '../../../typer/person';
+import { BarnetsId, IIdNummer } from '../../../typer/person';
 import { PersonType } from '../../../typer/personType';
 import { IArbeidsperiodeTekstinnhold } from '../../../typer/sanity/modaler/arbeidsperiode';
 import { IBarnetrygdsperiodeTekstinnhold } from '../../../typer/sanity/modaler/barnetrygdperiode';
 import { IPensjonsperiodeTekstinnhold } from '../../../typer/sanity/modaler/pensjonsperiode';
 import { IUtenlandsoppholdTekstinnhold } from '../../../typer/sanity/modaler/utenlandsopphold';
-import { ESanitySteg } from '../../../typer/sanity/sanity';
 import { IFormateringsfeilmeldingerTekstinnhold } from '../../../typer/sanity/tekstInnhold';
 import { IOmBarnetFeltTyper } from '../../../typer/skjema';
+import { AlternativtSvarForInput } from '../../../typer/svar';
 import { Årsak } from '../../../typer/utvidet';
 import { erNorskPostnummer, valideringAdresse } from '../../../utils/adresse';
 import {

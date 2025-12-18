@@ -7,8 +7,8 @@ import type { Felt, ISkjema } from '@navikt/familie-skjema';
 
 import { genererOppdaterteBarn, genererSvarForSpørsmålBarn } from '../components/SøknadsSteg/OmBarnaDine/utils';
 import { IBarnMedISøknad } from '../typer/barn';
-import { AlternativtSvarForInput } from '../typer/common';
 import { IOmBarnaDineFeltTyper } from '../typer/skjema';
+import { AlternativtSvarForInput } from '../typer/svar';
 import { ISøknad } from '../typer/søknad';
 
 describe('genererSvarForSpørsmålBarn', () => {

@@ -5,8 +5,8 @@ import { mockDeep } from 'vitest-mock-extended';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
-import { AlternativtSvarForInput } from '../../../typer/common';
-import { ESivilstand, ESøknadstype } from '../../../typer/kontrakt/generelle';
+import { ESivilstand, ESøknadstype } from '../../../../common/typer/kontrakt/generelle';
+import { AlternativtSvarForInput } from '../../../typer/svar';
 import { ISøknad } from '../../../typer/søknad';
 import { spyOnUseApp, TestProvidereMedEkteTekster } from '../../../utils/testing';
 

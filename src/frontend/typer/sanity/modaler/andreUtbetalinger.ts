@@ -1,4 +1,4 @@
-import { ISanitySpørsmålDokument, LocaleRecordBlock, LocaleRecordString } from '../sanity';
+import { ISanitySpørsmålDokument, LocaleRecordBlock, LocaleRecordString } from '../../../../common/sanity';
 
 export interface IAndreUtbetalingerTekstinnhold {
     tittel: LocaleRecordBlock;
