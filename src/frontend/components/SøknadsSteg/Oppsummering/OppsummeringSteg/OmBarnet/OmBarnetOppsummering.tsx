@@ -139,7 +139,12 @@ const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, barn, index })
                     />
                     {barn[barnDataKeySpørsmål.pågåendeSøknadFraAnnetEøsLand].svar && (
                         <OppsummeringFelt
-                            tittel={<TekstBlock block={omBarnetTekster.paagaaendeSoeknadYtelse.sporsmal} />}
+                            tittel={
+                                <TekstBlock
+                                    block={omBarnetTekster.paagaaendeSoeknadYtelse.sporsmal}
+                                    flettefelter={{ barnetsNavn: barn.navn }}
+                                />
+                            }
                             søknadsvar={barn[barnDataKeySpørsmål.pågåendeSøknadFraAnnetEøsLand].svar}
                         />
                     )}

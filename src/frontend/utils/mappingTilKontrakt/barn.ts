@@ -126,7 +126,8 @@ export const barnISøknadsFormat = (
         ),
         pågåendeSøknadFraAnnetEøsLand: nullableSøknadsfeltForESvar(
             omBarnetTekster.paagaaendeSoeknadYtelse.sporsmal,
-            pågåendeSøknadFraAnnetEøsLand.svar
+            pågåendeSøknadFraAnnetEøsLand.svar,
+            { barnetsNavn: navn }
         ),
         pågåendeSøknadHvilketLand: pågåendeSøknadHvilketLand.svar
             ? søknadsfelt(
@@ -141,7 +142,8 @@ export const barnISøknadsFormat = (
             : null,
         barnetrygdFraAnnetEøsland: søknadsfeltForESvar(
             omBarnetTekster.paagaaendeSoeknadYtelse.sporsmal,
-            barnetrygdFraAnnetEøsland.svar
+            barnetrygdFraAnnetEøsland.svar,
+            { barnetsNavn: navn }
         ),
         mottarEllerMottokEøsBarnetrygd: nullableSøknadsfeltForESvar(
             omBarnetTekster.faarEllerHarFaattYtelseFraAnnetLand.sporsmal,
