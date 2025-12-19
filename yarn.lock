@@ -2048,10 +2048,15 @@
   dependencies:
     "@portabletext/types" "^2.0.15"
 
-"@portabletext/types@^2.0.15", "@portabletext/types@^2.0.6":
+"@portabletext/types@^2.0.15":
   version "2.0.15"
   resolved "https://registry.npmjs.org/@portabletext/types/-/types-2.0.15.tgz#afc1231fd66965d777c6233aea79abfaf8716351"
   integrity sha512-2e6i2gSQsrA/5OL5Gm4/9bxB9MNO73Fa47zj+0mT93xkoQUCGCWX5fZh1YBJ86hszaRYlqvqG08oULxvvPPp/Q==
+
+"@portabletext/types@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.npmjs.org/@portabletext/types/-/types-4.0.0.tgz#f8b6d9cc64cfe43e3cd37c26eb76a82574ad4d94"
+  integrity sha512-mEoN82OQckrshqRx8idp+x8B/OpMfUMSjQp1w1wZFM3hf8cplGhK59Sa/UuGU6XdgAnFq90vJtnj5ejOmZmhvw==
 
 "@protobufjs/aspromise@^1.1.1", "@protobufjs/aspromise@^1.1.2":
   version "1.1.2"
