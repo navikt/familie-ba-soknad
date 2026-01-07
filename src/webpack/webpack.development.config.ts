@@ -7,6 +7,7 @@ import { CustomizeRule, mergeWithRules } from 'webpack-merge';
 import { BASE_PATH } from '../common/miljø';
 
 import baseConfig from './webpack.common.config';
+
 const devConfig: webpack.Configuration = mergeWithRules({
     module: {
         rules: {
@@ -69,6 +70,37 @@ const devConfig: webpack.Configuration = mergeWithRules({
                 options: {
                     plugins: ['react-refresh/babel', '@babel/plugin-syntax-import-assertions'],
                 },
+            },
+            {
+                test: /\.module\.css$/,
+                use: [
+                    'style-loader',
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            modules: {
+                                namedExport: false,
+                            },
+                            importLoaders: 1,
+                        },
+                    },
+                ],
+            },
+            {
+                test: /\.css$/,
+                exclude: /\.module\.css$/,
+                use: [
+                    'style-loader',
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            modules: {
+                                mode: 'icss',
+                            },
+                            importLoaders: 2,
+                        },
+                    },
+                ],
             },
         ],
     },

@@ -49,14 +49,39 @@ const prodConfig: webpack.Configuration = mergeWithRules({
     module: {
         rules: [
             {
-                test: /\.(css)$/,
+                test: /\.module\.css$/,
                 use: [
-                    { loader: MiniCssExtractPlugin.loader },
+                    'style-loader',
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            modules: {
+                                namedExport: false,
+                            },
+                            importLoaders: 1,
+                        },
+                    },
+                ],
+            },
+            {
+                test: /\.css$/,
+                exclude: /\.module\.css$/,
+                use: [
+                    MiniCssExtractPlugin.loader,
                     {
                         loader: 'css-loader',
                         options: {
                             modules: {
                                 mode: 'icss',
+                            },
+                            importLoaders: 2,
+                        },
+                    },
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            postcssOptions: {
+                                plugins: [['autoprefixer']],
                             },
                         },
                     },
