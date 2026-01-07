@@ -1,9 +1,8 @@
 import React from 'react';
 
-import { BodyShort, Button } from '@navikt/ds-react';
+import { BodyShort, Box, Button } from '@navikt/ds-react';
 
 import { useAppContext } from '../../../../context/AppContext';
-import { BarnekortContainer } from '../Barnekort/BarnekortContainer';
 
 export const NyttBarnKort: React.FC<{ onLeggTilBarn: () => void }> = ({ onLeggTilBarn }) => {
     const { tekster, plainTekst } = useAppContext();
@@ -15,11 +14,11 @@ export const NyttBarnKort: React.FC<{ onLeggTilBarn: () => void }> = ({ onLeggTi
     const { leggTilKnapp } = teksterForLeggTilBarnModal;
 
     return (
-        <BarnekortContainer>
+        <Box padding="6" background="surface-subtle" borderRadius="medium">
             <BodyShort spacing>{plainTekst(soekeForUregistrerteBarn)}</BodyShort>
             <Button type="button" variant="secondary" data-testid="legg-til-barn-knapp" onClick={() => onLeggTilBarn()}>
                 {plainTekst(leggTilKnapp)}
             </Button>
-        </BarnekortContainer>
+        </Box>
     );
 };
