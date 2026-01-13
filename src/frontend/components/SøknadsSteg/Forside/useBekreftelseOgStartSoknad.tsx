@@ -7,6 +7,7 @@ import { useAppContext } from '../../../context/AppContext';
 import { useEøsContext } from '../../../context/EøsContext';
 import { useStegContext } from '../../../context/StegContext';
 import { ISteg } from '../../../typer/routes';
+import { trackSøknadStartet } from '../../../umami';
 
 export enum BekreftelseStatus {
     NORMAL = 'NORMAL',
@@ -96,6 +97,7 @@ export const useBekreftelseOgStartSoknad = (): {
             if (!erStegUtfyltFrafør(nåværendeStegIndex)) {
                 settSisteUtfylteStegIndex(nåværendeStegIndex);
             }
+            trackSøknadStartet(søknadstype);
             navigate(nesteRoute.path);
         } else {
             if (søknadstype === undefined) {

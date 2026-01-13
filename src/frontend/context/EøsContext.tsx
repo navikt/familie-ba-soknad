@@ -8,6 +8,7 @@ import { byggHenterRessurs, hentDataFraRessurs } from '@navikt/familie-typer';
 import miljø from '../../common/miljø';
 import { barnDataKeySpørsmål, IBarnMedISøknad } from '../typer/barn';
 import { BarnetsId, ISøker } from '../typer/person';
+import { trackYtelseTypeFastsatt } from '../umami';
 
 import { useAppContext } from './AppContext';
 import { useLastRessurserContext } from './LastRessurserContext';
@@ -101,6 +102,7 @@ export function EøsProvider(props: PropsWithChildren) {
                 ...søknad,
                 erEøs,
             });
+            trackYtelseTypeFastsatt(erEøs ? 'EØS' : 'NASJONAL');
         }
     }, [søknad.søker, søknad.barnInkludertISøknaden]);
 
