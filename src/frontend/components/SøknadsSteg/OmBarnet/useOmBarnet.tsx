@@ -234,6 +234,7 @@ export const useOmBarnet = (
     const pågåendeSøknadFraAnnetEøsLand = useJaNeiSpmFelt({
         søknadsfelt: gjeldendeBarn[barnDataKeySpørsmål.pågåendeSøknadFraAnnetEøsLand],
         feilmelding: stegTekster.paagaaendeSoeknadYtelse.feilmelding,
+        flettefelter: { barnetsNavn: gjeldendeBarn.navn },
         feilmeldingSpråkId: 'ombarnet.pågåendesøknad.feilmelding',
         skalSkjules: !skalFeltetVises(barnDataKeySpørsmål.barnetrygdFraAnnetEøsland),
     });

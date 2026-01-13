@@ -208,6 +208,7 @@ const Oppfølgningsspørsmål: React.FC<{
                         skjema={skjema}
                         felt={pågåendeSøknadFraAnnetEøsLand}
                         spørsmålDokument={paagaaendeSoeknadYtelse}
+                        flettefelter={{ barnetsNavn: barn.navn }}
                     />
                     {pågåendeSøknadHvilketLand.erSynlig && (
                         <LandDropdown

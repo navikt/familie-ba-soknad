@@ -8,7 +8,6 @@ import { RouteEnum } from '../../../../typer/routes';
 import { hentBostedSpråkId } from '../../../../utils/språk';
 import { formaterFnr } from '../../../../utils/visning';
 import TekstBlock from '../../../Felleskomponenter/Sanity/TekstBlock';
-import { VelgBarnSpørsmålId, velgBarnSpørsmålSpråkId } from '../../VelgBarn/spørsmål';
 import { useVelgBarn } from '../../VelgBarn/useVelgBarn';
 import { OppsummeringFelt } from '../OppsummeringFelt';
 import Oppsummeringsbolk from '../Oppsummeringsbolk';
@@ -29,8 +28,7 @@ const VelgBarnOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
     return (
         <Oppsummeringsbolk
             steg={hentRouteObjektForRouteEnum(RouteEnum.VelgBarn)}
-            tittel={velgBarnSpørsmålSpråkId[VelgBarnSpørsmålId.velgBarn]}
-            tittelForSanity={velgBarnTekster.velgBarnTittel}
+            tittel={velgBarnTekster.velgBarnTittel}
             skjemaHook={velgBarnHook}
             settFeilAnchors={settFeilAnchors}
         >
