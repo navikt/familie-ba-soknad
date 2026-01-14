@@ -479,7 +479,10 @@ export const useOmBarnet = (
         søknadsfelt: andreForelder?.[andreForelderDataKeySpørsmål.skriftligAvtaleOmDeltBosted],
         feilmelding: stegTekster.deltBosted.feilmelding,
         feilmeldingSpråkId: 'ombarnet.delt-bosted.feilmelding',
-        skalSkjules: !andreForelder || gjeldendeBarn[barnDataKeySpørsmål.andreForelderErDød].svar === ESvar.JA,
+        skalSkjules:
+            !andreForelder ||
+            gjeldendeBarn[barnDataKeySpørsmål.andreForelderErDød].svar === ESvar.JA ||
+            borFastMedSøker.verdi !== ESvar.NEI,
         flettefelter: { barnetsNavn: gjeldendeBarn.navn },
         feilmeldingSpråkVerdier: { navn: gjeldendeBarn.navn },
     });
