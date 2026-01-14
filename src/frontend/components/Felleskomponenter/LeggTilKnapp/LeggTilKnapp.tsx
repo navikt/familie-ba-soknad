@@ -29,8 +29,8 @@ export const LeggTilKnapp: React.FC<Props> = ({ onClick, children, leggTilFlereT
                 <StyledButton
                     id={id}
                     data-testid={id}
-                    variant={'tertiary'}
-                    type={'button'}
+                    variant="tertiary"
+                    type="button"
                     onClick={onClick}
                     $feilmelding={!!feilmelding}
                     icon={<PlusCircleIcon aria-hidden />}
