@@ -1789,33 +1789,33 @@
     outvariant "^1.4.3"
     strict-event-emitter "^0.5.1"
 
-"@navikt/aksel-icons@^7.36.0":
-  version "7.36.0"
-  resolved "https://npm.pkg.github.com/download/@navikt/aksel-icons/7.36.0/5d01680f20cd3ad3c447ea53fd4f71d9e40056e1#5d01680f20cd3ad3c447ea53fd4f71d9e40056e1"
-  integrity sha512-zFLkhbaKFyXLWxXSnx3GW9tEGDz/fJ/Eug29tfgb6Lb934s3VEVUXQiYB8+BuUt6fTLz3ZGh3jv0NfWoGGtR1A==
+"@navikt/aksel-icons@^7.39.1":
+  version "7.39.1"
+  resolved "https://npm.pkg.github.com/download/@navikt/aksel-icons/7.39.1/07c4f141221b98e918a1b033cfd6448042ec619c#07c4f141221b98e918a1b033cfd6448042ec619c"
+  integrity sha512-cMu+gBb1/vJ+YbnYtFZAGeJTvPcy4pBa2OLHGcaU9PsoZJett7CmYsWVt7zodo6BD8h8Ne2ZkokFSP+aHCBoLA==
 
-"@navikt/ds-css@^7.36.0":
-  version "7.36.0"
-  resolved "https://npm.pkg.github.com/download/@navikt/ds-css/7.36.0/d9e4574fe73a39a74ec442ac341d22ff61aab0d4#d9e4574fe73a39a74ec442ac341d22ff61aab0d4"
-  integrity sha512-MLWHW8jj0ypW2l0suDE+k6ZmqX15kKzvlM9qLacbyDBrOP5AQY/nRWFem5IRple6mjDNUcLfzk3Z7UVMozzqCA==
+"@navikt/ds-css@^7.39.1":
+  version "7.39.1"
+  resolved "https://npm.pkg.github.com/download/@navikt/ds-css/7.39.1/637a0fb74298b72c584a890cf60c01183616a106#637a0fb74298b72c584a890cf60c01183616a106"
+  integrity sha512-DOvmzGdXcZNWFR8c8nq0fAp6eSmkXRk/jqLsyeI+3XmA6uOgaUYVoO2W9Nq8x3SLApwk116WVYtEjxcINMTmtQ==
 
-"@navikt/ds-react@^7.36.0":
-  version "7.36.0"
-  resolved "https://npm.pkg.github.com/download/@navikt/ds-react/7.36.0/6deea33d6483ed91e7eee9a7dc57c0d10c9185c6#6deea33d6483ed91e7eee9a7dc57c0d10c9185c6"
-  integrity sha512-mDTLc31q35kkf5KwIKbKISTKW2KjEplXDAhk/mAaa/E1HfZciLwhkOfnqVF89ktb4XsAUORwGVzrHp9PqabTUw==
+"@navikt/ds-react@^7.39.1":
+  version "7.39.1"
+  resolved "https://npm.pkg.github.com/download/@navikt/ds-react/7.39.1/6e1c8a690a2a5530f95e3ff206c0fcba6ef58ceb#6e1c8a690a2a5530f95e3ff206c0fcba6ef58ceb"
+  integrity sha512-SQKhmXwMrkd1DGVs9h2kb6d7dpY6p4PQHebUYI7bhY5zxEAG42t+HYcHGTUzT2d4YqiV31SDCmioSMkrh07GAw==
   dependencies:
     "@floating-ui/react" "0.27.8"
     "@floating-ui/react-dom" "^2.1.6"
-    "@navikt/aksel-icons" "^7.36.0"
-    "@navikt/ds-tokens" "^7.36.0"
+    "@navikt/aksel-icons" "^7.39.1"
+    "@navikt/ds-tokens" "^7.39.1"
     clsx "^2.1.0"
     date-fns "^4.0.0"
     react-day-picker "9.7.0"
 
-"@navikt/ds-tokens@^7.36.0":
-  version "7.37.0"
-  resolved "https://npm.pkg.github.com/download/@navikt/ds-tokens/7.37.0/faec0475b4703e1ad10265855d1bca1393f1224b#faec0475b4703e1ad10265855d1bca1393f1224b"
-  integrity sha512-+ewS/zBXgDE6NgpCsgZe+szCHVc4L+9M2Hmz5oxwvLE79gc4aoBv05ZYzokE/rZWaHLZxZAtv41Omv4XRwrK8g==
+"@navikt/ds-tokens@^7.39.1":
+  version "7.40.0"
+  resolved "https://npm.pkg.github.com/download/@navikt/ds-tokens/7.40.0/36f981e12d4d90f18155615b7666b737039a3ff0#36f981e12d4d90f18155615b7666b737039a3ff0"
+  integrity sha512-zBaBKLS5R2OZyXI4UUPOmiB15L/u/aJPHiyoccJDtmqrv5wRkc1oM6UCjzKK0D4gLZHBoxp7YBT0sR9Mp4DXFQ==
 
 "@navikt/familie-form-elements@^21.0.4":
   version "21.0.4"
