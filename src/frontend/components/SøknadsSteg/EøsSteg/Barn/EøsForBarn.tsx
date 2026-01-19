@@ -2,11 +2,11 @@ import React from 'react';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
+import { ESanitySteg } from '../../../../../common/sanity';
 import { useAppContext } from '../../../../context/AppContext';
 import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../../typer/barn';
-import { BarnetsId } from '../../../../typer/common';
+import { BarnetsId } from '../../../../typer/person';
 import { PersonType } from '../../../../typer/personType';
-import { ESanitySteg } from '../../../../typer/sanity/sanity';
 import { skalSkjuleAndreForelderFelt } from '../../../../utils/barn';
 import { Arbeidsperiode } from '../../../Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
 import { Barnetrygdperiode } from '../../../Felleskomponenter/Barnetrygdperiode/Barnetrygdperiode';

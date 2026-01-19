@@ -1,8 +1,8 @@
 import React from 'react';
 
+import { ESanitySteg } from '../../../../../common/sanity';
 import { useAppContext } from '../../../../context/AppContext';
 import { PersonType } from '../../../../typer/personType';
-import { ESanitySteg } from '../../../../typer/sanity/sanity';
 import { Arbeidsperiode } from '../../../Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
 import { Pensjonsperiode } from '../../../Felleskomponenter/Pensjonsmodal/Pensjonsperiode';
 import TekstBlock from '../../../Felleskomponenter/Sanity/TekstBlock';

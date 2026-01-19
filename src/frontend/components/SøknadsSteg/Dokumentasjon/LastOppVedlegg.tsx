@@ -2,6 +2,8 @@ import React from 'react';
 
 import { Checkbox, FormSummary, VStack } from '@navikt/ds-react';
 
+import { LocaleRecordBlock, Typografi } from '../../../../common/sanity';
+import { Dokumentasjonsbehov } from '../../../../common/typer/kontrakt/dokumentasjon';
 import { useAppContext } from '../../../context/AppContext';
 import {
     dokumentasjonsbehovTilBeskrivelseSanityApiNavn,
@@ -9,8 +11,6 @@ import {
     IDokumentasjon,
     IVedlegg,
 } from '../../../typer/dokumentasjon';
-import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
-import { LocaleRecordBlock, Typografi } from '../../../typer/sanity/sanity';
 import { slåSammen } from '../../../utils/slåSammen';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 

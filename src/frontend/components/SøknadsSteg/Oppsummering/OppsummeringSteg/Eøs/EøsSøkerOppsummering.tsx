@@ -27,8 +27,7 @@ const EøsSøkerOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
     return (
         <Oppsummeringsbolk
             steg={hentRouteObjektForRouteEnum(RouteEnum.EøsForSøker)}
-            tittel={'eøs-om-deg.sidetittel'}
-            tittelForSanity={teskterForSteg.eoesForSoekerTittel}
+            tittel={teskterForSteg.eoesForSoekerTittel}
             skjemaHook={eøsForSøkerHook}
             settFeilAnchors={settFeilAnchors}
         >

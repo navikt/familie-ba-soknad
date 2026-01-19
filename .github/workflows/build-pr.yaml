@@ -13,8 +13,8 @@ jobs:
     name: Kjør typecheck og tester
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # ratchet:actions/checkout@v4
-      - uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # ratchet:actions/setup-node@v4
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # ratchet:actions/checkout@v4
+      - uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # ratchet:actions/setup-node@v4
         with:
           node-version: "24"
           registry-url: "https://npm.pkg.github.com"
@@ -24,8 +24,10 @@ jobs:
         run: yarn --prefer-offline --frozen-lockfile
       - name: Kjør typecheck
         run: yarn typecheck
-      - name: Kjør prettier og eslint
-        run: yarn lint-test
+      - name: Kjør eslint
+        run: yarn lint
+      - name: Kjør prettier
+        run: yarn prettier
       - name: Kjør tester
         run: yarn test
 
@@ -37,8 +39,8 @@ jobs:
       id-token: write
     steps:
       - name: Checkout
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # ratchet:actions/checkout@v4
-      - uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # ratchet:actions/setup-node@v4
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # ratchet:actions/checkout@v4
+      - uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # ratchet:actions/setup-node@v4
         with:
           node-version: "20"
           registry-url: "https://npm.pkg.github.com"

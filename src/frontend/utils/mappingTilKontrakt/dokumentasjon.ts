@@ -1,11 +1,11 @@
-import { dokumentasjonsbehovTilTittelSanityApiNavn, IDokumentasjon, IVedlegg } from '../../typer/dokumentasjon';
+import { ESanitySteg, FlettefeltVerdier, PlainTekst } from '../../../common/sanity';
 import {
     Dokumentasjonsbehov,
     ISøknadKontraktDokumentasjon,
     ISøknadKontraktVedlegg,
-} from '../../typer/kontrakt/dokumentasjon';
-import { TilRestLocaleRecord } from '../../typer/kontrakt/generelle';
-import { ESanitySteg, FlettefeltVerdier, PlainTekst } from '../../typer/sanity/sanity';
+} from '../../../common/typer/kontrakt/dokumentasjon';
+import { TilRestLocaleRecord } from '../../../common/typer/kontrakt/generelle';
+import { dokumentasjonsbehovTilTittelSanityApiNavn, IDokumentasjon, IVedlegg } from '../../typer/dokumentasjon';
 import { IFrittståendeOrdTekstinnhold, ITekstinnhold } from '../../typer/sanity/tekstInnhold';
 import { ISøknad } from '../../typer/søknad';
 import { slåSammen } from '../slåSammen';

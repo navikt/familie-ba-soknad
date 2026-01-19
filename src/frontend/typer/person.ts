@@ -2,10 +2,12 @@ import { Alpha3Code } from 'i18n-iso-countries';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
-import { AlternativtSvarForInput, BarnetsId, DatoMedUkjent, ISODateString } from './common';
-import { ESivilstand, IAdresse } from './kontrakt/generelle';
+import { ISODateString } from '../../common/typer/ISODateString';
+import { ESivilstand, IAdresse } from '../../common/typer/kontrakt/generelle';
+
 import { IArbeidsperiode, IPensjonsperiode, IUtbetalingsperiode, IUtenlandsperiode } from './perioder';
 import { ISøknadSpørsmål } from './spørsmål';
+import { AlternativtSvarForInput, DatoMedUkjent } from './svar';
 import { Årsak } from './utvidet';
 
 export interface IPerson {
@@ -26,6 +28,8 @@ export interface ISøkerRespons extends IPerson {
     adresse: IAdresse | null;
     sivilstand: { type: ESivilstand };
 }
+
+export type BarnetsId = string;
 
 export interface IBarn extends IPerson {
     id: BarnetsId;

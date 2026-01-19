@@ -2,11 +2,11 @@ import React from 'react';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
+import { ESanitySteg } from '../../../../common/sanity';
+import { Dokumentasjonsbehov } from '../../../../common/typer/kontrakt/dokumentasjon';
+import { ESivilstand } from '../../../../common/typer/kontrakt/generelle';
 import { useAppContext } from '../../../context/AppContext';
-import { Dokumentasjonsbehov } from '../../../typer/kontrakt/dokumentasjon';
-import { ESivilstand } from '../../../typer/kontrakt/generelle';
 import { PersonType } from '../../../typer/personType';
-import { ESanitySteg } from '../../../typer/sanity/sanity';
 import { Arbeidsperiode } from '../../Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import ÅrsakDropdown from '../../Felleskomponenter/Dropdowns/ÅrsakDropdown';

@@ -3,8 +3,8 @@ import React from 'react';
 import { XMarkOctagonFillIcon } from '@navikt/aksel-icons';
 import { Button, Modal } from '@navikt/ds-react';
 
+import { Typografi } from '../../../../common/sanity';
 import { useAppContext } from '../../../context/AppContext';
-import { Typografi } from '../../../typer/sanity/sanity';
 import ModalContent from '../ModalContent';
 import TekstBlock from '../Sanity/TekstBlock';
 

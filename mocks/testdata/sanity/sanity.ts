@@ -1,4 +1,4 @@
-import { ESanitySteg } from '../../../src/frontend/typer/sanity/sanity';
+import { ESanitySteg } from '../../../src/common/sanity';
 import { ITekstinnhold } from '../../../src/frontend/typer/sanity/tekstInnhold';
 
 import { fellesTekstInnhold } from './felles/felles';

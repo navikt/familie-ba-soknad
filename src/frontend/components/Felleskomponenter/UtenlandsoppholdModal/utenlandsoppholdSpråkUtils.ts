@@ -1,6 +1,6 @@
+import { LocaleRecordBlock, LocaleRecordString } from '../../../../common/sanity';
 import { IBarnMedISøknad } from '../../../typer/barn';
 import { IUtenlandsoppholdTekstinnhold } from '../../../typer/sanity/modaler/utenlandsopphold';
-import { LocaleRecordBlock, LocaleRecordString } from '../../../typer/sanity/sanity';
 import { EUtenlandsoppholdÅrsak } from '../../../typer/utenlandsopphold';
 
 import { landFeilmeldingSpråkIdsSøker } from './spørsmål';

@@ -1,11 +1,11 @@
-import { IBarnMedISøknad } from '../../typer/barn';
 import {
     ERegistrertBostedType,
     fjernNullVerdierFraSpørsmål,
     SpørsmålMapMedNullVerdier,
     TilRestLocaleRecord,
-} from '../../typer/kontrakt/generelle';
-import { ISøknadIKontraktBarn } from '../../typer/kontrakt/kontrakt';
+} from '../../../common/typer/kontrakt/generelle';
+import { ISøknadIKontraktBarn } from '../../../common/typer/kontrakt/kontrakt';
+import { IBarnMedISøknad } from '../../typer/barn';
 import { PersonType } from '../../typer/personType';
 import { ITekstinnhold } from '../../typer/sanity/tekstInnhold';
 import { ISøknad } from '../../typer/søknad';
@@ -126,7 +126,8 @@ export const barnISøknadsFormat = (
         ),
         pågåendeSøknadFraAnnetEøsLand: nullableSøknadsfeltForESvar(
             omBarnetTekster.paagaaendeSoeknadYtelse.sporsmal,
-            pågåendeSøknadFraAnnetEøsLand.svar
+            pågåendeSøknadFraAnnetEøsLand.svar,
+            { barnetsNavn: navn }
         ),
         pågåendeSøknadHvilketLand: pågåendeSøknadHvilketLand.svar
             ? søknadsfelt(
@@ -141,7 +142,8 @@ export const barnISøknadsFormat = (
             : null,
         barnetrygdFraAnnetEøsland: søknadsfeltForESvar(
             omBarnetTekster.paagaaendeSoeknadYtelse.sporsmal,
-            barnetrygdFraAnnetEøsland.svar
+            barnetrygdFraAnnetEøsland.svar,
+            { barnetsNavn: navn }
         ),
         mottarEllerMottokEøsBarnetrygd: nullableSøknadsfeltForESvar(
             omBarnetTekster.faarEllerHarFaattYtelseFraAnnetLand.sporsmal,

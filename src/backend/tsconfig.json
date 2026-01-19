@@ -1,16 +1,20 @@
+
 {
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "resolveJsonModule": true,
-    "noImplicitAny": false,
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
-    "target": "ES6",
-    "module": "ESNext",
-    "moduleResolution": "Node",
+    /* Language and Environment */
+    "lib": ["ES2022", "dom"], // TODO: dom hører ikke hjemme her, men vi sjekker mot window i miljø.ts
+
+    /* Emit */
+    "importHelpers": true, // tslib dependency påkrevd
+
+    /* Modules */
+    "module": "ESNext", // TODO: Gjøres om til NodeNext når webpack er borte
+    "moduleResolution": "Node", // TODO: Gjøres om til NodeNext når webpack er borte
     "types": [
-        "node",
-        "vitest/globals",
-        "@testing-library/jest-dom"
-      ],
+      "node", // TODO: Fjernes når webpack er borte
+      "vitest/globals",
+      "@testing-library/jest-dom"
+    ]
   }
 }

@@ -7,8 +7,8 @@ import { feil, type FeltState, type ISkjema, ok, useFelt, useSkjema, Validerings
 
 import { useAppContext } from '../../../../context/AppContext';
 import useInputFeltMedUkjent from '../../../../hooks/useInputFeltMedUkjent';
-import { ESvarMedUbesvart } from '../../../../typer/common';
 import { ILeggTilBarnTyper } from '../../../../typer/skjema';
+import { ESvarMedUbesvart } from '../../../../typer/svar';
 import { erBarnRegistrertFraFør, hentUid } from '../../../../utils/barn';
 import { trimWhiteSpace } from '../../../../utils/hjelpefunksjoner';
 import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';

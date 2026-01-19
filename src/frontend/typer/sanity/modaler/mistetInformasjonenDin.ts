@@ -1,4 +1,4 @@
-import { LocaleRecordBlock } from '../sanity';
+import { LocaleRecordBlock } from '../../../../common/sanity';
 
 export interface IMistetInformasjonenDinModal {
     tittel: LocaleRecordBlock;

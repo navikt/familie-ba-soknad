@@ -10,8 +10,8 @@ import {
     IAndreForelder,
     IBarnMedISøknad,
 } from '../../../../../typer/barn';
-import { AlternativtSvarForInput } from '../../../../../typer/common';
 import { PersonType } from '../../../../../typer/personType';
+import { AlternativtSvarForInput } from '../../../../../typer/svar';
 import { formaterDato } from '../../../../../utils/dato';
 import { formaterDatoMedUkjent } from '../../../../../utils/visning';
 import { ArbeidsperiodeOppsummering } from '../../../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeOppsummering';

@@ -11,7 +11,9 @@ import { HttpProvider } from '@navikt/familie-http';
 import { type Ressurs, RessursStatus } from '@navikt/familie-typer';
 
 import { mockTekstInnhold } from '../../../mocks/testdata/sanity/sanity';
-import norskeTekster from '../assets/lang/nb.json' with { type: 'json' };
+import norskeTekster from '../../common/lang/nb.json' with { type: 'json' };
+import { ESivilstand, ESøknadstype, Slektsforhold } from '../../common/typer/kontrakt/generelle';
+import { LocaleType } from '../../common/typer/localeType';
 import { UtenlandsoppholdSpørsmålId } from '../components/Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 import {
     DinLivssituasjonSpørsmålId,
@@ -35,11 +37,10 @@ import { SanityProvider } from '../context/SanityContext';
 import { SpråkProvider } from '../context/SpråkContext';
 import { StegProvider } from '../context/StegContext';
 import { andreForelderDataKeySpørsmål, barnDataKeySpørsmål } from '../typer/barn';
-import { AlternativtSvarForInput, LocaleType } from '../typer/common';
-import { ESivilstand, ESøknadstype, Slektsforhold } from '../typer/kontrakt/generelle';
 import { IKvittering } from '../typer/kvittering';
 import { IUtenlandsperiode } from '../typer/perioder';
 import { ISøker } from '../typer/person';
+import { AlternativtSvarForInput } from '../typer/svar';
 import { initialStateSøknad, ISøknad } from '../typer/søknad';
 import { EUtenlandsoppholdÅrsak } from '../typer/utenlandsopphold';
 import { Årsak } from '../typer/utvidet';

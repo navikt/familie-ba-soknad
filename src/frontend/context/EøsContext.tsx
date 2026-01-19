@@ -5,10 +5,10 @@ import { Alpha3Code } from 'i18n-iso-countries';
 import { ESvar } from '@navikt/familie-form-elements';
 import { byggHenterRessurs, hentDataFraRessurs } from '@navikt/familie-typer';
 
-import miljø from '../../shared-utils/miljø';
+import miljø from '../../common/miljø';
 import { barnDataKeySpørsmål, IBarnMedISøknad } from '../typer/barn';
-import { BarnetsId } from '../typer/common';
-import { ISøker } from '../typer/person';
+import { BarnetsId, ISøker } from '../typer/person';
+import { trackYtelseTypeFastsatt } from '../umami';
 
 import { useAppContext } from './AppContext';
 import { useLastRessurserContext } from './LastRessurserContext';
@@ -102,6 +102,7 @@ export function EøsProvider(props: PropsWithChildren) {
                 ...søknad,
                 erEøs,
             });
+            trackYtelseTypeFastsatt(erEøs ? 'EØS' : 'NASJONAL');
         }
     }, [søknad.søker, søknad.barnInkludertISøknaden]);
 

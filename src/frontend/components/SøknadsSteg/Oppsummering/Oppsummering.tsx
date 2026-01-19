@@ -4,12 +4,10 @@ import { useNavigate } from 'react-router';
 
 import { VStack } from '@navikt/ds-react';
 
+import { ESanitySteg } from '../../../../common/sanity';
 import { useAppContext } from '../../../context/AppContext';
 import { useEøsContext } from '../../../context/EøsContext';
-import { useStegContext } from '../../../context/StegContext';
 import { IBarnMedISøknad } from '../../../typer/barn';
-import { RouteEnum } from '../../../typer/routes';
-import { ESanitySteg } from '../../../typer/sanity/sanity';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 
@@ -23,7 +21,6 @@ import VelgBarnOppsummering from './OppsummeringSteg/VelgBarnOppsummering';
 
 const Oppsummering: React.FC = () => {
     const { søknad, tekster } = useAppContext();
-    const { hentStegNummer } = useStegContext();
     const navigate = useNavigate();
     const [feilAnchors, settFeilAnchors] = useState<string[]>([]);
     const { barnSomTriggerEøs, søkerTriggerEøs } = useEøsContext();
@@ -64,13 +61,10 @@ const Oppsummering: React.FC = () => {
                 <OmBarnaOppsummering settFeilAnchors={settFeilAnchors} />
 
                 {søknad.barnInkludertISøknaden.map((barn, index) => {
-                    const enIndeksert = index + 1;
-                    const nummer = (hentStegNummer(RouteEnum.OmBarna) + enIndeksert).toString();
                     return (
                         <OmBarnetOppsummering
                             key={`om-barnet-${index}`}
                             barn={barn}
-                            nummer={nummer}
                             settFeilAnchors={settFeilAnchors}
                             index={index}
                         />
@@ -80,12 +74,9 @@ const Oppsummering: React.FC = () => {
                 <>
                     {søkerHarEøsSteg && <EøsSøkerOppsummering settFeilAnchors={settFeilAnchors} />}
                     {barnSomHarEøsSteg.map((barn, index) => {
-                        const enIndeksert = index + 1;
-                        const nummer = (hentStegNummer(RouteEnum.EøsForSøker) + enIndeksert).toString();
                         return (
                             <EøsBarnOppsummering
                                 key={`om-barnet-eøs-${index}`}
-                                nummer={nummer}
                                 settFeilAnchors={settFeilAnchors}
                                 barn={barn}
                             />

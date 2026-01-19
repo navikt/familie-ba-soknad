@@ -1,18 +1,17 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "allowJs": true,
-    "skipLibCheck": true,
-    "allowSyntheticDefaultImports": true,
-    "forceConsistentCasingInFileNames": true,
-    "module": "esnext",
-    "isolatedModules": true,
+    /* Language and Environment */
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "jsx": "react", // TODO: Bytt til react-jsx og rydd opp imports
+
+    /* Emit */
     "noEmit": true,
-    "jsx": "react-jsx",
+
+    /* Modules */
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "moduleDetection": "force",
+    "noUncheckedSideEffectImports": false // Trenger for import av @navikt/ds-css
   },
-  "exclude": ["../../node_modules", "../../dist", "../../build", "../backend", "../webpack", "../vitest.setup.ts"],
-  "lib": [
-    "es2015",
-    "esnext"
-  ]
 }

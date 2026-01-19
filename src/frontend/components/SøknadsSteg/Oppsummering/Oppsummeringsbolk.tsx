@@ -5,15 +5,16 @@ import { useNavigate } from 'react-router';
 import { FormSummary } from '@navikt/ds-react';
 import type { ISkjema } from '@navikt/familie-skjema';
 
-import { BASE_PATH } from '../../../../shared-utils/miljø';
-import { unslash } from '../../../../shared-utils/unslash';
+import { BASE_PATH } from '../../../../common/miljø';
+import { FlettefeltVerdier, LocaleRecordBlock, LocaleRecordString } from '../../../../common/sanity';
+import { unslash } from '../../../../common/unslash';
 import { useAppContext } from '../../../context/AppContext';
 import { useStegContext } from '../../../context/StegContext';
-import { ISteg, RouteEnum } from '../../../typer/routes';
-import { FlettefeltVerdier, LocaleRecordBlock, LocaleRecordString } from '../../../typer/sanity/sanity';
+import { IBarnMedISøknad } from '../../../typer/barn';
+import { ISteg } from '../../../typer/routes';
 import { SkjemaFeltTyper } from '../../../typer/skjema';
+import { uppercaseFørsteBokstav } from '../../../utils/visning';
 import { SkjemaFeiloppsummering } from '../../Felleskomponenter/SkjemaFeiloppsummering/SkjemaFeiloppsummering';
-import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 interface IHookReturn {
     valideringErOk: () => boolean;
@@ -22,25 +23,23 @@ interface IHookReturn {
 }
 
 interface Props {
-    tittel: string;
-    språkValues?: { [key: string]: string };
-    tittelForSanity?: LocaleRecordBlock | LocaleRecordString;
+    tittel: LocaleRecordBlock | LocaleRecordString;
     flettefelter?: FlettefeltVerdier;
-    steg?: ISteg;
+    steg: ISteg;
     skjemaHook: IHookReturn;
     settFeilAnchors?: React.Dispatch<React.SetStateAction<string[]>>;
+    barn?: IBarnMedISøknad;
     children?: ReactNode;
 }
 
 const Oppsummeringsbolk: React.FC<Props> = ({
     children,
     tittel,
-    språkValues,
-    tittelForSanity,
     flettefelter,
     steg,
     skjemaHook,
     settFeilAnchors,
+    barn,
 }) => {
     const { hentStegNummer } = useStegContext();
     const { søknad, tekster, plainTekst } = useAppContext();
@@ -71,6 +70,7 @@ const Oppsummeringsbolk: React.FC<Props> = ({
         }
     }, [visFeil]);
 
+    const stegnummer = hentStegNummer(steg.route, barn);
     const navigate = useNavigate();
 
     const navigerTilSteg: MouseEventHandler = event => {
@@ -84,14 +84,7 @@ const Oppsummeringsbolk: React.FC<Props> = ({
         <FormSummary>
             <FormSummary.Header>
                 <FormSummary.Heading level="3">
-                    {steg?.route !== RouteEnum.OmBarnet &&
-                        steg?.route !== RouteEnum.EøsForBarn &&
-                        `${hentStegNummer(steg?.route ?? RouteEnum.OmDeg)}. `}
-                    {tittelForSanity ? (
-                        plainTekst(tittelForSanity, flettefelter)
-                    ) : (
-                        <SpråkTekst id={tittel} values={språkValues} />
-                    )}
+                    {`${stegnummer}. ${uppercaseFørsteBokstav(plainTekst(tittel, flettefelter))}`}
                 </FormSummary.Heading>
             </FormSummary.Header>
             <FormSummary.Answers>

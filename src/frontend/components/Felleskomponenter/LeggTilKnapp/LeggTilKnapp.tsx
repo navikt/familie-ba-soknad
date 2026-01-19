@@ -3,12 +3,12 @@ import React, { ReactNode } from 'react';
 import styled from 'styled-components';
 
 import { PlusCircleIcon } from '@navikt/aksel-icons';
-import { BodyShort, Box, Button, ErrorMessage } from '@navikt/ds-react';
+import { Box, Button, ErrorMessage, FormSummary } from '@navikt/ds-react';
 import { ARed500 } from '@navikt/ds-tokens/dist/tokens';
 
 interface Props {
     onClick: () => void | Promise<void>;
-    leggTilFlereTekst?: ReactNode;
+    leggTilFlereTekst: ReactNode;
     feilmelding: ReactNode;
     id?: string;
     children?: ReactNode;
@@ -23,24 +23,26 @@ const StyledButton = styled(Button)`
 
 export const LeggTilKnapp: React.FC<Props> = ({ onClick, children, leggTilFlereTekst, feilmelding, id }) => {
     return (
-        <>
-            {leggTilFlereTekst && <BodyShort spacing>{leggTilFlereTekst}</BodyShort>}
-            <StyledButton
-                id={id}
-                data-testid={id}
-                variant={'tertiary'}
-                type={'button'}
-                onClick={onClick}
-                $feilmelding={!!feilmelding}
-                icon={<PlusCircleIcon aria-hidden />}
-            >
-                {children}
-            </StyledButton>
-            {!!feilmelding && (
-                <Box marginBlock="2 0">
-                    <ErrorMessage>{feilmelding}</ErrorMessage>
-                </Box>
-            )}
-        </>
+        <FormSummary.Answer>
+            <FormSummary.Label>{leggTilFlereTekst}</FormSummary.Label>
+            <FormSummary.Value>
+                <StyledButton
+                    id={id}
+                    data-testid={id}
+                    variant="tertiary"
+                    type="button"
+                    onClick={onClick}
+                    $feilmelding={!!feilmelding}
+                    icon={<PlusCircleIcon aria-hidden />}
+                >
+                    {children}
+                </StyledButton>
+                {!!feilmelding && (
+                    <Box marginBlock="2 0">
+                        <ErrorMessage>{feilmelding}</ErrorMessage>
+                    </Box>
+                )}
+            </FormSummary.Value>
+        </FormSummary.Answer>
     );
 };

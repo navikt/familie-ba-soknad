@@ -8,8 +8,8 @@ import { mockDeep } from 'vitest-mock-extended';
 import { ESvar } from '@navikt/familie-form-elements';
 import * as fnrvalidator from '@navikt/fnrvalidator';
 
+import { ESøknadstype } from '../../../../common/typer/kontrakt/generelle';
 import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../typer/barn';
-import { ESøknadstype } from '../../../typer/kontrakt/generelle';
 import { IBarnRespons } from '../../../typer/person';
 import { ISøknad } from '../../../typer/søknad';
 import { mekkGyldigSøker, silenceConsoleErrors, spyOnUseApp, TestProvidere } from '../../../utils/testing';

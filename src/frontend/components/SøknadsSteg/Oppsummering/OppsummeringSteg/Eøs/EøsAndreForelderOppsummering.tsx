@@ -3,6 +3,7 @@ import React, { Dispatch, SetStateAction } from 'react';
 import { ESvar } from '@navikt/familie-form-elements';
 import type { Felt, ISkjema } from '@navikt/familie-skjema';
 
+import { LocaleRecordBlock } from '../../../../../../common/sanity';
 import { useAppContext } from '../../../../../context/AppContext';
 import { useSpråkContext } from '../../../../../context/SpråkContext';
 import {
@@ -11,10 +12,9 @@ import {
     IAndreForelder,
     IBarnMedISøknad,
 } from '../../../../../typer/barn';
-import { AlternativtSvarForInput } from '../../../../../typer/common';
 import { PersonType } from '../../../../../typer/personType';
-import { LocaleRecordBlock } from '../../../../../typer/sanity/sanity';
 import { IEøsForBarnFeltTyper } from '../../../../../typer/skjema';
+import { AlternativtSvarForInput } from '../../../../../typer/svar';
 import { landkodeTilSpråk } from '../../../../../utils/språk';
 import { ArbeidsperiodeOppsummering } from '../../../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeOppsummering';
 import { BarnetrygdsperiodeOppsummering } from '../../../../Felleskomponenter/Barnetrygdperiode/BarnetrygdperiodeOppsummering';

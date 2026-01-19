@@ -5,13 +5,13 @@ import { useIntl } from 'react-intl';
 import { FormSummary } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
+import { ESivilstand } from '../../../../../common/typer/kontrakt/generelle';
 import { useAppContext } from '../../../../context/AppContext';
 import { useRoutesContext } from '../../../../context/RoutesContext';
-import { AlternativtSvarForInput } from '../../../../typer/common';
-import { ESivilstand } from '../../../../typer/kontrakt/generelle';
 import { ISamboer, ITidligereSamboer } from '../../../../typer/person';
 import { PersonType } from '../../../../typer/personType';
 import { RouteEnum } from '../../../../typer/routes';
+import { AlternativtSvarForInput } from '../../../../typer/svar';
 import { formaterDato } from '../../../../utils/dato';
 import { hentÅrsak } from '../../../../utils/språk';
 import { formaterFnr } from '../../../../utils/visning';
@@ -88,8 +88,7 @@ const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
     return (
         <Oppsummeringsbolk
             steg={hentRouteObjektForRouteEnum(RouteEnum.DinLivssituasjon)}
-            tittel={'dinlivssituasjon.sidetittel'}
-            tittelForSanity={dinLivssituasjonTekster.dinLivssituasjonTittel}
+            tittel={dinLivssituasjonTekster.dinLivssituasjonTittel}
             skjemaHook={dinLivsituasjonHook}
             settFeilAnchors={settFeilAnchors}
         >

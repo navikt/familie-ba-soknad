@@ -3,7 +3,7 @@ import React, { ReactNode } from 'react';
 import { FormSummary } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
-import { ESivilstand } from '../../../typer/kontrakt/generelle';
+import { ESivilstand } from '../../../../common/typer/kontrakt/generelle';
 import { jaNeiSvarTilSpråkId } from '../../../utils/spørsmål';
 import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
