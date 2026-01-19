@@ -101,7 +101,7 @@ const Datovelger: React.FC<DatoVelgerProps> = ({
 
     return felt.erSynlig ? (
         <div aria-live={dynamisk ? 'polite' : 'off'}>
-            <DatePicker dropdownCaption strategy={strategy} {...datepickerProps}>
+            <DatePicker data-testid={'datovelger'} dropdownCaption strategy={strategy} {...datepickerProps}>
                 <DatePicker.Input
                     {...inputProps}
                     id={felt.id}
