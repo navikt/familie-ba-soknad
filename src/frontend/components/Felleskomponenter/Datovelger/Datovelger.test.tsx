@@ -55,7 +55,7 @@ describe('Datovelger', () => {
             visFeilmeldinger: true,
         });
 
-        const { getAllByRole } = render(
+        const { getAllByRole, getByTestId } = render(
             <TestProvidere>
                 <Datovelger felt={current.fraOgMed} skjema={skjemaMock} label={'test-fra-og-med'} />
                 <Datovelger
@@ -70,7 +70,7 @@ describe('Datovelger', () => {
         const [, tilOgMedÅpneknapp] = getAllByRole('button');
         act(() => tilOgMedÅpneknapp.click());
 
-        const [tilOgMedKalender] = getAllByRole('dialog');
+        const tilOgMedKalender = getByTestId('datovelger');
 
         const forrigeDag = tilOgMedKalender.querySelector('[aria-label="torsdag 9"]');
 
