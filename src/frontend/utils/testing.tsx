@@ -148,7 +148,7 @@ export const mockEøs = (barnSomTriggerEøs = [], søkerTriggerEøs = false) => 
  */
 export const silenceConsoleErrors = () => {
     vi.spyOn(console, 'error');
-    vi.spyOn(global.console, 'error').mockImplementation(() => {
+    vi.spyOn(globalThis.console, 'error').mockImplementation(() => {
         // Shut up about the missing translations;
     });
 };
