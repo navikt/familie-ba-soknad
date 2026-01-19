@@ -164,8 +164,10 @@ export interface IVelgBarnFeltTyper {
     barnMedISøknad: IBarn[];
 }
 
-export interface ILeggTilBarnTyper
-    extends Omit<IBarn, 'borMedSøker' | 'alder' | 'navn' | 'adressebeskyttelse' | 'id' | barnDataKeySpørsmål> {
+export interface ILeggTilBarnTyper extends Omit<
+    IBarn,
+    'borMedSøker' | 'alder' | 'navn' | 'adressebeskyttelse' | 'id' | barnDataKeySpørsmål
+> {
     erFødt: ESvarMedUbesvart;
     fornavn: string;
     etternavn: string;
