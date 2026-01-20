@@ -66,5 +66,3 @@ spec:
       value: prod
     - name: NODE_OPTIONS
       value: "--disable-warning=DEP0169"
-  secureLogs:
-    enabled: true
