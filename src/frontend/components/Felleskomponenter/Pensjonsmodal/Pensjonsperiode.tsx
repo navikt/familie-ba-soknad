@@ -124,7 +124,7 @@ export const Pensjonsperiode: React.FC<Props> = ({
                             personType={personType}
                             erDød={erDød}
                             barn={barn}
-                            forklaring={plainTekst(leggTilPeriodeForklaring)}
+                            forklaring={plainTekst(leggTilPeriodeForklaring, { gjelderUtland: gjelderUtlandet })}
                         />
                     )}
                 </PerioderContainer>
