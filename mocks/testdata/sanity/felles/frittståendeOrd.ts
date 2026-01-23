@@ -8,6 +8,8 @@ export const frittståendeOrdTekstinnhold: IFrittståendeOrdTekstinnhold = {
     navn: lagLocaleRecordString(),
     utlandet: lagLocaleRecordString(),
     norge: lagLocaleRecordString(),
+    utenlandsk: lagLocaleRecordString(),
+    norsk: lagLocaleRecordString(),
     ja: lagLocaleRecordString(),
     nei: lagLocaleRecordString(),
     jegVetIkke: lagLocaleRecordString(),

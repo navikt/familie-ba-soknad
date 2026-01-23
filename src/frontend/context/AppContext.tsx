@@ -395,6 +395,12 @@ export function AppProvider(props: PropsWithChildren) {
                     undefined,
                     spesifikkLocale ?? valgtLocale
                 );
+            case ESanityFlettefeltverdi.UTENLANDSK_NORSK:
+                return plainTekst(
+                    flettefelter?.gjelderUtland ? frittståendeOrd.utenlandsk : frittståendeOrd.norsk,
+                    undefined,
+                    spesifikkLocale ?? valgtLocale
+                );
         }
     };
 
