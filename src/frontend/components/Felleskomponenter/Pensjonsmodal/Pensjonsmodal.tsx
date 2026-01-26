@@ -85,6 +85,7 @@ export const PensjonModal: React.FC<Props> = ({
         <SkjemaModal
             erÅpen={erÅpen}
             tittel={teksterForModal.tittel}
+            flettefelter={{ gjelderUtland: gjelderUtland }}
             forklaring={forklaring}
             onSubmitCallback={onLeggTil}
             submitKnappTekst={<TekstBlock block={teksterForModal.leggTilKnapp} />}
