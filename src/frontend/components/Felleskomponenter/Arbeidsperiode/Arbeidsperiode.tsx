@@ -122,7 +122,7 @@ export const Arbeidsperiode: React.FC<Props> = ({
                             gjelderUtlandet={gjelderUtlandet}
                             personType={personType}
                             erDød={erDød}
-                            forklaring={plainTekst(leggTilPeriodeForklaring)}
+                            forklaring={plainTekst(leggTilPeriodeForklaring, { gjelderUtland: gjelderUtlandet })}
                         />
                     )}
                 </PerioderContainer>

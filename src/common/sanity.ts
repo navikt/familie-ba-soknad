@@ -73,6 +73,7 @@ export enum ESanityFlettefeltverdi {
     SØKER_NAVN = 'SØKER_NAVN',
     I_UTENFOR = 'I_UTENFOR',
     UTLANDET_NORGE = 'UTLANDET_NORGE',
+    UTENLANDSK_NORSK = 'UTENLANDSK_NORSK',
     ANTALL = 'ANTALL',
     TOTAL_ANTALL = 'TOTAL_ANTALL',
     LAND = 'LAND',

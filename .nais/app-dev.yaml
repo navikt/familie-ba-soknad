@@ -64,5 +64,3 @@ spec:
   env:
     - name: ENV
       value: dev
-  secureLogs:
-    enabled: true
