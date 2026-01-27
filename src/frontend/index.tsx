@@ -19,10 +19,42 @@ import { initSentry } from './utils/sentry';
 
 import '@navikt/ds-css';
 
+const importerIntlNumberFormatLocaleData = async (locale: string) => {
+    switch (locale) {
+        case LocaleType.nb:
+            await import('@formatjs/intl-numberformat/locale-data/nb.js');
+            return;
+        case LocaleType.nn:
+            await import('@formatjs/intl-numberformat/locale-data/nn.js');
+            return;
+        case LocaleType.en:
+            await import('@formatjs/intl-numberformat/locale-data/en.js');
+            return;
+        default:
+            return;
+    }
+};
+
+const importerIntlDateTimeFormatLocaleData = async (locale: string) => {
+    switch (locale) {
+        case LocaleType.nb:
+            await import('@formatjs/intl-datetimeformat/locale-data/nb.js');
+            return;
+        case LocaleType.nn:
+            await import('@formatjs/intl-datetimeformat/locale-data/nn.js');
+            return;
+        case LocaleType.en:
+            await import('@formatjs/intl-datetimeformat/locale-data/en.js');
+            return;
+        default:
+            return;
+    }
+};
+
 const polyfillLocaledata = async () => {
     // https://github.com/formatjs/formatjs/issues/3066
     await import('@formatjs/intl-numberformat/polyfill-force');
-    await import('@formatjs/intl-datetimeformat/polyfill-force');
+    await import('@formatjs/intl-datetimeformat/polyfill-force.js');
 
     for (const locale in LocaleType) {
         // Last ned land-navn for statsborgeskap
@@ -34,18 +66,8 @@ const polyfillLocaledata = async () => {
         ).then(result => registerLocale(result));
 
         if (shouldPolyfill(locale)) {
-            await import(
-                /* webpackInclude: /(nb|nn|en)\.js/ */
-                /* webpackChunkName: "localedata" */
-                /* webpackMode: "lazy-once" */
-                `@formatjs/intl-numberformat/locale-data/${locale}`
-            );
-            await import(
-                /* webpackInclude: /(nb|nn|en)\.js/ */
-                /* webpackChunkName: "localedata" */
-                /* webpackMode: "lazy-once" */
-                `@formatjs/intl-datetimeformat/locale-data/${locale}`
-            );
+            await importerIntlNumberFormatLocaleData(locale);
+            await importerIntlDateTimeFormatLocaleData(locale);
         }
     }
 };
