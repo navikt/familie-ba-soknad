@@ -19,6 +19,14 @@ export function trackSøknadStartet(søknadstype: ESøknadstype): void {
     });
 }
 
+export function trackSøknadSendt(søknadstype: ESøknadstype, ytelseType: 'EØS' | 'NASJONAL'): void {
+    sendTilUmami('søknad_sendt', {
+        appNavn: 'familie-ba-soknad',
+        søknadstype: søknadstype,
+        ytelseType: ytelseType,
+    });
+}
+
 export function trackYtelseTypeFastsatt(ytelseType: 'EØS' | 'NASJONAL'): void {
     sendTilUmami('ytelse_type_fastsatt', {
         appNavn: 'familie-ba-soknad',
