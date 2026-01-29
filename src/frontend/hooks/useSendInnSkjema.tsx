@@ -8,6 +8,7 @@ import { erModellMismatchResponsRessurs } from '../../common/modellversjon';
 import { ISøknadKontrakt } from '../../common/typer/kontrakt/kontrakt';
 import { useAppContext } from '../context/AppContext';
 import { useSpråkContext } from '../context/SpråkContext';
+import { trackSøknadSendt } from '../umami';
 import { dataISøknadKontraktFormat } from '../utils/mappingTilKontrakt/søknad';
 import { sendInn } from '../utils/sendInnSkjema';
 
@@ -59,6 +60,10 @@ export const useSendInnSkjema = (): {
             );
 
             settInnsendingStatus(res);
+
+            if (res.status === RessursStatus.SUKSESS) {
+                trackSøknadSendt(søknad.søknadstype, søknad.erEøs ? 'EØS' : 'NASJONAL');
+            }
 
             return [res.status === RessursStatus.SUKSESS, formatert];
         } catch (error) {
