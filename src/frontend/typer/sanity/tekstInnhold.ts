@@ -73,6 +73,8 @@ export interface IFrittståendeOrdTekstinnhold {
     navn: LocaleRecordString;
     utlandet: LocaleRecordString;
     norge: LocaleRecordString;
+    utenlandsk: LocaleRecordString;
+    norsk: LocaleRecordString;
     ja: LocaleRecordString;
     nei: LocaleRecordString;
     jegVetIkke: LocaleRecordString;
