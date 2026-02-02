@@ -15,7 +15,7 @@ const AppContainer = () => {
             <Page.Block width="text" gutters>
                 {systemetLaster() && <SystemetLaster />}
                 {sluttbruker.status === RessursStatus.IKKE_TILGANG && (
-                    <Box marginBlock="32">
+                    <Box marginBlock="space-32">
                         <Alert variant={'warning'}>
                             {'Du må søke på papir. '}
                             <a href="https://www.nav.no/no/person/familie/barnetrygd-og-kontantstotte/barnetrygd">

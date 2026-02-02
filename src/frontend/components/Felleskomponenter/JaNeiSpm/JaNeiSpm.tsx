@@ -42,7 +42,7 @@ const JaNeiSpm: React.FC<JaNeiSpmProps> = ({
                 legend={
                     <>
                         <TekstBlock block={spørsmålDokument.sporsmal} flettefelter={flettefelter} />
-                        {tilleggsinfo && <Box marginBlock="2 0">{tilleggsinfo}</Box>}
+                        {tilleggsinfo && <Box marginBlock="space-2 space-0">{tilleggsinfo}</Box>}
                     </>
                 }
                 labelTekstForRadios={{

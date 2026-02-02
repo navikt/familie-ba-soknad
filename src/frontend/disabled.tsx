@@ -16,8 +16,8 @@ const root = createRoot(container!);
 
 root.render(
     <React.StrictMode>
-        <Box marginBlock="10 16">
-            <VStack gap="10">
+        <Box marginBlock="space-12 space-16">
+            <VStack gap="space-12">
                 <DisabledApp />
             </VStack>
         </Box>

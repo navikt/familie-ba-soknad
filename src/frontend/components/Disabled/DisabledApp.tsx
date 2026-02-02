@@ -6,7 +6,7 @@ export function DisabledApp() {
     return (
         <main>
             <Page.Block width="text" gutters>
-                <VStack gap="16">
+                <VStack gap="space-16">
                     <div>
                         <Heading level="1" size="large" spacing>
                             Vi jobber med å forbedre siden

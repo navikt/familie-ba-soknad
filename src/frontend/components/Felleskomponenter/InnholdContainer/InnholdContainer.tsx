@@ -9,8 +9,8 @@ const InnholdContainer: React.FC<{ className?: string; children?: ReactNode }> =
     const forsidetekster = tekster().FORSIDE;
 
     return (
-        <Box marginBlock="10 16" className={className}>
-            <VStack gap="10">
+        <Box marginBlock="space-12 space-16" className={className}>
+            <VStack gap="space-12">
                 <Heading level="1" size="xlarge">
                     {plainTekst(forsidetekster.soeknadstittelBarnetrygd)}
                 </Heading>
