@@ -63,7 +63,7 @@ const Filopplaster: React.FC<IFilopplasterProps> = ({ dokumentasjon, oppdaterDok
                 },
             }}
         >
-            <VStack gap="6">
+            <VStack gap="space-6">
                 <FileUpload.Dropzone
                     label={plainTekst(dokumentasjonTekster.lastOppFiler)}
                     description={
@@ -85,11 +85,11 @@ const Filopplaster: React.FC<IFilopplasterProps> = ({ dokumentasjon, oppdaterDok
                 />
 
                 {(dokumentasjon.opplastedeVedlegg.length > 0 || filerUnderOpplastning.length > 0) && (
-                    <VStack gap="2">
+                    <VStack gap="space-2">
                         <Heading level="4" size="xsmall">
                             {`${plainTekst(frittståendeOrdTekster.vedlegg)} (${dokumentasjon.opplastedeVedlegg.length + filerUnderOpplastning.length})`}
                         </Heading>
-                        <VStack as="ul" gap="3">
+                        <VStack as="ul" gap="space-4">
                             {dokumentasjon.opplastedeVedlegg.map((opplastetVedlegg, index) => (
                                 <FileUpload.Item
                                     as="li"
@@ -120,11 +120,11 @@ const Filopplaster: React.FC<IFilopplasterProps> = ({ dokumentasjon, oppdaterDok
                 )}
 
                 {avvisteFiler.length > 0 && (
-                    <VStack gap="2">
+                    <VStack gap="space-2">
                         <Heading level="4" size="xsmall">
                             {`${plainTekst(frittståendeOrdTekster.vedleggMedFeil)} (${avvisteFiler.length})`}
                         </Heading>
-                        <VStack as="ul" gap="3">
+                        <VStack as="ul" gap="space-4">
                             {avvisteFiler.map((fil, index) => (
                                 <FileUpload.Item
                                     as="li"

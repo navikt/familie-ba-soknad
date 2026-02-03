@@ -40,7 +40,7 @@ const BekreftelseOgStartSoknad: React.FC = () => {
 
     return (
         <form onSubmit={event => onStartSøknad(event)}>
-            <VStack gap="10">
+            <VStack gap="space-12">
                 <RadioGroup
                     legend={plainTekst(forsidetekster.soekerDuUtvidet.sporsmal)}
                     onChange={(value: ESøknadstype) => {
@@ -69,7 +69,7 @@ const BekreftelseOgStartSoknad: React.FC = () => {
                     <TekstBlock block={forsidetekster.bekreftelsesboksBroedtekst} typografi={Typografi.BodyLong} />
                 </ConfirmationPanel>
 
-                <VStack gap="8" width={{ sm: 'fit-content' }} marginInline={{ sm: 'auto' }}>
+                <VStack gap="space-8" width={{ sm: 'fit-content' }} marginInline={{ sm: 'auto' }}>
                     <Button
                         variant={bekreftelseStatus === BekreftelseStatus.BEKREFTET ? 'primary' : 'secondary'}
                         type={'submit'}

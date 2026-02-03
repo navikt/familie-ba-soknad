@@ -13,7 +13,7 @@ const Kontoinformasjon: React.FC = () => {
     const kvitteringstekster = tekster()[ESanitySteg.KVITTERING];
 
     return (
-        <VStack gap="6">
+        <VStack gap="space-6">
             {kontoinformasjon.status === RessursStatus.SUKSESS && (
                 <>
                     <Heading level="2" size="medium">

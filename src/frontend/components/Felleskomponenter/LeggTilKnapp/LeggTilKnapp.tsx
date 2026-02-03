@@ -38,7 +38,7 @@ export const LeggTilKnapp: React.FC<Props> = ({ onClick, children, leggTilFlereT
                     {children}
                 </StyledButton>
                 {!!feilmelding && (
-                    <Box marginBlock="2 0">
+                    <Box marginBlock="space-2 space-0">
                         <ErrorMessage>{feilmelding}</ErrorMessage>
                     </Box>
                 )}

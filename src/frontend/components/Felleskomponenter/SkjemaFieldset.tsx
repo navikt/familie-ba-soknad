@@ -9,7 +9,7 @@ const SkjemaFieldset: React.FC<{
 }> = ({ legend, dynamisk = false, children }) => {
     return (
         <Fieldset aria-live={dynamisk ? 'polite' : 'off'} legend={legend}>
-            <VStack gap="10">{children}</VStack>
+            <VStack gap="space-12">{children}</VStack>
         </Fieldset>
     );
 };
