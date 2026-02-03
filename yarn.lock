@@ -1478,16 +1478,6 @@
   resolved "https://registry.npmjs.org/@floating-ui/utils/-/utils-0.2.10.tgz#a2a1e3812d14525f725d011a73eceb41fef5bc1c"
   integrity sha512-aGTxbpbg8/b5JfU1HXSrbH3wXZuLPJcNEcZQFMxLs3oSzgtVu6nFPkbbGGUvBcUjKV2YyB9Wxxabo+HEH9tcRQ==
 
-"@formatjs/ecma402-abstract@2.3.4":
-  version "2.3.4"
-  resolved "https://registry.npmjs.org/@formatjs/ecma402-abstract/-/ecma402-abstract-2.3.4.tgz#e90c5a846ba2b33d92bc400fdd709da588280fbc"
-  integrity sha512-qrycXDeaORzIqNhBOx0btnhpD1c+/qFIHAN9znofuMJX6QBwtbrmlpWfD4oiUUD2vJUOIYFA/gYtg2KAMGG7sA==
-  dependencies:
-    "@formatjs/fast-memoize" "2.2.7"
-    "@formatjs/intl-localematcher" "0.6.1"
-    decimal.js "^10.4.3"
-    tslib "^2.8.0"
-
 "@formatjs/ecma402-abstract@3.0.8":
   version "3.0.8"
   resolved "https://registry.npmjs.org/@formatjs/ecma402-abstract/-/ecma402-abstract-3.0.8.tgz#b9c0bb8642c785408523d1c73fb44ff5942a4d7c"
@@ -1507,13 +1497,6 @@
     "@formatjs/intl-localematcher" "0.8.0"
     decimal.js "^10.6.0"
     tslib "^2.8.1"
-
-"@formatjs/fast-memoize@2.2.7":
-  version "2.2.7"
-  resolved "https://registry.npmjs.org/@formatjs/fast-memoize/-/fast-memoize-2.2.7.tgz#707f9ddaeb522a32f6715bb7950b0831f4cc7b15"
-  integrity sha512-Yabmi9nSvyOMrlSeGGWDiH7rf3a7sIwplbvo/dlz9WCIjzIQAfy1RMf4S0X3yG724n5Ghu2GmEl5NJIV6O9sZQ==
-  dependencies:
-    tslib "^2.8.0"
 
 "@formatjs/fast-memoize@3.0.3":
   version "3.0.3"
@@ -1556,13 +1539,6 @@
     decimal.js "^10.6.0"
     tslib "^2.8.1"
 
-"@formatjs/intl-localematcher@0.6.1":
-  version "0.6.1"
-  resolved "https://registry.npmjs.org/@formatjs/intl-localematcher/-/intl-localematcher-0.6.1.tgz#25dc30675320bf65a9d7f73876fc1e4064c0e299"
-  integrity sha512-ePEgLgVCqi2BBFnTMWPfIghu6FkbZnnBVhO2sSxvLfrdFw7wCHAHiDoM2h4NRgjbaY7+B7HgOLZGkK187pZTZg==
-  dependencies:
-    tslib "^2.8.0"
-
 "@formatjs/intl-localematcher@0.7.5":
   version "0.7.5"
   resolved "https://registry.npmjs.org/@formatjs/intl-localematcher/-/intl-localematcher-0.7.5.tgz#02100df1746be931ce18376e00250d82c6d9866d"
@@ -1579,15 +1555,15 @@
     "@formatjs/fast-memoize" "3.1.0"
     tslib "^2.8.1"
 
-"@formatjs/intl-numberformat@8.15.4":
-  version "8.15.4"
-  resolved "https://registry.npmjs.org/@formatjs/intl-numberformat/-/intl-numberformat-8.15.4.tgz#ab98f1e6508561f6e6d16dbc1816ea1995362e49"
-  integrity sha512-Y7ObFiSY5XC2v19H6nXwQ9zRMvPcBQP+rva26u8Z1ZfUTiMVtYAJ5dtAITILFJ9IPgcjUZY1gZLmJCmu0uLIhg==
+"@formatjs/intl-numberformat@9.2.1":
+  version "9.2.1"
+  resolved "https://registry.npmjs.org/@formatjs/intl-numberformat/-/intl-numberformat-9.2.1.tgz#17a2e3e21eb05302320cd3549ab8bb9387247dc7"
+  integrity sha512-5SN0pfd6TMYo3c6w+KJE3w6eAtEVNjHpynqRmNBZxK5qErj1cu4Q+IQ6LiXAiK7309lRUCwUs+VAVzf49hxZrw==
   dependencies:
-    "@formatjs/ecma402-abstract" "2.3.4"
-    "@formatjs/intl-localematcher" "0.6.1"
-    decimal.js "^10.4.3"
-    tslib "^2.8.0"
+    "@formatjs/ecma402-abstract" "3.1.0"
+    "@formatjs/intl-localematcher" "0.8.0"
+    decimal.js "^10.6.0"
+    tslib "^2.8.1"
 
 "@formatjs/intl@4.0.9":
   version "4.0.9"
