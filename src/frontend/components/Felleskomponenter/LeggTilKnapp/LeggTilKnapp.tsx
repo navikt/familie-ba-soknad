@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import { PlusCircleIcon } from '@navikt/aksel-icons';
 import { Box, Button, ErrorMessage, FormSummary } from '@navikt/ds-react';
-import { ARed500 } from '@navikt/ds-tokens/dist/tokens';
+import { BorderDanger } from '@navikt/ds-tokens/dist/tokens';
 
 interface Props {
     onClick: () => void | Promise<void>;
@@ -16,7 +16,7 @@ interface Props {
 
 const StyledButton = styled(Button)`
     && {
-        outline: ${props => (props.$feilmelding ? `2px solid ${ARed500}` : 'none')};
+        outline: ${props => (props.$feilmelding ? `2px solid ${BorderDanger}` : 'none')};
         outline-offset: ${props => (props.$feilmelding ? '-2px' : 'none')};
     }
 `;
