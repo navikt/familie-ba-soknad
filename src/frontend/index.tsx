@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { shouldPolyfill } from '@formatjs/intl-numberformat/should-polyfill';
+import { shouldPolyfill } from '@formatjs/intl-numberformat/should-polyfill.js';
 import { registerLocale } from 'i18n-iso-countries';
 import { CookiesProvider } from 'react-cookie';
 import ReactDOM from 'react-dom';
@@ -53,7 +53,7 @@ const importerIntlDateTimeFormatLocaleData = async (locale: string) => {
 
 const polyfillLocaledata = async () => {
     // https://github.com/formatjs/formatjs/issues/3066
-    await import('@formatjs/intl-numberformat/polyfill-force');
+    await import('@formatjs/intl-numberformat/polyfill-force.js');
     await import('@formatjs/intl-datetimeformat/polyfill-force.js');
 
     for (const locale in LocaleType) {
