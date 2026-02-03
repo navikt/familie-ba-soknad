@@ -5,12 +5,12 @@ import styled from 'styled-components';
 import { TrashFillIcon } from '@navikt/aksel-icons';
 import { Checkbox, Heading, Box, VStack, Button, Bleed, HGrid } from '@navikt/ds-react';
 import {
-    APurple400,
-    APurple800,
-    ABorderRadiusMedium,
-    ASpacing32,
-    ASpacing05,
-    AGrayalpha200,
+    BorderNeutralSubtle,
+    MetaPurple400,
+    MetaPurple800,
+    Radius8,
+    Space1,
+    Space32,
 } from '@navikt/ds-tokens/dist/tokens';
 
 import { ESanitySteg } from '../../../../../common/sanity';
@@ -32,10 +32,10 @@ interface IBarnekortProps {
 }
 
 const BarnekortHeader = styled.div`
-    height: ${ASpacing32};
-    background-color: ${APurple800};
-    border-bottom: 0.25rem solid ${APurple400};
-    border-radius: ${ABorderRadiusMedium} ${ABorderRadiusMedium} 0 0;
+    height: ${Space32};
+    background-color: ${MetaPurple800};
+    border-bottom: 0.25rem solid ${MetaPurple400};
+    border-radius: ${Radius8} ${Radius8} 0 0;
     display: flex;
     align-items: flex-end;
     justify-content: center;
@@ -43,10 +43,10 @@ const BarnekortHeader = styled.div`
 `;
 
 const Divider = styled.hr`
-    height: ${ASpacing05};
+    height: ${Space1};
     width: 100%;
     border: none;
-    background-color: ${AGrayalpha200};
+    background-color: ${BorderNeutralSubtle};
 `;
 
 const Barnekort: React.FC<IBarnekortProps> = ({ barn, velgBarnCallback, barnSomSkalVæreMed, fjernBarnCallback }) => {
@@ -79,8 +79,8 @@ const Barnekort: React.FC<IBarnekortProps> = ({ barn, velgBarnCallback, barnSomS
 
     return (
         <BarnekortContainer>
-            <VStack gap="6">
-                <Bleed marginInline="6" marginBlock="6 0" asChild>
+            <VStack gap="space-6">
+                <Bleed marginInline="space-6" marginBlock="space-6 space-0" asChild>
                     <Box>
                         <BarnekortHeader>
                             <TilfeldigBarnIkon />
@@ -90,7 +90,7 @@ const Barnekort: React.FC<IBarnekortProps> = ({ barn, velgBarnCallback, barnSomS
                 <Heading level="3" size="medium">
                     {barn.adressebeskyttelse ? <TekstBlock block={navnErstatterForAdressesperre} /> : barn.navn}
                 </Heading>
-                <HGrid gap="6" columns={{ sm: 1, md: '2fr 1fr 3fr' }}>
+                <HGrid gap="space-6" columns={{ sm: 1, md: '2fr 1fr 3fr' }}>
                     <BarnekortInfo label={plainTekst(foedselsnummerLabel)} verdi={fødselsnummerTekst} />
                     {barn.alder && ( // Barn med undefined fødselsdato i pdl eller som søker har lagt inn selv har alder -null-
                         <BarnekortInfo label={plainTekst(alderLabel)} verdi={`${barn.alder} ${plainTekst(aar)}`} />

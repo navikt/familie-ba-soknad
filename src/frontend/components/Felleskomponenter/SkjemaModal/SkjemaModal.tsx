@@ -52,7 +52,7 @@ const SkjemaModal: React.FC<{
             <ModalContent>
                 <BodyShort spacing>{forklaring}</BodyShort>
                 <form id="skjema">
-                    <VStack gap="10">{children}</VStack>
+                    <VStack gap="space-12">{children}</VStack>
                 </form>
             </ModalContent>
             <Modal.Footer>

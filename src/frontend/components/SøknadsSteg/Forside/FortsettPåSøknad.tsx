@@ -22,7 +22,7 @@ export const FortsettPåSøknad: React.FC = () => {
             <Alert variant={'info'}>
                 <TekstBlock block={forsideTekster.mellomlagretAlert} typografi={Typografi.BodyLong} />
             </Alert>
-            <VStack gap="8" width={{ sm: 'fit-content' }} marginInline={{ sm: 'auto' }}>
+            <VStack gap="space-8" width={{ sm: 'fit-content' }} marginInline={{ sm: 'auto' }}>
                 <Button onClick={fortsettPåSøknaden}>{plainTekst(navigasjonTekster.fortsettKnapp)}</Button>
                 <Button variant={'secondary'} onClick={() => settVisStartPåNyttModal(true)}>
                     {plainTekst(navigasjonTekster.startPaaNyttKnapp)}

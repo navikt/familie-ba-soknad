@@ -54,7 +54,7 @@ const Oppsummering: React.FC = () => {
             guide={oppsummeringGuide}
             gåVidereCallback={gåVidereCallback}
         >
-            <VStack gap="12">
+            <VStack gap="space-12">
                 <OmDegOppsummering settFeilAnchors={settFeilAnchors} />
                 <DinLivssituasjonOppsummering settFeilAnchors={settFeilAnchors} />
                 <VelgBarnOppsummering settFeilAnchors={settFeilAnchors} />

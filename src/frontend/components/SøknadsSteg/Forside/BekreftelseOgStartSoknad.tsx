@@ -2,7 +2,7 @@ import React from 'react';
 
 import { ArrowRightIcon } from '@navikt/aksel-icons';
 import { Button, ConfirmationPanel, Heading, Radio, RadioGroup, VStack } from '@navikt/ds-react';
-import { AGreen500, ANavRed, AOrange500 } from '@navikt/ds-tokens/dist/tokens';
+import { BorderDanger, BorderSuccess, BorderWarning } from '@navikt/ds-tokens/dist/tokens';
 
 import { ESanitySteg, Typografi } from '../../../../common/sanity';
 import { ESøknadstype } from '../../../../common/typer/kontrakt/generelle';
@@ -15,11 +15,11 @@ import { BekreftelseStatus, useBekreftelseOgStartSoknad } from './useBekreftelse
 export const bekreftelseBoksBorderFarge = (status: BekreftelseStatus) => {
     switch (status) {
         case BekreftelseStatus.BEKREFTET:
-            return AGreen500;
+            return BorderSuccess;
         case BekreftelseStatus.FEIL:
-            return ANavRed;
+            return BorderDanger;
         default:
-            return AOrange500;
+            return BorderWarning;
     }
 };
 
@@ -40,7 +40,7 @@ const BekreftelseOgStartSoknad: React.FC = () => {
 
     return (
         <form onSubmit={event => onStartSøknad(event)}>
-            <VStack gap="10">
+            <VStack gap="space-12">
                 <RadioGroup
                     legend={plainTekst(forsidetekster.soekerDuUtvidet.sporsmal)}
                     onChange={(value: ESøknadstype) => {
@@ -69,7 +69,7 @@ const BekreftelseOgStartSoknad: React.FC = () => {
                     <TekstBlock block={forsidetekster.bekreftelsesboksBroedtekst} typografi={Typografi.BodyLong} />
                 </ConfirmationPanel>
 
-                <VStack gap="8" width={{ sm: 'fit-content' }} marginInline={{ sm: 'auto' }}>
+                <VStack gap="space-8" width={{ sm: 'fit-content' }} marginInline={{ sm: 'auto' }}>
                     <Button
                         variant={bekreftelseStatus === BekreftelseStatus.BEKREFTET ? 'primary' : 'secondary'}
                         type={'submit'}

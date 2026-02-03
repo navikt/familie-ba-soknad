@@ -94,7 +94,7 @@ const Dokumentasjon: React.FC = () => {
                 return success;
             }}
         >
-            <VStack gap="12">
+            <VStack gap="space-12">
                 {slettaVedlegg.length > 0 && (
                     <Alert variant={'warning'}>
                         <TekstBlock block={stegTekster.forLangTidDokumentasjon} typografi={Typografi.BodyLong} />

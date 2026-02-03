@@ -33,7 +33,7 @@ const PictureScanningGuide = () => {
                 </ExpansionCard.Title>
             </ExpansionCard.Header>
             <ExpansionCard.Content>
-                <StyledVStack gap="8">
+                <StyledVStack gap="space-8">
                     <div>
                         <Heading level="4" size="xsmall" spacing>
                             {plainTekst(dokumentasjonTekster.slikTarDuEtGodtBildeTittel)}
@@ -50,7 +50,7 @@ const PictureScanningGuide = () => {
                         <Heading level="4" size="xsmall" spacing>
                             {plainTekst(dokumentasjonTekster.braOgDaarligeTittel)}
                         </Heading>
-                        <HGrid gap="4" columns={{ xs: 1, sm: 2 }}>
+                        <HGrid gap="space-4" columns={{ xs: 1, sm: 2 }}>
                             <PictureScanningExample
                                 image={<ScanningIcon status="good" height={svgIconHeight} />}
                                 variant="success"

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import { PaperclipIcon, TrashFillIcon } from '@navikt/aksel-icons';
 import { BodyShort, Button } from '@navikt/ds-react';
-import { ABorderDivider } from '@navikt/ds-tokens/dist/tokens';
+import { BorderNeutralSubtle } from '@navikt/ds-tokens/dist/tokens';
 
 import { IVedlegg } from '../../../../typer/dokumentasjon';
 import { formaterFilstørrelse } from '../../../../utils/dokumentasjon';
@@ -24,7 +24,7 @@ const FilRad = styled.li<{ $skillelinje: boolean }>`
     display: flex;
     justify-content: space-between;
     padding: 1rem 0;
-    border-bottom: ${props => (props.$skillelinje ? `1px solid ${ABorderDivider}` : 'none')};
+    border-bottom: ${props => (props.$skillelinje ? `1px solid ${BorderNeutralSubtle}` : 'none')};
 `;
 
 const FilTekstWrapper = styled.div`
