@@ -2,11 +2,10 @@ import React from 'react';
 
 import styled from 'styled-components';
 
-import { Heading } from '@navikt/ds-react';
-
+import { ESanitySteg, Typografi } from '../../../../common/sanity';
 import { useAppContext } from '../../../context/AppContext';
 import { IBarnMedISøknad } from '../../../typer/barn';
-import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import { TilfeldigBarnIkon } from '../../Felleskomponenter/TilfeldigBarnIkon/TilfeldigBarnIkon';
 
 const HeaderWrapper = styled.div`
@@ -28,6 +27,7 @@ const HorisontalLinje = styled.span`
 export const OmBarnetHeader: React.FC<{ barn: IBarnMedISøknad }> = ({ barn }) => {
     const {
         søknad: { barnInkludertISøknaden },
+        tekster,
     } = useAppContext();
     const barnIndex = barnInkludertISøknaden.findIndex(b => b.id === barn.id);
 
@@ -36,15 +36,14 @@ export const OmBarnetHeader: React.FC<{ barn: IBarnMedISøknad }> = ({ barn }) =
             <TilfeldigBarnIkon byttVedRerender={false} />
             <HorisontalLinje />
             <BarnCounterWrapper>
-                <Heading size={'xsmall'} level={'3'}>
-                    <SpråkTekst
-                        id={'ombarnet.undertittel'}
-                        values={{
-                            x: barnIndex + 1,
-                            antall: barnInkludertISøknaden.length,
-                        }}
-                    />
-                </Heading>
+                <TekstBlock
+                    block={tekster()[ESanitySteg.OM_BARNET].barnXAvY}
+                    flettefelter={{
+                        antall: (barnIndex + 1).toString(),
+                        totalAntall: barnInkludertISøknaden.length.toString(),
+                    }}
+                    typografi={Typografi.HeadingH3}
+                />
             </BarnCounterWrapper>
         </HeaderWrapper>
     );

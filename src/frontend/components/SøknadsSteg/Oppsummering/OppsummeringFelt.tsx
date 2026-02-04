@@ -1,11 +1,9 @@
 import React, { ReactNode } from 'react';
 
 import { FormSummary } from '@navikt/ds-react';
-import { ESvar } from '@navikt/familie-form-elements';
 
-import { ESivilstand } from '../../../../common/typer/kontrakt/generelle';
-import { jaNeiSvarTilSpråkId } from '../../../utils/spørsmål';
-import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
+import { useAppContext } from '../../../context/AppContext';
+import { formaterSøknadsvar } from '../../../utils/språk';
 
 interface IOppsummeringsFeltProps {
     tittel?: ReactNode;
@@ -14,19 +12,16 @@ interface IOppsummeringsFeltProps {
 }
 
 export const OppsummeringFelt: React.FC<IOppsummeringsFeltProps> = ({ tittel, søknadsvar, children }) => {
-    let språktekstid: boolean | string = false;
-    if (søknadsvar && søknadsvar in ESvar) {
-        språktekstid = jaNeiSvarTilSpråkId(søknadsvar as ESvar);
-    } else if (søknadsvar && søknadsvar in ESivilstand) {
-        språktekstid = 'felles.sivilstatus.kode.' + søknadsvar;
-    }
+    const { plainTekst, tekster } = useAppContext();
 
     return (
         <FormSummary.Answer>
             {tittel && <FormSummary.Label>{tittel}</FormSummary.Label>}
             {(søknadsvar || children) && (
                 <FormSummary.Value>
-                    {søknadsvar ? <>{språktekstid ? <SpråkTekst id={språktekstid} /> : søknadsvar}</> : children}
+                    {søknadsvar
+                        ? formaterSøknadsvar(søknadsvar, plainTekst, tekster().FELLES.frittståendeOrd)
+                        : children}
                 </FormSummary.Value>
             )}
         </FormSummary.Answer>

@@ -4,11 +4,10 @@ import { ArrowRightIcon } from '@navikt/aksel-icons';
 import { Button, ConfirmationPanel, Heading, Radio, RadioGroup, VStack } from '@navikt/ds-react';
 import { AGreen500, ANavRed, AOrange500 } from '@navikt/ds-tokens/dist/tokens';
 
-import { ESanitySteg, Typografi } from '../../../../common/sanity';
+import { Typografi } from '../../../../common/sanity';
 import { ESøknadstype } from '../../../../common/typer/kontrakt/generelle';
 import { useAppContext } from '../../../context/AppContext';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
-import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 import { BekreftelseStatus, useBekreftelseOgStartSoknad } from './useBekreftelseOgStartSoknad';
 
@@ -32,11 +31,11 @@ const BekreftelseOgStartSoknad: React.FC = () => {
         søknadstypeFeil,
         settSøknadstypeFeil,
     } = useBekreftelseOgStartSoknad();
+    const { tekster, plainTekst } = useAppContext();
 
-    const { tekster: teksterFunksjon, plainTekst } = useAppContext();
-    const tekster = teksterFunksjon();
-    const forsidetekster = tekster[ESanitySteg.FORSIDE];
-    const fellestekster = tekster[ESanitySteg.FELLES];
+    const forsidetekster = tekster().FORSIDE;
+    const navigasjonTekster = tekster().FELLES.navigasjon;
+    const fellestekster = tekster().FELLES;
 
     return (
         <form onSubmit={event => onStartSøknad(event)}>
@@ -76,7 +75,7 @@ const BekreftelseOgStartSoknad: React.FC = () => {
                         icon={<ArrowRightIcon aria-hidden />}
                         iconPosition="right"
                     >
-                        <SpråkTekst id="forside.start-soknad.knapp" />
+                        {plainTekst(navigasjonTekster.startKnapp)}
                     </Button>
                 </VStack>
             </VStack>

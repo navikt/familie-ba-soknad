@@ -1,11 +1,15 @@
+import { ReactNode } from 'react';
+
 import { Alpha3Code, alpha3ToAlpha2, getName } from 'i18n-iso-countries';
 import reactElementToJSXString from 'react-element-to-jsx-string';
 import { createIntl, createIntlCache } from 'react-intl';
 
+import { ESvar } from '@navikt/familie-form-elements';
+
 import engelsk from '../../common/lang/en.json' with { type: 'json' };
 import bokmål from '../../common/lang/nb.json' with { type: 'json' };
 import nynorsk from '../../common/lang/nn.json' with { type: 'json' };
-import { ESanitySivilstandApiKey, LocaleRecordString } from '../../common/sanity';
+import { ESanitySivilstandApiKey, LocaleRecordString, PlainTekst } from '../../common/sanity';
 import { ESivilstand, Slektsforhold } from '../../common/typer/kontrakt/generelle';
 import { LocaleType } from '../../common/typer/localeType';
 import { innebygdeFormatterere } from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
@@ -13,6 +17,7 @@ import { IDinLivssituasjonTekstinnhold } from '../components/SøknadsSteg/DinLiv
 import { IEøsForBarnTekstinnhold } from '../components/SøknadsSteg/EøsSteg/Barn/innholdTyper';
 import { IVelgBarnTekstinnhold } from '../components/SøknadsSteg/VelgBarn/innholdTyper';
 import { IBarn } from '../typer/person';
+import { IFrittståendeOrdTekstinnhold } from '../typer/sanity/tekstInnhold';
 import { AlternativtSvarForInput } from '../typer/svar';
 import { Årsak } from '../typer/utvidet';
 
@@ -172,5 +177,25 @@ export const hentBostedSpråkId = (barn: IBarn, teksterForSteg: IVelgBarnTekstin
         return teksterForSteg.registrertPaaAdressenDin;
     } else {
         return teksterForSteg.ikkeRegistrertPaaAdressenDin;
+    }
+};
+
+export const formaterSøknadsvar = (
+    søknadsvar: ReactNode,
+    plainTekst: PlainTekst,
+    tekster: IFrittståendeOrdTekstinnhold
+) => {
+    switch (søknadsvar) {
+        case ESvar.JA: {
+            return plainTekst(tekster.ja);
+        }
+        case ESvar.NEI: {
+            return plainTekst(tekster.nei);
+        }
+        case ESvar.VET_IKKE: {
+            return plainTekst(tekster.jegVetIkke);
+        }
+        default:
+            return søknadsvar;
     }
 };

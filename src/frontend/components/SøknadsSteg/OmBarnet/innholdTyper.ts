@@ -21,6 +21,7 @@ export interface IOmBarnetTekstinnhold {
     hvilketLandYtelse: ISanitySpørsmålDokument;
     svaralternativSammeSomAnnenForelder: LocaleRecordBlock;
     svaralternativAnnenForelder: LocaleRecordBlock;
+    barnXAvY: LocaleRecordBlock;
     hvemErBarnSinAndreForelder: ISanitySpørsmålDokument;
     navnAndreForelder: ISanitySpørsmålDokument;
     foedselsnummerDnummerAndreForelder: ISanitySpørsmålDokument;

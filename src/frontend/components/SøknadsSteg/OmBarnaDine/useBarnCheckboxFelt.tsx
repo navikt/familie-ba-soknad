@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 
 import { ESvar } from '@navikt/familie-form-elements';
 import { type Avhengigheter, feil, type Felt, type FeltState, ok, useFelt } from '@navikt/familie-skjema';
@@ -7,13 +7,11 @@ import { FlettefeltVerdier, LocaleRecordBlock } from '../../../../common/sanity'
 import { useAppContext } from '../../../context/AppContext';
 import { barnDataKeySpørsmål } from '../../../typer/barn';
 import { BarnetsId } from '../../../typer/person';
-import SpråkTekst from '../../Felleskomponenter/SpråkTekst/SpråkTekst';
 
 interface IUseBarnCheckboxFeltProps {
     datafeltNavn: barnDataKeySpørsmål;
-    feilmelding?: LocaleRecordBlock;
+    feilmelding: LocaleRecordBlock;
     flettefelter?: FlettefeltVerdier;
-    feilmeldingSpråkId: string;
     avhengighet: Felt<ESvar | null>;
     avhengigJaNeiSpmSvarCondition?: ESvar;
 }
@@ -22,7 +20,6 @@ const useBarnCheckboxFelt = ({
     datafeltNavn,
     feilmelding,
     flettefelter,
-    feilmeldingSpråkId,
     avhengighet,
     avhengigJaNeiSpmSvarCondition = ESvar.JA,
 }: IUseBarnCheckboxFeltProps) => {
@@ -35,19 +32,10 @@ const useBarnCheckboxFelt = ({
         feltId: barn[0][datafeltNavn].id,
         verdi: søknad.barnInkludertISøknaden.filter(barn => barn[datafeltNavn].svar === ESvar.JA).map(barn => barn.id),
         valideringsfunksjon: (felt: FeltState<BarnetsId[]>) => {
-            return felt.verdi.length > 0
-                ? ok(felt)
-                : feil(
-                      felt,
-                      feilmelding ? (
-                          plainTekst(feilmelding, { ...flettefelter })
-                      ) : (
-                          <SpråkTekst id={feilmeldingSpråkId} />
-                      )
-                  );
+            return felt.verdi.length > 0 ? ok(felt) : feil(felt, plainTekst(feilmelding, { ...flettefelter }));
         },
         skalFeltetVises: (avhengigheter: Avhengigheter) => {
-            return avhengigheter && avhengigheter.jaNeiSpm
+            return avhengigheter?.jaNeiSpm
                 ? (avhengigheter.jaNeiSpm as Felt<ESvar | null>).verdi === avhengigJaNeiSpmSvarCondition
                 : true;
         },

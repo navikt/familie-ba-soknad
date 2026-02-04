@@ -1,9 +1,5 @@
 import { IOmBarnetTekstinnhold } from '../../../../src/frontend/components/SøknadsSteg/OmBarnet/innholdTyper';
-import {
-    lagLocaleRecordBlock,
-    lagLocaleRecordString,
-    lagSanitySpørsmålDokument,
-} from '../lagSanityObjekter';
+import { lagLocaleRecordBlock, lagLocaleRecordString, lagSanitySpørsmålDokument } from '../lagSanityObjekter';
 
 export const omBarnetTekstinnhold: IOmBarnetTekstinnhold = {
     omBarnetTittel: lagLocaleRecordBlock(),
@@ -26,6 +22,7 @@ export const omBarnetTekstinnhold: IOmBarnetTekstinnhold = {
     hvilketLandYtelse: lagSanitySpørsmålDokument(),
     svaralternativSammeSomAnnenForelder: lagLocaleRecordBlock(),
     svaralternativAnnenForelder: lagLocaleRecordBlock(),
+    barnXAvY: lagLocaleRecordBlock(),
     hvemErBarnSinAndreForelder: lagSanitySpørsmålDokument(),
     navnAndreForelder: lagSanitySpørsmålDokument(),
     foedselsnummerDnummerAndreForelder: lagSanitySpørsmålDokument(),

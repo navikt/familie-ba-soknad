@@ -38,7 +38,6 @@ export const useOmBarnaDine = (): {
     const hvemErFosterbarn = useBarnCheckboxFelt({
         datafeltNavn: barnDataKeySpørsmål.erFosterbarn,
         feilmelding: teksterForSteg.hvemFosterbarn.feilmelding,
-        feilmeldingSpråkId: 'ombarna.fosterbarn.hvem.feilmelding',
         avhengighet: erNoenAvBarnaFosterbarn,
     });
 
@@ -51,7 +50,6 @@ export const useOmBarnaDine = (): {
     const hvemOppholderSegIInstitusjon = useBarnCheckboxFelt({
         datafeltNavn: barnDataKeySpørsmål.oppholderSegIInstitusjon,
         feilmelding: teksterForSteg.hvemInstitusjon.feilmelding,
-        feilmeldingSpråkId: 'ombarna.institusjon.hvem.feilmelding',
         avhengighet: oppholderBarnSegIInstitusjon,
     });
 
@@ -64,7 +62,6 @@ export const useOmBarnaDine = (): {
     const hvemErAdoptertFraUtland = useBarnCheckboxFelt({
         datafeltNavn: barnDataKeySpørsmål.erAdoptertFraUtland,
         feilmelding: teksterForSteg.hvemAdoptertFraUtlandet.feilmelding,
-        feilmeldingSpråkId: 'ombarna.adoptert.hvem.feilmelding',
         avhengighet: erBarnAdoptertFraUtland,
     });
 
@@ -77,7 +74,6 @@ export const useOmBarnaDine = (): {
     const hvemErSøktAsylFor = useBarnCheckboxFelt({
         datafeltNavn: barnDataKeySpørsmål.erAsylsøker,
         feilmelding: teksterForSteg.hvemAsyl.feilmelding,
-        feilmeldingSpråkId: 'ombarna.asyl.hvem.feilmelding',
         avhengighet: søktAsylForBarn,
     });
 
@@ -90,7 +86,6 @@ export const useOmBarnaDine = (): {
     const hvemTolvMndSammenhengendeINorge = useBarnCheckboxFelt({
         datafeltNavn: barnDataKeySpørsmål.boddMindreEnn12MndINorge,
         feilmelding: teksterForSteg.hvemOppholdUtenforNorge.feilmelding,
-        feilmeldingSpråkId: 'ombarna.hvemavbarnaoppholdt.feilmelding',
         avhengighet: barnOppholdtSegTolvMndSammenhengendeINorge,
         avhengigJaNeiSpmSvarCondition: ESvar.NEI,
     });
@@ -104,7 +99,6 @@ export const useOmBarnaDine = (): {
     const hvemBarnetrygdFraAnnetEøsland = useBarnCheckboxFelt({
         datafeltNavn: barnDataKeySpørsmål.barnetrygdFraAnnetEøsland,
         feilmelding: teksterForSteg.hvemSoektYtelse.feilmelding,
-        feilmeldingSpråkId: 'ombarna.barnetrygd-eøs-fortid.hvem.feilmelding',
         avhengighet: mottarBarnetrygdForBarnFraAnnetEøsland,
     });
 
@@ -133,7 +127,6 @@ export const useOmBarnaDine = (): {
     const hvemAvdødPartner = useBarnCheckboxFelt({
         datafeltNavn: barnDataKeySpørsmål.andreForelderErDød,
         feilmelding: teksterForSteg.hvemAvBarnaAvdoedPartner.feilmelding,
-        feilmeldingSpråkId: 'ombarna.enkeenkemann.hvem.feilmelding',
         avhengighet: erAvdødPartnerForelder,
     });
 
