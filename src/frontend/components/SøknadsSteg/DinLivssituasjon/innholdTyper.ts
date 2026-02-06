@@ -14,6 +14,7 @@ export interface IDinLivssituasjonTekstinnhold {
     pensjonUtland: ISanitySpørsmålDokument;
     samboersNavn: ISanitySpørsmålDokument;
     hattAnnenSamboerForSoektPeriode: ISanitySpørsmålDokument;
+    foedselsEllerDNummer: ISanitySpørsmålDokument;
 
     /* Årsak valgalternativ */
     valgalternativAarsakPlaceholder: LocaleRecordString;

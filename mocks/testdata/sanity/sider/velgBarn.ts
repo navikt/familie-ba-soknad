@@ -15,4 +15,5 @@ export const velgBarnTekstinnhold: IVelgBarnTekstinnhold = {
     registrertMedAdressesperre: lagLocaleRecordBlock(),
     registrertPaaAdressenDin: lagLocaleRecordBlock(),
     ikkeRegistrertPaaAdressenDin: lagLocaleRecordBlock(),
+    navnIkkeBestemtLabel: lagLocaleRecordBlock(),
 };

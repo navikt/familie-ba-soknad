@@ -12,4 +12,7 @@ export const leggTilBarnTekstinnhold: ILeggTilBarnTekstinnhold = {
     etternavn: lagSanitySpørsmålDokument(),
     foedselsnummerEllerDNummer: lagSanitySpørsmålDokument(),
     foedselsnummerAlert: lagLocaleRecordBlock(),
+    foedselsnummerFeilmelding: lagLocaleRecordBlock(),
+    sammeFoedselsnummerFeilmelding: lagLocaleRecordBlock(),
+    barnIkkeFoedtFeilmelding: lagLocaleRecordBlock(),
 };

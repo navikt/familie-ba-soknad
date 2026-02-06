@@ -218,7 +218,6 @@ export const useEøsForBarn = (
         søknadsfelt: omsorgsperson && omsorgsperson.idNummer,
         avhengighet: omsorgspersonIdNummerVetIkke,
         feilmelding: eøsForBarnTekster.idNummerOmsorgsperson.feilmelding,
-        feilmeldingSpråkId: 'eøs-om-barn.annenomsorgspersonidnummer.feilmelding',
         skalVises: borMedOmsorgsperson.verdi === ESvar.JA,
         customValidering: (felt: FeltState<string>) => {
             const verdi = trimWhiteSpace(felt.verdi);
@@ -440,10 +439,6 @@ export const useEøsForBarn = (
         avhengighet: barnetsAdresseVetIkke,
         feilmelding: eøsForBarnTekster.hvorBorBarnet.feilmelding,
         flettefelter: { barnetsNavn: gjeldendeBarn.navn },
-        feilmeldingSpråkId: 'eøs.hvorborbarn.feilmelding',
-        språkVerdier: {
-            barn: gjeldendeBarn.navn,
-        },
         skalVises:
             (borMedAndreForelder.verdi === ESvar.JA && skalSkjuleAndreForelderFelt(gjeldendeBarn)) ||
             gjeldendeBarn.erFosterbarn.svar === ESvar.JA,
@@ -461,8 +456,6 @@ export const useEøsForBarn = (
         søknadsfelt: andreForelder && andreForelder[andreForelderDataKeySpørsmål.adresse],
         avhengighet: andreForelderAdresseVetIkke,
         feilmelding: eøsForBarnTekster.hvorBorAndreForelder.feilmelding,
-        feilmeldingSpråkId: 'eøs-om-barn.andreforelderoppholdssted.feilmelding',
-        språkVerdier: { barn: gjeldendeBarn.navn },
         skalVises: !andreForelderErDød && !skalSkjuleAndreForelderFelt(gjeldendeBarn),
         customValidering: valideringAdresse,
     });

@@ -1,9 +1,5 @@
 import { IDinLivssituasjonTekstinnhold } from '../../../../src/frontend/components/SøknadsSteg/DinLivssituasjon/innholdTyper';
-import {
-    lagLocaleRecordString,
-    lagLocaleRecordBlock,
-    lagSanitySpørsmålDokument,
-} from '../lagSanityObjekter';
+import { lagLocaleRecordString, lagLocaleRecordBlock, lagSanitySpørsmålDokument } from '../lagSanityObjekter';
 
 export const dinLivssituasjonTekstinnhold: IDinLivssituasjonTekstinnhold = {
     dinLivssituasjonTittel: lagLocaleRecordBlock(),
@@ -19,6 +15,7 @@ export const dinLivssituasjonTekstinnhold: IDinLivssituasjonTekstinnhold = {
     pensjonUtland: lagSanitySpørsmålDokument(),
     samboersNavn: lagSanitySpørsmålDokument(),
     hattAnnenSamboerForSoektPeriode: lagSanitySpørsmålDokument(),
+    foedselsEllerDNummer: lagSanitySpørsmålDokument(),
 
     /* Årsak valgalternativ */
     valgalternativAarsakPlaceholder: lagLocaleRecordString(),
