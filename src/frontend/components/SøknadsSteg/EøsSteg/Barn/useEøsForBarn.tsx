@@ -121,8 +121,6 @@ export const useEøsForBarn = (
     const søkersSlektsforholdSpesifisering = useInputFelt({
         søknadsfelt: gjeldendeBarn[barnDataKeySpørsmål.søkersSlektsforholdSpesifisering],
         feilmelding: eøsForBarnTekster.hvilkenRelasjon.feilmelding,
-        feilmeldingSpråkId: 'eøs-om-barn.dinrelasjon.feilmelding',
-        feilmeldingSpråkVerdier: { barn: gjeldendeBarn.navn },
         skalVises: søkersSlektsforhold.verdi === Slektsforhold.ANNEN_RELASJON,
         customValidering: (felt: FeltState<string>) => {
             const verdi = trimWhiteSpace(felt.verdi);
@@ -165,7 +163,6 @@ export const useEøsForBarn = (
     const omsorgspersonNavn = useInputFelt({
         søknadsfelt: omsorgsperson && omsorgsperson.navn,
         feilmelding: eøsForBarnTekster.hvaHeterOmsorgspersonen.feilmelding,
-        feilmeldingSpråkId: 'eøs-om-barn.annenomsorgspersonnavn.feilmelding',
         skalVises: borMedOmsorgsperson.verdi === ESvar.JA,
         customValidering: (felt: FeltState<string>) => {
             const verdi = trimWhiteSpace(felt.verdi);
@@ -193,10 +190,6 @@ export const useEøsForBarn = (
     const omsorgpersonSlektsforholdSpesifisering = useInputFelt({
         søknadsfelt: omsorgsperson && omsorgsperson.slektsforholdSpesifisering,
         feilmelding: eøsForBarnTekster.hvilkenRelasjonOmsorgsperson.feilmelding,
-        feilmeldingSpråkId: 'eøs-om-barn.annenomsorgspersonrelasjon.feilmelding',
-        feilmeldingSpråkVerdier: {
-            barn: gjeldendeBarn.navn,
-        },
         skalVises: omsorgspersonSlektsforhold.verdi === Slektsforhold.ANNEN_RELASJON,
         customValidering: (felt: FeltState<string>) => {
             const verdi = trimWhiteSpace(felt.verdi);
@@ -231,7 +224,6 @@ export const useEøsForBarn = (
     const omsorgspersonAdresse = useInputFelt({
         søknadsfelt: omsorgsperson && omsorgsperson.adresse,
         feilmelding: eøsForBarnTekster.hvorBorOmsorgsperson.feilmelding,
-        feilmeldingSpråkId: 'eøs-om-barn.annenomsorgspersonoppholdssted.feilmelding',
         skalVises: borMedOmsorgsperson.verdi === ESvar.JA,
         customValidering: valideringAdresse,
         nullstillVedAvhengighetEndring: false,

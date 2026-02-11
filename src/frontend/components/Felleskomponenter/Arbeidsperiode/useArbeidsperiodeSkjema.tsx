@@ -61,7 +61,6 @@ export const useArbeidsperiodeSkjema = (gjelderUtlandet: boolean, personType: Pe
     const arbeidsgiver = useInputFelt({
         søknadsfelt: { id: ArbeidsperiodeSpørsmålsId.arbeidsgiver, svar: '' },
         feilmelding: teksterForPersonType.arbeidsgiver.feilmelding,
-        feilmeldingSpråkId: 'felles.oppgiarbeidsgiver.feilmelding',
         skalVises: gjelderUtlandet
             ? erEøsLand(arbeidsperiodeLand.verdi)
             : arbeidsperiodeAvsluttet.valideringsstatus === Valideringsstatus.OK || andreForelderErDød,

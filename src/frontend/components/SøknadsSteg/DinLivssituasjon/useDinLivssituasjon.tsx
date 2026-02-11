@@ -127,7 +127,6 @@ export const useDinLivssituasjon = (): {
             svar: søknad.søker.utvidet.nåværendeSamboer?.navn.svar || '',
         },
         feilmelding: teksterForSteg.samboersNavn.feilmelding,
-        feilmeldingSpråkId: 'omdeg.samboerNavn.feilmelding',
         skalVises: harSamboerNå.verdi === ESvar.JA,
     });
 

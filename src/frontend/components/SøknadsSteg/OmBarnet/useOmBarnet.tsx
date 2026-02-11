@@ -127,7 +127,6 @@ export const useOmBarnet = (
     const institusjonsnavn = useInputFelt({
         søknadsfelt: gjeldendeBarn[barnDataKeySpørsmål.institusjonsnavn],
         feilmelding: stegTekster.institusjonNavn.feilmelding,
-        feilmeldingSpråkId: 'ombarnet.institusjon.navn.feilmelding',
         skalVises:
             skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon) &&
             institusjonIUtlandCheckbox.verdi === ESvar.NEI,
@@ -136,7 +135,6 @@ export const useOmBarnet = (
     const institusjonsadresse = useInputFelt({
         søknadsfelt: gjeldendeBarn[barnDataKeySpørsmål.institusjonsadresse],
         feilmelding: stegTekster.institusjonAdresse.feilmelding,
-        feilmeldingSpråkId: 'ombarnet.institusjon.adresse.feilmelding',
         skalVises:
             skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon) &&
             institusjonIUtlandCheckbox.verdi === ESvar.NEI,

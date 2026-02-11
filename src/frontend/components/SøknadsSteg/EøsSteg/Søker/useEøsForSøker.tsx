@@ -60,7 +60,6 @@ export const useEøsForSøker = (): {
             svar: søker.adresseISøkeperiode.svar,
         },
         feilmelding: teksterForSteg.hvorBor.feilmelding,
-        feilmeldingSpråkId: 'eøs-om-deg.dittoppholdssted.feilmelding',
         skalVises: søker.triggetEøs,
         customValidering: valideringAdresse,
     });
