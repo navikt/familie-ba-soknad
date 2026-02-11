@@ -15,7 +15,7 @@ import { dagenEtterDato, dagensDato, gårsdagensDato, sisteDagDenneMåneden, str
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import TekstBlock from '../Sanity/TekstBlock';
 
-import { barnetrygdslandFeilmelding, mottarBarnetrygdNåFeilmelding } from './barnetrygdperiodeSpråkUtils';
+import { barnetrygdslandFeilmelding } from './barnetrygdperiodeSpråkUtils';
 import { BarnetrygdperiodeSpørsmålId } from './spørsmål';
 
 export interface IUsePensjonsperiodeSkjemaParams {
@@ -33,8 +33,6 @@ export const useBarnetrygdperiodeSkjema = (personType: PersonType, barn, erDød)
     const mottarEøsBarnetrygdNå = useJaNeiSpmFelt({
         søknadsfelt: { id: BarnetrygdperiodeSpørsmålId.mottarEøsBarnetrygdNå, svar: null },
         feilmelding: teksterForPersonType.mottarBarnetrygdNa.feilmelding,
-        feilmeldingSpråkId: mottarBarnetrygdNåFeilmelding(personType),
-        feilmeldingSpråkVerdier: { barn: barn.navn },
         skalSkjules: erDød,
     });
 

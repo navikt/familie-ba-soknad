@@ -35,7 +35,7 @@ const useInputFelt = ({
                 ? customValidering
                     ? customValidering(felt)
                     : ok(felt)
-                : feil(felt, plainTekst(feilmelding, flettefelter));
+                : feil(felt, plainTekst(feilmelding, { ...flettefelter }));
         },
         avhengigheter: { skalVises },
         skalFeltetVises: avhengigheter => avhengigheter.skalVises,

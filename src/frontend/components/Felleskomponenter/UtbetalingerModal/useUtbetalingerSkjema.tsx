@@ -20,7 +20,7 @@ import {
 } from '../../../utils/dato';
 import { minTilDatoForPeriode } from '../../../utils/perioder';
 
-import { fårUtbetalingNåFeilmelding, utbetalingslandFeilmelding } from './språkUtils';
+import { utbetalingslandFeilmelding } from './språkUtils';
 import { UtbetalingerSpørsmålId } from './spørsmål';
 
 export interface IUseUtbetalingerSkjemaParams {
@@ -37,9 +37,7 @@ export const useUtbetalingerSkjema = (personType, barn, erDød) => {
 
     const fårUtbetalingNå = useJaNeiSpmFelt({
         søknadsfelt: { id: UtbetalingerSpørsmålId.fårUtbetalingNå, svar: null },
-        feilmeldingSpråkId: fårUtbetalingNåFeilmelding(personType),
         skalSkjules: andreForelderErDød,
-        feilmeldingSpråkVerdier: barn ? { barn: barn.navn } : undefined,
         feilmelding: teksterForPersontype.faarUtbetalingerNaa.feilmelding,
         flettefelter: { barnetsNavn: barn?.navn },
     });

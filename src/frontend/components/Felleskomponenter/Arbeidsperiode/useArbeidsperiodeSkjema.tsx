@@ -40,7 +40,6 @@ export const useArbeidsperiodeSkjema = (gjelderUtlandet: boolean, personType: Pe
     const arbeidsperiodeAvsluttet = useJaNeiSpmFelt({
         søknadsfelt: { id: ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet, svar: null },
         feilmelding: teksterForPersonType.arbeidsperiodenAvsluttet.feilmelding,
-        feilmeldingSpråkId: 'felles.erarbeidsperiodenavsluttet.feilmelding',
         skalSkjules: andreForelderErDød,
     });
 

@@ -42,14 +42,12 @@ export const useOmdeg = (): {
     const borPåRegistrertAdresse = useJaNeiSpmFelt({
         søknadsfelt: søker.borPåRegistrertAdresse,
         feilmelding: teksterForSteg.borPaaRegistrertAdresse.feilmelding,
-        feilmeldingSpråkId: 'omdeg.borpådenneadressen.feilmelding',
         skalSkjules: !søker.adresse || søker.adressebeskyttelse,
     });
 
     const værtINorgeITolvMåneder = useJaNeiSpmFelt({
         søknadsfelt: søker.værtINorgeITolvMåneder,
         feilmelding: teksterForSteg.vaertINorgeITolvMaaneder.feilmelding,
-        feilmeldingSpråkId: 'omdeg.oppholdtsammenhengende.feilmelding',
     });
 
     const registrerteUtenlandsperioder = useFelt<IUtenlandsperiode[]>({
@@ -69,7 +67,6 @@ export const useOmdeg = (): {
     const planleggerÅBoINorgeTolvMnd = useJaNeiSpmFelt({
         søknadsfelt: søker.planleggerÅBoINorgeTolvMnd,
         feilmelding: teksterForSteg.planleggerAaBoINorgeTolvMnd.feilmelding,
-        feilmeldingSpråkId: 'omdeg.planlagt-opphold-sammenhengende.feilmelding',
         avhengigheter: {
             værtINorgeITolvMåneder: { hovedSpørsmål: værtINorgeITolvMåneder },
         },
