@@ -20,7 +20,6 @@ import {
 } from '../../../utils/dato';
 import { minTilDatoForPeriode } from '../../../utils/perioder';
 
-import { arbeidslandFeilmelding } from './arbeidsperiodeSpråkUtils';
 import { ArbeidsperiodeSpørsmålsId } from './spørsmål';
 
 export interface IUseArbeidsperiodeSkjemaParams {
@@ -40,7 +39,6 @@ export const useArbeidsperiodeSkjema = (gjelderUtlandet: boolean, personType: Pe
     const arbeidsperiodeAvsluttet = useJaNeiSpmFelt({
         søknadsfelt: { id: ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet, svar: null },
         feilmelding: teksterForPersonType.arbeidsperiodenAvsluttet.feilmelding,
-        feilmeldingSpråkId: 'felles.erarbeidsperiodenavsluttet.feilmelding',
         skalSkjules: andreForelderErDød,
     });
 
@@ -51,7 +49,6 @@ export const useArbeidsperiodeSkjema = (gjelderUtlandet: boolean, personType: Pe
         feilmelding: periodenErAvsluttet
             ? teksterForPersonType.hvilketLandFortid.feilmelding
             : teksterForPersonType.hvilketLandNaatid.feilmelding,
-        feilmeldingSpråkId: arbeidslandFeilmelding(periodenErAvsluttet, personType),
         skalFeltetVises:
             (arbeidsperiodeAvsluttet.valideringsstatus === Valideringsstatus.OK || andreForelderErDød) &&
             gjelderUtlandet,
@@ -61,7 +58,6 @@ export const useArbeidsperiodeSkjema = (gjelderUtlandet: boolean, personType: Pe
     const arbeidsgiver = useInputFelt({
         søknadsfelt: { id: ArbeidsperiodeSpørsmålsId.arbeidsgiver, svar: '' },
         feilmelding: teksterForPersonType.arbeidsgiver.feilmelding,
-        feilmeldingSpråkId: 'felles.oppgiarbeidsgiver.feilmelding',
         skalVises: gjelderUtlandet
             ? erEøsLand(arbeidsperiodeLand.verdi)
             : arbeidsperiodeAvsluttet.valideringsstatus === Valideringsstatus.OK || andreForelderErDød,

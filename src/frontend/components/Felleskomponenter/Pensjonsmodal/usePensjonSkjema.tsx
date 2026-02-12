@@ -15,7 +15,6 @@ import { IPensjonsperiodeTekstinnhold } from '../../../typer/sanity/modaler/pens
 import { IPensjonsperiodeFeltTyper } from '../../../typer/skjema';
 import { dagenEtterDato, sisteDagDenneMåneden, stringTilDate } from '../../../utils/dato';
 
-import { mottarPensjonNåFeilmeldingSpråkId, pensjonslandFeilmeldingSpråkId } from './språkUtils';
 import { PensjonsperiodeSpørsmålId } from './spørsmål';
 
 export interface IUsePensjonSkjemaParams {
@@ -25,7 +24,7 @@ export interface IUsePensjonSkjemaParams {
     barn?: IBarnMedISøknad;
 }
 
-export const usePensjonSkjema = ({ gjelderUtland, personType, erDød, barn }: IUsePensjonSkjemaParams) => {
+export const usePensjonSkjema = ({ gjelderUtland, personType, erDød }: IUsePensjonSkjemaParams) => {
     const { tekster } = useAppContext();
     const { erEøsLand } = useEøsContext();
     const teksterForPersonType: IPensjonsperiodeTekstinnhold =
@@ -36,8 +35,6 @@ export const usePensjonSkjema = ({ gjelderUtland, personType, erDød, barn }: IU
     const mottarPensjonNå = useJaNeiSpmFelt({
         søknadsfelt: { id: PensjonsperiodeSpørsmålId.mottarPensjonNå, svar: null },
         feilmelding: teksterForPersonType.faarPensjonNaa.feilmelding,
-        feilmeldingSpråkId: mottarPensjonNåFeilmeldingSpråkId(personType),
-        feilmeldingSpråkVerdier: barn ? { barn: barn.navn } : undefined,
         skalSkjules: erAndreForelderDød,
     });
 
@@ -52,7 +49,6 @@ export const usePensjonSkjema = ({ gjelderUtland, personType, erDød, barn }: IU
         feilmelding: periodenErAvsluttet
             ? teksterForPersonType.pensjonLandFortid.feilmelding
             : teksterForPersonType.pensjonLandNaatid.feilmelding,
-        feilmeldingSpråkId: pensjonslandFeilmeldingSpråkId(personType, periodenErAvsluttet),
         skalFeltetVises:
             (mottarPensjonNå.valideringsstatus === Valideringsstatus.OK || erAndreForelderDød) && gjelderUtland,
         nullstillVedAvhengighetEndring: true,

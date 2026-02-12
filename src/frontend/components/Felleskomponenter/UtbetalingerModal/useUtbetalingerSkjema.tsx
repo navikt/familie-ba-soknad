@@ -20,7 +20,6 @@ import {
 } from '../../../utils/dato';
 import { minTilDatoForPeriode } from '../../../utils/perioder';
 
-import { fårUtbetalingNåFeilmelding, utbetalingslandFeilmelding } from './språkUtils';
 import { UtbetalingerSpørsmålId } from './spørsmål';
 
 export interface IUseUtbetalingerSkjemaParams {
@@ -37,9 +36,7 @@ export const useUtbetalingerSkjema = (personType, barn, erDød) => {
 
     const fårUtbetalingNå = useJaNeiSpmFelt({
         søknadsfelt: { id: UtbetalingerSpørsmålId.fårUtbetalingNå, svar: null },
-        feilmeldingSpråkId: fårUtbetalingNåFeilmelding(personType),
         skalSkjules: andreForelderErDød,
-        feilmeldingSpråkVerdier: barn ? { barn: barn.navn } : undefined,
         feilmelding: teksterForPersontype.faarUtbetalingerNaa.feilmelding,
         flettefelter: { barnetsNavn: barn?.navn },
     });
@@ -48,13 +45,11 @@ export const useUtbetalingerSkjema = (personType, barn, erDød) => {
 
     const utbetalingLand = useLanddropdownFelt({
         søknadsfelt: { id: UtbetalingerSpørsmålId.utbetalingLand, svar: '' },
-        feilmeldingSpråkId: utbetalingslandFeilmelding(personType, periodenErAvsluttet),
         feilmelding: periodenErAvsluttet
             ? teksterForPersontype.utbetalingLandFortid.feilmelding
             : teksterForPersontype.utbetalingLandNaatid.feilmelding,
         skalFeltetVises: fårUtbetalingNå.valideringsstatus === Valideringsstatus.OK || andreForelderErDød,
         nullstillVedAvhengighetEndring: true,
-        feilmeldingSpråkVerdier: barn ? { barn: barn.navn } : undefined,
     });
 
     const utbetalingFraDato = useDatovelgerFeltForSanity({

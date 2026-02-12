@@ -127,7 +127,6 @@ export const useOmBarnet = (
     const institusjonsnavn = useInputFelt({
         søknadsfelt: gjeldendeBarn[barnDataKeySpørsmål.institusjonsnavn],
         feilmelding: stegTekster.institusjonNavn.feilmelding,
-        feilmeldingSpråkId: 'ombarnet.institusjon.navn.feilmelding',
         skalVises:
             skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon) &&
             institusjonIUtlandCheckbox.verdi === ESvar.NEI,
@@ -136,7 +135,6 @@ export const useOmBarnet = (
     const institusjonsadresse = useInputFelt({
         søknadsfelt: gjeldendeBarn[barnDataKeySpørsmål.institusjonsadresse],
         feilmelding: stegTekster.institusjonAdresse.feilmelding,
-        feilmeldingSpråkId: 'ombarnet.institusjon.adresse.feilmelding',
         skalVises:
             skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon) &&
             institusjonIUtlandCheckbox.verdi === ESvar.NEI,
@@ -213,8 +211,6 @@ export const useOmBarnet = (
     const planleggerÅBoINorge12Mnd = useJaNeiSpmFelt({
         søknadsfelt: gjeldendeBarn[barnDataKeySpørsmål.planleggerÅBoINorge12Mnd],
         feilmelding: stegTekster.planlagtBoSammenhengendeINorge.feilmelding,
-        feilmeldingSpråkId: 'ombarnet.oppholdtsammenhengende.feilmelding',
-        feilmeldingSpråkVerdier: { barn: gjeldendeBarn.navn },
         flettefelter: { barnetsNavn: gjeldendeBarn.navn },
         skalSkjules:
             !skalFeltetVises(barnDataKeySpørsmål.boddMindreEnn12MndINorge) ||
@@ -235,14 +231,12 @@ export const useOmBarnet = (
         søknadsfelt: gjeldendeBarn[barnDataKeySpørsmål.pågåendeSøknadFraAnnetEøsLand],
         feilmelding: stegTekster.paagaaendeSoeknadYtelse.feilmelding,
         flettefelter: { barnetsNavn: gjeldendeBarn.navn },
-        feilmeldingSpråkId: 'ombarnet.pågåendesøknad.feilmelding',
         skalSkjules: !skalFeltetVises(barnDataKeySpørsmål.barnetrygdFraAnnetEøsland),
     });
 
     const pågåendeSøknadHvilketLand = useLanddropdownFeltMedJaNeiAvhengighet({
         søknadsfelt: gjeldendeBarn[barnDataKeySpørsmål.pågåendeSøknadHvilketLand],
         feilmelding: stegTekster.hvilketLandYtelse.feilmelding,
-        feilmeldingSpråkId: 'ombarnet.hvilketlandsøkt.feilmelding',
         avhengigSvarCondition: ESvar.JA,
         avhengighet: pågåendeSøknadFraAnnetEøsLand,
     });
@@ -251,7 +245,6 @@ export const useOmBarnet = (
     const mottarEllerMottokEøsBarnetrygd = useJaNeiSpmFelt({
         søknadsfelt: gjeldendeBarn[barnDataKeySpørsmål.mottarEllerMottokEøsBarnetrygd],
         feilmelding: stegTekster.faarEllerHarFaattYtelseFraAnnetLand.feilmelding,
-        feilmeldingSpråkId: 'ombarnet.fårellerharsøktbarnetrygdeøs.feilmelding',
         skalSkjules: !skalFeltetVises(barnDataKeySpørsmål.barnetrygdFraAnnetEøsland),
     });
 
@@ -384,10 +377,8 @@ export const useOmBarnet = (
 
     const andreForelderArbeidUtlandet = useJaNeiSpmFelt({
         søknadsfelt: andreForelder?.[andreForelderDataKeySpørsmål.arbeidUtlandet],
-        feilmeldingSpråkId:
-            gjeldendeBarn.andreForelderErDød.svar === ESvar.JA
-                ? 'enkeenkemann.andreforelder-arbeidutland.feilmelding'
-                : 'eøs.andre-forelder.arbeid-utland.feilmelding',
+        feilmelding: stegTekster.planlagtBoSammenhengendeINorge.feilmelding,
+        flettefelter: { barnetsNavn: gjeldendeBarn.navn },
         avhengigheter: {
             andreForelderNavn: {
                 hovedSpørsmål: andreForelderNavn,
@@ -401,7 +392,6 @@ export const useOmBarnet = (
                     : undefined,
         },
         skalSkjules: andreForelderKanIkkeGiOpplysninger.verdi === ESvar.JA,
-        feilmeldingSpråkVerdier: { navn: gjeldendeBarn.navn },
     });
 
     const {
@@ -428,10 +418,11 @@ export const useOmBarnet = (
 
     const andreForelderPensjonUtland = useJaNeiSpmFelt({
         søknadsfelt: andreForelder?.[andreForelderDataKeySpørsmål.pensjonUtland],
-        feilmeldingSpråkId:
+        feilmelding:
             gjeldendeBarn.andreForelderErDød.svar === ESvar.JA
-                ? 'enkeenkemann.andre-forelder.utenlandspensjon.feilmelding'
-                : 'ombarnet.andreforelderpensjonutland.feilmelding',
+                ? stegTekster.pensjonUtlandAndreForelderGjenlevende.feilmelding
+                : stegTekster.pensjonUtlandAndreForelder.feilmelding,
+        flettefelter: { barnetsNavn: gjeldendeBarn.navn },
         avhengigheter: {
             andreForelderNavn: {
                 hovedSpørsmål: andreForelderNavn,
@@ -445,7 +436,6 @@ export const useOmBarnet = (
                     : undefined,
         },
         skalSkjules: andreForelderKanIkkeGiOpplysninger.verdi === ESvar.JA,
-        feilmeldingSpråkVerdier: { navn: gjeldendeBarn.navn },
     });
 
     const {
@@ -469,18 +459,14 @@ export const useOmBarnet = (
     const borFastMedSøker = useJaNeiSpmFelt({
         søknadsfelt: gjeldendeBarn[barnDataKeySpørsmål.borFastMedSøker],
         feilmelding: stegTekster.borBarnFastSammenMedDeg.feilmelding,
-        feilmeldingSpråkId: 'ombarnet.bor-fast.feilmelding',
         flettefelter: { barnetsNavn: gjeldendeBarn.navn },
-        feilmeldingSpråkVerdier: { navn: gjeldendeBarn.navn },
     });
 
     const skriftligAvtaleOmDeltBosted = useJaNeiSpmFelt({
         søknadsfelt: andreForelder?.[andreForelderDataKeySpørsmål.skriftligAvtaleOmDeltBosted],
         feilmelding: stegTekster.deltBosted.feilmelding,
-        feilmeldingSpråkId: 'ombarnet.delt-bosted.feilmelding',
         skalSkjules: !andreForelder || gjeldendeBarn[barnDataKeySpørsmål.andreForelderErDød].svar === ESvar.JA,
         flettefelter: { barnetsNavn: gjeldendeBarn.navn },
-        feilmeldingSpråkVerdier: { navn: gjeldendeBarn.navn },
     });
 
     /*--- SØKER HAR BODD MED ANDRE FORELDER - UTVIDET BARNETRYGD---*/
@@ -488,7 +474,6 @@ export const useOmBarnet = (
     const søkerHarBoddMedAndreForelder = useJaNeiSpmFelt({
         søknadsfelt: andreForelder?.utvidet[andreForelderDataKeySpørsmål.søkerHarBoddMedAndreForelder],
         feilmelding: stegTekster.boddSammenMedAndreForelder.feilmelding,
-        feilmeldingSpråkId: 'ombarnet.boddsammenmedandreforelder.feilmelding',
         avhengigheter: {
             borFastMedSøker: {
                 hovedSpørsmål: borFastMedSøker,
@@ -501,7 +486,6 @@ export const useOmBarnet = (
         },
         skalSkjules: !erUtvidet || !andreForelder,
         flettefelter: { barnetsNavn: gjeldendeBarn.navn },
-        feilmeldingSpråkVerdier: { navn: gjeldendeBarn.navn },
     });
 
     const borMedAndreForelderCheckbox = useFelt<ESvar>({

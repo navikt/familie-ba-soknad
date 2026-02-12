@@ -165,7 +165,7 @@ describe('useJaNeiSpmFelt', () => {
             () =>
                 useJaNeiSpmFelt({
                     søknadsfelt: værtINorgeITolvMåneder,
-                    feilmeldingSpråkId: 'test',
+                    feilmelding: { nb: [], nn: [], en: [], api_navn: 'test' },
                     avhengigheter: {
                         borPåRegistrertAdresse: { hovedSpørsmål: borPåRegistrertAdresseFeltMock },
                     },

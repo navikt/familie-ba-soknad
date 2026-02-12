@@ -60,7 +60,6 @@ export const useEøsForSøker = (): {
             svar: søker.adresseISøkeperiode.svar,
         },
         feilmelding: teksterForSteg.hvorBor.feilmelding,
-        feilmeldingSpråkId: 'eøs-om-deg.dittoppholdssted.feilmelding',
         skalVises: søker.triggetEøs,
         customValidering: valideringAdresse,
     });
@@ -68,7 +67,6 @@ export const useEøsForSøker = (): {
     const arbeidINorge = useJaNeiSpmFelt({
         søknadsfelt: søker.arbeidINorge,
         feilmelding: teksterForSteg.arbeidNorge.feilmelding,
-        feilmeldingSpråkId: 'eøs-om-deg.arbeidsperioderinorge.feilmelding',
     });
 
     const {
@@ -96,7 +94,6 @@ export const useEøsForSøker = (): {
     const pensjonNorge = useJaNeiSpmFelt({
         søknadsfelt: søker.pensjonNorge,
         feilmelding: teksterForSteg.pensjonNorge.feilmelding,
-        feilmeldingSpråkId: 'eøs-om-deg.pensjoninorge.feilmelding',
     });
     const {
         fjernPeriode: fjernPensjonsperiode,
@@ -123,7 +120,6 @@ export const useEøsForSøker = (): {
     const andreUtbetalinger = useJaNeiSpmFelt({
         søknadsfelt: søker.andreUtbetalinger,
         feilmelding: teksterForSteg.utbetalinger.feilmelding,
-        feilmeldingSpråkId: 'eøs-om-deg.utbetalinger.feilmelding',
     });
     const {
         fjernPeriode: fjernAndreUtbetalingsperiode,

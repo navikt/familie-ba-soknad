@@ -1,34 +1,29 @@
-import React, { ReactNode } from 'react';
-
 import { v4 as uuidv4 } from 'uuid';
 
 import { feil, type FeltState, ok, useFelt } from '@navikt/familie-skjema';
 
 import { FlettefeltVerdier, LocaleRecordBlock } from '../../common/sanity';
-import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
 import { useAppContext } from '../context/AppContext';
 import { ISøknadSpørsmål } from '../typer/spørsmål';
 import { trimWhiteSpace } from '../utils/hjelpefunksjoner';
 
+interface Props {
+    søknadsfelt: ISøknadSpørsmål<string> | null;
+    skalVises?: boolean;
+    customValidering?: ((felt: FeltState<string>) => FeltState<string>) | undefined;
+    nullstillVedAvhengighetEndring?: boolean;
+    feilmelding: LocaleRecordBlock;
+    flettefelter?: FlettefeltVerdier;
+}
+
 const useInputFelt = ({
     søknadsfelt,
     feilmelding,
-    feilmeldingSpråkId,
     skalVises = true,
     customValidering = undefined,
     nullstillVedAvhengighetEndring = true,
     flettefelter,
-    feilmeldingSpråkVerdier,
-}: {
-    søknadsfelt: ISøknadSpørsmål<string> | null;
-    feilmelding?: LocaleRecordBlock;
-    feilmeldingSpråkId: string;
-    skalVises?: boolean;
-    customValidering?: ((felt: FeltState<string>) => FeltState<string>) | undefined;
-    nullstillVedAvhengighetEndring?: boolean;
-    flettefelter?: FlettefeltVerdier;
-    feilmeldingSpråkVerdier?: { [key: string]: ReactNode };
-}) => {
+}: Props) => {
     const { plainTekst } = useAppContext();
 
     return useFelt<string>({
@@ -40,14 +35,7 @@ const useInputFelt = ({
                 ? customValidering
                     ? customValidering(felt)
                     : ok(felt)
-                : feil(
-                      felt,
-                      feilmelding ? (
-                          plainTekst(feilmelding, { ...flettefelter })
-                      ) : (
-                          <SpråkTekst id={feilmeldingSpråkId} values={feilmeldingSpråkVerdier} />
-                      )
-                  );
+                : feil(felt, plainTekst(feilmelding, { ...flettefelter }));
         },
         avhengigheter: { skalVises },
         skalFeltetVises: avhengigheter => avhengigheter.skalVises,

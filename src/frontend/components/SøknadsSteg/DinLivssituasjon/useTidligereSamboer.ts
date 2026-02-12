@@ -27,7 +27,6 @@ export const useTidligereSamboer = (): {
             id: TidligereSamboerSpørsmålId.tidligereSamboerNavn,
             svar: '',
         },
-        feilmeldingSpråkId: 'omdeg.samboerNavn.feilmelding',
         feilmelding: teksterForSøker.samboerNavn.feilmelding,
     });
 

@@ -82,7 +82,6 @@ export const useDinLivssituasjon = (): {
     const separertEnkeSkilt = useJaNeiSpmFelt({
         søknadsfelt: søker.utvidet.spørsmål.separertEnkeSkilt,
         feilmelding: teksterForSteg.separertEnkeSkilt.feilmelding,
-        feilmeldingSpråkId: 'omdeg.separertellerskilt.feilmelding',
         skalSkjules: søker.sivilstand.type !== ESivilstand.GIFT || !erUtvidet,
     });
 
@@ -114,10 +113,6 @@ export const useDinLivssituasjon = (): {
     const harSamboerNå = useJaNeiSpmFelt({
         søknadsfelt: søker.utvidet.spørsmål.harSamboerNå,
         feilmelding: harSamboerSpørsmålDokument.feilmelding,
-        feilmeldingSpråkId:
-            søker.sivilstand.type === ESivilstand.GIFT
-                ? 'omdeg.samboernå.gift.feilmelding'
-                : 'omdeg.samboernå.feilmelding',
         skalSkjules: !erUtvidet,
     });
 
@@ -127,7 +122,6 @@ export const useDinLivssituasjon = (): {
             svar: søknad.søker.utvidet.nåværendeSamboer?.navn.svar || '',
         },
         feilmelding: teksterForSteg.samboersNavn.feilmelding,
-        feilmeldingSpråkId: 'omdeg.samboerNavn.feilmelding',
         skalVises: harSamboerNå.verdi === ESvar.JA,
     });
 
@@ -199,7 +193,6 @@ export const useDinLivssituasjon = (): {
     const hattAnnenSamboerForSøktPeriode = useJaNeiSpmFelt({
         søknadsfelt: søker.utvidet.spørsmål.hattAnnenSamboerForSøktPeriode,
         feilmelding: teksterForSteg.hattAnnenSamboerForSoektPeriode.feilmelding,
-        feilmeldingSpråkId: 'omdeg.annensamboer.feilmelding',
         skalSkjules: !erUtvidet,
     });
 
@@ -225,13 +218,11 @@ export const useDinLivssituasjon = (): {
     const erAsylsøker = useJaNeiSpmFelt({
         søknadsfelt: søker.erAsylsøker,
         feilmelding: teksterForSteg.erAsylsoeker.feilmelding,
-        feilmeldingSpråkId: 'omdeg.asylsøker.feilmelding',
     });
 
     const arbeidIUtlandet = useJaNeiSpmFelt({
         søknadsfelt: søker.arbeidIUtlandet,
         feilmelding: teksterForSteg.arbeidUtenforNorge.feilmelding,
-        feilmeldingSpråkId: 'eøs.arbeid-utland.feilmelding',
     });
 
     const {
@@ -259,7 +250,6 @@ export const useDinLivssituasjon = (): {
     const mottarUtenlandspensjon = useJaNeiSpmFelt({
         søknadsfelt: søker.mottarUtenlandspensjon,
         feilmelding: teksterForSteg.pensjonUtland.feilmelding,
-        feilmeldingSpråkId: 'omdeg.pensjonutland.feilmelding',
     });
 
     const {

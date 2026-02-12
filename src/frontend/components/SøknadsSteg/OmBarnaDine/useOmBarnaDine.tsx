@@ -13,7 +13,6 @@ import { IOmBarnaDineFeltTyper } from '../../../typer/skjema';
 import { Årsak } from '../../../typer/utvidet';
 import { nullstilteEøsFelterForSøker } from '../../../utils/søker';
 
-import { OmBarnaDineSpørsmålId } from './spørsmål';
 import useBarnCheckboxFelt from './useBarnCheckboxFelt';
 import { avdødPartnerForelderSpørsmålDokument, genererOppdaterteBarn } from './utils';
 
@@ -32,7 +31,6 @@ export const useOmBarnaDine = (): {
     const erNoenAvBarnaFosterbarn = useJaNeiSpmFelt({
         søknadsfelt: søknad.erNoenAvBarnaFosterbarn,
         feilmelding: teksterForSteg.fosterbarn.feilmelding,
-        feilmeldingSpråkId: 'ombarna.fosterbarn.feilmelding',
     });
 
     const hvemErFosterbarn = useBarnCheckboxFelt({
@@ -44,7 +42,6 @@ export const useOmBarnaDine = (): {
     const oppholderBarnSegIInstitusjon = useJaNeiSpmFelt({
         søknadsfelt: søknad.oppholderBarnSegIInstitusjon,
         feilmelding: teksterForSteg.institusjon.feilmelding,
-        feilmeldingSpråkId: 'ombarna.institusjon.feilmelding',
     });
 
     const hvemOppholderSegIInstitusjon = useBarnCheckboxFelt({
@@ -56,7 +53,6 @@ export const useOmBarnaDine = (): {
     const erBarnAdoptertFraUtland = useJaNeiSpmFelt({
         søknadsfelt: søknad.erBarnAdoptertFraUtland,
         feilmelding: teksterForSteg.adoptertFraUtlandet.feilmelding,
-        feilmeldingSpråkId: 'ombarna.adoptert.feilmelding',
     });
 
     const hvemErAdoptertFraUtland = useBarnCheckboxFelt({
@@ -68,7 +64,6 @@ export const useOmBarnaDine = (): {
     const søktAsylForBarn = useJaNeiSpmFelt({
         søknadsfelt: søknad.søktAsylForBarn,
         feilmelding: teksterForSteg.asyl.feilmelding,
-        feilmeldingSpråkId: 'ombarna.asyl.feilmelding',
     });
 
     const hvemErSøktAsylFor = useBarnCheckboxFelt({
@@ -80,7 +75,6 @@ export const useOmBarnaDine = (): {
     const barnOppholdtSegTolvMndSammenhengendeINorge = useJaNeiSpmFelt({
         søknadsfelt: søknad.barnOppholdtSegTolvMndSammenhengendeINorge,
         feilmelding: teksterForSteg.sammenhengendeOppholdINorge.feilmelding,
-        feilmeldingSpråkId: 'ombarna.oppholdtsammenhengende.feilmelding',
     });
 
     const hvemTolvMndSammenhengendeINorge = useBarnCheckboxFelt({
@@ -93,7 +87,6 @@ export const useOmBarnaDine = (): {
     const mottarBarnetrygdForBarnFraAnnetEøsland = useJaNeiSpmFelt({
         søknadsfelt: søknad.mottarBarnetrygdForBarnFraAnnetEøsland,
         feilmelding: teksterForSteg.soektYtelseEuEoes.feilmelding,
-        feilmeldingSpråkId: 'ombarna.barnetrygd-eøs-fortid.feilmelding',
     });
 
     const hvemBarnetrygdFraAnnetEøsland = useBarnCheckboxFelt({
@@ -102,21 +95,9 @@ export const useOmBarnaDine = (): {
         avhengighet: mottarBarnetrygdForBarnFraAnnetEøsland,
     });
 
-    const avdødPartnerForelderFeilmelding = () => {
-        switch (søknad.erAvdødPartnerForelder.id) {
-            case OmBarnaDineSpørsmålId.erOppgittAvdødPartnerForelder:
-                return 'ombarna.enkeenkemann.feilmelding';
-            case OmBarnaDineSpørsmålId.erFolkeregAvdødPartnerForelder:
-                return 'ombarna.enkeenkemann.folkeregisteret-gjenlevende.feilmelding';
-            default:
-                return 'ombarna.enkeenkemann.folkeregisteret-enke.feilmelding';
-        }
-    };
-
     const erAvdødPartnerForelder = useJaNeiSpmFelt({
         søknadsfelt: søknad.erAvdødPartnerForelder,
         feilmelding: avdødPartnerForelderSpørsmålDokument(søknad, teksterForSteg).feilmelding,
-        feilmeldingSpråkId: avdødPartnerForelderFeilmelding(),
         skalSkjules: !(
             søknad.søker.sivilstand.type === ESivilstand.ENKE_ELLER_ENKEMANN ||
             søknad.søker.sivilstand.type === ESivilstand.GJENLEVENDE_PARTNER ||
