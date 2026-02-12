@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect } from 'react';
+import { useEffect } from 'react';
 
 import { Alpha3Code } from 'i18n-iso-countries';
 import { v4 as uuidv4 } from 'uuid';
@@ -7,30 +7,25 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { type Avhengigheter, feil, type Felt, type FeltState, ok, useFelt } from '@navikt/familie-skjema';
 
 import { FlettefeltVerdier, LocaleRecordBlock } from '../../common/sanity';
-import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
 import { useAppContext } from '../context/AppContext';
 import { ISøknadSpørsmål } from '../typer/spørsmål';
 
 const useLanddropdownFeltMedJaNeiAvhengighet = ({
     søknadsfelt,
     feilmelding,
-    feilmeldingSpråkId,
     avhengigSvarCondition,
     avhengighet,
     nullstillVedAvhengighetEndring = true,
     skalFeltetVises = true,
     flettefelter,
-    feilmeldingSpråkVerdier,
 }: {
     søknadsfelt?: ISøknadSpørsmål<Alpha3Code | ''>;
-    feilmelding?: LocaleRecordBlock;
-    feilmeldingSpråkId: string;
+    feilmelding: LocaleRecordBlock;
     avhengigSvarCondition: ESvar;
     avhengighet: Felt<ESvar | null>;
     nullstillVedAvhengighetEndring?: boolean;
     skalFeltetVises?: boolean;
     flettefelter?: FlettefeltVerdier;
-    feilmeldingSpråkVerdier?: { [key: string]: ReactNode };
 }) => {
     const skalViseFelt = jaNeiSpmVerdi => jaNeiSpmVerdi === avhengigSvarCondition;
     const { plainTekst } = useAppContext();
@@ -47,16 +42,7 @@ const useLanddropdownFeltMedJaNeiAvhengighet = ({
                 : true;
         },
         valideringsfunksjon: (felt: FeltState<Alpha3Code | ''>) => {
-            return felt.verdi !== ''
-                ? ok(felt)
-                : feil(
-                      felt,
-                      feilmelding ? (
-                          plainTekst(feilmelding, { ...flettefelter })
-                      ) : (
-                          <SpråkTekst id={feilmeldingSpråkId} values={feilmeldingSpråkVerdier} />
-                      )
-                  );
+            return felt.verdi !== '' ? ok(felt) : feil(felt, plainTekst(feilmelding, { ...flettefelter }));
         },
         nullstillVedAvhengighetEndring,
         avhengigheter: { jaNeiSpm: avhengighet },

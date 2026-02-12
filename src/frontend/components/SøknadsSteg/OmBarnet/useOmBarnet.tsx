@@ -237,7 +237,6 @@ export const useOmBarnet = (
     const pågåendeSøknadHvilketLand = useLanddropdownFeltMedJaNeiAvhengighet({
         søknadsfelt: gjeldendeBarn[barnDataKeySpørsmål.pågåendeSøknadHvilketLand],
         feilmelding: stegTekster.hvilketLandYtelse.feilmelding,
-        feilmeldingSpråkId: 'ombarnet.hvilketlandsøkt.feilmelding',
         avhengigSvarCondition: ESvar.JA,
         avhengighet: pågåendeSøknadFraAnnetEøsLand,
     });

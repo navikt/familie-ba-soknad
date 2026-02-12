@@ -369,10 +369,8 @@ export const useEøsForBarn = (
     const omsorgspersonPågåendeSøknadHvilketLand = useLanddropdownFeltMedJaNeiAvhengighet({
         søknadsfelt: omsorgsperson?.pågåendeSøknadHvilketLand,
         feilmelding: eøsForBarnTekster.hvilketLandSoektYtelseOmsorgsperson.feilmelding,
-        feilmeldingSpråkId: 'eøs-om-barn.omsorgsperson-barnetrygd-hvilketland.feilmelding',
         avhengigSvarCondition: ESvar.JA,
         avhengighet: omsorgspersonPågåendeSøknadFraAnnetEøsLand,
-        feilmeldingSpråkVerdier: { barn: gjeldendeBarn.navn },
     });
 
     const omsorgspersonBarnetrygdFraEøs = useJaNeiSpmFelt({
@@ -528,10 +526,8 @@ export const useEøsForBarn = (
     const andreForelderPågåendeSøknadHvilketLand = useLanddropdownFeltMedJaNeiAvhengighet({
         søknadsfelt: andreForelder?.[andreForelderDataKeySpørsmål.pågåendeSøknadHvilketLand],
         feilmelding: eøsForBarnTekster.hvilketLandSoektYtelseAndreForelder.feilmelding,
-        feilmeldingSpråkId: 'eøs-om-barn.andre-forelder-barnetrygd-hvilketland.feilmelding',
         avhengigSvarCondition: ESvar.JA,
         avhengighet: andreForelderPågåendeSøknadFraAnnetEøsLand,
-        feilmeldingSpråkVerdier: { barn: gjeldendeBarn.navn },
     });
 
     const andreForelderBarnetrygdFraEøs = useJaNeiSpmFelt({
