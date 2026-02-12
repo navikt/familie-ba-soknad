@@ -11,4 +11,7 @@ export interface ILeggTilBarnTekstinnhold {
     etternavn: ISanitySpørsmålDokument;
     foedselsnummerEllerDNummer: ISanitySpørsmålDokument;
     foedselsnummerAlert: LocaleRecordBlock;
+    foedselsnummerFeilmelding: LocaleRecordBlock;
+    sammeFoedselsnummerFeilmelding: LocaleRecordBlock;
+    barnIkkeFoedtFeilmelding: LocaleRecordBlock;
 }

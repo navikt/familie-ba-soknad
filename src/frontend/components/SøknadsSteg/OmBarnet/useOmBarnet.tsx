@@ -307,7 +307,7 @@ export const useOmBarnet = (
     const andreForelderNavn = useInputFeltMedUkjent({
         søknadsfelt: andreForelder?.[andreForelderDataKeySpørsmål.navn] ?? null,
         avhengighet: andreForelderKanIkkeGiOpplysninger,
-        feilmeldingSpråkId: 'ombarnet.andre-forelder.navn.feilmelding',
+        feilmelding: stegTekster.navnAndreForelder.feilmelding,
         skalVises:
             !!andreForelder &&
             (!sammeForelderSomAnnetBarn.erSynlig ||
@@ -337,8 +337,7 @@ export const useOmBarnet = (
     const andreForelderFnr = useInputFeltMedUkjent({
         søknadsfelt: andreForelder?.[andreForelderDataKeySpørsmål.fnr] ?? null,
         avhengighet: andreForelderFnrUkjent,
-        feilmelding: teksterForFormateringsfeilmeldinger.ugyldigFoedselsnummer,
-        feilmeldingSpråkId: 'ombarnet.andre-forelder.fnr.feilmelding',
+        feilmelding: stegTekster.foedselsnummerDnummerAndreForelder.feilmelding,
         erFnrInput: true,
         skalVises:
             !!andreForelder &&

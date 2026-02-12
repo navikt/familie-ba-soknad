@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { act, getAllByText, getByTestId, render } from '@testing-library/react';
+import { act, getByTestId, render } from '@testing-library/react';
 import { mockDeep } from 'vitest-mock-extended';
 
 import { ESvar } from '@navikt/familie-form-elements';
@@ -118,12 +118,8 @@ describe('Test av nåværende samboer skjema', () => {
 
         act(() => gåVidere.click());
 
-        //Feilmelding dukker både opp under spørsmålet og i feiloppsummeringen
-        const antallFeilmeldingerPerFeil = 2;
-        const fnrFeil: HTMLElement[] | null = getAllByText(
-            container,
-            'Du må oppgi samboerens fødselsnummer eller d-nummer for å gå videre'
-        );
-        expect(fnrFeil).toHaveLength(antallFeilmeldingerPerFeil);
+        expect(getByTestId(container, 'skjema-feiloppsummering')).toBeInTheDocument();
+        expect(getByTestId(container, 'feilmelding-utvidet-nåværende-samboer-fnr')).toBeInTheDocument();
+        expect(fnr).toHaveAttribute('aria-invalid', 'true');
     });
 });

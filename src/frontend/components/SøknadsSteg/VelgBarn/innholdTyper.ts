@@ -14,4 +14,5 @@ export interface IVelgBarnTekstinnhold {
     registrertMedAdressesperre: LocaleRecordBlock;
     registrertPaaAdressenDin: LocaleRecordBlock;
     ikkeRegistrertPaaAdressenDin: LocaleRecordBlock;
+    navnIkkeBestemtLabel: LocaleRecordBlock;
 }

@@ -43,7 +43,6 @@ export const useTidligereSamboer = (): {
             svar: '',
         },
         avhengighet: tidligereSamboerFnrUkjent,
-        feilmeldingSpråkId: 'omdeg.samboer.ident.ikkebesvart.feilmelding',
         feilmelding: teksterForSøker.foedselsnummerEllerDNummer.feilmelding,
         erFnrInput: true,
     });

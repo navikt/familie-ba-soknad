@@ -13,7 +13,6 @@ import Oppsummeringsbolk from '../../Oppsummeringsbolk';
 
 import EøsAndreForelderOppsummering from './EøsAndreForelderOppsummering';
 import EøsOmsorgspersonOppsummering from './EøsOmsorgspersonOppsummering';
-import { tittelSpmEøsBarnOppsummering } from './utils';
 
 interface Props {
     settFeilAnchors: React.Dispatch<React.SetStateAction<string[]>>;
@@ -54,7 +53,12 @@ const EøsBarnOppsummering: React.FC<Props> = ({ settFeilAnchors, barn }) => {
                     />
                     {barn.søkersSlektsforholdSpesifisering.svar && (
                         <OppsummeringFelt
-                            tittel={tittelSpmEøsBarnOppsummering(barn.søkersSlektsforholdSpesifisering.id, barn.navn)}
+                            tittel={
+                                <TekstBlock
+                                    block={eøsBarnTekster.hvilkenRelasjon.sporsmal}
+                                    flettefelter={flettefelter}
+                                />
+                            }
                             søknadsvar={barn.søkersSlektsforholdSpesifisering.svar}
                         />
                     )}

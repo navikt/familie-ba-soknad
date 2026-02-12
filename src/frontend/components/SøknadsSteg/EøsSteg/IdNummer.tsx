@@ -36,7 +36,6 @@ export const IdNummer: React.FC<{
     landAlphaCode,
     periodeType = undefined,
     idNummerVerdiFraSøknad,
-    feilmeldingSpråkId,
     barn,
     spørsmålDokument,
     lesevisning = false,
@@ -64,7 +63,6 @@ export const IdNummer: React.FC<{
         },
         avhengighet: idNummerUkjent,
         feilmelding: spørsmålDokument.feilmelding,
-        feilmeldingSpråkId: feilmeldingSpråkId,
         customValidering: (felt: FeltState<string>) => {
             const verdi = trimWhiteSpace(felt.verdi);
             if (verdi.match(/^[0-9A-Za-z\s\-.\\/]{4,20}$/)) {

@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { useIntl } from 'react-intl';
-
 import { FormSummary } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
@@ -18,8 +16,6 @@ import { formaterFnr } from '../../../../utils/visning';
 import { ArbeidsperiodeOppsummering } from '../../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeOppsummering';
 import { PensjonsperiodeOppsummering } from '../../../Felleskomponenter/Pensjonsmodal/PensjonsperiodeOppsummering';
 import TekstBlock from '../../../Felleskomponenter/Sanity/TekstBlock';
-import SpråkTekst from '../../../Felleskomponenter/SpråkTekst/SpråkTekst';
-import { samboerSpråkIder } from '../../DinLivssituasjon/spørsmål';
 import { useDinLivssituasjon } from '../../DinLivssituasjon/useDinLivssituasjon';
 import { OppsummeringFelt } from '../OppsummeringFelt';
 import Oppsummeringsbolk from '../Oppsummeringsbolk';
@@ -29,45 +25,45 @@ interface Props {
 }
 
 const SamboerOppsummering: React.FC<{ samboer: ISamboer | ITidligereSamboer }> = ({ samboer }) => {
-    const { formatMessage } = useIntl();
+    const { tekster, plainTekst } = useAppContext();
+
+    const tidligereSamboereModalTekster = tekster().FELLES.modaler.tidligereSamboere.søker;
 
     return (
         <FormSummary.Answer>
             <FormSummary.Value>
                 <FormSummary.Answers>
                     <OppsummeringFelt
-                        tittel={<SpråkTekst id={samboerSpråkIder.navn} />}
+                        tittel={<TekstBlock block={tidligereSamboereModalTekster.samboerNavn.sporsmal} />}
                         søknadsvar={samboer.navn.svar}
                     />
                     <OppsummeringFelt
-                        tittel={<SpråkTekst id={samboerSpråkIder.fnr} />}
+                        tittel={
+                            <TekstBlock block={tidligereSamboereModalTekster.foedselsnummerEllerDNummer.sporsmal} />
+                        }
                         søknadsvar={
                             samboer.ident.svar === AlternativtSvarForInput.UKJENT
-                                ? formatMessage({
-                                      id: samboerSpråkIder.fnrUkjent,
-                                  })
+                                ? plainTekst(tidligereSamboereModalTekster.foedselsnummerEllerDNummer.checkboxLabel)
                                 : formaterFnr(samboer.ident.svar)
                         }
                     />
                     {samboer.fødselsdato.svar && (
                         <OppsummeringFelt
-                            tittel={<SpråkTekst id={samboerSpråkIder.fødselsdato} />}
+                            tittel={<TekstBlock block={tidligereSamboereModalTekster.foedselsdato.sporsmal} />}
                             søknadsvar={
                                 samboer.fødselsdato.svar === AlternativtSvarForInput.UKJENT
-                                    ? formatMessage({
-                                          id: samboerSpråkIder.fødselsdatoUkjent,
-                                      })
+                                    ? plainTekst(tidligereSamboereModalTekster.foedselsdato.checkboxLabel)
                                     : formaterDato(samboer.fødselsdato.svar)
                             }
                         />
                     )}
                     <OppsummeringFelt
-                        tittel={<SpråkTekst id={samboerSpråkIder.samboerFraDato} />}
+                        tittel={<TekstBlock block={tidligereSamboereModalTekster.startdato.sporsmal} />}
                         søknadsvar={formaterDato(samboer.samboerFraDato.svar)}
                     />
                     {'samboerTilDato' in samboer && (
                         <OppsummeringFelt
-                            tittel={<SpråkTekst id={samboerSpråkIder.samboerTilDato} />}
+                            tittel={<TekstBlock block={tidligereSamboereModalTekster.sluttdato.sporsmal} />}
                             søknadsvar={formaterDato(samboer.samboerTilDato.svar)}
                         />
                     )}

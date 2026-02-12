@@ -153,7 +153,7 @@ export const useDinLivssituasjon = (): {
             svar: fnrInitiellVerdi(søker.utvidet.nåværendeSamboer),
         },
         avhengighet: nåværendeSamboerFnrUkjent,
-        feilmeldingSpråkId: 'omdeg.samboer.ident.ikkebesvart.feilmelding',
+        feilmelding: teksterForSteg.foedselsEllerDNummer.feilmelding,
         erFnrInput: true,
         skalVises: harSamboerNå.verdi === ESvar.JA,
     });
