@@ -22,14 +22,14 @@ import {
 } from '../../../utils/utenlandsopphold';
 
 import { UtenlandsoppholdSpørsmålId } from './spørsmål';
-import { hentFraDatoFeilmelding, hentLandFeilmelding, landFeilmeldingSpråkId } from './utenlandsoppholdSpråkUtils';
+import { hentFraDatoFeilmelding, hentLandFeilmelding } from './utenlandsoppholdSpråkUtils';
 
 export interface IUseUtenlandsoppholdSkjemaParams {
     personType: PersonType;
     barn?: IBarnMedISøknad;
 }
 
-export const useUtenlandsoppholdSkjema = ({ personType, barn }: IUseUtenlandsoppholdSkjemaParams) => {
+export const useUtenlandsoppholdSkjema = ({ personType }: IUseUtenlandsoppholdSkjemaParams) => {
     const { tekster, plainTekst } = useAppContext();
     const teksterForPersontype: IUtenlandsoppholdTekstinnhold =
         tekster()[ESanitySteg.FELLES].modaler.utenlandsopphold[personType];
@@ -48,7 +48,6 @@ export const useUtenlandsoppholdSkjema = ({ personType, barn }: IUseUtenlandsopp
     const oppholdsland = useLanddropdownFelt({
         søknadsfelt: { id: UtenlandsoppholdSpørsmålId.landUtenlandsopphold, svar: '' },
         feilmelding: hentLandFeilmelding(utenlandsoppholdÅrsak.verdi, teksterForPersontype),
-        feilmeldingSpråkId: landFeilmeldingSpråkId(utenlandsoppholdÅrsak.verdi, barn),
         skalFeltetVises: !!utenlandsoppholdÅrsak.verdi,
         nullstillVedAvhengighetEndring: true,
     });

@@ -20,7 +20,6 @@ import {
 } from '../../../utils/dato';
 import { minTilDatoForPeriode } from '../../../utils/perioder';
 
-import { arbeidslandFeilmelding } from './arbeidsperiodeSpråkUtils';
 import { ArbeidsperiodeSpørsmålsId } from './spørsmål';
 
 export interface IUseArbeidsperiodeSkjemaParams {
@@ -50,7 +49,6 @@ export const useArbeidsperiodeSkjema = (gjelderUtlandet: boolean, personType: Pe
         feilmelding: periodenErAvsluttet
             ? teksterForPersonType.hvilketLandFortid.feilmelding
             : teksterForPersonType.hvilketLandNaatid.feilmelding,
-        feilmeldingSpråkId: arbeidslandFeilmelding(periodenErAvsluttet, personType),
         skalFeltetVises:
             (arbeidsperiodeAvsluttet.valideringsstatus === Valideringsstatus.OK || andreForelderErDød) &&
             gjelderUtlandet,

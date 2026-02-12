@@ -15,7 +15,6 @@ import { dagenEtterDato, dagensDato, gårsdagensDato, sisteDagDenneMåneden, str
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import TekstBlock from '../Sanity/TekstBlock';
 
-import { barnetrygdslandFeilmelding } from './barnetrygdperiodeSpråkUtils';
 import { BarnetrygdperiodeSpørsmålId } from './spørsmål';
 
 export interface IUsePensjonsperiodeSkjemaParams {
@@ -24,7 +23,7 @@ export interface IUsePensjonsperiodeSkjemaParams {
     barn: IBarnMedISøknad;
 }
 
-export const useBarnetrygdperiodeSkjema = (personType: PersonType, barn, erDød) => {
+export const useBarnetrygdperiodeSkjema = (personType: PersonType, erDød) => {
     const { tekster } = useAppContext();
 
     const teksterForPersonType: IBarnetrygdsperiodeTekstinnhold =
@@ -45,10 +44,8 @@ export const useBarnetrygdperiodeSkjema = (personType: PersonType, barn, erDød)
         feilmelding: periodenErAvsluttet
             ? teksterForPersonType.barnetrygdLandFortid.feilmelding
             : teksterForPersonType.barnetrygdLandNatid.feilmelding,
-        feilmeldingSpråkId: barnetrygdslandFeilmelding(periodenErAvsluttet, personType),
         skalFeltetVises: mottarEøsBarnetrygdNå.valideringsstatus === Valideringsstatus.OK || andreForelderErDød,
         nullstillVedAvhengighetEndring: true,
-        feilmeldingSpråkVerdier: { barn: barn.navn },
     });
 
     const fraDatoBarnetrygdperiode = useDatovelgerFeltForSanity({

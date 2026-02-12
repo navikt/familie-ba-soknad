@@ -15,7 +15,6 @@ import { IPensjonsperiodeTekstinnhold } from '../../../typer/sanity/modaler/pens
 import { IPensjonsperiodeFeltTyper } from '../../../typer/skjema';
 import { dagenEtterDato, sisteDagDenneMåneden, stringTilDate } from '../../../utils/dato';
 
-import { pensjonslandFeilmeldingSpråkId } from './språkUtils';
 import { PensjonsperiodeSpørsmålId } from './spørsmål';
 
 export interface IUsePensjonSkjemaParams {
@@ -50,7 +49,6 @@ export const usePensjonSkjema = ({ gjelderUtland, personType, erDød }: IUsePens
         feilmelding: periodenErAvsluttet
             ? teksterForPersonType.pensjonLandFortid.feilmelding
             : teksterForPersonType.pensjonLandNaatid.feilmelding,
-        feilmeldingSpråkId: pensjonslandFeilmeldingSpråkId(personType, periodenErAvsluttet),
         skalFeltetVises:
             (mottarPensjonNå.valideringsstatus === Valideringsstatus.OK || erAndreForelderDød) && gjelderUtland,
         nullstillVedAvhengighetEndring: true,

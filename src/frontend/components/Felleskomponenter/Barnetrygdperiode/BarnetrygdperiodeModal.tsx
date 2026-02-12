@@ -40,8 +40,7 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
     const { tekster } = useAppContext();
     const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } = useBarnetrygdperiodeSkjema(
         personType,
-        barn,
-        erDød
+        barn
     );
 
     const teksterForModal: IBarnetrygdsperiodeTekstinnhold = tekster().FELLES.modaler.barnetrygdsperiode[personType];
