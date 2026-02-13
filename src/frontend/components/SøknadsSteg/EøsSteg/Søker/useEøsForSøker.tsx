@@ -49,6 +49,7 @@ export const useEøsForSøker = (): {
     const teksterForPensjonsperiode: IPensjonsperiodeTekstinnhold =
         tekster()[ESanitySteg.FELLES].modaler.pensjonsperiode.søker;
     const teksterForAndreUtbetalinger = tekster()[ESanitySteg.FELLES].modaler.andreUtbetalinger.søker;
+    const forLangAdresseTekst = tekster().FELLES.formateringsfeilmeldinger.forLangAdresse;
 
     const [idNummerFelter, settIdNummerFelter] = useState<Felt<string>[]>([]);
 
@@ -61,7 +62,7 @@ export const useEøsForSøker = (): {
         },
         feilmelding: teksterForSteg.hvorBor.feilmelding,
         skalVises: søker.triggetEøs,
-        customValidering: valideringAdresse,
+        customValidering: felt => valideringAdresse(felt, plainTekst(forLangAdresseTekst)),
     });
 
     const arbeidINorge = useJaNeiSpmFelt({

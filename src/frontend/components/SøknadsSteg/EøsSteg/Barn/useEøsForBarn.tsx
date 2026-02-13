@@ -82,6 +82,8 @@ export const useEøsForBarn = (
     const { søknad, settSøknad, tekster, plainTekst } = useAppContext();
 
     const eøsForBarnTekster = tekster().EØS_FOR_BARN;
+    const forLangAdresseTekst = tekster().FELLES.formateringsfeilmeldinger.forLangAdresse;
+
     const teksterForArbeidsperiode: IArbeidsperiodeTekstinnhold =
         tekster()[ESanitySteg.FELLES].modaler.arbeidsperiode.søker;
     const teksterForBarnetrygdsperiode: IBarnetrygdsperiodeTekstinnhold =
@@ -221,7 +223,7 @@ export const useEøsForBarn = (
         søknadsfelt: omsorgsperson && omsorgsperson.adresse,
         feilmelding: eøsForBarnTekster.hvorBorOmsorgsperson.feilmelding,
         skalVises: borMedOmsorgsperson.verdi === ESvar.JA,
-        customValidering: valideringAdresse,
+        customValidering: felt => valideringAdresse(felt, plainTekst(forLangAdresseTekst)),
         nullstillVedAvhengighetEndring: false,
     });
 
@@ -414,7 +416,7 @@ export const useEøsForBarn = (
         skalVises:
             (borMedAndreForelder.verdi === ESvar.JA && skalSkjuleAndreForelderFelt(gjeldendeBarn)) ||
             gjeldendeBarn.erFosterbarn.svar === ESvar.JA,
-        customValidering: valideringAdresse,
+        customValidering: felt => valideringAdresse(felt, plainTekst(forLangAdresseTekst)),
     });
 
     /*--- ANDRE FORELDER ---*/
@@ -429,7 +431,7 @@ export const useEøsForBarn = (
         avhengighet: andreForelderAdresseVetIkke,
         feilmelding: eøsForBarnTekster.hvorBorAndreForelder.feilmelding,
         skalVises: !andreForelderErDød && !skalSkjuleAndreForelderFelt(gjeldendeBarn),
-        customValidering: valideringAdresse,
+        customValidering: felt => valideringAdresse(felt, plainTekst(forLangAdresseTekst)),
     });
 
     const andreForelderArbeidNorge = useJaNeiSpmFelt({

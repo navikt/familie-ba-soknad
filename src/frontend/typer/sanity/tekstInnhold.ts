@@ -117,6 +117,7 @@ export interface IFormateringsfeilmeldingerTekstinnhold {
     ugyldigIDnummer: LocaleRecordString;
     ugyldigFoedselsnummer: LocaleRecordString;
     ugyldigRelasjon: LocaleRecordString;
+    forLangAdresse: LocaleRecordString;
     ugyldigPostnummer: LocaleRecordString;
     ugyldigDato: LocaleRecordString;
     datoKanIkkeVaereFremITid: LocaleRecordString;
