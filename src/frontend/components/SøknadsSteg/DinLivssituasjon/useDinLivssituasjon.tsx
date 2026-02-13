@@ -106,7 +106,7 @@ export const useDinLivssituasjon = (): {
         søknadsfelt: søker.utvidet.spørsmål.separertEnkeSkiltDato,
         avhengigSvarCondition: ESvar.JA,
         avhengighet: separertEnkeSkilt,
-        feilmeldingSpråkId: 'omdeg.frahvilkendatoseparertskilt.feilmelding',
+        feilmelding: teksterForSteg.separertEnkeSkiltDato.feilmelding,
     });
 
     /*---- NÅVÆRENDE SAMBOER ----*/
@@ -173,7 +173,7 @@ export const useDinLivssituasjon = (): {
         feltId: SamboerSpørsmålId.nåværendeSamboerFødselsdato,
         initiellVerdi: getInitialFødselsdato(søker.utvidet.nåværendeSamboer),
         vetIkkeCheckbox: nåværendeSamboerFødselsdatoUkjent,
-        feilmeldingSpråkId: 'omdeg.nåværendesamboer.fødselsdato.ukjent',
+        feilmelding: teksterForTidligereSamboere.foedselsdato.feilmelding,
         skalFeltetVises: nåværendeSamboerFnrUkjent.verdi === ESvar.JA,
         sluttdatoAvgrensning: dagensDato(),
     });
@@ -185,7 +185,7 @@ export const useDinLivssituasjon = (): {
         },
         avhengigSvarCondition: ESvar.JA,
         avhengighet: harSamboerNå,
-        feilmeldingSpråkId: 'omdeg.nårstartetsamboerforhold.feilmelding',
+        feilmelding: teksterForTidligereSamboere.startdato.feilmelding,
         sluttdatoAvgrensning: dagensDato(),
     });
 

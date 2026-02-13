@@ -3,14 +3,16 @@ import { useEffect } from 'react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { type Avhengigheter, type Felt, type FeltState, ok, useFelt } from '@navikt/familie-skjema';
 
+import { LocaleRecordBlock } from '../../common/sanity';
 import { ISODateString } from '../../common/typer/ISODateString';
+import { useAppContext } from '../context/AppContext';
 import { validerDato } from '../utils/dato';
 
 const useDatovelgerFeltMedUkjent = ({
     feltId,
     initiellVerdi,
     vetIkkeCheckbox,
-    feilmeldingSpråkId,
+    feilmelding,
     skalFeltetVises,
     nullstillVedAvhengighetEndring = true,
     sluttdatoAvgrensning = undefined,
@@ -21,7 +23,7 @@ const useDatovelgerFeltMedUkjent = ({
     feltId;
     initiellVerdi: ISODateString;
     vetIkkeCheckbox: Felt<ESvar>;
-    feilmeldingSpråkId: string;
+    feilmelding: LocaleRecordBlock;
     skalFeltetVises: boolean;
     nullstillVedAvhengighetEndring?: boolean;
     sluttdatoAvgrensning?: Date;
@@ -29,6 +31,7 @@ const useDatovelgerFeltMedUkjent = ({
     customStartdatoFeilmelding?: string;
     avhengigheter?: Avhengigheter;
 }) => {
+    const { plainTekst, tekster } = useAppContext();
     const datoFelt = useFelt<ISODateString>({
         feltId: feltId,
         verdi: initiellVerdi,
@@ -37,14 +40,15 @@ const useDatovelgerFeltMedUkjent = ({
                 return ok(felt);
             }
 
-            const feilmeldingSpråkId = avhengigheter && avhengigheter.feilmeldingSpråkId;
+            const feilmelding = avhengigheter?.feilmelding as LocaleRecordBlock;
             const customStartdatoFeilmelding = avhengigheter && avhengigheter.customStartdatoFeilmelding;
-
             const startdatoAvgrensningOppdatert = avhengigheter && avhengigheter.startdatoAvgrensning;
 
             return validerDato(
+                tekster().FELLES.formateringsfeilmeldinger,
+                plainTekst,
                 felt,
-                feilmeldingSpråkId,
+                feilmelding,
                 startdatoAvgrensningOppdatert,
                 sluttdatoAvgrensning,
                 customStartdatoFeilmelding
@@ -54,7 +58,7 @@ const useDatovelgerFeltMedUkjent = ({
             vetIkkeCheckbox,
             skalFeltetVises,
             customStartdatoFeilmelding,
-            feilmeldingSpråkId,
+            feilmelding,
             startdatoAvgrensning,
             ...avhengigheter,
         },
