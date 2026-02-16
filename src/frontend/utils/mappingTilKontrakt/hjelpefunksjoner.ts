@@ -1,25 +1,10 @@
-import { ReactNode } from 'react';
-
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { FlettefeltVerdier, LocaleRecordBlock, LocaleRecordString } from '../../../common/sanity';
-import {
-    ISøknadsfelt,
-    Slektsforhold,
-    SpørsmålMap as KontraktpørsmålMap,
-    TilRestLocaleRecord,
-} from '../../../common/typer/kontrakt/generelle';
+import { ISøknadsfelt, TilRestLocaleRecord } from '../../../common/typer/kontrakt/generelle';
 import { LocaleType } from '../../../common/typer/localeType';
 import { IBarnMedISøknad } from '../../typer/barn';
-import { ITekstinnhold } from '../../typer/sanity/tekstInnhold';
-import { ISøknadSpørsmål, SpørsmålId, ISøknadSpørsmålMap } from '../../typer/spørsmål';
 import { AlternativtSvarForInput } from '../../typer/svar';
-import { Årsak } from '../../typer/utvidet';
-import { hentTekster, hentÅrsak, landkodeTilSpråk, toSlektsforholdSpråkId } from '../språk';
-import { språkIndexListe } from '../spørsmål';
-import { isAlpha3Code } from '../typeguards';
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
 
 export const søknadsfeltHof =
     (tilRestLocaleRecord: TilRestLocaleRecord) =>
@@ -51,14 +36,6 @@ export const nullableSøknadsfeltForESvarHof =
         return svar ? søknadsfelt(spørsmål, sammeVerdiAlleSpråk(svar), flettefelter) : null;
     };
 
-export const søknadsfelt = <T>(
-    labelTekstId: string,
-    value: Record<LocaleType, T>,
-    labelMessageValues: object = {}
-): ISøknadsfelt<T> => {
-    return { label: hentTekster(labelTekstId, labelMessageValues), verdi: value };
-};
-
 export const verdiCallbackAlleSpråk = <T>(cb: (locale: LocaleType) => T): Record<LocaleType, T> => ({
     [LocaleType.nb]: cb(LocaleType.nb),
     [LocaleType.nn]: cb(LocaleType.nn),
@@ -77,71 +54,17 @@ export const sammeVerdiAlleSpråkEllerUkjent = <T>(
         ? tilRestLocaleRecord(checkboxLabel, flettefelter)
         : sammeVerdiAlleSpråk(svar);
 
-export const sammeVerdiAlleSpråkEllerUkjentSpråktekst = <T>(
-    svar: T | AlternativtSvarForInput,
-    ukjentTekstid: string,
-    språkVerdier: Record<string, ReactNode> = {}
-): Record<LocaleType, T | string> =>
-    svar === AlternativtSvarForInput.UKJENT ? hentTekster(ukjentTekstid, språkVerdier) : sammeVerdiAlleSpråk(svar);
-
-export const spørmålISøknadsFormat = (
-    spørsmålMap: ISøknadSpørsmålMap,
-    formatMessageValues: object = {},
-    tekster: ITekstinnhold
-): KontraktpørsmålMap => {
-    const dinLivssituasjonTekster = tekster.DIN_LIVSSITUASJON;
-
-    return Object.fromEntries(
-        Object.entries(spørsmålMap)
-            .map(
-                (
-                    entry: [string, ISøknadSpørsmål<any>]
-                ): [string, { label: Record<LocaleType, string>; verdi: Record<LocaleType, any> }] => {
-                    const verdi = entry[1].svar;
-                    let formatertVerdi: Record<LocaleType, string>;
-
-                    if (isAlpha3Code(verdi)) {
-                        formatertVerdi = verdiCallbackAlleSpråk(locale => landkodeTilSpråk(verdi, locale));
-                    } else if (verdi in ESvar) {
-                        // Slår opp språktekst i språkteksterUtenomSpørsmål i dokgen
-                        formatertVerdi = sammeVerdiAlleSpråk(verdi);
-                    } else if (verdi in Årsak) {
-                        formatertVerdi = hentÅrsak(verdi, dinLivssituasjonTekster);
-                    } else if (verdi in Slektsforhold) {
-                        formatertVerdi = hentTekster(toSlektsforholdSpråkId(verdi));
-                    } else {
-                        formatertVerdi = sammeVerdiAlleSpråk(verdi);
-                    }
-
-                    return [
-                        entry[0],
-                        søknadsfelt(språktekstIdFraSpørsmålId(entry[1].id), formatertVerdi, formatMessageValues),
-                    ];
-                }
-            )
-            .filter(entry => entry[1].verdi[LocaleType.nb])
-    );
-};
-
-export const språktekstIdFraSpørsmålId = (spørsmålId: SpørsmålId): string => {
-    for (const språkIndex of språkIndexListe) {
-        if (spørsmålId in språkIndex) {
-            return språkIndex[spørsmålId];
-        }
-    }
-    return 'ukjent-spørsmål';
-};
-
-export const søknadsfeltBarn = <T>(
-    labelTekstId: string,
-    value: Record<LocaleType, T>,
-    barn?: IBarnMedISøknad,
-    labelMessageValues: object = {}
-): ISøknadsfelt<T> =>
-    barn
-        ? søknadsfelt(labelTekstId, value, {
-              ...labelMessageValues,
-              navn: barn.navn,
-              barn: barn.navn,
-          })
-        : søknadsfelt(labelTekstId, value);
+export const søknadsfeltBarnHof =
+    (tilRestLocaleRecord: TilRestLocaleRecord) =>
+    <T>(
+        labelLocaleRecord: LocaleRecordString | LocaleRecordBlock | undefined,
+        svar: Record<LocaleType, T>,
+        barn?: IBarnMedISøknad,
+        flettefelter?: FlettefeltVerdier
+    ): ISøknadsfelt<T> =>
+        barn
+            ? søknadsfeltHof(tilRestLocaleRecord)(labelLocaleRecord, svar, {
+                  ...flettefelter,
+                  barnetsNavn: barn.navn,
+              })
+            : søknadsfeltHof(tilRestLocaleRecord)(labelLocaleRecord, svar);

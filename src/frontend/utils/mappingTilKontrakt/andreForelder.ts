@@ -14,9 +14,8 @@ import { tilIArbeidsperiodeIKontraktFormat } from './arbeidsperioder';
 import { tilIEøsBarnetrygsperiodeIKontraktFormat } from './eøsBarnetrygdsperiode';
 import {
     sammeVerdiAlleSpråk,
-    sammeVerdiAlleSpråkEllerUkjentSpråktekst,
-    språktekstIdFraSpørsmålId,
-    søknadsfeltBarn,
+    sammeVerdiAlleSpråkEllerUkjent,
+    søknadsfeltBarnHof,
     verdiCallbackAlleSpråk,
 } from './hjelpefunksjoner';
 import { idNummerTilISøknadsfelt } from './idNummer';
@@ -52,104 +51,131 @@ export const andreForelderTilISøknadsfelt = (
         kanIkkeGiOpplysninger,
         utvidet,
     } = andreForelder;
-    const forelderErDød = barn[barnDataKeySpørsmål.andreForelderErDød].svar === ESvar.JA;
+
+    const søknadsfeltBarn = søknadsfeltBarnHof(tilRestLocaleRecord);
+
+    const eøsTekster = tekster.EØS_FOR_BARN;
+    const omBarnetTekster = tekster.OM_BARNET;
+
+    const erForelderDød = barn[barnDataKeySpørsmål.andreForelderErDød].svar === ESvar.JA;
+
     return {
         kanIkkeGiOpplysninger: søknadsfeltBarn(
-            språktekstIdFraSpørsmålId(kanIkkeGiOpplysninger.id),
+            omBarnetTekster.navnAndreForelder.checkboxLabel,
             sammeVerdiAlleSpråk(kanIkkeGiOpplysninger.svar),
             barn
         ),
         navn: navn.svar
             ? søknadsfeltBarn(
-                  språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.andreForelderNavn),
-                  sammeVerdiAlleSpråkEllerUkjentSpråktekst(
+                  omBarnetTekster.navnAndreForelder.sporsmal,
+                  sammeVerdiAlleSpråkEllerUkjent(
+                      tilRestLocaleRecord,
                       navn.svar,
-                      omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderKanIkkeGiOpplysninger]
+                      omBarnetTekster.navnAndreForelder.checkboxLabel
                   ),
                   barn
               )
             : null,
         fnr: fnr.svar
             ? søknadsfeltBarn(
-                  språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.andreForelderFnr),
-                  sammeVerdiAlleSpråkEllerUkjentSpråktekst(
+                  omBarnetTekster.foedselsnummerDnummerAndreForelder.sporsmal,
+                  sammeVerdiAlleSpråkEllerUkjent(
+                      tilRestLocaleRecord,
                       fnr.svar,
-                      omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderFnrUkjent]
+                      omBarnetTekster.foedselsnummerDnummerAndreForelder.checkboxLabel
                   ),
                   barn
               )
             : null,
         fødselsdato: fødselsdato.svar
             ? søknadsfeltBarn(
-                  språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.andreForelderFødselsdato),
-                  sammeVerdiAlleSpråkEllerUkjentSpråktekst(
+                  omBarnetTekster.foedselsdatoAndreForelder.sporsmal,
+                  sammeVerdiAlleSpråkEllerUkjent(
+                      tilRestLocaleRecord,
                       fødselsdato.svar,
-                      omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.andreForelderFødselsdatoUkjent]
+                      omBarnetTekster.foedselsdatoAndreForelder.checkboxLabel
                   ),
                   barn
               )
             : null,
         pensjonUtland: pensjonUtland.svar
             ? søknadsfeltBarn(
-                  språktekstIdFraSpørsmålId(pensjonUtland.id),
+                  omBarnetTekster.pensjonUtlandAndreForelder.sporsmal,
                   sammeVerdiAlleSpråk(pensjonUtland.svar),
                   barn
               )
             : null,
         arbeidUtlandet: arbeidUtlandet.svar
             ? søknadsfeltBarn(
-                  språktekstIdFraSpørsmålId(arbeidUtlandet.id),
+                  omBarnetTekster.arbeidUtenforNorgeAndreForelder.sporsmal,
                   sammeVerdiAlleSpråk(arbeidUtlandet.svar),
                   barn
               )
             : null,
         pensjonNorge: pensjonNorge.svar
-            ? søknadsfeltBarn(språktekstIdFraSpørsmålId(pensjonNorge.id), sammeVerdiAlleSpråk(pensjonNorge.svar), barn)
+            ? søknadsfeltBarn(
+                  erForelderDød
+                      ? eøsTekster.pensjonNorgeAndreForelderGjenlevende.sporsmal
+                      : eøsTekster.pensjonNorgeAndreForelder.sporsmal,
+                  sammeVerdiAlleSpråk(pensjonNorge.svar),
+                  barn
+              )
             : null,
         arbeidNorge: arbeidNorge.svar
-            ? søknadsfeltBarn(språktekstIdFraSpørsmålId(arbeidNorge.id), sammeVerdiAlleSpråk(arbeidNorge.svar), barn)
+            ? søknadsfeltBarn(
+                  erForelderDød
+                      ? eøsTekster.arbeidNorgeAndreForelderGjenlevende.sporsmal
+                      : eøsTekster.arbeidNorgeAndreForelder.sporsmal,
+                  sammeVerdiAlleSpråk(arbeidNorge.svar),
+                  barn
+              )
             : null,
         andreUtbetalinger: andreUtbetalinger.svar
             ? søknadsfeltBarn(
-                  språktekstIdFraSpørsmålId(andreUtbetalinger.id),
+                  erForelderDød
+                      ? eøsTekster.utbetalingerAndreForelderGjenlevende.sporsmal
+                      : eøsTekster.utbetalingerAndreForelder.sporsmal,
                   sammeVerdiAlleSpråk(andreUtbetalinger.svar),
                   barn
               )
             : null,
         pågåendeSøknadFraAnnetEøsLand: pågåendeSøknadFraAnnetEøsLand.svar
             ? søknadsfeltBarn(
-                  språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.andreForelderPågåendeSøknadFraAnnetEøsLand),
+                  eøsTekster.paagaaendeSoeknadYtelseAndreForelder.sporsmal,
                   sammeVerdiAlleSpråk(pågåendeSøknadFraAnnetEøsLand.svar),
                   barn
               )
             : null,
         pågåendeSøknadHvilketLand: pågåendeSøknadHvilketLand.svar
             ? søknadsfeltBarn(
-                  språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.andreForelderPågåendeSøknadHvilketLand),
+                  eøsTekster.hvilketLandSoektYtelseAndreForelder.sporsmal,
                   verdiCallbackAlleSpråk(locale => landkodeTilSpråk(pågåendeSøknadHvilketLand.svar, locale)),
                   barn
               )
             : null,
         barnetrygdFraEøs: barnetrygdFraEøs.svar
             ? søknadsfeltBarn(
-                  språktekstIdFraSpørsmålId(barnetrygdFraEøs.id),
+                  erForelderDød
+                      ? eøsTekster.ytelseFraAnnetLandAndreForelderGjenlevende.sporsmal
+                      : eøsTekster.ytelseFraAnnetLandAndreForelder.sporsmal,
                   sammeVerdiAlleSpråk(barnetrygdFraEøs.svar),
                   barn
               )
             : null,
         skriftligAvtaleOmDeltBosted: skriftligAvtaleOmDeltBosted.svar
             ? søknadsfeltBarn(
-                  språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.skriftligAvtaleOmDeltBosted),
+                  omBarnetTekster.deltBosted.sporsmal,
                   sammeVerdiAlleSpråk(skriftligAvtaleOmDeltBosted.svar),
                   barn
               )
             : null,
         adresse: adresse.svar
             ? søknadsfeltBarn(
-                  språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.andreForelderAdresse),
-                  sammeVerdiAlleSpråkEllerUkjentSpråktekst(
+                  eøsTekster.hvorBorAndreForelder.sporsmal,
+                  sammeVerdiAlleSpråkEllerUkjent(
+                      tilRestLocaleRecord,
                       adresse.svar,
-                      eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.andreForelderAdresseVetIkke]
+                      eøsTekster.hvorBorAndreForelder.checkboxLabel
                   ),
                   barn
               )
