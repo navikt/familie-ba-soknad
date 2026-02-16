@@ -5,7 +5,6 @@ import { Alpha3Code } from 'i18n-iso-countries';
 import { ESvar } from '@navikt/familie-form-elements';
 import { feil, type Felt, type ISkjema, ok, useSkjema } from '@navikt/familie-skjema';
 
-import { ESanitySteg } from '../../../../../common/sanity';
 import { useAppContext } from '../../../../context/AppContext';
 import useInputFelt from '../../../../hooks/useInputFelt';
 import useJaNeiSpmFelt from '../../../../hooks/useJaNeiSpmFelt';
@@ -43,12 +42,10 @@ export const useEøsForSøker = (): {
     idNummerFelter: Felt<string>[];
 } => {
     const { søknad, settSøknad, tekster, plainTekst } = useAppContext();
-    const teksterForSteg: IEøsForSøkerTekstinnhold = tekster()[ESanitySteg.EØS_FOR_SØKER];
-    const teksterForArbeidsperiode: IArbeidsperiodeTekstinnhold =
-        tekster()[ESanitySteg.FELLES].modaler.arbeidsperiode.søker;
-    const teksterForPensjonsperiode: IPensjonsperiodeTekstinnhold =
-        tekster()[ESanitySteg.FELLES].modaler.pensjonsperiode.søker;
-    const teksterForAndreUtbetalinger = tekster()[ESanitySteg.FELLES].modaler.andreUtbetalinger.søker;
+    const teksterForSteg: IEøsForSøkerTekstinnhold = tekster().EØS_FOR_SØKER;
+    const teksterForArbeidsperiode: IArbeidsperiodeTekstinnhold = tekster().FELLES.modaler.arbeidsperiode.søker;
+    const teksterForPensjonsperiode: IPensjonsperiodeTekstinnhold = tekster().FELLES.modaler.pensjonsperiode.søker;
+    const teksterForAndreUtbetalinger = tekster().FELLES.modaler.andreUtbetalinger.søker;
     const forLangAdresseTekst = tekster().FELLES.formateringsfeilmeldinger.forLangAdresse;
 
     const [idNummerFelter, settIdNummerFelter] = useState<Felt<string>[]>([]);
