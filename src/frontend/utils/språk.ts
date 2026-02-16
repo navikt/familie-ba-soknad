@@ -1,8 +1,6 @@
 import { ReactNode } from 'react';
 
 import { Alpha3Code, alpha3ToAlpha2, getName } from 'i18n-iso-countries';
-import reactElementToJSXString from 'react-element-to-jsx-string';
-import { createIntl, createIntlCache } from 'react-intl';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
@@ -12,7 +10,6 @@ import nynorsk from '../../common/lang/nn.json' with { type: 'json' };
 import { ESanitySivilstandApiKey, LocaleRecordString, PlainTekst } from '../../common/sanity';
 import { ESivilstand, Slektsforhold } from '../../common/typer/kontrakt/generelle';
 import { LocaleType } from '../../common/typer/localeType';
-import { innebygdeFormatterere } from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
 import { IDinLivssituasjonTekstinnhold } from '../components/SøknadsSteg/DinLivssituasjon/innholdTyper';
 import { IEøsForBarnTekstinnhold } from '../components/SøknadsSteg/EøsSteg/Barn/innholdTyper';
 import { IVelgBarnTekstinnhold } from '../components/SøknadsSteg/VelgBarn/innholdTyper';
@@ -94,28 +91,6 @@ const texts: Record<LocaleType, Record<string, string>> = {
     [LocaleType.nb]: stripSpråkfil(bokmål),
     [LocaleType.nn]: stripSpråkfil(nynorsk),
     [LocaleType.en]: stripSpråkfil(engelsk),
-};
-
-const cache = createIntlCache();
-
-export const hentTekster = (tekstId: string, formatValues: object = {}): Record<LocaleType, string> => {
-    const map = {};
-
-    for (const locale in LocaleType) {
-        const { formatMessage } = createIntl({ locale, messages: texts[locale] }, cache);
-        const message = tekstId
-            ? formatMessage(
-                  { id: tekstId },
-                  // Fjerner bokmål-tagen, skapte problemer og trenger ikke være med til pdf-gen
-                  { ...formatValues, ...innebygdeFormatterere, bokmål: msg => msg }
-              )
-            : '';
-
-        map[locale] = message && reactElementToJSXString(message);
-    }
-
-    // Typescript er ikke smart nok til å se at alle locales er satt
-    return map as Record<LocaleType, string>;
 };
 
 export const hentUformaterteTekster = (tekstId: string): Record<LocaleType, string> => {
