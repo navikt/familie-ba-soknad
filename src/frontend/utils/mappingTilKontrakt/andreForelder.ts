@@ -2,8 +2,6 @@ import { ESvar } from '@navikt/familie-form-elements';
 
 import { TilRestLocaleRecord } from '../../../common/typer/kontrakt/generelle';
 import { IAndreForelderIKontraktFormat } from '../../../common/typer/kontrakt/kontrakt';
-import { EøsBarnSpørsmålId, eøsBarnSpørsmålSpråkId } from '../../components/SøknadsSteg/EøsSteg/Barn/spørsmål';
-import { OmBarnetSpørsmålsId, omBarnetSpørsmålSpråkId } from '../../components/SøknadsSteg/OmBarnet/spørsmål';
 import { barnDataKeySpørsmål, IAndreForelder, IBarnMedISøknad } from '../../typer/barn';
 import { PersonType } from '../../typer/personType';
 import { ITekstinnhold } from '../../typer/sanity/tekstInnhold';
@@ -183,18 +181,20 @@ export const andreForelderTilISøknadsfelt = (
         utvidet: {
             søkerHarBoddMedAndreForelder: utvidet.søkerHarBoddMedAndreForelder.svar
                 ? søknadsfeltBarn(
-                      språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.søkerHarBoddMedAndreForelder),
+                      omBarnetTekster.boddSammenMedAndreForelder.sporsmal,
                       sammeVerdiAlleSpråk(utvidet.søkerHarBoddMedAndreForelder.svar),
                       barn
                   )
                 : null,
             søkerFlyttetFraAndreForelderDato: utvidet.søkerFlyttetFraAndreForelderDato.svar
                 ? søknadsfeltBarn(
-                      språktekstIdFraSpørsmålId(OmBarnetSpørsmålsId.søkerFlyttetFraAndreForelderDato),
-                      sammeVerdiAlleSpråkEllerUkjentSpråktekst(
+                      omBarnetTekster.naarFlyttetFraAndreForelder.sporsmal,
+                      sammeVerdiAlleSpråkEllerUkjent(
+                          tilRestLocaleRecord,
                           utvidet.søkerFlyttetFraAndreForelderDato.svar,
-                          omBarnetSpørsmålSpråkId[OmBarnetSpørsmålsId.søkerBorMedAndreForelder]
-                      )
+                          omBarnetTekster.naarFlyttetFraAndreForelder.checkboxLabel
+                      ),
+                      barn
                   )
                 : null,
         },
@@ -207,7 +207,7 @@ export const andreForelderTilISøknadsfelt = (
                 tekster: tekster.FELLES.modaler.arbeidsperiode.andreForelder,
                 barn,
                 personType: PersonType.AndreForelder,
-                erDød: forelderErDød,
+                erDød: erForelderDød,
             })
         ),
         pensjonsperioderUtland: pensjonsperioderUtland.map((periode, index) =>
@@ -219,7 +219,7 @@ export const andreForelderTilISøknadsfelt = (
                 tekster: tekster.FELLES.modaler.pensjonsperiode.andreForelder,
                 barn,
                 personType: PersonType.AndreForelder,
-                erDød: forelderErDød,
+                erDød: erForelderDød,
             })
         ),
         arbeidsperioderNorge: arbeidsperioderNorge.map((periode, index) =>
@@ -231,7 +231,7 @@ export const andreForelderTilISøknadsfelt = (
                 tekster: tekster.FELLES.modaler.arbeidsperiode.andreForelder,
                 barn,
                 personType: PersonType.AndreForelder,
-                erDød: forelderErDød,
+                erDød: erForelderDød,
             })
         ),
         pensjonsperioderNorge: pensjonsperioderNorge.map((periode, index) =>
@@ -243,7 +243,7 @@ export const andreForelderTilISøknadsfelt = (
                 tekster: tekster.FELLES.modaler.pensjonsperiode.andreForelder,
                 barn,
                 personType: PersonType.AndreForelder,
-                erDød: forelderErDød,
+                erDød: erForelderDød,
             })
         ),
         andreUtbetalingsperioder: andreUtbetalingsperioder.map((periode, index) =>
@@ -253,7 +253,7 @@ export const andreForelderTilISøknadsfelt = (
                 tilRestLocaleRecord,
                 tekster: tekster.FELLES.modaler.andreUtbetalinger.andreForelder,
                 personType: PersonType.AndreForelder,
-                erDød: forelderErDød,
+                erDød: erForelderDød,
                 barn,
             })
         ),
@@ -264,7 +264,7 @@ export const andreForelderTilISøknadsfelt = (
                 personType: PersonType.AndreForelder,
                 tilRestLocaleRecord,
                 tekster: tekster.FELLES.modaler.barnetrygdsperiode.andreForelder,
-                erDød: forelderErDød,
+                erDød: erForelderDød,
                 barn,
             })
         ),
