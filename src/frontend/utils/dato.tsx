@@ -1,5 +1,3 @@
-import React from 'react';
-
 import * as Sentry from '@sentry/react';
 import {
     add,
@@ -23,7 +21,6 @@ import { feil, type FeltState, ok } from '@navikt/familie-skjema';
 import { LocaleRecordBlock, PlainTekst } from '../../common/sanity';
 import { ISODateString } from '../../common/typer/ISODateString';
 import { LocaleType } from '../../common/typer/localeType';
-import SpråkTekst from '../components/Felleskomponenter/SpråkTekst/SpråkTekst';
 import { IFormateringsfeilmeldingerTekstinnhold } from '../typer/sanity/tekstInnhold';
 import { AlternativtSvarForInput, DatoMedUkjent } from '../typer/svar';
 
@@ -62,41 +59,39 @@ export const parseTilGyldigDato = (dateString: string, format: string): Date | u
 };
 
 export const validerDato = (
+    tekster: IFormateringsfeilmeldingerTekstinnhold,
+    plainTekst: PlainTekst,
     feltState: FeltState<string>,
-    feilmeldingSpråkId: string,
+    feilmelding: LocaleRecordBlock | undefined,
     startdatoAvgrensning: Date | undefined = undefined,
     sluttdatoAvgrensning: Date | undefined = undefined,
     customStartdatoFeilmelding = ''
 ): FeltState<string> => {
     if (feltState.verdi === '') {
-        return feil(feltState, feilmeldingSpråkId ? <SpråkTekst id={feilmeldingSpråkId} /> : '');
+        return feil(feltState, plainTekst(feilmelding) ?? '');
     }
 
     const dato = parseTilGyldigDato(feltState.verdi, 'yyyy-MM-dd');
 
     if (!dato) {
-        return feil(feltState, <SpråkTekst id={'felles.dato-format.feilmelding'} />);
+        return feil(feltState, plainTekst(tekster.ugyldigDato));
     }
 
     if (!!sluttdatoAvgrensning && erDatoEtterSluttdatoAvgresning(dato, sluttdatoAvgrensning)) {
         return feil(
             feltState,
-            <SpråkTekst
-                id={
-                    sluttdatoAvgrensning === dagensDato()
-                        ? 'felles.dato-frem-i-tid.feilmelding'
-                        : 'felles.dato-frem-i-tid-eller-i-idag.feilmelding'
-                }
-            />
+            plainTekst(
+                sluttdatoAvgrensning === dagensDato()
+                    ? tekster.datoKanIkkeVaereFremITid
+                    : tekster.datoKanIkkeVaereDagensDatoEllerFremITid
+            )
         );
     }
 
     if (!!startdatoAvgrensning && erDatoFørStartDatoAvgrensning(dato, startdatoAvgrensning)) {
         return feil(
             feltState,
-            <SpråkTekst
-                id={customStartdatoFeilmelding ? customStartdatoFeilmelding : 'felles.tilogmedfeilformat.feilmelding'}
-            />
+            customStartdatoFeilmelding ? customStartdatoFeilmelding : plainTekst(tekster.periodeAvsluttesForTidlig)
         );
     }
     return ok(feltState);

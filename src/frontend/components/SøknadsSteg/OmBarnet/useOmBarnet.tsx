@@ -138,7 +138,8 @@ export const useOmBarnet = (
         skalVises:
             skalFeltetVises(barnDataKeySpørsmål.oppholderSegIInstitusjon) &&
             institusjonIUtlandCheckbox.verdi === ESvar.NEI,
-        customValidering: valideringAdresse,
+        customValidering: felt =>
+            valideringAdresse(felt, plainTekst(teksterForFormateringsfeilmeldinger.forLangAdresse)),
     });
 
     const institusjonspostnummer = useFelt<string>({

@@ -5,6 +5,7 @@ export const formateringsfeilmeldingerTekstinnhold: IFormateringsfeilmeldingerTe
     ugyldigIDnummer: lagLocaleRecordString(),
     ugyldigFoedselsnummer: lagLocaleRecordString(),
     ugyldigRelasjon: lagLocaleRecordString(),
+    forLangAdresse: lagLocaleRecordString(),
     ugyldigPostnummer: lagLocaleRecordString(),
     ugyldigDato: lagLocaleRecordString(),
     datoKanIkkeVaereFremITid: lagLocaleRecordString(),

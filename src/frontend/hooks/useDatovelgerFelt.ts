@@ -1,13 +1,15 @@
 import { type Avhengigheter, useFelt } from '@navikt/familie-skjema';
 
+import { LocaleRecordBlock } from '../../common/sanity';
 import { ISODateString } from '../../common/typer/ISODateString';
+import { useAppContext } from '../context/AppContext';
 import { ISøknadSpørsmål } from '../typer/spørsmål';
 import { validerDato } from '../utils/dato';
 
 const useDatovelgerFelt = ({
     søknadsfelt,
     skalFeltetVises,
-    feilmeldingSpråkId,
+    feilmelding,
     sluttdatoAvgrensning = undefined,
     startdatoAvgrensning = undefined,
     avhengigheter,
@@ -16,23 +18,26 @@ const useDatovelgerFelt = ({
 }: {
     søknadsfelt: ISøknadSpørsmål<ISODateString>;
     skalFeltetVises: boolean;
-    feilmeldingSpråkId: string;
+    feilmelding: LocaleRecordBlock;
     sluttdatoAvgrensning?: Date;
     startdatoAvgrensning?: Date;
     avhengigheter?: Avhengigheter;
     nullstillVedAvhengighetEndring?: boolean;
     customStartdatoFeilmelding?: string;
 }) => {
+    const { plainTekst, tekster } = useAppContext();
     return useFelt<ISODateString>({
         feltId: søknadsfelt.id,
         verdi: søknadsfelt.svar,
         valideringsfunksjon: (felt, avhengigheter) => {
-            const feilmeldingSpråkId = avhengigheter && avhengigheter.feilmeldingSpråkId;
+            const feilmelding = avhengigheter?.feilmelding as LocaleRecordBlock;
             const startdatoAvgrensningOppdatert = avhengigheter && avhengigheter.startdatoAvgrensning;
 
             return validerDato(
+                tekster().FELLES.formateringsfeilmeldinger,
+                plainTekst,
                 felt,
-                feilmeldingSpråkId,
+                feilmelding,
                 startdatoAvgrensningOppdatert,
                 sluttdatoAvgrensning,
                 customStartdatoFeilmelding
@@ -42,7 +47,7 @@ const useDatovelgerFelt = ({
         avhengigheter: {
             startdatoAvgrensning,
             skalFeltetVises,
-            feilmeldingSpråkId,
+            feilmelding,
             ...avhengigheter,
         },
         nullstillVedAvhengighetEndring,
