@@ -1,7 +1,5 @@
 import React from 'react';
 
-import styled from 'styled-components';
-
 import { Radio, RadioGroup } from '@navikt/ds-react';
 import type { ISkjema } from '@navikt/familie-skjema';
 
@@ -12,12 +10,6 @@ import { AlternativtSvarForInput } from '../../../typer/svar';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 
 import { OmBarnetSpørsmålsId } from './spørsmål';
-
-const StyledRadioGroup = styled(RadioGroup)`
-    && label:not(:last-child) {
-        margin-bottom: 1rem;
-    }
-`;
 
 const SammeSomAnnetBarnRadio: React.FC<{
     andreBarnSomErFyltUt: IBarnMedISøknad[];
@@ -41,7 +33,7 @@ const SammeSomAnnetBarnRadio: React.FC<{
         });
 
     return (
-        <StyledRadioGroup
+        <RadioGroup
             {...felt.hentNavInputProps(skjema.visFeilmeldinger)}
             legend={
                 <TekstBlock block={hvemErBarnSinAndreForelder.sporsmal} flettefelter={{ barnetsNavn: barnetsNavn }} />
@@ -58,7 +50,7 @@ const SammeSomAnnetBarnRadio: React.FC<{
                     {radio.label}
                 </Radio>
             ))}
-        </StyledRadioGroup>
+        </RadioGroup>
     );
 };
 
