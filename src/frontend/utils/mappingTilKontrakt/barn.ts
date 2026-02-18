@@ -144,7 +144,7 @@ export const barnISøknadsFormat = (
               )
             : null,
         barnetrygdFraAnnetEøsland: søknadsfeltForESvar(
-            omBarnetTekster.paagaaendeSoeknadYtelse.sporsmal,
+            omBarnaTekster.hvemSoektYtelse.sporsmal,
             barnetrygdFraAnnetEøsland.svar,
             { barnetsNavn: navn }
         ),
