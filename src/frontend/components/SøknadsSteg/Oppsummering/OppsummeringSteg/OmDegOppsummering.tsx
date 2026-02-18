@@ -1,11 +1,9 @@
 import React from 'react';
 
 import { Alpha3Code } from 'i18n-iso-countries';
-import { useIntl } from 'react-intl';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
-import { ESanitySteg } from '../../../../../common/sanity';
 import { useAppContext } from '../../../../context/AppContext';
 import { useRoutesContext } from '../../../../context/RoutesContext';
 import { useSpråkContext } from '../../../../context/SpråkContext';
@@ -27,12 +25,10 @@ interface Props {
 
 const OmDegOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
     const { søknad, tekster, plainTekst } = useAppContext();
-    const { OM_DEG: omDegTekster } = tekster();
+    const { OM_DEG: omDegTekster, FORSIDE: forsideTekster, FELLES: fellesTekster } = tekster();
     const { valgtLocale } = useSpråkContext();
-    const { formatMessage } = useIntl();
     const { hentRouteObjektForRouteEnum } = useRoutesContext();
     const omDegHook = useOmdeg();
-    const forsidetekster = tekster()[ESanitySteg.FORSIDE];
 
     return (
         <Oppsummeringsbolk
@@ -42,12 +38,12 @@ const OmDegOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
             settFeilAnchors={settFeilAnchors}
         >
             <OppsummeringFelt
-                tittel={<TekstBlock block={forsidetekster.bekreftelsesboksBroedtekst} />}
-                søknadsvar={
+                tittel={<TekstBlock block={forsideTekster.bekreftelsesboksBroedtekst} />}
+                søknadsvar={plainTekst(
                     søknad.lestOgForståttBekreftelse
-                        ? plainTekst(forsidetekster.bekreftelsesboksErklaering)
-                        : formatMessage({ id: jaNeiSvarTilSpråkId(ESvar.NEI) })
-                }
+                        ? forsideTekster.bekreftelsesboksErklaering
+                        : jaNeiSvarTilSpråkId(ESvar.NEI, fellesTekster.frittståendeOrd)
+                )}
             />
             <OppsummeringFelt tittel={plainTekst(omDegTekster.ident)} søknadsvar={formaterFnr(søknad.søker.ident)} />
             <OppsummeringFelt
