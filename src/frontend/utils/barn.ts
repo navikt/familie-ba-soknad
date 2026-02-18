@@ -1,8 +1,8 @@
 import { Alpha3Code } from 'i18n-iso-countries';
-import type { IntlShape } from 'react-intl';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
+import { PlainTekst } from '../../common/sanity';
 import { EøsBarnSpørsmålId } from '../components/SøknadsSteg/EøsSteg/Barn/spørsmål';
 import { idNummerLandMedPeriodeType } from '../components/SøknadsSteg/EøsSteg/idnummerUtils';
 import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
@@ -10,6 +10,7 @@ import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnet/spør
 import { barnDataKeySpørsmål, IAndreForelder, IBarnMedISøknad } from '../typer/barn';
 import { IEøsBarnetrygdsperiode, IUtenlandsperiode } from '../typer/perioder';
 import { IBarn, IBarnRespons, IIdNummer } from '../typer/person';
+import { IFrittståendeOrdTekstinnhold } from '../typer/sanity/tekstInnhold';
 import { ISøknad } from '../typer/søknad';
 
 import { formaterFnr } from './visning';
@@ -251,10 +252,14 @@ export const hentUid = () => {
     });
 };
 
-export const mapBarnResponsTilBarn = (barn: IBarnRespons[], intl): IBarn[] => {
+export const mapBarnResponsTilBarn = (
+    barn: IBarnRespons[],
+    tekster: IFrittståendeOrdTekstinnhold,
+    plainTekst: PlainTekst
+): IBarn[] => {
     return barn.map(barnRespons => ({
         id: hentUid(),
-        navn: barnetsNavnValue(barnRespons, intl),
+        navn: barnetsNavnValue(barnRespons, tekster, plainTekst),
         ident: barnRespons.ident,
         alder: barnRespons.fødselsdato ? hentAlder(barnRespons.fødselsdato) : null,
         borMedSøker: barnRespons.borMedSøker,
@@ -262,10 +267,12 @@ export const mapBarnResponsTilBarn = (barn: IBarnRespons[], intl): IBarn[] => {
     }));
 };
 
-const barnetsNavnValue = (barn: IBarnRespons, intl: IntlShape): string => {
-    return barn.navn
-        ? barn.navn
-        : intl.formatMessage({ id: 'felles.anonym.barn.fnr' }, { fødselsnummer: formaterFnr(barn.ident) });
+export const barnetsNavnValue = (
+    barn: IBarnRespons,
+    tekster: IFrittståendeOrdTekstinnhold,
+    plainTekst: PlainTekst
+): string => {
+    return barn.navn ? barn.navn : `${plainTekst(tekster.barn).toUpperCase()} ${formaterFnr(barn.ident)}`;
 };
 
 export const skalSkjuleAndreForelderFelt = (barn: IBarnMedISøknad) => {

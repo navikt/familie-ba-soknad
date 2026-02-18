@@ -1,7 +1,6 @@
 import React, { createContext, PropsWithChildren, useContext, useEffect, useState } from 'react';
 
 import { Alpha3Code, getName } from 'i18n-iso-countries';
-import { useIntl } from 'react-intl';
 
 import {
     byggFeiletRessurs,
@@ -81,7 +80,6 @@ const AppContext = createContext<AppContext | undefined>(undefined);
 
 export function AppProvider(props: PropsWithChildren) {
     const { valgtLocale } = useSpråkContext();
-    const intl = useIntl();
     const { axiosRequest, lasterRessurser } = useLastRessurserContext();
     const { innloggetStatus } = useInnloggetContext();
     const [sluttbruker, settSluttbruker] = useState(byggTomRessurs<ISøkerRespons>());
@@ -141,7 +139,11 @@ export function AppProvider(props: PropsWithChildren) {
                             ...søknad.søker,
                             navn: ressurs.data.navn,
                             statsborgerskap: ressurs.data.statsborgerskap,
-                            barn: mapBarnResponsTilBarn(ressurs.data.barn, intl),
+                            barn: mapBarnResponsTilBarn(
+                                ressurs.data.barn,
+                                tekster().FELLES.frittståendeOrd,
+                                plainTekst
+                            ),
                             ident: ressurs.data.ident,
                             adresse: ressurs.data.adresse,
                             sivilstand: ressurs.data.sivilstand,
