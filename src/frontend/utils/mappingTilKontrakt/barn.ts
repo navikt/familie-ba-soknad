@@ -9,6 +9,7 @@ import { IBarnMedISøknad } from '../../typer/barn';
 import { PersonType } from '../../typer/personType';
 import { ITekstinnhold } from '../../typer/sanity/tekstInnhold';
 import { ISøknad } from '../../typer/søknad';
+import { landkodeTilSpråk } from '../språk';
 
 import { andreForelderTilISøknadsfelt } from './andreForelder';
 import { tilIEøsBarnetrygsperiodeIKontraktFormat } from './eøsBarnetrygdsperiode';
@@ -18,6 +19,7 @@ import {
     sammeVerdiAlleSpråkEllerUkjent,
     søknadsfeltForESvarHof,
     søknadsfeltHof,
+    verdiCallbackAlleSpråk,
 } from './hjelpefunksjoner';
 import { idNummerTilISøknadsfelt } from './idNummer';
 import { omsorgspersonTilISøknadsfelt } from './omsorgsperson';
@@ -137,7 +139,7 @@ export const barnISøknadsFormat = (
                   omBarnetTekster.hvilketLandYtelse.sporsmal,
                   sammeVerdiAlleSpråkEllerUkjent(
                       tilRestLocaleRecord,
-                      pågåendeSøknadHvilketLand.svar,
+                      verdiCallbackAlleSpråk(locale => landkodeTilSpråk(pågåendeSøknadHvilketLand.svar, locale)),
                       omBarnetTekster.hvilketLandYtelse.checkboxLabel
                   ),
                   { barnetsNavn: navn }
