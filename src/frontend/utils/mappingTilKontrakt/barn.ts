@@ -108,7 +108,10 @@ export const barnISøknadsFormat = (
             omBarnaTekster.hvemInstitusjon.sporsmal,
             oppholderSegIInstitusjon.svar
         ),
-        erAdoptertFraUtland: søknadsfeltForESvar(omBarnaTekster.adoptertFraUtlandet.sporsmal, erAdoptertFraUtland.svar),
+        erAdoptertFraUtland: søknadsfeltForESvar(
+            omBarnaTekster.hvemAdoptertFraUtlandet.sporsmal,
+            erAdoptertFraUtland.svar
+        ),
         erAsylsøker: søknadsfeltForESvar(omBarnaTekster.hvemAsyl.sporsmal, erAsylsøker.svar),
         andreForelderErDød: nullableSøknadsfeltForESvar(
             omBarnaTekster.hvemAvBarnaAvdoedPartner.sporsmal,
