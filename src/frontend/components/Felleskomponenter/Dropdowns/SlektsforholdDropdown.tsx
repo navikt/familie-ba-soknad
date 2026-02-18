@@ -1,10 +1,9 @@
 import React, { ReactNode } from 'react';
 
-import { useIntl } from 'react-intl';
-
 import { Slektsforhold } from '../../../../common/typer/kontrakt/generelle';
+import { useAppContext } from '../../../context/AppContext';
 import { muligeSlektsforhold } from '../../../typer/barn';
-import { toSlektsforholdSpråkId } from '../../../utils/språk';
+import { hentSlektsforhold } from '../../../utils/språk';
 
 import StyledDropdown, { StyledDropdownProps } from './StyledDropdown';
 
@@ -13,16 +12,16 @@ export interface SlektsforholdDropdownProps extends StyledDropdownProps<Slektsfo
 }
 
 const SlektsforholdDropdown: React.FC<SlektsforholdDropdownProps> = ({ gjelderSøker = false, ...props }) => {
-    const intl = useIntl();
+    const { plainTekst, tekster } = useAppContext();
     const aktuelleSlektsforhold = gjelderSøker
         ? muligeSlektsforhold
         : muligeSlektsforhold.filter(slektsforhold => slektsforhold !== Slektsforhold.FORELDER);
     return (
         <StyledDropdown<Slektsforhold | ''> {...props}>
             {aktuelleSlektsforhold.map(
-                (slektsforhold): ReactNode => (
+                (slektsforhold: Slektsforhold): ReactNode => (
                     <option value={slektsforhold} key={slektsforhold}>
-                        {intl.formatMessage({ id: toSlektsforholdSpråkId(slektsforhold) })}
+                        {plainTekst(hentSlektsforhold(slektsforhold, tekster().EØS_FOR_BARN))}
                     </option>
                 )
             )}
