@@ -1,10 +1,9 @@
 import { IKontraktTidligereSamboer, ISøknadsfelt, TilRestLocaleRecord } from '../../../common/typer/kontrakt/generelle';
 import { LocaleType } from '../../../common/typer/localeType';
-import { TidligereSamboerSpørsmålId } from '../../components/SøknadsSteg/DinLivssituasjon/spørsmål';
 import { ITidligereSamboer } from '../../typer/person';
 import { ITidligereSamoboereTekstinnhold } from '../../typer/sanity/modaler/tidligereSamboere';
 
-import { sammeVerdiAlleSpråk, språktekstIdFraSpørsmålId, søknadsfelt } from './hjelpefunksjoner';
+import { sammeVerdiAlleSpråk, søknadsfeltHof } from './hjelpefunksjoner';
 import { samboerISøknadKontraktFormat } from './samboer';
 
 interface TidligereSamboerIKontraktFormatParams {
@@ -25,14 +24,13 @@ export const tidligereSamboerISøknadKontraktFormat = ({
         samboer,
     });
 
+    const søknadsfelt = søknadsfeltHof(tilRestLocaleRecord);
+
     return {
         label: tilRestLocaleRecord(tekster.oppsummeringstittel),
         verdi: sammeVerdiAlleSpråk({
             ...samboerIKontraktFormat[LocaleType.nb],
-            samboerTilDato: søknadsfelt(
-                språktekstIdFraSpørsmålId(TidligereSamboerSpørsmålId.tidligereSamboerTilDato),
-                sammeVerdiAlleSpråk(samboerTilDato.svar)
-            ),
+            samboerTilDato: søknadsfelt(tekster.sluttdato.sporsmal, sammeVerdiAlleSpråk(samboerTilDato.svar)),
         }),
     };
 };
