@@ -58,6 +58,7 @@ export const formateringsfeilmeldingerPrefix = 'FORMATERINGSFEILMELDINGER';
 export const vedlikeholdsarbeidPrefix = 'VEDLIKEHOLDSARBEID';
 export const kanIkkeBrukeSoeknadPrefix = 'KAN_IKKE_BRUKE_SOKNAD';
 export const hjelpeteksterForInputPrefix = 'HJELPETEKSTER_FOR_INPUT';
+export const alternativeTeksterPrefix = 'ALTERNATIVE_TEKSTER';
 
 export interface ISanitySpørsmålDokument extends SanityDokument {
     sporsmal: LocaleRecordBlock;
