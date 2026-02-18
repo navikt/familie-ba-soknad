@@ -137,11 +137,7 @@ export const barnISøknadsFormat = (
         pågåendeSøknadHvilketLand: pågåendeSøknadHvilketLand.svar
             ? søknadsfelt(
                   omBarnetTekster.hvilketLandYtelse.sporsmal,
-                  sammeVerdiAlleSpråkEllerUkjent(
-                      tilRestLocaleRecord,
-                      verdiCallbackAlleSpråk(locale => landkodeTilSpråk(pågåendeSøknadHvilketLand.svar, locale)),
-                      omBarnetTekster.hvilketLandYtelse.checkboxLabel
-                  ),
+                  verdiCallbackAlleSpråk(locale => landkodeTilSpråk(pågåendeSøknadHvilketLand.svar, locale)),
                   { barnetsNavn: navn }
               )
             : null,
