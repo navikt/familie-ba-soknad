@@ -1,17 +1,7 @@
 import React from 'react';
 
-import styled from 'styled-components';
-
 import { TrashFillIcon } from '@navikt/aksel-icons';
-import { Checkbox, Heading, Box, VStack, Button, Bleed, HGrid } from '@navikt/ds-react';
-import {
-    APurple400,
-    APurple800,
-    ABorderRadiusMedium,
-    ASpacing32,
-    ASpacing05,
-    AGrayalpha200,
-} from '@navikt/ds-tokens/dist/tokens';
+import { Bleed, Box, Button, Checkbox, Heading, HGrid, HStack, VStack } from '@navikt/ds-react';
 
 import { ESanitySteg } from '../../../../../common/sanity';
 import { useAppContext } from '../../../../context/AppContext';
@@ -21,7 +11,7 @@ import { formaterFnr, uppercaseFørsteBokstav } from '../../../../utils/visning'
 import TekstBlock from '../../../Felleskomponenter/Sanity/TekstBlock';
 import { TilfeldigBarnIkon } from '../../../Felleskomponenter/TilfeldigBarnIkon/TilfeldigBarnIkon';
 
-import { BarnekortContainer } from './BarnekortContainer';
+import styles from './Barnekort.module.css';
 import { BarnekortInfo } from './BarnekortInfo';
 
 interface IBarnekortProps {
@@ -30,24 +20,6 @@ interface IBarnekortProps {
     barnSomSkalVæreMed: IBarn[];
     fjernBarnCallback: (ident: string) => void;
 }
-
-const BarnekortHeader = styled.div`
-    height: ${ASpacing32};
-    background-color: ${APurple800};
-    border-bottom: 0.25rem solid ${APurple400};
-    border-radius: ${ABorderRadiusMedium} ${ABorderRadiusMedium} 0 0;
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    width: 100%;
-`;
-
-const Divider = styled.hr`
-    height: ${ASpacing05};
-    width: 100%;
-    border: none;
-    background-color: ${AGrayalpha200};
-`;
 
 const Barnekort: React.FC<IBarnekortProps> = ({ barn, velgBarnCallback, barnSomSkalVæreMed, fjernBarnCallback }) => {
     const { plainTekst, tekster } = useAppContext();
@@ -78,13 +50,18 @@ const Barnekort: React.FC<IBarnekortProps> = ({ barn, velgBarnCallback, barnSomS
     const knappetekst = tekster()[ESanitySteg.FELLES].modaler.leggTilBarn.fjernKnapp;
 
     return (
-        <BarnekortContainer>
+        <Box padding="6" background={'surface-subtle'} borderRadius="medium">
             <VStack gap="6">
                 <Bleed marginInline="6" marginBlock="6 0" asChild>
-                    <Box>
-                        <BarnekortHeader>
+                    <Box
+                        borderWidth={'0 0 4 0'}
+                        borderRadius={`4 4 0 0`}
+                        borderColor={'border-alt-1'}
+                        className={styles.header}
+                    >
+                        <HStack align={'end'} justify={'center'} width={'100%'} height={'var(--a-spacing-32'}>
                             <TilfeldigBarnIkon />
-                        </BarnekortHeader>
+                        </HStack>
                     </Box>
                 </Bleed>
                 <Heading level="3" size="medium">
@@ -110,7 +87,7 @@ const Barnekort: React.FC<IBarnekortProps> = ({ barn, velgBarnCallback, barnSomS
                         />
                     )}
                 </HGrid>
-                <Divider />
+                <hr className={styles.divider} />
                 <Checkbox
                     checked={erMedISøknad}
                     aria-label={`${plainTekst(soekOmYtelseForBarnetSjekkboks)} ${barn.navn}`}
@@ -131,7 +108,7 @@ const Barnekort: React.FC<IBarnekortProps> = ({ barn, velgBarnCallback, barnSomS
                     </Button>
                 )}
             </VStack>
-        </BarnekortContainer>
+        </Box>
     );
 };
 
