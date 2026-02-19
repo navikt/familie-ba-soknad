@@ -124,7 +124,7 @@ export function AppProvider(props: PropsWithChildren) {
     }, [søknad.søker.triggetEøs]);
 
     useEffect(() => {
-        if (innloggetStatus === InnloggetStatus.AUTENTISERT) {
+        if (innloggetStatus === InnloggetStatus.AUTENTISERT && teksterRessurs.status === RessursStatus.SUKSESS) {
             settSluttbruker(byggHenterRessurs());
 
             hentSluttbrukerFraPdl(axiosRequest).then(ressurs => {
@@ -166,7 +166,7 @@ export function AppProvider(props: PropsWithChildren) {
                 }
             });
         }
-    }, [innloggetStatus]);
+    }, [innloggetStatus, teksterRessurs.status]);
 
     const mellomlagre = () => {
         const barnetrygd: IMellomlagretBarnetrygd = {
