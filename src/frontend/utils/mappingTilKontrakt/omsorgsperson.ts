@@ -1,20 +1,18 @@
 import { Slektsforhold, TilRestLocaleRecord } from '../../../common/typer/kontrakt/generelle';
 import { IOmsorgspersonIKontraktFormat } from '../../../common/typer/kontrakt/kontrakt';
-import { EøsBarnSpørsmålId, eøsBarnSpørsmålSpråkId } from '../../components/SøknadsSteg/EøsSteg/Barn/spørsmål';
 import { IBarnMedISøknad } from '../../typer/barn';
 import { IOmsorgsperson } from '../../typer/omsorgsperson';
 import { PersonType } from '../../typer/personType';
 import { ITekstinnhold } from '../../typer/sanity/tekstInnhold';
-import { hentTekster, landkodeTilSpråk, toSlektsforholdSpråkId } from '../språk';
+import { hentSlektsforhold, landkodeTilSpråk } from '../språk';
 
 import { tilIAndreUtbetalingsperioderIKontraktFormat } from './andreUtbetalingsperioder';
 import { tilIArbeidsperiodeIKontraktFormat } from './arbeidsperioder';
 import { tilIEøsBarnetrygsperiodeIKontraktFormat } from './eøsBarnetrygdsperiode';
 import {
     sammeVerdiAlleSpråk,
-    sammeVerdiAlleSpråkEllerUkjentSpråktekst,
-    språktekstIdFraSpørsmålId,
-    søknadsfeltBarn,
+    sammeVerdiAlleSpråkEllerUkjent,
+    søknadsfeltBarnHof,
     verdiCallbackAlleSpråk,
 } from './hjelpefunksjoner';
 import { tilIPensjonsperiodeIKontraktFormat } from './pensjonsperioder';
@@ -59,37 +57,33 @@ export const omsorgspersonTilISøknadsfelt = (
         throw new TypeError('Omsorgspersonfelter mangler');
     }
 
+    const søknadsfeltBarn = søknadsfeltBarnHof(tilRestLocaleRecord);
+    const eøsTekster = tekster.EØS_FOR_BARN;
+
     return {
-        navn: søknadsfeltBarn(
-            språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.omsorgspersonNavn),
-            sammeVerdiAlleSpråk(navn.svar),
-            barn
-        ),
+        navn: søknadsfeltBarn(eøsTekster.hvaHeterOmsorgspersonen.sporsmal, sammeVerdiAlleSpråk(navn.svar), barn),
         slektsforhold: søknadsfeltBarn(
-            språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.omsorgspersonSlektsforhold),
-            hentTekster(toSlektsforholdSpråkId(slektsforhold.svar as Slektsforhold)),
+            eøsTekster.slektsforholdOmsorgsperson.sporsmal,
+            tilRestLocaleRecord(hentSlektsforhold(slektsforhold.svar as Slektsforhold, eøsTekster)),
             barn
         ),
         slektsforholdSpesifisering: søknadsfeltBarn(
-            språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.omsorgspersonSlektsforholdSpesifisering),
+            eøsTekster.hvilkenRelasjonOmsorgsperson.sporsmal,
             sammeVerdiAlleSpråk(slektsforholdSpesifisering.svar),
             barn
         ),
         idNummer: søknadsfeltBarn(
-            språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.omsorgspersonIdNummer),
-            sammeVerdiAlleSpråkEllerUkjentSpråktekst(
+            eøsTekster.idNummerOmsorgsperson.sporsmal,
+            sammeVerdiAlleSpråkEllerUkjent(
+                tilRestLocaleRecord,
                 idNummer.svar,
-                eøsBarnSpørsmålSpråkId[EøsBarnSpørsmålId.omsorgspersonIdNummerVetIkke]
+                eøsTekster.idNummerOmsorgsperson.checkboxLabel
             ),
             barn
         ),
-        adresse: søknadsfeltBarn(
-            språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.omsorgspersonAdresse),
-            sammeVerdiAlleSpråk(adresse.svar),
-            barn
-        ),
+        adresse: søknadsfeltBarn(eøsTekster.hvorBorOmsorgsperson.sporsmal, sammeVerdiAlleSpråk(adresse.svar), barn),
         arbeidUtland: søknadsfeltBarn(
-            språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.omsorgspersonArbeidUtland),
+            eøsTekster.arbeidUtenforNorgeOmsorgsperson.sporsmal,
             sammeVerdiAlleSpråk(arbeidUtland.svar),
             barn
         ),
@@ -104,7 +98,7 @@ export const omsorgspersonTilISøknadsfelt = (
             })
         ),
         arbeidNorge: søknadsfeltBarn(
-            språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.omsorgspersonArbeidNorge),
+            eøsTekster.arbeidNorgeOmsorgsperson.sporsmal,
             sammeVerdiAlleSpråk(arbeidNorge.svar),
             barn
         ),
@@ -119,7 +113,7 @@ export const omsorgspersonTilISøknadsfelt = (
             })
         ),
         pensjonUtland: søknadsfeltBarn(
-            språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.omsorgspersonPensjonUtland),
+            eøsTekster.pensjonUtlandOmsorgsperson.sporsmal,
             sammeVerdiAlleSpråk(pensjonUtland.svar),
             barn
         ),
@@ -135,7 +129,7 @@ export const omsorgspersonTilISøknadsfelt = (
             })
         ),
         pensjonNorge: søknadsfeltBarn(
-            språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.omsorgspersonPensjonNorge),
+            eøsTekster.pensjonNorgeOmsorgsperson.sporsmal,
             sammeVerdiAlleSpråk(pensjonNorge.svar),
             barn
         ),
@@ -151,7 +145,7 @@ export const omsorgspersonTilISøknadsfelt = (
             })
         ),
         andreUtbetalinger: søknadsfeltBarn(
-            språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.omsorgspersonAndreUtbetalinger),
+            eøsTekster.utbetalingerOmsorgsperson.sporsmal,
             sammeVerdiAlleSpråk(andreUtbetalinger.svar),
             barn
         ),
@@ -166,19 +160,19 @@ export const omsorgspersonTilISøknadsfelt = (
             })
         ),
         pågåendeSøknadFraAnnetEøsLand: søknadsfeltBarn(
-            språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.omsorgspersonPågåendeSøknadFraAnnetEøsLand),
+            eøsTekster.paagaaendeSoeknadYtelseOmsorgsperson.sporsmal,
             sammeVerdiAlleSpråk(pågåendeSøknadFraAnnetEøsLand.svar),
             barn
         ),
         pågåendeSøknadHvilketLand: pågåendeSøknadHvilketLand.svar
             ? søknadsfeltBarn(
-                  språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.omsorgspersonPågåendeSøknadHvilketLand),
+                  eøsTekster.hvilketLandSoektYtelseOmsorgsperson.sporsmal,
                   verdiCallbackAlleSpråk(locale => landkodeTilSpråk(pågåendeSøknadHvilketLand.svar, locale)),
                   barn
               )
             : null,
         barnetrygdFraEøs: søknadsfeltBarn(
-            språktekstIdFraSpørsmålId(EøsBarnSpørsmålId.omsorgspersonBarnetrygd),
+            eøsTekster.ytelseFraAnnetLandOmsorgsperson.sporsmal,
             sammeVerdiAlleSpråk(barnetrygdFraEøs.svar),
             barn
         ),

@@ -9,6 +9,7 @@ import { IBarnMedISøknad } from '../../typer/barn';
 import { PersonType } from '../../typer/personType';
 import { ITekstinnhold } from '../../typer/sanity/tekstInnhold';
 import { ISøknad } from '../../typer/søknad';
+import { landkodeTilSpråk } from '../språk';
 
 import { andreForelderTilISøknadsfelt } from './andreForelder';
 import { tilIEøsBarnetrygsperiodeIKontraktFormat } from './eøsBarnetrygdsperiode';
@@ -18,6 +19,7 @@ import {
     sammeVerdiAlleSpråkEllerUkjent,
     søknadsfeltForESvarHof,
     søknadsfeltHof,
+    verdiCallbackAlleSpråk,
 } from './hjelpefunksjoner';
 import { idNummerTilISøknadsfelt } from './idNummer';
 import { omsorgspersonTilISøknadsfelt } from './omsorgsperson';
@@ -108,7 +110,10 @@ export const barnISøknadsFormat = (
             omBarnaTekster.hvemInstitusjon.sporsmal,
             oppholderSegIInstitusjon.svar
         ),
-        erAdoptertFraUtland: søknadsfeltForESvar(omBarnaTekster.adoptertFraUtlandet.sporsmal, erAdoptertFraUtland.svar),
+        erAdoptertFraUtland: søknadsfeltForESvar(
+            omBarnaTekster.hvemAdoptertFraUtlandet.sporsmal,
+            erAdoptertFraUtland.svar
+        ),
         erAsylsøker: søknadsfeltForESvar(omBarnaTekster.hvemAsyl.sporsmal, erAsylsøker.svar),
         andreForelderErDød: nullableSøknadsfeltForESvar(
             omBarnaTekster.hvemAvBarnaAvdoedPartner.sporsmal,
@@ -132,16 +137,12 @@ export const barnISøknadsFormat = (
         pågåendeSøknadHvilketLand: pågåendeSøknadHvilketLand.svar
             ? søknadsfelt(
                   omBarnetTekster.hvilketLandYtelse.sporsmal,
-                  sammeVerdiAlleSpråkEllerUkjent(
-                      tilRestLocaleRecord,
-                      pågåendeSøknadHvilketLand.svar,
-                      omBarnetTekster.hvilketLandYtelse.checkboxLabel
-                  ),
+                  verdiCallbackAlleSpråk(locale => landkodeTilSpråk(pågåendeSøknadHvilketLand.svar, locale)),
                   { barnetsNavn: navn }
               )
             : null,
         barnetrygdFraAnnetEøsland: søknadsfeltForESvar(
-            omBarnetTekster.paagaaendeSoeknadYtelse.sporsmal,
+            omBarnaTekster.hvemSoektYtelse.sporsmal,
             barnetrygdFraAnnetEøsland.svar,
             { barnetsNavn: navn }
         ),

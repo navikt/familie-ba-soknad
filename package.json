@@ -17,9 +17,6 @@
     "prettier:fix": "prettier --write './src/**/*.{js,jsx,ts,tsx,json,css}'",
     "typecheck": "tsc --noEmit -p src/backend/tsconfig.json && tsc --noEmit -p src/frontend/tsconfig.json",
     "validate": "yarn typecheck && yarn lint && yarn prettier",
-    "texts:find-unused": "python3 src/scripts/finn-ubrukte-språktekster.py",
-    "texts:find-missing": "node src/scripts/find-missing-text-ids.js",
-    "texts:cleanup": "src/scripts/formater-tekster.sh src/common/lang",
     "prepare": "husky",
     "set-node-options": "NODE_OPTIONS='--import=./registerESMLoader.js --es-module-specifier-resolution=node'"
   },
