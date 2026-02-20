@@ -7,17 +7,16 @@ import { mockDeep } from 'vitest-mock-extended';
 import type { Felt, ISkjema } from '@navikt/familie-skjema';
 
 import { SkjemaFeltTyper } from '../../../typer/skjema';
-import { mockEøs, silenceConsoleErrors, TestProvidere } from '../../../utils/testing';
+import { mockEøs, spyOnUseApp, TestProvidere } from '../../../utils/testing';
 
 import { LandDropdown } from './LandDropdown';
 
 describe('LandDropdown', () => {
     beforeEach(() => {
-        silenceConsoleErrors();
+        spyOnUseApp({});
     });
 
     it('Rendrer alle land i alle dropdowns når eøs er skrudd av', async () => {
-        mockEøs();
         const felt = mockDeep<Felt<'' | Alpha3Code>>({
             erSynlig: true,
             id: 'test-id',

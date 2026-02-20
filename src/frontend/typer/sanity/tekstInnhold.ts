@@ -64,6 +64,7 @@ export interface IFellesTekstInnhold {
     vedlikeholdsarbeid: IVedlikeholdsarbeidTekstinnhold;
     kanIkkeBrukeSoeknad: IKanIkkeBrukeSoeknadTekstinnhold;
     hjelpeteksterForInput: IHjelpeteksterForInputTekstInnhold;
+    alternativeTekster: IAlternativeTeksterTekstinnhold;
 }
 
 export interface IFrittståendeOrdTekstinnhold {
@@ -204,4 +205,8 @@ export interface IHjelpeteksterForInputTekstInnhold {
     manedformatHjelpetekst: LocaleRecordBlock;
     manedformatPlaceholder: LocaleRecordBlock;
     velgLandPlaceholder: LocaleRecordBlock;
+}
+
+export interface IAlternativeTeksterTekstinnhold {
+    barneillustrajonAltTekst: LocaleRecordBlock;
 }

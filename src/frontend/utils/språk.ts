@@ -43,21 +43,6 @@ export const hentÅrsak = (årsak: Årsak, tekster: IDinLivssituasjonTekstinnhol
     }
 };
 
-export const toSlektsforholdSpråkId = (slektsforhold: Slektsforhold): string => {
-    switch (slektsforhold) {
-        case Slektsforhold.FORELDER:
-            return 'felles.velgslektsforhold.forelder';
-        case Slektsforhold.BESTEFORELDER:
-            return 'felles.velgslektsforhold.besteforelder';
-        case Slektsforhold.ONKEL_ELLER_TANTE:
-            return 'felles.velgslektsforhold.onkeltante';
-        case Slektsforhold.ANNEN_FAMILIERELASJON:
-            return 'felles.velgslektsforhold.annenfamilie';
-        case Slektsforhold.ANNEN_RELASJON:
-            return 'felles.velgslektsforhold.annenrelasjon';
-    }
-};
-
 export const hentSlektsforhold = (slektsforhold: Slektsforhold, tekster: IEøsForBarnTekstinnhold) => {
     switch (slektsforhold) {
         case Slektsforhold.FORELDER:

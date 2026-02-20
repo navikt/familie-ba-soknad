@@ -6,6 +6,7 @@ import { spyOnUseApp, TestProvidere } from '../utils/testing';
 import { useAppNavigationContext } from './AppNavigationContext';
 
 describe('AppNavigationContext', () => {
+    beforeEach(() => {});
     test(`Kan kunne sette og hente hvor bruker navigerte fra`, async () => {
         spyOnUseApp({
             barnInkludertISøknaden: [],

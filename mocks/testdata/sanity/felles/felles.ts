@@ -1,4 +1,5 @@
 import {
+    IAlternativeTeksterTekstinnhold,
     IFellesTekstInnhold,
     IHjelpeteksterForInputTekstInnhold,
     IKanIkkeBrukeSoeknadTekstinnhold,
@@ -28,6 +29,10 @@ const hjelpeteksterForInputTekstInnhold: IHjelpeteksterForInputTekstInnhold = {
     velgLandPlaceholder: lagLocaleRecordBlock(),
 };
 
+const alternativeTeksterTekstInnhold: IAlternativeTeksterTekstinnhold = {
+    barneillustrajonAltTekst: lagLocaleRecordBlock(),
+};
+
 export const fellesTekstInnhold: IFellesTekstInnhold = {
     frittståendeOrd: frittståendeOrdTekstinnhold,
     modaler: modalerTekstinnhold,
@@ -36,4 +41,5 @@ export const fellesTekstInnhold: IFellesTekstInnhold = {
     vedlikeholdsarbeid: vedlikeholdsarbeidTekstinnhold,
     kanIkkeBrukeSoeknad: kanIkkeBrukeSoeknadTekstinnhold,
     hjelpeteksterForInput: hjelpeteksterForInputTekstInnhold,
+    alternativeTekster: alternativeTeksterTekstInnhold,
 };

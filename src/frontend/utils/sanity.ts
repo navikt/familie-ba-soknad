@@ -8,6 +8,7 @@ import {
 import { pipe } from 'ramda';
 
 import {
+    alternativeTeksterPrefix,
     ESanityFlettefeltverdi,
     ESanitySteg,
     FlettefeltVerdier,
@@ -34,6 +35,7 @@ import { IStartPåNyttModal } from '../typer/sanity/modaler/startPåNytt';
 import { ITidligereSamoboereTekstinnhold } from '../typer/sanity/modaler/tidligereSamboere';
 import { IUtenlandsoppholdTekstinnhold } from '../typer/sanity/modaler/utenlandsopphold';
 import {
+    IAlternativeTeksterTekstinnhold,
     IFellesTekstInnhold,
     IFormateringsfeilmeldingerTekstinnhold,
     IFrittståendeOrdTekstinnhold,
@@ -162,6 +164,9 @@ export const transformerTilTekstinnhold = (alleDokumenter: SanityDokument[]): IT
         hjelpeteksterForInput: struktrerInnholdForFelles(
             dokumenterFiltrertPåPrefix(fellesDokumenter, hjelpeteksterForInputPrefix)
         ) as IHjelpeteksterForInputTekstInnhold,
+        alternativeTekster: struktrerInnholdForFelles(
+            dokumenterFiltrertPåPrefix(fellesDokumenter, alternativeTeksterPrefix)
+        ) as IAlternativeTeksterTekstinnhold,
     };
     return tekstInnhold as ITekstinnhold;
 };
