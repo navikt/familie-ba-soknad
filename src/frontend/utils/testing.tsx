@@ -1,7 +1,6 @@
 import React, { PropsWithChildren, ReactNode } from 'react';
 
 import { Cookies, CookiesProvider } from 'react-cookie';
-import { IntlProvider } from 'react-intl';
 import { MemoryRouter, useLocation } from 'react-router';
 import { vi } from 'vitest';
 import { mockDeep } from 'vitest-mock-extended';
@@ -11,7 +10,6 @@ import { HttpProvider } from '@navikt/familie-http';
 import { type Ressurs, RessursStatus } from '@navikt/familie-typer';
 
 import { mockTekstInnhold } from '../../../mocks/testdata/sanity/sanity';
-import norskeTekster from '../../common/lang/nb.json' with { type: 'json' };
 import { ESivilstand, ESøknadstype, Slektsforhold } from '../../common/typer/kontrakt/generelle';
 import { LocaleType } from '../../common/typer/localeType';
 import { UtenlandsoppholdSpørsmålId } from '../components/Felleskomponenter/UtenlandsoppholdModal/spørsmål';
@@ -157,8 +155,7 @@ const wrapMedProvidere = (
     // eslint-disable-next-line
     providerComponents: React.FC<any>[],
     mocketNettleserHistorikk: string[],
-    children?: ReactNode,
-    språkTekster?: Record<string, string>
+    children?: ReactNode
 ) => {
     const [Første, ...resten] = providerComponents;
     const erSpråkprovider = Første === SpråkProvider;
@@ -173,24 +170,12 @@ const wrapMedProvidere = (
                 : {})}
             {...(erMemoryRouter ? { initialEntries: mocketNettleserHistorikk } : {})}
         >
-            {språkTekster ? (
-                <IntlProvider locale={LocaleType.nb} messages={språkTekster}>
-                    {resten.length ? wrapMedProvidere(resten, mocketNettleserHistorikk, children) : children}
-                </IntlProvider>
-            ) : resten.length ? (
-                wrapMedProvidere(resten, mocketNettleserHistorikk, children)
-            ) : (
-                children
-            )}
+            {resten.length ? wrapMedProvidere(resten, mocketNettleserHistorikk, children) : children}
         </Første>
     );
 };
 
-const wrapMedDefaultProvidere = (
-    children: ReactNode,
-    språkTekster: Record<string, string>,
-    mocketNettleserHistorikk: string[]
-) =>
+const wrapMedDefaultProvidere = (children: ReactNode, mocketNettleserHistorikk: string[]) =>
     wrapMedProvidere(
         [
             CookiesProviderMedLocale,
@@ -208,22 +193,19 @@ const wrapMedDefaultProvidere = (
             AppNavigationProvider,
         ],
         mocketNettleserHistorikk,
-        children,
-        språkTekster
+        children
     );
 
 export const TestProvidere: React.FC<{
-    tekster?: Record<string, string>;
     mocketNettleserHistorikk?: string[];
     children?: ReactNode;
-}> = ({ tekster, mocketNettleserHistorikk = ['/'], children }) =>
-    wrapMedDefaultProvidere(children, tekster ?? {}, mocketNettleserHistorikk);
+}> = ({ mocketNettleserHistorikk = ['/'], children }) => wrapMedDefaultProvidere(children, mocketNettleserHistorikk);
 
 export const TestProvidereMedEkteTekster: React.FC<{
     mocketNettleserHistorikk?: string[];
     children?: ReactNode;
 }> = ({ mocketNettleserHistorikk, children }) => (
-    <TestProvidere tekster={norskeTekster} children={children} mocketNettleserHistorikk={mocketNettleserHistorikk} />
+    <TestProvidere children={children} mocketNettleserHistorikk={mocketNettleserHistorikk} />
 );
 
 export const wrapMedProvidereForSanity = (
@@ -232,13 +214,7 @@ export const wrapMedProvidereForSanity = (
     children?: ReactNode
 ) => {
     const [Første, ...resten] = providerComponents;
-    return (
-        <Første>
-            <IntlProvider locale={LocaleType.nb}>
-                {resten.length ? wrapMedProvidereForSanity(resten, children) : children}
-            </IntlProvider>
-        </Første>
-    );
+    return <Første>{resten.length ? wrapMedProvidereForSanity(resten, children) : children}</Første>;
 };
 
 const wrapMedDefaultProvidereForSanity = (children: ReactNode) =>
