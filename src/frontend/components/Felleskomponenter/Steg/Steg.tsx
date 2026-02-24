@@ -151,7 +151,7 @@ const Steg: React.FC<ISteg> = ({ tittel, guide, skjema, gåVidereCallback, vedle
                             <ArrowLeftIcon aria-hidden />
                             {plainTekst(tilbakeKnapp)}
                         </Link>
-                        <Box paddingBlock="6 5">
+                        <Box paddingBlock="space-24 space-20">
                             <Heading level="2" size={'large'} data-testid="steg-tittel">
                                 {tittel}
                             </Heading>
@@ -184,7 +184,7 @@ const Steg: React.FC<ISteg> = ({ tittel, guide, skjema, gåVidereCallback, vedle
                     </GuidePanel>
                 )}
                 <form onSubmit={event => håndterGåVidere(event)} autoComplete="off">
-                    <VStack gap="10">
+                    <VStack gap="space-40">
                         {children}
                         {skjema && visFeiloppsummering(skjema.skjema) && (
                             <SkjemaFeiloppsummering skjema={skjema.skjema} />

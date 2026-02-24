@@ -50,14 +50,14 @@ const Barnekort: React.FC<IBarnekortProps> = ({ barn, velgBarnCallback, barnSomS
     const knappetekst = tekster()[ESanitySteg.FELLES].modaler.leggTilBarn.fjernKnapp;
 
     return (
-        <Box padding="6" background={'surface-subtle'} borderRadius="medium">
-            <VStack gap="6">
-                <Bleed marginInline="6" marginBlock="6 0" asChild>
+        <Box padding="space-24" background={'sunken'} borderRadius="4">
+            <VStack gap="space-24">
+                <Bleed marginInline="space-24" marginBlock="space-24 space-0" asChild>
                     <Box
                         borderWidth={'0 0 4 0'}
                         borderRadius={`4 4 0 0`}
-                        borderColor={'border-alt-1'}
-                        className={styles.header}
+                        borderColor={'brand-beige-subtle'}
+                        background={'brand-beige-strong'}
                     >
                         <HStack align={'end'} justify={'center'} width={'100%'} height={'var(--a-spacing-32'}>
                             <TilfeldigBarnIkon />
@@ -67,7 +67,7 @@ const Barnekort: React.FC<IBarnekortProps> = ({ barn, velgBarnCallback, barnSomS
                 <Heading level="3" size="medium">
                     {barn.adressebeskyttelse ? <TekstBlock block={navnErstatterForAdressesperre} /> : barn.navn}
                 </Heading>
-                <HGrid gap="6" columns={{ sm: 1, md: '2fr 1fr 3fr' }}>
+                <HGrid gap="space-24" columns={{ sm: 1, md: '2fr 1fr 3fr' }}>
                     <BarnekortInfo label={plainTekst(foedselsnummerLabel)} verdi={fødselsnummerTekst} />
                     {barn.alder && ( // Barn med undefined fødselsdato i pdl eller som søker har lagt inn selv har alder -null-
                         <BarnekortInfo label={plainTekst(alderLabel)} verdi={`${barn.alder} ${plainTekst(aar)}`} />
