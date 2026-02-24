@@ -14,7 +14,7 @@ export const NyttBarnKort: React.FC<{ onLeggTilBarn: () => void }> = ({ onLeggTi
     const { leggTilKnapp } = teksterForLeggTilBarnModal;
 
     return (
-        <Box padding="6" background="surface-subtle" borderRadius="medium">
+        <Box padding="space-24" background={'sunken'} borderRadius="4">
             <BodyShort spacing>{plainTekst(soekeForUregistrerteBarn)}</BodyShort>
             <Button type="button" variant="secondary" data-testid="legg-til-barn-knapp" onClick={() => onLeggTilBarn()}>
                 {plainTekst(leggTilKnapp)}

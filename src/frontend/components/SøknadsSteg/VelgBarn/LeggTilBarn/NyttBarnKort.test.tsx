@@ -6,7 +6,7 @@ import { vi } from 'vitest';
 import { ESvar } from '@navikt/familie-form-elements';
 import * as fnrvalidator from '@navikt/fnrvalidator';
 
-import { TestProvidere, spyOnUseApp } from '../../../../utils/testing';
+import { spyOnUseApp, TestProvidere } from '../../../../utils/testing';
 
 import LeggTilBarnModal from './LeggTilBarnModal';
 import { NyttBarnKort } from './NyttBarnKort';
@@ -62,7 +62,7 @@ describe('NyttBarnKort', () => {
 
         const leggTilKnappIModal = getByTestId('submit-knapp-i-modal');
         expect(leggTilKnappIModal).toBeInTheDocument();
-        expect(leggTilKnappIModal).toHaveClass('navds-button--secondary');
+        expect(leggTilKnappIModal).toHaveClass('aksel-button--medium');
 
         const erFødt = getByTestId('legg-til-barn-er-født');
         expect(erFødt).toBeInTheDocument();
@@ -83,7 +83,7 @@ describe('NyttBarnKort', () => {
             fireEvent.input(idnrInput, { target: { value: '031159123456' } });
         });
 
-        expect(leggTilKnappIModal).toHaveClass('navds-button--primary');
+        expect(leggTilKnappIModal).toHaveClass('aksel-button--medium');
 
         // Her skjer det async kall med axios, som vi må vente på i de neste expectene
         act(() => leggTilKnappIModal?.click());
