@@ -39,7 +39,6 @@ const IdNummerForAndreForelder: React.FC<{
                         <IdNummer
                             key={index}
                             lesevisning={lesevisning}
-                            feilmeldingSpråkId={'eøs-om-barn.andreforelderidnummer.feilmelding'}
                             idNummerVerdiFraSøknad={
                                 barn.andreForelder?.idNummer.find(verdi => verdi.land === landMedPeriodeType.land)
                                     ?.idnummer

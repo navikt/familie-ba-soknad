@@ -11,7 +11,7 @@ import { ITekstinnhold } from '../../typer/sanity/tekstInnhold';
 import { ISøknad } from '../../typer/søknad';
 import { erDokumentasjonRelevant } from '../dokumentasjon';
 import { sivilstandTilSanitySivilstandApiKey } from '../språk';
-import { jaNeiSvarTilSpråkIdForSanity } from '../spørsmål';
+import { jaNeiSvarTilSpråkId } from '../spørsmål';
 
 import { barnISøknadsFormat } from './barn';
 import { dokumentasjonISøknadFormat } from './dokumentasjon';
@@ -127,7 +127,7 @@ export const dataISøknadKontraktFormat = (
                 tekster.DOKUMENTASJON.vedleggXavY,
                 tekster.DOKUMENTASJON.listeOverVedlegg,
                 tekster.EØS_FOR_SØKER.eoesForSoekerTittel,
-                ...Object.values(ESvar).map(svar => jaNeiSvarTilSpråkIdForSanity(svar, tekster.FELLES.frittståendeOrd)),
+                ...Object.values(ESvar).map(svar => jaNeiSvarTilSpråkId(svar, tekster.FELLES.frittståendeOrd)),
             ].reduce(
                 (map, sanityDok: LocaleRecordBlock | LocaleRecordString) => ({
                     ...map,

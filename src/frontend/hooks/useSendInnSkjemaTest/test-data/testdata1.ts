@@ -198,8 +198,6 @@ export const testdata1: TilKontraktTestData = {
         dokumentasjon: [
             {
                 dokumentasjonsbehov: 'AVTALE_DELT_BOSTED',
-                tittelSpråkId: 'dokumentasjon.deltbosted.vedleggtittel',
-                beskrivelseSpråkId: 'dokumentasjon.deltbosted.informasjon',
                 gjelderForBarnId: [],
                 gjelderForSøker: false,
                 harSendtInn: false,
@@ -207,8 +205,6 @@ export const testdata1: TilKontraktTestData = {
             },
             {
                 dokumentasjonsbehov: 'VEDTAK_OPPHOLDSTILLATELSE',
-                tittelSpråkId: 'dokumentasjon.oppholdstillatelse.vedleggtittel',
-                beskrivelseSpråkId: 'dokumentasjon.oppholdstillatelse.informasjon',
                 gjelderForBarnId: [],
                 gjelderForSøker: false,
                 harSendtInn: false,
@@ -216,8 +212,6 @@ export const testdata1: TilKontraktTestData = {
             },
             {
                 dokumentasjonsbehov: 'ADOPSJON_DATO',
-                tittelSpråkId: 'dokumentasjon.adopsjon.vedleggtittel',
-                beskrivelseSpråkId: 'dokumentasjon.adopsjon.informasjon',
                 gjelderForBarnId: [],
                 gjelderForSøker: false,
                 harSendtInn: false,
@@ -225,8 +219,6 @@ export const testdata1: TilKontraktTestData = {
             },
             {
                 dokumentasjonsbehov: 'BEKREFTELSE_FRA_BARNEVERN',
-                tittelSpråkId: 'dokumentasjon.bekreftelsebarnevernet.vedleggtittel',
-                beskrivelseSpråkId: 'dokumentasjon.bekreftelsebarnevernet.informasjon',
                 gjelderForBarnId: [],
                 gjelderForSøker: false,
                 harSendtInn: false,
@@ -234,8 +226,6 @@ export const testdata1: TilKontraktTestData = {
             },
             {
                 dokumentasjonsbehov: 'BOR_FAST_MED_SØKER',
-                tittelSpråkId: 'dokumentasjon.bekreftelseborsammen.vedleggtittel',
-                beskrivelseSpråkId: 'dokumentasjon.bekreftelseborsammen.informasjon',
                 gjelderForBarnId: [],
                 gjelderForSøker: false,
                 harSendtInn: false,
@@ -243,8 +233,6 @@ export const testdata1: TilKontraktTestData = {
             },
             {
                 dokumentasjonsbehov: 'SEPARERT_SKILT_ENKE',
-                tittelSpråkId: 'dokumentasjon.separasjonskilsmissedødsfall.vedleggtittel',
-                beskrivelseSpråkId: 'dokumentasjon.separasjonskilsmissedødsfall.informasjon',
                 gjelderForBarnId: [],
                 gjelderForSøker: false,
                 harSendtInn: false,
@@ -252,8 +240,6 @@ export const testdata1: TilKontraktTestData = {
             },
             {
                 dokumentasjonsbehov: 'MEKLINGSATTEST',
-                tittelSpråkId: 'dokumentasjon.meklingsattest.vedleggtittel',
-                beskrivelseSpråkId: 'dokumentasjon.meklingsattest.informasjon',
                 gjelderForBarnId: [],
                 gjelderForSøker: false,
                 harSendtInn: false,
@@ -261,8 +247,6 @@ export const testdata1: TilKontraktTestData = {
             },
             {
                 dokumentasjonsbehov: 'ANNEN_DOKUMENTASJON',
-                tittelSpråkId: 'dokumentasjon.annendokumentasjon.vedleggtittel',
-                beskrivelseSpråkId: null,
                 gjelderForBarnId: [],
                 gjelderForSøker: false,
                 harSendtInn: false,

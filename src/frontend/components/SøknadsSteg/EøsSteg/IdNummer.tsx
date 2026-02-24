@@ -26,7 +26,6 @@ export const IdNummer: React.FC<{
     landAlphaCode: Alpha3Code | '';
     periodeType?: PeriodeType;
     idNummerVerdiFraSøknad: string | undefined;
-    feilmeldingSpråkId: string;
     lesevisning?: boolean;
     spørsmålDokument: ISanitySpørsmålDokument;
     barn?: IBarnMedISøknad;

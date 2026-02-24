@@ -24,7 +24,6 @@ const IdNummerForBarn: React.FC<{
     return (
         <IdNummer
             lesevisning={lesevisning}
-            feilmeldingSpråkId={'eøs-om-barn.barnidnummer.feilmelding'}
             idNummerVerdiFraSøknad={barn.idNummer.find(verdi => verdi.land === landAlphaCode)?.idnummer}
             skjema={skjema}
             settIdNummerFelter={settIdNummerFelter}

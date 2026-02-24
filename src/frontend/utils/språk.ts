@@ -59,23 +59,6 @@ export const landkodeTilSpråk = (landkode: Alpha3Code | '', locale: string): st
     return (alpha3ToAlpha2Land && getName(alpha3ToAlpha2Land, locale)) ?? AlternativtSvarForInput.UKJENT;
 };
 
-export const hentSivilstatusSpråkId = (statuskode?: ESivilstand) => {
-    switch (statuskode) {
-        case ESivilstand.UGIFT:
-        case ESivilstand.GIFT:
-        case ESivilstand.ENKE_ELLER_ENKEMANN:
-        case ESivilstand.SKILT:
-        case ESivilstand.SEPARERT:
-        case ESivilstand.REGISTRERT_PARTNER:
-        case ESivilstand.SEPARERT_PARTNER:
-        case ESivilstand.SKILT_PARTNER:
-        case ESivilstand.GJENLEVENDE_PARTNER:
-            return `felles.sivilstatus.kode.${statuskode}`;
-        default:
-            return `felles.sivilstatus.kode.${ESivilstand.UOPPGITT}`;
-    }
-};
-
 export const sivilstandTilSanitySivilstandApiKey = (statuskode: ESivilstand): ESanitySivilstandApiKey => {
     switch (statuskode) {
         case ESivilstand.UGIFT:
