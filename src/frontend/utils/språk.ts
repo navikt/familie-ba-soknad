@@ -4,12 +4,8 @@ import { Alpha3Code, alpha3ToAlpha2, getName } from 'i18n-iso-countries';
 
 import { ESvar } from '@navikt/familie-form-elements';
 
-import engelsk from '../../common/lang/en.json' with { type: 'json' };
-import bokmål from '../../common/lang/nb.json' with { type: 'json' };
-import nynorsk from '../../common/lang/nn.json' with { type: 'json' };
 import { ESanitySivilstandApiKey, LocaleRecordString, PlainTekst } from '../../common/sanity';
 import { ESivilstand, Slektsforhold } from '../../common/typer/kontrakt/generelle';
-import { LocaleType } from '../../common/typer/localeType';
 import { IDinLivssituasjonTekstinnhold } from '../components/SøknadsSteg/DinLivssituasjon/innholdTyper';
 import { IEøsForBarnTekstinnhold } from '../components/SøknadsSteg/EøsSteg/Barn/innholdTyper';
 import { IVelgBarnTekstinnhold } from '../components/SøknadsSteg/VelgBarn/innholdTyper';
@@ -61,31 +57,6 @@ export const hentSlektsforhold = (slektsforhold: Slektsforhold, tekster: IEøsFo
 export const landkodeTilSpråk = (landkode: Alpha3Code | '', locale: string): string => {
     const alpha3ToAlpha2Land = landkode && alpha3ToAlpha2(landkode);
     return (alpha3ToAlpha2Land && getName(alpha3ToAlpha2Land, locale)) ?? AlternativtSvarForInput.UKJENT;
-};
-
-const stripSpråkfil = (språkfilInnhold: Record<string, string>): Record<string, string> => {
-    const språkEntries = Object.entries(språkfilInnhold);
-    return Object.fromEntries(
-        språkEntries.map(([key, value]) => {
-            return [key, value.trim()];
-        })
-    );
-};
-
-const texts: Record<LocaleType, Record<string, string>> = {
-    [LocaleType.nb]: stripSpråkfil(bokmål),
-    [LocaleType.nn]: stripSpråkfil(nynorsk),
-    [LocaleType.en]: stripSpråkfil(engelsk),
-};
-
-export const hentUformaterteTekster = (tekstId: string): Record<LocaleType, string> => {
-    const map = {};
-
-    for (const locale in LocaleType) {
-        map[locale] = texts[locale][tekstId];
-    }
-
-    return map as Record<LocaleType, string>;
 };
 
 export const hentSivilstatusSpråkId = (statuskode?: ESivilstand) => {

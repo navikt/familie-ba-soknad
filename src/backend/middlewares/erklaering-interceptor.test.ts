@@ -4,13 +4,10 @@ import { vi } from 'vitest';
 import { mockDeep } from 'vitest-mock-extended';
 
 import { ISøknadKontrakt } from '../../common/typer/kontrakt/kontrakt';
-import { LocaleType } from '../../common/typer/localeType';
 
-import { erklaeringInterceptor, hentSpråkteksterAlleSpråk } from './erklaering-interceptor';
+import { erklaeringInterceptor } from './erklaering-interceptor';
 
 describe('erklaering-interceptor', () => {
-    const aksepterteSvarSpråkNøkkel = 'forside.bekreftelsesboks.erklæring.spm';
-
     const request = (partialSøknad: DeepPartial<ISøknadKontrakt>) =>
         mockDeep<Request>({
             body: partialSøknad,
@@ -71,13 +68,5 @@ describe('erklaering-interceptor', () => {
         expect(response.send).not.toHaveBeenCalled();
         expect(next).toHaveBeenCalled();
         next.mockReset();
-    });
-
-    it('Kan hente bekreftelsestekst for alle språk', () => {
-        const svar = hentSpråkteksterAlleSpråk(aksepterteSvarSpråkNøkkel);
-        for (const locale in LocaleType) {
-            expect(svar).toHaveProperty(locale);
-            expect(svar[locale].length).toBeGreaterThan(0);
-        }
     });
 });
