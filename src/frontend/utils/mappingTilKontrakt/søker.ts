@@ -104,7 +104,7 @@ export const søkerIKontraktFormat = (
               )
             : null,
         separertEnkeSkilt: nullableSøknadsfeltForESvar(
-            dinLivssituasjonTekster.separertEnkeSkiltUtland.sporsmal,
+            dinLivssituasjonTekster.separertEnkeSkilt.sporsmal,
             separertEnkeSkilt.svar
         ),
         separertEnkeSkiltUtland: nullableSøknadsfeltForESvar(
