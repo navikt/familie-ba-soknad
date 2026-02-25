@@ -64,13 +64,11 @@ export const omsorgspersonTilISøknadsfelt = (
 
     return {
         navn: søknadsfelt(eøsTekster.hvaHeterOmsorgspersonen.sporsmal, sammeVerdiAlleSpråk(navn.svar)),
-        slektsforhold: slektsforhold.svar
-            ? søknadsfelt(
-                  eøsTekster.slektsforholdOmsorgsperson.sporsmal,
-                  tilRestLocaleRecord(hentSlektsforhold(slektsforhold.svar as Slektsforhold, eøsTekster)),
-                  flettefelter
-              )
-            : null,
+        slektsforhold: søknadsfelt(
+            eøsTekster.slektsforholdOmsorgsperson.sporsmal,
+            tilRestLocaleRecord(hentSlektsforhold(slektsforhold.svar as Slektsforhold, eøsTekster)),
+            flettefelter
+        ),
         slektsforholdSpesifisering: slektsforholdSpesifisering.svar
             ? søknadsfelt(
                   eøsTekster.hvilkenRelasjonOmsorgsperson.sporsmal,
