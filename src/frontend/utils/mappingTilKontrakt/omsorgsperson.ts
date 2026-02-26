@@ -1,10 +1,10 @@
-import { Slektsforhold, TilRestLocaleRecord } from '../../../common/typer/kontrakt/generelle';
+import { TilRestLocaleRecord } from '../../../common/typer/kontrakt/generelle';
 import { IOmsorgspersonIKontraktFormat } from '../../../common/typer/kontrakt/kontrakt';
 import { IBarnMedISøknad } from '../../typer/barn';
 import { IOmsorgsperson } from '../../typer/omsorgsperson';
 import { PersonType } from '../../typer/personType';
 import { ITekstinnhold } from '../../typer/sanity/tekstInnhold';
-import { hentSlektsforhold, landkodeTilSpråk } from '../språk';
+import { landkodeTilSpråk } from '../språk';
 
 import { tilIAndreUtbetalingsperioderIKontraktFormat } from './andreUtbetalingsperioder';
 import { tilIArbeidsperiodeIKontraktFormat } from './arbeidsperioder';
@@ -66,7 +66,7 @@ export const omsorgspersonTilISøknadsfelt = (
         navn: søknadsfelt(eøsTekster.hvaHeterOmsorgspersonen.sporsmal, sammeVerdiAlleSpråk(navn.svar)),
         slektsforhold: søknadsfelt(
             eøsTekster.slektsforholdOmsorgsperson.sporsmal,
-            tilRestLocaleRecord(hentSlektsforhold(slektsforhold.svar as Slektsforhold, eøsTekster)),
+            sammeVerdiAlleSpråk(slektsforhold.svar),
             flettefelter
         ),
         slektsforholdSpesifisering: slektsforholdSpesifisering.svar
