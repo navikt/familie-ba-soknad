@@ -2,7 +2,6 @@ import React from 'react';
 
 import { renderHook } from '@testing-library/react';
 import { Alpha3Code } from 'i18n-iso-countries';
-import { IntlProvider } from 'react-intl';
 import { mock } from 'vitest-mock-extended';
 
 import { ESvar } from '@navikt/familie-form-elements';
@@ -148,15 +147,13 @@ describe('useJaNeiSpmFelt', () => {
         const wrapper = ({ children }) => (
             <CookiesProviderMedLocale>
                 <SpråkProvider>
-                    <IntlProvider locale="no">
-                        <LastRessurserProvider>
-                            <InnloggetProvider>
-                                <SanityProvider>
-                                    <AppProvider>{children}</AppProvider>
-                                </SanityProvider>
-                            </InnloggetProvider>
-                        </LastRessurserProvider>
-                    </IntlProvider>
+                    <LastRessurserProvider>
+                        <InnloggetProvider>
+                            <SanityProvider>
+                                <AppProvider>{children}</AppProvider>
+                            </SanityProvider>
+                        </InnloggetProvider>
+                    </LastRessurserProvider>
                 </SpråkProvider>
             </CookiesProviderMedLocale>
         );

@@ -37,12 +37,6 @@ updates:
           - "classnames"
           - "react-element-to-jsx-string"
 
-      intl-i18n:
-        patterns:
-          - "react-intl"
-          - "@formatjs/*"
-          - "i18n-iso-countries"
-
       content-cms:
         patterns:
           - "@sanity/client"
