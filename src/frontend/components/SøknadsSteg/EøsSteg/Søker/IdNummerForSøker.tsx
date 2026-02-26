@@ -35,7 +35,6 @@ const IdNummerForSøker: React.FC<Props> = ({ lesevisning = false, skjema, settI
                 return (
                     !!landMedPeriodeType.land && (
                         <IdNummer
-                            feilmeldingSpråkId={'eøs-om-deg.dittidnummer.feilmelding'}
                             idNummerVerdiFraSøknad={
                                 søker.idNummer.find(verdi => verdi.land === landMedPeriodeType.land)?.idnummer
                             }

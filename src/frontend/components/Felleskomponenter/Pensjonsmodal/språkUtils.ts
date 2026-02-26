@@ -2,39 +2,6 @@ import { ESanitySteg, ISanitySpørsmålDokument } from '../../../../common/sanit
 import { PersonType } from '../../../typer/personType';
 import { ITekstinnhold } from '../../../typer/sanity/tekstInnhold';
 
-export const mottarPensjonNåFeilmeldingSpråkId = (personType: PersonType): string => {
-    switch (personType) {
-        case PersonType.AndreForelder:
-            return 'ombarnet.andre-forelder.pensjonnå.feilmelding';
-        case PersonType.Omsorgsperson:
-            return 'modal.omsorgsperson.pensjonnå.feilmelding';
-        case PersonType.Søker:
-        default:
-            return 'modal.fårdupensjonnå.feilmelding';
-    }
-};
-
-export const pensjonslandFeilmeldingSpråkId = (personType, periodenErAvsluttet) => {
-    switch (personType) {
-        case PersonType.AndreForelder: {
-            return periodenErAvsluttet
-                ? 'modal.hvilketlandpensjonandreforelder.feilmelding'
-                : 'ombarnet.andre-forelder.utenlandspensjon.land.feilmelding';
-        }
-        case PersonType.Omsorgsperson: {
-            return periodenErAvsluttet
-                ? 'modal.hvilketlandpensjon-fortid-omsorgsperson.feilmelding'
-                : 'modal.hvilketlandpensjon-nåtid-omsorgsperson.feilmelding';
-        }
-        case PersonType.Søker:
-        default: {
-            return periodenErAvsluttet
-                ? 'felles.hvilketlandpensjon.feilmelding'
-                : 'omdeg.utenlandspensjon.land.feilmelding';
-        }
-    }
-};
-
 export const pensjonSpørsmålDokument = (
     gjelderUtlandet: boolean,
     personType: PersonType,

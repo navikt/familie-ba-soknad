@@ -3,7 +3,7 @@ import { renderHook } from '@testing-library/react';
 import { ESanitySivilstandApiKey } from '../../../common/sanity';
 import { ESivilstand } from '../../../common/typer/kontrakt/generelle';
 import { ISøknadKontrakt } from '../../../common/typer/kontrakt/kontrakt';
-import { hentSivilstatusSpråkId, sivilstandTilSanitySivilstandApiKey } from '../../utils/språk';
+import { sivilstandTilSanitySivilstandApiKey } from '../../utils/språk';
 import { mekkGyldigUtvidetSøknad, spyOnUseApp, TestProvidereMedEkteTekster } from '../../utils/testing';
 import { erGyldigISøknadKontrakt } from '../../utils/typeguards';
 import { useSendInnSkjema } from '../useSendInnSkjema';
@@ -17,16 +17,6 @@ describe('useSendInnSkjema', () => {
         });
         const [_, formatert]: [boolean, ISøknadKontrakt] = await result.current.sendInnSkjema();
         expect(erGyldigISøknadKontrakt(formatert)).toBeTruthy();
-    });
-
-    it('Kan mappe sivilstandenum til språktekster', () => {
-        const språktekster = Object.values(ESivilstand).map(hentSivilstatusSpråkId);
-        let sivilstandCount = 0;
-        for (const sivilstand in ESivilstand) {
-            expect(språktekster).toContain(`felles.sivilstatus.kode.${sivilstand}`);
-            sivilstandCount++;
-        }
-        expect(språktekster.length).toEqual(sivilstandCount);
     });
 
     it('Kan mappe sivilstandenum til sanity sivilstand', () => {
