@@ -40,7 +40,7 @@
   },
   "dependencies": {
     "@grafana/faro-web-sdk": "2.1.0",
-    "@navikt/aksel-icons": "7.40.0",
+    "@navikt/aksel-icons": "8.6.0",
     "@navikt/ds-css": "7.40.0",
     "@navikt/ds-react": "7.40.0",
     "@navikt/familie-form-elements": "21.0.4",
