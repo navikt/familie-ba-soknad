@@ -1,5 +1,4 @@
-import React from 'react';
-import { act } from 'react';
+import React, { act } from 'react';
 
 import { render, waitFor } from '@testing-library/react';
 import { mockDeep } from 'vitest-mock-extended';
@@ -50,7 +49,7 @@ describe('Oppsummering', () => {
         const gåVidere = await findByTestId('neste-steg');
         await act(() => gåVidere.click());
 
-        const feilOppsummering = container.getElementsByClassName('navds-error-summary')[0];
+        const feilOppsummering = container.getElementsByClassName('aksel-error-summary')[0];
 
         const location = await findByTestId('location');
         expect(JSON.parse(location.innerHTML).hash).toEqual('#omdeg-feil');

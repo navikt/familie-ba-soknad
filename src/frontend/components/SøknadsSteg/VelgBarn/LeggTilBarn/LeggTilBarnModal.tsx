@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Alert, Fieldset } from '@navikt/ds-react';
+import { Fieldset, InlineMessage } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Valideringsstatus } from '@navikt/familie-skjema';
 
@@ -60,9 +60,9 @@ const LeggTilBarnModal: React.FC<{
             <KomponentGruppe>
                 <JaNeiSpm skjema={skjema} felt={skjema.felter.erFødt} spørsmålDokument={erBarnetFoedt} />
                 {skjema.felter.erFødt.verdi === ESvar.NEI && (
-                    <Alert variant={'warning'} inline>
+                    <InlineMessage status={'warning'}>
                         <TekstBlock block={ikkeFoedtAlert} typografi={Typografi.BodyShort} />
-                    </Alert>
+                    </InlineMessage>
                 )}
             </KomponentGruppe>
             {skjema.felter.erFødt.valideringsstatus === Valideringsstatus.OK && (
