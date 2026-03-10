@@ -11,6 +11,7 @@ import InnholdContainer from '../../Felleskomponenter/InnholdContainer/InnholdCo
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 
 import BekreftelseOgStartSoknad from './BekreftelseOgStartSoknad';
+import styles from './Forside.module.css';
 import { FortsettPåSøknad } from './FortsettPåSøknad';
 
 const Forside: React.FC = () => {
@@ -45,7 +46,9 @@ const Forside: React.FC = () => {
                 <Heading level="2" size="medium" spacing>
                     {plainTekst(forsidetekster.foerDuSoekerTittel)}
                 </Heading>
-                <TekstBlock block={forsidetekster.foerDuSoeker} typografi={Typografi.BodyLong} />
+                <div className={styles.textBlockContainer}>
+                    <TekstBlock block={forsidetekster.foerDuSoeker} typografi={Typografi.BodyLong} />
+                </div>
             </div>
             <Accordion>
                 <Accordion.Item>
