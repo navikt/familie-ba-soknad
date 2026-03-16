@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { ArrowRightIcon } from '@navikt/aksel-icons';
-import { Button, ConfirmationPanel, Heading, Radio, RadioGroup, VStack } from '@navikt/ds-react';
+import { Button, Checkbox, ErrorMessage, InfoCard, Radio, RadioGroup, VStack } from '@navikt/ds-react';
 
 import { Typografi } from '../../../../common/sanity';
 import { ESøknadstype } from '../../../../common/typer/kontrakt/generelle';
@@ -25,6 +25,18 @@ const BekreftelseOgStartSoknad: React.FC = () => {
     const navigasjonTekster = tekster().FELLES.navigasjon;
     const fellestekster = tekster().FELLES;
 
+    const bekreftelseKortStatus = () => {
+        switch (bekreftelseStatus) {
+            case BekreftelseStatus.BEKREFTET:
+                return 'success';
+            case BekreftelseStatus.FEIL:
+                return 'danger';
+            case BekreftelseStatus.NORMAL:
+            default:
+                return 'warning';
+        }
+    };
+
     return (
         <form onSubmit={event => onStartSøknad(event)}>
             <VStack gap="space-40">
@@ -40,23 +52,30 @@ const BekreftelseOgStartSoknad: React.FC = () => {
                     <Radio value={ESøknadstype.ORDINÆR}>{plainTekst(fellestekster.frittståendeOrd.nei)}</Radio>
                 </RadioGroup>
 
-                <ConfirmationPanel
-                    label={plainTekst(forsidetekster.bekreftelsesboksErklaering)}
-                    onChange={bekreftelseOnChange}
-                    checked={bekreftelseStatus === BekreftelseStatus.BEKREFTET}
-                    error={
-                        bekreftelseStatus === BekreftelseStatus.FEIL && (
-                            <span role={'alert'}>{plainTekst(forsidetekster.bekreftelsesboksFeilmelding)}</span>
-                        )
-                    }
-                >
-                    <Heading level="2" size="xsmall" spacing>
-                        {plainTekst(forsidetekster.bekreftelsesboksTittel)}
-                    </Heading>
-                    <TekstBlock block={forsidetekster.bekreftelsesboksBroedtekst} typografi={Typografi.BodyLong} />
-                </ConfirmationPanel>
+                <VStack gap={'space-8'}>
+                    <InfoCard data-color={bekreftelseKortStatus()}>
+                        <InfoCard.Header>
+                            <InfoCard.Title>{plainTekst(forsidetekster.bekreftelsesboksTittel)}</InfoCard.Title>
+                        </InfoCard.Header>
+                        <InfoCard.Content>
+                            <TekstBlock
+                                block={forsidetekster.bekreftelsesboksBroedtekst}
+                                typografi={Typografi.BodyLong}
+                            />
+                            <Checkbox
+                                value={bekreftelseStatus === BekreftelseStatus.BEKREFTET}
+                                onChange={bekreftelseOnChange}
+                            >
+                                {plainTekst(forsidetekster.bekreftelsesboksErklaering)}
+                            </Checkbox>
+                        </InfoCard.Content>
+                    </InfoCard>
+                    {bekreftelseStatus === BekreftelseStatus.FEIL && (
+                        <ErrorMessage showIcon>{plainTekst(forsidetekster.bekreftelsesboksFeilmelding)}</ErrorMessage>
+                    )}
+                </VStack>
 
-                <VStack gap="space-32" width={{ sm: 'fit-content' }} marginInline={{ sm: 'auto' }}>
+                <VStack width={{ sm: 'fit-content' }} marginInline={{ sm: 'auto' }}>
                     <Button
                         variant={bekreftelseStatus === BekreftelseStatus.BEKREFTET ? 'primary' : 'secondary'}
                         type={'submit'}
