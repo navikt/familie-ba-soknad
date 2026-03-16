@@ -1725,10 +1725,10 @@
   resolved "https://npm.pkg.github.com/download/@navikt/ds-tokens/8.5.2/1339bac9146a8627a4446b54b921914eae1eb75a#1339bac9146a8627a4446b54b921914eae1eb75a"
   integrity sha512-39QOU6iQgkhyWa8coNyuyvMdmagXR3FI6wG4VbWVcxmOCbBdc+C4/uM7h/7reCbWW0QpTcKN5DPrHHBk4Q00OA==
 
-"@navikt/familie-form-elements@21.0.8":
-  version "21.0.8"
-  resolved "https://npm.pkg.github.com/download/@navikt/familie-form-elements/21.0.8/4ea8a352134c4d30e1ce0f16f54fd19a4ffd8dc7#4ea8a352134c4d30e1ce0f16f54fd19a4ffd8dc7"
-  integrity sha512-HDqE6AU12nFM5e/e5hQsdOOsTSjxhColeiEVcopVm9f/GiECgw0lksj8kw4VsFxDohbl3+cYCx6rbDzMGeaJAA==
+"@navikt/familie-form-elements@22.0.1":
+  version "22.0.1"
+  resolved "https://npm.pkg.github.com/download/@navikt/familie-form-elements/22.0.1/8a18208cad1a699cc48496cca93bc242b3a60f60#8a18208cad1a699cc48496cca93bc242b3a60f60"
+  integrity sha512-K5BmXg7ifVSskpt3TIwcUha/saWmra7KCndYJ/+kG7FCr8SGQ5Kg8BInY9OkM+AEZH00S/gwSNMS4uCdxg+fnA==
   dependencies:
     react-select "5.10.2"
 
