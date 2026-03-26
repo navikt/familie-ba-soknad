@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Alert } from '@navikt/ds-react';
+import { InlineMessage } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { useAppContext } from '../../../context/AppContext';
@@ -159,9 +159,9 @@ export const BarnetrygdperiodeModal: React.FC<Props> = ({
                         />
                     }
                     description={
-                        <Alert variant={'info'} inline>
+                        <InlineMessage status={'info'}>
                             <TekstBlock block={teksterForModal.belopPerManed.beskrivelse} />
-                        </Alert>
+                        </InlineMessage>
                     }
                     fullbredde={false}
                 />
