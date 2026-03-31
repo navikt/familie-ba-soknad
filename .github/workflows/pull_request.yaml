@@ -17,3 +17,10 @@ jobs:
     with:
       node-version: '24'
     secrets: inherit
+
+  foobar:
+    name: Foobar
+    if: ${{ !contains(github.event.pull_request.labels.*.name, 'bar') }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Foobar step"
