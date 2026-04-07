@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 
 import { add, isBefore } from 'date-fns';
 
-import { Alert, BodyShort, Heading, VStack } from '@navikt/ds-react';
+import { ExclamationmarkTriangleIcon, XMarkOctagonIcon } from '@navikt/aksel-icons';
+import { BodyShort, Heading, InfoCard, VStack } from '@navikt/ds-react';
 import { RessursStatus } from '@navikt/familie-typer';
 
 import { ESanitySteg, Typografi } from '../../../../common/sanity';
@@ -96,16 +97,18 @@ const Dokumentasjon: React.FC = () => {
         >
             <VStack gap="space-48">
                 {slettaVedlegg.length > 0 && (
-                    <Alert variant={'warning'}>
-                        <TekstBlock block={stegTekster.forLangTidDokumentasjon} typografi={Typografi.BodyLong} />
-                        <ul>
-                            {slettaVedlegg.map(vedlegg => (
-                                <li key={vedlegg.dokumentId}>
-                                    <BodyShort>{vedlegg.navn}</BodyShort>
-                                </li>
-                            ))}
-                        </ul>
-                    </Alert>
+                    <InfoCard data-color={'warning'}>
+                        <InfoCard.Message icon={<ExclamationmarkTriangleIcon aria-hidden />}>
+                            <TekstBlock block={stegTekster.forLangTidDokumentasjon} />
+                            <ul>
+                                {slettaVedlegg.map(vedlegg => (
+                                    <li key={vedlegg.dokumentId}>
+                                        <BodyShort>{vedlegg.navn}</BodyShort>
+                                    </li>
+                                ))}
+                            </ul>
+                        </InfoCard.Message>
+                    </InfoCard>
                 )}
                 {brukerHarVedleggskrav ? (
                     <>
@@ -146,12 +149,11 @@ const Dokumentasjon: React.FC = () => {
                     />
                 ))}
                 {innsendingStatus.status === RessursStatus.FEILET && (
-                    <Alert variant="error" role="alert">
-                        <TekstBlock
-                            block={stegTekster.dokumentasjonFeilmeldingVedInnsending}
-                            typografi={Typografi.BodyLong}
-                        />
-                    </Alert>
+                    <InfoCard data-color="danger" role="alert">
+                        <InfoCard.Message icon={<XMarkOctagonIcon aria-hidden />}>
+                            <TekstBlock block={stegTekster.dokumentasjonFeilmeldingVedInnsending} />
+                        </InfoCard.Message>
+                    </InfoCard>
                 )}
             </VStack>
         </Steg>
