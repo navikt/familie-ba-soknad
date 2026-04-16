@@ -2,7 +2,8 @@ import React from 'react';
 
 import { BrowserRouter as Router } from 'react-router';
 
-import { Alert } from '@navikt/ds-react';
+import { ExclamationmarkTriangleIcon } from '@navikt/aksel-icons';
+import { InfoCard } from '@navikt/ds-react';
 
 import { BASE_PATH } from '../common/miljø';
 
@@ -23,12 +24,14 @@ function App() {
                         <StegProvider>
                             <GlobalStyle />
                             {process.env.NODE_ENV !== 'production' && (
-                                <Alert variant={'warning'}>
-                                    {`Denne siden er under utvikling. `}
-                                    <a href="https://www.nav.no/no/person/familie/barnetrygd-og-kontantstotte/barnetrygd">
-                                        Klikk her for å gå til våre sider for barnetrygd
-                                    </a>
-                                </Alert>
+                                <InfoCard data-color={'warning'}>
+                                    <InfoCard.Message icon={<ExclamationmarkTriangleIcon aria-hidden />}>
+                                        {`Denne siden er under utvikling. `}
+                                        <a href="https://www.nav.no/no/person/familie/barnetrygd-og-kontantstotte/barnetrygd">
+                                            Klikk her for å gå til våre sider for barnetrygd
+                                        </a>
+                                    </InfoCard.Message>
+                                </InfoCard>
                             )}
                             <AppNavigationProvider>
                                 <AppContainer />
