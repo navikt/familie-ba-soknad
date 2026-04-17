@@ -130,7 +130,7 @@
     "react-refresh": "0.18.0",
     "stream-browserify": "3.0.0",
     "style-loader": "4.0.0",
-    "styled-components": "6.3.6",
+    "styled-components": "6.4.0",
     "terser-webpack-plugin": "5.4.0",
     "ts-essentials": "10.1.0",
     "ts-loader": "9.5.1",
