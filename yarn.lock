@@ -10698,10 +10698,10 @@ vary@^1, vary@^1.1.2, vary@~1.1.2:
   optionalDependencies:
     fsevents "~2.3.3"
 
-vitest-mock-extended@3.1.0:
-  version "3.1.0"
-  resolved "https://registry.npmjs.org/vitest-mock-extended/-/vitest-mock-extended-3.1.0.tgz#d4e23f4bbc18d07c4ab928b861e74414c942c974"
-  integrity sha512-vCM0VkuocOUBwwqwV7JB7YStw07pqeKvEIrZnR8l3PtwYi6rAAJAyJACeC1UYNfbQWi85nz7EdiXWBFI5hll2g==
+vitest-mock-extended@4.0.0:
+  version "4.0.0"
+  resolved "https://registry.npmjs.org/vitest-mock-extended/-/vitest-mock-extended-4.0.0.tgz#5b502a6f1d05c2feae03c970743e2f23b2520636"
+  integrity sha512-m2FmH8JYfxzZoLsHuhXRY+Pv++a3zd91HYpSz81tpRLEHbtFkEL2QcWvJowucWuNTirzQURKfWbJJSXbYqkTsA==
   dependencies:
     ts-essentials ">=10.0.0"
 
