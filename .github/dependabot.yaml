@@ -11,6 +11,10 @@ updates:
       interval: daily
       time: "13:45"
       timezone: "Europe/Oslo"
+    ignore:
+      - dependency-name: "@types/node"
+        versions:
+          - "25"
     cooldown:
       default-days: 7
     open-pull-requests-limit: 20
