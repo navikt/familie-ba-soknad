@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { Alert } from '@navikt/ds-react';
+import { ExclamationmarkTriangleIcon, InformationSquareIcon } from '@navikt/aksel-icons';
+import { InfoCard } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 
 import { ESanitySteg, Typografi } from '../../../../common/sanity';
@@ -75,9 +76,11 @@ const OmDeg: React.FC = () => {
                     spørsmålDokument={borPaaRegistrertAdresse}
                 />
                 {skjema.felter.borPåRegistrertAdresse.verdi === ESvar.NEI && (
-                    <Alert variant="warning">
-                        <TekstBlock block={personopplysningerAlert} />
-                    </Alert>
+                    <InfoCard data-color="warning">
+                        <InfoCard.Message icon={<ExclamationmarkTriangleIcon aria-hidden />}>
+                            <TekstBlock block={personopplysningerAlert} />
+                        </InfoCard.Message>
+                    </InfoCard>
                 )}
             </KomponentGruppe>
             <KomponentGruppe>
@@ -125,9 +128,11 @@ const OmDeg: React.FC = () => {
                         spørsmålDokument={planleggerAaBoINorgeTolvMnd}
                     />
                     {skjema.felter.planleggerÅBoINorgeTolvMnd.verdi === ESvar.NEI && (
-                        <Alert variant="info">
-                            <TekstBlock block={planleggerAaBoINorgeTolvMnd.alert} />
-                        </Alert>
+                        <InfoCard data-color={'info'}>
+                            <InfoCard.Message icon={<InformationSquareIcon aria-hidden />}>
+                                <TekstBlock block={planleggerAaBoINorgeTolvMnd.alert} />
+                            </InfoCard.Message>
+                        </InfoCard>
                     )}
                 </KomponentGruppe>
             )}
