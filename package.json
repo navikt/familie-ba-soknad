@@ -39,7 +39,7 @@
     ]
   },
   "dependencies": {
-    "@grafana/faro-web-sdk": "2.3.1",
+    "@grafana/faro-web-sdk": "2.4.0",
     "@navikt/aksel-icons": "8.9.1",
     "@navikt/ds-css": "8.9.1",
     "@navikt/ds-react": "8.9.1",
@@ -54,7 +54,7 @@
     "@portabletext/react": "6.0.0",
     "@portabletext/toolkit": "5.0.1",
     "@sanity/client": "7.20.0",
-    "@sentry/react": "10.47.0",
+    "@sentry/react": "10.50.0",
     "axios": "1.15.2",
     "compression": "1.8.0",
     "cookie-parser": "1.4.7",
@@ -84,7 +84,7 @@
     "@eslint/js": "9.39.2",
     "@pmmmwh/react-refresh-webpack-plugin": "0.6.2",
     "@portabletext/types": "4.0.1",
-    "@sentry/webpack-plugin": "4.6.2",
+    "@sentry/webpack-plugin": "5.2.0",
     "@testing-library/dom": "10.4.1",
     "@testing-library/jest-dom": "6.9.1",
     "@testing-library/react": "16.3.2",
