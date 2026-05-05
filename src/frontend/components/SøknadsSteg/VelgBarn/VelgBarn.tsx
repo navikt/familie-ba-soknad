@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { FormSummary } from '@navikt/ds-react';
+
 import { ESanitySteg } from '../../../../common/sanity';
 import { useAppContext } from '../../../context/AppContext';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
@@ -29,7 +31,7 @@ const VelgBarn: React.FC = () => {
     const barn = barnFraRespons.concat(barnManueltLagtTil);
 
     const stegTekster = tekster()[ESanitySteg.VELG_BARN];
-    const { velgBarnTittel, velgBarnGuide } = stegTekster;
+    const { velgBarnTittel, velgBarnGuide, velgBarnListeTittel } = stegTekster;
 
     return (
         <>
@@ -45,15 +47,26 @@ const VelgBarn: React.FC = () => {
                     },
                 }}
             >
-                {barn.map(barnet => (
-                    <Barnekort
-                        key={barnet.id}
-                        barn={barnet}
-                        velgBarnCallback={håndterVelgBarnToggle}
-                        barnSomSkalVæreMed={barnSomSkalVæreMed}
-                        fjernBarnCallback={fjernBarn}
-                    />
-                ))}
+                {barn.length > 0 && (
+                    <FormSummary>
+                        <FormSummary.Header>
+                            <FormSummary.Heading level="3">
+                                <TekstBlock block={velgBarnListeTittel} />
+                            </FormSummary.Heading>
+                        </FormSummary.Header>
+                        <FormSummary.Answers>
+                            {barn.map(barnet => (
+                                <Barnekort
+                                    key={barnet.id}
+                                    barn={barnet}
+                                    velgBarnCallback={håndterVelgBarnToggle}
+                                    barnSomSkalVæreMed={barnSomSkalVæreMed}
+                                    fjernBarnCallback={fjernBarn}
+                                />
+                            ))}
+                        </FormSummary.Answers>
+                    </FormSummary>
+                )}
                 <NyttBarnKort onLeggTilBarn={åpneModal} />
             </Steg>
             {erÅpen && <LeggTilBarnModal erÅpen={erÅpen} lukkModal={lukkModal} />}
