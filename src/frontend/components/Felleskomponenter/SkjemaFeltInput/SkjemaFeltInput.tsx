@@ -32,7 +32,7 @@ export const SkjemaFeltInput: React.FC<SkjemaFeltInputProps> = props => {
             label={label}
             description={description}
             {...navInputPropsFraFeltHook}
-            maxLength={500}
+            maxLength={200}
             autoComplete={autoComplete}
             disabled={disabled}
             $fullbredde={fullbredde}
