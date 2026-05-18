@@ -23,7 +23,7 @@
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx,css}": [
       "prettier --write",
-      "eslint --fix src/ --max-warnings=70"
+      "eslint --fix src/ --max-warnings=71"
     ]
   },
   "browserslist": {

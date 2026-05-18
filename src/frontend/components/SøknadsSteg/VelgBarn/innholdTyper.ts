@@ -15,4 +15,5 @@ export interface IVelgBarnTekstinnhold {
     registrertPaaAdressenDin: LocaleRecordBlock;
     ikkeRegistrertPaaAdressenDin: LocaleRecordBlock;
     navnIkkeBestemtLabel: LocaleRecordBlock;
+    velgBarnListeTittel: LocaleRecordBlock;
 }

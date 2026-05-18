@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { TrashFillIcon } from '@navikt/aksel-icons';
-import { Bleed, Box, Button, Checkbox, Heading, HGrid, HStack, VStack } from '@navikt/ds-react';
+import { Button, Checkbox, FormSummary } from '@navikt/ds-react';
 
 import { ESanitySteg } from '../../../../../common/sanity';
 import { useAppContext } from '../../../../context/AppContext';
@@ -9,10 +9,6 @@ import { IBarn } from '../../../../typer/person';
 import { hentBostedSpråkId } from '../../../../utils/språk';
 import { formaterFnr, uppercaseFørsteBokstav } from '../../../../utils/visning';
 import TekstBlock from '../../../Felleskomponenter/Sanity/TekstBlock';
-import { TilfeldigBarnIkon } from '../../../Felleskomponenter/TilfeldigBarnIkon/TilfeldigBarnIkon';
-
-import styles from './Barnekort.module.css';
-import { BarnekortInfo } from './BarnekortInfo';
 
 interface IBarnekortProps {
     velgBarnCallback: (barn: IBarn, barnMedISøknad: boolean) => void;
@@ -50,53 +46,52 @@ const Barnekort: React.FC<IBarnekortProps> = ({ barn, velgBarnCallback, barnSomS
     const knappetekst = tekster()[ESanitySteg.FELLES].modaler.leggTilBarn.fjernKnapp;
 
     return (
-        <Box padding="space-24" background={'sunken'} borderRadius="4">
-            <VStack gap="space-24">
-                <Bleed marginInline="space-24" marginBlock="space-24 space-0" asChild>
-                    <Box
-                        borderWidth={'0 0 4 0'}
-                        borderRadius={`4 4 0 0`}
-                        borderColor={'brand-beige-subtle'}
-                        background={'brand-beige-strong'}
-                    >
-                        <HStack align={'end'} justify={'center'} width={'100%'} height={'var(--a-spacing-32'}>
-                            <TilfeldigBarnIkon />
-                        </HStack>
-                    </Box>
-                </Bleed>
-                <Heading level="3" size="medium">
-                    {barn.adressebeskyttelse ? <TekstBlock block={navnErstatterForAdressesperre} /> : barn.navn}
-                </Heading>
-                <HGrid gap="space-24" columns={{ sm: 1, md: '2fr 1fr 3fr' }}>
-                    <BarnekortInfo label={plainTekst(foedselsnummerLabel)} verdi={fødselsnummerTekst} />
+        <FormSummary.Answer>
+            <FormSummary.Label>
+                {barn.adressebeskyttelse ? <TekstBlock block={navnErstatterForAdressesperre} /> : barn.navn}
+            </FormSummary.Label>
+            <FormSummary.Value>
+                <FormSummary.Answers>
+                    <FormSummary.Answer>
+                        <FormSummary.Label>{plainTekst(foedselsnummerLabel)}</FormSummary.Label>
+                        <FormSummary.Value>{fødselsnummerTekst}</FormSummary.Value>
+                    </FormSummary.Answer>
                     {barn.alder && ( // Barn med undefined fødselsdato i pdl eller som søker har lagt inn selv har alder -null-
-                        <BarnekortInfo label={plainTekst(alderLabel)} verdi={`${barn.alder} ${plainTekst(aar)}`} />
+                        <FormSummary.Answer>
+                            <FormSummary.Label>{plainTekst(alderLabel)}</FormSummary.Label>
+                            <FormSummary.Value>{`${barn.alder} ${plainTekst(aar)}`}</FormSummary.Value>
+                        </FormSummary.Answer>
                     )}
                     {!erRegistrertManuelt && (
-                        <BarnekortInfo
-                            label={plainTekst(registrertBostedLabel)}
-                            verdi={
-                                <span
-                                    data-testid={
-                                        barn.adressebeskyttelse ? 'registrert-bosted-adressesperre' : undefined
-                                    }
-                                >
-                                    {plainTekst(hentBostedSpråkId(barn, teksterForSteg))}
-                                </span>
-                            }
-                        />
+                        <FormSummary.Answer>
+                            <FormSummary.Label>{plainTekst(registrertBostedLabel)}</FormSummary.Label>
+                            <FormSummary.Value>
+                                {
+                                    <span
+                                        data-testid={
+                                            barn.adressebeskyttelse ? 'registrert-bosted-adressesperre' : undefined
+                                        }
+                                    >
+                                        {plainTekst(hentBostedSpråkId(barn, teksterForSteg))}
+                                    </span>
+                                }
+                            </FormSummary.Value>
+                        </FormSummary.Answer>
                     )}
-                </HGrid>
-                <hr className={styles.divider} />
-                <Checkbox
-                    checked={erMedISøknad}
-                    aria-label={`${plainTekst(soekOmYtelseForBarnetSjekkboks)} ${barn.navn}`}
-                    onChange={() => velgBarnCallback(barn, erMedISøknad)}
-                    data-testid={`søk-om-barnetrygd-for-barn-${barn.ident}`}
-                >
-                    <TekstBlock block={soekOmYtelseForBarnetSjekkboks} />
-                </Checkbox>
-                {erRegistrertManuelt && (
+                    <FormSummary.Answer>
+                        <Checkbox
+                            checked={erMedISøknad}
+                            aria-label={`${plainTekst(soekOmYtelseForBarnetSjekkboks)} ${barn.navn}`}
+                            onChange={() => velgBarnCallback(barn, erMedISøknad)}
+                            data-testid={`søk-om-barnetrygd-for-barn-${barn.ident}`}
+                        >
+                            <TekstBlock block={soekOmYtelseForBarnetSjekkboks} />
+                        </Checkbox>
+                    </FormSummary.Answer>
+                </FormSummary.Answers>
+            </FormSummary.Value>
+            {erRegistrertManuelt && (
+                <FormSummary.Answer>
                     <Button
                         type={'button'}
                         variant="tertiary"
@@ -106,9 +101,9 @@ const Barnekort: React.FC<IBarnekortProps> = ({ barn, velgBarnCallback, barnSomS
                     >
                         <TekstBlock block={knappetekst} />
                     </Button>
-                )}
-            </VStack>
-        </Box>
+                </FormSummary.Answer>
+            )}
+        </FormSummary.Answer>
     );
 };
 
