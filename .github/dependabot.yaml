@@ -77,7 +77,6 @@ updates:
           - "date-fns"
           - "i18n-iso-countries"
           - "styled-components"
-          - "@types/styled-components"
       typescript-types:
         patterns:
           - "@types/node"
@@ -117,7 +116,6 @@ updates:
           - "@babel/preset-typescript"
           - "@pmmmwh/react-refresh-webpack-plugin"
           - "babel-loader"
-          - "babel-plugin-styled-components"
           - "buffer"
           - "case-sensitive-paths-webpack-plugin"
           - "copy-webpack-plugin"

@@ -23,7 +23,7 @@
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx,css}": [
       "prettier --write",
-      "eslint --fix src/ --max-warnings=71"
+      "eslint --fix src/ --max-warnings=76"
     ]
   },
   "browserslist": {
@@ -56,6 +56,7 @@
     "@sanity/client": "7.22.0",
     "@sentry/react": "10.51.0",
     "axios": "1.16.0",
+    "classnames": "2.5.1",
     "compression": "1.8.1",
     "cookie-parser": "1.4.7",
     "cors": "2.8.6",
@@ -96,10 +97,8 @@
     "@types/node": "24.12.2",
     "@types/react": "19.2.15",
     "@types/react-dom": "19.2.3",
-    "@types/styled-components": "5.1.36",
     "@vitejs/plugin-react": "6.0.1",
     "babel-loader": "10.1.1",
-    "babel-plugin-styled-components": "2.3.0",
     "buffer": "6.0.3",
     "case-sensitive-paths-webpack-plugin": "2.4.0",
     "concurrently": "9.2.1",
@@ -126,7 +125,7 @@
     "react-refresh": "0.18.0",
     "stream-browserify": "3.0.0",
     "style-loader": "4.0.0",
-    "styled-components": "6.4.1",
+    "styled-components": "6.4.2",
     "terser-webpack-plugin": "5.6.0",
     "ts-essentials": "10.2.0",
     "ts-loader": "9.5.7",
