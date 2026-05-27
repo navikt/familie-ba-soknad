@@ -55,6 +55,7 @@ export const BarnetrygdsperiodeOppsummering: React.FC<Props> = ({
     return (
         <PeriodeOppsummering
             fjernPeriodeCallback={fjernPeriodeCallback && (() => fjernPeriodeCallback(barnetrygdsperiode))}
+            fjernKnappTekst={teksterForPersonType.fjernKnapp}
             tittel={
                 <TekstBlock
                     block={teksterForPersonType.oppsummeringstittel}

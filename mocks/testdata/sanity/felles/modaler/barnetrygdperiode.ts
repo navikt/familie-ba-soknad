@@ -19,4 +19,5 @@ export const barnetrygdsperiodeTekstinnhold: IBarnetrygdsperiodeTekstinnhold = {
     sluttdato: lagSanitySpørsmålDokument(),
     belopPerManed: lagSanitySpørsmålDokument(),
     belopFormatFeilmelding: lagLocaleRecordBlock(),
+    fjernKnapp: lagLocaleRecordBlock(),
 };
