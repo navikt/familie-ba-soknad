@@ -1,0 +1,4 @@
+.buttonError {
+    outline: 2px solid var(--ax-border-danger);
+    outline-offset: -2px;
+}

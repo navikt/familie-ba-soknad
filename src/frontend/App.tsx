@@ -12,7 +12,8 @@ import { AppNavigationProvider } from './context/AppNavigationContext';
 import { EøsProvider } from './context/EøsContext';
 import { RoutesProvider } from './context/RoutesContext';
 import { StegProvider } from './context/StegContext';
-import { GlobalStyle } from './Theme';
+
+import './index.css';
 
 function App() {
     return (
@@ -21,7 +22,6 @@ function App() {
                 <RoutesProvider>
                     <Router basename={BASE_PATH}>
                         <StegProvider>
-                            <GlobalStyle />
                             {process.env.NODE_ENV !== 'production' && (
                                 <GlobalAlert status={'warning'}>
                                     <GlobalAlert.Header>
