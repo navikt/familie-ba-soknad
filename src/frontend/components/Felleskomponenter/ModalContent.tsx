@@ -1,17 +1,13 @@
 import React, { ReactNode } from 'react';
 
-import styled from 'styled-components';
-
-import { Modal } from '@navikt/ds-react';
-
-const StyledModalContent = styled(Modal.Body)`
-    && {
-        margin-top: 1rem;
-    }
-`;
+import { Box, Modal } from '@navikt/ds-react';
 
 const ModalContent: React.FC<{ children?: ReactNode }> = ({ children }) => {
-    return <StyledModalContent>{children}</StyledModalContent>;
+    return (
+        <Modal.Body>
+            <Box marginBlock={'space-16 space-0'}>{children}</Box>
+        </Modal.Body>
+    );
 };
 
 export default ModalContent;
