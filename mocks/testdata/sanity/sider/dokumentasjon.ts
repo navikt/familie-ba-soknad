@@ -50,6 +50,7 @@ export const dokumentasjonTekstinnhold: IDokumentasjonTekstinnhold = {
     filtypeFeilmelding: lagLocaleRecordString(),
     filstorrelseFeilmelding: lagLocaleRecordString(),
     antallFilerFeilmelding: lagLocaleRecordString(),
+    filnavnForLangtFeilmelding: lagLocaleRecordString(),
     ukjentFeilmelding: lagLocaleRecordString(),
     velgFil: lagLocaleRecordString(),
     velgFiler: lagLocaleRecordString(),
