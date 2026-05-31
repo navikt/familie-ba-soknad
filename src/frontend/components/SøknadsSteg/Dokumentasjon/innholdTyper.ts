@@ -53,6 +53,7 @@ export type IDokumentasjonTekstinnhold = {
     filtypeFeilmelding: LocaleRecordString;
     filstorrelseFeilmelding: LocaleRecordString;
     antallFilerFeilmelding: LocaleRecordString;
+    filnavnForLangtFeilmelding: LocaleRecordString;
     ukjentFeilmelding: LocaleRecordString;
     velgFil: LocaleRecordString;
     velgFiler: LocaleRecordString;
