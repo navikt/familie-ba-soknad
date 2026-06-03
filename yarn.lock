@@ -2570,10 +2570,10 @@
   dependencies:
     undici-types "~7.18.0"
 
-"@types/node@24.12.2":
-  version "24.12.2"
-  resolved "https://registry.npmjs.org/@types/node/-/node-24.12.2.tgz#353cb161dbf1785ea25e8829ba7ec574c5c629ac"
-  integrity sha512-A1sre26ke7HDIuY/M23nd9gfB+nrmhtYyMINbjI1zHJxYteKR6qSMX56FsmjMcDb3SMcjJg5BiRRgOCC/yBD0g==
+"@types/node@24.12.4":
+  version "24.12.4"
+  resolved "https://registry.npmjs.org/@types/node/-/node-24.12.4.tgz#2709745569811dcbdc57c097fafdd387c6330382"
+  integrity sha512-GUUEShf+PBCGW2KaXwcIt3Yk+e3pkKwWKb9GSyM9WQVE+ep2jzmHdGsHzu4wgcZy5fN9FBdVzjpBQsYlpfpgLA==
   dependencies:
     undici-types "~7.16.0"
 
@@ -10229,10 +10229,10 @@ ts-essentials@10.2.0, ts-essentials@>=10.0.0:
   resolved "https://registry.npmjs.org/ts-essentials/-/ts-essentials-10.2.0.tgz#72996d9e2525c205d06b432450e1ebc52214e267"
   integrity sha512-z9FlLywg0XEV46Ws1FwYN4NZDMr9qAe38lTTtgVBqzhhyEgwrnCUkFe4MEqnvar1kY1kFEnlkp56bxn2g0V+UA==
 
-ts-loader@9.5.7:
-  version "9.5.7"
-  resolved "https://registry.npmjs.org/ts-loader/-/ts-loader-9.5.7.tgz#582663e853646e18506cd5cc79feb354952731c0"
-  integrity sha512-/ZNrKgA3K3PtpMYOC71EeMWIloGw3IYEa5/t1cyz2r5/PyUwTXGzYJvcD3kfUvmhlfpz1rhV8B2O6IVTQ0avsg==
+ts-loader@9.6.0:
+  version "9.6.0"
+  resolved "https://registry.npmjs.org/ts-loader/-/ts-loader-9.6.0.tgz#50dfdea9c63ff9c5f4e89b04c1e3ce0d5d2946a1"
+  integrity sha512-dsJO0S+T7grTDWTc4a0nTygXGjKncVUpx8Y+af8EvI/D5WgTJby5UEk5eoMCB9EcLQmnvitqh99MqtjtHgAwFQ==
   dependencies:
     chalk "^4.1.0"
     enhanced-resolve "^5.0.0"
