@@ -22,11 +22,14 @@ updates:
           - "react-dom"
           - "@types/react-dom"
           - "react-router"
-      aksel:
+      navikt:
         patterns:
           - "@navikt/aksel-icons"
           - "@navikt/ds-css"
           - "@navikt/ds-react"
+          - "@navikt/fnrvalidator"
+          - "@navikt/nav-dekoratoren-moduler"
+          - "@navikt/oasis"
       familie:
         patterns:
           - "@navikt/familie-form-elements"
@@ -34,23 +37,20 @@ updates:
           - "@navikt/familie-logging"
           - "@navikt/familie-skjema"
           - "@navikt/familie-typer"
-      navikt:
+      tools:
         patterns:
-          - "@navikt/fnrvalidator"
-          - "@navikt/nav-dekoratoren-moduler"
-          - "@navikt/oasis"
-      sanity:
-        patterns:
+          - "@grafana/faro-web-sdk"
+          - "@sentry/react"
+          - "@sentry/webpack-plugin"
+          - "@axe-core/react"
+          - "concurrently"
+          - "husky"
+          - "lint-staged"
           - "@portabletext/react"
           - "@portabletext/toolkit"
           - "@portabletext/types"
           - "@sanity/client"
           - "ramda"
-      observability:
-        patterns:
-          - "@grafana/faro-web-sdk"
-          - "@sentry/react"
-          - "@sentry/webpack-plugin"
       server:
         patterns:
           - "compression"
@@ -64,28 +64,22 @@ updates:
           - "mustache-express"
           - "@types/mustache-express"
           - "xss"
-      common-utils:
+      utils:
         patterns:
           - "uuid"
-      backend-utils:
-        patterns:
           - "dotenv"
           - "unleash-client"
-      frontend-utils:
-        patterns:
           - "axios"
           - "date-fns"
           - "i18n-iso-countries"
           - "styled-components"
-      typescript-types:
+      build-test-validate:
         patterns:
           - "@types/node"
           - "ts-essentials"
           - "ts-loader"
           - "ts-node"
           - "typescript"
-      linting-formatting:
-        patterns:
           - "@eslint/js"
           - "@types/eslint-plugin-jsx-a11y"
           - "eslint"
@@ -97,8 +91,6 @@ updates:
           - "globals"
           - "prettier"
           - "typescript-eslint"
-      testing:
-        patterns:
           - "@testing-library/dom"
           - "@testing-library/jest-dom"
           - "@testing-library/react"
@@ -135,12 +127,6 @@ updates:
           - "webpack-cli"
           - "webpack-dev-server"
           - "webpack-merge"
-      dev-tools:
-        patterns:
-          - "@axe-core/react"
-          - "concurrently"
-          - "husky"
-          - "lint-staged"
       patch-updates:
         update-types:
           - "patch"
