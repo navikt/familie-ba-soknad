@@ -26,7 +26,7 @@ const polyfillLocaledata = async () => {
             /* webpackChunkName: "localedata" */
             /* webpackMode: "lazy-once" */
             `i18n-iso-countries/langs/${locale}.json`
-        ).then(result => registerLocale(result));
+        ).then(result => registerLocale(result.default ?? result));
     }
 };
 
