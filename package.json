@@ -70,7 +70,7 @@
     "react": "19.2.7",
     "react-cookie": "8.1.2",
     "react-dom": "19.2.7",
-    "react-router": "7.17.0",
+    "react-router": "8.0.1",
     "unleash-client": "6.11.0",
     "uuid": "14.0.0",
     "xss": "1.0.15"
@@ -95,7 +95,7 @@
     "@types/express": "5.0.6",
     "@types/mustache-express": "1.2.5",
     "@types/node": "24.13.2",
-    "@types/react": "19.2.16",
+    "@types/react": "19.2.17",
     "@types/react-dom": "19.2.3",
     "@vitejs/plugin-react": "6.0.2",
     "babel-loader": "10.1.1",
