@@ -23,34 +23,47 @@ export enum EStandardFileRejectionReasons {
 export enum ECustomFileRejectionReasons {
     FIL_DIMENSJONER_FOR_LITEN = 'filDimensjonerForLiten',
     MAKS_ANTALL_FILER_NÅDD = 'maksAntallFilerNådd',
+    FILNAVN_FOR_LANGT = 'filnavnForLangt',
     UKJENT_FEIL = 'ukjentFeil',
 }
 
 const filtrerFiler = (
     filer: FileObject[],
     antallEksisterendeFiler: number,
-    maksAntallFiler: number
+    maksAntallFiler: number,
+    maksFilnavnLengde: number
 ): { aksepterteFiler: FileAccepted[]; feilendeFiler: FileRejected[] } => {
     const filerUtenFeil: FileAccepted[] = filer.filter(file => !file.error);
     const filerMedFeil: FileRejected[] = filer.filter(file => file.error);
 
-    const ikkeForMangeFiler = antallEksisterendeFiler + filerUtenFeil.length <= maksAntallFiler;
+    // Backend avviser vedlegg med filnavn over maksFilnavnLengde tegn, så vi validerer det her for å gi brukeren beskjed med en gang.
+    const filerMedForLangtNavn: FileRejected[] = filerUtenFeil
+        .filter(fil => fil.file.name.length > maksFilnavnLengde)
+        .map(fil => ({
+            file: fil.file,
+            error: true,
+            reasons: [ECustomFileRejectionReasons.FILNAVN_FOR_LANGT],
+        }));
+
+    const filerMedGyldigNavn: FileAccepted[] = filerUtenFeil.filter(fil => fil.file.name.length <= maksFilnavnLengde);
+
+    const ikkeForMangeFiler = antallEksisterendeFiler + filerMedGyldigNavn.length <= maksAntallFiler;
 
     if (ikkeForMangeFiler) {
-        return { aksepterteFiler: filerUtenFeil, feilendeFiler: filerMedFeil };
+        return { aksepterteFiler: filerMedGyldigNavn, feilendeFiler: [...filerMedFeil, ...filerMedForLangtNavn] };
     } else {
         const ledigePlasser = maksAntallFiler - antallEksisterendeFiler;
 
-        const aksepterteFiler = filerUtenFeil.slice(0, ledigePlasser);
+        const aksepterteFiler = filerMedGyldigNavn.slice(0, ledigePlasser);
 
-        const filerOverMaksAntall = filerUtenFeil.slice(aksepterteFiler.length);
+        const filerOverMaksAntall = filerMedGyldigNavn.slice(aksepterteFiler.length);
         const filerOverMaksAntallMedFeil: FileRejected[] = filerOverMaksAntall.map(fil => ({
             file: fil.file,
             error: true,
             reasons: [ECustomFileRejectionReasons.MAKS_ANTALL_FILER_NÅDD],
         }));
 
-        const feilendeFiler = [...filerMedFeil, ...filerOverMaksAntallMedFeil];
+        const feilendeFiler = [...filerMedFeil, ...filerMedForLangtNavn, ...filerOverMaksAntallMedFeil];
 
         return { aksepterteFiler, feilendeFiler };
     }
@@ -101,6 +114,7 @@ export const useFilopplaster = (
     const MAKS_FILSTØRRELSE_MB = 10;
     const MAKS_FILSTØRRELSE_BYTES = MAKS_FILSTØRRELSE_MB * 1024 * 1024;
     const MAKS_ANTALL_FILER = 25;
+    const MAKS_FILNAVN_LENGDE = 200;
     const STØTTEDE_FILTYPER = [EFiltyper.PNG, EFiltyper.JPG, EFiltyper.JPEG, EFiltyper.PDF];
 
     const feilmeldinger: Record<FileRejectionReason | ECustomFileRejectionReasons, string> = {
@@ -108,6 +122,7 @@ export const useFilopplaster = (
         [EStandardFileRejectionReasons.FIL_STØRRELSE_FOR_STOR]: `${plainTekst(dokumentasjonTekster.filstorrelseFeilmelding)} ${MAKS_FILSTØRRELSE_MB} MB`,
         [ECustomFileRejectionReasons.FIL_DIMENSJONER_FOR_LITEN]: plainTekst(dokumentasjonTekster.bildetForLite),
         [ECustomFileRejectionReasons.MAKS_ANTALL_FILER_NÅDD]: `${plainTekst(dokumentasjonTekster.antallFilerFeilmelding)} ${MAKS_ANTALL_FILER}`,
+        [ECustomFileRejectionReasons.FILNAVN_FOR_LANGT]: `${plainTekst(dokumentasjonTekster.filnavnForLangtFeilmelding)} ${MAKS_FILNAVN_LENGDE}`,
         [ECustomFileRejectionReasons.UKJENT_FEIL]: plainTekst(dokumentasjonTekster.ukjentFeilmelding),
     };
 
@@ -117,7 +132,8 @@ export const useFilopplaster = (
         const { aksepterteFiler, feilendeFiler } = filtrerFiler(
             nyeFiler,
             dokumentasjon.opplastedeVedlegg.length,
-            MAKS_ANTALL_FILER
+            MAKS_ANTALL_FILER,
+            MAKS_FILNAVN_LENGDE
         );
 
         if (feilendeFiler.length > 0) {
