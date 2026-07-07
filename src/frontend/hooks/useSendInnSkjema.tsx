@@ -1,4 +1,4 @@
-import * as Sentry from '@sentry/react';
+import { captureException } from '@nais/apm';
 import { AxiosError } from 'axios';
 
 import { RessursStatus } from '@navikt/familie-typer';
@@ -51,9 +51,9 @@ export const useSendInnSkjema = (): {
                         settSisteModellVersjon(responseData.data.modellVersjon);
                     } else {
                         //Denne skal feile mykt, med en custom feilmelding til brukeren. Kaster dermed ingen feil her.
-                        Sentry.captureException(new Error('Klarte ikke sende inn søknaden', { cause: error.message }));
+                        captureException(new Error('Klarte ikke sende inn søknaden', { cause: error.message }));
                         if (error) {
-                            Sentry.captureException(error);
+                            captureException(error);
                         }
                     }
                 }

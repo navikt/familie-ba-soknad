@@ -13,8 +13,7 @@ import App from './App';
 import { SpråkProvider } from './context/SpråkContext';
 import { hentDekorator } from './decorator';
 import MiljøProvider from './MiljøProvider';
-import { initGrafanaFaro } from './utils/grafanaFaro';
-import { initSentry } from './utils/sentry';
+import { initApm } from './utils/apm';
 
 import '@navikt/ds-css';
 
@@ -33,8 +32,7 @@ const polyfillLocaledata = async () => {
 hentDekorator();
 
 polyfillLocaledata().then(async () => {
-    initSentry();
-    initGrafanaFaro();
+    initApm();
 
     if (process.env.NODE_ENV !== 'production') {
         import('@axe-core/react').then(({ default: axe }) => {
