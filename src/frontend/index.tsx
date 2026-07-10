@@ -14,7 +14,6 @@ import { SpråkProvider } from './context/SpråkContext';
 import { hentDekorator } from './decorator';
 import MiljøProvider from './MiljøProvider';
 import { initApm } from './utils/apm';
-import { initGrafanaFaro } from './utils/grafanaFaro';
 
 import '@navikt/ds-css';
 
@@ -34,7 +33,6 @@ hentDekorator();
 
 polyfillLocaledata().then(async () => {
     initApm();
-    initGrafanaFaro();
 
     if (process.env.NODE_ENV !== 'production') {
         import('@axe-core/react').then(({ default: axe }) => {
