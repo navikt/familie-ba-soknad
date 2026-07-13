@@ -1,11 +1,8 @@
-import { sentryWebpackPlugin } from '@sentry/webpack-plugin';
 import CssMinimizerWebpackPlugin from 'css-minimizer-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import TerserWebpackPlugin from 'terser-webpack-plugin';
 import webpack from 'webpack';
 import { CustomizeRule, mergeWithRules } from 'webpack-merge';
-
-import { BASE_PATH } from '../common/miljø';
 
 import baseConfig from './webpack.common.config';
 
@@ -24,25 +21,7 @@ const prodConfig: webpack.Configuration = mergeWithRules({
             filename: '[name].[contenthash].css',
         }),
         new CssMinimizerWebpackPlugin(),
-        process.env.SENTRY_AUTH_TOKEN
-            ? sentryWebpackPlugin({
-                  org: 'nav',
-                  project: 'familie-ba-soknad',
-                  authToken: process.env.SENTRY_AUTH_TOKEN,
-                  url: 'https://sentry.gc.nav.no/',
-                  release: {
-                      name: process.env.SENTRY_RELEASE,
-                      uploadLegacySourcemaps: {
-                          paths: ['dist'],
-                          urlPrefix: `~${BASE_PATH}`,
-                      },
-                  },
-                  errorHandler: err => {
-                      console.warn('Sentry CLI Plugin: ' + err.message);
-                  },
-              })
-            : undefined,
-    ].filter(val => !!val),
+    ],
     output: {
         filename: '[name].[contenthash].js',
     },

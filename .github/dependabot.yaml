@@ -41,8 +41,7 @@ updates:
       tools:
         patterns:
           - "@grafana/faro-web-sdk"
-          - "@sentry/react"
-          - "@sentry/webpack-plugin"
+          - "@nais/apm"
           - "@axe-core/react"
           - "concurrently"
           - "husky"
