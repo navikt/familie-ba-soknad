@@ -1,0 +1,2 @@
+# Ingen avhengigheter får kjøre (pre|post)install-scripts (sikkerhetstiltak)
+onlyBuiltDependencies: []
