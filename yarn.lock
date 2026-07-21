@@ -8834,10 +8834,10 @@ react-refresh@0.18.0:
   resolved "https://registry.npmjs.org/react-refresh/-/react-refresh-0.18.0.tgz#2dce97f4fe932a4d8142fa1630e475c1729c8062"
   integrity sha512-QgT5//D3jfjJb6Gsjxv0Slpj23ip+HtOpnNgnb2S5zU3CB26G/IDPGoy4RJB42wzFE46DRsstbW6tKHoKbhAxw==
 
-react-router@8.0.1:
-  version "8.0.1"
-  resolved "https://registry.npmjs.org/react-router/-/react-router-8.0.1.tgz#4202503acd371d0f053486df4c718bb20f100008"
-  integrity sha512-5EL/fANovVUhRK50NLS8RYfX0BxrimoKsHWUPPy8v5UEl8i6vzF7e4POo3u+AhPItDwccUAJjMfIOmydxBJmQw==
+react-router@8.2.0:
+  version "8.2.0"
+  resolved "https://registry.npmjs.org/react-router/-/react-router-8.2.0.tgz#194809cb06a1b9ed83654882fd549b7fd47a20fd"
+  integrity sha512-uP1LgGNHyilL1u+ZkecQk74DJOKOb6q4NLNYLRJcD/fjoogftNb5/Rj/07o/QBFsY/5MbAKPm1peTCQuVPv9cQ==
   dependencies:
     cookie-es "^3.1.1"
 
