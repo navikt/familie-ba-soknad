@@ -1,5 +1,3 @@
-# Flat node_modules (som yarn) for å unngå phantom-dependency-problemer ved migrering til pnpm
-nodeLinker: hoisted
 # Avhengigheter får ikke kjøre (pre|post)install-scripts (sikkerhetstiltak)
 allowBuilds:
   '@sentry/cli': false
