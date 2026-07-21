@@ -53,6 +53,12 @@ importers:
       '@sanity/client':
         specifier: 7.23.0
         version: 7.23.0
+      '@sentry/browser':
+        specifier: 10.64.0
+        version: 10.64.0
+      '@sentry/core':
+        specifier: 10.64.0
+        version: 10.64.0
       '@sentry/react':
         specifier: 10.64.0
         version: 10.64.0(react@19.2.7)
