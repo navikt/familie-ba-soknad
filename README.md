@@ -20,9 +20,10 @@ Select scopes `repo` og `read:packages`
 ## Kjør lokalt
 
 1. `nvm use`
-2. `pnpm install`
-3. `pnpm start:dev`
-4. Kjør opp familie-baks-soknad-api
+2. `corepack enable`
+3. `pnpm install`
+4. `pnpm start:dev`
+5. Kjør opp familie-baks-soknad-api
 
 ### Mellomlagring
 For å kjøre med mellomlagring må du ha familie-dokument kjørende (https://github.com/navikt/familie-dokument).
