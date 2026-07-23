@@ -1,5 +1,6 @@
 import path from 'path';
 
+import { sentryVitePlugin } from '@sentry/vite-plugin';
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 
@@ -11,12 +12,27 @@ const BACKEND_URL = 'http://localhost:55554';
 export default defineConfig({
     root: path.resolve(__dirname, 'src/frontend'),
     base: BASE_PATH,
-    plugins: [react()],
-    resolve: {
-        alias: {
-            'styled-components': path.resolve(__dirname, 'node_modules', 'styled-components'),
-        },
-    },
+    plugins: [
+        react(),
+        process.env.SENTRY_AUTH_TOKEN
+            ? sentryVitePlugin({
+                  org: 'nav',
+                  project: 'familie-ba-soknad',
+                  authToken: process.env.SENTRY_AUTH_TOKEN,
+                  url: 'https://sentry.gc.nav.no/',
+                  release: {
+                      name: process.env.SENTRY_RELEASE,
+                  },
+                  sourcemaps: {
+                      assets: ['dist/**'],
+                      filesToDeleteAfterUpload: ['dist/**/*.js.map'],
+                  },
+                  errorHandler: err => {
+                      console.warn('Sentry Vite Plugin: ' + err.message);
+                  },
+              })
+            : undefined,
+    ],
     server: {
         port: 3000,
         // Tillat at vite dev-serveren leser filer utenfor src/frontend (f.eks. src/common)
@@ -35,5 +51,7 @@ export default defineConfig({
         // Backend serverer statiske filer fra denne mappen, se src/backend/routes/static.ts
         outDir: path.resolve(__dirname, 'dist'),
         emptyOutDir: false,
+        // Sourcemaps trengs for at Sentry skal kunne laste opp og vise korrekt stacktrace
+        sourcemap: true,
     },
 });
