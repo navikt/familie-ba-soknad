@@ -7,11 +7,12 @@
 
     /* Emit */
     "importHelpers": true, // tslib dependency påkrevd
+    "outDir": "../../dist",
+    "rootDir": "..",
 
     /* Modules */
-    "module": "ESNext", // TODO: Gjøres om til NodeNext når webpack er borte
-    "moduleResolution": "Node", // TODO: Gjøres om til NodeNext når webpack er borte
-    "ignoreDeprecations": "6.0", // TODO: Fjernes når moduleResolution er oppdatert til NodeNext
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "types": [
       "node", // TODO: Fjernes når webpack er borte
       "vitest/globals",
