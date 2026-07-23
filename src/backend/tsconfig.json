@@ -13,10 +13,6 @@
     /* Modules */
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
-    "types": [
-      "node", // TODO: Fjernes når webpack er borte
-      "vitest/globals",
-      "@testing-library/jest-dom"
-    ]
+    "types": ["node", "vitest/globals", "@testing-library/jest-dom"]
   }
 }
