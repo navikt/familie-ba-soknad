@@ -19,8 +19,8 @@ import { initSentry } from './utils/sentry';
 
 import '@navikt/ds-css';
 
-// Statiske imports (i stedet for en dynamisk import med template literal) slik at både
-// webpack og vite kan analysere og bunte disse - en dynamisk sti kan ikke analyseres av vite.
+// Statiske imports (i stedet for en dynamisk import med template literal) slik at
+// vite kan analysere og bunte disse - en dynamisk sti kan ikke analyseres av vite.
 const localeImporters: Record<LocaleType, () => Promise<{ default: LocaleData }>> = {
     [LocaleType.en]: () => import('i18n-iso-countries/langs/en.json'),
     [LocaleType.nb]: () => import('i18n-iso-countries/langs/nb.json'),

@@ -24,7 +24,7 @@ initializeUnleash();
 
 const app = express();
 
-// webpack serve kjører på en annen port enn oss, må tillate det som origin
+// vite dev-serveren kjører på en annen port enn oss, må tillate det som origin
 if (process.env.NODE_ENV === 'development') {
     app.use(
         cors({
