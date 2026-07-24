@@ -2,7 +2,7 @@
   "name": "familie-ba-soknad",
   "type": "module",
   "scripts": {
-    "start:dev": "yarn clean && concurrently \"yarn:dev:*\"",
+    "start:dev": "yarn clean && yarn dev",
     "dev:server": "yarn build:backend && NODE_ENV=development node dist/backend/server.js",
     "dev:frontend": "vite",
     "dev": "concurrently \"yarn:dev:server\" \"yarn:dev:frontend\"",
