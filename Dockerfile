@@ -10,7 +10,7 @@ WORKDIR /app
 # og vi slipper å kopiere med hele det (mye større) node_modules som også inneholder frontend-only
 # avhengigheter (react, styled-components, @navikt/ds-react, osv.) som allerede er bundlet inn i
 # frontend-JS-en av Vite.
-# package.json med "type": "modules" må også kopieres over for å fortelle at Node skal anse .js filer som ES Modules og ikke CommonJS. Muliggjør bruken av import /export.
+# package.json med "type": "module" må også kopieres over for å fortelle at Node skal anse .js filer som ES Modules og ikke CommonJS. Muliggjør bruken av import /export.
 COPY package.json ./
 COPY dist ./dist
 
