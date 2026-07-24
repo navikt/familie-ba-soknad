@@ -53,5 +53,14 @@ export default defineConfig({
         emptyOutDir: false,
         // Sourcemaps trengs for at Sentry skal kunne laste opp og vise korrekt stacktrace
         sourcemap: true,
+        rolldownOptions: {
+            // To separate HTML-innganger: index.html (hovedappen) og disabled.html
+            // (killswitch-siden, se src/backend/middlewares/feature-toggles.ts sitt
+            // res.render('disabled.html', ...) og src/frontend/disabled.tsx).
+            input: {
+                index: path.resolve(__dirname, 'src/frontend/index.html'),
+                disabled: path.resolve(__dirname, 'src/frontend/disabled.html'),
+            },
+        },
     },
 });
