@@ -1,4 +1,4 @@
-import { modellVersjon } from './modellversjon';
+import { modellVersjon } from './modellversjon.js';
 
 interface MiljøProps {
     sanityDataset: string;
