@@ -1,9 +1,9 @@
 import { ESvar } from '@navikt/familie-form-elements';
 
-import { ISODateString } from '../ISODateString';
-import { LocaleType } from '../localeType';
+import { ISODateString } from '../ISODateString.js';
+import { LocaleType } from '../localeType.js';
 
-import { ISøknadKontraktDokumentasjon } from './dokumentasjon';
+import { ISøknadKontraktDokumentasjon } from './dokumentasjon.js';
 import {
     ERegistrertBostedType,
     ESivilstand,
@@ -14,7 +14,7 @@ import {
     ISøknadsfelt,
     IUtenlandsperiodeIKontraktFormat,
     SpørsmålMap,
-} from './generelle';
+} from './generelle.js';
 
 export interface ISøknadKontrakt {
     kontraktVersjon: number;

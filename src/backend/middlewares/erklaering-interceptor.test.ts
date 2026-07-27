@@ -3,9 +3,9 @@ import { DeepPartial } from 'ts-essentials';
 import { vi } from 'vitest';
 import { mockDeep } from 'vitest-mock-extended';
 
-import { ISøknadKontrakt } from '../../common/typer/kontrakt/kontrakt';
+import { ISøknadKontrakt } from '../../common/typer/kontrakt/kontrakt.js';
 
-import { erklaeringInterceptor } from './erklaering-interceptor';
+import { erklaeringInterceptor } from './erklaering-interceptor.js';
 
 describe('erklaering-interceptor', () => {
     const request = (partialSøknad: DeepPartial<ISøknadKontrakt>) =>

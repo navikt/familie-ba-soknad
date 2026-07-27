@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express';
 
-import { KillSwitchToggle } from '../../common/typer/feature-toggles';
-import { isEnabled } from '../utils/unleash';
+import { KillSwitchToggle } from '../../common/typer/feature-toggles.js';
+import { isEnabled } from '../utils/unleash.js';
 
 /**
  * Express-middleware som returnerer en feil-side hvis familie-ba-soknad.disable-soknad er skrudd på i unleash
