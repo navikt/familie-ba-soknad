@@ -7,7 +7,7 @@ import { defineConfig } from 'vite';
 import { BASE_PATH } from './src/common/miljø';
 
 // Backend (Node/Express) kjører lokalt på denne porten, se src/common/miljø.ts
-const BACKEND_URL = 'http://localhost:55554';
+const BACKEND_URL = 'http://localhost:8080';
 
 export default defineConfig({
     root: path.resolve(__dirname, 'src/frontend'),

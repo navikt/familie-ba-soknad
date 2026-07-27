@@ -65,7 +65,7 @@ const miljø = (): MiljøProps => {
             modellVersjon: modellVersjon,
             wonderwallUrl: '',
             oauthCallbackUri: `http://localhost:3000${BASE_PATH}`,
-            port: 55554,
+            port: 8080,
         };
     }
 };
