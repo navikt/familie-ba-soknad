@@ -8,7 +8,7 @@
     "dev": "concurrently \"yarn:dev:server\" \"yarn:dev:frontend\"",
     "build": "yarn build:frontend && yarn build:backend",
     "build:frontend": "vite build",
-    "build:backend": "tsc -p src/backend/tsconfig.json && node scripts/prune-backend-node-modules.mjs",
+    "build:backend": "tsc -p src/backend/tsconfig.json && node scripts/prune-backend-node-modules.js",
     "clean": "rm -rf dist",
     "test": "vitest",
     "lint": "eslint './src/**/*.{js,ts,tsx}'",
