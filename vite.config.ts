@@ -6,9 +6,6 @@ import { defineConfig } from 'vite';
 
 import { BASE_PATH } from './src/common/miljø';
 
-// Backend (Node/Express) kjører lokalt på denne porten, se src/common/miljø.ts
-const BACKEND_URL = 'http://localhost:8000';
-
 export default defineConfig({
     root: path.resolve(__dirname, 'src/frontend'),
     base: BASE_PATH,
@@ -34,17 +31,9 @@ export default defineConfig({
             : undefined,
     ],
     server: {
-        port: 3000,
         // Tillat at vite dev-serveren leser filer utenfor src/frontend (f.eks. src/common)
         fs: {
             allow: [path.resolve(__dirname)],
-        },
-        proxy: {
-            [`${BASE_PATH}api`]: { target: BACKEND_URL, changeOrigin: true },
-            [`${BASE_PATH}dokument`]: { target: BACKEND_URL, changeOrigin: true },
-            [`${BASE_PATH}modellversjon`]: { target: BACKEND_URL, changeOrigin: true },
-            [`${BASE_PATH}toggles`]: { target: BACKEND_URL, changeOrigin: true },
-            [`${BASE_PATH}konverter`]: { target: BACKEND_URL, changeOrigin: true },
         },
     },
     build: {

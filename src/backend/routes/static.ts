@@ -2,12 +2,12 @@ import path from 'path';
 
 import express, { Express } from 'express';
 import mustacheExpress from 'mustache-express';
+import type { ViteDevServer } from 'vite';
 
 import { BASE_PATH } from '../../common/miljø.js';
 
-export const konfigurerStatic = (app: Express): Express => {
-    // Sett opp mustache templates for index.html og disabled.html
-    const frontendMappe = path.join(process.cwd(), 'dist');
+export const konfigurerStatic = (app: Express, viteDevServer?: ViteDevServer): Express => {
+    const frontendMappe = viteDevServer ? path.join(process.cwd(), 'src/frontend') : path.join(process.cwd(), 'dist');
     app.set('views', frontendMappe);
     app.set('view engine', 'mustache');
     app.engine('html', mustacheExpress());
@@ -17,7 +17,9 @@ export const konfigurerStatic = (app: Express): Express => {
         app.set('view cache', false);
     }
 
-    // Serve alle statiske filer utenom index.html direkte fra dist-mappen
-    app.use(BASE_PATH, express.static(frontendMappe, { index: false }));
+    if (!viteDevServer) {
+        // Serve alle statiske filer utenom index.html direkte fra dist-mappen
+        app.use(BASE_PATH, express.static(frontendMappe, { index: false }));
+    }
     return app;
 };
