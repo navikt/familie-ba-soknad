@@ -1,22 +1,22 @@
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
-import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
+import type { ViteDevServer } from 'vite';
 
 import { logInfo } from '@navikt/familie-logging';
 
-import miljø, { BASE_PATH } from '../common/miljø';
+import miljø, { BASE_PATH, erLokalt } from '../common/miljø.js';
 
-import { cspString } from './csp';
-import { expressToggleInterceptor } from './middlewares/feature-toggles';
-import { konfigurerIndex, konfigurerIndexFallback } from './routes';
-import { konfigurerApi } from './routes/api';
-import { konfigurerAllFeatureTogglesEndpoint } from './routes/feature-toggles';
-import { konfigurerModellVersjonEndpoint } from './routes/modellversjon';
-import { konfigurerNais } from './routes/nais';
-import { konfigurerStatic } from './routes/static';
-import { initializeUnleash } from './utils/unleash';
+import { cspString } from './csp.js';
+import { expressToggleInterceptor } from './middlewares/feature-toggles.js';
+import { konfigurerApi } from './routes/api.js';
+import { konfigurerAllFeatureTogglesEndpoint } from './routes/feature-toggles.js';
+import { konfigurerIndex, konfigurerIndexFallback } from './routes/index.js';
+import { konfigurerModellVersjonEndpoint } from './routes/modellversjon.js';
+import { konfigurerNais } from './routes/nais.js';
+import { konfigurerStatic } from './routes/static.js';
+import { initializeUnleash } from './utils/unleash.js';
 
 dotenv.config();
 
@@ -24,14 +24,14 @@ initializeUnleash();
 
 const app = express();
 
-// webpack serve kjører på en annen port enn oss, må tillate det som origin
-if (process.env.NODE_ENV === 'development') {
-    app.use(
-        cors({
-            origin: 'http://localhost:3000',
-            credentials: true,
-        })
-    );
+let viteDevServer: ViteDevServer | undefined;
+if (erLokalt()) {
+    const viteModuleNavn = 'vite';
+    const { createServer } = await import(viteModuleNavn);
+    viteDevServer = await createServer({
+        server: { middlewareMode: true },
+        appType: 'custom',
+    });
 }
 
 // Alltid bruk gzip-compression på alt vi server med express
@@ -40,10 +40,10 @@ app.use(compression());
 // Parse cookies, bl.a. for rendring av lang-attribute
 app.use(cookieParser());
 
-konfigurerStatic(app);
+konfigurerStatic(app, viteDevServer);
 
 // Middleware for unleash kill-switch
-app.use(expressToggleInterceptor);
+app.use(expressToggleInterceptor(viteDevServer));
 
 app.use((_req, res, next) => {
     res.header('Content-Security-Policy', cspString(process.env.DEKORATOREN_URL ?? 'https://www.nav.no/dekoratoren'));
@@ -52,13 +52,18 @@ app.use((_req, res, next) => {
     next();
 });
 
-konfigurerIndex(app);
 konfigurerNais(app);
 konfigurerApi(app);
 konfigurerAllFeatureTogglesEndpoint(app);
 konfigurerModellVersjonEndpoint(app);
 
-konfigurerIndexFallback(app);
+if (viteDevServer) {
+    app.use(viteDevServer.middlewares);
+}
+
+konfigurerIndex(app, viteDevServer);
+
+konfigurerIndexFallback(app, viteDevServer);
 
 logInfo(`Starting server on localhost: http://localhost:${miljø().port}${BASE_PATH}`);
 

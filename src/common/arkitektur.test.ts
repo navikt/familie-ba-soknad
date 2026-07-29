@@ -7,7 +7,7 @@ const importsIFil = (filePath: string): string[] => {
     const innhold = readFileSync(filePath, 'utf-8');
     const importRegex = /from ['"](.+?)['"]/g;
     const imports: string[] = [];
-    let match: string[];
+    let match: RegExpExecArray | null;
     while ((match = importRegex.exec(innhold)) !== null) {
         imports.push(match[1]);
     }

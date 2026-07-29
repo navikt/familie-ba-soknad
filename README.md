@@ -19,6 +19,11 @@ Select scopes `repo` og `read:packages`
 
 ## Kjør lokalt
 
+Prosjektet bruker [pnpm](https://pnpm.io/) som pakkehåndterer. Riktig pnpm-versjon er
+låst via `packageManager`-feltet i `package.json` og hentes automatisk av
+[Corepack](https://nodejs.org/api/corepack.html) (fulgte med Node.js). Kjør `corepack enable`
+én gang for å aktivere Corepack, så vil riktig pnpm-versjon brukes automatisk i prosjektet.
+
 1. `nvm use`
 2. `corepack enable`
 3. `pnpm install`
