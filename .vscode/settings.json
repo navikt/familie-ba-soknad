@@ -7,5 +7,5 @@
         "typescriptreact"
     ],
     "editor.formatOnSave": true,
-    "jest.jestCommandLine": "yarn test"
+    "jest.jestCommandLine": "pnpm test"
 }
