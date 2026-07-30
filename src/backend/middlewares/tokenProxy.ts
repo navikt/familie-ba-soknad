@@ -84,7 +84,7 @@ const getLokaltMotPreprodToken = async (applicationName: ApplicationName): Promi
     const token = envVarNavn && process.env[envVarNavn];
     if (!token) {
         throw Error(
-            `Mangler ${envVarNavn} i .env. Kjør 'yarn hent-preprod-tokens' for å hente gyldige tokens fra tokenx-token-generator.`
+            `Mangler ${envVarNavn} i .env. Kjør 'pnpm hent-preprod-tokens' for å hente gyldige tokens fra tokenx-token-generator.`
         );
     }
     return `Bearer ${token}`;
