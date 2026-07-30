@@ -13,7 +13,7 @@
             "runtimeArgs": [
                 "start:dev:ts-server",
             ],
-            "runtimeExecutable": "yarn",
+            "runtimeExecutable": "pnpm",
             "type": "node"
         },
         {
@@ -24,7 +24,7 @@
             "internalConsoleOptions": "neverOpen",
             "disableOptimisticBPs": true,
             "cwd": "${workspaceFolder}",
-            "runtimeExecutable": "yarn",
+            "runtimeExecutable": "pnpm",
             "args": [
                 "test",
                 "--runInBand",

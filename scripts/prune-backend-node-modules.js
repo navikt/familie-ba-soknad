@@ -17,6 +17,12 @@ async function main() {
         throw new Error(`Fant ikke ${entryFile}. Kjør 'yarn build:backend' (tsc) før dette scriptet.`);
     }
 
+    // Fjern en eventuell tidligere pruning før sporing. Ellers vil @vercel/nft
+    // resolve avhengigheter mot den gamle dist/node_modules (stier som starter med
+    // "dist/node_modules/") som deretter filtreres bort under, slik at f.eks.
+    // 'compression' ikke kopieres og produksjonsserveren feiler med ERR_MODULE_NOT_FOUND.
+    await rm(nodeModulesDir, { recursive: true, force: true });
+
     // Ignorerer filer som ikke er nødvendige for produksjon. @vercel/nft vil finne vite da den importeres i backend-koden, men vite er kun nødvendig for utvikling og bygging, ikke for produksjon.
     const ignoredFiles = ['node_modules/vite'];
 
@@ -26,8 +32,6 @@ async function main() {
     });
 
     const nodeModuleFiles = [...fileList].filter(file => file.startsWith('node_modules/'));
-
-    await rm(nodeModulesDir, { recursive: true, force: true });
 
     await Promise.all(
         nodeModuleFiles.map(async relativFil => {

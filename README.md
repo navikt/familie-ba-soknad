@@ -19,10 +19,16 @@ Select scopes `repo` og `read:packages`
 
 ## Kjør lokalt
 
+Prosjektet bruker [pnpm](https://pnpm.io/) som pakkehåndterer. Riktig pnpm-versjon er
+låst via `packageManager`-feltet i `package.json` og hentes automatisk av
+[Corepack](https://nodejs.org/api/corepack.html) (fulgte med Node.js). Kjør `corepack enable`
+én gang for å aktivere Corepack, så vil riktig pnpm-versjon brukes automatisk i prosjektet.
+
 1. `nvm use`
-2. `yarn install`
-3. `yarn start:dev`
-4. Kjør opp familie-baks-soknad-api
+2. `corepack enable`
+3. `pnpm install`
+4. `pnpm start:dev`
+5. Kjør opp familie-baks-soknad-api
 
 ### Mellomlagring
 For å kjøre med mellomlagring må du ha familie-dokument kjørende (https://github.com/navikt/familie-dokument).
@@ -95,7 +101,7 @@ if (toggles.NY_TOGGLE) {
 
 # Test av PDF
 Etter at søknaden er sendt inn, vil det genereres en PDF basert på svarene som er gitt. Søknaden går først til `familie-baks-soknad-api` før den sendes over til `familie-baks-mottak` som forbereder og trigger PDF-generering i `familie-dokument`. For å teste hele dette løpet trenger man derfor å kjøre opp alle disse applikasjonene:
-* `familie-ba-soknad` (`yarn start:dev`)
+* `familie-ba-soknad` (`pnpm start:dev`)
 * `familie-baks-soknad-api` (Kjør `LokalLauncher.kt`, se `README.md`)
 * `familie-dokument` (Kjør `ApplicationLocalSoknad.kt`)
 * `familie-baks-mottak` (Kjør `DevLauncherPostgress.kt`, se `README.md`)
