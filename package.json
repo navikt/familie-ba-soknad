@@ -10,6 +10,7 @@
     "build:frontend": "vite build",
     "build:backend": "tsc -p src/backend/tsconfig.json && node scripts/prune-backend-node-modules.js",
     "clean": "rm -rf dist",
+    "hent-preprod-tokens": "node scripts/hent-preprod-tokens.js",
     "test": "vitest",
     "lint": "eslint './src/**/*.{js,ts,tsx}'",
     "lint:fix": "eslint './src/**/*.{js,ts,tsx}' --fix",
