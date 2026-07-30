@@ -4,6 +4,7 @@
   "packageManager": "pnpm@11.15.0",
   "scripts": {
     "start:dev": "pnpm clean && pnpm dev",
+    "start:dev:lokalt-mot-preprod": "ENV=lokalt-mot-preprod pnpm start:dev",
     "dev:server": "pnpm build:backend && NODE_ENV=development node dist/backend/server.js",
     "dev:frontend": "vite",
     "dev": "pnpm dev:server",
@@ -11,6 +12,7 @@
     "build:frontend": "vite build",
     "build:backend": "tsc -p src/backend/tsconfig.json && node scripts/prune-backend-node-modules.js",
     "clean": "rm -rf dist",
+    "hent-preprod-tokens": "node scripts/hent-preprod-tokens.js",
     "test": "vitest",
     "lint": "eslint './src/**/*.{js,ts,tsx}'",
     "lint:fix": "eslint './src/**/*.{js,ts,tsx}' --fix",
@@ -108,6 +110,7 @@
     "jsdom": "29.1.1",
     "lint-staged": "17.0.8",
     "msw": "2.14.6",
+    "playwright": "1.62.0",
     "prettier": "3.8.4",
     "ts-essentials": "10.2.1",
     "typescript": "6.0.3",
