@@ -232,8 +232,8 @@ importers:
         specifier: 4.1.10
         version: 4.1.10(@opentelemetry/api@1.9.1)(@types/node@24.13.3)(jsdom@30.0.0)(msw@2.15.0(@types/node@24.13.3)(typescript@7.0.2))(vite@8.1.5(@types/node@24.13.3)(terser@5.49.0)(yaml@2.9.0))
       vitest-mock-extended:
-        specifier: 5.1.0
-        version: 5.1.0(typescript@7.0.2)(vitest@4.1.10(@opentelemetry/api@1.9.1)(@types/node@24.13.3)(jsdom@30.0.0)(msw@2.15.0(@types/node@24.13.3)(typescript@7.0.2))(vite@8.1.5(@types/node@24.13.3)(terser@5.49.0)(yaml@2.9.0)))
+        specifier: 5.0.0
+        version: 5.0.0(typescript@7.0.2)(vitest@4.1.10(@opentelemetry/api@1.9.1)(@types/node@24.13.3)(jsdom@30.0.0)(msw@2.15.0(@types/node@24.13.3)(typescript@7.0.2))(vite@8.1.5(@types/node@24.13.3)(terser@5.49.0)(yaml@2.9.0)))
 
 packages:
 
@@ -3782,8 +3782,8 @@ packages:
       yaml:
         optional: true
 
-  vitest-mock-extended@5.1.0:
-    resolution: {integrity: sha512-xW28qmo6CbEROzwFRKw+fhLQcwoxBbUHdezDtBJXiHinthfyYZ3pwt4ez4r+XPdimTbXJcFetjzKBJqMw1A6Jw==}
+  vitest-mock-extended@5.0.0:
+    resolution: {integrity: sha512-fnPf7Q5eVQPs8cCoNVdRA46khG1t1PL4LkdE7cYYZeT665jm0dGibYdBKCAQRCJhaw4Aam1QgraFiHMYnheTag==}
     peerDependencies:
       typescript: 3.x || 4.x || 5.x || 6.x || 7.x
       vitest: '>=4.0.0'
@@ -7798,7 +7798,7 @@ snapshots:
       terser: 5.49.0
       yaml: 2.9.0
 
-  vitest-mock-extended@5.1.0(typescript@7.0.2)(vitest@4.1.10(@opentelemetry/api@1.9.1)(@types/node@24.13.3)(jsdom@30.0.0)(msw@2.15.0(@types/node@24.13.3)(typescript@7.0.2))(vite@8.1.5(@types/node@24.13.3)(terser@5.49.0)(yaml@2.9.0))):
+  vitest-mock-extended@5.0.0(typescript@7.0.2)(vitest@4.1.10(@opentelemetry/api@1.9.1)(@types/node@24.13.3)(jsdom@30.0.0)(msw@2.15.0(@types/node@24.13.3)(typescript@7.0.2))(vite@8.1.5(@types/node@24.13.3)(terser@5.49.0)(yaml@2.9.0))):
     dependencies:
       ts-essentials: 10.2.1(typescript@7.0.2)
       typescript: 7.0.2

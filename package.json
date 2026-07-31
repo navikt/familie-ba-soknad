@@ -117,6 +117,6 @@
     "typescript-eslint": "8.65.0",
     "vite": "8.1.5",
     "vitest": "4.1.10",
-    "vitest-mock-extended": "5.1.0"
+    "vitest-mock-extended": "5.0.0"
   }
 }
