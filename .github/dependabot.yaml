@@ -44,7 +44,6 @@ updates:
           - "@sentry/react"
           - "@sentry/vite-plugin"
           - "@axe-core/react"
-          - "concurrently"
           - "husky"
           - "lint-staged"
           - "@portabletext/react"
