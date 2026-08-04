@@ -1,6 +1,6 @@
 import React, { PropsWithChildren } from 'react';
 
-import * as Sentry from '@sentry/react';
+import { ApmErrorBoundary } from '@nais/apm/react';
 
 import { HttpProvider } from '@navikt/familie-http';
 
@@ -13,10 +13,7 @@ import { SanityProvider } from './context/SanityContext';
 const MiljøProvider: React.FC<PropsWithChildren> = ({ children }) => {
     return (
         <HttpProvider>
-            <Sentry.ErrorBoundary
-                fallback={() => <Feilside />}
-                beforeCapture={scope => scope.setTag('scope', 'familie-ba-soknad')}
-            >
+            <ApmErrorBoundary fallback={<Feilside />}>
                 <LastRessurserProvider>
                     <SanityProvider>
                         <InnloggetProvider>
@@ -24,7 +21,7 @@ const MiljøProvider: React.FC<PropsWithChildren> = ({ children }) => {
                         </InnloggetProvider>
                     </SanityProvider>
                 </LastRessurserProvider>
-            </Sentry.ErrorBoundary>
+            </ApmErrorBoundary>
         </HttpProvider>
     );
 };
