@@ -41,8 +41,7 @@ updates:
       tools:
         patterns:
           - "@grafana/faro-web-sdk"
-          - "@sentry/react"
-          - "@sentry/vite-plugin"
+          - "@nais/apm"
           - "@axe-core/react"
           - "husky"
           - "lint-staged"
