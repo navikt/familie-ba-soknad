@@ -14,13 +14,11 @@ const ÅrsakDropdown: React.FC<ÅrsakDropdownProps> = ({ ...props }) => {
     const dinLivssituasjonTekster = tekster().DIN_LIVSSITUASJON;
     return (
         <StyledDropdown<Årsak | ''> {...props}>
-            {muligeÅrsaker.map(
-                (årsak): ReactNode => (
-                    <option value={årsak} key={årsak}>
-                        {plainTekst(hentÅrsak(årsak, dinLivssituasjonTekster))}
-                    </option>
-                )
-            )}
+            {muligeÅrsaker.map((årsak): ReactNode => (
+                <option value={årsak} key={årsak}>
+                    {plainTekst(hentÅrsak(årsak, dinLivssituasjonTekster))}
+                </option>
+            ))}
         </StyledDropdown>
     );
 };

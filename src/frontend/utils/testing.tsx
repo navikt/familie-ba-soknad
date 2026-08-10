@@ -57,8 +57,8 @@ export const spyOnUseApp = søknad => {
     const settInnsendingStatus = vi.fn();
     const axiosRequestMock = vi
         .fn()
-        .mockImplementation(
-            (): Promise<Ressurs<unknown>> => Promise.resolve({ status: RessursStatus.SUKSESS, data: {} })
+        .mockImplementation((): Promise<Ressurs<unknown>> =>
+            Promise.resolve({ status: RessursStatus.SUKSESS, data: {} })
         );
     const erUtvidet = søknad.søknadstype === 'UTVIDET';
     const settNåværendeRoute = vi.fn();
