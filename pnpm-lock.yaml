@@ -28,13 +28,13 @@ importers:
         version: 22.0.2(@navikt/ds-css@8.16.1)(@navikt/ds-react@8.16.1(@types/react@19.2.17)(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(@types/react@19.2.17)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(styled-components@6.4.4(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(supports-color@10.2.2)
       '@navikt/familie-http':
         specifier: 8.0.23
-        version: 8.0.23(axios@1.18.1(debug@4.4.3(supports-color@10.2.2))(supports-color@10.2.2))(react@19.2.8)
+        version: 8.0.23(axios@1.19.0(debug@4.4.3(supports-color@10.2.2))(supports-color@10.2.2))(react@19.2.8)
       '@navikt/familie-logging':
         specifier: 7.0.8
         version: 7.0.8
       '@navikt/familie-skjema':
         specifier: 8.2.49
-        version: 8.2.49(axios@1.18.1(debug@4.4.3(supports-color@10.2.2))(supports-color@10.2.2))(react@19.2.8)
+        version: 8.2.49(axios@1.19.0(debug@4.4.3(supports-color@10.2.2))(supports-color@10.2.2))(react@19.2.8)
       '@navikt/familie-typer':
         specifier: 8.0.6
         version: 8.0.6
@@ -57,8 +57,8 @@ importers:
         specifier: 7.26.2
         version: 7.26.2
       axios:
-        specifier: 1.18.1
-        version: 1.18.1(debug@4.4.3(supports-color@10.2.2))(supports-color@10.2.2)
+        specifier: 1.19.0
+        version: 1.19.0(debug@4.4.3(supports-color@10.2.2))(supports-color@10.2.2)
       classnames:
         specifier: 2.5.1
         version: 2.5.1
@@ -1312,8 +1312,8 @@ packages:
     resolution: {integrity: sha512-s7iGf5GaVMxEG0ENN9x+xTr7GFZCb1ZP/1uATUpCEK2X78nDB3RwbtFCo9pGAf9ru+VwoQ464DkaLEeRM08wJA==}
     engines: {node: '>=4'}
 
-  axios@1.18.1:
-    resolution: {integrity: sha512-3nTvFlvpn9Zu/RkHUqtc7/+al4UpRW5az71ap5zccp6e8RAYEzhMTecX8Dz1wWDYrPpUoB1HAQEGEAEvUr7S9g==}
+  axios@1.19.0:
+    resolution: {integrity: sha512-ht/iuYZXEjFxLH/Hkezgd7m6JKlHHXEUSneaDz8uZe1Gj5QZtCnpyDsckvAiEnT89OEbCLmnte4R4sn7P0EKFw==}
 
   axobject-query@4.1.0:
     resolution: {integrity: sha512-qIj0G9wZbMGNLjLmg1PT6v2mE9AH2zlnADJD/2tC6E00hgmhUOfEB6greHPAfLRSufHqROIUTkw6E+M3lH0PTQ==}
@@ -4181,20 +4181,20 @@ snapshots:
       - react-dom
       - supports-color
 
-  '@navikt/familie-http@8.0.23(axios@1.18.1(debug@4.4.3(supports-color@10.2.2))(supports-color@10.2.2))(react@19.2.8)':
+  '@navikt/familie-http@8.0.23(axios@1.19.0(debug@4.4.3(supports-color@10.2.2))(supports-color@10.2.2))(react@19.2.8)':
     dependencies:
       '@navikt/familie-typer': 8.0.6
       '@sentry/core': 10.64.0
-      axios: 1.18.1(debug@4.4.3(supports-color@10.2.2))(supports-color@10.2.2)
+      axios: 1.19.0(debug@4.4.3(supports-color@10.2.2))(supports-color@10.2.2)
       react: 19.2.8
 
   '@navikt/familie-logging@7.0.8':
     dependencies:
       winston: 3.19.0
 
-  '@navikt/familie-skjema@8.2.49(axios@1.18.1(debug@4.4.3(supports-color@10.2.2))(supports-color@10.2.2))(react@19.2.8)':
+  '@navikt/familie-skjema@8.2.49(axios@1.19.0(debug@4.4.3(supports-color@10.2.2))(supports-color@10.2.2))(react@19.2.8)':
     dependencies:
-      '@navikt/familie-http': 8.0.23(axios@1.18.1(debug@4.4.3(supports-color@10.2.2))(supports-color@10.2.2))(react@19.2.8)
+      '@navikt/familie-http': 8.0.23(axios@1.19.0(debug@4.4.3(supports-color@10.2.2))(supports-color@10.2.2))(react@19.2.8)
       '@navikt/familie-typer': 8.0.6
       '@types/deep-equal': 1.0.4
       deep-equal: 2.2.3
@@ -4891,7 +4891,7 @@ snapshots:
 
   axe-core@4.12.1: {}
 
-  axios@1.18.1(debug@4.4.3(supports-color@10.2.2))(supports-color@10.2.2):
+  axios@1.19.0(debug@4.4.3(supports-color@10.2.2))(supports-color@10.2.2):
     dependencies:
       follow-redirects: 1.16.0(debug@4.4.3(supports-color@10.2.2))
       form-data: 4.0.6
