@@ -1,19 +1,19 @@
-import React, { Dispatch, SetStateAction } from 'react';
-
 import { ESvar } from '@navikt/familie-form-elements';
 import type { Felt, ISkjema } from '@navikt/familie-skjema';
 
-import { LocaleRecordBlock } from '../../../../../../common/sanity';
+import type { Dispatch, FC, SetStateAction } from 'react';
+
+import type { LocaleRecordBlock } from '../../../../../../common/sanity';
 import { useAppContext } from '../../../../../context/AppContext';
 import { useSpråkContext } from '../../../../../context/SpråkContext';
 import {
     andreForelderDataKeySpørsmål,
     barnDataKeySpørsmål,
-    IAndreForelder,
-    IBarnMedISøknad,
+    type IAndreForelder,
+    type IBarnMedISøknad,
 } from '../../../../../typer/barn';
 import { PersonType } from '../../../../../typer/personType';
-import { IEøsForBarnFeltTyper } from '../../../../../typer/skjema';
+import type { IEøsForBarnFeltTyper } from '../../../../../typer/skjema';
 import { AlternativtSvarForInput } from '../../../../../typer/svar';
 import { landkodeTilSpråk } from '../../../../../utils/språk';
 import { ArbeidsperiodeOppsummering } from '../../../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeOppsummering';
@@ -24,7 +24,7 @@ import { UtbetalingsperiodeOppsummering } from '../../../../Felleskomponenter/Ut
 import IdNummerForAndreForelder from '../../../EøsSteg/Barn/IdNummerForAndreForelder';
 import { OppsummeringFelt } from '../../OppsummeringFelt';
 
-const EøsAndreForelderOppsummering: React.FC<{
+const EøsAndreForelderOppsummering: FC<{
     barn: IBarnMedISøknad;
     andreForelder: IAndreForelder;
     skjema: ISkjema<IEøsForBarnFeltTyper, string>;
@@ -57,7 +57,7 @@ const EøsAndreForelderOppsummering: React.FC<{
         andreForelderDataKeySpm: andreForelderDataKeySpørsmål;
         spørsmålstekst: LocaleRecordBlock;
     }) => {
-        return barn.andreForelder && barn.andreForelder[andreForelderDataKeySpm].svar ? (
+        return barn.andreForelder?.[andreForelderDataKeySpm].svar ? (
             <OppsummeringFelt
                 tittel={<TekstBlock block={spørsmålstekst} flettefelter={flettefelter} />}
                 søknadsvar={barn.andreForelder[andreForelderDataKeySpm].svar}

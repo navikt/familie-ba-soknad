@@ -1,10 +1,9 @@
-import { Alpha3Code } from 'i18n-iso-countries';
+import { type FeltState, feil, ok, useFelt } from '@navikt/familie-skjema';
+import type { Alpha3Code } from 'i18n-iso-countries';
 
-import { feil, type FeltState, ok, useFelt } from '@navikt/familie-skjema';
-
-import { LocaleRecordBlock } from '../../common/sanity';
+import type { LocaleRecordBlock } from '../../common/sanity';
 import { useAppContext } from '../context/AppContext';
-import { ISøknadSpørsmål } from '../typer/spørsmål';
+import type { ISøknadSpørsmål } from '../typer/spørsmål';
 
 const useLanddropdownFelt = ({
     søknadsfelt,
@@ -22,7 +21,7 @@ const useLanddropdownFelt = ({
         feltId: søknadsfelt.id,
         verdi: søknadsfelt.svar,
         skalFeltetVises: avhengigheter => {
-            return avhengigheter && avhengigheter.skalFeltetVises;
+            return avhengigheter?.skalFeltetVises;
         },
         valideringsfunksjon: (felt: FeltState<Alpha3Code | ''>, avhengigheter) => {
             return felt.verdi !== ''

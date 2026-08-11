@@ -1,6 +1,6 @@
-import { ISanitySpørsmålDokument } from '../../../../common/sanity';
+import type { ISanitySpørsmålDokument } from '../../../../common/sanity';
 import { PersonType } from '../../../typer/personType';
-import { ITekstinnhold } from '../../../typer/sanity/tekstInnhold';
+import type { ITekstinnhold } from '../../../typer/sanity/tekstInnhold';
 
 export const mottarEllerMottattUtbetalingApiNavn = (
     personType: PersonType,

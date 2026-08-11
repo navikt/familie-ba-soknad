@@ -1,14 +1,13 @@
-import React, { ReactNode } from 'react';
+import { TextField } from '@navikt/ds-react';
+import type { Felt } from '@navikt/familie-skjema';
 
 import classNames from 'classnames';
 
-import { TextField } from '@navikt/ds-react';
-import type { Felt } from '@navikt/familie-skjema';
+import type { FC, ReactNode } from 'react';
 
 import styles from './SkjemaFeltInput.module.css';
 
 interface SkjemaFeltInputProps {
-    // eslint-disable-next-line
     felt: Felt<any>;
     visFeilmeldinger: boolean;
     label: ReactNode;
@@ -21,7 +20,7 @@ interface SkjemaFeltInputProps {
 /**
  * Henter input props fra felt, og fra props. Props overstyrer felt.
  */
-export const SkjemaFeltInput: React.FC<SkjemaFeltInputProps> = props => {
+export const SkjemaFeltInput: FC<SkjemaFeltInputProps> = props => {
     const { felt, label, visFeilmeldinger, description, autoComplete = 'off', disabled, fullbredde = true } = props;
     const navInputPropsFraFeltHook = felt.hentNavInputProps(visFeilmeldinger);
 

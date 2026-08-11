@@ -1,10 +1,7 @@
-import React from 'react';
-
-import { act, fireEvent, render, waitFor, within } from '@testing-library/react';
-import { vi } from 'vitest';
-
 import { ESvar } from '@navikt/familie-form-elements';
 import * as fnrvalidator from '@navikt/fnrvalidator';
+import { act, fireEvent, render, waitFor, within } from '@testing-library/react';
+import { vi } from 'vitest';
 
 import { spyOnUseApp, TestProvidere } from '../../../../utils/testing';
 

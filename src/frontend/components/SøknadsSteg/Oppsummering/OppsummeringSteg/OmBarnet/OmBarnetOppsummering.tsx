@@ -1,11 +1,10 @@
-import React from 'react';
-
 import { ESvar } from '@navikt/familie-form-elements';
+import type { Dispatch, FC, SetStateAction } from 'react';
 
 import { useAppContext } from '../../../../../context/AppContext';
 import { useSpråkContext } from '../../../../../context/SpråkContext';
 import { useStegContext } from '../../../../../context/StegContext';
-import { andreForelderDataKeySpørsmål, barnDataKeySpørsmål, IBarnMedISøknad } from '../../../../../typer/barn';
+import { andreForelderDataKeySpørsmål, barnDataKeySpørsmål, type IBarnMedISøknad } from '../../../../../typer/barn';
 import { PersonType } from '../../../../../typer/personType';
 import { formaterDato } from '../../../../../utils/dato';
 import { landkodeTilSpråk } from '../../../../../utils/språk';
@@ -20,12 +19,12 @@ import Oppsummeringsbolk from '../../Oppsummeringsbolk';
 import AndreForelderOppsummering from './AndreForelderOppsummering';
 
 interface Props {
-    settFeilAnchors: React.Dispatch<React.SetStateAction<string[]>>;
+    settFeilAnchors: Dispatch<SetStateAction<string[]>>;
     barn: IBarnMedISøknad;
     index: number;
 }
 
-const OmBarnetOppsummering: React.FC<Props> = ({ settFeilAnchors, barn, index }) => {
+const OmBarnetOppsummering: FC<Props> = ({ settFeilAnchors, barn, index }) => {
     const { tekster, plainTekst } = useAppContext();
     const { hentStegObjektForBarn } = useStegContext();
     const { valgtLocale } = useSpråkContext();

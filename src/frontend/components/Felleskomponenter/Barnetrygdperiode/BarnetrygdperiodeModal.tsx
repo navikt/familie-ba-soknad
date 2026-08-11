@@ -1,12 +1,11 @@
-import React from 'react';
-
 import { InlineMessage } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
+import type { FC } from 'react';
 
 import { useAppContext } from '../../../context/AppContext';
-import { IEøsBarnetrygdsperiode } from '../../../typer/perioder';
+import type { IEøsBarnetrygdsperiode } from '../../../typer/perioder';
 import { PersonType } from '../../../typer/personType';
-import { IBarnetrygdsperiodeTekstinnhold } from '../../../typer/sanity/modaler/barnetrygdperiode';
+import type { IBarnetrygdsperiodeTekstinnhold } from '../../../typer/sanity/modaler/barnetrygdperiode';
 import { dagensDato, gårsdagensDato, sisteDagDenneMåneden } from '../../../utils/dato';
 import { trimWhiteSpace, visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
 import { minTilDatoForPeriode } from '../../../utils/perioder';
@@ -19,7 +18,7 @@ import { SkjemaFeltInput } from '../SkjemaFeltInput/SkjemaFeltInput';
 import SkjemaModal from '../SkjemaModal/SkjemaModal';
 
 import { BarnetrygdperiodeSpørsmålId } from './spørsmål';
-import { IUsePensjonsperiodeSkjemaParams, useBarnetrygdperiodeSkjema } from './useBarnetrygdperiodeSkjema';
+import { type IUsePensjonsperiodeSkjemaParams, useBarnetrygdperiodeSkjema } from './useBarnetrygdperiodeSkjema';
 
 interface Props extends IUsePensjonsperiodeSkjemaParams {
     erÅpen: boolean;
@@ -28,7 +27,7 @@ interface Props extends IUsePensjonsperiodeSkjemaParams {
     forklaring?: string;
 }
 
-export const BarnetrygdperiodeModal: React.FC<Props> = ({
+export const BarnetrygdperiodeModal: FC<Props> = ({
     erÅpen,
     lukkModal,
     onLeggTilBarnetrygdsperiode,

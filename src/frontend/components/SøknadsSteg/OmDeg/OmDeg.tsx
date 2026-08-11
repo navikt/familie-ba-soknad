@@ -1,13 +1,12 @@
-import React from 'react';
-
 import { ExclamationmarkTriangleIcon, InformationSquareIcon } from '@navikt/aksel-icons';
 import { InfoCard } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
+import type { FC } from 'react';
 
 import { ESanitySteg, Typografi } from '../../../../common/sanity';
 import { useAppContext } from '../../../context/AppContext';
 import { PersonType } from '../../../typer/personType';
-import { IUtenlandsoppholdTekstinnhold } from '../../../typer/sanity/modaler/utenlandsopphold';
+import type { IUtenlandsoppholdTekstinnhold } from '../../../typer/sanity/modaler/utenlandsopphold';
 import { uppercaseFørsteBokstav } from '../../../utils/visning';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
@@ -23,7 +22,7 @@ import { UtenlandsperiodeOppsummering } from '../../Felleskomponenter/Utenlandso
 import { Personopplysninger } from './Personopplysninger';
 import { useOmdeg } from './useOmdeg';
 
-const OmDeg: React.FC = () => {
+const OmDeg: FC = () => {
     const { tekster, plainTekst } = useAppContext();
 
     const {

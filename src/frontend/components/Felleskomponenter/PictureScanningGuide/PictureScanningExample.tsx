@@ -1,13 +1,12 @@
-import React from 'react';
-
 import { BodyShort, InfoCard, type InfoCardProps } from '@navikt/ds-react';
+import type { ReactNode } from 'react';
 
 interface Props {
-    image: React.ReactNode;
+    image: ReactNode;
     variant: InfoCardProps['data-color'];
     statusText: string;
     description: string;
-    icon: React.ReactNode;
+    icon: ReactNode;
 }
 
 const PictureScanningExample = ({ image, icon, variant, statusText, description }: Props) => (

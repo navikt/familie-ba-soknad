@@ -1,12 +1,11 @@
-import { Alpha3Code } from 'i18n-iso-countries';
+import type { ESvar } from '@navikt/familie-form-elements';
+import type { Alpha3Code } from 'i18n-iso-countries';
 
-import { ESvar } from '@navikt/familie-form-elements';
+import type { Slektsforhold } from '../../common/typer/kontrakt/generelle';
 
-import { Slektsforhold } from '../../common/typer/kontrakt/generelle';
-
-import { IArbeidsperiode, IEøsBarnetrygdsperiode, IPensjonsperiode, IUtbetalingsperiode } from './perioder';
-import { ISøknadSpørsmål } from './spørsmål';
-import { AlternativtSvarForInput } from './svar';
+import type { IArbeidsperiode, IEøsBarnetrygdsperiode, IPensjonsperiode, IUtbetalingsperiode } from './perioder';
+import type { ISøknadSpørsmål } from './spørsmål';
+import type { AlternativtSvarForInput } from './svar';
 
 export interface IOmsorgsperson {
     navn: ISøknadSpørsmål<string>;

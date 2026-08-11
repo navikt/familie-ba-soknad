@@ -1,9 +1,7 @@
-import { Dispatch, SetStateAction, useState } from 'react';
-
-import { Alpha3Code } from 'i18n-iso-countries';
-
 import { ESvar } from '@navikt/familie-form-elements';
-import { feil, type Felt, type FeltState, type ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
+import { type Felt, type FeltState, feil, type ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
+import type { Alpha3Code } from 'i18n-iso-countries';
+import { type Dispatch, type SetStateAction, useState } from 'react';
 
 import { ESanitySteg } from '../../../../../common/sanity';
 import { Slektsforhold } from '../../../../../common/typer/kontrakt/generelle';
@@ -16,21 +14,21 @@ import { usePerioder } from '../../../../hooks/usePerioder';
 import {
     andreForelderDataKeySpørsmål,
     barnDataKeySpørsmål,
-    IAndreForelder,
-    IBarnMedISøknad,
+    type IAndreForelder,
+    type IBarnMedISøknad,
 } from '../../../../typer/barn';
-import { IOmsorgsperson } from '../../../../typer/omsorgsperson';
-import {
+import type { IOmsorgsperson } from '../../../../typer/omsorgsperson';
+import type {
     IArbeidsperiode,
     IEøsBarnetrygdsperiode,
     IPensjonsperiode,
     IUtbetalingsperiode,
 } from '../../../../typer/perioder';
-import { BarnetsId } from '../../../../typer/person';
+import type { BarnetsId } from '../../../../typer/person';
 import { PersonType } from '../../../../typer/personType';
-import { IArbeidsperiodeTekstinnhold } from '../../../../typer/sanity/modaler/arbeidsperiode';
-import { IBarnetrygdsperiodeTekstinnhold } from '../../../../typer/sanity/modaler/barnetrygdperiode';
-import { IEøsForBarnFeltTyper } from '../../../../typer/skjema';
+import type { IArbeidsperiodeTekstinnhold } from '../../../../typer/sanity/modaler/arbeidsperiode';
+import type { IBarnetrygdsperiodeTekstinnhold } from '../../../../typer/sanity/modaler/barnetrygdperiode';
+import type { IEøsForBarnFeltTyper } from '../../../../typer/skjema';
 import { AlternativtSvarForInput } from '../../../../typer/svar';
 import { valideringAdresse } from '../../../../utils/adresse';
 import { skalSkjuleAndreForelderFelt, skalViseBorMedOmsorgsperson } from '../../../../utils/barn';
@@ -159,7 +157,7 @@ export const useEøsForBarn = (
     });
 
     const omsorgspersonNavn = useInputFelt({
-        søknadsfelt: omsorgsperson && omsorgsperson.navn,
+        søknadsfelt: omsorgsperson?.navn || null,
         feilmelding: eøsForBarnTekster.hvaHeterOmsorgspersonen.feilmelding,
         skalVises: borMedOmsorgsperson.verdi === ESvar.JA,
         customValidering: (felt: FeltState<string>) => {
@@ -186,7 +184,7 @@ export const useEøsForBarn = (
     });
 
     const omsorgpersonSlektsforholdSpesifisering = useInputFelt({
-        søknadsfelt: omsorgsperson && omsorgsperson.slektsforholdSpesifisering,
+        søknadsfelt: omsorgsperson?.slektsforholdSpesifisering || null,
         feilmelding: eøsForBarnTekster.hvilkenRelasjonOmsorgsperson.feilmelding,
         skalVises: omsorgspersonSlektsforhold.verdi === Slektsforhold.ANNEN_RELASJON,
         customValidering: (felt: FeltState<string>) => {
@@ -206,7 +204,7 @@ export const useEøsForBarn = (
     });
 
     const omsorgspersonIdNummer = useInputFeltMedUkjent({
-        søknadsfelt: omsorgsperson && omsorgsperson.idNummer,
+        søknadsfelt: omsorgsperson?.idNummer || null,
         avhengighet: omsorgspersonIdNummerVetIkke,
         feilmelding: eøsForBarnTekster.idNummerOmsorgsperson.feilmelding,
         skalVises: borMedOmsorgsperson.verdi === ESvar.JA,
@@ -220,7 +218,7 @@ export const useEøsForBarn = (
     });
 
     const omsorgspersonAdresse = useInputFelt({
-        søknadsfelt: omsorgsperson && omsorgsperson.adresse,
+        søknadsfelt: omsorgsperson?.adresse || null,
         feilmelding: eøsForBarnTekster.hvorBorOmsorgsperson.feilmelding,
         skalVises: borMedOmsorgsperson.verdi === ESvar.JA,
         customValidering: felt => valideringAdresse(felt, plainTekst(forLangAdresseTekst)),
@@ -427,7 +425,7 @@ export const useEøsForBarn = (
     });
 
     const andreForelderAdresse = useInputFeltMedUkjent({
-        søknadsfelt: andreForelder && andreForelder[andreForelderDataKeySpørsmål.adresse],
+        søknadsfelt: andreForelder?.[andreForelderDataKeySpørsmål.adresse] || null,
         avhengighet: andreForelderAdresseVetIkke,
         feilmelding: eøsForBarnTekster.hvorBorAndreForelder.feilmelding,
         skalVises: !andreForelderErDød && !skalSkjuleAndreForelderFelt(gjeldendeBarn),
@@ -713,7 +711,7 @@ export const useEøsForBarn = (
             } else {
                 const barnSkalOppdatereEnAnnensForelder =
                     barn[barnDataKeySpørsmål.sammeForelderSomAnnetBarnMedId].svar === gjeldendeBarn.id;
-                return !!barn.andreForelder && barnSkalOppdatereEnAnnensForelder
+                return barn.andreForelder && barnSkalOppdatereEnAnnensForelder
                     ? { ...barn, ...genererAndreForelder(barn.andreForelder) }
                     : barn;
             }

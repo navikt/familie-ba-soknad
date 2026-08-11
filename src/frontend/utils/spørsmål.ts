@@ -1,7 +1,7 @@
 import { ESvar } from '@navikt/familie-form-elements';
 import type { Felt } from '@navikt/familie-skjema';
 
-import { IFrittståendeOrdTekstinnhold } from '../typer/sanity/tekstInnhold';
+import type { IFrittståendeOrdTekstinnhold } from '../typer/sanity/tekstInnhold';
 import { AlternativtSvarForInput } from '../typer/svar';
 
 export const svarForSpørsmålMedUkjent = (vetIkkeFelt: Felt<ESvar>, spørsmålFelt: Felt<string>): string => {

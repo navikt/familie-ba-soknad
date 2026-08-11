@@ -1,11 +1,10 @@
+import { type Avhengigheter, useFelt } from '@navikt/familie-skjema';
+import type { ValiderFelt } from '@navikt/familie-skjema/dist/typer';
 import { useEffect, useState } from 'react';
 
-import { type Avhengigheter, useFelt } from '@navikt/familie-skjema';
-import { type ValiderFelt } from '@navikt/familie-skjema/dist/typer';
-
-import { BarnetsId } from '../typer/person';
-import { PersonType } from '../typer/personType';
-import { SpørsmålId } from '../typer/spørsmål';
+import type { BarnetsId } from '../typer/person';
+import type { PersonType } from '../typer/personType';
+import type { SpørsmålId } from '../typer/spørsmål';
 
 export const usePerioder = <T>({
     feltId,

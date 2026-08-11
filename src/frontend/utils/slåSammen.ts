@@ -1,5 +1,5 @@
-import { PlainTekst } from '../../common/sanity';
-import { IFrittståendeOrdTekstinnhold } from '../typer/sanity/tekstInnhold';
+import type { PlainTekst } from '../../common/sanity';
+import type { IFrittståendeOrdTekstinnhold } from '../typer/sanity/tekstInnhold';
 
 export const slåSammen = (
     tekstListe: string[],

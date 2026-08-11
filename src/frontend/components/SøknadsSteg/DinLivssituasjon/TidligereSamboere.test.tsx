@@ -1,12 +1,9 @@
-import React from 'react';
-
+import { ESvar } from '@navikt/familie-form-elements';
 import { render } from '@testing-library/react';
 import { mockDeep } from 'vitest-mock-extended';
 
-import { ESvar } from '@navikt/familie-form-elements';
-
 import { ESivilstand, ESøknadstype } from '../../../../common/typer/kontrakt/generelle';
-import { ISøknad } from '../../../typer/søknad';
+import type { ISøknad } from '../../../typer/søknad';
 import { spyOnUseApp, TestProvidere } from '../../../utils/testing';
 
 import DinLivssituasjon from './DinLivssituasjon';

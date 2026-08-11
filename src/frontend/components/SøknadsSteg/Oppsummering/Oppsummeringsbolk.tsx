@@ -1,18 +1,25 @@
-import React, { MouseEventHandler, ReactNode, useEffect, useState } from 'react';
-
-import { useNavigate } from 'react-router';
-
 import { FormSummary } from '@navikt/ds-react';
 import type { ISkjema } from '@navikt/familie-skjema';
 
+import {
+    type Dispatch,
+    type FC,
+    type MouseEventHandler,
+    type ReactNode,
+    type SetStateAction,
+    useEffect,
+    useState,
+} from 'react';
+import { useNavigate } from 'react-router';
+
 import { BASE_PATH } from '../../../../common/miljø';
-import { FlettefeltVerdier, LocaleRecordBlock, LocaleRecordString } from '../../../../common/sanity';
+import type { FlettefeltVerdier, LocaleRecordBlock, LocaleRecordString } from '../../../../common/sanity';
 import { unslash } from '../../../../common/unslash';
 import { useAppContext } from '../../../context/AppContext';
 import { useStegContext } from '../../../context/StegContext';
-import { IBarnMedISøknad } from '../../../typer/barn';
-import { ISteg } from '../../../typer/routes';
-import { SkjemaFeltTyper } from '../../../typer/skjema';
+import type { IBarnMedISøknad } from '../../../typer/barn';
+import type { ISteg } from '../../../typer/routes';
+import type { SkjemaFeltTyper } from '../../../typer/skjema';
 import { uppercaseFørsteBokstav } from '../../../utils/visning';
 import { SkjemaFeiloppsummering } from '../../Felleskomponenter/SkjemaFeiloppsummering/SkjemaFeiloppsummering';
 
@@ -27,26 +34,18 @@ interface Props {
     flettefelter?: FlettefeltVerdier;
     steg: ISteg;
     skjemaHook: IHookReturn;
-    settFeilAnchors?: React.Dispatch<React.SetStateAction<string[]>>;
+    settFeilAnchors?: Dispatch<SetStateAction<string[]>>;
     barn?: IBarnMedISøknad;
     children?: ReactNode;
 }
 
-const Oppsummeringsbolk: React.FC<Props> = ({
-    children,
-    tittel,
-    flettefelter,
-    steg,
-    skjemaHook,
-    settFeilAnchors,
-    barn,
-}) => {
+const Oppsummeringsbolk: FC<Props> = ({ children, tittel, flettefelter, steg, skjemaHook, settFeilAnchors, barn }) => {
     const { hentStegNummer } = useStegContext();
     const { søknad, tekster, plainTekst } = useAppContext();
     const { validerAlleSynligeFelter, valideringErOk, skjema } = skjemaHook;
     const [visFeil, settVisFeil] = useState(false);
 
-    const feilOppsummeringId = skjema.skjemanavn + '-feil';
+    const feilOppsummeringId = `${skjema.skjemanavn}-feil`;
 
     useEffect(() => {
         // Når felter valideres blir nye synlige, så vi må kjøre denne igjen til vi har validert alt

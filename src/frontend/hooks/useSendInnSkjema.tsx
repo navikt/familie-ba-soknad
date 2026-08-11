@@ -1,11 +1,10 @@
 import { captureException } from '@nais/apm';
-import { AxiosError } from 'axios';
-
 import { RessursStatus } from '@navikt/familie-typer';
+import type { AxiosError } from 'axios';
 
 import miljø from '../../common/miljø';
 import { erModellMismatchResponsRessurs } from '../../common/modellversjon';
-import { ISøknadKontrakt } from '../../common/typer/kontrakt/kontrakt';
+import type { ISøknadKontrakt } from '../../common/typer/kontrakt/kontrakt';
 import { useAppContext } from '../context/AppContext';
 import { useSpråkContext } from '../context/SpråkContext';
 import { trackSøknadSendt } from '../umami';

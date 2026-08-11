@@ -1,14 +1,11 @@
-import React from 'react';
-
+import { type ISkjema, useFelt } from '@navikt/familie-skjema';
 import { act, render, renderHook } from '@testing-library/react';
 import { formatISO } from 'date-fns';
 import { vi } from 'vitest';
 import { mockDeep } from 'vitest-mock-extended';
 
-import { type ISkjema, useFelt } from '@navikt/familie-skjema';
-
-import { ISODateString } from '../../../../common/typer/ISODateString';
-import { SkjemaFeltTyper } from '../../../typer/skjema';
+import type { ISODateString } from '../../../../common/typer/ISODateString';
+import type { SkjemaFeltTyper } from '../../../typer/skjema';
 import * as datoUtils from '../../../utils/dato';
 import { dagensDato } from '../../../utils/dato';
 import { silenceConsoleErrors, spyOnUseApp, TestProvidere } from '../../../utils/testing';

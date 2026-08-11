@@ -1,9 +1,9 @@
 import { type Avhengigheter, useFelt } from '@navikt/familie-skjema';
 
-import { LocaleRecordBlock } from '../../common/sanity';
-import { ISODateString } from '../../common/typer/ISODateString';
+import type { LocaleRecordBlock } from '../../common/sanity';
+import type { ISODateString } from '../../common/typer/ISODateString';
 import { useAppContext } from '../context/AppContext';
-import { ISøknadSpørsmål } from '../typer/spørsmål';
+import type { ISøknadSpørsmål } from '../typer/spørsmål';
 import { validerDato } from '../utils/dato';
 
 const useDatovelgerFelt = ({
@@ -31,7 +31,7 @@ const useDatovelgerFelt = ({
         verdi: søknadsfelt.svar,
         valideringsfunksjon: (felt, avhengigheter) => {
             const feilmelding = avhengigheter?.feilmelding as LocaleRecordBlock;
-            const startdatoAvgrensningOppdatert = avhengigheter && avhengigheter.startdatoAvgrensning;
+            const startdatoAvgrensningOppdatert = avhengigheter?.startdatoAvgrensning;
 
             return validerDato(
                 tekster().FELLES.formateringsfeilmeldinger,

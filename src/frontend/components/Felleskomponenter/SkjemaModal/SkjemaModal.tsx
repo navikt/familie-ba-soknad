@@ -1,12 +1,12 @@
-import React, { ReactNode } from 'react';
-
 import { BodyShort, Button, Modal, VStack } from '@navikt/ds-react';
 
-import { FlettefeltVerdier, LocaleRecordBlock } from '../../../../common/sanity';
+import type { FC, ReactNode } from 'react';
+
+import type { FlettefeltVerdier, LocaleRecordBlock } from '../../../../common/sanity';
 import { useAppContext } from '../../../context/AppContext';
 import ModalContent from '../ModalContent';
 
-const SkjemaModal: React.FC<{
+const SkjemaModal: FC<{
     erÅpen: boolean;
     lukkModal: () => void;
     submitSpinner?: boolean;

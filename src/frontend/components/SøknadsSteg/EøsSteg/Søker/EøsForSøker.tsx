@@ -1,5 +1,4 @@
-import React from 'react';
-
+import type { FC } from 'react';
 import { ESanitySteg } from '../../../../../common/sanity';
 import { useAppContext } from '../../../../context/AppContext';
 import { PersonType } from '../../../../typer/personType';
@@ -13,7 +12,7 @@ import { Utbetalingsperiode } from '../../../Felleskomponenter/UtbetalingerModal
 import IdNummerForSøker from './IdNummerForSøker';
 import { useEøsForSøker } from './useEøsForSøker';
 
-const EøsForSøker: React.FC = () => {
+const EøsForSøker: FC = () => {
     const { tekster } = useAppContext();
 
     const {

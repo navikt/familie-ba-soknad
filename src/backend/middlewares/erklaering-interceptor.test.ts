@@ -1,9 +1,9 @@
-import { Request, Response } from 'express';
-import { DeepPartial } from 'ts-essentials';
+import type { Request, Response } from 'express';
+import type { DeepPartial } from 'ts-essentials';
 import { vi } from 'vitest';
 import { mockDeep } from 'vitest-mock-extended';
 
-import { ISøknadKontrakt } from '../../common/typer/kontrakt/kontrakt.js';
+import type { ISøknadKontrakt } from '../../common/typer/kontrakt/kontrakt.js';
 
 import { erklaeringInterceptor } from './erklaering-interceptor.js';
 

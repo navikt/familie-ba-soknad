@@ -1,17 +1,16 @@
-import { useEffect, useState } from 'react';
-
 import { feil, type ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
+import { useEffect, useState } from 'react';
 
 import { ESanitySteg } from '../../../../common/sanity';
 import { useAppContext } from '../../../context/AppContext';
 import { useEøsContext } from '../../../context/EøsContext';
 import { useStegContext } from '../../../context/StegContext';
-import { IBarnMedISøknad } from '../../../typer/barn';
-import { BarnetsId, IBarn } from '../../../typer/person';
-import { IVelgBarnFeltTyper } from '../../../typer/skjema';
+import type { IBarnMedISøknad } from '../../../typer/barn';
+import type { BarnetsId, IBarn } from '../../../typer/person';
+import type { IVelgBarnFeltTyper } from '../../../typer/skjema';
 import { genererInitialBarnMedISøknad } from '../../../utils/barn';
 
-import { IVelgBarnTekstinnhold } from './innholdTyper';
+import type { IVelgBarnTekstinnhold } from './innholdTyper';
 import { VelgBarnSpørsmålId } from './spørsmål';
 
 export const useVelgBarn = (): {

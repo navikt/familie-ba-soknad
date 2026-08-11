@@ -1,17 +1,16 @@
-import { Alpha3Code } from 'i18n-iso-countries';
-
 import { ESvar } from '@navikt/familie-form-elements';
+import type { Alpha3Code } from 'i18n-iso-countries';
 
-import { PlainTekst } from '../../common/sanity';
+import type { PlainTekst } from '../../common/sanity';
 import { EøsBarnSpørsmålId } from '../components/SøknadsSteg/EøsSteg/Barn/spørsmål';
 import { idNummerLandMedPeriodeType } from '../components/SøknadsSteg/EøsSteg/idnummerUtils';
 import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
 import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnet/spørsmål';
-import { barnDataKeySpørsmål, IAndreForelder, IBarnMedISøknad } from '../typer/barn';
-import { IEøsBarnetrygdsperiode, IUtenlandsperiode } from '../typer/perioder';
-import { IBarn, IBarnRespons, IIdNummer } from '../typer/person';
-import { IFrittståendeOrdTekstinnhold } from '../typer/sanity/tekstInnhold';
-import { ISøknad } from '../typer/søknad';
+import { barnDataKeySpørsmål, type IAndreForelder, type IBarnMedISøknad } from '../typer/barn';
+import type { IEøsBarnetrygdsperiode, IUtenlandsperiode } from '../typer/perioder';
+import type { IBarn, IBarnRespons, IIdNummer } from '../typer/person';
+import type { IFrittståendeOrdTekstinnhold } from '../typer/sanity/tekstInnhold';
+import type { ISøknad } from '../typer/søknad';
 
 import { formaterFnr } from './visning';
 
@@ -245,7 +244,7 @@ export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => 
 };
 
 export const hentUid = () => {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
         const r = (Math.random() * 16) | 0,
             v = c === 'x' ? r : (r & 0x3) | 0x8;
         return v.toString(16);

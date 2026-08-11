@@ -1,19 +1,19 @@
-import { ArbeidsperiodeSpørsmålsId } from '../components/Felleskomponenter/Arbeidsperiode/spørsmål';
-import { BarnetrygdperiodeSpørsmålId } from '../components/Felleskomponenter/Barnetrygdperiode/spørsmål';
-import { PensjonsperiodeSpørsmålId } from '../components/Felleskomponenter/Pensjonsmodal/spørsmål';
-import { UtbetalingerSpørsmålId } from '../components/Felleskomponenter/UtbetalingerModal/spørsmål';
-import { UtenlandsoppholdSpørsmålId } from '../components/Felleskomponenter/UtenlandsoppholdModal/spørsmål';
-import {
+import type { ArbeidsperiodeSpørsmålsId } from '../components/Felleskomponenter/Arbeidsperiode/spørsmål';
+import type { BarnetrygdperiodeSpørsmålId } from '../components/Felleskomponenter/Barnetrygdperiode/spørsmål';
+import type { PensjonsperiodeSpørsmålId } from '../components/Felleskomponenter/Pensjonsmodal/spørsmål';
+import type { UtbetalingerSpørsmålId } from '../components/Felleskomponenter/UtbetalingerModal/spørsmål';
+import type { UtenlandsoppholdSpørsmålId } from '../components/Felleskomponenter/UtenlandsoppholdModal/spørsmål';
+import type {
     DinLivssituasjonSpørsmålId,
     SamboerSpørsmålId,
     TidligereSamboerSpørsmålId,
 } from '../components/SøknadsSteg/DinLivssituasjon/spørsmål';
-import { EøsBarnSpørsmålId } from '../components/SøknadsSteg/EøsSteg/Barn/spørsmål';
-import { EøsSøkerSpørsmålId } from '../components/SøknadsSteg/EøsSteg/Søker/spørsmål';
-import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
-import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnet/spørsmål';
-import { OmDegSpørsmålId } from '../components/SøknadsSteg/OmDeg/spørsmål';
-import { VelgBarnSpørsmålId } from '../components/SøknadsSteg/VelgBarn/spørsmål';
+import type { EøsBarnSpørsmålId } from '../components/SøknadsSteg/EøsSteg/Barn/spørsmål';
+import type { EøsSøkerSpørsmålId } from '../components/SøknadsSteg/EøsSteg/Søker/spørsmål';
+import type { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
+import type { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnet/spørsmål';
+import type { OmDegSpørsmålId } from '../components/SøknadsSteg/OmDeg/spørsmål';
+import type { VelgBarnSpørsmålId } from '../components/SøknadsSteg/VelgBarn/spørsmål';
 
 export type SpørsmålId =
     | OmDegSpørsmålId
@@ -36,5 +36,4 @@ export interface ISøknadSpørsmål<T> {
     svar: T;
 }
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 export type ISøknadSpørsmålMap = Record<string, ISøknadSpørsmål<any>>;

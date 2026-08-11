@@ -1,10 +1,8 @@
-import React from 'react';
-
 import { render } from '@testing-library/react';
 
 import { ESivilstand } from '../../../../common/typer/kontrakt/generelle';
 import { SpråkProvider } from '../../../context/SpråkContext';
-import { ISøker } from '../../../typer/person';
+import type { ISøker } from '../../../typer/person';
 import { CookiesProviderMedLocale, spyOnUseApp, TestProvidere } from '../../../utils/testing';
 
 import { Personopplysninger } from './Personopplysninger';

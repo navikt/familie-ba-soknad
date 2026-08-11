@@ -1,12 +1,11 @@
-import React from 'react';
-
 import { FormSummary } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
+import type { Dispatch, FC, SetStateAction } from 'react';
 
 import { ESivilstand } from '../../../../../common/typer/kontrakt/generelle';
 import { useAppContext } from '../../../../context/AppContext';
 import { useRoutesContext } from '../../../../context/RoutesContext';
-import { ISamboer, ITidligereSamboer } from '../../../../typer/person';
+import type { ISamboer, ITidligereSamboer } from '../../../../typer/person';
 import { PersonType } from '../../../../typer/personType';
 import { RouteEnum } from '../../../../typer/routes';
 import { AlternativtSvarForInput } from '../../../../typer/svar';
@@ -21,10 +20,10 @@ import { OppsummeringFelt } from '../OppsummeringFelt';
 import Oppsummeringsbolk from '../Oppsummeringsbolk';
 
 interface Props {
-    settFeilAnchors: React.Dispatch<React.SetStateAction<string[]>>;
+    settFeilAnchors: Dispatch<SetStateAction<string[]>>;
 }
 
-const SamboerOppsummering: React.FC<{ samboer: ISamboer | ITidligereSamboer }> = ({ samboer }) => {
+const SamboerOppsummering: FC<{ samboer: ISamboer | ITidligereSamboer }> = ({ samboer }) => {
     const { tekster, plainTekst } = useAppContext();
 
     const tidligereSamboereModalTekster = tekster().FELLES.modaler.tidligereSamboere.søker;
@@ -73,7 +72,7 @@ const SamboerOppsummering: React.FC<{ samboer: ISamboer | ITidligereSamboer }> =
     );
 };
 
-const DinLivssituasjonOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
+const DinLivssituasjonOppsummering: FC<Props> = ({ settFeilAnchors }) => {
     const { søknad, erUtvidet, tekster, plainTekst } = useAppContext();
     const { hentRouteObjektForRouteEnum } = useRoutesContext();
     const dinLivsituasjonHook = useDinLivssituasjon();

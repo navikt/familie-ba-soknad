@@ -1,13 +1,12 @@
-import React from 'react';
-
 import { ESvar } from '@navikt/familie-form-elements';
 import type { Felt, ISkjema } from '@navikt/familie-skjema';
+import type { FC } from 'react';
 
 import { useAppContext } from '../../../context/AppContext';
-import { ITidligereSamboer } from '../../../typer/person';
+import type { ITidligereSamboer } from '../../../typer/person';
 import { PersonType } from '../../../typer/personType';
-import { ITidligereSamoboereTekstinnhold } from '../../../typer/sanity/modaler/tidligereSamboere';
-import { IDinLivssituasjonFeltTyper } from '../../../typer/skjema';
+import type { ITidligereSamoboereTekstinnhold } from '../../../typer/sanity/modaler/tidligereSamboere';
+import type { IDinLivssituasjonFeltTyper } from '../../../typer/skjema';
 import { genererPeriodeId } from '../../../utils/perioder';
 import { uppercaseFørsteBokstav } from '../../../utils/visning';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
@@ -17,7 +16,7 @@ import PerioderContainer from '../../Felleskomponenter/PerioderContainer';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
 
-import { IDinLivssituasjonTekstinnhold } from './innholdTyper';
+import type { IDinLivssituasjonTekstinnhold } from './innholdTyper';
 import LeggTilSamboerModal from './LeggTilSamboerModal';
 import SamboerOpplysninger from './SamboerOpplysninger';
 import { DinLivssituasjonSpørsmålId } from './spørsmål';
@@ -30,7 +29,7 @@ interface Props {
     tidligereSamboere: Felt<ITidligereSamboer[]>;
 }
 
-const TidligereSamboere: React.FC<Props> = ({
+const TidligereSamboere: FC<Props> = ({
     skjema,
     leggTilTidligereSamboer,
     fjernTidligereSamboer,

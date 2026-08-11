@@ -1,20 +1,19 @@
-import React from 'react';
-
 import { ESvar } from '@navikt/familie-form-elements';
+import type { FC } from 'react';
 
 import { ESanitySteg } from '../../../../common/sanity';
 import { useAppContext } from '../../../context/AppContext';
-import { IBarnMedISøknad } from '../../../typer/barn';
-import { IUtenlandsperiode } from '../../../typer/perioder';
-import { IUtenlandsoppholdTekstinnhold } from '../../../typer/sanity/modaler/utenlandsopphold';
+import type { IBarnMedISøknad } from '../../../typer/barn';
+import type { IUtenlandsperiode } from '../../../typer/perioder';
+import type { IUtenlandsoppholdTekstinnhold } from '../../../typer/sanity/modaler/utenlandsopphold';
 import { EUtenlandsoppholdÅrsak } from '../../../typer/utenlandsopphold';
 import { visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import {
     harTilhørendeFomFelt,
-    hentMinAvgrensningPåTilDato,
     hentMaxAvgrensningPåFraDato,
     hentMaxAvgrensningPåTilDato,
+    hentMinAvgrensningPåTilDato,
 } from '../../../utils/utenlandsopphold';
 import Datovelger from '../Datovelger/Datovelger';
 import { LandDropdown } from '../Dropdowns/LandDropdown';
@@ -25,7 +24,7 @@ import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeilopps
 import SkjemaModal from '../SkjemaModal/SkjemaModal';
 
 import { UtenlandsoppholdSpørsmålId } from './spørsmål';
-import { IUseUtenlandsoppholdSkjemaParams, useUtenlandsoppholdSkjema } from './useUtenlandsoppholdSkjema';
+import { type IUseUtenlandsoppholdSkjemaParams, useUtenlandsoppholdSkjema } from './useUtenlandsoppholdSkjema';
 import {
     hentFraDatoSpørsmål,
     hentLandSpørsmål,
@@ -41,7 +40,7 @@ interface Props extends IUseUtenlandsoppholdSkjemaParams {
     forklaring?: string;
 }
 
-export const UtenlandsoppholdModal: React.FC<Props> = ({
+export const UtenlandsoppholdModal: FC<Props> = ({
     erÅpen,
     lukkModal,
     onLeggTilUtenlandsperiode,

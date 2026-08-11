@@ -11,11 +11,6 @@ updates:
         versions:
           - "25"
           - "26"
-      # typescript-eslint støtter ikke TypeScript 7.x ennå (peer dep krever <6.1.0),
-      # se https://github.com/typescript-eslint/typescript-eslint/issues/10940
-      - dependency-name: "typescript"
-        versions:
-          - ">= 7"
     cooldown:
       default-days: 4
     open-pull-requests-limit: 20
@@ -80,19 +75,9 @@ updates:
       build-test-validate:
         patterns:
           - "@types/node"
+          - "@biomejs/biome"
           - "ts-essentials"
           - "typescript"
-          - "@eslint/js"
-          - "@types/eslint-plugin-jsx-a11y"
-          - "eslint"
-          - "eslint-config-prettier"
-          - "eslint-plugin-import"
-          - "eslint-plugin-jsx-a11y"
-          - "eslint-plugin-prettier"
-          - "eslint-plugin-react-hooks"
-          - "globals"
-          - "prettier"
-          - "typescript-eslint"
           - "@testing-library/dom"
           - "@testing-library/jest-dom"
           - "@testing-library/react"

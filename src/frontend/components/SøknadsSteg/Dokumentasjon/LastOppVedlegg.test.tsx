@@ -1,13 +1,11 @@
-import React from 'react';
-
 import { render } from '@testing-library/react';
 import { vi } from 'vitest';
 import { mockDeep } from 'vitest-mock-extended';
 
 import { Dokumentasjonsbehov } from '../../../../common/typer/kontrakt/dokumentasjon';
 import { ESivilstand, ESøknadstype } from '../../../../common/typer/kontrakt/generelle';
-import { IDokumentasjon } from '../../../typer/dokumentasjon';
-import { ISøker } from '../../../typer/person';
+import type { IDokumentasjon } from '../../../typer/dokumentasjon';
+import type { ISøker } from '../../../typer/person';
 import { initialStateSøknad } from '../../../typer/søknad';
 import { spyOnUseApp, TestProvidere } from '../../../utils/testing';
 

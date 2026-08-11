@@ -1,7 +1,3 @@
-import React, { createContext, PropsWithChildren, useContext, useEffect, useState } from 'react';
-
-import { Alpha3Code, getName } from 'i18n-iso-countries';
-
 import {
     byggFeiletRessurs,
     byggHenterRessurs,
@@ -10,27 +6,38 @@ import {
     type Ressurs,
     RessursStatus,
 } from '@navikt/familie-typer';
+import { type Alpha3Code, getName } from 'i18n-iso-countries';
+
+import {
+    createContext,
+    type Dispatch,
+    type PropsWithChildren,
+    type SetStateAction,
+    useContext,
+    useEffect,
+    useState,
+} from 'react';
 
 import miljø, { BASE_PATH } from '../../common/miljø';
-import { ESanityFlettefeltverdi, ESanitySteg, FlettefeltVerdier, PlainTekst } from '../../common/sanity';
-import { ESivilstand, ESøknadstype, TilRestLocaleRecord } from '../../common/typer/kontrakt/generelle';
+import { ESanityFlettefeltverdi, ESanitySteg, type FlettefeltVerdier, type PlainTekst } from '../../common/sanity';
+import { ESivilstand, ESøknadstype, type TilRestLocaleRecord } from '../../common/typer/kontrakt/generelle';
 import { LocaleType } from '../../common/typer/localeType';
 import { DinLivssituasjonSpørsmålId } from '../components/SøknadsSteg/DinLivssituasjon/spørsmål';
 import { useDebounce } from '../hooks/useDebounce/useDebounce';
-import { IKontoinformasjon } from '../typer/kontoinformasjon';
-import { IKvittering } from '../typer/kvittering';
-import { IMellomlagretBarnetrygd } from '../typer/mellomlager';
-import { ISøkerRespons } from '../typer/person';
+import type { IKontoinformasjon } from '../typer/kontoinformasjon';
+import type { IKvittering } from '../typer/kvittering';
+import type { IMellomlagretBarnetrygd } from '../typer/mellomlager';
+import type { ISøkerRespons } from '../typer/person';
 import { RouteEnum } from '../typer/routes';
-import { ITekstinnhold } from '../typer/sanity/tekstInnhold';
-import { initialStateSøknad, ISøknad } from '../typer/søknad';
+import type { ITekstinnhold } from '../typer/sanity/tekstInnhold';
+import { type ISøknad, initialStateSøknad } from '../typer/søknad';
 import { InnloggetStatus } from '../utils/autentisering';
 import { mapBarnResponsTilBarn } from '../utils/barn';
 import { plainTekstHof } from '../utils/sanity';
 
 import { preferredAxios } from './axios';
 import { useInnloggetContext } from './InnloggetContext';
-import { AxiosRequest, useLastRessurserContext } from './LastRessurserContext';
+import { type AxiosRequest, useLastRessurserContext } from './LastRessurserContext';
 import { hentSluttbrukerFraPdl } from './pdl';
 import { useSanityContext } from './SanityContext';
 import { useSpråkContext } from './SpråkContext';
@@ -39,32 +46,32 @@ export interface AppContext {
     axiosRequest: AxiosRequest;
     sluttbruker: Ressurs<ISøkerRespons>;
     søknad: ISøknad;
-    settSøknad: React.Dispatch<React.SetStateAction<ISøknad>>;
+    settSøknad: Dispatch<SetStateAction<ISøknad>>;
     nullstillSøknadsobjekt: () => void;
     innsendingStatus: Ressurs<IKvittering>;
-    settInnsendingStatus: React.Dispatch<React.SetStateAction<Ressurs<IKvittering>>>;
+    settInnsendingStatus: Dispatch<SetStateAction<Ressurs<IKvittering>>>;
     sisteUtfylteStegIndex: number;
-    settSisteUtfylteStegIndex: React.Dispatch<React.SetStateAction<number>>;
+    settSisteUtfylteStegIndex: Dispatch<SetStateAction<number>>;
     datoSistLagret: string | null;
-    settDatoSistLagret: React.Dispatch<React.SetStateAction<string | null>>;
+    settDatoSistLagret: Dispatch<SetStateAction<string | null>>;
     erStegUtfyltFrafør: (nåværendeStegIndex: number) => boolean;
     avbrytOgSlettSøknad: () => void;
     gåTilbakeTilStart: () => void;
     brukMellomlagretVerdi: () => void;
     mellomlagretVerdi: IMellomlagretBarnetrygd | undefined;
     fåttGyldigKvittering: boolean;
-    settFåttGyldigKvittering: React.Dispatch<React.SetStateAction<boolean>>;
+    settFåttGyldigKvittering: Dispatch<SetStateAction<boolean>>;
     erUtvidet: boolean;
-    settNåværendeRoute: React.Dispatch<React.SetStateAction<RouteEnum | undefined>>;
+    settNåværendeRoute: Dispatch<SetStateAction<RouteEnum | undefined>>;
     systemetFeiler: () => boolean;
     systemetOK: () => boolean;
     systemetLaster: () => boolean;
     mellomlagre: () => void;
     tvingKjøringAvDebouncedMellomlagre: () => void;
     modellVersjonOppdatert: boolean;
-    settSisteModellVersjon: React.Dispatch<React.SetStateAction<number>>;
+    settSisteModellVersjon: Dispatch<SetStateAction<number>>;
     eøsLand: Ressurs<Map<Alpha3Code, string>>;
-    settEøsLand: React.Dispatch<React.SetStateAction<Ressurs<Map<Alpha3Code, string>>>>;
+    settEøsLand: Dispatch<SetStateAction<Ressurs<Map<Alpha3Code, string>>>>;
     tekster: () => ITekstinnhold;
     flettefeltTilTekst: (
         sanityFlettefelt: ESanityFlettefeltverdi,

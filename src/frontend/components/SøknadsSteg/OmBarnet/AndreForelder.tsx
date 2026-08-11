@@ -1,14 +1,13 @@
-import React from 'react';
-
 import { FormSummary } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import type { ISkjema } from '@navikt/familie-skjema';
+import type { FC } from 'react';
 
 import { useAppContext } from '../../../context/AppContext';
-import { IBarnMedISøknad } from '../../../typer/barn';
-import { IArbeidsperiode, IPensjonsperiode } from '../../../typer/perioder';
+import type { IBarnMedISøknad } from '../../../typer/barn';
+import type { IArbeidsperiode, IPensjonsperiode } from '../../../typer/perioder';
 import { PersonType } from '../../../typer/personType';
-import { IOmBarnetFeltTyper } from '../../../typer/skjema';
+import type { IOmBarnetFeltTyper } from '../../../typer/skjema';
 import { AlternativtSvarForInput } from '../../../typer/svar';
 import { dagensDato } from '../../../utils/dato';
 import { Arbeidsperiode } from '../../Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
@@ -22,7 +21,7 @@ import AndreForelderOppsummering from '../Oppsummering/OppsummeringSteg/OmBarnet
 
 import SammeSomAnnetBarnRadio from './SammeSomAnnetBarnRadio';
 
-const AndreForelder: React.FC<{
+const AndreForelder: FC<{
     barn: IBarnMedISøknad;
     skjema: ISkjema<IOmBarnetFeltTyper, string>;
     andreBarnSomErFyltUt: IBarnMedISøknad[];

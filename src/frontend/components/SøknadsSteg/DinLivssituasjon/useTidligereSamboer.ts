@@ -6,8 +6,8 @@ import useDatovelgerFeltMedUkjentForSanity from '../../../hooks/useDatovelgerFel
 import useInputFelt from '../../../hooks/useInputFelt';
 import useInputFeltMedUkjent from '../../../hooks/useInputFeltMedUkjent';
 import useDatovelgerFeltForSanity from '../../../hooks/useSendInnSkjemaTest/useDatovelgerForSanity';
-import { ITidligereSamoboereTekstinnhold } from '../../../typer/sanity/modaler/tidligereSamboere';
-import { ITidligereSamboerFeltTyper } from '../../../typer/skjema';
+import type { ITidligereSamoboereTekstinnhold } from '../../../typer/sanity/modaler/tidligereSamboere';
+import type { ITidligereSamboerFeltTyper } from '../../../typer/skjema';
 import { dagenEtterDato, dagensDato, gårsdagensDato, stringTilDate } from '../../../utils/dato';
 
 import { TidligereSamboerSpørsmålId } from './spørsmål';

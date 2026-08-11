@@ -1,10 +1,9 @@
+import { type FeltState, feil, ok, useFelt } from '@navikt/familie-skjema';
 import { v4 as uuidv4 } from 'uuid';
 
-import { feil, type FeltState, ok, useFelt } from '@navikt/familie-skjema';
-
-import { FlettefeltVerdier, LocaleRecordBlock } from '../../common/sanity';
+import type { FlettefeltVerdier, LocaleRecordBlock } from '../../common/sanity';
 import { useAppContext } from '../context/AppContext';
-import { ISøknadSpørsmål } from '../typer/spørsmål';
+import type { ISøknadSpørsmål } from '../typer/spørsmål';
 import { trimWhiteSpace } from '../utils/hjelpefunksjoner';
 
 interface Props {

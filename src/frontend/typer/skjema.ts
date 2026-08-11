@@ -1,22 +1,21 @@
-import { Alpha3Code } from 'i18n-iso-countries';
+import type { ESvar } from '@navikt/familie-form-elements';
+import type { Alpha3Code } from 'i18n-iso-countries';
 
-import { ESvar } from '@navikt/familie-form-elements';
+import type { ISODateString } from '../../common/typer/ISODateString';
+import type { Slektsforhold } from '../../common/typer/kontrakt/generelle';
 
-import { ISODateString } from '../../common/typer/ISODateString';
-import { Slektsforhold } from '../../common/typer/kontrakt/generelle';
-
-import { barnDataKeySpørsmål } from './barn';
-import {
+import type { barnDataKeySpørsmål } from './barn';
+import type {
     IArbeidsperiode,
     IEøsBarnetrygdsperiode,
     IPensjonsperiode,
     IUtbetalingsperiode,
     IUtenlandsperiode,
 } from './perioder';
-import { BarnetsId, IBarn, IIdNummer, ITidligereSamboer } from './person';
-import { AlternativtSvarForInput, DatoMedUkjent, ESvarMedUbesvart } from './svar';
-import { EUtenlandsoppholdÅrsak } from './utenlandsopphold';
-import { Årsak } from './utvidet';
+import type { BarnetsId, IBarn, IIdNummer, ITidligereSamboer } from './person';
+import type { AlternativtSvarForInput, DatoMedUkjent, ESvarMedUbesvart } from './svar';
+import type { EUtenlandsoppholdÅrsak } from './utenlandsopphold';
+import type { Årsak } from './utvidet';
 
 export interface IDinLivssituasjonFeltTyper {
     årsak: Årsak | '';
@@ -164,10 +163,8 @@ export interface IVelgBarnFeltTyper {
     barnMedISøknad: IBarn[];
 }
 
-export interface ILeggTilBarnTyper extends Omit<
-    IBarn,
-    'borMedSøker' | 'alder' | 'navn' | 'adressebeskyttelse' | 'id' | barnDataKeySpørsmål
-> {
+export interface ILeggTilBarnTyper
+    extends Omit<IBarn, 'borMedSøker' | 'alder' | 'navn' | 'adressebeskyttelse' | 'id' | barnDataKeySpørsmål> {
     erFødt: ESvarMedUbesvart;
     fornavn: string;
     etternavn: string;

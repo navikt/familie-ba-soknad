@@ -1,10 +1,9 @@
-import { Express, RequestHandler } from 'express';
-import { ParamsDictionary } from 'express-serve-static-core';
-
 import { byggSuksessRessurs, type Ressurs } from '@navikt/familie-typer';
+import type { Express, RequestHandler } from 'express';
+import type { ParamsDictionary } from 'express-serve-static-core';
 
 import { BASE_PATH } from '../../common/miljø.js';
-import { defaultFeatureToggleValues, AllFeatureToggles, ToggleKeys } from '../../common/typer/feature-toggles.js';
+import { type AllFeatureToggles, defaultFeatureToggleValues, ToggleKeys } from '../../common/typer/feature-toggles.js';
 import { isEnabled } from '../utils/unleash.js';
 
 const fetchAllFeatureTogglesHandler: RequestHandler<ParamsDictionary, Ressurs<AllFeatureToggles>> = (_, res) => {

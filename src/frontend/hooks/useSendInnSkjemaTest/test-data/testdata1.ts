@@ -1,4 +1,4 @@
-import { TilKontraktTestData } from './typer';
+import type { TilKontraktTestData } from './typer';
 
 export const testdata1: TilKontraktTestData = {
     input: {

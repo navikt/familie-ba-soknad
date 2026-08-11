@@ -1,14 +1,19 @@
 import { ESvar } from '@navikt/familie-form-elements';
 
-import { ESanitySivilstandApiKey, LocaleRecordBlock, LocaleRecordString, PlainTekst } from '../../../common/sanity';
-import { ESivilstand, TilRestLocaleRecord } from '../../../common/typer/kontrakt/generelle';
-import { ISøknadKontrakt } from '../../../common/typer/kontrakt/kontrakt';
-import { LocaleType } from '../../../common/typer/localeType';
+import {
+    ESanitySivilstandApiKey,
+    type LocaleRecordBlock,
+    type LocaleRecordString,
+    type PlainTekst,
+} from '../../../common/sanity';
+import { ESivilstand, type TilRestLocaleRecord } from '../../../common/typer/kontrakt/generelle';
+import type { ISøknadKontrakt } from '../../../common/typer/kontrakt/kontrakt';
+import type { LocaleType } from '../../../common/typer/localeType';
 import { avdødPartnerForelderSpørsmålDokument } from '../../components/SøknadsSteg/OmBarnaDine/utils';
-import { IBarnMedISøknad } from '../../typer/barn';
-import { ISøker } from '../../typer/person';
-import { ITekstinnhold } from '../../typer/sanity/tekstInnhold';
-import { ISøknad } from '../../typer/søknad';
+import type { IBarnMedISøknad } from '../../typer/barn';
+import type { ISøker } from '../../typer/person';
+import type { ITekstinnhold } from '../../typer/sanity/tekstInnhold';
+import type { ISøknad } from '../../typer/søknad';
 import { erDokumentasjonRelevant } from '../dokumentasjon';
 import { sivilstandTilSanitySivilstandApiKey } from '../språk';
 import { jaNeiSvarTilSpråkId } from '../spørsmål';

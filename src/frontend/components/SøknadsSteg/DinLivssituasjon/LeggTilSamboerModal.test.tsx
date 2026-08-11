@@ -1,13 +1,11 @@
-import React from 'react';
-import { act } from 'react';
-
-import { render, within } from '@testing-library/react';
-import { mockDeep } from 'vitest-mock-extended';
-
 import { ESvar } from '@navikt/familie-form-elements';
 
+import { render, within } from '@testing-library/react';
+import { act } from 'react';
+import { mockDeep } from 'vitest-mock-extended';
+
 import { ESøknadstype } from '../../../../common/typer/kontrakt/generelle';
-import { ISøknad } from '../../../typer/søknad';
+import type { ISøknad } from '../../../typer/søknad';
 import { spyOnUseApp, TestProvidere } from '../../../utils/testing';
 
 import DinLivssituasjon from './DinLivssituasjon';

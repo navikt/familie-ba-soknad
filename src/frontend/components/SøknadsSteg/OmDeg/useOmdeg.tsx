@@ -1,16 +1,15 @@
-import { useEffect, useState } from 'react';
-
 import { ESvar } from '@navikt/familie-form-elements';
 import { feil, type ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
+import { useEffect, useState } from 'react';
 
 import { ESanitySteg } from '../../../../common/sanity';
 import { useAppContext } from '../../../context/AppContext';
 import { useEøsContext } from '../../../context/EøsContext';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
-import { IUtenlandsperiode } from '../../../typer/perioder';
-import { IIdNummer } from '../../../typer/person';
-import { IUtenlandsoppholdTekstinnhold } from '../../../typer/sanity/modaler/utenlandsopphold';
-import { IOmDegFeltTyper } from '../../../typer/skjema';
+import type { IUtenlandsperiode } from '../../../typer/perioder';
+import type { IIdNummer } from '../../../typer/person';
+import type { IUtenlandsoppholdTekstinnhold } from '../../../typer/sanity/modaler/utenlandsopphold';
+import type { IOmDegFeltTyper } from '../../../typer/skjema';
 import { AlternativtSvarForInput } from '../../../typer/svar';
 import { nullstilteEøsFelterForBarn } from '../../../utils/barn';
 import { nullstilteEøsFelterForSøker } from '../../../utils/søker';
@@ -18,7 +17,7 @@ import { flyttetPermanentFraNorge } from '../../../utils/utenlandsopphold';
 import { UtenlandsoppholdSpørsmålId } from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 import { idNummerLandMedPeriodeType, PeriodeType } from '../EøsSteg/idnummerUtils';
 
-import { IOmDegTekstinnhold } from './innholdTyper';
+import type { IOmDegTekstinnhold } from './innholdTyper';
 
 export const useOmdeg = (): {
     skjema: ISkjema<IOmDegFeltTyper, string>;

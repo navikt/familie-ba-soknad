@@ -1,10 +1,9 @@
-import React from 'react';
-
+import type { FC } from 'react';
 import { useAppContext } from '../../../context/AppContext';
 import { useSpråkContext } from '../../../context/SpråkContext';
-import { IUtenlandsperiode } from '../../../typer/perioder';
-import { PeriodePersonTypeMedBarnProps } from '../../../typer/personType';
-import { IUtenlandsoppholdTekstinnhold } from '../../../typer/sanity/modaler/utenlandsopphold';
+import type { IUtenlandsperiode } from '../../../typer/perioder';
+import type { PeriodePersonTypeMedBarnProps } from '../../../typer/personType';
+import type { IUtenlandsoppholdTekstinnhold } from '../../../typer/sanity/modaler/utenlandsopphold';
 import { formaterDato } from '../../../utils/dato';
 import { landkodeTilSpråk } from '../../../utils/språk';
 import { formaterDatoMedUkjent } from '../../../utils/visning';
@@ -27,7 +26,7 @@ type Props = {
 
 type UtenlandsperiodeOppsummeringProps = Props & PeriodePersonTypeMedBarnProps;
 
-export const UtenlandsperiodeOppsummering: React.FC<UtenlandsperiodeOppsummeringProps> = ({
+export const UtenlandsperiodeOppsummering: FC<UtenlandsperiodeOppsummeringProps> = ({
     periode,
     nummer,
     fjernPeriodeCallback,

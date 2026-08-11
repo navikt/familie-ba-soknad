@@ -1,24 +1,23 @@
-import { useEffect } from 'react';
-
 import { ESvar } from '@navikt/familie-form-elements';
-import { feil, type FeltState, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
+import { type FeltState, feil, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
+import { useEffect } from 'react';
 
 import { ESanitySteg } from '../../../../common/sanity';
 import { useAppContext } from '../../../context/AppContext';
 import useDatovelgerFeltMedUkjentForSanity from '../../../hooks/useDatovelgerFeltMedUkjentForSanity';
 import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
 import useDatovelgerFeltForSanity from '../../../hooks/useSendInnSkjemaTest/useDatovelgerForSanity';
-import { IBarnMedISøknad } from '../../../typer/barn';
-import { PersonType } from '../../../typer/personType';
-import { IUtenlandsoppholdTekstinnhold } from '../../../typer/sanity/modaler/utenlandsopphold';
-import { IUtenlandsoppholdFeltTyper } from '../../../typer/skjema';
+import type { IBarnMedISøknad } from '../../../typer/barn';
+import type { PersonType } from '../../../typer/personType';
+import type { IUtenlandsoppholdTekstinnhold } from '../../../typer/sanity/modaler/utenlandsopphold';
+import type { IUtenlandsoppholdFeltTyper } from '../../../typer/skjema';
 import { EUtenlandsoppholdÅrsak } from '../../../typer/utenlandsopphold';
 import { dagenEtterDato, stringTilDate } from '../../../utils/dato';
 import {
     harTilhørendeFomFelt,
-    hentMinAvgrensningPåTilDato,
     hentMaxAvgrensningPåFraDato,
     hentMaxAvgrensningPåTilDato,
+    hentMinAvgrensningPåTilDato,
 } from '../../../utils/utenlandsopphold';
 
 import { UtenlandsoppholdSpørsmålId } from './spørsmål';

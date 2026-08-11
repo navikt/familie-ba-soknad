@@ -1,7 +1,7 @@
-import { PortableTextBlock } from '@portabletext/types';
-import { Alpha3Code } from 'i18n-iso-countries';
+import type { PortableTextBlock } from '@portabletext/types';
+import type { Alpha3Code } from 'i18n-iso-countries';
 
-import { LocaleType } from './typer/localeType.js';
+import type { LocaleType } from './typer/localeType.js';
 
 export interface SanityDokument {
     _createdAt: string;

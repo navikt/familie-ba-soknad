@@ -1,6 +1,10 @@
-import { IKontraktNåværendeSamboer, ISøknadsfelt, TilRestLocaleRecord } from '../../../common/typer/kontrakt/generelle';
-import { ISamboer } from '../../typer/person';
-import { ITidligereSamoboereTekstinnhold } from '../../typer/sanity/modaler/tidligereSamboere';
+import type {
+    IKontraktNåværendeSamboer,
+    ISøknadsfelt,
+    TilRestLocaleRecord,
+} from '../../../common/typer/kontrakt/generelle';
+import type { ISamboer } from '../../typer/person';
+import type { ITidligereSamoboereTekstinnhold } from '../../typer/sanity/modaler/tidligereSamboere';
 
 import { sammeVerdiAlleSpråk } from './hjelpefunksjoner';
 

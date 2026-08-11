@@ -1,18 +1,17 @@
-import React from 'react';
-
 import { TrashFillIcon } from '@navikt/aksel-icons';
 import { Button, FormSummary } from '@navikt/ds-react';
+import type { FC } from 'react';
 
 import { useAppContext } from '../../../context/AppContext';
-import { ITidligereSamboer } from '../../../typer/person';
-import { ITidligereSamoboereTekstinnhold } from '../../../typer/sanity/modaler/tidligereSamboere';
+import type { ITidligereSamboer } from '../../../typer/person';
+import type { ITidligereSamoboereTekstinnhold } from '../../../typer/sanity/modaler/tidligereSamboere';
 import { AlternativtSvarForInput } from '../../../typer/svar';
 import { formaterDato } from '../../../utils/dato';
 import { formaterFnr } from '../../../utils/visning';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import { OppsummeringFelt } from '../Oppsummering/OppsummeringFelt';
 
-const SamboerOpplysninger: React.FC<{
+const SamboerOpplysninger: FC<{
     samboer: ITidligereSamboer;
     fjernTidligereSamboer: (samboer: ITidligereSamboer) => void;
 }> = ({ samboer, fjernTidligereSamboer }) => {

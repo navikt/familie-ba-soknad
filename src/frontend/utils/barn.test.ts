@@ -1,15 +1,14 @@
-import { DeepPartial } from 'ts-essentials';
+import { ESvar } from '@navikt/familie-form-elements';
+import type { Felt, ISkjema } from '@navikt/familie-skjema';
+import type { DeepPartial } from 'ts-essentials';
 import { vi } from 'vitest';
 import * as vitestMockExtended from 'vitest-mock-extended';
 
-import { ESvar } from '@navikt/familie-form-elements';
-import type { Felt, ISkjema } from '@navikt/familie-skjema';
-
 import { genererOppdaterteBarn, genererSvarForSpørsmålBarn } from '../components/SøknadsSteg/OmBarnaDine/utils';
-import { IBarnMedISøknad } from '../typer/barn';
-import { IOmBarnaDineFeltTyper } from '../typer/skjema';
+import type { IBarnMedISøknad } from '../typer/barn';
+import type { IOmBarnaDineFeltTyper } from '../typer/skjema';
 import { AlternativtSvarForInput } from '../typer/svar';
-import { ISøknad } from '../typer/søknad';
+import type { ISøknad } from '../typer/søknad';
 
 describe('genererSvarForSpørsmålBarn', () => {
     const mockBarn = vitestMockExtended.mockDeep<IBarnMedISøknad>({ id: 'random-id' });

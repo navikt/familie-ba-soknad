@@ -1,6 +1,6 @@
-import React, { ReactNode } from 'react';
-
 import { FormSummary } from '@navikt/ds-react';
+
+import type { FC, ReactNode } from 'react';
 
 import { useAppContext } from '../../../context/AppContext';
 import { formaterSøknadsvar } from '../../../utils/språk';
@@ -11,7 +11,7 @@ interface IOppsummeringsFeltProps {
     children?: ReactNode;
 }
 
-export const OppsummeringFelt: React.FC<IOppsummeringsFeltProps> = ({ tittel, søknadsvar, children }) => {
+export const OppsummeringFelt: FC<IOppsummeringsFeltProps> = ({ tittel, søknadsvar, children }) => {
     const { plainTekst, tekster } = useAppContext();
 
     return (

@@ -7,10 +7,10 @@ import useDatovelgerFeltMedUkjentForSanity from '../../../hooks/useDatovelgerFel
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
 import useDatovelgerFeltForSanity from '../../../hooks/useSendInnSkjemaTest/useDatovelgerForSanity';
-import { IBarnMedISøknad } from '../../../typer/barn';
+import type { IBarnMedISøknad } from '../../../typer/barn';
 import { PersonType } from '../../../typer/personType';
-import { IAndreUtbetalingerTekstinnhold } from '../../../typer/sanity/modaler/andreUtbetalinger';
-import { IUtbetalingerFeltTyper } from '../../../typer/skjema';
+import type { IAndreUtbetalingerTekstinnhold } from '../../../typer/sanity/modaler/andreUtbetalinger';
+import type { IUtbetalingerFeltTyper } from '../../../typer/skjema';
 import {
     dagensDato,
     erSammeDatoSomDagensDato,

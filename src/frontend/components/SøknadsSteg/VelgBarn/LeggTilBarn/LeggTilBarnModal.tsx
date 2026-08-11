@@ -1,12 +1,11 @@
-import React from 'react';
-
 import { Fieldset, InlineMessage } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Valideringsstatus } from '@navikt/familie-skjema';
+import type { FC } from 'react';
 
 import { Typografi } from '../../../../../common/sanity';
 import { useAppContext } from '../../../../context/AppContext';
-import { ILeggTilBarnTekstinnhold } from '../../../../typer/sanity/modaler/leggTilBarn';
+import type { ILeggTilBarnTekstinnhold } from '../../../../typer/sanity/modaler/leggTilBarn';
 import { visFeiloppsummering } from '../../../../utils/hjelpefunksjoner';
 import JaNeiSpm from '../../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import KomponentGruppe from '../../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
@@ -19,7 +18,7 @@ import { SøkerMåBrukePDF } from '../../../Felleskomponenter/SøkerMåBrukePDF'
 
 import { useLeggTilBarn } from './useLeggTilBarn';
 
-const LeggTilBarnModal: React.FC<{
+const LeggTilBarnModal: FC<{
     erÅpen: boolean;
     lukkModal: () => void;
 }> = ({ erÅpen, lukkModal }) => {

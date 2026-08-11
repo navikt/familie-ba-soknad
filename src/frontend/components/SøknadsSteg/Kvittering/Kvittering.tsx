@@ -1,10 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
-
-import { format } from 'date-fns';
-
 import { CheckmarkCircleIcon, ExclamationmarkTriangleIcon } from '@navikt/aksel-icons';
 import { InfoCard, VStack } from '@navikt/ds-react';
 import { RessursStatus } from '@navikt/familie-typer';
+import { format } from 'date-fns';
+
+import { type FC, useEffect, useRef, useState } from 'react';
 
 import { Typografi } from '../../../../common/sanity';
 import { Dokumentasjonsbehov } from '../../../../common/typer/kontrakt/dokumentasjon';
@@ -19,7 +18,7 @@ import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import Steg from '../../Felleskomponenter/Steg/Steg';
 import Kontoinformasjon from '../../Kontoinformasjon/Kontoinformasjon';
 
-const Kvittering: React.FC = () => {
+const Kvittering: FC = () => {
     const {
         avbrytOgSlettSøknad,
         sisteUtfylteStegIndex,

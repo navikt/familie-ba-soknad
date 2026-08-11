@@ -1,18 +1,17 @@
-import React, { ReactNode, useEffect } from 'react';
-
-import { useNavigate } from 'react-router';
-
 import { ArrowLeftIcon, InformationSquareIcon } from '@navikt/aksel-icons';
 import { Box, FormProgress, GuidePanel, Heading, InfoCard, Link, VStack } from '@navikt/ds-react';
 import type { ISkjema } from '@navikt/familie-skjema';
 import { setAvailableLanguages } from '@navikt/nav-dekoratoren-moduler';
 
-import { LocaleRecordBlock } from '../../../../common/sanity';
+import { type FC, type ReactNode, useEffect } from 'react';
+import { useNavigate } from 'react-router';
+
+import type { LocaleRecordBlock } from '../../../../common/sanity';
 import { useAppContext } from '../../../context/AppContext';
 import { useAppNavigationContext } from '../../../context/AppNavigationContext';
 import { useStegContext } from '../../../context/StegContext';
 import { RouteEnum } from '../../../typer/routes';
-import { SkjemaFeltTyper } from '../../../typer/skjema';
+import type { SkjemaFeltTyper } from '../../../typer/skjema';
 import { visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
 import InnholdContainer from '../InnholdContainer/InnholdContainer';
 import TekstBlock from '../Sanity/TekstBlock';
@@ -20,7 +19,7 @@ import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeilopps
 import useModal from '../SkjemaModal/useModal';
 import { VedleggOppsummering } from '../VedleggOppsummering/VedleggOppsummering';
 import { skalVedleggOppsummeringVises } from '../VedleggOppsummering/vedleggOppsummering.domene';
-import { IVedleggOppsummering } from '../VedleggOppsummering/vedleggOppsummering.types';
+import type { IVedleggOppsummering } from '../VedleggOppsummering/vedleggOppsummering.types';
 
 import ModellVersjonModal from './ModellVersjonModal';
 import Navigeringspanel from './Navigeringspanel';
@@ -41,7 +40,7 @@ interface ISteg {
     children?: ReactNode;
 }
 
-const Steg: React.FC<ISteg> = ({ tittel, guide, skjema, gåVidereCallback, vedleggOppsummering, children }) => {
+const Steg: FC<ISteg> = ({ tittel, guide, skjema, gåVidereCallback, vedleggOppsummering, children }) => {
     const navigate = useNavigate();
     const { erÅpen: erModellVersjonModalÅpen, åpneModal: åpneModellVersjonModal } = useModal();
     const {
@@ -201,7 +200,7 @@ const Steg: React.FC<ISteg> = ({ tittel, guide, skjema, gåVidereCallback, vedle
                             <Navigeringspanel
                                 onTilbakeCallback={håndterTilbake}
                                 onAvbrytCallback={håndterAvbryt}
-                                valideringErOk={skjema && skjema.valideringErOk}
+                                valideringErOk={skjema?.valideringErOk}
                             />
                         )}
                     </VStack>

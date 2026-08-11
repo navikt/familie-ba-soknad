@@ -1,8 +1,8 @@
-import React, { ReactNode } from 'react';
-
 import { Checkbox, ErrorMessage } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import type { Felt } from '@navikt/familie-skjema';
+
+import type { FC, ReactNode } from 'react';
 
 import useFørsteRender from '../../../hooks/useFørsteRender';
 
@@ -12,7 +12,7 @@ interface SkjemaCheckboxProps {
     label: ReactNode;
 }
 
-export const SkjemaCheckbox: React.FC<SkjemaCheckboxProps> = ({ felt, visFeilmeldinger = false, label }) => {
+export const SkjemaCheckbox: FC<SkjemaCheckboxProps> = ({ felt, visFeilmeldinger = false, label }) => {
     useFørsteRender(() => {
         felt.validerOgSettFelt(felt.verdi);
     });

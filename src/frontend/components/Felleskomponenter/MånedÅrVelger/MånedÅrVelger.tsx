@@ -1,19 +1,19 @@
-import React, { useState } from 'react';
-
-import { formatISO, lastDayOfMonth } from 'date-fns';
-
 import { BodyShort, MonthPicker, useMonthpicker } from '@navikt/ds-react';
 import type { Felt } from '@navikt/familie-skjema';
 
+import { formatISO, lastDayOfMonth } from 'date-fns';
+
+import { type FC, type ReactNode, useState } from 'react';
+
 import { ESanitySteg } from '../../../../common/sanity';
-import { ISODateString } from '../../../../common/typer/ISODateString';
+import type { ISODateString } from '../../../../common/typer/ISODateString';
 import { useAppContext } from '../../../context/AppContext';
 import { useSpråkContext } from '../../../context/SpråkContext';
 
 interface MånedÅrVelgerProps {
     tidligsteValgbareMåned?: Date;
     senesteValgbareMåned?: Date;
-    label: React.ReactNode;
+    label: ReactNode;
     felt: Felt<ISODateString>;
     visFeilmeldinger?: boolean;
     disabled?: boolean;
@@ -39,7 +39,7 @@ export enum DagIMåneden {
     SISTE_DAG = 'SISTE_DAG',
 }
 
-export const MånedÅrVelger: React.FC<MånedÅrVelgerProps> = ({
+export const MånedÅrVelger: FC<MånedÅrVelgerProps> = ({
     tidligsteValgbareMåned,
     senesteValgbareMåned,
     label,

@@ -1,15 +1,12 @@
+import { ESvar } from '@navikt/familie-form-elements';
+import { type Felt, type FeltState, feil, ok, useFelt, Valideringsstatus } from '@navikt/familie-skjema';
 import { useState } from 'react';
-
 import { v4 as uuidv4 } from 'uuid';
 
-import { ESvar } from '@navikt/familie-form-elements';
-import { feil, type Felt, type FeltState, ok, useFelt, Valideringsstatus } from '@navikt/familie-skjema';
-
-import { FlettefeltVerdier, LocaleRecordBlock } from '../../common/sanity';
+import type { FlettefeltVerdier, LocaleRecordBlock } from '../../common/sanity';
 import { useAppContext } from '../context/AppContext';
-import { ISøknadSpørsmål } from '../typer/spørsmål';
+import type { ISøknadSpørsmål } from '../typer/spørsmål';
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface FeltGruppe {
     hovedSpørsmål: Felt<any>;
     tilhørendeFelter?: Felt<any>[];
@@ -25,7 +22,7 @@ export const erRelevanteAvhengigheterValidert = (avhengigheter: { [key: string]:
     }
 
     const tilhørendeSomIkkeErValidert = Object.values(avhengigheter).filter(feltGruppe => {
-        if (!(feltGruppe && feltGruppe.tilhørendeFelter)) {
+        if (!feltGruppe?.tilhørendeFelter) {
             return false;
         } else {
             return !!feltGruppe.tilhørendeFelter.find(
@@ -62,7 +59,7 @@ const useJaNeiSpmFelt = ({
             return felt.verdi !== null ? ok(felt) : feil(felt, plainTekst(feilmelding, { ...flettefelter }));
         },
         skalFeltetVises: (avhengigheter: { [key: string]: FeltGruppe }) => {
-            if (avhengigheter && avhengigheter.skalSkjules) return false;
+            if (avhengigheter?.skalSkjules) return false;
             if (!avhengigheter) return harBlittVist;
 
             // borPåRegistrertAdresse er et spesialtilfelle for avhengighet, fordi hvis svaret på den er Nei må man søke på papir.

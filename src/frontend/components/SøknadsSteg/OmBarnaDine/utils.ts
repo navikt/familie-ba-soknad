@@ -1,12 +1,11 @@
-import { Alpha3Code } from 'i18n-iso-countries';
-
 import { ESvar } from '@navikt/familie-form-elements';
 import type { Felt, ISkjema } from '@navikt/familie-skjema';
+import type { Alpha3Code } from 'i18n-iso-countries';
 
-import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../typer/barn';
-import { IOmsorgsperson } from '../../../typer/omsorgsperson';
-import { IOmBarnaDineFeltTyper } from '../../../typer/skjema';
-import { ISøknad } from '../../../typer/søknad';
+import { barnDataKeySpørsmål, type IBarnMedISøknad } from '../../../typer/barn';
+import type { IOmsorgsperson } from '../../../typer/omsorgsperson';
+import type { IOmBarnaDineFeltTyper } from '../../../typer/skjema';
+import type { ISøknad } from '../../../typer/søknad';
 import {
     filtrerteRelevanteIdNummerForBarn,
     genererInitiellAndreForelder,
@@ -15,7 +14,7 @@ import {
 } from '../../../utils/barn';
 import { EøsBarnSpørsmålId } from '../EøsSteg/Barn/spørsmål';
 
-import { IOmBarnaTekstinnhold } from './innholdTyper';
+import type { IOmBarnaTekstinnhold } from './innholdTyper';
 import { OmBarnaDineSpørsmålId } from './spørsmål';
 
 export const genererSvarForSpørsmålBarn = (barn: IBarnMedISøknad, felt: Felt<string[]>): ESvar =>

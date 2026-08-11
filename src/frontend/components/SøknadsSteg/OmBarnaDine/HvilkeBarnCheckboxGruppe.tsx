@@ -1,12 +1,12 @@
-import React, { ReactNode, useEffect, useState } from 'react';
-
 import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import type { Felt } from '@navikt/familie-skjema';
 
+import { type FC, type ReactNode, useEffect, useState } from 'react';
+
 import { useAppContext } from '../../../context/AppContext';
-import { barnDataKeySpørsmål } from '../../../typer/barn';
-import { BarnetsId } from '../../../typer/person';
+import type { barnDataKeySpørsmål } from '../../../typer/barn';
+import type { BarnetsId } from '../../../typer/person';
 import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 
 interface Props {
@@ -18,7 +18,7 @@ interface Props {
     children?: ReactNode;
 }
 
-const HvilkeBarnCheckboxGruppe: React.FC<Props> = ({
+const HvilkeBarnCheckboxGruppe: FC<Props> = ({
     legendTekst,
     skjemafelt,
     søknadsdatafelt,

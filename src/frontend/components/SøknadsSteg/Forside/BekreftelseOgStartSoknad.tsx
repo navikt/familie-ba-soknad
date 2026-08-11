@@ -1,7 +1,6 @@
-import React from 'react';
-
 import { ArrowRightIcon } from '@navikt/aksel-icons';
 import { Button, Checkbox, ErrorMessage, InfoCard, Radio, RadioGroup, VStack } from '@navikt/ds-react';
+import type { FC } from 'react';
 
 import { Typografi } from '../../../../common/sanity';
 import { ESøknadstype } from '../../../../common/typer/kontrakt/generelle';
@@ -10,7 +9,7 @@ import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 
 import { BekreftelseStatus, useBekreftelseOgStartSoknad } from './useBekreftelseOgStartSoknad';
 
-const BekreftelseOgStartSoknad: React.FC = () => {
+const BekreftelseOgStartSoknad: FC = () => {
     const {
         onStartSøknad,
         bekreftelseOnChange,

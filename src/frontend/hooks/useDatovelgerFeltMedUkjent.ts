@@ -1,10 +1,9 @@
-import { useEffect } from 'react';
-
 import { ESvar } from '@navikt/familie-form-elements';
 import { type Avhengigheter, type Felt, type FeltState, ok, useFelt } from '@navikt/familie-skjema';
+import { useEffect } from 'react';
 
-import { LocaleRecordBlock } from '../../common/sanity';
-import { ISODateString } from '../../common/typer/ISODateString';
+import type { LocaleRecordBlock } from '../../common/sanity';
+import type { ISODateString } from '../../common/typer/ISODateString';
 import { useAppContext } from '../context/AppContext';
 import { validerDato } from '../utils/dato';
 
@@ -36,13 +35,13 @@ const useDatovelgerFeltMedUkjent = ({
         feltId: feltId,
         verdi: initiellVerdi,
         valideringsfunksjon: (felt: FeltState<string>, avhengigheter) => {
-            if (avhengigheter && avhengigheter.vetIkkeCheckbox && avhengigheter.vetIkkeCheckbox.verdi === ESvar.JA) {
+            if (avhengigheter?.vetIkkeCheckbox && avhengigheter.vetIkkeCheckbox.verdi === ESvar.JA) {
                 return ok(felt);
             }
 
             const feilmelding = avhengigheter?.feilmelding as LocaleRecordBlock;
-            const customStartdatoFeilmelding = avhengigheter && avhengigheter.customStartdatoFeilmelding;
-            const startdatoAvgrensningOppdatert = avhengigheter && avhengigheter.startdatoAvgrensning;
+            const customStartdatoFeilmelding = avhengigheter?.customStartdatoFeilmelding;
+            const startdatoAvgrensningOppdatert = avhengigheter?.startdatoAvgrensning;
 
             return validerDato(
                 tekster().FELLES.formateringsfeilmeldinger,
@@ -63,7 +62,7 @@ const useDatovelgerFeltMedUkjent = ({
             ...avhengigheter,
         },
         nullstillVedAvhengighetEndring,
-        skalFeltetVises: avhengigheter => avhengigheter && avhengigheter.skalFeltetVises,
+        skalFeltetVises: avhengigheter => avhengigheter?.skalFeltetVises,
     });
 
     useEffect(() => {

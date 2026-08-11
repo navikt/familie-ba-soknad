@@ -1,13 +1,12 @@
-import React, { PropsWithChildren, ReactNode } from 'react';
+import { ESvar } from '@navikt/familie-form-elements';
+import { HttpProvider } from '@navikt/familie-http';
+import { type Ressurs, RessursStatus } from '@navikt/familie-typer';
 
+import type { FC, PropsWithChildren, ReactNode } from 'react';
 import { Cookies, CookiesProvider } from 'react-cookie';
 import { MemoryRouter, useLocation } from 'react-router';
 import { vi } from 'vitest';
 import { mockDeep } from 'vitest-mock-extended';
-
-import { ESvar } from '@navikt/familie-form-elements';
-import { HttpProvider } from '@navikt/familie-http';
-import { type Ressurs, RessursStatus } from '@navikt/familie-typer';
 
 import { mockTekstInnhold } from '../../../mocks/testdata/sanity/sanity';
 import { ESivilstand, ESøknadstype, Slektsforhold } from '../../common/typer/kontrakt/generelle';
@@ -35,11 +34,11 @@ import { SanityProvider } from '../context/SanityContext';
 import { SpråkProvider } from '../context/SpråkContext';
 import { StegProvider } from '../context/StegContext';
 import { andreForelderDataKeySpørsmål, barnDataKeySpørsmål } from '../typer/barn';
-import { IKvittering } from '../typer/kvittering';
-import { IUtenlandsperiode } from '../typer/perioder';
-import { ISøker } from '../typer/person';
+import type { IKvittering } from '../typer/kvittering';
+import type { IUtenlandsperiode } from '../typer/perioder';
+import type { ISøker } from '../typer/person';
 import { AlternativtSvarForInput } from '../typer/svar';
-import { initialStateSøknad, ISøknad } from '../typer/søknad';
+import { type ISøknad, initialStateSøknad } from '../typer/søknad';
 import { EUtenlandsoppholdÅrsak } from '../typer/utenlandsopphold';
 import { Årsak } from '../typer/utvidet';
 
@@ -57,8 +56,8 @@ export const spyOnUseApp = søknad => {
     const settInnsendingStatus = vi.fn();
     const axiosRequestMock = vi
         .fn()
-        .mockImplementation((): Promise<Ressurs<unknown>> =>
-            Promise.resolve({ status: RessursStatus.SUKSESS, data: {} })
+        .mockImplementation(
+            (): Promise<Ressurs<unknown>> => Promise.resolve({ status: RessursStatus.SUKSESS, data: {} })
         );
     const erUtvidet = søknad.søknadstype === 'UTVIDET';
     const settNåværendeRoute = vi.fn();
@@ -151,12 +150,7 @@ export const silenceConsoleErrors = () => {
     });
 };
 
-const wrapMedProvidere = (
-    // eslint-disable-next-line
-    providerComponents: React.FC<any>[],
-    mocketNettleserHistorikk: string[],
-    children?: ReactNode
-) => {
+const wrapMedProvidere = (providerComponents: FC<any>[], mocketNettleserHistorikk: string[], children?: ReactNode) => {
     const [Første, ...resten] = providerComponents;
     const erSpråkprovider = Første === SpråkProvider;
     const erMemoryRouter = Første === MemoryRouter;
@@ -196,23 +190,19 @@ const wrapMedDefaultProvidere = (children: ReactNode, mocketNettleserHistorikk: 
         children
     );
 
-export const TestProvidere: React.FC<{
+export const TestProvidere: FC<{
     mocketNettleserHistorikk?: string[];
     children?: ReactNode;
 }> = ({ mocketNettleserHistorikk = ['/'], children }) => wrapMedDefaultProvidere(children, mocketNettleserHistorikk);
 
-export const TestProvidereMedEkteTekster: React.FC<{
+export const TestProvidereMedEkteTekster: FC<{
     mocketNettleserHistorikk?: string[];
     children?: ReactNode;
 }> = ({ mocketNettleserHistorikk, children }) => (
-    <TestProvidere children={children} mocketNettleserHistorikk={mocketNettleserHistorikk} />
+    <TestProvidere mocketNettleserHistorikk={mocketNettleserHistorikk}>{children}</TestProvidere>
 );
 
-export const wrapMedProvidereForSanity = (
-    // eslint-disable-next-line
-    providerComponents: React.FC<any>[],
-    children?: ReactNode
-) => {
+export const wrapMedProvidereForSanity = (providerComponents: FC<any>[], children?: ReactNode) => {
     const [Første, ...resten] = providerComponents;
     return <Første>{resten.length ? wrapMedProvidereForSanity(resten, children) : children}</Første>;
 };

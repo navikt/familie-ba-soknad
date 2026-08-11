@@ -1,16 +1,15 @@
-import React from 'react';
-
 import { Box, VStack } from '@navikt/ds-react';
+import type { FC } from 'react';
 
 import { ESanitySteg, Typografi } from '../../../../common/sanity';
 import { useAppContext } from '../../../context/AppContext';
-import { IBarnMedISøknad } from '../../../typer/barn';
+import type { IBarnMedISøknad } from '../../../typer/barn';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import { TilfeldigBarnIkon } from '../../Felleskomponenter/TilfeldigBarnIkon/TilfeldigBarnIkon';
 
 import styles from './OmBarnetHeader.module.css';
 
-export const OmBarnetHeader: React.FC<{ barn: IBarnMedISøknad }> = ({ barn }) => {
+export const OmBarnetHeader: FC<{ barn: IBarnMedISøknad }> = ({ barn }) => {
     const {
         søknad: { barnInkludertISøknaden },
         tekster,
