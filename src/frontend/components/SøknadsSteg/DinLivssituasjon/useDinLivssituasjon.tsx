@@ -94,7 +94,9 @@ export const useDinLivssituasjon = (): {
                 : feil(felt, plainTekst(teksterForSteg.separertEnkeSkiltUtland.feilmelding));
         },
         skalFeltetVises: avhengigheter => {
-            return avhengigheter?.separertEnkeSkilt && avhengigheter.separertEnkeSkilt.verdi === ESvar.JA;
+            return (
+                avhengigheter && avhengigheter.separertEnkeSkilt && avhengigheter.separertEnkeSkilt.verdi === ESvar.JA
+            );
         },
         avhengigheter: { separertEnkeSkilt },
     });

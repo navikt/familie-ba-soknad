@@ -60,7 +60,7 @@ const useInputFeltMedUkjent = ({
             }
         },
         avhengigheter: { vetIkkeCheckbox: avhengighet, skalVises },
-        skalFeltetVises: avhengigheter => avhengigheter?.skalVises,
+        skalFeltetVises: avhengigheter => avhengigheter && avhengigheter.skalVises,
         nullstillVedAvhengighetEndring,
     });
     useEffect(() => {

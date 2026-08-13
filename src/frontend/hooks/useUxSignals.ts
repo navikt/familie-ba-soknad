@@ -7,7 +7,7 @@ export const useUxSignals = (ready: boolean) => {
         const script = document.createElement('script');
         script.async = true;
         script.src = 'https://widget.uxsignals.com/embed.js';
-        if (consent?.consent.surveys && ready) {
+        if (consent && consent.consent.surveys && ready) {
             document.body.appendChild(script);
         }
 

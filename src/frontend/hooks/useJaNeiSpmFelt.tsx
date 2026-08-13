@@ -22,7 +22,7 @@ export const erRelevanteAvhengigheterValidert = (avhengigheter: { [key: string]:
     }
 
     const tilhørendeSomIkkeErValidert = Object.values(avhengigheter).filter(feltGruppe => {
-        if (!feltGruppe?.tilhørendeFelter) {
+        if (!(feltGruppe && feltGruppe.tilhørendeFelter)) {
             return false;
         } else {
             return !!feltGruppe.tilhørendeFelter.find(
@@ -59,7 +59,7 @@ const useJaNeiSpmFelt = ({
             return felt.verdi !== null ? ok(felt) : feil(felt, plainTekst(feilmelding, { ...flettefelter }));
         },
         skalFeltetVises: (avhengigheter: { [key: string]: FeltGruppe }) => {
-            if (avhengigheter?.skalSkjules) return false;
+            if (avhengigheter && avhengigheter.skalSkjules) return false;
             if (!avhengigheter) return harBlittVist;
 
             // borPåRegistrertAdresse er et spesialtilfelle for avhengighet, fordi hvis svaret på den er Nei må man søke på papir.

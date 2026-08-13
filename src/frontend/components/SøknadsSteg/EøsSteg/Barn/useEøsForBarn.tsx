@@ -157,7 +157,7 @@ export const useEøsForBarn = (
     });
 
     const omsorgspersonNavn = useInputFelt({
-        søknadsfelt: omsorgsperson?.navn || null,
+        søknadsfelt: omsorgsperson && omsorgsperson.navn,
         feilmelding: eøsForBarnTekster.hvaHeterOmsorgspersonen.feilmelding,
         skalVises: borMedOmsorgsperson.verdi === ESvar.JA,
         customValidering: (felt: FeltState<string>) => {
@@ -184,7 +184,7 @@ export const useEøsForBarn = (
     });
 
     const omsorgpersonSlektsforholdSpesifisering = useInputFelt({
-        søknadsfelt: omsorgsperson?.slektsforholdSpesifisering || null,
+        søknadsfelt: omsorgsperson && omsorgsperson.slektsforholdSpesifisering,
         feilmelding: eøsForBarnTekster.hvilkenRelasjonOmsorgsperson.feilmelding,
         skalVises: omsorgspersonSlektsforhold.verdi === Slektsforhold.ANNEN_RELASJON,
         customValidering: (felt: FeltState<string>) => {
@@ -204,7 +204,7 @@ export const useEøsForBarn = (
     });
 
     const omsorgspersonIdNummer = useInputFeltMedUkjent({
-        søknadsfelt: omsorgsperson?.idNummer || null,
+        søknadsfelt: omsorgsperson && omsorgsperson.idNummer,
         avhengighet: omsorgspersonIdNummerVetIkke,
         feilmelding: eøsForBarnTekster.idNummerOmsorgsperson.feilmelding,
         skalVises: borMedOmsorgsperson.verdi === ESvar.JA,
@@ -218,7 +218,7 @@ export const useEøsForBarn = (
     });
 
     const omsorgspersonAdresse = useInputFelt({
-        søknadsfelt: omsorgsperson?.adresse || null,
+        søknadsfelt: omsorgsperson && omsorgsperson.adresse,
         feilmelding: eøsForBarnTekster.hvorBorOmsorgsperson.feilmelding,
         skalVises: borMedOmsorgsperson.verdi === ESvar.JA,
         customValidering: felt => valideringAdresse(felt, plainTekst(forLangAdresseTekst)),
@@ -425,7 +425,7 @@ export const useEøsForBarn = (
     });
 
     const andreForelderAdresse = useInputFeltMedUkjent({
-        søknadsfelt: andreForelder?.[andreForelderDataKeySpørsmål.adresse] || null,
+        søknadsfelt: andreForelder && andreForelder[andreForelderDataKeySpørsmål.adresse],
         avhengighet: andreForelderAdresseVetIkke,
         feilmelding: eøsForBarnTekster.hvorBorAndreForelder.feilmelding,
         skalVises: !andreForelderErDød && !skalSkjuleAndreForelderFelt(gjeldendeBarn),

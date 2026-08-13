@@ -57,7 +57,7 @@ const EøsAndreForelderOppsummering: FC<{
         andreForelderDataKeySpm: andreForelderDataKeySpørsmål;
         spørsmålstekst: LocaleRecordBlock;
     }) => {
-        return barn.andreForelder?.[andreForelderDataKeySpm].svar ? (
+        return barn.andreForelder && barn.andreForelder[andreForelderDataKeySpm].svar ? (
             <OppsummeringFelt
                 tittel={<TekstBlock block={spørsmålstekst} flettefelter={flettefelter} />}
                 søknadsvar={barn.andreForelder[andreForelderDataKeySpm].svar}

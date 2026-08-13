@@ -16,7 +16,7 @@ import type {
 } from '../../common/typer/kontrakt/kontrakt';
 
 const erGyldigIKontraktNåværendeSamboer = (input): input is IKontraktNåværendeSamboer =>
-    !!(input?.navn && input.ident && input.fødselsdato && input.samboerFraDato);
+    !!(input && input.navn && input.ident && input.fødselsdato && input.samboerFraDato);
 
 const erGyldigNåværendeSamboer = (
     harSamboerNå: ISøknadsfelt<string>,
@@ -35,10 +35,11 @@ const erGyldigNåværendeSamboer = (
 };
 
 const erGyldigIKontraktTidligereSamboer = (input): input is IKontraktTidligereSamboer =>
-    !!(input?.samboerTilDato && erGyldigIKontraktNåværendeSamboer(input));
+    !!(input && input.samboerTilDato && erGyldigIKontraktNåværendeSamboer(input));
 
 const erGyldigTidligereSamboere = (input: ISøknadKontraktSøker): boolean =>
-    input?.tidligereSamboere &&
+    input &&
+    input.tidligereSamboere &&
     Array.isArray(input.tidligereSamboere) &&
     input.tidligereSamboere
         .map(tidligereSamboerSøknadsfelt => erGyldigIKontraktTidligereSamboer(tidligereSamboerSøknadsfelt.verdi['nb']))

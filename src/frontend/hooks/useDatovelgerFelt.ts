@@ -31,7 +31,7 @@ const useDatovelgerFelt = ({
         verdi: søknadsfelt.svar,
         valideringsfunksjon: (felt, avhengigheter) => {
             const feilmelding = avhengigheter?.feilmelding as LocaleRecordBlock;
-            const startdatoAvgrensningOppdatert = avhengigheter?.startdatoAvgrensning;
+            const startdatoAvgrensningOppdatert = avhengigheter && avhengigheter.startdatoAvgrensning;
 
             return validerDato(
                 tekster().FELLES.formateringsfeilmeldinger,

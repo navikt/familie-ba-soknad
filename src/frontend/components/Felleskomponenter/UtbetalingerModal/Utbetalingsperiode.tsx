@@ -54,7 +54,7 @@ export const Utbetalingsperiode: FC<Props> = ({
 
     const frittståendeOrdTekster = tekster().FELLES.frittståendeOrd;
 
-    const barnetsNavn = barn?.navn;
+    const barnetsNavn = barn && barn.navn;
 
     return (
         <KomponentGruppe>

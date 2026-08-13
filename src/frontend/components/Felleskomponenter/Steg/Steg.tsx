@@ -200,7 +200,7 @@ const Steg: FC<ISteg> = ({ tittel, guide, skjema, gåVidereCallback, vedleggOpps
                             <Navigeringspanel
                                 onTilbakeCallback={håndterTilbake}
                                 onAvbrytCallback={håndterAvbryt}
-                                valideringErOk={skjema?.valideringErOk}
+                                valideringErOk={skjema && skjema.valideringErOk}
                             />
                         )}
                     </VStack>

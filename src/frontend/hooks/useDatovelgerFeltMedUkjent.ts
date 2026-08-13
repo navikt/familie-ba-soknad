@@ -35,13 +35,13 @@ const useDatovelgerFeltMedUkjent = ({
         feltId: feltId,
         verdi: initiellVerdi,
         valideringsfunksjon: (felt: FeltState<string>, avhengigheter) => {
-            if (avhengigheter?.vetIkkeCheckbox && avhengigheter.vetIkkeCheckbox.verdi === ESvar.JA) {
+            if (avhengigheter && avhengigheter.vetIkkeCheckbox && avhengigheter.vetIkkeCheckbox.verdi === ESvar.JA) {
                 return ok(felt);
             }
 
             const feilmelding = avhengigheter?.feilmelding as LocaleRecordBlock;
-            const customStartdatoFeilmelding = avhengigheter?.customStartdatoFeilmelding;
-            const startdatoAvgrensningOppdatert = avhengigheter?.startdatoAvgrensning;
+            const customStartdatoFeilmelding = avhengigheter && avhengigheter.customStartdatoFeilmelding;
+            const startdatoAvgrensningOppdatert = avhengigheter && avhengigheter.startdatoAvgrensning;
 
             return validerDato(
                 tekster().FELLES.formateringsfeilmeldinger,
@@ -62,7 +62,7 @@ const useDatovelgerFeltMedUkjent = ({
             ...avhengigheter,
         },
         nullstillVedAvhengighetEndring,
-        skalFeltetVises: avhengigheter => avhengigheter?.skalFeltetVises,
+        skalFeltetVises: avhengigheter => avhengigheter && avhengigheter.skalFeltetVises,
     });
 
     useEffect(() => {

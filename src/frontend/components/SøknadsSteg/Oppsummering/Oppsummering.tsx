@@ -35,7 +35,7 @@ const Oppsummering: FC = () => {
         // Gjør dette for syns skyld, men push scroller ikke vinduet
         navigate({ hash: elementId });
         const element = document.getElementById(elementId);
-        if (element?.scrollIntoView) {
+        if (element && element.scrollIntoView) {
             element.scrollIntoView();
         }
     };
