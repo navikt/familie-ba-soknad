@@ -1,8 +1,6 @@
-import React from 'react';
-
-import { Alpha3Code } from 'i18n-iso-countries';
-
 import { BodyShort } from '@navikt/ds-react';
+import type { Alpha3Code } from 'i18n-iso-countries';
+import type { FC } from 'react';
 
 import { ESanitySteg } from '../../../../common/sanity';
 import { useAppContext } from '../../../context/AppContext';
@@ -11,7 +9,7 @@ import { genererAdresseVisning } from '../../../utils/adresse';
 import { landkodeTilSpråk, sivilstandTilSanitySivilstandApiKey } from '../../../utils/språk';
 import { formaterFnr } from '../../../utils/visning';
 
-export const Personopplysninger: React.FC = () => {
+export const Personopplysninger: FC = () => {
     const { valgtLocale } = useSpråkContext();
     const { søknad, tekster, plainTekst } = useAppContext();
 

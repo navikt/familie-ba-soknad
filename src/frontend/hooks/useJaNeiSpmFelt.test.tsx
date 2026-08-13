@@ -1,20 +1,17 @@
-import React from 'react';
-
+import type { ESvar } from '@navikt/familie-form-elements';
+import { type Felt, Valideringsstatus } from '@navikt/familie-skjema';
 import { renderHook } from '@testing-library/react';
-import { Alpha3Code } from 'i18n-iso-countries';
+import type { Alpha3Code } from 'i18n-iso-countries';
 import { mock } from 'vitest-mock-extended';
 
-import { ESvar } from '@navikt/familie-form-elements';
-import { type Felt, Valideringsstatus } from '@navikt/familie-skjema';
-
-import { ISODateString } from '../../common/typer/ISODateString';
+import type { ISODateString } from '../../common/typer/ISODateString';
 import { OmDegSpørsmålId } from '../components/SøknadsSteg/OmDeg/spørsmål';
 import { AppProvider } from '../context/AppContext';
 import { InnloggetProvider } from '../context/InnloggetContext';
 import { LastRessurserProvider } from '../context/LastRessurserContext';
 import { SanityProvider } from '../context/SanityContext';
 import { SpråkProvider } from '../context/SpråkContext';
-import { ISøknadSpørsmål } from '../typer/spørsmål';
+import type { ISøknadSpørsmål } from '../typer/spørsmål';
 import { CookiesProviderMedLocale } from '../utils/testing';
 
 import useJaNeiSpmFelt, { erRelevanteAvhengigheterValidert } from './useJaNeiSpmFelt';

@@ -1,16 +1,14 @@
+import { ESvar } from '@navikt/familie-form-elements';
+import { type Felt, type FeltState, feil, ok, useFelt } from '@navikt/familie-skjema';
+import { idnr } from '@navikt/fnrvalidator';
 import { useEffect } from 'react';
-
 import { v4 as uuidv4 } from 'uuid';
 
-import { ESvar } from '@navikt/familie-form-elements';
-import { feil, type Felt, type FeltState, ok, useFelt } from '@navikt/familie-skjema';
-import { idnr } from '@navikt/fnrvalidator';
-
-import { FlettefeltVerdier, LocaleRecordBlock, LocaleRecordString } from '../../common/sanity';
+import type { FlettefeltVerdier, LocaleRecordBlock, LocaleRecordString } from '../../common/sanity';
 import { useAppContext } from '../context/AppContext';
-import { IdNummerKey } from '../typer/skjema';
-import { ISøknadSpørsmål } from '../typer/spørsmål';
-import { DatoMedUkjent } from '../typer/svar';
+import type { IdNummerKey } from '../typer/skjema';
+import type { ISøknadSpørsmål } from '../typer/spørsmål';
+import type { DatoMedUkjent } from '../typer/svar';
 import { trimWhiteSpace } from '../utils/hjelpefunksjoner';
 import { formaterInitVerdiForInputMedUkjent } from '../utils/input';
 

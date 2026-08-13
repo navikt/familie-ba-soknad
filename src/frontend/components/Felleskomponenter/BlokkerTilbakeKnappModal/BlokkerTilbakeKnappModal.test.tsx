@@ -1,12 +1,9 @@
-import React from 'react';
-
-import { act, screen, render, waitFor } from '@testing-library/react';
+import { ESvar } from '@navikt/familie-form-elements';
+import { act, render, screen, waitFor } from '@testing-library/react';
 import { useNavigate } from 'react-router';
 
-import { ESvar } from '@navikt/familie-form-elements';
-
-import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../typer/barn';
-import { IBarn, IBarnRespons } from '../../../typer/person';
+import { barnDataKeySpørsmål, type IBarnMedISøknad } from '../../../typer/barn';
+import type { IBarn, IBarnRespons } from '../../../typer/person';
 import { silenceConsoleErrors, spyOnUseApp, TestProvidere } from '../../../utils/testing';
 import { OmBarnaDineSpørsmålId } from '../../SøknadsSteg/OmBarnaDine/spørsmål';
 
@@ -63,7 +60,7 @@ describe('Ingen navigering tilbake til søknad fra kvitteringssiden', () => {
             const navigate = useNavigate();
 
             return (
-                <button data-testid="tilbakeknapp" onClick={() => navigate(-1)}>
+                <button type="button" data-testid="tilbakeknapp" onClick={() => navigate(-1)}>
                     Tilbake
                 </button>
             );

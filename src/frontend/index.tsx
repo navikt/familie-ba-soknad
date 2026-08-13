@@ -1,12 +1,10 @@
-import React from 'react';
-
-import { registerLocale } from 'i18n-iso-countries';
+import { awaitDecoratorData } from '@navikt/nav-dekoratoren-moduler';
 import type { LocaleData } from 'i18n-iso-countries';
+import { registerLocale } from 'i18n-iso-countries';
+import React, { StrictMode } from 'react';
 import { CookiesProvider } from 'react-cookie';
 import ReactDOM from 'react-dom';
 import { createRoot } from 'react-dom/client';
-
-import { awaitDecoratorData } from '@navikt/nav-dekoratoren-moduler';
 
 import { LocaleType } from '../common/typer/localeType';
 
@@ -50,7 +48,7 @@ polyfillLocaledata().then(async () => {
 
     const root = createRoot(container!);
     root.render(
-        <React.StrictMode>
+        <StrictMode>
             <CookiesProvider>
                 <SpråkProvider>
                     <MiljøProvider>
@@ -58,6 +56,6 @@ polyfillLocaledata().then(async () => {
                     </MiljøProvider>
                 </SpråkProvider>
             </CookiesProvider>
-        </React.StrictMode>
+        </StrictMode>
     );
 });

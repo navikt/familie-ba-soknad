@@ -1,14 +1,13 @@
-import React from 'react';
-
 import { BodyShort, FormSummary } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
+import type { FC } from 'react';
 
 import { useAppContext } from '../../../../../context/AppContext';
 import {
     andreForelderDataKeySpørsmål,
     barnDataKeySpørsmål,
-    IAndreForelder,
-    IBarnMedISøknad,
+    type IAndreForelder,
+    type IBarnMedISøknad,
 } from '../../../../../typer/barn';
 import { PersonType } from '../../../../../typer/personType';
 import { AlternativtSvarForInput } from '../../../../../typer/svar';
@@ -19,7 +18,7 @@ import { PensjonsperiodeOppsummering } from '../../../../Felleskomponenter/Pensj
 import TekstBlock from '../../../../Felleskomponenter/Sanity/TekstBlock';
 import { OppsummeringFelt } from '../../OppsummeringFelt';
 
-const AndreForelderOppsummering: React.FC<{
+const AndreForelderOppsummering: FC<{
     barn: IBarnMedISøknad;
     andreForelder: IAndreForelder;
 }> = ({ barn, andreForelder }) => {

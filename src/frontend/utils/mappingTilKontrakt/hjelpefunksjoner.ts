@@ -1,9 +1,9 @@
-import { ESvar } from '@navikt/familie-form-elements';
+import type { ESvar } from '@navikt/familie-form-elements';
 
-import { FlettefeltVerdier, LocaleRecordBlock, LocaleRecordString } from '../../../common/sanity';
-import { ISøknadsfelt, TilRestLocaleRecord } from '../../../common/typer/kontrakt/generelle';
+import type { FlettefeltVerdier, LocaleRecordBlock, LocaleRecordString } from '../../../common/sanity';
+import type { ISøknadsfelt, TilRestLocaleRecord } from '../../../common/typer/kontrakt/generelle';
 import { LocaleType } from '../../../common/typer/localeType';
-import { IBarnMedISøknad } from '../../typer/barn';
+import type { IBarnMedISøknad } from '../../typer/barn';
 import { AlternativtSvarForInput } from '../../typer/svar';
 
 export const søknadsfeltHof =

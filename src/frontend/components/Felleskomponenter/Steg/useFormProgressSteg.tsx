@@ -1,7 +1,7 @@
-import { FlettefeltVerdier, LocaleRecordBlock } from '../../../../common/sanity';
+import type { FlettefeltVerdier, LocaleRecordBlock } from '../../../../common/sanity';
 import { useAppContext } from '../../../context/AppContext';
 import { useStegContext } from '../../../context/StegContext';
-import { ISteg, RouteEnum } from '../../../typer/routes';
+import { type ISteg, RouteEnum } from '../../../typer/routes';
 
 interface IStegMedTittel extends ISteg {
     tittel: string;
@@ -31,7 +31,7 @@ export const useFormProgressSteg = (): IStegMedTittel[] => {
     return steg
         .map(steg => {
             let tittelBlock: LocaleRecordBlock;
-            let tittelFlettefeltVerdier: FlettefeltVerdier | undefined = undefined;
+            let tittelFlettefeltVerdier: FlettefeltVerdier | undefined;
 
             switch (steg.route) {
                 case RouteEnum.Forside:
@@ -83,15 +83,16 @@ export const useFormProgressSteg = (): IStegMedTittel[] => {
                 case RouteEnum.Kvittering:
                     tittelBlock = KVITTERING.kvitteringTittel;
                     break;
-                default:
+                default: {
                     /*
                      * Det er viktig at alle enum-medlemmer i RouteEnum blir håndtert i switch-setningen.
                      * Hvis et medlem utelates, vil koden under feile fordi den forutsetter at hver route har en tilhørende tittel fra Sanity.
-                     * Eslint vil fange opp en ubehandlet enum-verdi og kaste en feil, men dersom dette ikke korrigeres, kan det resultere i runtime-feil eller manglende tittel for enkelte steg.
+                     * Biome vil fange opp en ubehandlet enum-verdi og kaste en feil, men dersom dette ikke korrigeres, kan det resultere i runtime-feil eller manglende tittel for enkelte steg.
                      * Dette bidrar til å sikre at alle routes har en tilhørende titteltekst og at applikasjonen oppfører seg som forventet.
                      */
                     const alleRouteEnumMedlemmerGjennomgås: never = steg.route;
                     return alleRouteEnumMedlemmerGjennomgås;
+                }
             }
 
             return {

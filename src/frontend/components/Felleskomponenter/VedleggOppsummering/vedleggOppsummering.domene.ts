@@ -1,8 +1,8 @@
-import { PlainTekst } from '../../../../common/sanity';
-import { IFrittståendeOrdTekstinnhold } from '../../../typer/sanity/tekstInnhold';
+import type { PlainTekst } from '../../../../common/sanity';
+import type { IFrittståendeOrdTekstinnhold } from '../../../typer/sanity/tekstInnhold';
 import { slåSammen } from '../../../utils/slåSammen';
 
-import { IVedleggOppsummering } from './vedleggOppsummering.types';
+import type { IVedleggOppsummering } from './vedleggOppsummering.types';
 
 export const hentVedleggSomSkalVises = (vedlegg: IVedleggOppsummering[]): IVedleggOppsummering[] => {
     return vedlegg.filter(enkeltVedlegg => enkeltVedlegg.skalVises);

@@ -1,12 +1,11 @@
+import { ESvar } from '@navikt/familie-form-elements';
+import { type Avhengigheter, type Felt, type FeltState, feil, ok, useFelt } from '@navikt/familie-skjema';
 import { useEffect } from 'react';
 
-import { ESvar } from '@navikt/familie-form-elements';
-import { type Avhengigheter, feil, type Felt, type FeltState, ok, useFelt } from '@navikt/familie-skjema';
-
-import { FlettefeltVerdier, LocaleRecordBlock } from '../../../../common/sanity';
+import type { FlettefeltVerdier, LocaleRecordBlock } from '../../../../common/sanity';
 import { useAppContext } from '../../../context/AppContext';
-import { barnDataKeySpørsmål } from '../../../typer/barn';
-import { BarnetsId } from '../../../typer/person';
+import type { barnDataKeySpørsmål } from '../../../typer/barn';
+import type { BarnetsId } from '../../../typer/person';
 
 interface IUseBarnCheckboxFeltProps {
     datafeltNavn: barnDataKeySpørsmål;

@@ -1,12 +1,11 @@
-import { Alpha3Code } from 'i18n-iso-countries';
+import type { ESvar } from '@navikt/familie-form-elements';
+import type { Alpha3Code } from 'i18n-iso-countries';
 
-import { ESvar } from '@navikt/familie-form-elements';
+import type { ISODateString } from '../../common/typer/ISODateString';
 
-import { ISODateString } from '../../common/typer/ISODateString';
-
-import { ISøknadSpørsmål } from './spørsmål';
-import { DatoMedUkjent } from './svar';
-import { EUtenlandsoppholdÅrsak } from './utenlandsopphold';
+import type { ISøknadSpørsmål } from './spørsmål';
+import type { DatoMedUkjent } from './svar';
+import type { EUtenlandsoppholdÅrsak } from './utenlandsopphold';
 
 export interface IUtenlandsperiode {
     utenlandsoppholdÅrsak: ISøknadSpørsmål<EUtenlandsoppholdÅrsak>;

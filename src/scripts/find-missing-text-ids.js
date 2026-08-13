@@ -4,18 +4,6 @@ import en from '../common/lang/en.json' with { type: 'json' };
 import nb from '../common/lang/nb.json' with { type: 'json' };
 import nn from '../common/lang/nn.json' with { type: 'json' };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const finnMuligensUbrukteIder = (alleBenyttedeSpråkIder, språkfil, språkfilNavn) => {
-    console.info('------------------------------------------------------------');
-    console.info(`ubrukte språkId'er i ${språkfilNavn}.json: 
-`);
-    const iderSomIkkeErIBruk = Object.keys(språkfil).filter(key => !alleBenyttedeSpråkIder.includes(key));
-    iderSomIkkeErIBruk.forEach(key => {
-        console.info(`Ikke i bruk? -> ${key}`);
-    });
-    return iderSomIkkeErIBruk;
-};
-
 /**
  * Skriptet finner *nesten* alle tekst id'er som er i bruk i ./src/frontend
  * i package.json må "type": "module" fjernes for å kunne gjøre scriptet
@@ -26,9 +14,9 @@ const finnMuligensUbrukteIder = (alleBenyttedeSpråkIder, språkfil, språkfilNa
 exec(
     `grep -r -oh -I --exclude '.json' --exclude '.test.ts' -E "([\\'|\\"]{1,1}([a-zA-ZæøåÆØÅ]+\\.{1,1})(([a-zA-ZæøåÆØÅ]+\\.{1,1})|([a-zA-ZæøåÆØÅ]+\\_{1,1})|([a-zA-ZæøåÆØÅ]+\\-{1,1}))*[a-zA-ZæøåÆØÅ]+[\\'|\\"]{1,1})" ./src/frontend`,
     (_, stdout) => {
-        let alleMatchendeIder = stdout.split('\n');
+        const alleMatchendeIder = stdout.split('\n');
 
-        let alleBenyttedeSpråkIder = [...new Set(alleMatchendeIder)]
+        const alleBenyttedeSpråkIder = [...new Set(alleMatchendeIder)]
             .map(elem => {
                 return elem.slice(1, elem.length - 1);
             })

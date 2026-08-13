@@ -1,4 +1,4 @@
-import { LocaleRecordBlock } from '../../../../common/sanity';
+import type { LocaleRecordBlock } from '../../../../common/sanity';
 
 export type IKvitteringTekstinnhold = {
     kvitteringTittel: LocaleRecordBlock;

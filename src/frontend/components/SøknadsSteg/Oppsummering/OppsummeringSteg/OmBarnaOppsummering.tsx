@@ -1,6 +1,5 @@
-import React from 'react';
-
 import { ESvar } from '@navikt/familie-form-elements';
+import type { Dispatch, FC, SetStateAction } from 'react';
 
 import { useAppContext } from '../../../../context/AppContext';
 import { useRoutesContext } from '../../../../context/RoutesContext';
@@ -14,10 +13,10 @@ import { OppsummeringFelt } from '../OppsummeringFelt';
 import Oppsummeringsbolk from '../Oppsummeringsbolk';
 
 interface Props {
-    settFeilAnchors: React.Dispatch<React.SetStateAction<string[]>>;
+    settFeilAnchors: Dispatch<SetStateAction<string[]>>;
 }
 
-const OmBarnaOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
+const OmBarnaOppsummering: FC<Props> = ({ settFeilAnchors }) => {
     const { søknad, tekster } = useAppContext();
     const { hentRouteObjektForRouteEnum } = useRoutesContext();
     const omBarnaTekster = tekster().OM_BARNA;

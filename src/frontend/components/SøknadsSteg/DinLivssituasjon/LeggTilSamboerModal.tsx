@@ -1,8 +1,7 @@
-import React from 'react';
-
+import type { FC } from 'react';
 import { useAppContext } from '../../../context/AppContext';
-import { ITidligereSamboer } from '../../../typer/person';
-import { ITidligereSamoboereTekstinnhold } from '../../../typer/sanity/modaler/tidligereSamboere';
+import type { ITidligereSamboer } from '../../../typer/person';
+import type { ITidligereSamoboereTekstinnhold } from '../../../typer/sanity/modaler/tidligereSamboere';
 import { trimWhiteSpace, visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
@@ -20,12 +19,7 @@ interface Props {
     forklaring?: string;
 }
 
-const LeggTilSamboerModal: React.FC<Props> = ({
-    leggTilTidligereSamboer,
-    lukkModal,
-    erÅpen,
-    forklaring = undefined,
-}) => {
+const LeggTilSamboerModal: FC<Props> = ({ leggTilTidligereSamboer, lukkModal, erÅpen, forklaring = undefined }) => {
     const { tekster } = useAppContext();
     const { skjema, valideringErOk, nullstillSkjema, validerFelterOgVisFeilmelding } = useTidligereSamboer();
 

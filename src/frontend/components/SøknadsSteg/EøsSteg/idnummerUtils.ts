@@ -1,6 +1,11 @@
-import { Alpha3Code } from 'i18n-iso-countries';
+import type { Alpha3Code } from 'i18n-iso-countries';
 
-import { IArbeidsperiode, IEøsBarnetrygdsperiode, IPensjonsperiode, IUtenlandsperiode } from '../../../typer/perioder';
+import type {
+    IArbeidsperiode,
+    IEøsBarnetrygdsperiode,
+    IPensjonsperiode,
+    IUtenlandsperiode,
+} from '../../../typer/perioder';
 
 export const idNummerKeyPrefix = '-idnummer-';
 

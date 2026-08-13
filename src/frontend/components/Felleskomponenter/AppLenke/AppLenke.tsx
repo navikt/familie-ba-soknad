@@ -1,13 +1,12 @@
-import React, { MouseEventHandler, ReactNode } from 'react';
-
-import { useNavigate } from 'react-router';
-
 import { Link } from '@navikt/ds-react';
+
+import type { FC, MouseEventHandler, ReactNode } from 'react';
+import { useNavigate } from 'react-router';
 
 import { BASE_PATH } from '../../../../common/miljø';
 import { unslash } from '../../../../common/unslash';
 import { useAppNavigationContext } from '../../../context/AppNavigationContext';
-import { ISteg } from '../../../typer/routes';
+import type { ISteg } from '../../../typer/routes';
 
 interface Props {
     steg: ISteg;
@@ -16,7 +15,7 @@ interface Props {
     children?: ReactNode;
 }
 
-export const AppLenke: React.FC<Props> = ({ steg, hash, returnTo, children }) => {
+export const AppLenke: FC<Props> = ({ steg, hash, returnTo, children }) => {
     const navigate = useNavigate();
     const { settKomFra } = useAppNavigationContext();
 
@@ -33,7 +32,7 @@ export const AppLenke: React.FC<Props> = ({ steg, hash, returnTo, children }) =>
 
     return (
         <Link
-            href={BASE_PATH + unslash(steg.path) + (hash ? '#' + hash : '')}
+            href={BASE_PATH + unslash(steg.path) + (hash ? `#${hash}` : '')}
             rel="noopener noreferrer"
             onClick={clickHandler}
         >

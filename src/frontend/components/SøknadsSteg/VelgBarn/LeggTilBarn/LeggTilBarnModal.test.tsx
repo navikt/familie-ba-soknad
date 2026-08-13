@@ -1,9 +1,6 @@
-import React from 'react';
-
+import { ESvar } from '@navikt/familie-form-elements';
 import { act, render, within } from '@testing-library/react';
 import { vi } from 'vitest';
-
-import { ESvar } from '@navikt/familie-form-elements';
 
 import { silenceConsoleErrors, spyOnUseApp, TestProvidere } from '../../../../utils/testing';
 

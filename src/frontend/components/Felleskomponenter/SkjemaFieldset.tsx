@@ -1,8 +1,8 @@
-import React, { ReactNode } from 'react';
-
 import { Fieldset, VStack } from '@navikt/ds-react';
 
-const SkjemaFieldset: React.FC<{
+import type { FC, ReactNode } from 'react';
+
+const SkjemaFieldset: FC<{
     legend?: ReactNode;
     dynamisk?: boolean;
     children?: ReactNode;

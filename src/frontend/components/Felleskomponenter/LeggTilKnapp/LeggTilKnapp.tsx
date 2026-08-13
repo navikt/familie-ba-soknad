@@ -1,9 +1,9 @@
-import React, { ReactNode } from 'react';
+import { PlusCircleIcon } from '@navikt/aksel-icons';
+import { Box, Button, ErrorMessage, FormSummary } from '@navikt/ds-react';
 
 import classNames from 'classnames';
 
-import { PlusCircleIcon } from '@navikt/aksel-icons';
-import { Box, Button, ErrorMessage, FormSummary } from '@navikt/ds-react';
+import type { FC, ReactNode } from 'react';
 
 import styles from './LeggTilKnapp.module.css';
 
@@ -15,7 +15,7 @@ interface Props {
     children?: ReactNode;
 }
 
-export const LeggTilKnapp: React.FC<Props> = ({ onClick, children, leggTilFlereTekst, feilmelding, id }) => {
+export const LeggTilKnapp: FC<Props> = ({ onClick, children, leggTilFlereTekst, feilmelding, id }) => {
     return (
         <FormSummary.Answer>
             <FormSummary.Label>{leggTilFlereTekst}</FormSummary.Label>

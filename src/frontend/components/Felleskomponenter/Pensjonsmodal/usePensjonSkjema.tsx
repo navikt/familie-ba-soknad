@@ -1,7 +1,6 @@
-import { useEffect } from 'react';
-
 import { ESvar } from '@navikt/familie-form-elements';
 import { useSkjema, Valideringsstatus } from '@navikt/familie-skjema';
+import { useEffect } from 'react';
 
 import { ESanitySteg } from '../../../../common/sanity';
 import { useAppContext } from '../../../context/AppContext';
@@ -9,10 +8,10 @@ import { useEøsContext } from '../../../context/EøsContext';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
 import useDatovelgerFeltForSanity from '../../../hooks/useSendInnSkjemaTest/useDatovelgerForSanity';
-import { IBarnMedISøknad } from '../../../typer/barn';
+import type { IBarnMedISøknad } from '../../../typer/barn';
 import { PersonType } from '../../../typer/personType';
-import { IPensjonsperiodeTekstinnhold } from '../../../typer/sanity/modaler/pensjonsperiode';
-import { IPensjonsperiodeFeltTyper } from '../../../typer/skjema';
+import type { IPensjonsperiodeTekstinnhold } from '../../../typer/sanity/modaler/pensjonsperiode';
+import type { IPensjonsperiodeFeltTyper } from '../../../typer/skjema';
 import { dagenEtterDato, sisteDagDenneMåneden, stringTilDate } from '../../../utils/dato';
 
 import { PensjonsperiodeSpørsmålId } from './spørsmål';

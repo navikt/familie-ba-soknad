@@ -1,4 +1,4 @@
-import { AxiosError } from 'axios';
+import type { AxiosError } from 'axios';
 
 import miljø from '../../common/miljø';
 import { preferredAxios as axios } from '../context/axios';

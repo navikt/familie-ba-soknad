@@ -1,11 +1,10 @@
-import React from 'react';
-
 import { TrashFillIcon } from '@navikt/aksel-icons';
 import { Button, Checkbox, FormSummary } from '@navikt/ds-react';
+import type { FC } from 'react';
 
 import { ESanitySteg } from '../../../../../common/sanity';
 import { useAppContext } from '../../../../context/AppContext';
-import { IBarn } from '../../../../typer/person';
+import type { IBarn } from '../../../../typer/person';
 import { hentBostedSpråkId } from '../../../../utils/språk';
 import { formaterFnr, uppercaseFørsteBokstav } from '../../../../utils/visning';
 import TekstBlock from '../../../Felleskomponenter/Sanity/TekstBlock';
@@ -17,7 +16,7 @@ interface IBarnekortProps {
     fjernBarnCallback: (ident: string) => void;
 }
 
-const Barnekort: React.FC<IBarnekortProps> = ({ barn, velgBarnCallback, barnSomSkalVæreMed, fjernBarnCallback }) => {
+const Barnekort: FC<IBarnekortProps> = ({ barn, velgBarnCallback, barnSomSkalVæreMed, fjernBarnCallback }) => {
     const { plainTekst, tekster } = useAppContext();
     const {
         søknad: { barnRegistrertManuelt },

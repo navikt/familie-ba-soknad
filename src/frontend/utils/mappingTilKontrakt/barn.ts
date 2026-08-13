@@ -1,14 +1,14 @@
 import {
     ERegistrertBostedType,
     fjernNullVerdierFraSpørsmål,
-    SpørsmålMapMedNullVerdier,
-    TilRestLocaleRecord,
+    type SpørsmålMapMedNullVerdier,
+    type TilRestLocaleRecord,
 } from '../../../common/typer/kontrakt/generelle';
-import { ISøknadIKontraktBarn } from '../../../common/typer/kontrakt/kontrakt';
-import { IBarnMedISøknad } from '../../typer/barn';
+import type { ISøknadIKontraktBarn } from '../../../common/typer/kontrakt/kontrakt';
+import type { IBarnMedISøknad } from '../../typer/barn';
 import { PersonType } from '../../typer/personType';
-import { ITekstinnhold } from '../../typer/sanity/tekstInnhold';
-import { ISøknad } from '../../typer/søknad';
+import type { ITekstinnhold } from '../../typer/sanity/tekstInnhold';
+import type { ISøknad } from '../../typer/søknad';
 import { landkodeTilSpråk } from '../språk';
 
 import { andreForelderTilISøknadsfelt } from './andreForelder';

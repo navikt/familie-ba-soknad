@@ -1,7 +1,6 @@
-import { useEffect } from 'react';
-
 import { ESvar } from '@navikt/familie-form-elements';
-import { feil, type FeltState, type ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
+import { type FeltState, feil, type ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
+import { useEffect } from 'react';
 
 import { ESanitySteg } from '../../../../common/sanity';
 import { Dokumentasjonsbehov } from '../../../../common/typer/kontrakt/dokumentasjon';
@@ -15,13 +14,13 @@ import useInputFeltMedUkjent from '../../../hooks/useInputFeltMedUkjent';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import { usePerioder } from '../../../hooks/usePerioder';
 import { barnDataKeySpørsmål } from '../../../typer/barn';
-import { IArbeidsperiode, IPensjonsperiode } from '../../../typer/perioder';
-import { ISamboer, ISøker, ITidligereSamboer } from '../../../typer/person';
+import type { IArbeidsperiode, IPensjonsperiode } from '../../../typer/perioder';
+import type { ISamboer, ISøker, ITidligereSamboer } from '../../../typer/person';
 import { PersonType } from '../../../typer/personType';
-import { IArbeidsperiodeTekstinnhold } from '../../../typer/sanity/modaler/arbeidsperiode';
-import { IPensjonsperiodeTekstinnhold } from '../../../typer/sanity/modaler/pensjonsperiode';
-import { ITidligereSamoboereTekstinnhold } from '../../../typer/sanity/modaler/tidligereSamboere';
-import { IDinLivssituasjonFeltTyper } from '../../../typer/skjema';
+import type { IArbeidsperiodeTekstinnhold } from '../../../typer/sanity/modaler/arbeidsperiode';
+import type { IPensjonsperiodeTekstinnhold } from '../../../typer/sanity/modaler/pensjonsperiode';
+import type { ITidligereSamoboereTekstinnhold } from '../../../typer/sanity/modaler/tidligereSamboere';
+import type { IDinLivssituasjonFeltTyper } from '../../../typer/skjema';
 import { AlternativtSvarForInput } from '../../../typer/svar';
 import { Årsak } from '../../../typer/utvidet';
 import { nullstilteEøsFelterForBarn } from '../../../utils/barn';
@@ -34,7 +33,7 @@ import { PensjonsperiodeSpørsmålId } from '../../Felleskomponenter/Pensjonsmod
 import { idNummerLand } from '../EøsSteg/idnummerUtils';
 import { OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
 
-import { IDinLivssituasjonTekstinnhold } from './innholdTyper';
+import type { IDinLivssituasjonTekstinnhold } from './innholdTyper';
 import { DinLivssituasjonSpørsmålId, SamboerSpørsmålId } from './spørsmål';
 
 export const useDinLivssituasjon = (): {

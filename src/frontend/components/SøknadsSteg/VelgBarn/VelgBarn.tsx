@@ -1,6 +1,5 @@
-import React from 'react';
-
 import { FormSummary } from '@navikt/ds-react';
+import type { FC } from 'react';
 
 import { ESanitySteg } from '../../../../common/sanity';
 import { useAppContext } from '../../../context/AppContext';
@@ -13,7 +12,7 @@ import LeggTilBarnModal from './LeggTilBarn/LeggTilBarnModal';
 import { NyttBarnKort } from './LeggTilBarn/NyttBarnKort';
 import { useVelgBarn } from './useVelgBarn';
 
-const VelgBarn: React.FC = () => {
+const VelgBarn: FC = () => {
     const { søknad, tekster } = useAppContext();
     const { lukkModal, åpneModal, erÅpen } = useModal();
     const {

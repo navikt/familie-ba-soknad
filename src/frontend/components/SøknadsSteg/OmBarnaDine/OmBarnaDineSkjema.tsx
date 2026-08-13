@@ -1,6 +1,5 @@
-import React from 'react';
-
 import { ESvar } from '@navikt/familie-form-elements';
+import type { FC } from 'react';
 
 import { ESanitySteg, Typografi } from '../../../../common/sanity';
 import { Dokumentasjonsbehov } from '../../../../common/typer/kontrakt/dokumentasjon';
@@ -14,7 +13,7 @@ import HvilkeBarnCheckboxGruppe from './HvilkeBarnCheckboxGruppe';
 import { useOmBarnaDine } from './useOmBarnaDine';
 import { avdødPartnerForelderSpørsmålDokument } from './utils';
 
-const OmBarnaDineSkjema: React.FC = () => {
+const OmBarnaDineSkjema: FC = () => {
     const { skjema, validerFelterOgVisFeilmelding, valideringErOk, oppdaterSøknad } = useOmBarnaDine();
 
     const { søknad, tekster } = useAppContext();

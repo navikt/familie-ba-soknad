@@ -1,12 +1,11 @@
+import type { ESvar } from '@navikt/familie-form-elements';
+import { type Felt, useFelt } from '@navikt/familie-skjema';
 import { useEffect } from 'react';
 
-import { ESvar } from '@navikt/familie-form-elements';
-import { type Felt, useFelt } from '@navikt/familie-skjema';
-
-import { LocaleRecordBlock } from '../../common/sanity';
-import { ISODateString } from '../../common/typer/ISODateString';
+import type { LocaleRecordBlock } from '../../common/sanity';
+import type { ISODateString } from '../../common/typer/ISODateString';
 import { useAppContext } from '../context/AppContext';
-import { ISøknadSpørsmål } from '../typer/spørsmål';
+import type { ISøknadSpørsmål } from '../typer/spørsmål';
 import { validerDato } from '../utils/dato';
 
 const useDatovelgerFeltMedJaNeiAvhengighet = ({

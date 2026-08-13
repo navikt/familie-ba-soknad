@@ -1,12 +1,9 @@
-import React from 'react';
-
+import type { Felt, ISkjema } from '@navikt/familie-skjema';
 import { render } from '@testing-library/react';
-import { Alpha3Code } from 'i18n-iso-countries';
+import type { Alpha3Code } from 'i18n-iso-countries';
 import { mockDeep } from 'vitest-mock-extended';
 
-import type { Felt, ISkjema } from '@navikt/familie-skjema';
-
-import { SkjemaFeltTyper } from '../../../typer/skjema';
+import type { SkjemaFeltTyper } from '../../../typer/skjema';
 import { mockEøs, spyOnUseApp, TestProvidere } from '../../../utils/testing';
 
 import { LandDropdown } from './LandDropdown';

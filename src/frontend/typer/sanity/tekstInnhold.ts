@@ -1,25 +1,30 @@
-import { ESanitySteg, ISanitySpørsmålDokument, LocaleRecordBlock, LocaleRecordString } from '../../../common/sanity';
-import { IDinLivssituasjonTekstinnhold } from '../../components/SøknadsSteg/DinLivssituasjon/innholdTyper';
-import { IDokumentasjonTekstinnhold } from '../../components/SøknadsSteg/Dokumentasjon/innholdTyper';
-import { IEøsForBarnTekstinnhold } from '../../components/SøknadsSteg/EøsSteg/Barn/innholdTyper';
-import { IEøsForSøkerTekstinnhold } from '../../components/SøknadsSteg/EøsSteg/Søker/innholdTyper';
-import { IKvitteringTekstinnhold } from '../../components/SøknadsSteg/Kvittering/innholdTyper';
-import { IOmBarnaTekstinnhold } from '../../components/SøknadsSteg/OmBarnaDine/innholdTyper';
-import { IOmBarnetTekstinnhold } from '../../components/SøknadsSteg/OmBarnet/innholdTyper';
-import { IOmDegTekstinnhold } from '../../components/SøknadsSteg/OmDeg/innholdTyper';
-import { IOppsummeringTekstinnhold } from '../../components/SøknadsSteg/Oppsummering/innholdTyper';
-import { IVelgBarnTekstinnhold } from '../../components/SøknadsSteg/VelgBarn/innholdTyper';
+import {
+    ESanitySteg,
+    type ISanitySpørsmålDokument,
+    type LocaleRecordBlock,
+    type LocaleRecordString,
+} from '../../../common/sanity';
+import type { IDinLivssituasjonTekstinnhold } from '../../components/SøknadsSteg/DinLivssituasjon/innholdTyper';
+import type { IDokumentasjonTekstinnhold } from '../../components/SøknadsSteg/Dokumentasjon/innholdTyper';
+import type { IEøsForBarnTekstinnhold } from '../../components/SøknadsSteg/EøsSteg/Barn/innholdTyper';
+import type { IEøsForSøkerTekstinnhold } from '../../components/SøknadsSteg/EøsSteg/Søker/innholdTyper';
+import type { IKvitteringTekstinnhold } from '../../components/SøknadsSteg/Kvittering/innholdTyper';
+import type { IOmBarnaTekstinnhold } from '../../components/SøknadsSteg/OmBarnaDine/innholdTyper';
+import type { IOmBarnetTekstinnhold } from '../../components/SøknadsSteg/OmBarnet/innholdTyper';
+import type { IOmDegTekstinnhold } from '../../components/SøknadsSteg/OmDeg/innholdTyper';
+import type { IOppsummeringTekstinnhold } from '../../components/SøknadsSteg/Oppsummering/innholdTyper';
+import type { IVelgBarnTekstinnhold } from '../../components/SøknadsSteg/VelgBarn/innholdTyper';
 
-import { IAndreUtbetalingerTekstinnhold } from './modaler/andreUtbetalinger';
-import { IArbeidsperiodeTekstinnhold } from './modaler/arbeidsperiode';
-import { IBarnetrygdsperiodeTekstinnhold } from './modaler/barnetrygdperiode';
-import { IBlokkerTilbakeknappTekstinnhold } from './modaler/blokkerTilbakeknapp';
-import { ILeggTilBarnTekstinnhold } from './modaler/leggTilBarn';
-import { IMistetInformasjonenDinModal } from './modaler/mistetInformasjonenDin';
-import { IPensjonsperiodeTekstinnhold } from './modaler/pensjonsperiode';
-import { IStartPåNyttModal } from './modaler/startPåNytt';
-import { ITidligereSamoboereTekstinnhold } from './modaler/tidligereSamboere';
-import { IUtenlandsoppholdTekstinnhold } from './modaler/utenlandsopphold';
+import type { IAndreUtbetalingerTekstinnhold } from './modaler/andreUtbetalinger';
+import type { IArbeidsperiodeTekstinnhold } from './modaler/arbeidsperiode';
+import type { IBarnetrygdsperiodeTekstinnhold } from './modaler/barnetrygdperiode';
+import type { IBlokkerTilbakeknappTekstinnhold } from './modaler/blokkerTilbakeknapp';
+import type { ILeggTilBarnTekstinnhold } from './modaler/leggTilBarn';
+import type { IMistetInformasjonenDinModal } from './modaler/mistetInformasjonenDin';
+import type { IPensjonsperiodeTekstinnhold } from './modaler/pensjonsperiode';
+import type { IStartPåNyttModal } from './modaler/startPåNytt';
+import type { ITidligereSamoboereTekstinnhold } from './modaler/tidligereSamboere';
+import type { IUtenlandsoppholdTekstinnhold } from './modaler/utenlandsopphold';
 
 export enum SanityPersonType {
     ANDRE_FORELDER = 'ANDRE_FORELDER',

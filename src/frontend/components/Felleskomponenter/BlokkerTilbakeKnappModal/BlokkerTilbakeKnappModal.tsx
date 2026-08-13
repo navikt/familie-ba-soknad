@@ -1,11 +1,9 @@
-import React from 'react';
-
 import { Box, Button, Modal } from '@navikt/ds-react';
 
 import { Typografi } from '../../../../common/sanity';
 import { useAppContext } from '../../../context/AppContext';
 import { useAppNavigationContext } from '../../../context/AppNavigationContext';
-import { IBlokkerTilbakeknappTekstinnhold } from '../../../typer/sanity/modaler/blokkerTilbakeknapp';
+import type { IBlokkerTilbakeknappTekstinnhold } from '../../../typer/sanity/modaler/blokkerTilbakeknapp';
 import ModalContent from '../ModalContent';
 import TekstBlock from '../Sanity/TekstBlock';
 

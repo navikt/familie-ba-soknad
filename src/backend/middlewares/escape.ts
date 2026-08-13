@@ -1,7 +1,7 @@
-import { RequestHandler } from 'express';
+import type { RequestHandler } from 'express';
 import xss from 'xss';
 
-import { ISøknadKontrakt } from '../../common/typer/kontrakt/kontrakt.js';
+import type { ISøknadKontrakt } from '../../common/typer/kontrakt/kontrakt.js';
 
 export const escapeBody: RequestHandler = async (req, _res, next) => {
     const søknad: ISøknadKontrakt = req.body;

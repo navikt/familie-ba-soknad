@@ -1,6 +1,5 @@
-import React from 'react';
-
 import { FormSummary } from '@navikt/ds-react';
+import type { Dispatch, FC, SetStateAction } from 'react';
 
 import { useAppContext } from '../../../../context/AppContext';
 import { useRoutesContext } from '../../../../context/RoutesContext';
@@ -13,10 +12,10 @@ import { OppsummeringFelt } from '../OppsummeringFelt';
 import Oppsummeringsbolk from '../Oppsummeringsbolk';
 
 interface Props {
-    settFeilAnchors: React.Dispatch<React.SetStateAction<string[]>>;
+    settFeilAnchors: Dispatch<SetStateAction<string[]>>;
 }
 
-const VelgBarnOppsummering: React.FC<Props> = ({ settFeilAnchors }) => {
+const VelgBarnOppsummering: FC<Props> = ({ settFeilAnchors }) => {
     const { søknad, tekster, plainTekst } = useAppContext();
     const { hentRouteObjektForRouteEnum } = useRoutesContext();
     const velgBarnHook = useVelgBarn();

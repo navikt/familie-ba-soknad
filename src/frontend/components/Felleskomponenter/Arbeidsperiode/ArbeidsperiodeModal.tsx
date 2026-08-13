@@ -1,11 +1,10 @@
-import React from 'react';
-
 import { ESvar } from '@navikt/familie-form-elements';
+import type { FC } from 'react';
 
 import { useAppContext } from '../../../context/AppContext';
-import { IArbeidsperiode } from '../../../typer/perioder';
+import type { IArbeidsperiode } from '../../../typer/perioder';
 import { PersonType } from '../../../typer/personType';
-import { IArbeidsperiodeTekstinnhold } from '../../../typer/sanity/modaler/arbeidsperiode';
+import type { IArbeidsperiodeTekstinnhold } from '../../../typer/sanity/modaler/arbeidsperiode';
 import { dagensDato, gårsdagensDato, sisteDagDenneMåneden } from '../../../utils/dato';
 import { trimWhiteSpace, visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
 import { minTilDatoForPeriode } from '../../../utils/perioder';
@@ -20,7 +19,7 @@ import { SkjemaFeltInput } from '../SkjemaFeltInput/SkjemaFeltInput';
 import SkjemaModal from '../SkjemaModal/SkjemaModal';
 
 import { ArbeidsperiodeSpørsmålsId } from './spørsmål';
-import { IUseArbeidsperiodeSkjemaParams, useArbeidsperiodeSkjema } from './useArbeidsperiodeSkjema';
+import { type IUseArbeidsperiodeSkjemaParams, useArbeidsperiodeSkjema } from './useArbeidsperiodeSkjema';
 
 interface ArbeidsperiodeModalProps extends IUseArbeidsperiodeSkjemaParams {
     erÅpen: boolean;
@@ -30,7 +29,7 @@ interface ArbeidsperiodeModalProps extends IUseArbeidsperiodeSkjemaParams {
     forklaring?: string;
 }
 
-export const ArbeidsperiodeModal: React.FC<ArbeidsperiodeModalProps> = ({
+export const ArbeidsperiodeModal: FC<ArbeidsperiodeModalProps> = ({
     erÅpen,
     lukkModal,
     onLeggTilArbeidsperiode,

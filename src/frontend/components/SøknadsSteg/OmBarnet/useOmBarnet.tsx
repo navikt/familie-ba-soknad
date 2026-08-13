@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
-
 import { ESvar } from '@navikt/familie-form-elements';
-import { feil, type FeltState, type ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
+import { type FeltState, feil, type ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
+import { useEffect, useState } from 'react';
 
 import { ESanitySteg } from '../../../../common/sanity';
 import { Dokumentasjonsbehov } from '../../../../common/typer/kontrakt/dokumentasjon';
@@ -18,19 +17,24 @@ import useDatovelgerFeltForSanity from '../../../hooks/useSendInnSkjemaTest/useD
 import {
     andreForelderDataKeySpørsmål,
     barnDataKeySpørsmål,
-    IAndreForelder,
-    IBarnMedISøknad,
+    type IAndreForelder,
+    type IBarnMedISøknad,
 } from '../../../typer/barn';
-import { IDokumentasjon } from '../../../typer/dokumentasjon';
-import { IArbeidsperiode, IEøsBarnetrygdsperiode, IPensjonsperiode, IUtenlandsperiode } from '../../../typer/perioder';
-import { BarnetsId, IIdNummer } from '../../../typer/person';
+import type { IDokumentasjon } from '../../../typer/dokumentasjon';
+import type {
+    IArbeidsperiode,
+    IEøsBarnetrygdsperiode,
+    IPensjonsperiode,
+    IUtenlandsperiode,
+} from '../../../typer/perioder';
+import type { BarnetsId, IIdNummer } from '../../../typer/person';
 import { PersonType } from '../../../typer/personType';
-import { IArbeidsperiodeTekstinnhold } from '../../../typer/sanity/modaler/arbeidsperiode';
-import { IBarnetrygdsperiodeTekstinnhold } from '../../../typer/sanity/modaler/barnetrygdperiode';
-import { IPensjonsperiodeTekstinnhold } from '../../../typer/sanity/modaler/pensjonsperiode';
-import { IUtenlandsoppholdTekstinnhold } from '../../../typer/sanity/modaler/utenlandsopphold';
-import { IFormateringsfeilmeldingerTekstinnhold } from '../../../typer/sanity/tekstInnhold';
-import { IOmBarnetFeltTyper } from '../../../typer/skjema';
+import type { IArbeidsperiodeTekstinnhold } from '../../../typer/sanity/modaler/arbeidsperiode';
+import type { IBarnetrygdsperiodeTekstinnhold } from '../../../typer/sanity/modaler/barnetrygdperiode';
+import type { IPensjonsperiodeTekstinnhold } from '../../../typer/sanity/modaler/pensjonsperiode';
+import type { IUtenlandsoppholdTekstinnhold } from '../../../typer/sanity/modaler/utenlandsopphold';
+import type { IFormateringsfeilmeldingerTekstinnhold } from '../../../typer/sanity/tekstInnhold';
+import type { IOmBarnetFeltTyper } from '../../../typer/skjema';
 import { AlternativtSvarForInput } from '../../../typer/svar';
 import { Årsak } from '../../../typer/utvidet';
 import { erNorskPostnummer, valideringAdresse } from '../../../utils/adresse';
@@ -53,7 +57,7 @@ import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import { UtenlandsoppholdSpørsmålId } from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 import { idNummerLand } from '../EøsSteg/idnummerUtils';
 
-import { IOmBarnetTekstinnhold } from './innholdTyper';
+import type { IOmBarnetTekstinnhold } from './innholdTyper';
 import { OmBarnetSpørsmålsId } from './spørsmål';
 
 export const barnErUnder16År = (barnet: IBarnMedISøknad): boolean => Number(barnet.alder) < 16;
@@ -794,7 +798,7 @@ export const useOmBarnet = (
 
     const oppdaterSøknad = () => {
         const oppdatertBarnInkludertISøknaden: IBarnMedISøknad[] = søknad.barnInkludertISøknaden.map(barn => {
-            let oppdatertBarn;
+            let oppdatertBarn: IBarnMedISøknad;
             if (barn === gjeldendeBarn) {
                 oppdatertBarn = genererOppdatertBarn(barn);
             } else if (barn.sammeForelderSomAnnetBarnMedId.svar === gjeldendeBarn.id) {

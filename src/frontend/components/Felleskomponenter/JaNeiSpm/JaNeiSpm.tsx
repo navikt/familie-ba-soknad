@@ -1,14 +1,13 @@
-import React, { ReactNode } from 'react';
-
-import { v4 as uuidv4 } from 'uuid';
-
 import { Box } from '@navikt/ds-react';
-import { ESvar, JaNeiSpørsmål } from '@navikt/familie-form-elements';
+import { type ESvar, JaNeiSpørsmål } from '@navikt/familie-form-elements';
 import type { Felt, ISkjema } from '@navikt/familie-skjema';
 
-import { FlettefeltVerdier, ISanitySpørsmålDokument } from '../../../../common/sanity';
+import type { FC, ReactNode } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+
+import type { FlettefeltVerdier, ISanitySpørsmålDokument } from '../../../../common/sanity';
 import { useAppContext } from '../../../context/AppContext';
-import { SkjemaFeltTyper } from '../../../typer/skjema';
+import type { SkjemaFeltTyper } from '../../../typer/skjema';
 import TekstBlock from '../Sanity/TekstBlock';
 
 interface JaNeiSpmProps {
@@ -20,7 +19,7 @@ interface JaNeiSpmProps {
     flettefelter?: FlettefeltVerdier;
 }
 
-const JaNeiSpm: React.FC<JaNeiSpmProps> = ({
+const JaNeiSpm: FC<JaNeiSpmProps> = ({
     skjema,
     felt,
     tilleggsinfo,

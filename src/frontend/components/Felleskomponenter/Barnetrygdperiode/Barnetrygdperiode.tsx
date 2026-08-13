@@ -1,14 +1,13 @@
-import React from 'react';
-
 import { ESvar } from '@navikt/familie-form-elements';
 import type { Felt, ISkjema } from '@navikt/familie-skjema';
+import type { FC } from 'react';
 
 import { useAppContext } from '../../../context/AppContext';
-import { IBarnMedISøknad } from '../../../typer/barn';
-import { IEøsBarnetrygdsperiode } from '../../../typer/perioder';
-import { PeriodePersonTypeProps, PersonType } from '../../../typer/personType';
-import { IBarnetrygdsperiodeTekstinnhold } from '../../../typer/sanity/modaler/barnetrygdperiode';
-import { IEøsForBarnFeltTyper, IOmBarnetFeltTyper } from '../../../typer/skjema';
+import type { IBarnMedISøknad } from '../../../typer/barn';
+import type { IEøsBarnetrygdsperiode } from '../../../typer/perioder';
+import { type PeriodePersonTypeProps, PersonType } from '../../../typer/personType';
+import type { IBarnetrygdsperiodeTekstinnhold } from '../../../typer/sanity/modaler/barnetrygdperiode';
+import type { IEøsForBarnFeltTyper, IOmBarnetFeltTyper } from '../../../typer/skjema';
 import { genererPeriodeId } from '../../../utils/perioder';
 import { uppercaseFørsteBokstav } from '../../../utils/visning';
 import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
@@ -34,7 +33,7 @@ interface Props {
 
 type BarnetrygdperiodeProps = Props & PeriodePersonTypeProps;
 
-export const Barnetrygdperiode: React.FC<BarnetrygdperiodeProps> = ({
+export const Barnetrygdperiode: FC<BarnetrygdperiodeProps> = ({
     skjema,
     registrerteEøsBarnetrygdsperioder,
     leggTilBarnetrygdsperiode,

@@ -1,13 +1,10 @@
-import React from 'react';
-
+import { RessursStatus } from '@navikt/familie-typer';
 import { renderHook, waitFor } from '@testing-library/react';
 import { vi } from 'vitest';
 import { mockDeep } from 'vitest-mock-extended';
 
-import { RessursStatus } from '@navikt/familie-typer';
-
 import { ESivilstand } from '../../common/typer/kontrakt/generelle';
-import { ISøkerRespons } from '../typer/person';
+import type { ISøkerRespons } from '../typer/person';
 import {
     mekkGyldigSøker,
     mekkGyldigUtenlandsoppholdEøs,

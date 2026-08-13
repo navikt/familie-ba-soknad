@@ -1,11 +1,11 @@
 import { ESvar } from '@navikt/familie-form-elements';
 
-import { ISøknadsfelt, TilRestLocaleRecord } from '../../../common/typer/kontrakt/generelle';
-import { IPensjonsperiodeIKontraktFormat } from '../../../common/typer/kontrakt/kontrakt';
-import { IBarnMedISøknad } from '../../typer/barn';
-import { IPensjonsperiode } from '../../typer/perioder';
-import { PeriodePersonTypeMedBarnProps, PersonType } from '../../typer/personType';
-import { IPensjonsperiodeTekstinnhold } from '../../typer/sanity/modaler/pensjonsperiode';
+import type { ISøknadsfelt, TilRestLocaleRecord } from '../../../common/typer/kontrakt/generelle';
+import type { IPensjonsperiodeIKontraktFormat } from '../../../common/typer/kontrakt/kontrakt';
+import type { IBarnMedISøknad } from '../../typer/barn';
+import type { IPensjonsperiode } from '../../typer/perioder';
+import { type PeriodePersonTypeMedBarnProps, PersonType } from '../../typer/personType';
+import type { IPensjonsperiodeTekstinnhold } from '../../typer/sanity/modaler/pensjonsperiode';
 import { formaterDatostringKunMåned } from '../dato';
 import { landkodeTilSpråk } from '../språk';
 import { uppercaseFørsteBokstav } from '../visning';

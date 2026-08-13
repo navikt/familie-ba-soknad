@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from 'react';
-
 import { BodyShort, Heading, Loader } from '@navikt/ds-react';
 import {
+    byggFeiletRessurs,
+    byggHenterRessurs,
+    byggTomRessurs,
     type Ressurs,
     RessursStatus,
-    byggTomRessurs,
-    byggHenterRessurs,
-    byggFeiletRessurs,
 } from '@navikt/familie-typer';
+
+import { type FC, useEffect, useState } from 'react';
 
 import miljø from '../../../common/miljø';
 import { useAppContext } from '../../context/AppContext';
 
-const Helse: React.FC = () => {
+const Helse: FC = () => {
     const { axiosRequest } = useAppContext();
 
     const [helseApi, settHelseApi] = useState(byggTomRessurs<string>());
@@ -75,10 +75,10 @@ const renderHelse = (ressurs: Ressurs<string>, tjeneste: string) => {
     return (
         <div className={'helse__tjeneste'}>
             <BodyShort>{`Svar fra ${tjeneste}:`}</BodyShort>
-            {ressurs.status === RessursStatus.SUKSESS && <BodyShort children={`suksess (${ressurs.data})`} />}
+            {ressurs.status === RessursStatus.SUKSESS && <BodyShort>{`suksess (${ressurs.data})`}</BodyShort>}
             {ressurs.status === RessursStatus.HENTER && <Loader />}
             {ressurs.status === RessursStatus.FEILET && (
-                <BodyShort children={`feilet (${ressurs.frontendFeilmelding})`} />
+                <BodyShort>{`feilet (${ressurs.frontendFeilmelding})`}</BodyShort>
             )}
         </div>
     );

@@ -1,10 +1,9 @@
-import React, { ReactNode } from 'react';
-
+import { BodyLong, BodyShort, Detail, Heading, Ingress, Label } from '@navikt/ds-react';
 import { PortableText } from '@portabletext/react';
 
-import { BodyLong, BodyShort, Detail, Heading, Ingress, Label } from '@navikt/ds-react';
+import type { CSSProperties, FC, ReactNode } from 'react';
 
-import { FlettefeltVerdier, LocaleRecordBlock, Typografi } from '../../../../common/sanity';
+import { type FlettefeltVerdier, type LocaleRecordBlock, Typografi } from '../../../../common/sanity';
 import { useAppContext } from '../../../context/AppContext';
 import { useSpråkContext } from '../../../context/SpråkContext';
 
@@ -12,7 +11,7 @@ import styles from './TekstBlock.module.css';
 
 interface Props {
     typografi?: Typografi;
-    style?: React.CSSProperties;
+    style?: CSSProperties;
     children?: ReactNode;
 }
 
@@ -71,7 +70,7 @@ function TypografiWrapper({ typografi, style, children }: Props) {
     }
 }
 
-const TekstBlock: React.FC<{
+const TekstBlock: FC<{
     block: LocaleRecordBlock | undefined;
     flettefelter?: FlettefeltVerdier;
     typografi?: Typografi;

@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import { type FormEvent, useEffect, useState } from 'react';
 
 import { useNavigate } from 'react-router';
 
-import { ESøknadstype } from '../../../../common/typer/kontrakt/generelle';
+import type { ESøknadstype } from '../../../../common/typer/kontrakt/generelle';
 import { useAppContext } from '../../../context/AppContext';
 import { useEøsContext } from '../../../context/EøsContext';
 import { useStegContext } from '../../../context/StegContext';
-import { ISteg } from '../../../typer/routes';
+import type { ISteg } from '../../../typer/routes';
 import { trackSøknadStartet } from '../../../umami';
 
 export enum BekreftelseStatus {
@@ -16,7 +16,7 @@ export enum BekreftelseStatus {
 }
 
 export const useBekreftelseOgStartSoknad = (): {
-    onStartSøknad: (event: React.FormEvent) => void;
+    onStartSøknad: (event: FormEvent) => void;
     bekreftelseOnChange: () => void;
     bekreftelseStatus: BekreftelseStatus;
     fortsettPåSøknaden: () => void;
@@ -84,7 +84,7 @@ export const useBekreftelseOgStartSoknad = (): {
         avbrytOgSlettSøknad();
     };
 
-    const onStartSøknad = (event: React.FormEvent) => {
+    const onStartSøknad = (event: FormEvent) => {
         event.preventDefault();
 
         if (bekreftelseStatus === BekreftelseStatus.BEKREFTET && søknadstype != undefined) {

@@ -1,6 +1,5 @@
-import React from 'react';
-
 import { ESvar } from '@navikt/familie-form-elements';
+import type { FC } from 'react';
 
 import { ESanitySteg } from '../../../../common/sanity';
 import { Dokumentasjonsbehov } from '../../../../common/typer/kontrakt/dokumentasjon';
@@ -19,7 +18,7 @@ import SamboerSkjema from './SamboerSkjema';
 import TidligereSamboere from './TidligereSamboere';
 import { useDinLivssituasjon } from './useDinLivssituasjon';
 
-const DinLivssituasjon: React.FC = () => {
+const DinLivssituasjon: FC = () => {
     const {
         skjema,
         validerFelterOgVisFeilmelding,

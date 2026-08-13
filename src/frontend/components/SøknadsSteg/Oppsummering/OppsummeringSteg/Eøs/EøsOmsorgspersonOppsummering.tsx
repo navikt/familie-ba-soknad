@@ -1,9 +1,8 @@
-import React from 'react';
-
+import type { FC } from 'react';
 import { useAppContext } from '../../../../../context/AppContext';
 import { useSpråkContext } from '../../../../../context/SpråkContext';
-import { IBarnMedISøknad } from '../../../../../typer/barn';
-import { IOmsorgsperson } from '../../../../../typer/omsorgsperson';
+import type { IBarnMedISøknad } from '../../../../../typer/barn';
+import type { IOmsorgsperson } from '../../../../../typer/omsorgsperson';
 import { PersonType } from '../../../../../typer/personType';
 import { AlternativtSvarForInput } from '../../../../../typer/svar';
 import { hentSlektsforhold, landkodeTilSpråk } from '../../../../../utils/språk';
@@ -14,7 +13,7 @@ import TekstBlock from '../../../../Felleskomponenter/Sanity/TekstBlock';
 import { UtbetalingsperiodeOppsummering } from '../../../../Felleskomponenter/UtbetalingerModal/UtbetalingsperiodeOppsummering';
 import { OppsummeringFelt } from '../../OppsummeringFelt';
 
-const EøsOmsorgspersonOppsummering: React.FC<{
+const EøsOmsorgspersonOppsummering: FC<{
     omsorgsperson: IOmsorgsperson;
     barn: IBarnMedISøknad;
 }> = ({ omsorgsperson, barn }) => {

@@ -1,8 +1,7 @@
-import React, { PropsWithChildren } from 'react';
-
 import { ApmErrorBoundary } from '@nais/apm/react';
-
 import { HttpProvider } from '@navikt/familie-http';
+
+import type { FC, PropsWithChildren } from 'react';
 
 import { Feilside } from './components/Felleskomponenter/Feilside/Feilside';
 import { FeatureTogglesProvider } from './context/FeatureTogglesContext';
@@ -10,7 +9,7 @@ import { InnloggetProvider } from './context/InnloggetContext';
 import { LastRessurserProvider } from './context/LastRessurserContext';
 import { SanityProvider } from './context/SanityContext';
 
-const MiljøProvider: React.FC<PropsWithChildren> = ({ children }) => {
+const MiljøProvider: FC<PropsWithChildren> = ({ children }) => {
     return (
         <HttpProvider>
             <ApmErrorBoundary fallback={<Feilside />}>

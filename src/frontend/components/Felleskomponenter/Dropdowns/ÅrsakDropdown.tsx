@@ -1,24 +1,26 @@
-import React, { ReactNode } from 'react';
+import type { FC, ReactNode } from 'react';
 
 import { useAppContext } from '../../../context/AppContext';
 import { muligeÅrsaker } from '../../../typer/søknad';
-import { Årsak } from '../../../typer/utvidet';
+import type { Årsak } from '../../../typer/utvidet';
 import { hentÅrsak } from '../../../utils/språk';
 
-import StyledDropdown, { StyledDropdownProps } from './StyledDropdown';
+import StyledDropdown, { type StyledDropdownProps } from './StyledDropdown';
 
 export type ÅrsakDropdownProps = StyledDropdownProps<Årsak | ''>;
 
-const ÅrsakDropdown: React.FC<ÅrsakDropdownProps> = ({ ...props }) => {
+const ÅrsakDropdown: FC<ÅrsakDropdownProps> = ({ ...props }) => {
     const { plainTekst, tekster } = useAppContext();
     const dinLivssituasjonTekster = tekster().DIN_LIVSSITUASJON;
     return (
         <StyledDropdown<Årsak | ''> {...props}>
-            {muligeÅrsaker.map((årsak): ReactNode => (
-                <option value={årsak} key={årsak}>
-                    {plainTekst(hentÅrsak(årsak, dinLivssituasjonTekster))}
-                </option>
-            ))}
+            {muligeÅrsaker.map(
+                (årsak): ReactNode => (
+                    <option value={årsak} key={årsak}>
+                        {plainTekst(hentÅrsak(årsak, dinLivssituasjonTekster))}
+                    </option>
+                )
+            )}
         </StyledDropdown>
     );
 };

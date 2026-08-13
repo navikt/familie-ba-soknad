@@ -1,15 +1,16 @@
 import { readdirSync, readFileSync, statSync } from 'fs';
 import { join } from 'path';
 
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
 const importsIFil = (filePath: string): string[] => {
     const innhold = readFileSync(filePath, 'utf-8');
     const importRegex = /from ['"](.+?)['"]/g;
     const imports: string[] = [];
-    let match: RegExpExecArray | null;
-    while ((match = importRegex.exec(innhold)) !== null) {
+    let match: RegExpExecArray | null = importRegex.exec(innhold);
+    while (match !== null) {
         imports.push(match[1]);
+        match = importRegex.exec(innhold);
     }
     return imports;
 };

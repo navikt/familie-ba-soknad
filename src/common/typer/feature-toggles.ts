@@ -2,9 +2,8 @@ export enum KillSwitchToggle {
     SOKNAD = 'familie-ba-soknad.disable-soknad',
 }
 
-export enum FeatureToggle {
-    // EKSEMPEL = 'EKSEMPEL',
-}
+export enum FeatureToggle {}
+// EKSEMPEL = 'EKSEMPEL',
 
 export const ToggleKeys: Record<FeatureToggle, string> = {
     // [FeatureToggle.EKSEMPEL]: 'familie-ba-soknad.eksempel',

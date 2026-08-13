@@ -1,4 +1,4 @@
-import { ESøknadstype } from '../common/typer/kontrakt/generelle';
+import type { ESøknadstype } from '../common/typer/kontrakt/generelle';
 
 declare global {
     interface Window {

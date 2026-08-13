@@ -1,17 +1,16 @@
-import React, { useState } from 'react';
-
-import { add, isBefore } from 'date-fns';
-
 import { ExclamationmarkTriangleIcon, XMarkOctagonIcon } from '@navikt/aksel-icons';
 import { BodyShort, Heading, InfoCard, VStack } from '@navikt/ds-react';
 import { RessursStatus } from '@navikt/familie-typer';
+import { add, isBefore } from 'date-fns';
+
+import { type FC, useState } from 'react';
 
 import { ESanitySteg, Typografi } from '../../../../common/sanity';
 import { Dokumentasjonsbehov } from '../../../../common/typer/kontrakt/dokumentasjon';
 import { useAppContext } from '../../../context/AppContext';
 import useFørsteRender from '../../../hooks/useFørsteRender';
 import { useSendInnSkjema } from '../../../hooks/useSendInnSkjema';
-import { IDokumentasjon, IVedlegg } from '../../../typer/dokumentasjon';
+import type { IDokumentasjon, IVedlegg } from '../../../typer/dokumentasjon';
 import { hentRelevateDokumentasjoner } from '../../../utils/dokumentasjon';
 import PictureScanningGuide from '../../Felleskomponenter/PictureScanningGuide/PictureScanningGuide';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
@@ -27,7 +26,7 @@ export const erVedleggstidspunktGyldig = (vedleggTidspunkt: string): boolean => 
     return isBefore(new Date(), grenseTidForVedlegg);
 };
 
-const Dokumentasjon: React.FC = () => {
+const Dokumentasjon: FC = () => {
     const { søknad, settSøknad, innsendingStatus, tekster, plainTekst, tvingKjøringAvDebouncedMellomlagre } =
         useAppContext();
     const { sendInnSkjema } = useSendInnSkjema();

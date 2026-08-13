@@ -1,9 +1,8 @@
-import React, { ReactNode } from 'react';
-
 import { TrashFillIcon } from '@navikt/aksel-icons';
 import { Button, FormSummary } from '@navikt/ds-react';
+import type { ReactNode } from 'react';
 
-import { LocaleRecordBlock } from '../../../../common/sanity';
+import type { LocaleRecordBlock } from '../../../../common/sanity';
 import { useAppContext } from '../../../context/AppContext';
 import TekstBlock from '../Sanity/TekstBlock';
 

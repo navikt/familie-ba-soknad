@@ -1,12 +1,12 @@
 import { ESvar } from '@navikt/familie-form-elements';
-import { feil, type FeltState, type ISkjema, ok, useFelt, useSkjema, Valideringsstatus } from '@navikt/familie-skjema';
+import { type FeltState, feil, type ISkjema, ok, useFelt, useSkjema, Valideringsstatus } from '@navikt/familie-skjema';
 
-import { ESanitySteg, LocaleRecordBlock } from '../../../../../common/sanity';
+import { ESanitySteg, type LocaleRecordBlock } from '../../../../../common/sanity';
 import { useAppContext } from '../../../../context/AppContext';
 import useInputFeltMedUkjent from '../../../../hooks/useInputFeltMedUkjent';
-import { ILeggTilBarnTekstinnhold } from '../../../../typer/sanity/modaler/leggTilBarn';
-import { ILeggTilBarnTyper } from '../../../../typer/skjema';
-import { ESvarMedUbesvart } from '../../../../typer/svar';
+import type { ILeggTilBarnTekstinnhold } from '../../../../typer/sanity/modaler/leggTilBarn';
+import type { ILeggTilBarnTyper } from '../../../../typer/skjema';
+import type { ESvarMedUbesvart } from '../../../../typer/svar';
 import { erBarnRegistrertFraFør, hentUid } from '../../../../utils/barn';
 import { trimWhiteSpace } from '../../../../utils/hjelpefunksjoner';
 import { VelgBarnSpørsmålId } from '../spørsmål';

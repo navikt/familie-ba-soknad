@@ -1,12 +1,11 @@
-import React, { act } from 'react';
-
-import { render, waitFor } from '@testing-library/react';
-import { mockDeep } from 'vitest-mock-extended';
-
 import { ESvar } from '@navikt/familie-form-elements';
 
+import { render, waitFor } from '@testing-library/react';
+import { act } from 'react';
+import { mockDeep } from 'vitest-mock-extended';
+
 import { ESøknadstype } from '../../../../common/typer/kontrakt/generelle';
-import { ISøknad } from '../../../typer/søknad';
+import type { ISøknad } from '../../../typer/søknad';
 import { LesUtLocation, mekkGyldigSøknad, spyOnUseApp, TestProvidere } from '../../../utils/testing';
 import { OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
 import { OmBarnetSpørsmålsId } from '../OmBarnet/spørsmål';

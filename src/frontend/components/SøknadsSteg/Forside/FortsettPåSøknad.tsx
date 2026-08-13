@@ -1,7 +1,6 @@
-import React from 'react';
-
 import { InformationSquareIcon } from '@navikt/aksel-icons';
 import { Button, InfoCard, VStack } from '@navikt/ds-react';
+import type { FC } from 'react';
 
 import { useAppContext } from '../../../context/AppContext';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
@@ -9,7 +8,7 @@ import { SlettSøknadenModal } from '../../Felleskomponenter/Steg/SlettSøknaden
 
 import { useBekreftelseOgStartSoknad } from './useBekreftelseOgStartSoknad';
 
-export const FortsettPåSøknad: React.FC = () => {
+export const FortsettPåSøknad: FC = () => {
     const { tekster, plainTekst } = useAppContext();
     const { fortsettPåSøknaden, visStartPåNyttModal, settVisStartPåNyttModal, startPåNytt } =
         useBekreftelseOgStartSoknad();

@@ -1,16 +1,15 @@
-import { ReactNode } from 'react';
-
-import { Alpha3Code, alpha3ToAlpha2, getName } from 'i18n-iso-countries';
-
 import { ESvar } from '@navikt/familie-form-elements';
 
-import { ESanitySivilstandApiKey, LocaleRecordString, PlainTekst } from '../../common/sanity';
+import { type Alpha3Code, alpha3ToAlpha2, getName } from 'i18n-iso-countries';
+import type { ReactNode } from 'react';
+
+import { ESanitySivilstandApiKey, type LocaleRecordString, type PlainTekst } from '../../common/sanity';
 import { ESivilstand, Slektsforhold } from '../../common/typer/kontrakt/generelle';
-import { IDinLivssituasjonTekstinnhold } from '../components/SøknadsSteg/DinLivssituasjon/innholdTyper';
-import { IEøsForBarnTekstinnhold } from '../components/SøknadsSteg/EøsSteg/Barn/innholdTyper';
-import { IVelgBarnTekstinnhold } from '../components/SøknadsSteg/VelgBarn/innholdTyper';
-import { IBarn } from '../typer/person';
-import { IFrittståendeOrdTekstinnhold } from '../typer/sanity/tekstInnhold';
+import type { IDinLivssituasjonTekstinnhold } from '../components/SøknadsSteg/DinLivssituasjon/innholdTyper';
+import type { IEøsForBarnTekstinnhold } from '../components/SøknadsSteg/EøsSteg/Barn/innholdTyper';
+import type { IVelgBarnTekstinnhold } from '../components/SøknadsSteg/VelgBarn/innholdTyper';
+import type { IBarn } from '../typer/person';
+import type { IFrittståendeOrdTekstinnhold } from '../typer/sanity/tekstInnhold';
 import { AlternativtSvarForInput } from '../typer/svar';
 import { Årsak } from '../typer/utvidet';
 

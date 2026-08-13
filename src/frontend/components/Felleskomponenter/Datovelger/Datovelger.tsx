@@ -1,14 +1,14 @@
-import React, { ReactNode, useEffect } from 'react';
-
-import { formatISO, isAfter, startOfDay } from 'date-fns';
-
 import { BodyShort, DatePicker, useDatepicker } from '@navikt/ds-react';
 import type { Felt, ISkjema } from '@navikt/familie-skjema';
 
-import { ISODateString } from '../../../../common/typer/ISODateString';
+import { formatISO, isAfter, startOfDay } from 'date-fns';
+
+import { type FC, type ReactNode, useEffect } from 'react';
+
+import type { ISODateString } from '../../../../common/typer/ISODateString';
 import { useAppContext } from '../../../context/AppContext';
 import { useSpråkContext } from '../../../context/SpråkContext';
-import { SkjemaFeltTyper } from '../../../typer/skjema';
+import type { SkjemaFeltTyper } from '../../../typer/skjema';
 import {
     dagenEtterDato,
     dagensDato,
@@ -31,7 +31,7 @@ interface DatoVelgerProps {
     strategy?: 'absolute' | 'fixed';
 }
 
-const Datovelger: React.FC<DatoVelgerProps> = ({
+const Datovelger: FC<DatoVelgerProps> = ({
     felt,
     avgrensDatoFremITid = false,
     avgrensMaxDato,

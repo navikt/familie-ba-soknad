@@ -1,6 +1,6 @@
-import { LocaleType } from '../../common/typer/localeType';
+import type { LocaleType } from '../../common/typer/localeType';
 
-import { ISøknad } from './søknad';
+import type { ISøknad } from './søknad';
 
 export interface IMellomlagretBarnetrygd {
     søknad: ISøknad;

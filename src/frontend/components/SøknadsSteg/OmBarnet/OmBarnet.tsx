@@ -1,13 +1,12 @@
-import React from 'react';
-
 import { ReadMore } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
+import type { FC } from 'react';
 
 import { ESanitySteg, Typografi } from '../../../../common/sanity';
 import { Dokumentasjonsbehov } from '../../../../common/typer/kontrakt/dokumentasjon';
 import { useAppContext } from '../../../context/AppContext';
 import { barnDataKeySpørsmål } from '../../../typer/barn';
-import { BarnetsId } from '../../../typer/person';
+import type { BarnetsId } from '../../../typer/person';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
@@ -19,7 +18,7 @@ import { OmBarnetHeader } from './OmBarnetHeader';
 import Oppfølgningsspørsmål from './Oppfølgningsspørsmål';
 import { barnErUnder16År, useOmBarnet } from './useOmBarnet';
 
-const OmBarnet: React.FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
+const OmBarnet: FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
     const { tekster, plainTekst } = useAppContext();
 
     const {

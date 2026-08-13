@@ -1,6 +1,5 @@
-import { useEffect } from 'react';
-
 import { getCurrentConsent } from '@navikt/nav-dekoratoren-moduler';
+import { useEffect } from 'react';
 
 export const useUxSignals = (ready: boolean) => {
     useEffect(() => {

@@ -1,16 +1,14 @@
-import React from 'react';
-
 import { ESvar } from '@navikt/familie-form-elements';
-import { feil, type FeltState, ok, useFelt, useSkjema, Valideringsstatus } from '@navikt/familie-skjema';
+import { type FeltState, feil, ok, useFelt, useSkjema, Valideringsstatus } from '@navikt/familie-skjema';
 
 import { useAppContext } from '../../../context/AppContext';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
 import useDatovelgerFeltForSanity from '../../../hooks/useSendInnSkjemaTest/useDatovelgerForSanity';
-import { IBarnMedISøknad } from '../../../typer/barn';
+import type { IBarnMedISøknad } from '../../../typer/barn';
 import { PersonType } from '../../../typer/personType';
-import { IBarnetrygdsperiodeTekstinnhold } from '../../../typer/sanity/modaler/barnetrygdperiode';
-import { IBarnetrygdperioderFeltTyper } from '../../../typer/skjema';
+import type { IBarnetrygdsperiodeTekstinnhold } from '../../../typer/sanity/modaler/barnetrygdperiode';
+import type { IBarnetrygdperioderFeltTyper } from '../../../typer/skjema';
 import { dagenEtterDato, dagensDato, gårsdagensDato, sisteDagDenneMåneden, stringTilDate } from '../../../utils/dato';
 import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import TekstBlock from '../Sanity/TekstBlock';

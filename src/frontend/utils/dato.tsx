@@ -1,4 +1,5 @@
 import { captureException } from '@nais/apm';
+import { type FeltState, feil, ok } from '@navikt/familie-skjema';
 import {
     add,
     endOfMonth,
@@ -16,13 +17,11 @@ import {
 } from 'date-fns';
 import { enGB, nb, nn } from 'date-fns/locale';
 
-import { feil, type FeltState, ok } from '@navikt/familie-skjema';
-
-import { LocaleRecordBlock, PlainTekst } from '../../common/sanity';
-import { ISODateString } from '../../common/typer/ISODateString';
+import type { LocaleRecordBlock, PlainTekst } from '../../common/sanity';
+import type { ISODateString } from '../../common/typer/ISODateString';
 import { LocaleType } from '../../common/typer/localeType';
-import { IFormateringsfeilmeldingerTekstinnhold } from '../typer/sanity/tekstInnhold';
-import { AlternativtSvarForInput, DatoMedUkjent } from '../typer/svar';
+import type { IFormateringsfeilmeldingerTekstinnhold } from '../typer/sanity/tekstInnhold';
+import { AlternativtSvarForInput, type DatoMedUkjent } from '../typer/svar';
 
 export const erDatoFormatGodkjent = (dato: Date) => isValid(dato);
 
@@ -77,7 +76,7 @@ export const validerDato = (
         return feil(feltState, plainTekst(tekster.ugyldigDato));
     }
 
-    if (!!sluttdatoAvgrensning && erDatoEtterSluttdatoAvgresning(dato, sluttdatoAvgrensning)) {
+    if (sluttdatoAvgrensning && erDatoEtterSluttdatoAvgresning(dato, sluttdatoAvgrensning)) {
         return feil(
             feltState,
             plainTekst(
@@ -88,7 +87,7 @@ export const validerDato = (
         );
     }
 
-    if (!!startdatoAvgrensning && erDatoFørStartDatoAvgrensning(dato, startdatoAvgrensning)) {
+    if (startdatoAvgrensning && erDatoFørStartDatoAvgrensning(dato, startdatoAvgrensning)) {
         return feil(
             feltState,
             customStartdatoFeilmelding ? customStartdatoFeilmelding : plainTekst(tekster.periodeAvsluttesForTidlig)
@@ -115,7 +114,7 @@ export const validerDatoForSanity = (
     if (!dato) {
         return feil(feltState, plainTekst(tekster.ugyldigDato));
     }
-    if (!!sluttdatoAvgrensning && erDatoEtterSluttdatoAvgresning(dato, sluttdatoAvgrensning)) {
+    if (sluttdatoAvgrensning && erDatoEtterSluttdatoAvgresning(dato, sluttdatoAvgrensning)) {
         return feil(
             feltState,
             plainTekst(
@@ -126,7 +125,7 @@ export const validerDatoForSanity = (
         );
     }
 
-    if (!!startdatoAvgrensning && erDatoFørStartDatoAvgrensning(dato, startdatoAvgrensning)) {
+    if (startdatoAvgrensning && erDatoFørStartDatoAvgrensning(dato, startdatoAvgrensning)) {
         return feil(
             feltState,
             customStartdatoFeilmelding ? customStartdatoFeilmelding : plainTekst(tekster.periodeAvsluttesForTidlig)

@@ -1,15 +1,14 @@
-import React from 'react';
-
 import { Heading } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import type { Felt, ISkjema } from '@navikt/familie-skjema';
+import type { FC } from 'react';
 
 import { useAppContext } from '../../../context/AppContext';
-import { barnDataKeySpørsmål, IBarnMedISøknad } from '../../../typer/barn';
-import { IEøsBarnetrygdsperiode, IUtenlandsperiode } from '../../../typer/perioder';
+import { barnDataKeySpørsmål, type IBarnMedISøknad } from '../../../typer/barn';
+import type { IEøsBarnetrygdsperiode, IUtenlandsperiode } from '../../../typer/perioder';
 import { PersonType } from '../../../typer/personType';
-import { IUtenlandsoppholdTekstinnhold } from '../../../typer/sanity/modaler/utenlandsopphold';
-import { IOmBarnetFeltTyper } from '../../../typer/skjema';
+import type { IUtenlandsoppholdTekstinnhold } from '../../../typer/sanity/modaler/utenlandsopphold';
+import type { IOmBarnetFeltTyper } from '../../../typer/skjema';
 import { dagensDato, erSammeDatoSomDagensDato, morgendagensDato, stringTilDate } from '../../../utils/dato';
 import { uppercaseFørsteBokstav } from '../../../utils/visning';
 import { Barnetrygdperiode } from '../../Felleskomponenter/Barnetrygdperiode/Barnetrygdperiode';
@@ -27,9 +26,9 @@ import { UtenlandsoppholdSpørsmålId } from '../../Felleskomponenter/Utenlandso
 import { UtenlandsoppholdModal } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsoppholdModal';
 import { UtenlandsperiodeOppsummering } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsperiodeOppsummering';
 
-import { IOmBarnetTekstinnhold } from './innholdTyper';
+import type { IOmBarnetTekstinnhold } from './innholdTyper';
 
-const Oppfølgningsspørsmål: React.FC<{
+const Oppfølgningsspørsmål: FC<{
     barn: IBarnMedISøknad;
     skjema: ISkjema<IOmBarnetFeltTyper, string>;
     leggTilUtenlandsperiode: (periode: IUtenlandsperiode) => void;
