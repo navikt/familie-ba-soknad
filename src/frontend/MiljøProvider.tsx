@@ -7,18 +7,15 @@ import { Feilside } from './components/Felleskomponenter/Feilside/Feilside';
 import { FeatureTogglesProvider } from './context/FeatureTogglesContext';
 import { InnloggetProvider } from './context/InnloggetContext';
 import { LastRessurserProvider } from './context/LastRessurserContext';
-import { SanityProvider } from './context/SanityContext';
 
 const MiljøProvider: FC<PropsWithChildren> = ({ children }) => {
     return (
         <HttpProvider>
             <ApmErrorBoundary fallback={<Feilside />}>
                 <LastRessurserProvider>
-                    <SanityProvider>
-                        <InnloggetProvider>
-                            <FeatureTogglesProvider>{children}</FeatureTogglesProvider>
-                        </InnloggetProvider>
-                    </SanityProvider>
+                    <InnloggetProvider>
+                        <FeatureTogglesProvider>{children}</FeatureTogglesProvider>
+                    </InnloggetProvider>
                 </LastRessurserProvider>
             </ApmErrorBoundary>
         </HttpProvider>

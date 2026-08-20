@@ -17,6 +17,7 @@ import VelgBarn from './components/SøknadsSteg/VelgBarn/VelgBarn';
 import { useAppContext } from './context/AppContext';
 import { useEøsContext } from './context/EøsContext';
 import { useRoutesContext } from './context/RoutesContext';
+import { useVisSystemetLaster } from './hooks/useVisSystemetLaster';
 import { type IRoute, RouteEnum } from './typer/routes';
 
 /**
@@ -42,8 +43,9 @@ const EøsForBarnWrapper: FC = () => {
 };
 
 const Søknad = () => {
-    const { systemetLaster } = useAppContext();
     const { routes } = useRoutesContext();
+
+    const visSystemetLaster = useVisSystemetLaster();
 
     const routeTilKomponent = (route: IRoute): FC => {
         switch (route.route) {
@@ -73,7 +75,7 @@ const Søknad = () => {
     };
 
     return (
-        <div className={systemetLaster() ? 'blur' : undefined}>
+        <div className={visSystemetLaster ? 'blur' : undefined}>
             <Routes>
                 <Route path={'/helse'} element={<Helse />} />
                 <Route path={'/'} element={<Forside />} />
