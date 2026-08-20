@@ -105,8 +105,8 @@ importers:
         specifier: 6.4.4
         version: 6.4.4(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       unleash-client:
-        specifier: 6.12.0
-        version: 6.12.0(supports-color@10.2.2)
+        specifier: 6.12.1
+        version: 6.12.1(supports-color@10.2.2)
       uuid:
         specifier: 14.0.1
         version: 14.0.1
@@ -2297,8 +2297,9 @@ packages:
     resolution: {integrity: sha512-K5zQjDllxWkf7Z5xJdV0/B0WTNqx6vxG70zJE4N0kBs4LovmEYWJzQGxC9bS9RAKu3bgM40lrd5zoLJ12MQ5BA==}
     engines: {node: '>= 0.10'}
 
-  re2js@1.3.3:
-    resolution: {integrity: sha512-s/I5zEAo79SUK0Qw4dpZKpiMwbQ6Gz0KU2NRr7eaO4x/p2g7Vvmn3hdeXDg8VsaUjfj/ora+e9oi27LX/C9+mw==}
+  re2js@2.8.6:
+    resolution: {integrity: sha512-xLgQil4kIUCrAzVk9fRSkxkFNwmygLFjVxXrLc65aE1F0+Zsb8rxumFBy4XKyvgMCTL6kilDq3EZ0piE2dP/Dg==}
+    engines: {node: '>=18.0.0'}
 
   react-cookie@8.1.2:
     resolution: {integrity: sha512-S45Z1y1dHyYfLEI4bFKQICuP+SwJqTPWbdc2ZpE6aQSdjSVJAjUDfwTPq8B7BWieIsgyyEWMb/QOrudtwJMjXA==}
@@ -2725,8 +2726,8 @@ packages:
   universal-cookie@8.1.2:
     resolution: {integrity: sha512-kcKzTGNsxVytujrYOvQbvh//QyFrA53HrzCGyzh6i9ujCww5gfPrLK0tG+jJD40SIIldiEjBNPPSR8fBMS21GA==}
 
-  unleash-client@6.12.0:
-    resolution: {integrity: sha512-KKwdUyAPUk0KSZJ6XBYtZ7wEYKJ/fypExFI6teomGqvKOGMMY4tc4BBZMgOyLjeE/2xn8/p8ZBIu9MWw0A/Grw==}
+  unleash-client@6.12.1:
+    resolution: {integrity: sha512-xeojMfPZynteI2fqGW70po23Nd588MKSv9cv5dH3BOfQmsVE0jcvypLl7a4/NfrAgmMKOpZ48N4TtnGd7klJDQ==}
     engines: {node: '>=20'}
 
   unpipe@1.0.0:
@@ -5101,7 +5102,7 @@ snapshots:
       iconv-lite: 0.7.3
       unpipe: 1.0.0
 
-  re2js@1.3.3: {}
+  re2js@2.8.6: {}
 
   react-cookie@8.1.2(@types/react@19.2.18)(react@19.2.8):
     dependencies:
@@ -5553,7 +5554,7 @@ snapshots:
     dependencies:
       cookie: 1.1.1
 
-  unleash-client@6.12.0(supports-color@10.2.2):
+  unleash-client@6.12.1(supports-color@10.2.2):
     dependencies:
       http-proxy-agent: 7.0.2(supports-color@10.2.2)
       https-proxy-agent: 7.0.6(supports-color@10.2.2)
@@ -5563,7 +5564,7 @@ snapshots:
       make-fetch-happen: 15.0.6(supports-color@10.2.2)
       murmurhash3js: 3.0.1
       proxy-from-env: 1.1.0
-      re2js: 1.3.3
+      re2js: 2.8.6
       semver: 7.8.5
     transitivePeerDependencies:
       - supports-color
