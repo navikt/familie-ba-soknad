@@ -2,11 +2,11 @@ import { ArrowRightIcon } from '@navikt/aksel-icons';
 import { Button, Checkbox, ErrorMessage, InfoCard, Radio, RadioGroup, VStack } from '@navikt/ds-react';
 import type { FC } from 'react';
 
-import { Typografi } from '../../../../common/sanity';
+import { ESanitySteg, Typografi } from '../../../../common/sanity';
 import { ESøknadstype } from '../../../../common/typer/kontrakt/generelle';
 import { useAppContext } from '../../../context/AppContext';
+import { useSanityTekster } from '../../../context/SanityContext';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
-
 import { BekreftelseStatus, useBekreftelseOgStartSoknad } from './useBekreftelseOgStartSoknad';
 
 const BekreftelseOgStartSoknad: FC = () => {
@@ -18,11 +18,11 @@ const BekreftelseOgStartSoknad: FC = () => {
         søknadstypeFeil,
         settSøknadstypeFeil,
     } = useBekreftelseOgStartSoknad();
-    const { tekster, plainTekst } = useAppContext();
 
-    const forsidetekster = tekster().FORSIDE;
-    const navigasjonTekster = tekster().FELLES.navigasjon;
-    const fellestekster = tekster().FELLES;
+    const { plainTekst } = useAppContext();
+
+    const forsidetekster = useSanityTekster(ESanitySteg.FORSIDE);
+    const fellestekster = useSanityTekster(ESanitySteg.FELLES);
 
     const bekreftelseKortStatus = () => {
         switch (bekreftelseStatus) {
@@ -81,7 +81,7 @@ const BekreftelseOgStartSoknad: FC = () => {
                         icon={<ArrowRightIcon aria-hidden />}
                         iconPosition="right"
                     >
-                        {plainTekst(navigasjonTekster.startKnapp)}
+                        {plainTekst(fellestekster.navigasjon.startKnapp)}
                     </Button>
                 </VStack>
             </VStack>

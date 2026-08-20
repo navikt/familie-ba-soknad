@@ -1,16 +1,15 @@
 import { ESvar } from '@navikt/familie-form-elements';
 import { HttpProvider } from '@navikt/familie-http';
 import { type Ressurs, RessursStatus } from '@navikt/familie-typer';
-
+import { QueryClient } from '@tanstack/react-query';
 import type { FC, PropsWithChildren, ReactNode } from 'react';
 import { Cookies, CookiesProvider } from 'react-cookie';
 import { MemoryRouter, useLocation } from 'react-router';
 import { vi } from 'vitest';
 import { mockDeep } from 'vitest-mock-extended';
-
 import { mockTekstInnhold } from '../../../mocks/testdata/sanity/sanity';
 import { ESivilstand, ESøknadstype, Slektsforhold } from '../../common/typer/kontrakt/generelle';
-import { LocaleType } from '../../common/typer/localeType';
+import { AppProviders } from '../AppProviders';
 import { UtenlandsoppholdSpørsmålId } from '../components/Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 import {
     DinLivssituasjonSpørsmålId,
@@ -30,7 +29,6 @@ import { FeatureTogglesProvider } from '../context/FeatureTogglesContext';
 import { InnloggetProvider } from '../context/InnloggetContext';
 import { LastRessurserProvider } from '../context/LastRessurserContext';
 import { RoutesProvider } from '../context/RoutesContext';
-import { SanityProvider } from '../context/SanityContext';
 import { SpråkProvider } from '../context/SpråkContext';
 import { StegProvider } from '../context/StegContext';
 import { andreForelderDataKeySpørsmål, barnDataKeySpørsmål } from '../typer/barn';
@@ -41,8 +39,17 @@ import { AlternativtSvarForInput } from '../typer/svar';
 import { type ISøknad, initialStateSøknad } from '../typer/søknad';
 import { EUtenlandsoppholdÅrsak } from '../typer/utenlandsopphold';
 import { Årsak } from '../typer/utvidet';
-
 import { genererInitialBarnMedISøknad } from './barn';
+
+const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            retry: false,
+            refetchOnWindowFocus: false,
+            refetchOnReconnect: false,
+        },
+    },
+});
 
 export const spyOnUseApp = søknad => {
     const tilRestLocaleRecord = vi.fn();
@@ -150,88 +157,75 @@ export const silenceConsoleErrors = () => {
     });
 };
 
-const wrapMedProvidere = (providerComponents: FC<any>[], mocketNettleserHistorikk: string[], children?: ReactNode) => {
-    const [Første, ...resten] = providerComponents;
-    const erSpråkprovider = Første === SpråkProvider;
-    const erMemoryRouter = Første === MemoryRouter;
-
-    return (
-        <Første
-            {...(erSpråkprovider
-                ? {
-                      defaultLocale: LocaleType.nb,
-                  }
-                : {})}
-            {...(erMemoryRouter ? { initialEntries: mocketNettleserHistorikk } : {})}
-        >
-            {resten.length ? wrapMedProvidere(resten, mocketNettleserHistorikk, children) : children}
-        </Første>
-    );
-};
-
-const wrapMedDefaultProvidere = (children: ReactNode, mocketNettleserHistorikk: string[]) =>
-    wrapMedProvidere(
-        [
-            CookiesProviderMedLocale,
-            SpråkProvider,
-            HttpProvider,
-            LastRessurserProvider,
-            SanityProvider,
-            InnloggetProvider,
-            FeatureTogglesProvider,
-            AppProvider,
-            EøsProvider,
-            RoutesProvider,
-            MemoryRouter,
-            StegProvider,
-            AppNavigationProvider,
-        ],
-        mocketNettleserHistorikk,
-        children
-    );
-
-export const TestProvidere: FC<{
+export interface TestProviderProps {
     mocketNettleserHistorikk?: string[];
     children?: ReactNode;
-}> = ({ mocketNettleserHistorikk = ['/'], children }) => wrapMedDefaultProvidere(children, mocketNettleserHistorikk);
+}
 
-export const TestProvidereMedEkteTekster: FC<{
-    mocketNettleserHistorikk?: string[];
-    children?: ReactNode;
-}> = ({ mocketNettleserHistorikk, children }) => (
+export const TestProvidere: FC<TestProviderProps> = ({ mocketNettleserHistorikk = ['/'], children }) => (
+    <CookiesProviderMedLocale>
+        <SpråkProvider>
+            <HttpProvider>
+                <LastRessurserProvider>
+                    <InnloggetProvider>
+                        <FeatureTogglesProvider>
+                            <AppProviders queryClient={queryClient}>
+                                <AppProvider>
+                                    <EøsProvider>
+                                        <RoutesProvider>
+                                            <MemoryRouter initialEntries={mocketNettleserHistorikk}>
+                                                <StegProvider>
+                                                    <AppNavigationProvider>{children}</AppNavigationProvider>
+                                                </StegProvider>
+                                            </MemoryRouter>
+                                        </RoutesProvider>
+                                    </EøsProvider>
+                                </AppProvider>
+                            </AppProviders>
+                        </FeatureTogglesProvider>
+                    </InnloggetProvider>
+                </LastRessurserProvider>
+            </HttpProvider>
+        </SpråkProvider>
+    </CookiesProviderMedLocale>
+);
+
+export const TestProvidereMedEkteTekster: FC<TestProviderProps> = ({ mocketNettleserHistorikk, children }) => (
     <TestProvidere mocketNettleserHistorikk={mocketNettleserHistorikk}>{children}</TestProvidere>
 );
 
-export const wrapMedProvidereForSanity = (providerComponents: FC<any>[], children?: ReactNode) => {
-    const [Første, ...resten] = providerComponents;
-    return <Første>{resten.length ? wrapMedProvidereForSanity(resten, children) : children}</Første>;
-};
-
-const wrapMedDefaultProvidereForSanity = (children: ReactNode) =>
-    wrapMedProvidereForSanity(
-        [
-            CookiesProvider,
-            SpråkProvider,
-            HttpProvider,
-            LastRessurserProvider,
-            SanityProvider,
-            InnloggetProvider,
-            FeatureTogglesProvider,
-            AppProvider,
-            EøsProvider,
-            RoutesProvider,
-            MemoryRouter,
-            StegProvider,
-            AppNavigationProvider,
-        ],
-        children
-    );
-
-interface TestProviderPropsForSanity {
+export interface TestProviderPropsForSanity {
     children?: ReactNode;
 }
+
 export function TestProvidereForSanity({ children }: TestProviderPropsForSanity) {
-    return wrapMedDefaultProvidereForSanity(children);
+    return (
+        <CookiesProvider>
+            <SpråkProvider>
+                <HttpProvider>
+                    <LastRessurserProvider>
+                        <InnloggetProvider>
+                            <FeatureTogglesProvider>
+                                <AppProviders queryClient={queryClient}>
+                                    <AppProvider>
+                                        <EøsProvider>
+                                            <RoutesProvider>
+                                                <MemoryRouter>
+                                                    <StegProvider>
+                                                        <AppNavigationProvider>{children}</AppNavigationProvider>
+                                                    </StegProvider>
+                                                </MemoryRouter>
+                                            </RoutesProvider>
+                                        </EøsProvider>
+                                    </AppProvider>
+                                </AppProviders>
+                            </FeatureTogglesProvider>
+                        </InnloggetProvider>
+                    </LastRessurserProvider>
+                </HttpProvider>
+            </SpråkProvider>
+        </CookiesProvider>
+    );
 }
 
 export const LesUtLocation = () => {
