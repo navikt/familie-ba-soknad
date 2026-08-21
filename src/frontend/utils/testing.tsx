@@ -1,13 +1,12 @@
 import { ESvar } from '@navikt/familie-form-elements';
 import { HttpProvider } from '@navikt/familie-http';
 import { type Ressurs, RessursStatus } from '@navikt/familie-typer';
-
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import type { FC, PropsWithChildren, ReactNode } from 'react';
 import { Cookies, CookiesProvider } from 'react-cookie';
 import { MemoryRouter, useLocation } from 'react-router';
 import { vi } from 'vitest';
 import { mockDeep } from 'vitest-mock-extended';
-
 import { mockTekstInnhold } from '../../../mocks/testdata/sanity/sanity';
 import { ESivilstand, ESøknadstype, Slektsforhold } from '../../common/typer/kontrakt/generelle';
 import { LocaleType } from '../../common/typer/localeType';
@@ -41,8 +40,17 @@ import { AlternativtSvarForInput } from '../typer/svar';
 import { type ISøknad, initialStateSøknad } from '../typer/søknad';
 import { EUtenlandsoppholdÅrsak } from '../typer/utenlandsopphold';
 import { Årsak } from '../typer/utvidet';
-
 import { genererInitialBarnMedISøknad } from './barn';
+
+const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            retry: false,
+            refetchOnWindowFocus: false,
+            refetchOnReconnect: false,
+        },
+    },
+});
 
 export const spyOnUseApp = søknad => {
     const tilRestLocaleRecord = vi.fn();
@@ -169,16 +177,16 @@ const wrapMedProvidere = (providerComponents: FC<any>[], mocketNettleserHistorik
     );
 };
 
-const wrapMedDefaultProvidere = (children: ReactNode, mocketNettleserHistorikk: string[]) =>
-    wrapMedProvidere(
+const wrapMedDefaultProvidere = (children: ReactNode, mocketNettleserHistorikk: string[]) => {
+    const providers = wrapMedProvidere(
         [
             CookiesProviderMedLocale,
             SpråkProvider,
             HttpProvider,
             LastRessurserProvider,
-            SanityProvider,
             InnloggetProvider,
             FeatureTogglesProvider,
+            SanityProvider,
             AppProvider,
             EøsProvider,
             RoutesProvider,
@@ -189,6 +197,8 @@ const wrapMedDefaultProvidere = (children: ReactNode, mocketNettleserHistorikk: 
         mocketNettleserHistorikk,
         children
     );
+    return <QueryClientProvider client={queryClient}>{providers}</QueryClientProvider>;
+};
 
 export const TestProvidere: FC<{
     mocketNettleserHistorikk?: string[];
@@ -207,16 +217,16 @@ export const wrapMedProvidereForSanity = (providerComponents: FC<any>[], childre
     return <Første>{resten.length ? wrapMedProvidereForSanity(resten, children) : children}</Første>;
 };
 
-const wrapMedDefaultProvidereForSanity = (children: ReactNode) =>
-    wrapMedProvidereForSanity(
+const wrapMedDefaultProvidereForSanity = (children: ReactNode) => {
+    const providers = wrapMedProvidereForSanity(
         [
             CookiesProvider,
             SpråkProvider,
             HttpProvider,
             LastRessurserProvider,
-            SanityProvider,
             InnloggetProvider,
             FeatureTogglesProvider,
+            SanityProvider,
             AppProvider,
             EøsProvider,
             RoutesProvider,
@@ -226,10 +236,13 @@ const wrapMedDefaultProvidereForSanity = (children: ReactNode) =>
         ],
         children
     );
+    return <QueryClientProvider client={queryClient}>{providers}</QueryClientProvider>;
+};
 
 interface TestProviderPropsForSanity {
     children?: ReactNode;
 }
+
 export function TestProvidereForSanity({ children }: TestProviderPropsForSanity) {
     return wrapMedDefaultProvidereForSanity(children);
 }

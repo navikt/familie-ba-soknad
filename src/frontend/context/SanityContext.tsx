@@ -1,66 +1,52 @@
-import { byggHenterRessurs, byggTomRessurs, type Ressurs, RessursStatus } from '@navikt/familie-typer';
-
-import { createClient } from '@sanity/client';
-import { createContext, type PropsWithChildren, useContext, useEffect, useState } from 'react';
-
-import miljø from '../../common/miljø';
-import type { SanityDokument } from '../../common/sanity';
+import { Page } from '@navikt/ds-react';
+import { createContext, type PropsWithChildren, useContext } from 'react';
+import type { ESanitySteg } from '../../common/sanity';
+import { Feilside } from '../components/Felleskomponenter/Feilside/Feilside';
+import SystemetLaster from '../components/Felleskomponenter/SystemetLaster/SystemetLaster';
+import { useHentSanityTekster } from '../hooks/useHentSanityTekster';
 import type { ITekstinnhold } from '../typer/sanity/tekstInnhold';
-import { transformerTilTekstinnhold } from '../utils/sanity';
 
-import { loggFeil } from './axios';
-import { useLastRessurserContext } from './LastRessurserContext';
-
-export interface SanityContext {
-    teksterRessurs: Ressurs<ITekstinnhold>;
+interface SanityContext {
+    tekster: ITekstinnhold;
 }
 
 const SanityContext = createContext<SanityContext | undefined>(undefined);
 
-export function SanityProvider(props: PropsWithChildren) {
-    const { settRessurserSomLaster, fjernRessursSomLaster, ressurserSomLaster } = useLastRessurserContext();
-    const [teksterRessurs, settTeksterRessurs] = useState(byggTomRessurs<ITekstinnhold>());
+export function SanityProvider({ children }: PropsWithChildren) {
+    const { data, isPending, error } = useHentSanityTekster();
 
-    const sanityKlient = createClient({
-        projectId: 'by26nl8j',
-        dataset: miljø().sanityDataset,
-        apiVersion: '2021-10-21',
-        useCdn: true,
-    });
+    if (isPending) {
+        return (
+            <main>
+                <Page.Block width={'text'} gutters={true}>
+                    <SystemetLaster />
+                </Page.Block>
+            </main>
+        );
+    }
 
-    useEffect(() => {
-        const ressursId = 'sanity';
-        settRessurserSomLaster([...ressurserSomLaster, ressursId]);
-        settTeksterRessurs(byggHenterRessurs());
+    if (error) {
+        return (
+            <main>
+                <Page.Block width={'text'} gutters={true}>
+                    <Feilside />
+                </Page.Block>
+            </main>
+        );
+    }
 
-        sanityKlient
-            .fetch<SanityDokument[]>('*')
-            .then(dokumenter => {
-                fjernRessursSomLaster(ressursId);
-                settTeksterRessurs({
-                    data: transformerTilTekstinnhold(dokumenter),
-                    status: RessursStatus.SUKSESS,
-                });
-            })
-            .catch(error => {
-                fjernRessursSomLaster(ressursId);
-                settTeksterRessurs({
-                    frontendFeilmelding: 'Kunne ikke hente tekster fra Sanity',
-                    status: RessursStatus.FEILET,
-                });
-                loggFeil(error);
-            });
-    }, []);
-
-    return <SanityContext.Provider value={{ teksterRessurs }}>{props.children}</SanityContext.Provider>;
+    return <SanityContext.Provider value={{ tekster: data }}>{children}</SanityContext.Provider>;
 }
 
 export function useSanityContext() {
     const context = useContext(SanityContext);
-
     if (context === undefined) {
-        throw new Error('useSanityContext må brukes innenfor SanityProvider');
+        throw new Error('useSanityContext må brukes innenfor en SanityProvider');
     }
-
     return context;
+}
+
+export function useSanityTekster<T extends ESanitySteg>(steg: T): ITekstinnhold[T] {
+    const { tekster } = useSanityContext();
+    return tekster[steg];
 }

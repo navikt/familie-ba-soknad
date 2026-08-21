@@ -103,7 +103,7 @@ export function AppProvider(props: PropsWithChildren) {
     const [sisteModellVersjon, settSisteModellVersjon] = useState(modellVersjon);
     const modellVersjonOppdatert = sisteModellVersjon > modellVersjon;
 
-    const { teksterRessurs } = useSanityContext();
+    const sanityContext = useSanityContext();
 
     useEffect(() => {
         if (nåværendeRoute === RouteEnum.Kvittering) {
@@ -131,7 +131,7 @@ export function AppProvider(props: PropsWithChildren) {
     }, [søknad.søker.triggetEøs]);
 
     useEffect(() => {
-        if (innloggetStatus === InnloggetStatus.AUTENTISERT && teksterRessurs.status === RessursStatus.SUKSESS) {
+        if (innloggetStatus === InnloggetStatus.AUTENTISERT) {
             settSluttbruker(byggHenterRessurs());
 
             hentSluttbrukerFraPdl(axiosRequest).then(ressurs => {
@@ -173,7 +173,7 @@ export function AppProvider(props: PropsWithChildren) {
                 }
             });
         }
-    }, [innloggetStatus, teksterRessurs.status]);
+    }, [innloggetStatus]);
 
     const mellomlagre = () => {
         const barnetrygd: IMellomlagretBarnetrygd = {
@@ -315,19 +315,14 @@ export function AppProvider(props: PropsWithChildren) {
     };
 
     const systemetFeiler = () => {
-        return (
-            sluttbruker.status === RessursStatus.FEILET ||
-            eøsLand.status === RessursStatus.FEILET ||
-            teksterRessurs.status === RessursStatus.FEILET
-        );
+        return sluttbruker.status === RessursStatus.FEILET || eøsLand.status === RessursStatus.FEILET;
     };
 
     const systemetOK = () => {
         return (
             innloggetStatus === InnloggetStatus.AUTENTISERT &&
             sluttbruker.status === RessursStatus.SUKSESS &&
-            eøsLand.status === RessursStatus.SUKSESS &&
-            teksterRessurs.status === RessursStatus.SUKSESS
+            eøsLand.status === RessursStatus.SUKSESS
         );
     };
 
@@ -338,11 +333,7 @@ export function AppProvider(props: PropsWithChildren) {
     };
 
     const tekster = (): ITekstinnhold => {
-        if (teksterRessurs.status === RessursStatus.SUKSESS) {
-            return teksterRessurs.data;
-        } else {
-            throw new Error(`Søknaden har lastet uten tekster`);
-        }
+        return sanityContext.tekster;
     };
 
     const flettefeltTilTekst = (
