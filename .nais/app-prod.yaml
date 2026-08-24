@@ -50,6 +50,9 @@ spec:
       memory: 1024Mi
     requests:
       memory: 512Mi
+  frontend:
+    generatedConfig:
+      mountPath: /app/dist/nais.js
   idporten:
     enabled: true
     sidecar:

@@ -33,19 +33,4 @@ export const renderHtml = (
             res.send(html);
         }
     );
-    req.app.render(htmlFileName, { LOCALE_CODE: språk ?? 'nb' }, async (feil: Error, html: string) => {
-        if (feil) {
-            return next(feil);
-        }
-        // Når vi kjører applikasjon lokalt med ViteDevServer, må vi transformere html-filen for å injisere HMR-klient, løse %BASE_URL% og modul-importer.
-        if (viteDevServer) {
-            try {
-                html = await viteDevServer.transformIndexHtml(req.originalUrl, html);
-            } catch (transformFeil) {
-                viteDevServer.ssrFixStacktrace(transformFeil as Error);
-                return next(transformFeil);
-            }
-        }
-        res.send(html);
-    });
 };
