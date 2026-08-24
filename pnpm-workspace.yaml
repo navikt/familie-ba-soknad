@@ -9,3 +9,5 @@ allowBuilds:
   '@sentry/cli': false
   core-js-pure: false
   msw: false
+minimumReleaseAgeExclude:
+  - '@navikt/*'
