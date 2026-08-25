@@ -1,10 +1,9 @@
+import { useTranslate } from '@hooks/useTranslate';
 import { ArrowRightIcon } from '@navikt/aksel-icons';
 import { Button, Checkbox, ErrorMessage, InfoCard, Radio, RadioGroup, VStack } from '@navikt/ds-react';
 import type { FC } from 'react';
-
 import { ESanitySteg, Typografi } from '../../../../common/sanity';
 import { ESøknadstype } from '../../../../common/typer/kontrakt/generelle';
-import { useAppContext } from '../../../context/AppContext';
 import { useSanityTekster } from '../../../context/SanityContext';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import { BekreftelseStatus, useBekreftelseOgStartSoknad } from './useBekreftelseOgStartSoknad';
@@ -19,10 +18,9 @@ const BekreftelseOgStartSoknad: FC = () => {
         settSøknadstypeFeil,
     } = useBekreftelseOgStartSoknad();
 
-    const { plainTekst } = useAppContext();
-
     const forsidetekster = useSanityTekster(ESanitySteg.FORSIDE);
     const fellestekster = useSanityTekster(ESanitySteg.FELLES);
+    const translate = useTranslate();
 
     const bekreftelseKortStatus = () => {
         switch (bekreftelseStatus) {
@@ -40,21 +38,21 @@ const BekreftelseOgStartSoknad: FC = () => {
         <form onSubmit={event => onStartSøknad(event)}>
             <VStack gap="space-40">
                 <RadioGroup
-                    legend={plainTekst(forsidetekster.soekerDuUtvidet.sporsmal)}
+                    legend={translate(forsidetekster.soekerDuUtvidet.sporsmal)}
                     onChange={(value: ESøknadstype) => {
                         settSøknadstype(value);
                         settSøknadstypeFeil(false);
                     }}
-                    error={søknadstypeFeil && plainTekst(forsidetekster.soekerDuUtvidet.feilmelding)}
+                    error={søknadstypeFeil && translate(forsidetekster.soekerDuUtvidet.feilmelding)}
                 >
-                    <Radio value={ESøknadstype.UTVIDET}>{plainTekst(fellestekster.frittståendeOrd.ja)}</Radio>
-                    <Radio value={ESøknadstype.ORDINÆR}>{plainTekst(fellestekster.frittståendeOrd.nei)}</Radio>
+                    <Radio value={ESøknadstype.UTVIDET}>{translate(fellestekster.frittståendeOrd.ja)}</Radio>
+                    <Radio value={ESøknadstype.ORDINÆR}>{translate(fellestekster.frittståendeOrd.nei)}</Radio>
                 </RadioGroup>
 
                 <VStack gap={'space-8'}>
                     <InfoCard data-color={bekreftelseKortStatus()}>
                         <InfoCard.Header>
-                            <InfoCard.Title>{plainTekst(forsidetekster.bekreftelsesboksTittel)}</InfoCard.Title>
+                            <InfoCard.Title>{translate(forsidetekster.bekreftelsesboksTittel)}</InfoCard.Title>
                         </InfoCard.Header>
                         <InfoCard.Content>
                             <TekstBlock
@@ -65,12 +63,12 @@ const BekreftelseOgStartSoknad: FC = () => {
                                 value={bekreftelseStatus === BekreftelseStatus.BEKREFTET}
                                 onChange={bekreftelseOnChange}
                             >
-                                {plainTekst(forsidetekster.bekreftelsesboksErklaering)}
+                                {translate(forsidetekster.bekreftelsesboksErklaering)}
                             </Checkbox>
                         </InfoCard.Content>
                     </InfoCard>
                     {bekreftelseStatus === BekreftelseStatus.FEIL && (
-                        <ErrorMessage showIcon>{plainTekst(forsidetekster.bekreftelsesboksFeilmelding)}</ErrorMessage>
+                        <ErrorMessage showIcon>{translate(forsidetekster.bekreftelsesboksFeilmelding)}</ErrorMessage>
                     )}
                 </VStack>
 
@@ -81,7 +79,7 @@ const BekreftelseOgStartSoknad: FC = () => {
                         icon={<ArrowRightIcon aria-hidden />}
                         iconPosition="right"
                     >
-                        {plainTekst(fellestekster.navigasjon.startKnapp)}
+                        {translate(fellestekster.navigasjon.startKnapp)}
                     </Button>
                 </VStack>
             </VStack>

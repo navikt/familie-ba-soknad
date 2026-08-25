@@ -107,6 +107,9 @@ export type FlettefeltVerdier = {
     klokkeslett?: string;
 };
 
+/**
+ * @deprecated Bruke {@link useTranslate}
+ */
 export type PlainTekst = (
     localeRecord: LocaleRecordBlock | LocaleRecordString | undefined,
     flettefelter?: FlettefeltVerdier,
