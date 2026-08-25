@@ -1,8 +1,7 @@
+import { useTranslate } from '@hooks/useTranslate';
 import { Accordion, GuidePanel, Heading } from '@navikt/ds-react';
 import { setAvailableLanguages } from '@navikt/nav-dekoratoren-moduler';
-
 import { type FC, useEffect } from 'react';
-
 import miljø from '../../../../common/miljø';
 import { ESanitySteg, Typografi } from '../../../../common/sanity';
 import { useAppContext } from '../../../context/AppContext';
@@ -15,7 +14,7 @@ import styles from './Forside.module.css';
 import { FortsettPåSøknad } from './FortsettPåSøknad';
 
 const Forside: FC = () => {
-    const { mellomlagretVerdi, settNåværendeRoute, plainTekst } = useAppContext();
+    const { mellomlagretVerdi, settNåværendeRoute } = useAppContext();
 
     useEffect(() => {
         settNåværendeRoute(RouteEnum.Forside);
@@ -33,18 +32,19 @@ const Forside: FC = () => {
     const kanFortsettePåSøknad = mellomlagretVerdi && mellomlagretVerdi.modellVersjon === miljø().modellVersjon;
 
     const forsidetekster = useSanityTekster(ESanitySteg.FORSIDE);
+    const translate = useTranslate();
 
     return (
         <InnholdContainer>
             <GuidePanel poster>
                 <Heading level="2" size="medium" spacing>
-                    {plainTekst(forsidetekster.veilederHei)}
+                    {translate(forsidetekster.veilederHei)}
                 </Heading>
                 <TekstBlock block={forsidetekster.veilederIntro} typografi={Typografi.BodyLong} />
             </GuidePanel>
             <div>
                 <Heading level="2" size="medium" spacing>
-                    {plainTekst(forsidetekster.foerDuSoekerTittel)}
+                    {translate(forsidetekster.foerDuSoekerTittel)}
                 </Heading>
                 <div className={styles.textBlockContainer}>
                     <TekstBlock block={forsidetekster.foerDuSoeker} typografi={Typografi.BodyLong} />
@@ -52,21 +52,21 @@ const Forside: FC = () => {
             </div>
             <Accordion>
                 <Accordion.Item>
-                    <Accordion.Header>{plainTekst(forsidetekster.informasjonOmPlikterTittel)}</Accordion.Header>
+                    <Accordion.Header>{translate(forsidetekster.informasjonOmPlikterTittel)}</Accordion.Header>
                     <Accordion.Content>
                         <TekstBlock block={forsidetekster.informasjonOmPlikter} />
                     </Accordion.Content>
                 </Accordion.Item>
                 <Accordion.Item>
                     <Accordion.Header>
-                        {plainTekst(forsidetekster.informasjonOmPersonopplysningerTittel)}
+                        {translate(forsidetekster.informasjonOmPersonopplysningerTittel)}
                     </Accordion.Header>
                     <Accordion.Content>
                         <TekstBlock block={forsidetekster.informasjonOmPersonopplysninger} />
                     </Accordion.Content>
                 </Accordion.Item>
                 <Accordion.Item>
-                    <Accordion.Header>{plainTekst(forsidetekster.informasjonOmLagringAvSvarTittel)}</Accordion.Header>
+                    <Accordion.Header>{translate(forsidetekster.informasjonOmLagringAvSvarTittel)}</Accordion.Header>
                     <Accordion.Content>
                         <TekstBlock block={forsidetekster.informasjonOmLagringAvSvar} />
                     </Accordion.Content>

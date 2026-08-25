@@ -1,3 +1,4 @@
+import { useDebounce } from '@hooks/useDebounce/useDebounce';
 import {
     byggFeiletRessurs,
     byggHenterRessurs,
@@ -7,7 +8,6 @@ import {
     RessursStatus,
 } from '@navikt/familie-typer';
 import { type Alpha3Code, getName } from 'i18n-iso-countries';
-
 import {
     createContext,
     type Dispatch,
@@ -17,13 +17,11 @@ import {
     useEffect,
     useState,
 } from 'react';
-
 import miljø, { BASE_PATH } from '../../common/miljø';
 import { ESanityFlettefeltverdi, ESanitySteg, type FlettefeltVerdier, type PlainTekst } from '../../common/sanity';
 import { ESivilstand, ESøknadstype, type TilRestLocaleRecord } from '../../common/typer/kontrakt/generelle';
 import { LocaleType } from '../../common/typer/localeType';
 import { DinLivssituasjonSpørsmålId } from '../components/SøknadsSteg/DinLivssituasjon/spørsmål';
-import { useDebounce } from '../hooks/useDebounce/useDebounce';
 import type { IKontoinformasjon } from '../typer/kontoinformasjon';
 import type { IKvittering } from '../typer/kvittering';
 import type { IMellomlagretBarnetrygd } from '../typer/mellomlager';
@@ -72,12 +70,13 @@ export interface AppContext {
     settSisteModellVersjon: Dispatch<SetStateAction<number>>;
     eøsLand: Ressurs<Map<Alpha3Code, string>>;
     settEøsLand: Dispatch<SetStateAction<Ressurs<Map<Alpha3Code, string>>>>;
+    /**
+     * @deprecated Bruk {@link useSanityTekster}
+     */
     tekster: () => ITekstinnhold;
-    flettefeltTilTekst: (
-        sanityFlettefelt: ESanityFlettefeltverdi,
-        flettefelter?: FlettefeltVerdier,
-        spesifikkLocale?: LocaleType
-    ) => string;
+    /**
+     * @deprecated Bruk {@link useTranslate}
+     */
     plainTekst: PlainTekst;
     tilRestLocaleRecord: TilRestLocaleRecord;
     kontoinformasjon: Ressurs<IKontoinformasjon>;
@@ -332,10 +331,16 @@ export function AppProvider(props: PropsWithChildren) {
         return lasterRessurser() || innloggetStatus === InnloggetStatus.IKKE_VERIFISERT;
     };
 
+    /**
+     * @deprecated Bruk {@link useSanityTekster}
+     */
     const tekster = (): ITekstinnhold => {
         return sanityContext.tekster;
     };
 
+    /**
+     * @deprecated Bruk {@link useTranslateFlettefelt}
+     */
     const flettefeltTilTekst = (
         sanityFlettefelt: ESanityFlettefeltverdi,
         flettefelter?: FlettefeltVerdier,
@@ -404,6 +409,9 @@ export function AppProvider(props: PropsWithChildren) {
         }
     };
 
+    /**
+     * @deprecated Bruk {@link useTranslate}
+     */
     const plainTekst = plainTekstHof(flettefeltTilTekst, valgtLocale);
 
     const tilRestLocaleRecord: TilRestLocaleRecord = (sanityTekst, flettefelter): Record<LocaleType, string> => {
@@ -446,8 +454,13 @@ export function AppProvider(props: PropsWithChildren) {
                 settSisteModellVersjon,
                 eøsLand,
                 settEøsLand,
+                /**
+                 * @deprecated Bruk {@link useSanityTekster}
+                 */
                 tekster,
-                flettefeltTilTekst,
+                /**
+                 * @deprecated Bruk {@link useTranslate}
+                 */
                 plainTekst,
                 tilRestLocaleRecord,
                 kontoinformasjon,
