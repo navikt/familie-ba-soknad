@@ -6,16 +6,16 @@ import { type FC, useEffect } from 'react';
 import miljø from '../../../../common/miljø';
 import { ESanitySteg, Typografi } from '../../../../common/sanity';
 import { useAppContext } from '../../../context/AppContext';
+import { useSanityTekster } from '../../../context/SanityContext';
 import { RouteEnum } from '../../../typer/routes';
 import InnholdContainer from '../../Felleskomponenter/InnholdContainer/InnholdContainer';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
-
 import BekreftelseOgStartSoknad from './BekreftelseOgStartSoknad';
 import styles from './Forside.module.css';
 import { FortsettPåSøknad } from './FortsettPåSøknad';
 
 const Forside: FC = () => {
-    const { mellomlagretVerdi, settNåværendeRoute, tekster, plainTekst } = useAppContext();
+    const { mellomlagretVerdi, settNåværendeRoute, plainTekst } = useAppContext();
 
     useEffect(() => {
         settNåværendeRoute(RouteEnum.Forside);
@@ -32,7 +32,7 @@ const Forside: FC = () => {
 
     const kanFortsettePåSøknad = mellomlagretVerdi && mellomlagretVerdi.modellVersjon === miljø().modellVersjon;
 
-    const forsidetekster = tekster()[ESanitySteg.FORSIDE];
+    const forsidetekster = useSanityTekster(ESanitySteg.FORSIDE);
 
     return (
         <InnholdContainer>

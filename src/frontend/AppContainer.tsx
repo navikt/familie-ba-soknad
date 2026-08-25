@@ -4,15 +4,18 @@ import { RessursStatus } from '@navikt/familie-typer';
 import { Feilside } from './components/Felleskomponenter/Feilside/Feilside';
 import SystemetLaster from './components/Felleskomponenter/SystemetLaster/SystemetLaster';
 import { useAppContext } from './context/AppContext';
+import { useVisSystemetLaster } from './hooks/useVisSystemetLaster';
 import Søknad from './Søknad';
 
 const AppContainer = () => {
-    const { systemetLaster, systemetFeiler, sluttbruker, systemetOK } = useAppContext();
+    const { systemetFeiler, sluttbruker, systemetOK } = useAppContext();
+
+    const visSystemetLaster = useVisSystemetLaster();
 
     return (
         <main>
             <Page.Block width="text" gutters>
-                {systemetLaster() && <SystemetLaster />}
+                {visSystemetLaster && <SystemetLaster />}
                 {sluttbruker.status === RessursStatus.IKKE_TILGANG && (
                     <Box marginBlock="space-128">
                         <GlobalAlert status={'warning'}>
@@ -28,7 +31,7 @@ const AppContainer = () => {
                     </Box>
                 )}
                 {systemetOK() && <Søknad />}
-                {systemetFeiler() && !systemetLaster() && <Feilside />}
+                {systemetFeiler() && !visSystemetLaster && <Feilside />}
             </Page.Block>
         </main>
     );

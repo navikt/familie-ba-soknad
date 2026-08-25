@@ -5,15 +5,14 @@ import type { Alpha3Code } from 'i18n-iso-countries';
 import { mock } from 'vitest-mock-extended';
 
 import type { ISODateString } from '../../common/typer/ISODateString';
+import { AppProviders } from '../AppProviders';
 import { OmDegSpørsmålId } from '../components/SøknadsSteg/OmDeg/spørsmål';
 import { AppProvider } from '../context/AppContext';
 import { InnloggetProvider } from '../context/InnloggetContext';
 import { LastRessurserProvider } from '../context/LastRessurserContext';
-import { SanityProvider } from '../context/SanityContext';
 import { SpråkProvider } from '../context/SpråkContext';
 import type { ISøknadSpørsmål } from '../typer/spørsmål';
 import { CookiesProviderMedLocale } from '../utils/testing';
-
 import useJaNeiSpmFelt, { erRelevanteAvhengigheterValidert } from './useJaNeiSpmFelt';
 
 describe('erRelevanteAvhengigheterValidert', () => {
@@ -146,9 +145,9 @@ describe('useJaNeiSpmFelt', () => {
                 <SpråkProvider>
                     <LastRessurserProvider>
                         <InnloggetProvider>
-                            <SanityProvider>
+                            <AppProviders>
                                 <AppProvider>{children}</AppProvider>
-                            </SanityProvider>
+                            </AppProviders>
                         </InnloggetProvider>
                     </LastRessurserProvider>
                 </SpråkProvider>
