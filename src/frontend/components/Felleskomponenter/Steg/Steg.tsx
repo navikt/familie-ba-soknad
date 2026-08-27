@@ -1,7 +1,6 @@
 import { ArrowLeftIcon, InformationSquareIcon } from '@navikt/aksel-icons';
 import { Box, FormProgress, GuidePanel, Heading, InfoCard, Link, VStack } from '@navikt/ds-react';
 import type { ISkjema } from '@navikt/familie-skjema';
-import { setAvailableLanguages } from '@navikt/nav-dekoratoren-moduler';
 
 import { type FC, type ReactNode, useEffect } from 'react';
 import { useNavigate } from 'react-router';
@@ -9,6 +8,7 @@ import { useNavigate } from 'react-router';
 import type { LocaleRecordBlock } from '../../../../common/sanity';
 import { useAppContext } from '../../../context/AppContext';
 import { useAppNavigationContext } from '../../../context/AppNavigationContext';
+import { useSpråkContext } from '../../../context/SpråkContext';
 import { useStegContext } from '../../../context/StegContext';
 import { RouteEnum } from '../../../typer/routes';
 import type { SkjemaFeltTyper } from '../../../typer/skjema';
@@ -20,7 +20,6 @@ import useModal from '../SkjemaModal/useModal';
 import { VedleggOppsummering } from '../VedleggOppsummering/VedleggOppsummering';
 import { skalVedleggOppsummeringVises } from '../VedleggOppsummering/vedleggOppsummering.domene';
 import type { IVedleggOppsummering } from '../VedleggOppsummering/vedleggOppsummering.types';
-
 import ModellVersjonModal from './ModellVersjonModal';
 import Navigeringspanel from './Navigeringspanel';
 import { ScrollHandler } from './ScrollHandler';
@@ -55,6 +54,7 @@ const Steg: FC<ISteg> = ({ tittel, guide, skjema, gåVidereCallback, vedleggOpps
     const { hentNesteSteg, hentForrigeSteg, hentNåværendeSteg, hentNåværendeStegIndex, erPåKvitteringsside } =
         useStegContext();
     const { komFra, settKomFra } = useAppNavigationContext();
+    const { skjulSpråkvelger } = useSpråkContext();
 
     const nesteRoute = hentNesteSteg();
     const forrigeRoute = hentForrigeSteg();
@@ -80,10 +80,6 @@ const Steg: FC<ISteg> = ({ tittel, guide, skjema, gåVidereCallback, vedleggOpps
             åpneModellVersjonModal();
         }
     }, [modellVersjonOppdatert]);
-
-    const skjulSpråkvelger = () => {
-        setAvailableLanguages([]).then();
-    };
 
     const håndterAvbryt = () => {
         gåTilbakeTilStart();

@@ -1,9 +1,9 @@
+import { useLocale } from '@hooks/useLocale';
 import { getName } from 'i18n-iso-countries';
 import { ESanityFlettefeltverdi, ESanitySteg, type FlettefeltVerdier } from '../../common/sanity';
 import type { LocaleType } from '../../common/typer/localeType';
 import { useAppContext } from '../context/AppContext';
 import { useSanityTekster } from '../context/SanityContext';
-import { useSpråkContext } from '../context/SpråkContext';
 import { plainTekstHof } from '../utils/sanity';
 
 type TranslateFlettefelt = (
@@ -13,11 +13,12 @@ type TranslateFlettefelt = (
 ) => string;
 
 export function useTranslateFlettefelt(): TranslateFlettefelt {
-    const { valgtLocale } = useSpråkContext();
     const { søknad } = useAppContext();
+
+    const locale = useLocale();
     const fellestekster = useSanityTekster(ESanitySteg.FELLES);
 
-    const plainTekst = plainTekstHof(flettefeltTilTekst, valgtLocale);
+    const plainTekst = plainTekstHof(flettefeltTilTekst, locale);
 
     function flettefeltTilTekst(
         sanityFlettefelt: ESanityFlettefeltverdi,
@@ -57,14 +58,14 @@ export function useTranslateFlettefelt(): TranslateFlettefelt {
                 if (!flettefelter?.land) {
                     throw Error('Flettefeltet land ikke sendt med');
                 }
-                return getName(flettefelter.land, spesifikkLocale ?? valgtLocale) ?? flettefelter.land;
+                return getName(flettefelter.land, spesifikkLocale ?? locale) ?? flettefelter.land;
             case ESanityFlettefeltverdi.YTELSE:
-                return plainTekst(fellestekster.frittståendeOrd.barnetrygd, undefined, spesifikkLocale ?? valgtLocale);
+                return plainTekst(fellestekster.frittståendeOrd.barnetrygd, undefined, spesifikkLocale ?? locale);
             case ESanityFlettefeltverdi.I_UTENFOR:
                 return plainTekst(
                     flettefelter?.gjelderUtland ? frittståendeOrd.utenfor : frittståendeOrd.i,
                     undefined,
-                    spesifikkLocale ?? valgtLocale
+                    spesifikkLocale ?? locale
                 );
             case ESanityFlettefeltverdi.YTELSE_BESTEMT_FORM:
                 throw Error('Flettefeltet YTELSE_BESTEMT_FORM er ikke støttet enda');
@@ -72,13 +73,13 @@ export function useTranslateFlettefelt(): TranslateFlettefelt {
                 return plainTekst(
                     flettefelter?.gjelderUtland ? frittståendeOrd.utlandet : frittståendeOrd.norge,
                     undefined,
-                    spesifikkLocale ?? valgtLocale
+                    spesifikkLocale ?? locale
                 );
             case ESanityFlettefeltverdi.UTENLANDSK_NORSK:
                 return plainTekst(
                     flettefelter?.gjelderUtland ? frittståendeOrd.utenlandsk : frittståendeOrd.norsk,
                     undefined,
-                    spesifikkLocale ?? valgtLocale
+                    spesifikkLocale ?? locale
                 );
         }
     }
