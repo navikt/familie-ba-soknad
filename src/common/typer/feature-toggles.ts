@@ -3,7 +3,6 @@ export enum KillSwitchToggle {
 }
 
 export enum FeatureToggle {}
-// EKSEMPEL = 'EKSEMPEL',
 
 export const ToggleKeys: Record<FeatureToggle, string> = {
     // [FeatureToggle.EKSEMPEL]: 'familie-ba-soknad.eksempel',

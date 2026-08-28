@@ -4,7 +4,6 @@ import { HttpProvider } from '@navikt/familie-http';
 import type { FC, PropsWithChildren } from 'react';
 
 import { Feilside } from './components/Felleskomponenter/Feilside/Feilside';
-import { FeatureTogglesProvider } from './context/FeatureTogglesContext';
 import { InnloggetProvider } from './context/InnloggetContext';
 import { LastRessurserProvider } from './context/LastRessurserContext';
 
@@ -13,9 +12,7 @@ const MiljøProvider: FC<PropsWithChildren> = ({ children }) => {
         <HttpProvider>
             <ApmErrorBoundary fallback={<Feilside />}>
                 <LastRessurserProvider>
-                    <InnloggetProvider>
-                        <FeatureTogglesProvider>{children}</FeatureTogglesProvider>
-                    </InnloggetProvider>
+                    <InnloggetProvider>{children}</InnloggetProvider>
                 </LastRessurserProvider>
             </ApmErrorBoundary>
         </HttpProvider>

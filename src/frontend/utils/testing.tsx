@@ -1,7 +1,7 @@
 import { ESvar } from '@navikt/familie-form-elements';
 import { HttpProvider } from '@navikt/familie-http';
 import { type Ressurs, RessursStatus } from '@navikt/familie-typer';
-import { QueryClient } from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import type { FC, PropsWithChildren, ReactNode } from 'react';
 import { Cookies, CookiesProvider } from 'react-cookie';
 import { MemoryRouter, useLocation } from 'react-router';
@@ -9,7 +9,6 @@ import { vi } from 'vitest';
 import { mockDeep } from 'vitest-mock-extended';
 import { mockTekstInnhold } from '../../../mocks/testdata/sanity/sanity';
 import { ESivilstand, ESøknadstype, Slektsforhold } from '../../common/typer/kontrakt/generelle';
-import { AppProviders } from '../AppProviders';
 import { UtenlandsoppholdSpørsmålId } from '../components/Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 import {
     DinLivssituasjonSpørsmålId,
@@ -29,6 +28,7 @@ import { FeatureTogglesProvider } from '../context/FeatureTogglesContext';
 import { InnloggetProvider } from '../context/InnloggetContext';
 import { LastRessurserProvider } from '../context/LastRessurserContext';
 import { RoutesProvider } from '../context/RoutesContext';
+import { SanityProvider } from '../context/SanityContext';
 import { SpråkProvider } from '../context/SpråkContext';
 import { StegProvider } from '../context/StegContext';
 import { andreForelderDataKeySpørsmål, barnDataKeySpørsmål } from '../typer/barn';
@@ -168,21 +168,23 @@ export const TestProvidere: FC<TestProviderProps> = ({ mocketNettleserHistorikk 
             <HttpProvider>
                 <LastRessurserProvider>
                     <InnloggetProvider>
-                        <FeatureTogglesProvider>
-                            <AppProviders queryClient={queryClient}>
-                                <AppProvider>
-                                    <EøsProvider>
-                                        <RoutesProvider>
-                                            <MemoryRouter initialEntries={mocketNettleserHistorikk}>
-                                                <StegProvider>
-                                                    <AppNavigationProvider>{children}</AppNavigationProvider>
-                                                </StegProvider>
-                                            </MemoryRouter>
-                                        </RoutesProvider>
-                                    </EøsProvider>
-                                </AppProvider>
-                            </AppProviders>
-                        </FeatureTogglesProvider>
+                        <QueryClientProvider client={queryClient}>
+                            <FeatureTogglesProvider>
+                                <SanityProvider tekster={mockTekstInnhold()}>
+                                    <AppProvider>
+                                        <EøsProvider>
+                                            <RoutesProvider>
+                                                <MemoryRouter initialEntries={mocketNettleserHistorikk}>
+                                                    <StegProvider>
+                                                        <AppNavigationProvider>{children}</AppNavigationProvider>
+                                                    </StegProvider>
+                                                </MemoryRouter>
+                                            </RoutesProvider>
+                                        </EøsProvider>
+                                    </AppProvider>
+                                </SanityProvider>
+                            </FeatureTogglesProvider>
+                        </QueryClientProvider>
                     </InnloggetProvider>
                 </LastRessurserProvider>
             </HttpProvider>
@@ -205,21 +207,23 @@ export function TestProvidereForSanity({ children }: TestProviderPropsForSanity)
                 <HttpProvider>
                     <LastRessurserProvider>
                         <InnloggetProvider>
-                            <FeatureTogglesProvider>
-                                <AppProviders queryClient={queryClient}>
-                                    <AppProvider>
-                                        <EøsProvider>
-                                            <RoutesProvider>
-                                                <MemoryRouter>
-                                                    <StegProvider>
-                                                        <AppNavigationProvider>{children}</AppNavigationProvider>
-                                                    </StegProvider>
-                                                </MemoryRouter>
-                                            </RoutesProvider>
-                                        </EøsProvider>
-                                    </AppProvider>
-                                </AppProviders>
-                            </FeatureTogglesProvider>
+                            <QueryClientProvider client={queryClient}>
+                                <FeatureTogglesProvider>
+                                    <SanityProvider tekster={mockTekstInnhold()}>
+                                        <AppProvider>
+                                            <EøsProvider>
+                                                <RoutesProvider>
+                                                    <MemoryRouter>
+                                                        <StegProvider>
+                                                            <AppNavigationProvider>{children}</AppNavigationProvider>
+                                                        </StegProvider>
+                                                    </MemoryRouter>
+                                                </RoutesProvider>
+                                            </EøsProvider>
+                                        </AppProvider>
+                                    </SanityProvider>
+                                </FeatureTogglesProvider>
+                            </QueryClientProvider>
                         </InnloggetProvider>
                     </LastRessurserProvider>
                 </HttpProvider>

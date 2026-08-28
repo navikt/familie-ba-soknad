@@ -3,13 +3,14 @@ import { type Felt, Valideringsstatus } from '@navikt/familie-skjema';
 import { renderHook } from '@testing-library/react';
 import type { Alpha3Code } from 'i18n-iso-countries';
 import { mock } from 'vitest-mock-extended';
-
+import { mockTekstInnhold } from '../../../mocks/testdata/sanity/sanity';
 import type { ISODateString } from '../../common/typer/ISODateString';
-import { AppProviders } from '../AppProviders';
 import { OmDegSpørsmålId } from '../components/SøknadsSteg/OmDeg/spørsmål';
 import { AppProvider } from '../context/AppContext';
+import { FeatureTogglesProvider } from '../context/FeatureTogglesContext';
 import { InnloggetProvider } from '../context/InnloggetContext';
 import { LastRessurserProvider } from '../context/LastRessurserContext';
+import { SanityProvider } from '../context/SanityContext';
 import { SpråkProvider } from '../context/SpråkContext';
 import type { ISøknadSpørsmål } from '../typer/spørsmål';
 import { CookiesProviderMedLocale } from '../utils/testing';
@@ -145,9 +146,11 @@ describe('useJaNeiSpmFelt', () => {
                 <SpråkProvider>
                     <LastRessurserProvider>
                         <InnloggetProvider>
-                            <AppProviders>
-                                <AppProvider>{children}</AppProvider>
-                            </AppProviders>
+                            <FeatureTogglesProvider>
+                                <SanityProvider tekster={mockTekstInnhold()}>
+                                    <AppProvider>{children}</AppProvider>
+                                </SanityProvider>
+                            </FeatureTogglesProvider>
                         </InnloggetProvider>
                     </LastRessurserProvider>
                 </SpråkProvider>
