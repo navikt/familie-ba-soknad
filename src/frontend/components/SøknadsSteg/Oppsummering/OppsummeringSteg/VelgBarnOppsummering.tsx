@@ -2,7 +2,7 @@ import { FormSummary } from '@navikt/ds-react';
 import type { Dispatch, FC, SetStateAction } from 'react';
 
 import { useAppContext } from '../../../../context/AppContext';
-import { useRoutesContext } from '../../../../context/RoutesContext';
+import { ROUTES } from '../../../../routes';
 import { RouteEnum } from '../../../../typer/routes';
 import { hentBostedSpråkId } from '../../../../utils/språk';
 import { formaterFnr } from '../../../../utils/visning';
@@ -17,7 +17,6 @@ interface Props {
 
 const VelgBarnOppsummering: FC<Props> = ({ settFeilAnchors }) => {
     const { søknad, tekster, plainTekst } = useAppContext();
-    const { hentRouteObjektForRouteEnum } = useRoutesContext();
     const velgBarnHook = useVelgBarn();
 
     const velgBarnTekster = tekster().VELG_BARN;
@@ -26,7 +25,7 @@ const VelgBarnOppsummering: FC<Props> = ({ settFeilAnchors }) => {
 
     return (
         <Oppsummeringsbolk
-            steg={hentRouteObjektForRouteEnum(RouteEnum.VelgBarn)}
+            steg={ROUTES[RouteEnum.VelgBarn]}
             tittel={velgBarnTekster.velgBarnTittel}
             skjemaHook={velgBarnHook}
             settFeilAnchors={settFeilAnchors}

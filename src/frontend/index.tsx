@@ -10,6 +10,7 @@ import { LocaleType } from '../common/typer/localeType';
 import App from './App';
 import { hentDekorator } from './decorator';
 import { initApm } from './utils/apm';
+import { registerAxiosInterceptors } from './utils/interceptors';
 
 import '@navikt/ds-css';
 
@@ -27,6 +28,8 @@ const polyfillLocaledata = async () => {
         await localeImporters[locale as LocaleType]().then(result => registerLocale(result.default));
     }
 };
+
+registerAxiosInterceptors();
 
 hentDekorator();
 
