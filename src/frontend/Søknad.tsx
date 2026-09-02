@@ -1,6 +1,6 @@
+import { useVisSystemetLaster } from '@hooks/useVisSystemetLaster';
 import type { FC } from 'react';
 import { Navigate, Route, Routes, useParams } from 'react-router';
-
 import RedirectTilStart from './components/Felleskomponenter/RedirectTilStart/RedirectTilStart';
 import Helse from './components/Helse/Helse';
 import DinLivssituasjon from './components/SøknadsSteg/DinLivssituasjon/DinLivssituasjon';
@@ -16,8 +16,7 @@ import Oppsummering from './components/SøknadsSteg/Oppsummering/Oppsummering';
 import VelgBarn from './components/SøknadsSteg/VelgBarn/VelgBarn';
 import { useAppContext } from './context/AppContext';
 import { useEøsContext } from './context/EøsContext';
-import { useRoutesContext } from './context/RoutesContext';
-import { useVisSystemetLaster } from './hooks/useVisSystemetLaster';
+import { ROUTES } from './routes';
 import { type IRoute, RouteEnum } from './typer/routes';
 
 /**
@@ -43,8 +42,6 @@ const EøsForBarnWrapper: FC = () => {
 };
 
 const Søknad = () => {
-    const { routes } = useRoutesContext();
-
     const visSystemetLaster = useVisSystemetLaster();
 
     const routeTilKomponent = (route: IRoute): FC => {
@@ -79,7 +76,7 @@ const Søknad = () => {
             <Routes>
                 <Route path={'/helse'} element={<Helse />} />
                 <Route path={'/'} element={<Forside />} />
-                {routes.map((route, index) => (
+                {Object.values(ROUTES).map((route, index) => (
                     <Route
                         key={index}
                         path={route.path}
