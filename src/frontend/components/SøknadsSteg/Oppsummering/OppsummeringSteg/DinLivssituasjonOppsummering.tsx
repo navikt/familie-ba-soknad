@@ -4,7 +4,7 @@ import type { Dispatch, FC, SetStateAction } from 'react';
 
 import { ESivilstand } from '../../../../../common/typer/kontrakt/generelle';
 import { useAppContext } from '../../../../context/AppContext';
-import { useRoutesContext } from '../../../../context/RoutesContext';
+import { ROUTES } from '../../../../routes';
 import type { ISamboer, ITidligereSamboer } from '../../../../typer/person';
 import { PersonType } from '../../../../typer/personType';
 import { RouteEnum } from '../../../../typer/routes';
@@ -74,7 +74,6 @@ const SamboerOppsummering: FC<{ samboer: ISamboer | ITidligereSamboer }> = ({ sa
 
 const DinLivssituasjonOppsummering: FC<Props> = ({ settFeilAnchors }) => {
     const { søknad, erUtvidet, tekster, plainTekst } = useAppContext();
-    const { hentRouteObjektForRouteEnum } = useRoutesContext();
     const dinLivsituasjonHook = useDinLivssituasjon();
 
     const tidligereSamboere = søknad.søker.utvidet.tidligereSamboere;
@@ -82,7 +81,7 @@ const DinLivssituasjonOppsummering: FC<Props> = ({ settFeilAnchors }) => {
 
     return (
         <Oppsummeringsbolk
-            steg={hentRouteObjektForRouteEnum(RouteEnum.DinLivssituasjon)}
+            steg={ROUTES[RouteEnum.DinLivssituasjon]}
             tittel={dinLivssituasjonTekster.dinLivssituasjonTittel}
             skjemaHook={dinLivsituasjonHook}
             settFeilAnchors={settFeilAnchors}
