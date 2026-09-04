@@ -7,12 +7,12 @@ export const initApm = () => {
         init({
             // app-navn, versjon, miljø og collector-URL løses automatisk fra Nais meta-tags / NAIS_*-variabler
             ignoreErrors: [
-                // Støy fra dekoratøren (var i denyUrls i Sentry)
+                // Støy fra dekoratøren
                 /dekoratoren\/client/,
                 // Støy fra nettleserutvidelser er allerede i DEFAULT_IGNORE_ERRORS
             ],
         });
-        // Tagger alle events med app-scope (tilsvarte beforeCapture i Sentry.ErrorBoundary)
+        // Tagger alle events med app-scope
         setTag('scope', 'familie-ba-soknad');
     }
 };
