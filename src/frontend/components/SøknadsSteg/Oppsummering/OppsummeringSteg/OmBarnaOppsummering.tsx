@@ -2,7 +2,7 @@ import { ESvar } from '@navikt/familie-form-elements';
 import type { Dispatch, FC, SetStateAction } from 'react';
 
 import { useAppContext } from '../../../../context/AppContext';
-import { useRoutesContext } from '../../../../context/RoutesContext';
+import { ROUTES } from '../../../../routes';
 import { barnDataKeySpørsmål } from '../../../../typer/barn';
 import { RouteEnum } from '../../../../typer/routes';
 import TekstBlock from '../../../Felleskomponenter/Sanity/TekstBlock';
@@ -18,7 +18,6 @@ interface Props {
 
 const OmBarnaOppsummering: FC<Props> = ({ settFeilAnchors }) => {
     const { søknad, tekster } = useAppContext();
-    const { hentRouteObjektForRouteEnum } = useRoutesContext();
     const omBarnaTekster = tekster().OM_BARNA;
     const omBarnaDineHook = useOmBarnaDine();
 
@@ -30,7 +29,7 @@ const OmBarnaOppsummering: FC<Props> = ({ settFeilAnchors }) => {
 
     return (
         <Oppsummeringsbolk
-            steg={hentRouteObjektForRouteEnum(RouteEnum.OmBarna)}
+            steg={ROUTES[RouteEnum.OmBarna]}
             tittel={omBarnaTekster.omBarnaTittel}
             skjemaHook={omBarnaDineHook}
             settFeilAnchors={settFeilAnchors}

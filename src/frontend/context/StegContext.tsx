@@ -1,13 +1,11 @@
 import { createContext, type PropsWithChildren, useContext, useEffect, useState } from 'react';
 
 import { matchPath, useLocation } from 'react-router';
-
+import { ROUTES } from '../routes';
 import type { IBarnMedISøknad } from '../typer/barn';
 import { type ISteg, RouteEnum } from '../typer/routes';
-
 import { useAppContext } from './AppContext';
 import { useEøsContext } from './EøsContext';
-import { useRoutesContext } from './RoutesContext';
 
 interface StegContext {
     steg: ISteg[];
@@ -30,8 +28,6 @@ export function StegProvider(props: PropsWithChildren) {
     const { barnInkludertISøknaden } = søknad;
     const location = useLocation();
 
-    const { routes } = useRoutesContext();
-
     const [barnForSteg, settBarnForSteg] = useState<IBarnMedISøknad[]>([]);
     const { barnSomTriggerEøs, søkerTriggerEøs } = useEøsContext();
 
@@ -39,21 +35,21 @@ export function StegProvider(props: PropsWithChildren) {
         settBarnForSteg(søknad.barnInkludertISøknaden);
     }, [søknad.barnInkludertISøknaden]);
 
-    const steg: ISteg[] = routes.flatMap((route): ISteg | ISteg[] => {
-        const barnRoute = routes.find(route => route.route === RouteEnum.OmBarnet);
-        const barnEøsRoute = routes.find(route => route.route === RouteEnum.EøsForBarn);
+    const steg: ISteg[] = Object.values(ROUTES).flatMap((route): ISteg | ISteg[] => {
+        const barnRoute = ROUTES[RouteEnum.OmBarnet];
+        const barnEøsRoute = ROUTES[RouteEnum.EøsForBarn];
 
         switch (route.route) {
             case RouteEnum.OmBarnet: {
                 const omBarnetSteg = barnForSteg.map((_barn, index) => ({
-                    path: barnRoute?.path.replace(':number', (index + 1) as unknown as string) ?? '/',
+                    path: barnRoute.path.replace(':number', (index + 1) as unknown as string),
                     route: RouteEnum.OmBarnet,
                     label: route.label,
                 }));
                 return omBarnetSteg.length
                     ? omBarnetSteg
                     : {
-                          path: barnRoute?.path.replace(':number', 1 as unknown as string) ?? '/',
+                          path: barnRoute.path.replace(':number', 1 as unknown as string),
                           route: RouteEnum.OmBarnet,
                           label: route.label,
                       };
@@ -63,7 +59,7 @@ export function StegProvider(props: PropsWithChildren) {
                     ? barnInkludertISøknaden.map(barn => barn.id)
                     : barnSomTriggerEøs;
                 return barnSomSkalHaEøsSteg.map((_barnId, index) => ({
-                    path: barnEøsRoute?.path.replace(':number', (index + 1) as unknown as string) ?? '/',
+                    path: barnEøsRoute.path.replace(':number', (index + 1) as unknown as string),
                     route: RouteEnum.EøsForBarn,
                     label: route.label,
                 }));

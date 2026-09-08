@@ -1,32 +1,18 @@
-import type { AxiosError } from 'axios';
-
-import miljø from '../../common/miljø';
-import { preferredAxios as axios } from '../context/axios';
-
-import { routerBasePath } from './hjelpefunksjoner';
-
-const er401Feil = (error: AxiosError) => error && error.response && error.response.status === 401;
-const getLoginUrl = () => {
-    return `${miljø().wonderwallUrl}${window.location.origin}${routerBasePath()}`;
-};
+export function utledInnloggetStatus(isSuccess: boolean, isPending: boolean, isError: boolean) {
+    if (isPending) {
+        return InnloggetStatus.IKKE_VERIFISERT;
+    }
+    if (isError) {
+        return InnloggetStatus.FEILET;
+    }
+    if (isSuccess) {
+        return InnloggetStatus.AUTENTISERT;
+    }
+    return InnloggetStatus.IKKE_VERIFISERT;
+}
 
 export enum InnloggetStatus {
     AUTENTISERT,
     FEILET,
     IKKE_VERIFISERT,
 }
-
-export const autentiseringsInterceptor = () => {
-    axios.interceptors.response.use(
-        response => {
-            return response;
-        },
-        (error: AxiosError) => {
-            if (er401Feil(error)) {
-                window.location.href = getLoginUrl();
-            } else {
-                throw error;
-            }
-        }
-    );
-};
