@@ -8,7 +8,6 @@ import type { ISODateString } from '../../common/typer/ISODateString';
 import { OmDegSpørsmålId } from '../components/SøknadsSteg/OmDeg/spørsmål';
 import { AppProvider } from '../context/AppContext';
 import { FeatureTogglesProvider } from '../context/FeatureTogglesContext';
-import { InnloggetProvider } from '../context/InnloggetContext';
 import { LastRessurserProvider } from '../context/LastRessurserContext';
 import { SanityProvider } from '../context/SanityContext';
 import { SpråkProvider } from '../context/SpråkContext';
@@ -145,13 +144,11 @@ describe('useJaNeiSpmFelt', () => {
             <CookiesProviderMedLocale>
                 <SpråkProvider>
                     <LastRessurserProvider>
-                        <InnloggetProvider>
-                            <FeatureTogglesProvider>
-                                <SanityProvider tekster={mockTekstInnhold()}>
-                                    <AppProvider>{children}</AppProvider>
-                                </SanityProvider>
-                            </FeatureTogglesProvider>
-                        </InnloggetProvider>
+                        <FeatureTogglesProvider>
+                            <SanityProvider tekster={mockTekstInnhold()}>
+                                <AppProvider>{children}</AppProvider>
+                            </SanityProvider>
+                        </FeatureTogglesProvider>
                     </LastRessurserProvider>
                 </SpråkProvider>
             </CookiesProviderMedLocale>
