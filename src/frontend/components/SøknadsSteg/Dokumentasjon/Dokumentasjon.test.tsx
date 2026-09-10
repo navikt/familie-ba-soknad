@@ -162,7 +162,7 @@ describe('Dokumentasjon – feil ved innsending', () => {
 
         expect(screen.queryByRole('alert')).not.toBeInTheDocument();
         expect(hentApp().innsendingStatus.erRatebegrenset).toBeUndefined();
-        expect(screen.getByTestId('location')).toHaveTextContent('/kvittering');
+        await waitFor(() => expect(screen.getByTestId('location')).toHaveTextContent('/kvittering'));
         expect(trackSøknadSendt).toHaveBeenCalledTimes(1);
         expect(sendInn).toHaveBeenCalledTimes(3);
     });
