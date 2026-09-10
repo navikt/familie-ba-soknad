@@ -7,8 +7,10 @@ import { type FC, useState } from 'react';
 
 import { ESanitySteg, Typografi } from '../../../../common/sanity';
 import { Dokumentasjonsbehov } from '../../../../common/typer/kontrakt/dokumentasjon';
+import type { LocaleType } from '../../../../common/typer/localeType';
 import { useAppContext } from '../../../context/AppContext';
 import useFørsteRender from '../../../hooks/useFørsteRender';
+import { useLocale } from '../../../hooks/useLocale';
 import { useSendInnSkjema } from '../../../hooks/useSendInnSkjema';
 import type { IDokumentasjon, IVedlegg } from '../../../typer/dokumentasjon';
 import { hentRelevateDokumentasjoner } from '../../../utils/dokumentasjon';
@@ -20,6 +22,12 @@ import { hentVedleggOppsummering } from '../../Felleskomponenter/VedleggOppsumme
 
 import LastOppVedlegg from './LastOppVedlegg';
 
+const ratebegrensetFeilmelding: Record<LocaleType, string> = {
+    nb: 'Du har sendt for mange forespørsler. Vent litt og prøv igjen senere.',
+    nn: 'Du har sendt for mange førespurnader. Vent litt og prøv igjen seinare.',
+    en: 'You have sent too many requests. Please wait a while and try again later.',
+};
+
 // Vedlegg er lagret 48 timer
 export const erVedleggstidspunktGyldig = (vedleggTidspunkt: string): boolean => {
     const grenseTidForVedlegg = add(new Date(vedleggTidspunkt), { hours: 46 });
@@ -30,6 +38,7 @@ const Dokumentasjon: FC = () => {
     const { søknad, settSøknad, innsendingStatus, tekster, plainTekst, tvingKjøringAvDebouncedMellomlagre } =
         useAppContext();
     const { sendInnSkjema } = useSendInnSkjema();
+    const locale = useLocale();
     const [slettaVedlegg, settSlettaVedlegg] = useState<IVedlegg[]>([]);
 
     const oppdaterDokumentasjon = (
@@ -150,7 +159,11 @@ const Dokumentasjon: FC = () => {
                 {innsendingStatus.status === RessursStatus.FEILET && (
                     <InfoCard data-color="danger" role="alert">
                         <InfoCard.Message icon={<XMarkOctagonIcon aria-hidden />}>
-                            <TekstBlock block={stegTekster.dokumentasjonFeilmeldingVedInnsending} />
+                            {innsendingStatus.erRatebegrenset ? (
+                                <BodyShort>{ratebegrensetFeilmelding[locale]}</BodyShort>
+                            ) : (
+                                <TekstBlock block={stegTekster.dokumentasjonFeilmeldingVedInnsending} />
+                            )}
                         </InfoCard.Message>
                     </InfoCard>
                 )}
