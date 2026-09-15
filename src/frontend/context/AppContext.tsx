@@ -40,14 +40,16 @@ import { hentSluttbrukerFraPdl } from './pdl';
 import { useSanityContext } from './SanityContext';
 import { useSpråkContext } from './SpråkContext';
 
+export type InnsendingStatus = Ressurs<IKvittering> & { erRatebegrenset?: boolean };
+
 export interface AppContext {
     axiosRequest: AxiosRequest;
     sluttbruker: Ressurs<ISøkerRespons>;
     søknad: ISøknad;
     settSøknad: Dispatch<SetStateAction<ISøknad>>;
     nullstillSøknadsobjekt: () => void;
-    innsendingStatus: Ressurs<IKvittering>;
-    settInnsendingStatus: Dispatch<SetStateAction<Ressurs<IKvittering>>>;
+    innsendingStatus: InnsendingStatus;
+    settInnsendingStatus: Dispatch<SetStateAction<InnsendingStatus>>;
     sisteUtfylteStegIndex: number;
     settSisteUtfylteStegIndex: Dispatch<SetStateAction<number>>;
     datoSistLagret: string | null;
@@ -92,7 +94,7 @@ export function AppProvider(props: PropsWithChildren) {
     const [eøsLand, settEøsLand] = useState(byggTomRessurs<Map<Alpha3Code, string>>());
     const [kontoinformasjon, settKontoinformasjon] = useState(byggTomRessurs<IKontoinformasjon>());
     const [søknad, settSøknad] = useState<ISøknad>(initialStateSøknad());
-    const [innsendingStatus, settInnsendingStatus] = useState(byggTomRessurs<IKvittering>());
+    const [innsendingStatus, settInnsendingStatus] = useState<InnsendingStatus>(byggTomRessurs<IKvittering>());
     const [sisteUtfylteStegIndex, settSisteUtfylteStegIndex] = useState<number>(-1);
     const [datoSistLagret, settDatoSistLagret] = useState<string | null>(null);
     const [mellomlagretVerdi, settMellomlagretVerdi] = useState<IMellomlagretBarnetrygd>();
