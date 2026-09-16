@@ -40,13 +40,16 @@ export const useSendInnSkjema = (): {
                 plainTekst
             );
 
+            let erRatebegrenset = false;
             const res = await sendInn<ISøknadKontrakt>(
                 formatert,
                 axiosRequest,
                 `${soknadApiProxyUrl}/soknad/v${kontraktVersjon}`,
                 (error: AxiosError) => {
                     const responseData = error.response?.data;
-                    if (responseData && erModellMismatchResponsRessurs(responseData)) {
+                    if (error.response?.status === 429) {
+                        erRatebegrenset = true;
+                    } else if (responseData && erModellMismatchResponsRessurs(responseData)) {
                         settSisteModellVersjon(responseData.data.modellVersjon);
                     } else {
                         //Denne skal feile mykt, med en custom feilmelding til brukeren. Kaster dermed ingen feil her.
@@ -58,7 +61,7 @@ export const useSendInnSkjema = (): {
                 }
             );
 
-            settInnsendingStatus(res);
+            settInnsendingStatus(erRatebegrenset ? { ...res, erRatebegrenset } : res);
 
             if (res.status === RessursStatus.SUKSESS) {
                 trackSøknadSendt(søknad.søknadstype, søknad.erEøs ? 'EØS' : 'NASJONAL');
