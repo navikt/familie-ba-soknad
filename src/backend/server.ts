@@ -1,4 +1,3 @@
-import { logInfo } from '@navikt/familie-logging';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
@@ -8,6 +7,7 @@ import type { ViteDevServer } from 'vite';
 import miljø, { BASE_PATH, erLokalt } from '../common/miljø.js';
 
 import { cspString } from './csp.js';
+import { logger } from './logger.js';
 import { expressToggleInterceptor } from './middlewares/feature-toggles.js';
 import { konfigurerApi } from './routes/api.js';
 import { konfigurerAllFeatureTogglesEndpoint } from './routes/feature-toggles.js';
@@ -64,6 +64,6 @@ konfigurerIndex(app, viteDevServer);
 
 konfigurerIndexFallback(app, viteDevServer);
 
-logInfo(`Starting server on localhost: http://localhost:${miljø().port}${BASE_PATH}`);
+logger.info(`Starting server on localhost: http://localhost:${miljø().port}${BASE_PATH}`);
 
 app.listen(miljø().port);
