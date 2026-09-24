@@ -12,6 +12,7 @@ import { expressToggleInterceptor } from './middlewares/feature-toggles.js';
 import { konfigurerApi } from './routes/api.js';
 import { konfigurerAllFeatureTogglesEndpoint } from './routes/feature-toggles.js';
 import { konfigurerIndex, konfigurerIndexFallback } from './routes/index.js';
+import { konfigurerLogg } from './routes/logg.js';
 import { konfigurerModellVersjonEndpoint } from './routes/modellversjon.js';
 import { konfigurerNais } from './routes/nais.js';
 import { konfigurerStatic } from './routes/static.js';
@@ -53,6 +54,7 @@ app.use((_req, res, next) => {
 
 konfigurerNais(app);
 konfigurerApi(app);
+konfigurerLogg(app);
 konfigurerAllFeatureTogglesEndpoint(app);
 konfigurerModellVersjonEndpoint(app);
 
