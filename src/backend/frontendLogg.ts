@@ -1,6 +1,5 @@
+import type { LoggNivå } from '../common/typer/logg.js';
 import type { LoggSanitizer } from './loggSanitizer.js';
-
-export type LoggNivå = 'error' | 'warn' | 'info' | 'debug' | 'trace';
 
 export interface Loggpost {
     nivå: LoggNivå;
