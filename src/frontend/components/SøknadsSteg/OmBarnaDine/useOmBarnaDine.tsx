@@ -32,10 +32,21 @@ export const useOmBarnaDine = (): {
         feilmelding: teksterForSteg.fosterbarn.feilmelding,
     });
 
+    const erNoenAvBarnaIBeredskapshjem = useJaNeiSpmFelt({
+        søknadsfelt: søknad.erNoenAvBarnaIBeredskapshjem,
+        feilmelding: teksterForSteg.beredskapshjem.feilmelding,
+    });
+
     const hvemErFosterbarn = useBarnCheckboxFelt({
         datafeltNavn: barnDataKeySpørsmål.erFosterbarn,
         feilmelding: teksterForSteg.hvemFosterbarn.feilmelding,
         avhengighet: erNoenAvBarnaFosterbarn,
+    });
+
+    const hvemErIBeredskapshjem = useBarnCheckboxFelt({
+        datafeltNavn: barnDataKeySpørsmål.erIBeredskapshjem,
+        feilmelding: teksterForSteg.hvemBeredskapshjem.feilmelding,
+        avhengighet: erNoenAvBarnaIBeredskapshjem,
     });
 
     const oppholderBarnSegIInstitusjon = useJaNeiSpmFelt({
@@ -144,6 +155,10 @@ export const useOmBarnaDine = (): {
                 ...søknad.erNoenAvBarnaFosterbarn,
                 svar: erNoenAvBarnaFosterbarn.verdi,
             },
+            erNoenAvBarnaIBeredskapshjem: {
+                ...søknad.erNoenAvBarnaIBeredskapshjem,
+                svar: erNoenAvBarnaIBeredskapshjem.verdi,
+            },
             oppholderBarnSegIInstitusjon: {
                 ...søknad.oppholderBarnSegIInstitusjon,
                 svar: oppholderBarnSegIInstitusjon.verdi,
@@ -199,6 +214,7 @@ export const useOmBarnaDine = (): {
     >({
         felter: {
             erNoenAvBarnaFosterbarn,
+            erNoenAvBarnaIBeredskapshjem,
             oppholderBarnSegIInstitusjon,
             erBarnAdoptertFraUtland,
             søktAsylForBarn,
@@ -206,6 +222,7 @@ export const useOmBarnaDine = (): {
             mottarBarnetrygdForBarnFraAnnetEøsland,
             erAvdødPartnerForelder,
             hvemErFosterbarn,
+            hvemErIBeredskapshjem,
             hvemErAdoptertFraUtland,
             hvemOppholderSegIInstitusjon,
             hvemBarnetrygdFraAnnetEøsland,

@@ -152,6 +152,10 @@ export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => 
             id: OmBarnaDineSpørsmålId.hvemErFosterbarn,
             svar: null,
         },
+        [barnDataKeySpørsmål.erIBeredskapshjem]: {
+            id: OmBarnaDineSpørsmålId.hvemErIBeredskapshjem,
+            svar: null,
+        },
         [barnDataKeySpørsmål.erAdoptertFraUtland]: {
             id: OmBarnaDineSpørsmålId.hvemErAdoptertFraUtland,
             svar: null,

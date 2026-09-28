@@ -22,6 +22,7 @@ export interface ISøknad {
     barnInkludertISøknaden: IBarnMedISøknad[];
     barnRegistrertManuelt: IBarn[];
     erNoenAvBarnaFosterbarn: ISøknadSpørsmål<ESvar | null>;
+    erNoenAvBarnaIBeredskapshjem: ISøknadSpørsmål<ESvar | null>;
     oppholderBarnSegIInstitusjon: ISøknadSpørsmål<ESvar | null>;
     erBarnAdoptertFraUtland: ISøknadSpørsmål<ESvar | null>;
     søktAsylForBarn: ISøknadSpørsmål<ESvar | null>;
@@ -135,6 +136,10 @@ export const initialStateSøknad = (): ISøknad => {
         },
         erNoenAvBarnaFosterbarn: {
             id: OmBarnaDineSpørsmålId.erNoenAvBarnaFosterbarn,
+            svar: null,
+        },
+        erNoenAvBarnaIBeredskapshjem: {
+            id: OmBarnaDineSpørsmålId.erNoenAvBarnaIBeredskapshjem,
             svar: null,
         },
         oppholderBarnSegIInstitusjon: {

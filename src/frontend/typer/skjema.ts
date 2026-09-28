@@ -50,6 +50,7 @@ export interface ITidligereSamboerFeltTyper {
 
 export interface IOmBarnaDineFeltTyper {
     erNoenAvBarnaFosterbarn: ESvar | null;
+    erNoenAvBarnaIBeredskapshjem: ESvar | null;
     oppholderBarnSegIInstitusjon: ESvar | null;
     erBarnAdoptertFraUtland: ESvar | null;
     søktAsylForBarn: ESvar | null;
@@ -57,6 +58,7 @@ export interface IOmBarnaDineFeltTyper {
     mottarBarnetrygdForBarnFraAnnetEøsland: ESvar | null;
     erAvdødPartnerForelder: ESvar | null;
     hvemErFosterbarn: BarnetsId[];
+    hvemErIBeredskapshjem: BarnetsId[];
     hvemOppholderSegIInstitusjon: BarnetsId[];
     hvemErAdoptertFraUtland: BarnetsId[];
     hvemBarnetrygdFraAnnetEøsland: BarnetsId[];
