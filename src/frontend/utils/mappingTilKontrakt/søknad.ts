@@ -121,6 +121,7 @@ export const dataISøknadKontraktFormat = (
                 tekster.VELG_BARN.ikkeRegistrertPaaAdressenDin,
                 tekster.OM_BARNA.omBarnaTittel,
                 tekster.OM_BARNET.opplystFosterbarn,
+                tekster.OM_BARNET.opplystBeredskapshjem,
                 tekster.OM_BARNET.opplystInstitusjon,
                 tekster.OM_BARNET.opplystBarnOppholdUtenforNorge,
                 tekster.OM_BARNET.opplystFaarHarFaattEllerSoektYtelse,
