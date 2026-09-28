@@ -6,6 +6,8 @@ export const omBarnaTekstinnhold: IOmBarnaTekstinnhold = {
     omBarnaGuide: lagLocaleRecordBlock(),
     fosterbarn: lagSanitySpørsmålDokument(),
     hvemFosterbarn: lagSanitySpørsmålDokument(),
+    beredskapshjem: lagSanitySpørsmålDokument(),
+    hvemBeredskapshjem: lagSanitySpørsmålDokument(),
     institusjon: lagSanitySpørsmålDokument(),
     hvemInstitusjon: lagSanitySpørsmålDokument(),
     adoptertFraUtlandet: lagSanitySpørsmålDokument(),
