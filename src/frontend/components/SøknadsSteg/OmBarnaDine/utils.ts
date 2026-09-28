@@ -60,6 +60,8 @@ export const genererOppdaterteBarn = (
 
         const erFosterbarn: ESvar = genererSvarForSpørsmålBarn(barn, skjema.felter.hvemErFosterbarn);
 
+        const erIBeredskapshjem: ESvar = genererSvarForSpørsmålBarn(barn, skjema.felter.hvemErIBeredskapshjem);
+
         const utenlandsperioder = boddMindreEnn12MndINorge === ESvar.JA ? barn.utenlandsperioder : [];
         const eøsBarnetrygdsperioder = mottarBarnetrygdFraAnnetEøsland === ESvar.JA ? barn.eøsBarnetrygdsperioder : [];
 
@@ -139,6 +141,10 @@ export const genererOppdaterteBarn = (
             [barnDataKeySpørsmål.erFosterbarn]: {
                 ...barn[barnDataKeySpørsmål.erFosterbarn],
                 svar: erFosterbarn,
+            },
+            [barnDataKeySpørsmål.erIBeredskapshjem]: {
+                ...barn[barnDataKeySpørsmål.erIBeredskapshjem],
+                svar: erIBeredskapshjem,
             },
             [barnDataKeySpørsmål.erAsylsøker]: {
                 ...barn[barnDataKeySpørsmål.erAsylsøker],
