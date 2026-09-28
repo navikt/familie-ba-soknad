@@ -61,6 +61,10 @@ export const dataISøknadKontraktFormat = (
                 omBarnaTekster.fosterbarn.sporsmal,
                 sammeVerdiAlleSpråk(søknad.erNoenAvBarnaFosterbarn.svar)
             ),
+            erNoenAvBarnaIBeredskapshjem: søknadsfeltForSanity(
+                omBarnaTekster.beredskapshjem.sporsmal,
+                sammeVerdiAlleSpråk(søknad.erNoenAvBarnaIBeredskapshjem.svar)
+            ),
             søktAsylForBarn: søknadsfeltForSanity(
                 omBarnaTekster.asyl.sporsmal,
                 sammeVerdiAlleSpråk(søknad.søktAsylForBarn.svar)
