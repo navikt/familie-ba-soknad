@@ -42,7 +42,7 @@
     ]
   },
   "dependencies": {
-    "@nais/apm": "0.6.3",
+    "@nais/apm": "0.7.1",
     "@navikt/aksel-icons": "8.16.2",
     "@navikt/ds-css": "8.16.2",
     "@navikt/ds-react": "8.16.2",
@@ -56,7 +56,7 @@
     "@navikt/pino-logger": "5.0.1",
     "@portabletext/react": "8.0.1",
     "@portabletext/toolkit": "6.0.0",
-    "@sanity/client": "8.6.1",
+    "@sanity/client": "8.7.0",
     "@tanstack/react-query": "5.102.8",
     "@tanstack/react-query-devtools": "5.101.4",
     "axios": "1.20.0",
