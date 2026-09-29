@@ -10,6 +10,7 @@ import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import { barnDataKeySpørsmål } from '../../../typer/barn';
 import type { IOmBarnaDineFeltTyper } from '../../../typer/skjema';
 import { Årsak } from '../../../typer/utvidet';
+import { erBarnIFosterhjemEllerBeredskapshjem } from '../../../utils/barn';
 import { nullstilteEøsFelterForSøker } from '../../../utils/søker';
 
 import useBarnCheckboxFelt from './useBarnCheckboxFelt';
@@ -199,7 +200,9 @@ export const useOmBarnaDine = (): {
                     case Dokumentasjonsbehov.BEKREFTELSE_FRA_BARNEVERN:
                         return {
                             ...dok,
-                            gjelderForBarnId: hvemErFosterbarn.verdi,
+                            gjelderForBarnId: oppdaterteBarn
+                                .filter(erBarnIFosterhjemEllerBeredskapshjem)
+                                .map(barn => barn.id),
                         };
                     default:
                         return dok;
