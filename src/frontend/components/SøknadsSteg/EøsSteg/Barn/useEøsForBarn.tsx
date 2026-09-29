@@ -31,7 +31,11 @@ import type { IBarnetrygdsperiodeTekstinnhold } from '../../../../typer/sanity/m
 import type { IEøsForBarnFeltTyper } from '../../../../typer/skjema';
 import { AlternativtSvarForInput } from '../../../../typer/svar';
 import { valideringAdresse } from '../../../../utils/adresse';
-import { skalSkjuleAndreForelderFelt, skalViseBorMedOmsorgsperson } from '../../../../utils/barn';
+import {
+    erBarnIFosterhjemEllerBeredskapshjem,
+    skalSkjuleAndreForelderFelt,
+    skalViseBorMedOmsorgsperson,
+} from '../../../../utils/barn';
 import { trimWhiteSpace } from '../../../../utils/hjelpefunksjoner';
 import { formaterVerdiForCheckbox } from '../../../../utils/input';
 import { svarForSpørsmålMedUkjent } from '../../../../utils/spørsmål';
@@ -108,6 +112,7 @@ export const useEøsForBarn = (
     const andreForelder = gjeldendeBarn.andreForelder;
     const omsorgsperson = gjeldendeBarn.omsorgsperson;
     const andreForelderErDød = gjeldendeBarn[barnDataKeySpørsmål.andreForelderErDød].svar === ESvar.JA;
+    const erIFosterhjemEllerBeredskapshjem = erBarnIFosterhjemEllerBeredskapshjem(gjeldendeBarn);
 
     /*--- SLEKTSFORHOLD ---*/
     const søkersSlektsforhold = useFelt<Slektsforhold | ''>({
@@ -116,7 +121,7 @@ export const useEøsForBarn = (
         valideringsfunksjon: (felt: FeltState<Slektsforhold | ''>) => {
             return felt.verdi !== '' ? ok(felt) : feil(felt, plainTekst(eøsForBarnTekster.slektsforhold.feilmelding));
         },
-        skalFeltetVises: () => gjeldendeBarn.erFosterbarn.svar === ESvar.NEI,
+        skalFeltetVises: () => !erIFosterhjemEllerBeredskapshjem,
     });
     const søkersSlektsforholdSpesifisering = useInputFelt({
         søknadsfelt: gjeldendeBarn[barnDataKeySpørsmål.søkersSlektsforholdSpesifisering],
@@ -137,7 +142,7 @@ export const useEøsForBarn = (
         feilmelding: eøsForBarnTekster.borMedAndreForelder.feilmelding,
         nullstillVedAvhengighetEndring: true,
         skalSkjules:
-            gjeldendeBarn.erFosterbarn.svar === ESvar.JA ||
+            erIFosterhjemEllerBeredskapshjem ||
             andreForelderErDød ||
             gjeldendeBarn.oppholderSegIInstitusjon.svar === ESvar.JA,
     });
@@ -152,7 +157,7 @@ export const useEøsForBarn = (
             gjeldendeBarn.borFastMedSøker.svar,
             gjeldendeBarn.oppholderSegIInstitusjon.svar,
             gjeldendeBarn.andreForelderErDød.svar,
-            gjeldendeBarn.erFosterbarn.svar
+            erIFosterhjemEllerBeredskapshjem ? ESvar.JA : ESvar.NEI
         ),
     });
 
@@ -178,7 +183,7 @@ export const useEøsForBarn = (
                 : feil(felt, plainTekst(eøsForBarnTekster.slektsforholdOmsorgsperson.feilmelding));
         },
         skalFeltetVises: avhengigheter =>
-            gjeldendeBarn.erFosterbarn.svar === ESvar.NEI && avhengigheter.borMedOmsorgsperson.verdi === ESvar.JA,
+            !erIFosterhjemEllerBeredskapshjem && avhengigheter.borMedOmsorgsperson.verdi === ESvar.JA,
         avhengigheter: { borMedOmsorgsperson },
         nullstillVedAvhengighetEndring: false,
     });
@@ -402,7 +407,7 @@ export const useEøsForBarn = (
         feltId: EøsBarnSpørsmålId.barnetsAdresseVetIkke,
         skalFeltetVises: () =>
             (borMedAndreForelder.verdi === ESvar.JA && skalSkjuleAndreForelderFelt(gjeldendeBarn)) ||
-            gjeldendeBarn.erFosterbarn.svar === ESvar.JA,
+            erIFosterhjemEllerBeredskapshjem,
         avhengigheter: { borMedAndreForelder },
     });
 
@@ -413,7 +418,7 @@ export const useEøsForBarn = (
         flettefelter: { barnetsNavn: gjeldendeBarn.navn },
         skalVises:
             (borMedAndreForelder.verdi === ESvar.JA && skalSkjuleAndreForelderFelt(gjeldendeBarn)) ||
-            gjeldendeBarn.erFosterbarn.svar === ESvar.JA,
+            erIFosterhjemEllerBeredskapshjem,
         customValidering: felt => valideringAdresse(felt, plainTekst(forLangAdresseTekst)),
     });
 
