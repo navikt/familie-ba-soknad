@@ -62,6 +62,9 @@ export const genererOppdaterteBarn = (
 
         const erIBeredskapshjem: ESvar = genererSvarForSpørsmålBarn(barn, skjema.felter.hvemErIBeredskapshjem);
 
+        const erIFosterhjemEllerBeredskapshjem: ESvar =
+            erFosterbarn === ESvar.JA || erIBeredskapshjem === ESvar.JA ? ESvar.JA : ESvar.NEI;
+
         const utenlandsperioder = boddMindreEnn12MndINorge === ESvar.JA ? barn.utenlandsperioder : [];
         const eøsBarnetrygdsperioder = mottarBarnetrygdFraAnnetEøsland === ESvar.JA ? barn.eøsBarnetrygdsperioder : [];
 
@@ -78,7 +81,9 @@ export const genererOppdaterteBarn = (
         );
 
         const borMedAnnenForelderErIkkeRelevant = () =>
-            erFosterbarn === ESvar.JA || oppholderSegIInstitusjon === ESvar.JA || andreForelderErDød === ESvar.JA;
+            erIFosterhjemEllerBeredskapshjem === ESvar.JA ||
+            oppholderSegIInstitusjon === ESvar.JA ||
+            andreForelderErDød === ESvar.JA;
 
         const borMedAndreForelder = borMedAnnenForelderErIkkeRelevant() ? null : barn.borMedAndreForelder.svar;
 
@@ -87,7 +92,7 @@ export const genererOppdaterteBarn = (
             barn.borFastMedSøker.svar,
             oppholderSegIInstitusjon,
             andreForelderErDød,
-            erFosterbarn
+            erIFosterhjemEllerBeredskapshjem
         )
             ? barn[barnDataKeySpørsmål.borMedOmsorgsperson].svar
             : null;
@@ -96,7 +101,7 @@ export const genererOppdaterteBarn = (
             barn.omsorgsperson && borMedOmsorgsperson === ESvar.JA
                 ? {
                       ...barn.omsorgsperson,
-                      ...(erFosterbarn === ESvar.JA && {
+                      ...(erIFosterhjemEllerBeredskapshjem === ESvar.JA && {
                           slektsforhold: { ...barn.omsorgsperson?.slektsforhold, svar: '' },
                           slektsforholdSpesifisering: {
                               ...barn.omsorgsperson?.slektsforholdSpesifisering,
@@ -118,7 +123,7 @@ export const genererOppdaterteBarn = (
             utenlandsperioder,
             eøsBarnetrygdsperioder,
             andreForelder:
-                erFosterbarn === ESvar.JA
+                erIFosterhjemEllerBeredskapshjem === ESvar.JA
                     ? null
                     : genererInitiellAndreForelder(barn.andreForelder, andreForelderErDød === ESvar.JA),
             omsorgsperson,
@@ -128,11 +133,11 @@ export const genererOppdaterteBarn = (
             },
             [barnDataKeySpørsmål.søkersSlektsforhold]: {
                 id: EøsBarnSpørsmålId.søkersSlektsforhold,
-                svar: erFosterbarn === ESvar.JA ? '' : barn.søkersSlektsforhold.svar,
+                svar: erIFosterhjemEllerBeredskapshjem === ESvar.JA ? '' : barn.søkersSlektsforhold.svar,
             },
             [barnDataKeySpørsmål.søkersSlektsforholdSpesifisering]: {
                 id: EøsBarnSpørsmålId.søkersSlektsforholdSpesifisering,
-                svar: erFosterbarn === ESvar.JA ? '' : barn.søkersSlektsforholdSpesifisering.svar,
+                svar: erIFosterhjemEllerBeredskapshjem === ESvar.JA ? '' : barn.søkersSlektsforholdSpesifisering.svar,
             },
             [barnDataKeySpørsmål.borMedOmsorgsperson]: {
                 ...barn[barnDataKeySpørsmål.borMedOmsorgsperson],
@@ -245,7 +250,7 @@ export const genererOppdaterteBarn = (
             [barnDataKeySpørsmål.adresse]: {
                 ...barn[barnDataKeySpørsmål.adresse],
                 svar:
-                    erFosterbarn === ESvar.JA ||
+                    erIFosterhjemEllerBeredskapshjem === ESvar.JA ||
                     (barn.andreForelder?.kanIkkeGiOpplysninger && barn.borMedAndreForelder.svar === ESvar.JA)
                         ? barn.adresse.svar
                         : '',
