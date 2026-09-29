@@ -1,12 +1,15 @@
+import { ESvar } from '@navikt/familie-form-elements';
 import { render } from '@testing-library/react';
 import { vi } from 'vitest';
 import { mockDeep } from 'vitest-mock-extended';
 
 import { Dokumentasjonsbehov } from '../../../../common/typer/kontrakt/dokumentasjon';
 import { ESivilstand, ESøknadstype } from '../../../../common/typer/kontrakt/generelle';
+import { barnDataKeySpørsmål } from '../../../typer/barn';
 import type { IDokumentasjon } from '../../../typer/dokumentasjon';
-import type { ISøker } from '../../../typer/person';
+import type { IBarn, ISøker } from '../../../typer/person';
 import { initialStateSøknad } from '../../../typer/søknad';
+import { genererInitialBarnMedISøknad } from '../../../utils/barn';
 import { spyOnUseApp, TestProvidere } from '../../../utils/testing';
 
 import LastOppVedlegg from './LastOppVedlegg';
@@ -25,6 +28,44 @@ const hentAnnenDokumentasjon = (): IDokumentasjon => {
 };
 
 describe('LastOppVedlegg', () => {
+    it('viser beredskapshjemtekst når bekreftelse fra barnevernet gjelder et barn i beredskapshjem', () => {
+        const barnFraPdl: IBarn = {
+            id: 'barn-id',
+            navn: 'Barn Barnesen',
+            ident: '12345678910',
+            borMedSøker: true,
+            alder: null,
+            adressebeskyttelse: false,
+        };
+        const barn = {
+            ...genererInitialBarnMedISøknad(barnFraPdl),
+            [barnDataKeySpørsmål.erFosterbarn]: {
+                ...genererInitialBarnMedISøknad(barnFraPdl)[barnDataKeySpørsmål.erFosterbarn],
+                svar: ESvar.NEI,
+            },
+            [barnDataKeySpørsmål.erIBeredskapshjem]: {
+                ...genererInitialBarnMedISøknad(barnFraPdl)[barnDataKeySpørsmål.erIBeredskapshjem],
+                svar: ESvar.JA,
+            },
+        };
+        const dokumentasjon: IDokumentasjon = {
+            dokumentasjonsbehov: Dokumentasjonsbehov.BEKREFTELSE_FRA_BARNEVERN,
+            gjelderForBarnId: [barn.id],
+            gjelderForSøker: false,
+            harSendtInn: false,
+            opplastedeVedlegg: [],
+        };
+        spyOnUseApp({ barnInkludertISøknaden: [barn] });
+
+        const { getByText } = render(
+            <TestProvidere>
+                <LastOppVedlegg dokumentasjon={dokumentasjon} oppdaterDokumentasjon={vi.fn()} />
+            </TestProvidere>
+        );
+
+        expect(getByText('beredskapshjem-beskrivelse')).toBeInTheDocument();
+    });
+
     it('Viser ikke info-tekst og checkbox knapp for ANNEN_DOKUMENTASJON', () => {
         spyOnUseApp({});
         const dokumentasjon = hentAnnenDokumentasjon();

@@ -65,6 +65,7 @@ export enum BeskrivelseSanityApiNavn {
     avtaleOmDeltBosted = 'avtaleOmDeltBosted',
     meklingsattest = 'meklingsattest',
     bekreftelseFraBarnevernetBarnetrygd = 'bekreftelseFraBarnevernetBarnetrygd',
+    bekreftelseFraBarnevernetBeredskapshjemBarnetrygd = 'bekreftelseFraBarnevernetBeredskapshjemBarnetrygd',
     lastOppSenereISoknad = 'lastOppSenereISoknad',
     annenDokumentasjonBeskrivelse = 'annenDokumentasjonBeskrivelse',
 }
