@@ -1,12 +1,10 @@
-import { ESvar } from '@navikt/familie-form-elements';
 import { render } from '@testing-library/react';
 import { vi } from 'vitest';
 import { mockDeep } from 'vitest-mock-extended';
 
 import { Dokumentasjonsbehov } from '../../../../common/typer/kontrakt/dokumentasjon';
 import { ESivilstand, ESøknadstype } from '../../../../common/typer/kontrakt/generelle';
-import { barnDataKeySpørsmål } from '../../../typer/barn';
-import type { IDokumentasjon } from '../../../typer/dokumentasjon';
+import { BeskrivelseSanityApiNavn, type IDokumentasjon } from '../../../typer/dokumentasjon';
 import type { IBarn, ISøker } from '../../../typer/person';
 import { initialStateSøknad } from '../../../typer/søknad';
 import { genererInitialBarnMedISøknad } from '../../../utils/barn';
@@ -37,19 +35,10 @@ describe('LastOppVedlegg', () => {
             alder: null,
             adressebeskyttelse: false,
         };
-        const barn = {
-            ...genererInitialBarnMedISøknad(barnFraPdl),
-            [barnDataKeySpørsmål.erFosterbarn]: {
-                ...genererInitialBarnMedISøknad(barnFraPdl)[barnDataKeySpørsmål.erFosterbarn],
-                svar: ESvar.NEI,
-            },
-            [barnDataKeySpørsmål.erIBeredskapshjem]: {
-                ...genererInitialBarnMedISøknad(barnFraPdl)[barnDataKeySpørsmål.erIBeredskapshjem],
-                svar: ESvar.JA,
-            },
-        };
+        const barn = genererInitialBarnMedISøknad(barnFraPdl);
         const dokumentasjon: IDokumentasjon = {
             dokumentasjonsbehov: Dokumentasjonsbehov.BEKREFTELSE_FRA_BARNEVERN,
+            beskrivelseSanityApiNavn: BeskrivelseSanityApiNavn.bekreftelseFraBarnevernetBeredskapshjemBarnetrygd,
             gjelderForBarnId: [barn.id],
             gjelderForSøker: false,
             harSendtInn: false,

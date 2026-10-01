@@ -8,6 +8,7 @@ import { useAppContext } from '../../../context/AppContext';
 import { useEøsContext } from '../../../context/EøsContext';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import { barnDataKeySpørsmål } from '../../../typer/barn';
+import { BeskrivelseSanityApiNavn } from '../../../typer/dokumentasjon';
 import type { IOmBarnaDineFeltTyper } from '../../../typer/skjema';
 import { Årsak } from '../../../typer/utvidet';
 import { erBarnIFosterhjemEllerBeredskapshjem } from '../../../utils/barn';
@@ -144,6 +145,9 @@ export const useOmBarnaDine = (): {
 
     const oppdaterSøknad = () => {
         const oppdaterteBarn = genererOppdaterteBarn(søknad, skjema, skalTriggeEøsForBarn, erEøsLand);
+        const gjelderBeredskapshjem = oppdaterteBarn.some(
+            barn => barn[barnDataKeySpørsmål.erIBeredskapshjem].svar === ESvar.JA
+        );
 
         const skalNullstilleEøsForSøker = !søknad.søker.triggetEøs && !oppdaterteBarn.find(barn => barn.triggetEøs);
 
@@ -203,6 +207,9 @@ export const useOmBarnaDine = (): {
                             gjelderForBarnId: oppdaterteBarn
                                 .filter(erBarnIFosterhjemEllerBeredskapshjem)
                                 .map(barn => barn.id),
+                            beskrivelseSanityApiNavn: gjelderBeredskapshjem
+                                ? BeskrivelseSanityApiNavn.bekreftelseFraBarnevernetBeredskapshjemBarnetrygd
+                                : BeskrivelseSanityApiNavn.bekreftelseFraBarnevernetBarnetrygd,
                         };
                     default:
                         return dok;

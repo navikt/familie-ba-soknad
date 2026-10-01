@@ -1,13 +1,10 @@
 import { Checkbox, FormSummary, VStack } from '@navikt/ds-react';
-import { ESvar } from '@navikt/familie-form-elements';
 import type { ChangeEvent, FC } from 'react';
 
 import { type LocaleRecordBlock, Typografi } from '../../../../common/sanity';
 import { Dokumentasjonsbehov } from '../../../../common/typer/kontrakt/dokumentasjon';
 import { useAppContext } from '../../../context/AppContext';
-import { barnDataKeySpørsmål } from '../../../typer/barn';
 import {
-    BeskrivelseSanityApiNavn,
     dokumentasjonsbehovTilBeskrivelseSanityApiNavn,
     dokumentasjonsbehovTilTittelSanityApiNavn,
     type IDokumentasjon,
@@ -56,9 +53,6 @@ const LastOppVedlegg: FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon }) => 
     const barnDokumentasjonenGjelderFor = søknad.barnInkludertISøknaden.filter(barn =>
         dokumentasjon.gjelderForBarnId.find(id => id === barn.id)
     );
-    const gjelderBeredskapshjem =
-        dokumentasjon.dokumentasjonsbehov === Dokumentasjonsbehov.BEKREFTELSE_FRA_BARNEVERN &&
-        barnDokumentasjonenGjelderFor.some(barn => barn[barnDataKeySpørsmål.erIBeredskapshjem].svar === ESvar.JA);
 
     const barnasNavn = slåSammen(
         barnDokumentasjonenGjelderFor.map(barn => barn.navn),
@@ -66,9 +60,9 @@ const LastOppVedlegg: FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon }) => 
         frittståendeOrdTekster
     );
 
-    const dokumentasjonsbeskrivelse = gjelderBeredskapshjem
-        ? BeskrivelseSanityApiNavn.bekreftelseFraBarnevernetBeredskapshjemBarnetrygd
-        : dokumentasjonsbehovTilBeskrivelseSanityApiNavn(dokumentasjon.dokumentasjonsbehov);
+    const dokumentasjonsbeskrivelse =
+        dokumentasjon.beskrivelseSanityApiNavn ??
+        dokumentasjonsbehovTilBeskrivelseSanityApiNavn(dokumentasjon.dokumentasjonsbehov);
 
     return (
         <FormSummary>

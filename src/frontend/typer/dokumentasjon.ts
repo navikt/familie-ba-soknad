@@ -9,6 +9,7 @@ export interface IVedlegg {
 
 export interface IDokumentasjon {
     dokumentasjonsbehov: Dokumentasjonsbehov;
+    beskrivelseSanityApiNavn?: BeskrivelseSanityApiNavn;
     gjelderForBarnId: string[];
     gjelderForSøker: boolean;
     harSendtInn: boolean;
