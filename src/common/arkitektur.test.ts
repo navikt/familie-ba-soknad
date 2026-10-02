@@ -35,7 +35,7 @@ describe('Arkitektur for prosjekt', () => {
 
         frontendFiler.forEach(fil => {
             const imports = importsIFil(fil);
-            const ugyldigeImports = imports.filter(imp => imp.includes('../backend'));
+            const ugyldigeImports = imports.filter(imp => imp.includes('../backend/'));
             if (ugyldigeImports.length > 0) {
                 alleUgyldigeImports.push(`${fil}: ${ugyldigeImports.join(', ')}`);
             }
@@ -53,7 +53,7 @@ describe('Arkitektur for prosjekt', () => {
 
         backendFiler.forEach(fil => {
             const imports = importsIFil(fil);
-            const ugyldigeImports = imports.filter(imp => imp.includes('../frontend'));
+            const ugyldigeImports = imports.filter(imp => imp.includes('../frontend/'));
             if (ugyldigeImports.length > 0) {
                 alleUgyldigeImports.push(`${fil}: ${ugyldigeImports.join(', ')}`);
             }
@@ -71,7 +71,7 @@ describe('Arkitektur for prosjekt', () => {
 
         commonFiler.forEach(fil => {
             const imports = importsIFil(fil);
-            const ugyldigeImports = imports.filter(imp => imp.includes('../frontend') || imp.includes('../backend'));
+            const ugyldigeImports = imports.filter(imp => imp.includes('../frontend/') || imp.includes('../backend/'));
             if (ugyldigeImports.length > 0) {
                 alleUgyldigeImports.push(`${fil}: ${ugyldigeImports.join(', ')}`);
             }

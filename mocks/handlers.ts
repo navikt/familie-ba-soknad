@@ -46,4 +46,7 @@ export const handlers = [
     http.get('https://by26nl8j.apicdn.sanity.io/v2021-10-21/data/query/ba-production', () => {
         return HttpResponse.json(mockTekstInnhold());
     }),
+    http.post(urlMedBasePath('logg'), () => {
+        return new HttpResponse(null, { status: 204 });
+    }),
 ];
