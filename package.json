@@ -42,7 +42,7 @@
     ]
   },
   "dependencies": {
-    "@nais/apm": "0.7.1",
+    "@nais/apm": "0.7.2",
     "@navikt/aksel-icons": "8.16.2",
     "@navikt/ds-css": "8.16.2",
     "@navikt/ds-react": "8.16.2",
