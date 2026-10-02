@@ -68,6 +68,7 @@ const Oppfølgningsspørsmål: FC<{
     const teksterForSteg: IOmBarnetTekstinnhold = tekster().OM_BARNET;
     const {
         opplystFosterbarn,
+        opplystBeredskapshjem,
         opplystInstitusjon,
         institusjonIUtlandetCheckbox,
         institusjonNavn,
@@ -93,6 +94,11 @@ const Oppfølgningsspørsmål: FC<{
             {barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA && (
                 <Heading level="4" size="xsmall">
                     <TekstBlock block={opplystFosterbarn} flettefelter={{ barnetsNavn: barn.navn }} />
+                </Heading>
+            )}
+            {barn[barnDataKeySpørsmål.erIBeredskapshjem].svar === ESvar.JA && (
+                <Heading level="4" size="xsmall">
+                    <TekstBlock block={opplystBeredskapshjem} flettefelter={{ barnetsNavn: barn.navn }} />
                 </Heading>
             )}
             {barn[barnDataKeySpørsmål.oppholderSegIInstitusjon].svar === ESvar.JA && (

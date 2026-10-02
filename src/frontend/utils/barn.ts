@@ -152,6 +152,10 @@ export const genererInitialBarnMedISøknad = (barn: IBarn): IBarnMedISøknad => 
             id: OmBarnaDineSpørsmålId.hvemErFosterbarn,
             svar: null,
         },
+        [barnDataKeySpørsmål.erIBeredskapshjem]: {
+            id: OmBarnaDineSpørsmålId.hvemErIBeredskapshjem,
+            svar: null,
+        },
         [barnDataKeySpørsmål.erAdoptertFraUtland]: {
             id: OmBarnaDineSpørsmålId.hvemErAdoptertFraUtland,
             svar: null,
@@ -274,11 +278,12 @@ export const barnetsNavnValue = (
     return barn.navn ? barn.navn : `${plainTekst(tekster.barn).toUpperCase()} ${formaterFnr(barn.ident)}`;
 };
 
+export const erBarnIFosterhjemEllerBeredskapshjem = (barn: IBarnMedISøknad): boolean =>
+    barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA ||
+    barn[barnDataKeySpørsmål.erIBeredskapshjem].svar === ESvar.JA;
+
 export const skalSkjuleAndreForelderFelt = (barn: IBarnMedISøknad) => {
-    return (
-        barn.andreForelder?.kanIkkeGiOpplysninger.svar === ESvar.JA ||
-        barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA
-    );
+    return barn.andreForelder?.kanIkkeGiOpplysninger.svar === ESvar.JA || erBarnIFosterhjemEllerBeredskapshjem(barn);
 };
 
 export const skalSpørreOmIdNummerForPågåendeSøknadEøsLand = (

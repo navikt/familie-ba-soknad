@@ -8,8 +8,10 @@ import { useAppContext } from '../../../context/AppContext';
 import { useEøsContext } from '../../../context/EøsContext';
 import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
 import { barnDataKeySpørsmål } from '../../../typer/barn';
+import { BeskrivelseSanityApiNavn } from '../../../typer/dokumentasjon';
 import type { IOmBarnaDineFeltTyper } from '../../../typer/skjema';
 import { Årsak } from '../../../typer/utvidet';
+import { erBarnIFosterhjemEllerBeredskapshjem } from '../../../utils/barn';
 import { nullstilteEøsFelterForSøker } from '../../../utils/søker';
 
 import useBarnCheckboxFelt from './useBarnCheckboxFelt';
@@ -32,10 +34,21 @@ export const useOmBarnaDine = (): {
         feilmelding: teksterForSteg.fosterbarn.feilmelding,
     });
 
+    const erNoenAvBarnaIBeredskapshjem = useJaNeiSpmFelt({
+        søknadsfelt: søknad.erNoenAvBarnaIBeredskapshjem,
+        feilmelding: teksterForSteg.beredskapshjem.feilmelding,
+    });
+
     const hvemErFosterbarn = useBarnCheckboxFelt({
         datafeltNavn: barnDataKeySpørsmål.erFosterbarn,
         feilmelding: teksterForSteg.hvemFosterbarn.feilmelding,
         avhengighet: erNoenAvBarnaFosterbarn,
+    });
+
+    const hvemErIBeredskapshjem = useBarnCheckboxFelt({
+        datafeltNavn: barnDataKeySpørsmål.erIBeredskapshjem,
+        feilmelding: teksterForSteg.hvemBeredskapshjem.feilmelding,
+        avhengighet: erNoenAvBarnaIBeredskapshjem,
     });
 
     const oppholderBarnSegIInstitusjon = useJaNeiSpmFelt({
@@ -132,6 +145,9 @@ export const useOmBarnaDine = (): {
 
     const oppdaterSøknad = () => {
         const oppdaterteBarn = genererOppdaterteBarn(søknad, skjema, skalTriggeEøsForBarn, erEøsLand);
+        const gjelderBeredskapshjem = oppdaterteBarn.some(
+            barn => barn[barnDataKeySpørsmål.erIBeredskapshjem].svar === ESvar.JA
+        );
 
         const skalNullstilleEøsForSøker = !søknad.søker.triggetEøs && !oppdaterteBarn.find(barn => barn.triggetEøs);
 
@@ -143,6 +159,10 @@ export const useOmBarnaDine = (): {
             erNoenAvBarnaFosterbarn: {
                 ...søknad.erNoenAvBarnaFosterbarn,
                 svar: erNoenAvBarnaFosterbarn.verdi,
+            },
+            erNoenAvBarnaIBeredskapshjem: {
+                ...søknad.erNoenAvBarnaIBeredskapshjem,
+                svar: erNoenAvBarnaIBeredskapshjem.verdi,
             },
             oppholderBarnSegIInstitusjon: {
                 ...søknad.oppholderBarnSegIInstitusjon,
@@ -184,7 +204,12 @@ export const useOmBarnaDine = (): {
                     case Dokumentasjonsbehov.BEKREFTELSE_FRA_BARNEVERN:
                         return {
                             ...dok,
-                            gjelderForBarnId: hvemErFosterbarn.verdi,
+                            gjelderForBarnId: oppdaterteBarn
+                                .filter(erBarnIFosterhjemEllerBeredskapshjem)
+                                .map(barn => barn.id),
+                            beskrivelseSanityApiNavn: gjelderBeredskapshjem
+                                ? BeskrivelseSanityApiNavn.bekreftelseFraBarnevernetBeredskapshjemBarnetrygd
+                                : BeskrivelseSanityApiNavn.bekreftelseFraBarnevernetBarnetrygd,
                         };
                     default:
                         return dok;
@@ -199,6 +224,7 @@ export const useOmBarnaDine = (): {
     >({
         felter: {
             erNoenAvBarnaFosterbarn,
+            erNoenAvBarnaIBeredskapshjem,
             oppholderBarnSegIInstitusjon,
             erBarnAdoptertFraUtland,
             søktAsylForBarn,
@@ -206,6 +232,7 @@ export const useOmBarnaDine = (): {
             mottarBarnetrygdForBarnFraAnnetEøsland,
             erAvdødPartnerForelder,
             hvemErFosterbarn,
+            hvemErIBeredskapshjem,
             hvemErAdoptertFraUtland,
             hvemOppholderSegIInstitusjon,
             hvemBarnetrygdFraAnnetEøsland,

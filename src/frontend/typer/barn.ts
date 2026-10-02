@@ -39,6 +39,7 @@ export enum andreForelderDataKeySpørsmål {
 
 export enum barnDataKeySpørsmål {
     erFosterbarn = 'erFosterbarn',
+    erIBeredskapshjem = 'erIBeredskapshjem',
     erAdoptertFraUtland = 'erAdoptertFraUtland',
     erAsylsøker = 'erAsylsøker',
     barnetrygdFraAnnetEøsland = 'barnetrygdFraAnnetEøsland',
@@ -104,6 +105,7 @@ export interface IBarnMedISøknad extends IBarn {
     omsorgsperson: IOmsorgsperson | null;
     triggetEøs: boolean;
     [barnDataKeySpørsmål.erFosterbarn]: ISøknadSpørsmål<ESvar | null>;
+    [barnDataKeySpørsmål.erIBeredskapshjem]: ISøknadSpørsmål<ESvar | null>;
     [barnDataKeySpørsmål.erAdoptertFraUtland]: ISøknadSpørsmål<ESvar | null>;
     [barnDataKeySpørsmål.pågåendeSøknadFraAnnetEøsLand]: ISøknadSpørsmål<ESvar | null>;
     [barnDataKeySpørsmål.pågåendeSøknadHvilketLand]: ISøknadSpørsmål<Alpha3Code | ''>;

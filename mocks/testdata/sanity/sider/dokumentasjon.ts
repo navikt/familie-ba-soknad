@@ -1,6 +1,6 @@
-import { IDokumentasjonTekstinnhold } from '../../../../src/frontend/components/SøknadsSteg/Dokumentasjon/innholdTyper';
+import type { IDokumentasjonTekstinnhold } from '../../../../src/frontend/components/SøknadsSteg/Dokumentasjon/innholdTyper';
 import { BeskrivelseSanityApiNavn, TittelSanityApiNavn } from '../../../../src/frontend/typer/dokumentasjon';
-import { lagLocaleRecordString, lagLocaleRecordBlock } from '../lagSanityObjekter';
+import { lagLocaleRecordBlock, lagLocaleRecordString } from '../lagSanityObjekter';
 
 export const dokumentasjonTekstinnhold: IDokumentasjonTekstinnhold = {
     dokumentasjonTittel: lagLocaleRecordBlock(),
@@ -82,7 +82,9 @@ export const dokumentasjonTekstinnhold: IDokumentasjonTekstinnhold = {
     [BeskrivelseSanityApiNavn.bekreftelsePaaAtBarnBorSammenMedDeg]: lagLocaleRecordBlock(),
     [BeskrivelseSanityApiNavn.avtaleOmDeltBosted]: lagLocaleRecordBlock(),
     [BeskrivelseSanityApiNavn.meklingsattest]: lagLocaleRecordBlock(),
-    [BeskrivelseSanityApiNavn.bekreftelseFraBarnevernetBarnetrygd]: lagLocaleRecordBlock(),
+    [BeskrivelseSanityApiNavn.bekreftelseFraBarnevernetBarnetrygd]: lagLocaleRecordBlock('fosterhjem-beskrivelse'),
+    [BeskrivelseSanityApiNavn.bekreftelseFraBarnevernetBeredskapshjemBarnetrygd]:
+        lagLocaleRecordBlock('beredskapshjem-beskrivelse'),
     [BeskrivelseSanityApiNavn.lastOppSenereISoknad]: lagLocaleRecordBlock(),
     [BeskrivelseSanityApiNavn.annenDokumentasjonBeskrivelse]: lagLocaleRecordBlock(),
 };

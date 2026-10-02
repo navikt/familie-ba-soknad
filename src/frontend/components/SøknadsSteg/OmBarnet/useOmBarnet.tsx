@@ -39,6 +39,7 @@ import { AlternativtSvarForInput } from '../../../typer/svar';
 import { Årsak } from '../../../typer/utvidet';
 import { erNorskPostnummer, valideringAdresse } from '../../../utils/adresse';
 import {
+    erBarnIFosterhjemEllerBeredskapshjem,
     filtrerteRelevanteIdNummerForBarn,
     genererInitiellAndreForelder,
     nullstilteEøsFelterForBarn,
@@ -684,6 +685,7 @@ export const useOmBarnet = (
         const eøsBarnetrygdsperioder =
             mottarEllerMottokEøsBarnetrygd.verdi === ESvar.JA ? registrerteEøsBarnetrygdsperioder.verdi : [];
         const utenlandsperioder = registrerteUtenlandsperioder.verdi;
+        const erIFosterhjemEllerBeredskapshjem = erBarnIFosterhjemEllerBeredskapshjem(barn);
 
         const borMedOmsorgsperson = {
             ...barn.borMedOmsorgsperson,
@@ -692,7 +694,7 @@ export const useOmBarnet = (
                 borFastMedSøker.verdi,
                 barn.oppholderSegIInstitusjon.svar,
                 barn.andreForelderErDød.svar,
-                barn.erFosterbarn.svar
+                erIFosterhjemEllerBeredskapshjem ? ESvar.JA : ESvar.NEI
             )
                 ? barn.borMedOmsorgsperson.svar
                 : null,
@@ -764,7 +766,7 @@ export const useOmBarnet = (
             adresse: {
                 ...barn.adresse,
                 svar:
-                    barn.erFosterbarn.svar === ESvar.JA ||
+                    erIFosterhjemEllerBeredskapshjem ||
                     (barn.borMedAndreForelder.svar === ESvar.JA && andreForelderKanIkkeGiOpplysninger.verdi == ESvar.JA)
                         ? barn.adresse.svar
                         : '',

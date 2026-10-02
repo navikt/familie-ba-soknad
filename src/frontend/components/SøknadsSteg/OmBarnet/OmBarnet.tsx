@@ -5,8 +5,8 @@ import type { FC } from 'react';
 import { ESanitySteg, Typografi } from '../../../../common/sanity';
 import { Dokumentasjonsbehov } from '../../../../common/typer/kontrakt/dokumentasjon';
 import { useAppContext } from '../../../context/AppContext';
-import { barnDataKeySpørsmål } from '../../../typer/barn';
 import type { BarnetsId } from '../../../typer/person';
+import { erBarnIFosterhjemEllerBeredskapshjem } from '../../../utils/barn';
 import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
 import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
 import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
@@ -65,7 +65,7 @@ const OmBarnet: FC<{ barnetsId: BarnetsId }> = ({ barnetsId }) => {
             }}
             vedleggOppsummering={[
                 {
-                    skalVises: barn[barnDataKeySpørsmål.erFosterbarn].svar === ESvar.JA,
+                    skalVises: erBarnIFosterhjemEllerBeredskapshjem(barn),
                     dokumentasjonsbehov: Dokumentasjonsbehov.BEKREFTELSE_FRA_BARNEVERN,
                 },
                 {

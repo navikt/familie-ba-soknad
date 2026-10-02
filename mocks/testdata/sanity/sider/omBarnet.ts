@@ -7,6 +7,7 @@ export const omBarnetTekstinnhold: IOmBarnetTekstinnhold = {
     omBarnetGuide: lagLocaleRecordBlock(),
     barnetsAndreForelder: lagLocaleRecordString(),
     opplystFosterbarn: lagLocaleRecordBlock(),
+    opplystBeredskapshjem: lagLocaleRecordBlock(),
     opplystInstitusjon: lagLocaleRecordBlock(),
     institusjonIUtlandetCheckbox: lagLocaleRecordBlock(),
     institusjonNavn: lagSanitySpørsmålDokument(),

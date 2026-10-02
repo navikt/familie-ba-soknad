@@ -51,6 +51,16 @@ const OmBarnetOppsummering: FC<Props> = ({ settFeilAnchors, barn, index }) => {
                     }
                 />
             )}
+            {barn[barnDataKeySpørsmål.erIBeredskapshjem].svar === ESvar.JA && (
+                <OppsummeringFelt
+                    tittel={
+                        <TekstBlock
+                            block={omBarnetTekster.opplystBeredskapshjem}
+                            flettefelter={{ barnetsNavn: barn.navn }}
+                        />
+                    }
+                />
+            )}
             {barn[barnDataKeySpørsmål.oppholderSegIInstitusjon].svar === ESvar.JA && (
                 <>
                     <OppsummeringFelt
