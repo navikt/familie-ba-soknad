@@ -1,3 +1,4 @@
+import { ESvar } from '@navikt/familie-form-elements';
 import { renderHook } from '@testing-library/react';
 
 import type { ISøknadKontrakt } from '../../../common/typer/kontrakt/kontrakt';
@@ -24,6 +25,16 @@ describe('test konvertering fra ISøknad til ISøknadKontrakt', () => {
 
         const [_, formatert]: [boolean, ISøknadKontrakt] = await result.current.sendInnSkjema();
         expect(erGyldigISøknadKontrakt(formatert)).toBeTruthy();
+        expect(formatert.spørsmål.erNoenAvBarnaIBeredskapshjem.verdi).toEqual({
+            nb: ESvar.JA,
+            nn: ESvar.JA,
+            en: ESvar.JA,
+        });
+        expect(formatert.barn[0].spørsmål.erIBeredskapshjem.verdi).toEqual({
+            nb: ESvar.JA,
+            nn: ESvar.JA,
+            en: ESvar.JA,
+        });
     });
     it('case 2', async () => {
         const { input: iSøknad } = testdata2;

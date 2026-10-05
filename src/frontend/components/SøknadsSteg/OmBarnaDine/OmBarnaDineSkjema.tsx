@@ -24,6 +24,8 @@ const OmBarnaDineSkjema: FC = () => {
         omBarnaGuide,
         fosterbarn,
         hvemFosterbarn,
+        beredskapshjem,
+        hvemBeredskapshjem,
         institusjon,
         hvemInstitusjon,
         adoptertFraUtlandet,
@@ -64,6 +66,18 @@ const OmBarnaDineSkjema: FC = () => {
                 skjemafelt={skjema.felter.hvemErFosterbarn}
                 søknadsdatafelt={barnDataKeySpørsmål.erFosterbarn}
                 nullstillValgteBarn={skjema.felter.erNoenAvBarnaFosterbarn.verdi === ESvar.NEI}
+                visFeilmelding={skjema.visFeilmeldinger}
+            />
+            <JaNeiSpm
+                skjema={skjema}
+                felt={skjema.felter.erNoenAvBarnaIBeredskapshjem}
+                spørsmålDokument={beredskapshjem}
+            />
+            <HvilkeBarnCheckboxGruppe
+                legendTekst={<TekstBlock block={hvemBeredskapshjem.sporsmal} />}
+                skjemafelt={skjema.felter.hvemErIBeredskapshjem}
+                søknadsdatafelt={barnDataKeySpørsmål.erIBeredskapshjem}
+                nullstillValgteBarn={skjema.felter.erNoenAvBarnaIBeredskapshjem.verdi === ESvar.NEI}
                 visFeilmelding={skjema.visFeilmeldinger}
             />
             <JaNeiSpm

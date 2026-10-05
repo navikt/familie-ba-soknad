@@ -9,6 +9,7 @@ export interface IVedlegg {
 
 export interface IDokumentasjon {
     dokumentasjonsbehov: Dokumentasjonsbehov;
+    beskrivelseSanityApiNavn?: BeskrivelseSanityApiNavn;
     gjelderForBarnId: string[];
     gjelderForSøker: boolean;
     harSendtInn: boolean;
@@ -65,6 +66,7 @@ export enum BeskrivelseSanityApiNavn {
     avtaleOmDeltBosted = 'avtaleOmDeltBosted',
     meklingsattest = 'meklingsattest',
     bekreftelseFraBarnevernetBarnetrygd = 'bekreftelseFraBarnevernetBarnetrygd',
+    bekreftelseFraBarnevernetBeredskapshjemBarnetrygd = 'bekreftelseFraBarnevernetBeredskapshjemBarnetrygd',
     lastOppSenereISoknad = 'lastOppSenereISoknad',
     annenDokumentasjonBeskrivelse = 'annenDokumentasjonBeskrivelse',
 }

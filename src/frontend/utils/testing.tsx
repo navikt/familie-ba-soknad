@@ -332,6 +332,10 @@ export const mekkGyldigSøknad = (): ISøknad => {
             id: OmBarnaDineSpørsmålId.erNoenAvBarnaFosterbarn,
             svar: ESvar.NEI,
         },
+        erNoenAvBarnaIBeredskapshjem: {
+            id: OmBarnaDineSpørsmålId.erNoenAvBarnaIBeredskapshjem,
+            svar: ESvar.NEI,
+        },
         oppholderBarnSegIInstitusjon: {
             id: OmBarnaDineSpørsmålId.oppholderBarnSegIInstitusjon,
             svar: ESvar.NEI,
@@ -364,6 +368,10 @@ export const mekkGyldigSøknad = (): ISøknad => {
                 }),
                 [barnDataKeySpørsmål.erFosterbarn]: {
                     id: OmBarnaDineSpørsmålId.hvemErFosterbarn,
+                    svar: ESvar.NEI,
+                },
+                [barnDataKeySpørsmål.erIBeredskapshjem]: {
+                    id: OmBarnaDineSpørsmålId.hvemErIBeredskapshjem,
                     svar: ESvar.NEI,
                 },
                 [barnDataKeySpørsmål.oppholderSegIInstitusjon]: {
