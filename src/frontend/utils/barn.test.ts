@@ -4,6 +4,7 @@ import type { DeepPartial } from 'ts-essentials';
 import { vi } from 'vitest';
 import * as vitestMockExtended from 'vitest-mock-extended';
 
+import { Slektsforhold } from '../../common/typer/kontrakt/generelle';
 import { genererOppdaterteBarn, genererSvarForSpørsmålBarn } from '../components/SøknadsSteg/OmBarnaDine/utils';
 import type { IBarnMedISøknad } from '../typer/barn';
 import type { IOmBarnaDineFeltTyper } from '../typer/skjema';
@@ -41,19 +42,25 @@ describe('genererOppdaterteBarn', () => {
                 institusjonOppholdStartdato: { svar: '2020-09-08' },
                 institusjonOppholdSluttdato: { svar: AlternativtSvarForInput.UKJENT },
                 planleggerÅBoINorge12Mnd: { svar: ESvar.JA },
+                søkersSlektsforhold: { svar: Slektsforhold.FORELDER },
+                søkersSlektsforholdSpesifisering: { svar: 'Mor' },
             },
         ],
     });
 
     const mockSkjema = vitestMockExtended.mockDeep<ISkjema<IOmBarnaDineFeltTyper, string>>({
         felter: {
-            hvemErFosterbarn: { verdi: ['random-id'] },
+            hvemErFosterbarn: { verdi: [] },
+            hvemErIBeredskapshjem: { verdi: ['random-id'] },
             hvemErSøktAsylFor: { verdi: ['random-id'] },
             hvemErAdoptertFraUtland: { verdi: [] },
             hvemOppholderSegIInstitusjon: { verdi: [] },
             hvemTolvMndSammenhengendeINorge: { verdi: [] },
             hvemBarnetrygdFraAnnetEøsland: { verdi: ['random-id'] },
             erNoenAvBarnaFosterbarn: {
+                verdi: ESvar.NEI,
+            },
+            erNoenAvBarnaIBeredskapshjem: {
                 verdi: ESvar.JA,
             },
             oppholderBarnSegIInstitusjon: {
@@ -78,7 +85,11 @@ describe('genererOppdaterteBarn', () => {
         expect(genererOppdaterteBarn(mockSøknad, mockSkjema, _barn => false, vi.fn())).toEqual([
             expect.objectContaining<DeepPartial<IBarnMedISøknad>>({
                 id: 'random-id',
-                erFosterbarn: expect.objectContaining({ svar: 'JA' }),
+                erFosterbarn: expect.objectContaining({ svar: 'NEI' }),
+                erIBeredskapshjem: expect.objectContaining({ svar: 'JA' }),
+                andreForelder: null,
+                søkersSlektsforhold: expect.objectContaining({ svar: '' }),
+                søkersSlektsforholdSpesifisering: expect.objectContaining({ svar: '' }),
                 erAsylsøker: expect.objectContaining({ svar: 'JA' }),
                 erAdoptertFraUtland: expect.objectContaining({ svar: 'NEI' }),
                 oppholderSegIInstitusjon: expect.objectContaining({ svar: 'NEI' }),

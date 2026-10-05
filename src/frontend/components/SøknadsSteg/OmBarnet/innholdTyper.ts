@@ -6,6 +6,7 @@ export interface IOmBarnetTekstinnhold {
     omBarnetGuide: LocaleRecordBlock;
     barnetsAndreForelder: LocaleRecordString;
     opplystFosterbarn: LocaleRecordBlock;
+    opplystBeredskapshjem: LocaleRecordBlock;
     opplystInstitusjon: LocaleRecordBlock;
     institusjonIUtlandetCheckbox: LocaleRecordBlock;
     institusjonNavn: ISanitySpørsmålDokument;

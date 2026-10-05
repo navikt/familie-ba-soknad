@@ -107,6 +107,10 @@ export const testdata1: TilKontraktTestData = {
                     id: 'hvem-er-fosterbarn',
                     svar: 'NEI',
                 },
+                erIBeredskapshjem: {
+                    id: 'hvem-er-i-beredskapshjem',
+                    svar: 'JA',
+                },
                 erAdoptertFraUtland: {
                     id: 'hvem-er-adoptert-fra-utland',
                     svar: 'NEI',
@@ -353,6 +357,10 @@ export const testdata1: TilKontraktTestData = {
         erNoenAvBarnaFosterbarn: {
             id: 'er-noen-av-barna-fosterbarn',
             svar: 'NEI',
+        },
+        erNoenAvBarnaIBeredskapshjem: {
+            id: 'er-noen-av-barna-i-beredskapshjem',
+            svar: 'JA',
         },
         oppholderBarnSegIInstitusjon: {
             id: 'oppholder-barn-seg-i-institusjon',

@@ -46,6 +46,16 @@ const OmBarnaOppsummering: FC<Props> = ({ settFeilAnchors }) => {
                 />
             )}
             <OppsummeringFelt
+                tittel={<TekstBlock block={omBarnaTekster.beredskapshjem.sporsmal} />}
+                søknadsvar={søknad.erNoenAvBarnaIBeredskapshjem.svar}
+            />
+            {søknad.erNoenAvBarnaIBeredskapshjem.svar === ESvar.JA && (
+                <OppsummeringFelt
+                    tittel={<TekstBlock block={omBarnaTekster.hvemBeredskapshjem.sporsmal} />}
+                    søknadsvar={genererListeMedBarn(barnDataKeySpørsmål.erIBeredskapshjem)}
+                />
+            )}
+            <OppsummeringFelt
                 tittel={<TekstBlock block={omBarnaTekster.institusjon.sporsmal} />}
                 søknadsvar={søknad.oppholderBarnSegIInstitusjon.svar}
             />

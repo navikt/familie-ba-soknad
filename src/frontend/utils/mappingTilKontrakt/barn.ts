@@ -45,6 +45,7 @@ export const barnISøknadsFormat = (
         triggetEøs,
         adresse,
         erFosterbarn,
+        erIBeredskapshjem,
         erAdoptertFraUtland,
         pågåendeSøknadFraAnnetEøsLand,
         pågåendeSøknadHvilketLand,
@@ -106,6 +107,7 @@ export const barnISøknadsFormat = (
     const spørsmål: SpørsmålMapMedNullVerdier = {
         // Om barna tekster
         erFosterbarn: søknadsfeltForESvar(omBarnaTekster.hvemFosterbarn.sporsmal, erFosterbarn.svar),
+        erIBeredskapshjem: søknadsfeltForESvar(omBarnaTekster.hvemBeredskapshjem.sporsmal, erIBeredskapshjem.svar),
         oppholderSegIInstitusjon: søknadsfeltForESvar(
             omBarnaTekster.hvemInstitusjon.sporsmal,
             oppholderSegIInstitusjon.svar

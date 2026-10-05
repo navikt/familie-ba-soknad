@@ -5,6 +5,8 @@ export interface IOmBarnaTekstinnhold {
     omBarnaGuide: LocaleRecordBlock;
     fosterbarn: ISanitySpørsmålDokument;
     hvemFosterbarn: ISanitySpørsmålDokument;
+    beredskapshjem: ISanitySpørsmålDokument;
+    hvemBeredskapshjem: ISanitySpørsmålDokument;
     institusjon: ISanitySpørsmålDokument;
     hvemInstitusjon: ISanitySpørsmålDokument;
     adoptertFraUtlandet: ISanitySpørsmålDokument;

@@ -1,6 +1,8 @@
 export enum OmBarnaDineSpørsmålId {
     erNoenAvBarnaFosterbarn = 'er-noen-av-barna-fosterbarn',
     hvemErFosterbarn = 'hvem-er-fosterbarn',
+    erNoenAvBarnaIBeredskapshjem = 'er-noen-av-barna-i-beredskapshjem',
+    hvemErIBeredskapshjem = 'hvem-er-i-beredskapshjem',
     oppholderBarnSegIInstitusjon = 'oppholder-barn-seg-i-institusjon',
     hvemOppholderSegIInstitusjon = 'hvem-oppholder-seg-i-institusjon',
     erBarnAdoptertFraUtland = 'er-barn-adoptert-fra-utland',

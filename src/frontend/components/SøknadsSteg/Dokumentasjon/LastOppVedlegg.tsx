@@ -53,13 +53,16 @@ const LastOppVedlegg: FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon }) => 
     const barnDokumentasjonenGjelderFor = søknad.barnInkludertISøknaden.filter(barn =>
         dokumentasjon.gjelderForBarnId.find(id => id === barn.id)
     );
+
     const barnasNavn = slåSammen(
         barnDokumentasjonenGjelderFor.map(barn => barn.navn),
         plainTekst,
         frittståendeOrdTekster
     );
 
-    const dokumentasjonsbeskrivelse = dokumentasjonsbehovTilBeskrivelseSanityApiNavn(dokumentasjon.dokumentasjonsbehov);
+    const dokumentasjonsbeskrivelse =
+        dokumentasjon.beskrivelseSanityApiNavn ??
+        dokumentasjonsbehovTilBeskrivelseSanityApiNavn(dokumentasjon.dokumentasjonsbehov);
 
     return (
         <FormSummary>

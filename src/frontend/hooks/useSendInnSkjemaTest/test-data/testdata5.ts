@@ -107,6 +107,10 @@ export const testdata5: TilKontraktTestData = {
                     id: 'hvem-er-fosterbarn',
                     svar: 'NEI',
                 },
+                erIBeredskapshjem: {
+                    id: 'hvem-er-i-beredskapshjem',
+                    svar: 'NEI',
+                },
                 pågåendeSøknadFraAnnetEøsLand: {
                     id: 'andre-forelder-pågående-søknad',
                     svar: null,
@@ -309,6 +313,10 @@ export const testdata5: TilKontraktTestData = {
                 },
                 erFosterbarn: {
                     id: 'hvem-er-fosterbarn',
+                    svar: 'NEI',
+                },
+                erIBeredskapshjem: {
+                    id: 'hvem-er-i-beredskapshjem',
                     svar: 'NEI',
                 },
                 pågåendeSøknadFraAnnetEøsLand: {
@@ -610,6 +618,10 @@ export const testdata5: TilKontraktTestData = {
         },
         erNoenAvBarnaFosterbarn: {
             id: 'er-noen-av-barna-fosterbarn',
+            svar: 'NEI',
+        },
+        erNoenAvBarnaIBeredskapshjem: {
+            id: 'er-noen-av-barna-i-beredskapshjem',
             svar: 'NEI',
         },
         oppholderBarnSegIInstitusjon: {
