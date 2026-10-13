@@ -19,6 +19,9 @@ export const handlers = [
     http.get(urlMedBasePath('api/innlogget/barnetrygd'), () => {
         return HttpResponse.json(byggSuksessRessurs('Autentisert kall'));
     }),
+    http.post(urlMedBasePath('dokument/soknad/barnetrygd'), () => {
+        return new HttpResponse(null, { status: 201 });
+    }),
     http.delete(urlMedBasePath('dokument/soknad/barnetrygd'), () => {
         return HttpResponse.json(byggSuksessRessurs(''));
     }),
