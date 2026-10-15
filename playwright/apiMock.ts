@@ -67,6 +67,7 @@ async function svarMedMock(route: Route, handlers: RequestHandler[], appOrigin: 
 async function fyllUtIndexHtml(route: Route) {
     const respons = await route.fetch();
     const html = (await respons.text()).replace('{{LOCALE_CODE}}', 'nb').replace('{{{NAIS_META_TAGS}}}', '');
+
     return route.fulfill({ response: respons, body: html });
 }
 
