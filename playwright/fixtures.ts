@@ -2,10 +2,13 @@ import { test as base, expect } from '@playwright/test';
 
 import { handlers } from '../mocks/handlers';
 import { type ApiMock, settOppApiMock } from './apiMock';
+import { lagMellomlager, type Mellomlager } from './mellomlager';
 import { sanityHandler } from './sanity';
 
 interface Fixtures {
     apiMock: ApiMock;
+    /** Erstatter mellomlagringsmockene med en mellomlagring som husker søknaden. Se `mellomlager.ts`. */
+    mellomlager: Mellomlager;
 }
 
 export const test = base.extend<Fixtures>({
@@ -27,6 +30,12 @@ export const test = base.extend<Fixtures>({
         },
         { auto: true },
     ],
+    mellomlager: async ({ apiMock }, use) => {
+        const mellomlager = lagMellomlager();
+
+        apiMock.use(...mellomlager.handlers);
+        await use(mellomlager);
+    },
 });
 
 export { expect };
