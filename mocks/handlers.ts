@@ -49,6 +49,17 @@ export const handlers = [
     http.get('https://by26nl8j.apicdn.sanity.io/v2021-10-21/data/query/ba-production', () => {
         return HttpResponse.json(mockTekstInnhold());
     }),
+    http.post(urlMedBasePath('api/soknad/v10'), () => {
+        return HttpResponse.json(
+            byggSuksessRessurs({
+                tekst: 'Søknad mottatt',
+                mottattDato: '2026-01-15T09:30:00',
+            })
+        );
+    }),
+    http.post(urlMedBasePath('dokument/mapper/familievedlegg'), () => {
+        return HttpResponse.json({ dokumentId: crypto.randomUUID(), filnavn: 'vedlegg.pdf' }, { status: 201 });
+    }),
     http.post(urlMedBasePath('logg'), () => {
         return new HttpResponse(null, { status: 204 });
     }),
