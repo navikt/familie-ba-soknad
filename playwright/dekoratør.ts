@@ -28,6 +28,7 @@ window.addEventListener('message', ({ data }) => {
 
 export function svarMedDekoratørStub(route: Route) {
     const erSkript = new URL(route.request().url()).pathname.endsWith('.js');
+
     return route.fulfill({
         contentType: erSkript ? 'text/javascript' : 'text/css',
         body: erSkript ? DEKORATØR_STUB : '',

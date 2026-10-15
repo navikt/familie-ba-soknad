@@ -5,6 +5,7 @@ import { BASE_PATH } from './src/common/miljø';
 // Egen port, slik at testene ikke gjenbruker en preview-server fra en annen app (f.eks. familie-ba-sak-frontend).
 const port = 8200;
 const baseURL = `http://localhost:${port}`;
+
 // Relativ til rotmappen i vite.config.ts (src/frontend).
 const byggMappe = '../../playwright/.bygg';
 const erCI = !!process.env.CI;
