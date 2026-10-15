@@ -55,6 +55,10 @@ kall til backend og Sanity besvares av msw-handlers fra `mocks/handlers.ts` og d
 Testene bruker et øyeblikksbilde av tekstene i Sanity (`playwright/testdata/sanity-dokumenter.json`).
 Kjør `pnpm hent-sanity-dokumenter` for å oppdatere det.
 
+Felles hjelpefunksjoner for å fylle ut søknaden ligger i `playwright/søknad.ts`, f.eks. `gåTilSteg(page, Steg.Oppsummering)`.
+Bruk `apiMock.use(...)` for å overstyre et endepunkt i én test, og fixturen `mellomlager` for tester som trenger at
+mellomlagringen husker søknaden.
+
 # Bygg og deploy
 Appen bygges hos github actions, og gir beskjed til nais deploy om å deployere appen i gcp. Alle commits til feature brancher går til dev miljøet og master går til produksjon.
 
