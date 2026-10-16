@@ -7,7 +7,7 @@ import { BASE_PATH } from './src/common/miljø';
 
 export default defineConfig({
     root: path.resolve(__dirname, 'src/frontend'),
-    base: BASE_PATH,
+    base: process.env.CDN_BASE_URL || BASE_PATH,
     plugins: [react()],
     resolve: {
         alias: {
@@ -25,6 +25,7 @@ export default defineConfig({
         // Backend serverer statiske filer fra denne mappen, se src/backend/routes/static.ts
         outDir: path.resolve(__dirname, 'dist'),
         emptyOutDir: false,
+        sourcemap: true,
         rolldownOptions: {
             // To separate HTML-innganger: index.html (hovedappen) og disabled.html
             // (killswitch-siden, se src/backend/middlewares/feature-toggles.ts sitt
@@ -32,6 +33,9 @@ export default defineConfig({
             input: {
                 index: path.resolve(__dirname, 'src/frontend/index.html'),
                 disabled: path.resolve(__dirname, 'src/frontend/disabled.html'),
+            },
+            output: {
+                keepNames: true,
             },
         },
     },
