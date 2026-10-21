@@ -1,5 +1,5 @@
 import { ESvar } from '@navikt/familie-form-elements';
-import { act, getByTestId, render } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import { mockDeep } from 'vitest-mock-extended';
 
 import { ESivilstand, ESøknadstype } from '../../../../common/typer/kontrakt/generelle';
@@ -94,7 +94,7 @@ describe('Test av nåværende samboer skjema', () => {
 
         const [navn, fnr, fnrUkjent, fødselsdato, fødselsdatoUkjent, samboerFraDato] =
             getAllNåværendeSamboerFields(container);
-        const gåVidere = getByTestId(container, 'neste-steg');
+        const gåVidere = screen.getByRole('button', { name: 'FELLES.navigasjon.gaaVidereKnapp' });
 
         expect(navn.value).toBe('Initial verdi for samboer sitt navn');
         expect(fnr.value).toBe('');
@@ -115,8 +115,10 @@ describe('Test av nåværende samboer skjema', () => {
 
         act(() => gåVidere.click());
 
-        expect(getByTestId(container, 'skjema-feiloppsummering')).toBeInTheDocument();
-        expect(getByTestId(container, 'feilmelding-utvidet-nåværende-samboer-fnr')).toBeInTheDocument();
+        expect(screen.getByRole('heading', { name: 'FELLES.navigasjon.duMaaRetteOppFoelgende' })).toBeInTheDocument();
+        expect(
+            screen.getByRole('link', { name: 'DIN_LIVSSITUASJON.foedselsEllerDNummer.feilmelding' })
+        ).toBeInTheDocument();
         expect(fnr).toHaveAttribute('aria-invalid', 'true');
     });
 });
