@@ -15,7 +15,7 @@ export const SøkerMåBrukePDF: FC<SøkerMåBrukePDFProps> = ({ advarselTekst })
     const { brukPDFKontantstoette } = tekster().FELLES.kanIkkeBrukeSoeknad;
 
     return (
-        <InfoCard data-color={'warning'} data-testid="søker-må-bruke-pdf">
+        <InfoCard data-color={'warning'}>
             <InfoCard.Message icon={<ExclamationmarkTriangleIcon aria-hidden />}>
                 {advarselTekst}
                 <Box marginBlock="space-12 space-0">

@@ -46,7 +46,7 @@ const SamboerOpplysninger: FC<{
                         {formaterDato(samboer.samboerFraDato.svar)}
                     </OppsummeringFelt>
                     <OppsummeringFelt tittel={<TekstBlock block={teksterForModal.sluttdato.sporsmal} />}>
-                        <div data-testid={samboer.samboerTilDato.id}>{formaterDato(samboer.samboerTilDato.svar)}</div>
+                        <div>{formaterDato(samboer.samboerTilDato.svar)}</div>
                     </OppsummeringFelt>
                     <Button
                         type={'button'}

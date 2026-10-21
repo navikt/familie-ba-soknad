@@ -23,7 +23,6 @@ export const LeggTilKnapp: FC<Props> = ({ onClick, children, leggTilFlereTekst, 
                 <Button
                     className={classNames({ [styles.buttonError]: !!feilmelding })}
                     id={id}
-                    data-testid={id}
                     variant="tertiary"
                     type="button"
                     onClick={onClick}

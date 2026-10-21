@@ -30,7 +30,7 @@ export const genererAdresseVisning = (søker: ISøker, tekster: IOmDegTekstinnho
     }
 
     return (
-        <BodyShort data-testid={`adressevisning-${søker.adressebeskyttelse ? 'sperre' : 'ikke-registrert'}`}>
+        <BodyShort>
             {plainTekst(søker.adressebeskyttelse ? tekster.soekerAdressesperre : tekster.ikkeRegistrertAdresse)}
         </BodyShort>
     );

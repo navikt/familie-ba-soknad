@@ -65,15 +65,7 @@ const Barnekort: FC<IBarnekortProps> = ({ barn, velgBarnCallback, barnSomSkalVæ
                         <FormSummary.Answer>
                             <FormSummary.Label>{plainTekst(registrertBostedLabel)}</FormSummary.Label>
                             <FormSummary.Value>
-                                {
-                                    <span
-                                        data-testid={
-                                            barn.adressebeskyttelse ? 'registrert-bosted-adressesperre' : undefined
-                                        }
-                                    >
-                                        {plainTekst(hentBostedSpråkId(barn, teksterForSteg))}
-                                    </span>
-                                }
+                                <span>{plainTekst(hentBostedSpråkId(barn, teksterForSteg))}</span>
                             </FormSummary.Value>
                         </FormSummary.Answer>
                     )}
@@ -82,7 +74,6 @@ const Barnekort: FC<IBarnekortProps> = ({ barn, velgBarnCallback, barnSomSkalVæ
                             checked={erMedISøknad}
                             aria-label={`${plainTekst(soekOmYtelseForBarnetSjekkboks)} ${barn.navn}`}
                             onChange={() => velgBarnCallback(barn, erMedISøknad)}
-                            data-testid={`søk-om-barnetrygd-for-barn-${barn.ident}`}
                         >
                             <TekstBlock block={soekOmYtelseForBarnetSjekkboks} />
                         </Checkbox>
@@ -96,7 +87,6 @@ const Barnekort: FC<IBarnekortProps> = ({ barn, velgBarnCallback, barnSomSkalVæ
                         variant="tertiary"
                         onClick={() => fjernBarnCallback(barn.id)}
                         icon={<TrashFillIcon aria-hidden />}
-                        data-testid="fjern-barn-knapp"
                     >
                         <TekstBlock block={knappetekst} />
                     </Button>
