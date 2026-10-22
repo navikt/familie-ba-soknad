@@ -26,7 +26,6 @@ import * as eøsContext from '../context/EøsContext';
 import { EøsProvider } from '../context/EøsContext';
 import { FeatureTogglesProvider } from '../context/FeatureTogglesContext';
 import { LastRessurserProvider } from '../context/LastRessurserContext';
-import { RoutesProvider } from '../context/RoutesContext';
 import { SanityProvider } from '../context/SanityContext';
 import { SpråkProvider } from '../context/SpråkContext';
 import { StegProvider } from '../context/StegContext';
@@ -171,13 +170,11 @@ export const TestProvidere: FC<TestProviderProps> = ({ mocketNettleserHistorikk 
                             <SanityProvider tekster={mockTekstInnhold()}>
                                 <AppProvider>
                                     <EøsProvider>
-                                        <RoutesProvider>
-                                            <MemoryRouter initialEntries={mocketNettleserHistorikk}>
-                                                <StegProvider>
-                                                    <AppNavigationProvider>{children}</AppNavigationProvider>
-                                                </StegProvider>
-                                            </MemoryRouter>
-                                        </RoutesProvider>
+                                        <MemoryRouter initialEntries={mocketNettleserHistorikk}>
+                                            <StegProvider>
+                                                <AppNavigationProvider>{children}</AppNavigationProvider>
+                                            </StegProvider>
+                                        </MemoryRouter>
                                     </EøsProvider>
                                 </AppProvider>
                             </SanityProvider>
@@ -208,13 +205,11 @@ export function TestProvidereForSanity({ children }: TestProviderPropsForSanity)
                                 <SanityProvider tekster={mockTekstInnhold()}>
                                     <AppProvider>
                                         <EøsProvider>
-                                            <RoutesProvider>
-                                                <MemoryRouter>
-                                                    <StegProvider>
-                                                        <AppNavigationProvider>{children}</AppNavigationProvider>
-                                                    </StegProvider>
-                                                </MemoryRouter>
-                                            </RoutesProvider>
+                                            <MemoryRouter>
+                                                <StegProvider>
+                                                    <AppNavigationProvider>{children}</AppNavigationProvider>
+                                                </StegProvider>
+                                            </MemoryRouter>
                                         </EøsProvider>
                                     </AppProvider>
                                 </SanityProvider>
