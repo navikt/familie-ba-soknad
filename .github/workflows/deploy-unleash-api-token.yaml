@@ -18,7 +18,7 @@ jobs:
         with:
           persist-credentials: false
       - name: deploy unleash api-token to dev
-        uses: nais/deploy/actions/deploy@027a91857992525139798892f2804b0ca21f4af6 # ratchet:nais/deploy/actions/deploy@v2
+        uses: nais/deploy/actions/deploy@f7d413cffac4c73314c90c1abeb162b3c7b0c2c0 # ratchet:nais/deploy/actions/deploy@v2
         env:
           CLUSTER: dev-gcp
           RESOURCE: .nais/unleash/unleash-apitoken-dev.yaml
@@ -33,7 +33,7 @@ jobs:
         with:
           persist-credentials: false
       - name: deploy unleash api-token to prod
-        uses: nais/deploy/actions/deploy@027a91857992525139798892f2804b0ca21f4af6 # ratchet:nais/deploy/actions/deploy@v2
+        uses: nais/deploy/actions/deploy@f7d413cffac4c73314c90c1abeb162b3c7b0c2c0 # ratchet:nais/deploy/actions/deploy@v2
         env:
           CLUSTER: prod-gcp
           RESOURCE: .nais/unleash/unleash-apitoken-prod.yaml
