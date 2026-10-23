@@ -8,3 +8,6 @@ dist/
 .DS_Store
 secure.log
 secure1.log
+playwright/.bygg
+playwright/resultater
+playwright/rapport
