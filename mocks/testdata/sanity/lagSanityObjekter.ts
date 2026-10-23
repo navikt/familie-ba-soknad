@@ -1,5 +1,8 @@
 import { ESanitySteg } from '../../../src/common/sanity';
 
+export const STANDARD_STRING_TEKST = 'default string';
+export const STANDARD_BLOCK_TEKST = 'default block';
+
 export function lagSanitySpørsmålDokument() {
     return {
         sporsmal: lagLocaleRecordBlock(),
@@ -19,7 +22,7 @@ export function lagSanitySpørsmålDokument() {
     };
 }
 
-export function lagLocaleRecordString(text = 'default string') {
+export function lagLocaleRecordString(text = STANDARD_STRING_TEKST) {
     return {
         _createdAt: '2022-09-01T09:31:48Z',
         _id: '3cb3d89a-cbdb-4804-8091-9532b687d8b0',
@@ -36,7 +39,7 @@ export function lagLocaleRecordString(text = 'default string') {
     };
 }
 
-export function lagLocaleRecordBlock(text = 'default block') {
+export function lagLocaleRecordBlock(text = STANDARD_BLOCK_TEKST) {
     return {
         _createdAt: '2024-03-14T12:14:45Z',
         _id: 'FORSIDE_TITTEL_BARNETRYGD',

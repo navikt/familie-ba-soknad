@@ -1,6 +1,6 @@
 import { ESvar } from '@navikt/familie-form-elements';
 import * as fnrvalidator from '@navikt/fnrvalidator';
-import { act, fireEvent, render } from '@testing-library/react';
+import { act, fireEvent, render, screen, within } from '@testing-library/react';
 import type { DeepPartial } from 'ts-essentials';
 import { vi } from 'vitest';
 import { mockDeep } from 'vitest-mock-extended';
@@ -9,7 +9,14 @@ import { ESøknadstype } from '../../../../common/typer/kontrakt/generelle';
 import { barnDataKeySpørsmål, type IBarnMedISøknad } from '../../../typer/barn';
 import type { IBarnRespons } from '../../../typer/person';
 import type { ISøknad } from '../../../typer/søknad';
-import { mekkGyldigSøker, silenceConsoleErrors, spyOnUseApp, TestProvidere } from '../../../utils/testing';
+import {
+    hentSpørsmål,
+    hentSvaralternativ,
+    mekkGyldigSøker,
+    silenceConsoleErrors,
+    spyOnUseApp,
+    TestProvidere,
+} from '../../../utils/testing';
 import { OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
 
 import VelgBarn from './VelgBarn';
@@ -63,16 +70,16 @@ describe('VelgBarn', () => {
             søknad.barnInkludertISøknaden = nySøknad.barnInkludertISøknaden;
         });
 
-        const { getByTestId } = render(
+        render(
             <TestProvidere mocketNettleserHistorikk={['/velg-barn']}>
                 <VelgBarn />
             </TestProvidere>
         );
 
-        const fjernBarnKnapp = getByTestId('fjern-barn-knapp');
+        const fjernBarnKnapp = screen.getByRole('button', { name: 'FELLES.modaler.leggTilBarn.fjernKnapp' });
         act(() => fjernBarnKnapp.click());
 
-        const gåVidere = getByTestId('neste-steg');
+        const gåVidere = screen.getByRole('button', { name: 'FELLES.navigasjon.gaaVidereKnapp' });
         act(() => gåVidere.click());
 
         // Først blir barnet fjernet fra manuelt registrerte barn
@@ -117,13 +124,13 @@ describe('VelgBarn', () => {
 
         spyOnUseApp(søknad);
 
-        const { queryByText, queryByTestId } = render(
+        render(
             <TestProvidere mocketNettleserHistorikk={['/velg-barn']}>
                 <VelgBarn />
             </TestProvidere>
         );
-        const ident = queryByText(søknad.søker.barn[0].ident ?? 'finnes-ikke-kast-feil');
-        const info = queryByTestId('registrert-bosted-adressesperre');
+        const ident = screen.queryByText(søknad.søker.barn[0].ident ?? 'finnes-ikke-kast-feil');
+        const info = screen.queryByText('VELG_BARN.registrertMedAdressesperre');
 
         expect(ident).not.toBeInTheDocument();
         expect(info).toBeInTheDocument();
@@ -145,27 +152,27 @@ describe('VelgBarn', () => {
             søknad.barnInkludertISøknaden = nySøknad.barnInkludertISøknaden;
         });
 
-        const { getByTestId, getAllByRole } = render(
+        render(
             <TestProvidere mocketNettleserHistorikk={['/velg-barn']}>
                 <VelgBarn />
             </TestProvidere>
         );
 
-        const fjernBarnKnapp = getByTestId('fjern-barn-knapp');
+        const fjernBarnKnapp = screen.getByRole('button', { name: 'FELLES.modaler.leggTilBarn.fjernKnapp' });
         act(() => fjernBarnKnapp.click());
 
-        const leggTilBarnKnapp = getByTestId('legg-til-barn-knapp');
+        const leggTilBarnKnapp = screen.getByRole('button', { name: 'FELLES.modaler.leggTilBarn.leggTilKnapp' });
         act(() => leggTilBarnKnapp.click());
 
-        const leggTilKnappIModal = getByTestId('submit-knapp-i-modal');
+        const modal = within(screen.getByRole('dialog'));
+        const leggTilKnappIModal = modal.getByRole('button', { name: 'FELLES.modaler.leggTilBarn.leggTilKnapp' });
 
-        const jaKnapp = getAllByRole('radio').find(radio => radio.getAttribute('value') === ESvar.JA);
-        expect(jaKnapp).toBeDefined();
-        act(() => jaKnapp!.click());
+        const erBarnetFødt = hentSpørsmål('FELLES.modaler.leggTilBarn.erBarnetFoedt.sporsmal');
+        act(() => hentSvaralternativ(erBarnetFødt, 'ja').click());
 
-        const fornavnInput = getByTestId('legg-til-barn-fornavn');
-        const etternavnInput = getByTestId('legg-til-barn-etternavn');
-        const idnrInput = getByTestId('legg-til-barn-fnr');
+        const fornavnInput = modal.getByLabelText('FELLES.modaler.leggTilBarn.fornavn.sporsmal');
+        const etternavnInput = modal.getByLabelText('FELLES.modaler.leggTilBarn.etternavn.sporsmal');
+        const idnrInput = modal.getByLabelText('FELLES.modaler.leggTilBarn.foedselsnummerEllerDNummer.sporsmal');
 
         act(() => {
             fireEvent.input(fornavnInput, { target: { value: manueltRegistrert.navn } });
@@ -173,7 +180,7 @@ describe('VelgBarn', () => {
             fireEvent.input(idnrInput, { target: { value: manueltRegistrert.ident } });
         });
 
-        await act(() => leggTilKnappIModal?.click());
+        await act(() => leggTilKnappIModal.click());
 
         expect(søknad.barnRegistrertManuelt.length).toBe(1);
         // Først fjernet vi barnet, så la vi det til igjen
@@ -197,14 +204,14 @@ describe('VelgBarn', () => {
         };
         spyOnUseApp(søknad);
 
-        const { getByTestId } = render(
+        render(
             <TestProvidere mocketNettleserHistorikk={['/velg-barn']}>
                 <VelgBarn />
             </TestProvidere>
         );
-        const checkbox: HTMLInputElement = getByTestId('søk-om-barnetrygd-for-barn-12345') as HTMLInputElement;
+        const checkbox = screen.getByRole('checkbox', { name: 'VELG_BARN.soekOmYtelseForBarnetSjekkboks Jens' });
         act(() => checkbox.click());
 
-        expect(checkbox.checked).toBe(true);
+        expect(checkbox).toBeChecked();
     });
 });

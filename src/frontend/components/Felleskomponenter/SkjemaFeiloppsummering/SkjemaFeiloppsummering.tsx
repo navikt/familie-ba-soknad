@@ -16,20 +16,11 @@ interface Props {
 export const SkjemaFeiloppsummering: FC<Props> = ({ skjema, stegMedFeil, id }) => {
     const { tekster, plainTekst } = useAppContext();
     return (
-        <ErrorSummary
-            id={id}
-            heading={plainTekst(tekster().FELLES.navigasjon.duMaaRetteOppFoelgende)}
-            headingTag="h3"
-            data-testid="skjema-feiloppsummering"
-        >
+        <ErrorSummary id={id} heading={plainTekst(tekster().FELLES.navigasjon.duMaaRetteOppFoelgende)} headingTag="h3">
             {Object.values(skjema.felter)
                 .filter(felt => felt.erSynlig && felt.valideringsstatus === Valideringsstatus.FEIL)
                 .map(felt => (
-                    <ErrorSummary.Item
-                        href={`#${felt.id}`}
-                        data-testid={`feilmelding-${felt.id}`}
-                        key={`feil-${felt.id}`}
-                    >
+                    <ErrorSummary.Item href={`#${felt.id}`} key={`feil-${felt.id}`}>
                         {stegMedFeil ? (
                             <AppLenke steg={stegMedFeil} hash={felt.id} key={`feil-${stegMedFeil}`}>
                                 {felt.feilmelding}

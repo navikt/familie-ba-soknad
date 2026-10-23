@@ -1,6 +1,6 @@
 import { ESanitySteg } from '../../../src/common/sanity';
-import { ITekstinnhold } from '../../../src/frontend/typer/sanity/tekstInnhold';
-
+import type { ITekstinnhold } from '../../../src/frontend/typer/sanity/tekstInnhold';
+import { brukNøkkelSomTekst } from './brukNøkkelSomTekst';
 import { fellesTekstInnhold } from './felles/felles';
 import { dinLivssituasjonTekstinnhold } from './sider/dinLivssituasjon';
 import { dokumentasjonTekstinnhold } from './sider/dokumentasjon';
@@ -14,8 +14,8 @@ import { omDegTekstinnhold } from './sider/omDeg';
 import { oppsummeringTekstinnhold } from './sider/oppsummering';
 import { velgBarnTekstinnhold } from './sider/velgBarn';
 
-export function mockTekstInnhold(): ITekstinnhold {
-    return {
+const lagTekstInnhold = (): ITekstinnhold => {
+    const innhold: ITekstinnhold = {
         [ESanitySteg.FORSIDE]: forsideTekstinnhold,
         [ESanitySteg.OM_DEG]: omDegTekstinnhold,
         [ESanitySteg.DIN_LIVSSITUASJON]: dinLivssituasjonTekstinnhold,
@@ -29,4 +29,12 @@ export function mockTekstInnhold(): ITekstinnhold {
         [ESanitySteg.KVITTERING]: kvitteringTekstinnhold,
         [ESanitySteg.FELLES]: fellesTekstInnhold,
     };
+
+    return brukNøkkelSomTekst(structuredClone(innhold));
+};
+
+const tekstInnhold = lagTekstInnhold();
+
+export function mockTekstInnhold(): ITekstinnhold {
+    return { ...tekstInnhold };
 }

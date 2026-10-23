@@ -1,5 +1,10 @@
-import { IFrittståendeOrdTekstinnhold } from '../../../../src/frontend/typer/sanity/tekstInnhold';
+import { ESanitySivilstandApiKey } from '../../../../src/common/sanity';
+import type { IFrittståendeOrdTekstinnhold } from '../../../../src/frontend/typer/sanity/tekstInnhold';
 import { lagLocaleRecordString } from '../lagSanityObjekter';
+
+const sivilstandTekster = Object.fromEntries(
+    Object.values(ESanitySivilstandApiKey).map(apiNavn => [apiNavn, lagLocaleRecordString()])
+);
 
 export const frittståendeOrdTekstinnhold: IFrittståendeOrdTekstinnhold = {
     i: lagLocaleRecordString(),
@@ -32,4 +37,5 @@ export const frittståendeOrdTekstinnhold: IFrittståendeOrdTekstinnhold = {
     eller: lagLocaleRecordString(),
     og: lagLocaleRecordString(),
     soeker: lagLocaleRecordString(),
+    ...sivilstandTekster,
 };
