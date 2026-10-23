@@ -87,7 +87,7 @@
     "xss": "1.0.15"
   },
   "devDependencies": {
-    "@axe-core/react": "4.13.0",
+    "@axe-core/react": "4.14.0",
     "@biomejs/biome": "2.5.15",
     "@playwright/test": "1.63.0",
     "@portabletext/types": "4.0.2",
