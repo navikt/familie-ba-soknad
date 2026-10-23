@@ -51,6 +51,16 @@ describe('brukNøkkelSomTekst', () => {
 });
 
 describe('mockTekstInnhold', () => {
+    it('gir persontyper som deler mock-objekt hver sin tekst og api_navn', () => {
+        const { utenlandsopphold } = mockTekstInnhold().FELLES.modaler;
+
+        for (const personType of ['søker', 'barn', 'andreForelder'] as const) {
+            const sti = `FELLES.modaler.utenlandsopphold.${personType}.tittel`;
+            expect(blokkTekst(utenlandsopphold[personType].tittel)).toBe(sti);
+            expect(utenlandsopphold[personType].tittel.api_navn).toBe(sti);
+        }
+    });
+
     it('gir ulike tekster til ulike felt', () => {
         const { OM_DEG } = mockTekstInnhold();
 

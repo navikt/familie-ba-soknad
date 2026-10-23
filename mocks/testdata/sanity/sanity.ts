@@ -30,7 +30,8 @@ const lagTekstInnhold = (): ITekstinnhold => {
         [ESanitySteg.FELLES]: fellesTekstInnhold,
     };
 
-    return brukNøkkelSomTekst(structuredClone(innhold));
+    // Gir hver forekomst av delte objekter en egen kopi, slik at de får hver sin tekst.
+    return brukNøkkelSomTekst(JSON.parse(JSON.stringify(innhold)));
 };
 
 const tekstInnhold = lagTekstInnhold();
