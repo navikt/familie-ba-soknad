@@ -1,12 +1,10 @@
-import { ESvar } from '@navikt/familie-form-elements';
-
-import { render, within } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import { act } from 'react';
 import { mockDeep } from 'vitest-mock-extended';
 
 import { ESøknadstype } from '../../../../common/typer/kontrakt/generelle';
 import type { ISøknad } from '../../../typer/søknad';
-import { spyOnUseApp, TestProvidere } from '../../../utils/testing';
+import { hentSvaralternativ, spyOnUseApp, TestProvidere, ventPåSpørsmål } from '../../../utils/testing';
 
 import DinLivssituasjon from './DinLivssituasjon';
 import { DinLivssituasjonSpørsmålId } from './spørsmål';
@@ -40,39 +38,34 @@ describe('LeggTilSamboerModal', () => {
     it('Viser riktige feilmeldinger ved ingen utfylte felt av tidligere samboer', async () => {
         spyOnUseApp(søknad);
 
-        const { getByTestId, findByTestId } = render(
+        render(
             <TestProvidere mocketNettleserHistorikk={['/din-livssituasjon']}>
                 <DinLivssituasjon />
             </TestProvidere>
         );
 
-        const hattAnnenSamboerSpørsmål = await findByTestId('hatt-annen-samboer-i-perioden');
+        const hattAnnenSamboerSpørsmål = await ventPåSpørsmål(
+            'DIN_LIVSSITUASJON.hattAnnenSamboerForSoektPeriode.sporsmal'
+        );
+        act(() => hentSvaralternativ(hattAnnenSamboerSpørsmål, 'ja').click());
 
-        const jaKnapp: HTMLElement | undefined = within(hattAnnenSamboerSpørsmål)
-            .getAllByRole('radio')
-            .find(radio => radio.getAttribute('value') === ESvar.JA);
-        expect(jaKnapp).toBeDefined();
-        act(() => jaKnapp!.click());
-
-        const leggTilSamboerKnapp = getByTestId('hatt-annen-samboer-i-perioden-søker');
+        const leggTilSamboerKnapp = screen.getByRole('button', {
+            name: 'FELLES.modaler.tidligereSamboere.søker.leggTilKnapp',
+        });
         act(() => leggTilSamboerKnapp.click());
 
-        const gåVidereKnapp = getByTestId('submit-knapp-i-modal');
-        act(() => gåVidereKnapp.click());
+        const modal = within(screen.getByRole('dialog'));
+        const leggTilKnappIModal = modal.getByRole('button', {
+            name: 'FELLES.modaler.tidligereSamboere.søker.leggTilKnapp',
+        });
+        act(() => leggTilKnappIModal.click());
 
-        const feiloppsummering = getByTestId('skjema-feiloppsummering');
-        expect(feiloppsummering).toBeInTheDocument();
-
-        const feilmeldingSamboerNavn = getByTestId('feilmelding-utvidet-tidligere-samboer-navn');
-        expect(feilmeldingSamboerNavn).toBeInTheDocument();
-
-        const feilmeldingFnr = getByTestId('feilmelding-utvidet-tidligere-samboer-fnr');
-        expect(feilmeldingFnr).toBeInTheDocument();
-
-        const feilmeldingForholdStart = getByTestId('feilmelding-utvidet-tidligere-samboer-samboerFraDato');
-        expect(feilmeldingForholdStart).toBeInTheDocument();
-
-        const feilmeldingForholdSlutt = getByTestId('feilmelding-utvidet-tidligere-samboer-samboerTilDato');
-        expect(feilmeldingForholdSlutt).toBeInTheDocument();
+        expect(modal.getByRole('heading', { name: 'FELLES.navigasjon.duMaaRetteOppFoelgende' })).toBeInTheDocument();
+        expect(modal.getAllByRole('link').map(lenke => lenke.textContent)).toEqual([
+            'FELLES.modaler.tidligereSamboere.søker.samboerNavn.feilmelding',
+            'FELLES.modaler.tidligereSamboere.søker.foedselsnummerEllerDNummer.feilmelding',
+            'FELLES.modaler.tidligereSamboere.søker.startdato.feilmelding',
+            'FELLES.modaler.tidligereSamboere.søker.sluttdato.feilmelding',
+        ]);
     });
 });

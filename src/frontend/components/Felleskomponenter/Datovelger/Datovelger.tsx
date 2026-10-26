@@ -101,11 +101,10 @@ const Datovelger: FC<DatoVelgerProps> = ({
 
     return felt.erSynlig ? (
         <div aria-live={dynamisk ? 'polite' : 'off'}>
-            <DatePicker data-testid={'datovelger'} dropdownCaption strategy={strategy} {...datepickerProps}>
+            <DatePicker dropdownCaption strategy={strategy} {...datepickerProps}>
                 <DatePicker.Input
                     {...inputProps}
                     id={felt.id}
-                    data-testid={felt.id}
                     disabled={disabled}
                     size={'medium'}
                     label={label}

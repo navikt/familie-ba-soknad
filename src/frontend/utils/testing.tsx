@@ -2,13 +2,16 @@ import { ESvar } from '@navikt/familie-form-elements';
 import { HttpProvider } from '@navikt/familie-http';
 import { type Ressurs, RessursStatus } from '@navikt/familie-typer';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { within } from '@testing-library/react';
 import type { FC, PropsWithChildren, ReactNode } from 'react';
 import { Cookies, CookiesProvider } from 'react-cookie';
 import { MemoryRouter, useLocation } from 'react-router';
 import { vi } from 'vitest';
 import { mockDeep } from 'vitest-mock-extended';
 import { mockTekstInnhold } from '../../../mocks/testdata/sanity/sanity';
+import type { ESanityFlettefeltverdi } from '../../common/sanity';
 import { ESivilstand, ESøknadstype, Slektsforhold } from '../../common/typer/kontrakt/generelle';
+import { LocaleType } from '../../common/typer/localeType';
 import { UtenlandsoppholdSpørsmålId } from '../components/Felleskomponenter/UtenlandsoppholdModal/spørsmål';
 import {
     DinLivssituasjonSpørsmålId,
@@ -38,6 +41,7 @@ import { type ISøknad, initialStateSøknad } from '../typer/søknad';
 import { EUtenlandsoppholdÅrsak } from '../typer/utenlandsopphold';
 import { Årsak } from '../typer/utvidet';
 import { genererInitialBarnMedISøknad } from './barn';
+import { plainTekstHof } from './sanity';
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -48,6 +52,22 @@ const queryClient = new QueryClient({
         },
     },
 });
+
+const flettefeltTilTekstStub = (flettefeltVerdi: ESanityFlettefeltverdi): string => `[${flettefeltVerdi}]`;
+
+const escapeRegExp = (tekst: string) => tekst.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+export const hentSpørsmål = (sti: string, container: HTMLElement = document.body): HTMLElement =>
+    within(container).getByRole('radiogroup', { name: new RegExp(`^${escapeRegExp(sti)}`) });
+
+export const ventPåSpørsmål = (sti: string, container: HTMLElement = document.body): Promise<HTMLElement> =>
+    within(container).findByRole('radiogroup', { name: new RegExp(`^${escapeRegExp(sti)}`) });
+
+export const spørsmålFinnes = (sti: string, container: HTMLElement = document.body): boolean =>
+    within(container).queryByRole('radiogroup', { name: new RegExp(`^${escapeRegExp(sti)}`) }) !== null;
+
+export const hentSvaralternativ = (spørsmål: HTMLElement, svar: 'ja' | 'nei' | 'jegVetIkke'): HTMLElement =>
+    within(spørsmål).getByRole('radio', { name: `FELLES.frittståendeOrd.${svar}` });
 
 export const spyOnUseApp = søknad => {
     const tilRestLocaleRecord = vi.fn();
@@ -103,7 +123,7 @@ export const spyOnUseApp = søknad => {
         systemetFeiler: vi.fn().mockReturnValue(false),
         fåttGyldigKvittering: søknad.fåttGyldigKvittering === true,
         tekster: vi.fn().mockImplementation(() => mockTekstInnhold()),
-        plainTekst: vi.fn().mockReturnValue('tekst fra sanity'),
+        plainTekst: vi.fn(plainTekstHof(flettefeltTilTekstStub, LocaleType.nb)),
         tilRestLocaleRecord,
     });
 

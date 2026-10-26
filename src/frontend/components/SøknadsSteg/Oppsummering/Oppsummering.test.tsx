@@ -1,6 +1,6 @@
 import { ESvar } from '@navikt/familie-form-elements';
 
-import { render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { act } from 'react';
 import { mockDeep } from 'vitest-mock-extended';
 
@@ -39,16 +39,18 @@ describe('Oppsummering', () => {
         });
         spyOnUseApp(søknad);
 
-        const { container, findByTestId } = render(
+        const { findByTestId } = render(
             <TestProvidere mocketNettleserHistorikk={['/oppsummering']}>
                 <Oppsummering />
                 <LesUtLocation />
             </TestProvidere>
         );
-        const gåVidere = await findByTestId('neste-steg');
+        const gåVidere = await screen.findByRole('button', { name: 'FELLES.navigasjon.gaaVidereKnapp' });
         await act(() => gåVidere.click());
 
-        const feilOppsummering = container.getElementsByClassName('aksel-error-summary')[0];
+        const feilOppsummering = screen.getAllByRole('heading', {
+            name: 'FELLES.navigasjon.duMaaRetteOppFoelgende',
+        })[0];
 
         const location = await findByTestId('location');
         expect(JSON.parse(location.innerHTML).hash).toEqual('#omdeg-feil');
@@ -60,17 +62,17 @@ describe('Oppsummering', () => {
         const søknad = mekkGyldigSøknad();
         spyOnUseApp(søknad);
 
-        const { queryAllByRole, findByTestId } = render(
+        const { findByTestId } = render(
             <TestProvidere mocketNettleserHistorikk={['/oppsummering']}>
                 <Oppsummering />
                 <LesUtLocation />
             </TestProvidere>
         );
-        const gåVidere = await findByTestId('neste-steg');
+        const gåVidere = await screen.findByRole('button', { name: 'FELLES.navigasjon.gaaVidereKnapp' });
 
         await act(() => gåVidere.click());
 
-        expect(queryAllByRole('alert').length).toBe(0);
+        expect(screen.queryAllByRole('alert').length).toBe(0);
         const location = await findByTestId('location');
         await waitFor(() => {
             expect(JSON.parse(location.innerHTML).pathname).toEqual('/dokumentasjon');
