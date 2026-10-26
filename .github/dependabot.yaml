@@ -23,6 +23,9 @@ updates:
           - "react-dom"
           - "@types/react-dom"
           - "react-router"
+          - "@tanstack/react-query"
+          - "@tanstack/react-query-devtools"
+          - "styled-components"
       navikt:
         patterns:
           - "@navikt/aksel-icons"
@@ -31,6 +34,7 @@ updates:
           - "@navikt/fnrvalidator"
           - "@navikt/nav-dekoratoren-moduler"
           - "@navikt/oasis"
+          - "@navikt/pino-logger"
       familie:
         patterns:
           - "@navikt/familie-form-elements"
@@ -59,10 +63,13 @@ updates:
           - "@types/cors"
           - "express"
           - "@types/express"
+          - "@types/express-serve-static-core"
           - "http-proxy-middleware"
           - "@types/http-proxy"
           - "mustache-express"
           - "@types/mustache-express"
+          - "pino"
+          - "pino-pretty"
           - "xss"
       utils:
         patterns:
@@ -72,6 +79,7 @@ updates:
           - "axios"
           - "date-fns"
           - "i18n-iso-countries"
+          - "classnames"
       build-test-validate:
         patterns:
           - "@types/node"
@@ -87,6 +95,9 @@ updates:
           - "vitest"
           - "vitest-mock-extended"
           - "@vitejs/plugin-react"
+          - "@vercel/nft"
+          - "playwright"
+          - "@playwright/test"
       security-updates:
         applies-to: security-updates
         patterns:
