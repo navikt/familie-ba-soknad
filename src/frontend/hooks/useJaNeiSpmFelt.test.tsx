@@ -1,6 +1,7 @@
 import type { ESvar } from '@navikt/familie-form-elements';
 import { type Felt, Valideringsstatus } from '@navikt/familie-skjema';
 import { renderHook } from '@testing-library/react';
+import { lagSøker } from '@testutils/testdata/søkerTestdata';
 import type { Alpha3Code } from 'i18n-iso-countries';
 import { mock } from 'vitest-mock-extended';
 import { mockTekstInnhold } from '../../../mocks/testdata/sanity/sanity';
@@ -11,6 +12,7 @@ import { FeatureTogglesProvider } from '../context/FeatureTogglesContext';
 import { LastRessurserProvider } from '../context/LastRessurserContext';
 import { SanityProvider } from '../context/SanityContext';
 import { SpråkProvider } from '../context/SpråkContext';
+import { SøkerProvider } from '../context/SøkerContext';
 import type { ISøknadSpørsmål } from '../typer/spørsmål';
 import { CookiesProviderMedLocale } from '../utils/testing';
 import useJaNeiSpmFelt, { erRelevanteAvhengigheterValidert } from './useJaNeiSpmFelt';
@@ -146,7 +148,9 @@ describe('useJaNeiSpmFelt', () => {
                     <LastRessurserProvider>
                         <FeatureTogglesProvider>
                             <SanityProvider tekster={mockTekstInnhold()}>
-                                <AppProvider>{children}</AppProvider>
+                                <SøkerProvider søker={lagSøker()}>
+                                    <AppProvider>{children}</AppProvider>
+                                </SøkerProvider>
                             </SanityProvider>
                         </FeatureTogglesProvider>
                     </LastRessurserProvider>

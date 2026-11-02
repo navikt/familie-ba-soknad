@@ -1,10 +1,7 @@
-import { RessursStatus } from '@navikt/familie-typer';
 import { renderHook, waitFor } from '@testing-library/react';
-import { vi } from 'vitest';
-import { mockDeep } from 'vitest-mock-extended';
+import { lagSøker } from '@testutils/testdata/søkerTestdata';
 
 import { ESivilstand } from '../../common/typer/kontrakt/generelle';
-import type { ISøkerRespons } from '../typer/person';
 import {
     mekkGyldigSøker,
     mekkGyldigUtenlandsoppholdEøs,
@@ -13,23 +10,13 @@ import {
 } from '../utils/testing';
 
 import { EøsProvider, useEøsContext } from './EøsContext';
-import * as pdlRequest from './pdl';
 
 describe('EøsContext', () => {
     const wrapper = ({ children }) => (
-        <TestProvidere>
+        <TestProvidere søker={lagSøker({ sivilstand: { type: ESivilstand.UGIFT } })}>
             <EøsProvider>{children}</EøsProvider>
         </TestProvidere>
     );
-
-    beforeEach(() => {
-        vi.spyOn(pdlRequest, 'hentSluttbrukerFraPdl').mockImplementation(async () => ({
-            status: RessursStatus.SUKSESS,
-            data: mockDeep<ISøkerRespons>({
-                sivilstand: { type: ESivilstand.UGIFT },
-            }),
-        }));
-    });
 
     test(`Skal kunne sjekke om et land er EØS-land`, async () => {
         const { result } = renderHook(() => useEøsContext(), { wrapper });
