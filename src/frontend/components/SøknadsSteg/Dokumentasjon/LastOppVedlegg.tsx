@@ -73,7 +73,6 @@ const LastOppVedlegg: FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon }) => 
                 {dokumentasjonsbeskrivelse && (
                     <div>
                         <TekstBlock
-                            data-testid={'dokumentasjonsbeskrivelse'}
                             block={dokumentasjonTekster[dokumentasjonsbeskrivelse]}
                             flettefelter={{ barnetsNavn: barnasNavn }}
                             typografi={Typografi.BodyLong}
@@ -83,7 +82,6 @@ const LastOppVedlegg: FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon }) => 
 
                 {dokumentasjon.dokumentasjonsbehov !== Dokumentasjonsbehov.ANNEN_DOKUMENTASJON && (
                     <Checkbox
-                        data-testid={'dokumentasjon-er-sendt-inn-checkboks'}
                         aria-label={`${plainTekst(
                             dokumentasjonTekster.sendtInnTidligere
                         )} (${plainTekst(tittel, { barnetsNavn: barnasNavn })})`}
@@ -95,7 +93,7 @@ const LastOppVedlegg: FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon }) => 
                 )}
 
                 {!dokumentasjon.harSendtInn && (
-                    <div data-testid={'dokumentopplaster'}>
+                    <div>
                         <Filopplaster dokumentasjon={dokumentasjon} oppdaterDokumentasjon={oppdaterDokumentasjon} />
                     </div>
                 )}

@@ -33,7 +33,6 @@ export const SkjemaFeltInput: FC<SkjemaFeltInputProps> = props => {
             maxLength={500}
             autoComplete={autoComplete}
             disabled={disabled}
-            data-testid={felt.id}
         />
     ) : null;
 };

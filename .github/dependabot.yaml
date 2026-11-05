@@ -65,7 +65,6 @@ updates:
           - "@types/express"
           - "@types/express-serve-static-core"
           - "http-proxy-middleware"
-          - "@types/http-proxy"
           - "mustache-express"
           - "@types/mustache-express"
           - "pino"

@@ -87,7 +87,7 @@ const LeggTilBarnModal: FC<{
                             />
                         </KomponentGruppe>
                     </Fieldset>
-                    <div aria-live="polite" data-testid="fødselsnummer-eller-d-nummer-container">
+                    <div aria-live="polite">
                         <SkjemaFeltInput
                             felt={skjema.felter.ident}
                             visFeilmeldinger={skjema.visFeilmeldinger}

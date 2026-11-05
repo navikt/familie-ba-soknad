@@ -59,7 +59,6 @@ const SkjemaModal: FC<{
                 <Button
                     form="skjema"
                     variant={valideringErOk() ? 'primary' : 'secondary'}
-                    data-testid="submit-knapp-i-modal"
                     loading={submitSpinner}
                     onClick={event => {
                         event.preventDefault();

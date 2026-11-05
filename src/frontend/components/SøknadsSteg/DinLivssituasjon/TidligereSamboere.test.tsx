@@ -1,5 +1,5 @@
 import { ESvar } from '@navikt/familie-form-elements';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { mockDeep } from 'vitest-mock-extended';
 
 import { ESivilstand, ESøknadstype } from '../../../../common/typer/kontrakt/generelle';
@@ -38,16 +38,18 @@ const søknad = mockDeep<ISøknad>({
     },
 });
 
+const sluttdato = 'FELLES.modaler.tidligereSamboere.søker.sluttdato.sporsmal';
+
 describe('TidligereSamboere', () => {
     it('"Når ble samboerforholdet avsluttet?" skal ikke vises dersom man ikke har tidligere samboere', () => {
         spyOnUseApp(søknad);
 
-        const { queryByTestId } = render(
+        render(
             <TestProvidere mocketNettleserHistorikk={['/din-livssituasjon']}>
                 <DinLivssituasjon />
             </TestProvidere>
         );
-        const result = queryByTestId('utvidet-tidligere-samboer-samboerTilDato');
+        const result = screen.queryByText(sluttdato);
         expect(result).not.toBeInTheDocument();
     });
 
@@ -93,12 +95,12 @@ describe('TidligereSamboere', () => {
             },
         });
 
-        const { getByTestId } = render(
+        render(
             <TestProvidere>
                 <DinLivssituasjon />
             </TestProvidere>
         );
-        const result = getByTestId('utvidet-tidligere-samboer-samboerTilDato');
+        const result = screen.getByText(sluttdato);
         expect(result).toBeInTheDocument();
     });
 });

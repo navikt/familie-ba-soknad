@@ -1,5 +1,5 @@
 import { ESvar } from '@navikt/familie-form-elements';
-import { act, render, screen, waitFor } from '@testing-library/react';
+import { act, render, screen, within } from '@testing-library/react';
 import { useNavigate } from 'react-router';
 
 import { barnDataKeySpørsmål, type IBarnMedISøknad } from '../../../typer/barn';
@@ -39,6 +39,16 @@ const fraPdlSomIBarnMedISøknad: Partial<IBarnMedISøknad> = {
     },
 };
 
+const Tilbakeknapp = () => {
+    const navigate = useNavigate();
+
+    return (
+        <button type="button" onClick={() => navigate(-1)}>
+            Tilbake
+        </button>
+    );
+};
+
 describe('Ingen navigering tilbake til søknad fra kvitteringssiden', () => {
     test(`Render BlokkerTilbakeKnappModal og sjekk at den virker`, async () => {
         silenceConsoleErrors();
@@ -56,30 +66,21 @@ describe('Ingen navigering tilbake til søknad fra kvitteringssiden', () => {
             søknad.barnInkludertISøknaden = nySøknad.barnInkludertISøknaden;
         });
 
-        const Tilbakeknapp = () => {
-            const navigate = useNavigate();
-
-            return (
-                <button type="button" data-testid="tilbakeknapp" onClick={() => navigate(-1)}>
-                    Tilbake
-                </button>
-            );
-        };
-
-        const { findByTestId } = render(
+        render(
             <TestProvidere mocketNettleserHistorikk={['/dokumentasjon', '/kvittering']}>
                 <BlokkerTilbakeKnappModal />
                 <Tilbakeknapp />
             </TestProvidere>
         );
 
-        const tilbakeknapp = await findByTestId('tilbakeknapp');
+        const tilbakeknapp = await screen.findByRole('button', { name: 'Tilbake' });
+        expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
         act(() => {
             tilbakeknapp.click();
         });
 
-        const infoTekst = await waitFor(() => screen.getByTestId('blokker-tilbakeknapp-tekst'));
+        const modal = await screen.findByRole('dialog', { name: 'FELLES.modaler.blokkerTilbakeknapp.tittel' });
 
-        expect(infoTekst).toBeInTheDocument();
+        expect(within(modal).getByText('FELLES.modaler.blokkerTilbakeknapp.tilDittNav')).toBeInTheDocument();
     });
 });

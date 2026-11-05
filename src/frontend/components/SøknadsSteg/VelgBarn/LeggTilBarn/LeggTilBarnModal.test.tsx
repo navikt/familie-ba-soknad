@@ -1,8 +1,13 @@
-import { ESvar } from '@navikt/familie-form-elements';
-import { act, render, within } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import { vi } from 'vitest';
 
-import { silenceConsoleErrors, spyOnUseApp, TestProvidere } from '../../../../utils/testing';
+import {
+    hentSpørsmål,
+    hentSvaralternativ,
+    silenceConsoleErrors,
+    spyOnUseApp,
+    TestProvidere,
+} from '../../../../utils/testing';
 
 import LeggTilBarnModal from './LeggTilBarnModal';
 
@@ -11,26 +16,22 @@ describe('LeggTilBarnModal', () => {
         silenceConsoleErrors();
         spyOnUseApp({});
 
-        const { getByTestId } = render(
+        render(
             <TestProvidere>
                 <LeggTilBarnModal erÅpen={true} lukkModal={vi.fn()} />
             </TestProvidere>
         );
 
-        const erFødtSpørsmål = getByTestId('legg-til-barn-er-født');
+        const erFødtSpørsmål = hentSpørsmål('FELLES.modaler.leggTilBarn.erBarnetFoedt.sporsmal');
+        act(() => hentSvaralternativ(erFødtSpørsmål, 'ja').click());
 
-        const erFødtJaKnapp = within(erFødtSpørsmål)
-            .getAllByRole('radio')
-            .find(radio => radio.getAttribute('value') === ESvar.JA);
-        expect(erFødtJaKnapp).toBeDefined();
-        act(() => erFødtJaKnapp!.click());
+        expect(screen.queryByText('FELLES.modaler.leggTilBarn.foedselsnummerAlert')).not.toBeInTheDocument();
 
-        const fødselsnummerEllerDNummerContainer = getByTestId('fødselsnummer-eller-d-nummer-container');
+        const harIkkeFnrCheckbox = screen.getByRole('checkbox', {
+            name: 'FELLES.modaler.leggTilBarn.foedselsnummerEllerDNummer.checkboxLabel',
+        });
+        act(() => harIkkeFnrCheckbox.click());
 
-        const harIkkFnrCheckbox = within(fødselsnummerEllerDNummerContainer).getByRole('checkbox');
-        act(() => harIkkFnrCheckbox.click());
-
-        const advarsel = getByTestId('søker-må-bruke-pdf');
-        expect(advarsel).toBeInTheDocument();
+        expect(screen.getByText('FELLES.modaler.leggTilBarn.foedselsnummerAlert')).toBeInTheDocument();
     });
 });

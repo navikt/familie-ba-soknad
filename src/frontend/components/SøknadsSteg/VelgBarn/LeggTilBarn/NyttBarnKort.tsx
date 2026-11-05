@@ -15,7 +15,7 @@ export const NyttBarnKort: FC<{ onLeggTilBarn: () => void }> = ({ onLeggTilBarn 
     return (
         <Box padding="space-24" background={'sunken'} borderRadius="4">
             <BodyShort spacing>{plainTekst(soekeForUregistrerteBarn)}</BodyShort>
-            <Button type="button" variant="secondary" data-testid="legg-til-barn-knapp" onClick={() => onLeggTilBarn()}>
+            <Button type="button" variant="secondary" onClick={() => onLeggTilBarn()}>
                 {plainTekst(leggTilKnapp)}
             </Button>
         </Box>

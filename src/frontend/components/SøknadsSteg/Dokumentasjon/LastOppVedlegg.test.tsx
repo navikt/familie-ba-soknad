@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { vi } from 'vitest';
 import { mockDeep } from 'vitest-mock-extended';
 
@@ -25,6 +25,9 @@ const hentAnnenDokumentasjon = (): IDokumentasjon => {
     return dokumentasjon;
 };
 
+const sendtInnTidligere = /^DOKUMENTASJON\.sendtInnTidligere/;
+const velgFiler = 'DOKUMENTASJON.velgFiler';
+
 describe('LastOppVedlegg', () => {
     it('viser beredskapshjemtekst når bekreftelse fra barnevernet gjelder et barn i beredskapshjem', () => {
         const barnFraPdl: IBarn = {
@@ -46,13 +49,14 @@ describe('LastOppVedlegg', () => {
         };
         spyOnUseApp({ barnInkludertISøknaden: [barn] });
 
-        const { getByText } = render(
+        render(
             <TestProvidere>
                 <LastOppVedlegg dokumentasjon={dokumentasjon} oppdaterDokumentasjon={vi.fn()} />
             </TestProvidere>
         );
 
-        expect(getByText('beredskapshjem-beskrivelse')).toBeInTheDocument();
+        expect(screen.getByText('beredskapshjem-beskrivelse')).toBeInTheDocument();
+        expect(screen.getByRole('checkbox', { name: sendtInnTidligere })).toBeInTheDocument();
     });
 
     it('Viser ikke info-tekst og checkbox knapp for ANNEN_DOKUMENTASJON', () => {
@@ -60,15 +64,14 @@ describe('LastOppVedlegg', () => {
         const dokumentasjon = hentAnnenDokumentasjon();
         const oppdaterDokumentasjon = vi.fn();
 
-        const { getByTestId, queryByTestId } = render(
+        render(
             <TestProvidere>
                 <LastOppVedlegg dokumentasjon={dokumentasjon} oppdaterDokumentasjon={oppdaterDokumentasjon} />
             </TestProvidere>
         );
 
-        expect(queryByTestId('dokumentasjon-er-sendt-inn-checkboks')).not.toBeInTheDocument();
-        expect(queryByTestId('dokumentasjonsbeskrivelse')).not.toBeInTheDocument();
-        expect(getByTestId('dokumentopplaster')).toBeInTheDocument();
+        expect(screen.queryByRole('checkbox', { name: sendtInnTidligere })).not.toBeInTheDocument();
+        expect(screen.getByRole('button', { name: velgFiler })).toBeInTheDocument();
     });
 
     it('Viser info-tekst og checkbox knapp for ANNEN_DOKUMENTASJON når utvidet og skilt', () => {
@@ -82,14 +85,13 @@ describe('LastOppVedlegg', () => {
         const dokumentasjon = hentAnnenDokumentasjon();
         const oppdaterDokumentasjon = vi.fn();
 
-        const { getByTestId, queryByTestId } = render(
+        render(
             <TestProvidere mocketNettleserHistorikk={['/utvidet/']}>
                 <LastOppVedlegg dokumentasjon={dokumentasjon} oppdaterDokumentasjon={oppdaterDokumentasjon} />
             </TestProvidere>
         );
 
-        expect(queryByTestId('dokumentasjon-er-sendt-inn-checkboks')).not.toBeInTheDocument();
-        expect(queryByTestId('dokumentasjonsbeskrivelse')).not.toBeInTheDocument();
-        expect(getByTestId('dokumentopplaster')).toBeInTheDocument();
+        expect(screen.queryByRole('checkbox', { name: sendtInnTidligere })).not.toBeInTheDocument();
+        expect(screen.getByRole('button', { name: velgFiler })).toBeInTheDocument();
     });
 });

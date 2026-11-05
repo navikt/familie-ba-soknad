@@ -147,7 +147,7 @@ const Steg: FC<ISteg> = ({ tittel, guide, skjema, gåVidereCallback, vedleggOpps
                             {plainTekst(tilbakeKnapp)}
                         </Link>
                         <Box paddingBlock="space-24 space-20">
-                            <Heading level="2" size={'large'} data-testid="steg-tittel">
+                            <Heading level="2" size={'large'}>
                                 {tittel}
                             </Heading>
                         </Box>

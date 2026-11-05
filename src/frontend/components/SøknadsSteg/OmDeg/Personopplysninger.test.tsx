@@ -48,7 +48,7 @@ describe('Personopplysninger', () => {
 
         spyOnUseApp({ søker });
 
-        const { queryByText, queryByTestId } = render(
+        const { queryByText, getByText } = render(
             <CookiesProviderMedLocale>
                 <SpråkProvider>
                     <Personopplysninger />
@@ -56,7 +56,7 @@ describe('Personopplysninger', () => {
             </CookiesProviderMedLocale>
         );
         expect(queryByText('123456 78901')).toBeInTheDocument();
-        expect(queryByTestId('adressevisning-ikke-registrert')).toBeInTheDocument();
+        expect(getByText('OM_DEG.ikkeRegistrertAdresse')).toBeInTheDocument();
     });
 
     test('Viser riktig info og stopper søknad ved adressebeskyttelse', () => {
@@ -72,11 +72,11 @@ describe('Personopplysninger', () => {
 
         spyOnUseApp({ søker });
 
-        const { getByTestId } = render(
+        const { getByText } = render(
             <TestProvidere>
                 <Personopplysninger />
             </TestProvidere>
         );
-        expect(getByTestId('adressevisning-sperre')).toBeInTheDocument();
+        expect(getByText('OM_DEG.soekerAdressesperre')).toBeInTheDocument();
     });
 });

@@ -1,8 +1,5 @@
-import type { Socket } from 'node:net';
-
 import type { NextFunction, Request, RequestHandler, Response } from 'express';
 import type { ClientRequest } from 'http';
-import type { ProxyTargetUrl } from 'http-proxy';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import { v4 as uuid } from 'uuid';
 
@@ -28,7 +25,7 @@ export const doProxy = (targetUrl: string): RequestHandler => {
         secure: true,
         on: {
             proxyReq: restream,
-            error: (err: Error, _req: Request, _res: Response | Socket, proxyTargetUrl?: ProxyTargetUrl) => {
+            error: (err, _req, _res, proxyTargetUrl) => {
                 logger.error({ err, proxyTargetUrl }, 'Feil under proxy til apiet');
             },
         },

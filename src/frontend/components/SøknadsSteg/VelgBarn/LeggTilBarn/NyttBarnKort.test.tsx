@@ -1,9 +1,8 @@
-import { ESvar } from '@navikt/familie-form-elements';
 import * as fnrvalidator from '@navikt/fnrvalidator';
-import { act, fireEvent, render, waitFor, within } from '@testing-library/react';
+import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { vi } from 'vitest';
 
-import { spyOnUseApp, TestProvidere } from '../../../../utils/testing';
+import { hentSpørsmål, hentSvaralternativ, spyOnUseApp, TestProvidere } from '../../../../utils/testing';
 
 import LeggTilBarnModal from './LeggTilBarnModal';
 import { NyttBarnKort } from './NyttBarnKort';
@@ -17,7 +16,7 @@ describe('NyttBarnKort', () => {
         vi.spyOn(fnrvalidator, 'idnr').mockReturnValue({ status: 'valid', type: 'fnr' });
         const åpen: number[] = [];
 
-        const { getByRole, getByTestId, rerender } = render(
+        const { rerender } = render(
             <TestProvidere mocketNettleserHistorikk={['localhost:3000/velg-barn/']}>
                 <NyttBarnKort
                     onLeggTilBarn={() => {
@@ -35,7 +34,7 @@ describe('NyttBarnKort', () => {
             </TestProvidere>
         );
 
-        const leggTilBarnKort = getByRole('button');
+        const leggTilBarnKort = screen.getByRole('button', { name: 'FELLES.modaler.leggTilBarn.leggTilKnapp' });
         expect(leggTilBarnKort).toBeInTheDocument();
         act(() => leggTilBarnKort.click());
 
@@ -57,22 +56,17 @@ describe('NyttBarnKort', () => {
             </TestProvidere>
         );
 
-        const leggTilKnappIModal = getByTestId('submit-knapp-i-modal');
+        const modal = within(screen.getByRole('dialog'));
+        const leggTilKnappIModal = modal.getByRole('button', { name: 'FELLES.modaler.leggTilBarn.leggTilKnapp' });
         expect(leggTilKnappIModal).toBeInTheDocument();
         expect(leggTilKnappIModal).toHaveClass('aksel-button--medium');
 
-        const erFødt = getByTestId('legg-til-barn-er-født');
-        expect(erFødt).toBeInTheDocument();
+        const erFødt = hentSpørsmål('FELLES.modaler.leggTilBarn.erBarnetFoedt.sporsmal');
+        act(() => hentSvaralternativ(erFødt, 'ja').click());
 
-        const jaKnapp = within(erFødt)
-            .getAllByRole('radio')
-            .find(radio => radio.getAttribute('value') === ESvar.JA);
-        expect(jaKnapp).toBeDefined();
-        act(() => jaKnapp!.click());
-
-        const fornavnInput = getByTestId('legg-til-barn-fornavn');
-        const etternavnInput = getByTestId('legg-til-barn-etternavn');
-        const idnrInput = getByTestId('legg-til-barn-fnr');
+        const fornavnInput = modal.getByLabelText('FELLES.modaler.leggTilBarn.fornavn.sporsmal');
+        const etternavnInput = modal.getByLabelText('FELLES.modaler.leggTilBarn.etternavn.sporsmal');
+        const idnrInput = modal.getByLabelText('FELLES.modaler.leggTilBarn.foedselsnummerEllerDNummer.sporsmal');
 
         act(() => {
             fireEvent.input(fornavnInput, { target: { value: 'Sirius' } });
@@ -83,7 +77,7 @@ describe('NyttBarnKort', () => {
         expect(leggTilKnappIModal).toHaveClass('aksel-button--medium');
 
         // Her skjer det async kall med axios, som vi må vente på i de neste expectene
-        act(() => leggTilKnappIModal?.click());
+        act(() => leggTilKnappIModal.click());
         await waitFor(() => expect(åpen.length).toBe(0));
     });
 });
