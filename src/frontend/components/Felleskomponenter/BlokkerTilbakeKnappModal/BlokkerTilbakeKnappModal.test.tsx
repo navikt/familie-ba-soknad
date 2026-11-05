@@ -39,6 +39,16 @@ const fraPdlSomIBarnMedISøknad: Partial<IBarnMedISøknad> = {
     },
 };
 
+const Tilbakeknapp = () => {
+    const navigate = useNavigate();
+
+    return (
+        <button type="button" onClick={() => navigate(-1)}>
+            Tilbake
+        </button>
+    );
+};
+
 describe('Ingen navigering tilbake til søknad fra kvitteringssiden', () => {
     test(`Render BlokkerTilbakeKnappModal og sjekk at den virker`, async () => {
         silenceConsoleErrors();
@@ -55,16 +65,6 @@ describe('Ingen navigering tilbake til søknad fra kvitteringssiden', () => {
             søknad.barnRegistrertManuelt = nySøknad.barnRegistrertManuelt;
             søknad.barnInkludertISøknaden = nySøknad.barnInkludertISøknaden;
         });
-
-        const Tilbakeknapp = () => {
-            const navigate = useNavigate();
-
-            return (
-                <button type="button" onClick={() => navigate(-1)}>
-                    Tilbake
-                </button>
-            );
-        };
 
         render(
             <TestProvidere mocketNettleserHistorikk={['/dokumentasjon', '/kvittering']}>
