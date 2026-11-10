@@ -6,7 +6,8 @@ metadata:
   labels:
     team: teamfamilie
   annotations:
-    nginx.ingress.kubernetes.io/proxy-body-size: "25M"
+    # Litt over MAKS_FILSTØRRELSE_MB (10 MB) i useFilopplaster.tsx, så det er plass til multipart-headere
+    nginx.ingress.kubernetes.io/proxy-body-size: "11M"
     nginx.ingress.kubernetes.io/proxy-read-timeout: "120"
 spec:
   envFrom:
