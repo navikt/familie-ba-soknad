@@ -35,6 +35,11 @@ describe('test konvertering fra ISøknad til ISøknadKontrakt', () => {
             nn: ESvar.JA,
             en: ESvar.JA,
         });
+        expect(formatert.søker.spørsmål.værtINorgeITolvMåneder.verdi).toEqual({
+            nb: ESvar.JA,
+            nn: ESvar.JA,
+            en: ESvar.JA,
+        });
     });
     it('case 2', async () => {
         const { input: iSøknad } = testdata2;
