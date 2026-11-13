@@ -36,6 +36,14 @@ const toBarn = personopplysning({
     ],
 });
 
+const panelet = (page: Page) => page.getByRole('region', { name: 'Testverktøy: preutfyll søknaden' });
+
+/** Panelet er lukket til testeren åpner det. */
+async function åpnePreutfylling(page: Page) {
+    await page.goto(FORSIDE_MED_PREUTFYLLING);
+    await panelet(page).getByRole('button', { name: 'Vis mer' }).click();
+}
+
 async function preutfyll(
     page: Page,
     { scenario = 'Happy case – ordinær barnetrygd uten avvik', avvik = [] as string[] } = {}
@@ -120,11 +128,20 @@ test.describe('Preutfylling i testmiljø', () => {
         await page.goto(BASE_PATH);
 
         await expect(page.getByRole('button', { name: 'Start søknad' })).toBeVisible();
+        await expect(panelet(page)).toBeHidden();
+    });
+
+    test('skal være lukket til testeren åpner det', async ({ page }) => {
+        await page.goto(FORSIDE_MED_PREUTFYLLING);
+
+        await expect(panelet(page)).toBeVisible();
         await expect(page.getByRole('button', { name: PREUTFYLL })).toBeHidden();
+        await panelet(page).getByRole('button', { name: 'Vis mer' }).click();
+        await expect(page.getByRole('button', { name: PREUTFYLL })).toBeVisible();
     });
 
     test('skal sende inn en ordinær søknad', async ({ page }) => {
-        await page.goto(FORSIDE_MED_PREUTFYLLING);
+        await åpnePreutfylling(page);
 
         await preutfyll(page);
 
@@ -137,7 +154,7 @@ test.describe('Preutfylling i testmiljø', () => {
     });
 
     test('skal sende inn en søknad om utvidet barnetrygd', async ({ page }) => {
-        await page.goto(FORSIDE_MED_PREUTFYLLING);
+        await åpnePreutfylling(page);
 
         await preutfyll(page, { scenario: 'Utvidet barnetrygd' });
 
@@ -146,7 +163,7 @@ test.describe('Preutfylling i testmiljø', () => {
     });
 
     test('skal sende inn en søknad der søkeren har arbeidet i et EØS-land', async ({ page }) => {
-        await page.goto(FORSIDE_MED_PREUTFYLLING);
+        await åpnePreutfylling(page);
 
         await preutfyll(page, { scenario: 'EØS – søker har arbeidet i et EØS-land' });
 
@@ -158,7 +175,7 @@ test.describe('Preutfylling i testmiljø', () => {
     });
 
     test('skal sende inn en søknad der barna får barnetrygd fra et EØS-land', async ({ page }) => {
-        await page.goto(FORSIDE_MED_PREUTFYLLING);
+        await åpnePreutfylling(page);
 
         await preutfyll(page, { scenario: 'EØS – barna får barnetrygd fra et EØS-land' });
 
@@ -169,7 +186,7 @@ test.describe('Preutfylling i testmiljø', () => {
     });
 
     test('skal sende inn en søknad der den andre forelderen arbeider i et EØS-land', async ({ page }) => {
-        await page.goto(FORSIDE_MED_PREUTFYLLING);
+        await åpnePreutfylling(page);
 
         await preutfyll(page, { scenario: 'EØS – den andre forelderen arbeider i et EØS-land' });
 
@@ -181,7 +198,7 @@ test.describe('Preutfylling i testmiljø', () => {
 
     for (const { navn, forvent } of AVVIK) {
         test(`skal sende inn en søknad med avviket «${navn}»`, async ({ page }) => {
-            await page.goto(FORSIDE_MED_PREUTFYLLING);
+            await åpnePreutfylling(page);
 
             await preutfyll(page, { avvik: [navn] });
 
@@ -198,7 +215,7 @@ test.describe('Preutfylling i testmiljø', () => {
         'EØS – den andre forelderen arbeider i et EØS-land',
     ]) {
         test(`skal kunne kombinere «${scenario}» med alle avvik som passer sammen`, async ({ page }) => {
-            await page.goto(FORSIDE_MED_PREUTFYLLING);
+            await åpnePreutfylling(page);
 
             await preutfyll(page, { scenario, avvik: AVVIK_SOM_PASSER_MED_ANDRE_FORELDER });
 
@@ -210,7 +227,7 @@ test.describe('Preutfylling i testmiljø', () => {
 
     for (const scenario of ['EØS – søker har arbeidet i et EØS-land', 'EØS – barna får barnetrygd fra et EØS-land']) {
         test(`skal kunne kombinere «${scenario}» med fosterbarn`, async ({ page }) => {
-            await page.goto(FORSIDE_MED_PREUTFYLLING);
+            await åpnePreutfylling(page);
 
             await preutfyll(page, {
                 scenario,
@@ -224,7 +241,7 @@ test.describe('Preutfylling i testmiljø', () => {
     }
 
     test('skal avvise avvik som ikke kan kombineres', async ({ page }) => {
-        await page.goto(FORSIDE_MED_PREUTFYLLING);
+        await åpnePreutfylling(page);
 
         await preutfyll(page, { avvik: ['Barna er fosterbarn', 'Skriftlig avtale om delt bosted'] });
 
@@ -234,7 +251,7 @@ test.describe('Preutfylling i testmiljø', () => {
 
     test('skal spørre hvilke barn søknaden gjelder når søkeren har flere barn', async ({ page, apiMock }) => {
         apiMock.use(toBarn);
-        await page.goto(FORSIDE_MED_PREUTFYLLING);
+        await åpnePreutfylling(page);
 
         await preutfyll(page);
 
@@ -247,7 +264,7 @@ test.describe('Preutfylling i testmiljø', () => {
 
     test('skal sende inn en EØS-søknad for flere barn', async ({ page, apiMock }) => {
         apiMock.use(toBarn);
-        await page.goto(FORSIDE_MED_PREUTFYLLING);
+        await åpnePreutfylling(page);
         await page.getByRole('checkbox', { name: new RegExp(`^${BARN.navn}`) }).check();
         await page.getByRole('checkbox', { name: new RegExp(`^${BARN_NUMMER_TO.navn}`) }).check();
 
@@ -260,7 +277,7 @@ test.describe('Preutfylling i testmiljø', () => {
 
     test('skal kunne legge til et barn som ikke er i listen fra folkeregisteret', async ({ page, apiMock }) => {
         apiMock.use(personopplysning({ barn: [] }));
-        await page.goto(FORSIDE_MED_PREUTFYLLING);
+        await åpnePreutfylling(page);
         await page
             .getByRole('textbox', { name: 'Legg til barn med fødselsnummer (valgfritt)' })
             .fill(BARN_UTENFOR_FOLKEREGISTERLISTEN);
@@ -274,7 +291,7 @@ test.describe('Preutfylling i testmiljø', () => {
 
     test('skal sende inn en søknad for en søker med adressebeskyttelse', async ({ page, apiMock }) => {
         apiMock.use(personopplysning({ adresse: null, adressebeskyttelse: true }));
-        await page.goto(FORSIDE_MED_PREUTFYLLING);
+        await åpnePreutfylling(page);
 
         await preutfyll(page);
 
@@ -283,7 +300,7 @@ test.describe('Preutfylling i testmiljø', () => {
     });
 
     test('skal kunne fortsette på oppsummeringen etter at siden er lastet på nytt', async ({ page, mellomlager }) => {
-        await page.goto(FORSIDE_MED_PREUTFYLLING);
+        await åpnePreutfylling(page);
         await preutfyll(page, { scenario: 'EØS – søker har arbeidet i et EØS-land' });
         await forventSteg(page, Steg.Oppsummering);
         await expect.poll(() => mellomlager.lagret()?.søknad.barnInkludertISøknaden).toHaveLength(1);

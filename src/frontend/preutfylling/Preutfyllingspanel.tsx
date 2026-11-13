@@ -1,15 +1,4 @@
-import {
-    BodyShort,
-    Box,
-    Button,
-    Checkbox,
-    CheckboxGroup,
-    Heading,
-    Page,
-    Select,
-    TextField,
-    VStack,
-} from '@navikt/ds-react';
+import { Box, Button, Checkbox, CheckboxGroup, ExpansionCard, Page, Select, TextField, VStack } from '@navikt/ds-react';
 import { hentDataFraRessurs } from '@navikt/familie-typer';
 import type { Alpha3Code } from 'i18n-iso-countries';
 import { type FormEvent, useEffect, useState } from 'react';
@@ -124,82 +113,77 @@ const Preutfyllingspanel = () => {
 
     return (
         <Page.Block width="text" gutters>
-            <Box
-                as="section"
-                aria-labelledby="preutfylling-tittel"
-                padding="space-24"
-                marginBlock="space-24"
-                borderWidth="2"
-                borderRadius="12"
-                borderColor="warning"
-                background="warning-soft"
-            >
-                <form onSubmit={preutfyll}>
-                    <VStack gap="space-20">
-                        <div>
-                            <Heading id="preutfylling-tittel" level="2" size="small" spacing>
-                                Testverktøy: preutfyll søknaden
-                            </Heading>
-                            <BodyShort>
-                                Vises bare i testmiljø. Fyller ut hele søknaden for den innloggede testpersonen og tar
-                                deg til oppsummeringen, der du kan se over svarene før du sender inn.
-                            </BodyShort>
-                        </div>
-                        <Select
-                            label="Scenario"
-                            value={scenario}
-                            onChange={event => settScenario(event.target.value as Scenario)}
-                        >
-                            {Object.values(Scenario).map(etScenario => (
-                                <option key={etScenario} value={etScenario}>
-                                    {scenarioNavn[etScenario]}
-                                </option>
-                            ))}
-                        </Select>
-                        <CheckboxGroup
-                            legend="Avvik (valgfritt)"
-                            description="Svar som avviker fra happy case. Avvikene som gjelder barn, gjelder alle barna i søknaden."
-                            value={avvik}
-                            onChange={settAvvik}
-                            error={feilmeldinger.valg}
-                        >
-                            {Object.values(Avvik).map(etAvvik => (
-                                <Checkbox key={etAvvik} value={etAvvik}>
-                                    {avvikNavn[etAvvik]}
-                                </Checkbox>
-                            ))}
-                        </CheckboxGroup>
-                        {måVelgeBarn && (
-                            <CheckboxGroup
-                                legend="Hvilke barn skal søknaden gjelde?"
-                                value={valgteBarnIder}
-                                onChange={settValgteBarnIder}
-                                error={feilmeldinger.barn}
-                            >
-                                {barnFraFolkeregisteret.map(barn => (
-                                    <Checkbox key={barn.id} value={barn.id}>
-                                        {barnetsEtikett(barn)}
-                                    </Checkbox>
-                                ))}
-                            </CheckboxGroup>
-                        )}
-                        <TextField
-                            label="Legg til barn med fødselsnummer (valgfritt)"
-                            description="For barn som ikke hentes fra folkeregisteret, for eksempel barn med adressebeskyttelse."
-                            value={ekstraBarnIdent}
-                            onChange={event => settEkstraBarnIdent(event.target.value)}
-                            inputMode="numeric"
-                            autoComplete="off"
-                            htmlSize={14}
-                            error={feilmeldinger.ekstraBarnIdent}
-                        />
-                        <div>
-                            <Button type="submit" variant="secondary">
-                                Preutfyll og gå til oppsummering
-                            </Button>
-                        </div>
-                    </VStack>
-                </form>
+            <Box marginBlock="space-24">
+                <ExpansionCard aria-label="Testverktøy: preutfyll søknaden" size="small" data-color="warning">
+                    <ExpansionCard.Header>
+                        <ExpansionCard.Title as="h2" size="small">
+                            Testverktøy: preutfyll søknaden
+                        </ExpansionCard.Title>
+                        <ExpansionCard.Description>
+                            Vises bare i testmiljø. Fyller ut hele søknaden for den innloggede testpersonen og tar deg
+                            til oppsummeringen, der du kan se over svarene før du sender inn.
+                        </ExpansionCard.Description>
+                    </ExpansionCard.Header>
+                    <ExpansionCard.Content>
+                        <form onSubmit={preutfyll}>
+                            <VStack gap="space-20">
+                                <Select
+                                    label="Scenario"
+                                    value={scenario}
+                                    onChange={event => settScenario(event.target.value as Scenario)}
+                                >
+                                    {Object.values(Scenario).map(etScenario => (
+                                        <option key={etScenario} value={etScenario}>
+                                            {scenarioNavn[etScenario]}
+                                        </option>
+                                    ))}
+                                </Select>
+                                <CheckboxGroup
+                                    legend="Avvik (valgfritt)"
+                                    description="Svar som avviker fra happy case. Avvikene som gjelder barn, gjelder alle barna i søknaden."
+                                    value={avvik}
+                                    onChange={settAvvik}
+                                    error={feilmeldinger.valg}
+                                >
+                                    {Object.values(Avvik).map(etAvvik => (
+                                        <Checkbox key={etAvvik} value={etAvvik}>
+                                            {avvikNavn[etAvvik]}
+                                        </Checkbox>
+                                    ))}
+                                </CheckboxGroup>
+                                {måVelgeBarn && (
+                                    <CheckboxGroup
+                                        legend="Hvilke barn skal søknaden gjelde?"
+                                        value={valgteBarnIder}
+                                        onChange={settValgteBarnIder}
+                                        error={feilmeldinger.barn}
+                                    >
+                                        {barnFraFolkeregisteret.map(barn => (
+                                            <Checkbox key={barn.id} value={barn.id}>
+                                                {barnetsEtikett(barn)}
+                                            </Checkbox>
+                                        ))}
+                                    </CheckboxGroup>
+                                )}
+                                <TextField
+                                    label="Legg til barn med fødselsnummer (valgfritt)"
+                                    description="For barn som ikke hentes fra folkeregisteret, for eksempel barn med adressebeskyttelse."
+                                    value={ekstraBarnIdent}
+                                    onChange={event => settEkstraBarnIdent(event.target.value)}
+                                    inputMode="numeric"
+                                    autoComplete="off"
+                                    htmlSize={14}
+                                    error={feilmeldinger.ekstraBarnIdent}
+                                />
+                                <div>
+                                    <Button type="submit" variant="secondary">
+                                        Preutfyll og gå til oppsummering
+                                    </Button>
+                                </div>
+                            </VStack>
+                        </form>
+                    </ExpansionCard.Content>
+                </ExpansionCard>
             </Box>
         </Page.Block>
     );
