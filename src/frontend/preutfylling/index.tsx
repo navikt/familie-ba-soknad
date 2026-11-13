@@ -1,19 +1,15 @@
 import { lazy, Suspense } from 'react';
 
-const Preutfyllingspanel = lazy(() => import('./Preutfyllingspanel'));
+import { skalVisePreutfylling } from './skalVisePreutfylling';
 
-// Tillatelsesliste i stedet for «ikke prod», slik at panelet aldri vises på et vertsnavn vi ikke kjenner.
-const erTestmiljø = () => {
-    const { hostname } = window.location;
-    return hostname === 'localhost' || hostname === '127.0.0.1' || hostname.endsWith('.dev.nav.no');
-};
+const Preutfyllingspanel = lazy(() => import('./Preutfyllingspanel'));
 
 /**
  * Testverktøy for å sende inn søknader uten å fylle dem ut for hånd. All koden ligger i denne mappen, og koden for
- * selve panelet lastes bare ned i testmiljø.
+ * selve panelet lastes bare ned der panelet skal vises.
  */
 export function Preutfylling() {
-    if (!erTestmiljø()) {
+    if (!skalVisePreutfylling(window.location)) {
         return null;
     }
     return (
