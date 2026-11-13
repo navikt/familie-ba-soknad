@@ -6,7 +6,7 @@ metadata:
   labels:
     team: teamfamilie
   annotations:
-    nginx.ingress.kubernetes.io/proxy-body-size: "25M"
+    nginx.ingress.kubernetes.io/proxy-body-size: "11M"
     nginx.ingress.kubernetes.io/proxy-read-timeout: "120"
 spec:
   envFrom:
