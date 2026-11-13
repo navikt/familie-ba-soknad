@@ -46,6 +46,7 @@ export const søkerIKontraktFormat = (
         idNummer,
         triggetEøs,
         borPåRegistrertAdresse,
+        værtINorgeITolvMåneder,
         planleggerÅBoINorgeTolvMnd,
         erAsylsøker,
         arbeidIUtlandet,
@@ -79,6 +80,10 @@ export const søkerIKontraktFormat = (
         borPåRegistrertAdresse: nullableSøknadsfeltForESvar(
             omDegTekster.borPaaRegistrertAdresse.sporsmal,
             borPåRegistrertAdresse.svar
+        ),
+        værtINorgeITolvMåneder: søknadsfeltForESvar(
+            omDegTekster.vaertINorgeITolvMaaneder.sporsmal,
+            værtINorgeITolvMåneder.svar
         ),
         planleggerÅBoINorgeTolvMnd: nullableSøknadsfeltForESvar(
             omDegTekster.planleggerAaBoINorgeTolvMnd.sporsmal,
