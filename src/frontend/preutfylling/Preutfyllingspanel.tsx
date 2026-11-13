@@ -8,6 +8,7 @@ import { useLocation, useNavigate } from 'react-router';
 import { useAppContext } from '../context/AppContext';
 import { useEøsContext } from '../context/EøsContext';
 import { useStegContext } from '../context/StegContext';
+import { ROUTES } from '../routes';
 import type { IBarn } from '../typer/person';
 import { RouteEnum } from '../typer/routes';
 import type { ISøknad } from '../typer/søknad';
@@ -16,6 +17,7 @@ import { formaterFnr } from '../utils/visning';
 import { byggPreutfyltSøknad, erEøsScenario, finnUgyldigKombinasjon } from './byggPreutfyltSøknad';
 import { Avvik, avvikNavn, Scenario, scenarioNavn } from './scenario';
 
+// Danmark er et EØS-land både i kodeverket i preprod og i testdataene. Mangler det, brukes det første EØS-landet.
 const FORETRUKKET_EØS_LAND: Alpha3Code = 'DNK';
 
 interface Feilmeldinger {
@@ -56,17 +58,15 @@ const Preutfyllingspanel = () => {
     const [skalGåTilOppsummering, settSkalGåTilOppsummering] = useState(false);
 
     // Indeksen til oppsummeringen avhenger av barna og EØS-svarene, så den er først riktig etter at søknaden er satt.
+    // Derfor skjer navigeringen i en effekt etter at søknaden er satt, og ikke i samme hendelse.
+    const oppsummeringIndeks = steg.findIndex(etSteg => etSteg.route === RouteEnum.Oppsummering);
     useEffect(() => {
-        if (!skalGåTilOppsummering) {
-            return;
-        }
-        settSkalGåTilOppsummering(false);
-        const oppsummeringIndeks = steg.findIndex(etSteg => etSteg.route === RouteEnum.Oppsummering);
-        if (oppsummeringIndeks !== -1) {
+        if (skalGåTilOppsummering) {
+            settSkalGåTilOppsummering(false);
             settSisteUtfylteStegIndex(oppsummeringIndeks);
-            navigate(steg[oppsummeringIndeks].path);
+            navigate(ROUTES[RouteEnum.Oppsummering].path);
         }
-    }, [skalGåTilOppsummering, steg, settSisteUtfylteStegIndex, navigate]);
+    }, [skalGåTilOppsummering, oppsummeringIndeks, settSisteUtfylteStegIndex, navigate]);
 
     if (pathname !== '/' || !systemetOK()) {
         return null;
@@ -138,7 +138,8 @@ const Preutfyllingspanel = () => {
         } catch (feilFraByggingen) {
             // Feil i en hendelse fanges ikke av Feilgrense, så de vises her i stedet for at klikket ikke gjør noe.
             console.error(feilFraByggingen);
-            return settFeilmeldinger({ scenario: 'Klarte ikke å lage søknaden. Se konsollen for detaljer.' });
+            settFeilmeldinger({ scenario: 'Klarte ikke å lage søknaden. Se konsollen for detaljer.' });
+            return;
         }
 
         settSøknad(preutfyltSøknad);
@@ -160,7 +161,8 @@ const Preutfyllingspanel = () => {
                         </ExpansionCard.Title>
                         <ExpansionCard.Description>
                             Vises bare i testmiljø. Fyller ut hele søknaden for den innloggede testpersonen og tar deg
-                            til oppsummeringen, der du kan se over svarene før du sender inn.
+                            til oppsummeringen, der du kan se over svarene før du sender inn. En søknad du har påbegynt,
+                            blir erstattet.
                         </ExpansionCard.Description>
                     </ExpansionCard.Header>
                     <ExpansionCard.Content>

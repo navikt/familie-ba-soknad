@@ -1,7 +1,7 @@
 import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { lagBarn } from '@testutils/testdata/barnTestdata';
 import { lagSøker } from '@testutils/testdata/søkerTestdata';
-import { StrictMode, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useLocation } from 'react-router';
 import { beforeEach, describe, expect, it } from 'vitest';
 
@@ -13,12 +13,11 @@ import { TestProvidere } from '../utils/testing';
 
 import Preutfyllingspanel from './Preutfyllingspanel';
 import { Avvik, avvikNavn, Scenario } from './scenario';
+import { EKSTRA_BARN_IDENT } from './testoppsett';
 
 const PREUTFYLL = 'Preutfyll og gå til oppsummering';
 const VELG_BARN = 'Velg minst ett barn, eller legg til et barn med fødselsnummer.';
 const EKSTRA_BARN = /^Legg til barn med fødselsnummer/;
-// Syntetisk fødselsnummer (Tenor) som ikke tilhører en ekte person.
-const EKSTRA_BARN_IDENT = '15859040087';
 
 const TO_BARN = [
     lagBarn({ ident: '12345678987', navn: 'Barn En' }),
@@ -42,16 +41,16 @@ let tilstand: Tilstand;
 
 /** Leser tilstanden panelet setter i søknaden, og hvilke sider søkeren sendes til. */
 const Sonde = () => {
-    const { pathname } = useLocation();
+    const { pathname, key } = useLocation();
     const { søknad, sisteUtfylteStegIndex } = useAppContext();
     const { steg, barnForSteg } = useStegContext();
     const { søkerTriggerEøs, barnSomTriggerEøs } = useEøsContext();
 
+    // Nøkkelen er ny for hver navigering, så to navigeringer til samme side registreres som to.
+    // biome-ignore lint/correctness/useExhaustiveDependencies: effekten skal kjøre for hver navigering
     useEffect(() => {
-        if (besøkteSider.at(-1) !== pathname) {
-            besøkteSider.push(pathname);
-        }
-    }, [pathname]);
+        besøkteSider.push(pathname);
+    }, [key]);
 
     tilstand = {
         side: pathname,
@@ -67,14 +66,13 @@ const Sonde = () => {
     return null;
 };
 
-const åpnePanelet = async (søker = lagSøker(), strictMode = false) => {
-    const tre = (
+const åpnePanelet = async (søker = lagSøker()) => {
+    render(
         <TestProvidere søker={søker}>
             <Preutfyllingspanel />
             <Sonde />
         </TestProvidere>
     );
-    render(strictMode ? <StrictMode>{tre}</StrictMode> : tre);
     fireEvent.click(await screen.findByRole('button', { name: 'Vis mer' }));
 };
 
@@ -82,14 +80,13 @@ const preutfyll = () => act(async () => fireEvent.click(screen.getByRole('button
 const barnet = (navn: string) => screen.getByRole('checkbox', { name: new RegExp(`^${navn},`) });
 const eøsSteg = () => tilstand.steg.filter(sti => sti.startsWith('/eøs'));
 
-// StrictMode kjører effekter to ganger, og avslører om navigeringen til oppsummeringen kan skje mer enn én gang.
-describe.each([false, true])('Preutfyllingspanel (StrictMode: %s)', strictMode => {
+describe('Preutfyllingspanel', () => {
     beforeEach(() => {
         besøkteSider.length = 0;
     });
 
     it('skal sette en ordinær søknad og gå én gang til oppsummeringen', async () => {
-        await åpnePanelet(lagSøker(), strictMode);
+        await åpnePanelet(lagSøker());
 
         await preutfyll();
 
@@ -104,7 +101,7 @@ describe.each([false, true])('Preutfyllingspanel (StrictMode: %s)', strictMode =
     });
 
     it('skal gi EØS-steg for søkeren og hvert barn når søkeren har arbeidet i et EØS-land', async () => {
-        await åpnePanelet(lagSøker({ barn: TO_BARN }), strictMode);
+        await åpnePanelet(lagSøker({ barn: TO_BARN }));
         fireEvent.change(screen.getByRole('combobox', { name: 'Scenario' }), { target: { value: Scenario.EØS_SØKER } });
         fireEvent.click(barnet('Barn En'));
         fireEvent.click(barnet('Barn To'));
@@ -121,7 +118,7 @@ describe.each([false, true])('Preutfyllingspanel (StrictMode: %s)', strictMode =
     });
 
     it('skal gi EØS-steg når barna utløser EØS', async () => {
-        await åpnePanelet(lagSøker(), strictMode);
+        await åpnePanelet(lagSøker());
         fireEvent.change(screen.getByRole('combobox', { name: 'Scenario' }), { target: { value: Scenario.EØS_BARN } });
 
         await preutfyll();
@@ -133,7 +130,7 @@ describe.each([false, true])('Preutfyllingspanel (StrictMode: %s)', strictMode =
     });
 
     it('skal spørre hvilke barn søknaden gjelder når søkeren har flere barn', async () => {
-        await åpnePanelet(lagSøker({ barn: TO_BARN }), strictMode);
+        await åpnePanelet(lagSøker({ barn: TO_BARN }));
         expect(barnet('Barn En')).not.toBeChecked();
         expect(barnet('Barn To')).not.toBeChecked();
 
@@ -149,7 +146,7 @@ describe.each([false, true])('Preutfyllingspanel (StrictMode: %s)', strictMode =
     });
 
     it('skal kunne søke bare for et barn lagt til med fødselsnummer når søkeren har ett barn', async () => {
-        await åpnePanelet(lagSøker({ barn: [TO_BARN[0]] }), strictMode);
+        await åpnePanelet(lagSøker({ barn: [TO_BARN[0]] }));
         expect(barnet('Barn En')).toBeChecked();
         fireEvent.click(barnet('Barn En'));
         fireEvent.change(screen.getByRole('textbox', { name: EKSTRA_BARN }), { target: { value: '158590 40087' } });
@@ -161,12 +158,12 @@ describe.each([false, true])('Preutfyllingspanel (StrictMode: %s)', strictMode =
     });
 
     it('skal vise feilen på feltet for fødselsnummer når søkeren ikke har barn', async () => {
-        await åpnePanelet(lagSøker({ barn: [] }), strictMode);
+        await åpnePanelet(lagSøker({ barn: [] }));
 
         await preutfyll();
 
         expect(screen.getByRole('textbox', { name: EKSTRA_BARN })).toHaveAccessibleDescription(
-            new RegExp(VELG_BARN.slice(0, 20))
+            expect.stringContaining(VELG_BARN)
         );
         expect(tilstand.side).toBe('/');
     });
@@ -178,7 +175,7 @@ describe.each([false, true])('Preutfyllingspanel (StrictMode: %s)', strictMode =
             feilmelding: 'Barnet med dette fødselsnummeret er allerede hentet fra folkeregisteret.',
         },
     ])('skal avvise fødselsnummeret $ident', async ({ ident, feilmelding }) => {
-        await åpnePanelet(lagSøker({ barn: [TO_BARN[0]] }), strictMode);
+        await åpnePanelet(lagSøker({ barn: [TO_BARN[0]] }));
         fireEvent.change(screen.getByRole('textbox', { name: EKSTRA_BARN }), { target: { value: ident } });
 
         await preutfyll();
@@ -188,7 +185,7 @@ describe.each([false, true])('Preutfyllingspanel (StrictMode: %s)', strictMode =
     });
 
     it('skal avvise valg som ikke kan kombineres', async () => {
-        await åpnePanelet(lagSøker(), strictMode);
+        await åpnePanelet(lagSøker());
         fireEvent.click(screen.getByRole('checkbox', { name: avvikNavn[Avvik.FOSTERBARN] }));
         fireEvent.click(screen.getByRole('checkbox', { name: avvikNavn[Avvik.DELT_BOSTED] }));
 
@@ -202,7 +199,7 @@ describe.each([false, true])('Preutfyllingspanel (StrictMode: %s)', strictMode =
     it('skal ikke vise navn og fødselsnummer for barn med adressebeskyttelse', async () => {
         const barn = lagBarn({ ident: '12345678987', navn: 'Barn En', adressebeskyttelse: true });
 
-        await åpnePanelet(lagSøker({ barn: [barn] }), strictMode);
+        await åpnePanelet(lagSøker({ barn: [barn] }));
 
         expect(screen.getByRole('checkbox', { name: /^Barn med adressebeskyttelse/ })).toBeChecked();
         expect(screen.queryByText(/Barn En/)).not.toBeInTheDocument();

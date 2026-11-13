@@ -9,7 +9,7 @@ import { spyOnUseApp } from '../utils/testing';
 import { byggPreutfyltSøknad, finnUgyldigKombinasjon, type Preutfyllingsvalg } from './byggPreutfyltSøknad';
 import { Avvik, Scenario } from './scenario';
 
-/** Felles oppsett for testene i denne mappen. Brukes ikke av selve verktøyet. */
+// Felles oppsett for testene i denne mappen. Brukes ikke av selve verktøyet.
 
 export const EØS_LAND = 'BEL';
 export const EKSTRA_BARN_IDENT = '15859040087';
@@ -130,6 +130,13 @@ export const TILFELLER_MED_KOMBINASJONER: Tilfelle[] = Object.values(Scenario).f
     )
 );
 
+/** Sivilstanden styrer spørsmålene i utvidet barnetrygd og spørsmålet om avdød partner. */
+export const TILFELLER_MED_SIVILSTAND: Tilfelle[] = [
+    ...Object.values(ESivilstand).map(type => medSivilstand(Scenario.UTVIDET, type)),
+    medSivilstand(Scenario.ORDINÆR, ESivilstand.ENKE_ELLER_ENKEMANN),
+    medSivilstand(Scenario.EØS_SØKER, ESivilstand.GJENLEVENDE_PARTNER),
+];
+
 /**
  * Alle tilfellene testene kjøres for. Hvert avvik alene, sivilstandene og de andre søkerne prøves bare der de gir andre
  * svar, for å holde testene raske.
@@ -137,10 +144,7 @@ export const TILFELLER_MED_KOMBINASJONER: Tilfelle[] = Object.values(Scenario).f
 export const TILFELLER: Tilfelle[] = [
     ...TILFELLER_MED_KOMBINASJONER,
     ...ALLE_AVVIK.map(avvik => medAvvik(Scenario.ORDINÆR, [avvik])),
-    // Sivilstanden styrer spørsmålene i utvidet barnetrygd og spørsmålet om avdød partner.
-    ...Object.values(ESivilstand).map(type => medSivilstand(Scenario.UTVIDET, type)),
-    medSivilstand(Scenario.ORDINÆR, ESivilstand.ENKE_ELLER_ENKEMANN),
-    medSivilstand(Scenario.EØS_SØKER, ESivilstand.GJENLEVENDE_PARTNER),
+    ...TILFELLER_MED_SIVILSTAND,
     ...medAndreSøkereOgBarn(Scenario.ORDINÆR),
     ...medAndreSøkereOgBarn(Scenario.EØS_ANDRE_FORELDER),
 ];

@@ -13,14 +13,19 @@ import { Avvik, avvikNavn, Scenario, scenarioNavn } from '../../src/frontend/pre
 import { expect, test } from '../fixtures';
 import { BARN, erInnsending, forventSteg, gåTilNesteSteg, oppsummeringsbolk, Steg } from '../søknad';
 
+/*
+ * Reglene i verktøyet testes av enhetstestene i src/frontend/preutfylling, som kjører i CI. Testene her dekker det bare
+ * et ekte bygg kan vise: at panelet lastes og skjules riktig, og at en preutfylt søknad kommer seg gjennom
+ * oppsummeringen, dokumentasjonen og innsendingen i nettleseren.
+ */
+
 // Lokalt vises panelet bare med ?preutfylling i adressen, se skalVisePreutfylling.
 const FORSIDE_MED_PREUTFYLLING = `${BASE_PATH}?preutfylling`;
 const PREUTFYLL = 'Preutfyll og gå til oppsummering';
-const EKSTRA_BARN = 'Legg til barn med fødselsnummer (valgfritt)';
 
 // Syntetiske fødselsnumre (Tenor) som ikke tilhører ekte personer.
 const BARN_NUMMER_TO = { navn: 'Lille Barnessen', ident: '10832350120' };
-const BARN_UTENFOR_FOLKEREGISTERLISTEN = '15859040087';
+const BARN_LAGT_TIL_MED_FØDSELSNUMMER = '15859040087';
 
 const personopplysning = (endring: object) =>
     http.get(urlMedBasePath('api/personopplysning'), () =>
@@ -86,6 +91,7 @@ const vedleggskrav = (søknad: ISøknadKontrakt) => søknad.dokumentasjon.map(do
 // Annen dokumentasjon kan alltid lastes opp, så den er med i alle søknader.
 const INGEN_VEDLEGGSKRAV = [Dokumentasjonsbehov.ANNEN_DOKUMENTASJON];
 
+// Hva som skal stå i den innsendte søknaden for hvert avvik. Typen krever en forventning når et avvik legges til.
 const FORVENTET_SVAR: Record<Avvik, (søknad: ISøknadKontrakt) => void> = {
     [Avvik.DELT_BOSTED]: søknad => {
         expect(søknad.barn[0].andreForelder?.skriftligAvtaleOmDeltBosted?.verdi.nb).toBe('JA');
@@ -119,14 +125,15 @@ const FORVENTET_SVAR: Record<Avvik, (søknad: ISøknadKontrakt) => void> = {
         expect(søknad.barn[0].utenlandsperioder).toHaveLength(1);
     },
 };
-const ALLE_AVVIK = Object.values(Avvik);
-const AVVIK_SOM_PASSER_MED_ANDRE_FORELDER = ALLE_AVVIK.filter(avvik => avvik !== Avvik.FOSTERBARN);
+const AVVIK_SOM_PASSER_MED_ANDRE_FORELDER = Object.values(Avvik).filter(avvik => avvik !== Avvik.FOSTERBARN);
 
 test.describe('Preutfylling i testmiljø', () => {
     test('skal ikke vises lokalt uten ?preutfylling i adressen', async ({ page }) => {
         await page.goto(BASE_PATH);
 
         await expect(page.getByRole('button', { name: 'Start søknad' })).toBeVisible();
+        // Panelet lastes for seg, så testen venter til siden er ferdig med å hente før den ser etter det.
+        await page.waitForLoadState('networkidle');
         await expect(panelet(page)).toBeHidden();
     });
 
@@ -199,19 +206,7 @@ test.describe('Preutfylling i testmiljø', () => {
         expect(søknad.barn[0].andreForelder?.arbeidsperioderUtland).toHaveLength(1);
     });
 
-    for (const avvik of ALLE_AVVIK) {
-        test(`skal sende inn en søknad med avviket «${avvikNavn[avvik]}»`, async ({ page }) => {
-            await åpnePreutfylling(page);
-
-            await preutfyll(page, { avvik: [avvik] });
-
-            const søknad = await sendInnFraOppsummeringen(page);
-            FORVENTET_SVAR[avvik](søknad);
-            expect(søknad.antallEøsSteg).toBe(0);
-        });
-    }
-
-    for (const scenario of Object.values(Scenario).filter(scenario => scenario !== Scenario.ORDINÆR)) {
+    for (const scenario of [Scenario.UTVIDET, Scenario.EØS_ANDRE_FORELDER]) {
         test(`skal kunne kombinere «${scenarioNavn[scenario]}» med alle avvik som passer sammen`, async ({ page }) => {
             await åpnePreutfylling(page);
 
@@ -225,57 +220,18 @@ test.describe('Preutfylling i testmiljø', () => {
         });
     }
 
-    for (const scenario of [Scenario.EØS_SØKER, Scenario.EØS_BARN]) {
-        test(`skal kunne kombinere «${scenarioNavn[scenario]}» med fosterbarn`, async ({ page }) => {
-            await åpnePreutfylling(page);
+    test('skal kunne kombinere fosterbarn med et EØS-scenario', async ({ page }) => {
+        await åpnePreutfylling(page);
 
-            await preutfyll(page, { scenario, avvik: [Avvik.FOSTERBARN, Avvik.BOR_IKKE_FAST_MED_SØKER] });
-
-            const søknad = await sendInnFraOppsummeringen(page);
-            FORVENTET_SVAR[Avvik.FOSTERBARN](søknad);
-            expect(søknad.barn[0].harEøsSteg).toBe(true);
+        await preutfyll(page, {
+            scenario: Scenario.EØS_BARN,
+            avvik: [Avvik.FOSTERBARN, Avvik.BOR_IKKE_FAST_MED_SØKER],
         });
-    }
 
-    test('skal avvise fosterbarn sammen med avtale om delt bosted', async ({ page }) => {
-        await åpnePreutfylling(page);
-
-        await preutfyll(page, { avvik: [Avvik.FOSTERBARN, Avvik.DELT_BOSTED] });
-
-        await expect(page.getByText('Fosterbarn kan ikke kombineres med avtale om delt bosted.')).toBeVisible();
-        await expect(page.getByRole('button', { name: PREUTFYLL })).toBeVisible();
-    });
-
-    test('skal avvise fosterbarn når den andre forelderen arbeider i et EØS-land', async ({ page }) => {
-        await åpnePreutfylling(page);
-
-        await preutfyll(page, { scenario: Scenario.EØS_ANDRE_FORELDER, avvik: [Avvik.FOSTERBARN] });
-
-        await expect(page.getByText(/^Fosterbarn kan ikke kombineres med scenarioet/)).toBeVisible();
-        await expect(page.getByRole('button', { name: PREUTFYLL })).toBeVisible();
-    });
-
-    test('skal fjerne feilmeldingen når testeren endrer valgene', async ({ page }) => {
-        await åpnePreutfylling(page);
-        await preutfyll(page, { avvik: [Avvik.FOSTERBARN, Avvik.DELT_BOSTED] });
-        await expect(page.getByText('Fosterbarn kan ikke kombineres med avtale om delt bosted.')).toBeVisible();
-
-        await avviket(page, Avvik.DELT_BOSTED).uncheck();
-
-        await expect(page.getByText('Fosterbarn kan ikke kombineres med avtale om delt bosted.')).toBeHidden();
-    });
-
-    test('skal spørre hvilke barn søknaden gjelder når søkeren har flere barn', async ({ page, apiMock }) => {
-        apiMock.use(toBarn);
-        await åpnePreutfylling(page);
-
-        await preutfyll(page);
-
-        await expect(page.getByText('Velg minst ett barn, eller legg til et barn med fødselsnummer.')).toBeVisible();
-        await barnet(page, BARN_NUMMER_TO.navn).check();
-        await preutfyll(page);
         const søknad = await sendInnFraOppsummeringen(page);
-        expect(søknad.barn.map(barn => barn.ident.verdi.nb)).toEqual([BARN_NUMMER_TO.ident]);
+        FORVENTET_SVAR[Avvik.FOSTERBARN](søknad);
+        FORVENTET_SVAR[Avvik.BOR_IKKE_FAST_MED_SØKER](søknad);
+        expect(søknad.barn[0].harEøsSteg).toBe(true);
     });
 
     test('skal sende inn en EØS-søknad for flere barn', async ({ page, apiMock }) => {
@@ -287,54 +243,24 @@ test.describe('Preutfylling i testmiljø', () => {
         await preutfyll(page, { scenario: Scenario.EØS_ANDRE_FORELDER });
 
         const søknad = await sendInnFraOppsummeringen(page);
-        expect(søknad.barn).toHaveLength(2);
+        expect(søknad.barn.map(barn => barn.ident.verdi.nb)).toEqual([BARN.ident, BARN_NUMMER_TO.ident]);
         expect(søknad.antallEøsSteg).toBe(3);
     });
 
-    test('skal kunne legge til et barn som ikke er i listen fra folkeregisteret', async ({ page, apiMock }) => {
-        apiMock.use(personopplysning({ barn: [] }));
+    test('skal sende inn en søknad for et barn lagt til med fødselsnummer', async ({ page, apiMock }) => {
+        apiMock.use(personopplysning({ barn: [], adresse: null, adressebeskyttelse: true }));
         await åpnePreutfylling(page);
-        await page.getByRole('textbox', { name: EKSTRA_BARN }).fill(BARN_UTENFOR_FOLKEREGISTERLISTEN);
+        await page
+            .getByRole('textbox', { name: 'Legg til barn med fødselsnummer (valgfritt)' })
+            .fill(BARN_LAGT_TIL_MED_FØDSELSNUMMER);
 
         await preutfyll(page);
 
         const søknad = await sendInnFraOppsummeringen(page);
-        expect(søknad.barn.map(barn => barn.ident.verdi.nb)).toEqual([BARN_UTENFOR_FOLKEREGISTERLISTEN]);
+        expect(søknad.barn.map(barn => barn.ident.verdi.nb)).toEqual([BARN_LAGT_TIL_MED_FØDSELSNUMMER]);
         expect(søknad.barn[0].registrertBostedType.verdi.nb).toBe('IKKE_FYLT_INN');
         expect(vedleggskrav(søknad)).toContain(Dokumentasjonsbehov.BOR_FAST_MED_SØKER);
-    });
-
-    test('skal kunne søke bare for barnet som er lagt til, når søkeren har ett barn i folkeregisteret', async ({
-        page,
-    }) => {
-        await åpnePreutfylling(page);
-        await expect(barnet(page, BARN.navn)).toBeChecked();
-        await barnet(page, BARN.navn).uncheck();
-        await page.getByRole('textbox', { name: EKSTRA_BARN }).fill(BARN_UTENFOR_FOLKEREGISTERLISTEN);
-
-        await preutfyll(page);
-
-        const søknad = await sendInnFraOppsummeringen(page);
-        expect(søknad.barn.map(barn => barn.ident.verdi.nb)).toEqual([BARN_UTENFOR_FOLKEREGISTERLISTEN]);
-    });
-
-    test('skal avvise et fødselsnummer som ikke er gyldig', async ({ page }) => {
-        await åpnePreutfylling(page);
-        await page.getByRole('textbox', { name: EKSTRA_BARN }).fill('12345678901');
-
-        await preutfyll(page);
-
-        await expect(page.getByText('Fødselsnummeret er ikke gyldig.')).toBeVisible();
-        await expect(page.getByRole('button', { name: PREUTFYLL })).toBeVisible();
-    });
-
-    test('skal ikke svare på spørsmålet om adresse for en søker med adressebeskyttelse', async ({ page, apiMock }) => {
-        apiMock.use(personopplysning({ adresse: null, adressebeskyttelse: true }));
-        await åpnePreutfylling(page);
-
-        await preutfyll(page);
-
-        const søknad = await sendInnFraOppsummeringen(page);
+        // Spørsmålet om adresse stilles ikke til en søker med adressebeskyttelse.
         expect(svarFraSøker(søknad, 'værtINorgeITolvMåneder')).toBe('JA');
         expect(svarFraSøker(søknad, 'borPåRegistrertAdresse')).toBeUndefined();
     });

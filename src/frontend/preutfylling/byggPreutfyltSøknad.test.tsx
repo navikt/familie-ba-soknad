@@ -25,12 +25,21 @@ import {
     preutfyll,
     TILFELLER,
     TILFELLER_MED_KOMBINASJONER,
+    TILFELLER_MED_SIVILSTAND,
     type Tilfelle,
 } from './testoppsett';
 
 const GÅ_VIDERE = 'FELLES.navigasjon.gaaVidereKnapp';
 const FEILOPPSUMMERING = 'FELLES.navigasjon.duMaaRetteOppFoelgende';
 const EØS_TILFELLER = TILFELLER.filter(erEøs);
+
+// Vises når en test feiler, slik at den som har endret søknaden ser hva testen vil og hva valgene er.
+const STEGET_LAGRER_NOE_ANNET =
+    'Steget i søknaden lagrer noe annet enn testverktøyet for preutfylling har skrevet. Oppdater ' +
+    'byggPreutfyltSøknad.ts, eller slett verktøyet hvis ingen bruker det. Se src/frontend/preutfylling/README.md.';
+const SØKNADEN_GODTAS_IKKE =
+    'Søknaden godtar ikke lenger det testverktøyet for preutfylling skriver. Oppdater byggPreutfyltSøknad.ts, ' +
+    'eller slett verktøyet hvis ingen bruker det. Se src/frontend/preutfylling/README.md.';
 
 /**
  * Stegene i søknaden eier reglene for hvilke spørsmål som vises og hva som lagres. Testene under lar hvert steg lagre
@@ -59,38 +68,38 @@ describe('Stegene i søknaden lagrer det samme som verktøyet har skrevet', () =
     it.each(TILFELLER)('Om deg: $navn', tilfelle => {
         const { lagret, preutfylt } = lagretAvSteget(() => useOmdeg(), tilfelle);
 
-        expect(lagret).toEqual(preutfylt);
+        expect(lagret, STEGET_LAGRER_NOE_ANNET).toEqual(preutfylt);
     });
 
     it.each(TILFELLER)('Din livssituasjon: $navn', tilfelle => {
         const { lagret, preutfylt } = lagretAvSteget(() => useDinLivssituasjon(), tilfelle);
 
-        expect(lagret).toEqual(preutfylt);
+        expect(lagret, STEGET_LAGRER_NOE_ANNET).toEqual(preutfylt);
     });
 
     it.each(TILFELLER)('Velg barn: $navn', tilfelle => {
         const { lagret, preutfylt } = lagretAvSteget(() => useVelgBarn(), tilfelle);
 
-        expect(lagret).toEqual(preutfylt);
+        expect(lagret, STEGET_LAGRER_NOE_ANNET).toEqual(preutfylt);
     });
 
     it.each(TILFELLER)('Om barna dine: $navn', tilfelle => {
         const { lagret, preutfylt } = lagretAvSteget(() => useOmBarnaDine(), tilfelle);
 
-        expect(lagret).toEqual(preutfylt);
+        expect(lagret, STEGET_LAGRER_NOE_ANNET).toEqual(preutfylt);
     });
 
     it.each(TILFELLER)('Om barnet, for hvert barn: $navn', tilfelle => {
-        for (const barn of preutfyll(tilfelle).barnInkludertISøknaden) {
-            const preutfylt = preutfyll(tilfelle);
-            const barnetsId = preutfylt.barnInkludertISøknaden.find(etBarn => etBarn.ident === barn.ident)?.id ?? '';
+        const preutfylt = preutfyll(tilfelle);
+        for (const barn of preutfylt.barnInkludertISøknaden) {
             const { settSøknad } = brukSøknad(structuredClone(preutfylt));
-            const { result, unmount } = renderHook(() => useOmBarnet(barnetsId), { wrapper: TestProvidere });
+            const { result, unmount } = renderHook(() => useOmBarnet(barn.id), { wrapper: TestProvidere });
             settSøknad.mockClear();
 
             act(() => result.current.oppdaterSøknad());
 
-            expect(settSøknad.mock.calls[0][0]).toEqual(preutfylt);
+            expect(settSøknad).toHaveBeenCalledTimes(1);
+            expect(settSøknad.mock.calls[0][0], STEGET_LAGRER_NOE_ANNET).toEqual(preutfylt);
             unmount();
         }
     });
@@ -109,17 +118,16 @@ describe('Stegene i søknaden lagrer det samme som verktøyet har skrevet', () =
         await act(() => gåVidere.click());
 
         expect(settSøknad).toHaveBeenCalledTimes(1);
-        expect(settSøknad.mock.calls[0][0]).toEqual(preutfylt);
+        expect(settSøknad.mock.calls[0][0], STEGET_LAGRER_NOE_ANNET).toEqual(preutfylt);
     });
 
     it.each(EØS_TILFELLER)('EØS for barnet, for hvert barn: $navn', async tilfelle => {
-        const antallBarn = preutfyll(tilfelle).barnInkludertISøknaden.length;
-        for (let indeks = 0; indeks < antallBarn; indeks++) {
-            const preutfylt = preutfyll(tilfelle);
+        const preutfylt = preutfyll(tilfelle);
+        for (const [indeks, barn] of preutfylt.barnInkludertISøknaden.entries()) {
             const { settSøknad } = brukSøknad(structuredClone(preutfylt));
             const { unmount } = render(
                 <TestProvidere mocketNettleserHistorikk={[`/eøs-barn/barn/${indeks + 1}`]}>
-                    <EøsForBarn barnetsId={preutfylt.barnInkludertISøknaden[indeks].id} />
+                    <EøsForBarn barnetsId={barn.id} />
                 </TestProvidere>
             );
             const gåVidere = await screen.findByRole('button', { name: GÅ_VIDERE });
@@ -128,7 +136,7 @@ describe('Stegene i søknaden lagrer det samme som verktøyet har skrevet', () =
             await act(() => gåVidere.click());
 
             expect(settSøknad).toHaveBeenCalledTimes(1);
-            expect(settSøknad.mock.calls[0][0]).toEqual(preutfylt);
+            expect(settSøknad.mock.calls[0][0], STEGET_LAGRER_NOE_ANNET).toEqual(preutfylt);
             unmount();
         }
     });
@@ -140,25 +148,28 @@ describe('Søknaden godtar den preutfylte søknaden', () => {
     });
 
     // Oppsummeringen kjører valideringen til alle stegene, så den stopper en søknad som mangler svar. Den er tregest
-    // å teste, så den kjøres bare for scenarioene med og uten kombinasjoner av avvik.
-    it.each(TILFELLER_MED_KOMBINASJONER)('skal komme videre fra oppsummeringen uten feil: $navn', async tilfelle => {
-        brukSøknad(preutfyll(tilfelle));
-        render(
-            <TestProvidere mocketNettleserHistorikk={['/oppsummering']}>
-                <Oppsummering />
-                <LesUtLocation />
-            </TestProvidere>
-        );
+    // å teste, så den kjøres for kombinasjonene av avvik og for sivilstandene, som styrer hvilke spørsmål som vises.
+    it.each([...TILFELLER_MED_KOMBINASJONER, ...TILFELLER_MED_SIVILSTAND])(
+        'skal komme videre fra oppsummeringen uten feil: $navn',
+        async tilfelle => {
+            brukSøknad(preutfyll(tilfelle));
+            render(
+                <TestProvidere mocketNettleserHistorikk={['/oppsummering']}>
+                    <Oppsummering />
+                    <LesUtLocation />
+                </TestProvidere>
+            );
 
-        const gåVidere = await screen.findByRole('button', { name: GÅ_VIDERE });
-        await act(() => gåVidere.click());
+            const gåVidere = await screen.findByRole('button', { name: GÅ_VIDERE });
+            await act(() => gåVidere.click());
 
-        const location = await screen.findByTestId('location');
-        await waitFor(() => {
-            expect(JSON.parse(location.innerHTML).pathname).toEqual('/dokumentasjon');
-        });
-        expect(screen.queryAllByRole('heading', { name: FEILOPPSUMMERING })).toHaveLength(0);
-    });
+            const location = await screen.findByTestId('location');
+            await waitFor(() => {
+                expect(JSON.parse(location.innerHTML).pathname, SØKNADEN_GODTAS_IKKE).toEqual('/dokumentasjon');
+            });
+            expect(screen.queryAllByRole('heading', { name: FEILOPPSUMMERING })).toHaveLength(0);
+        }
+    );
 
     // Innsendingen er mocket, så testen viser at søknaden lar seg gjøre om til kontrakten, ikke at mottaket godtar den.
     it.each(TILFELLER)('skal kunne gjøres om til kontrakten som sendes inn: $navn', async tilfelle => {
