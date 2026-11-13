@@ -1,7 +1,7 @@
 const erLokalt = (hostname: string) => hostname === 'localhost' || hostname === '127.0.0.1';
 
 /**
- * Tillatelsesliste i stedet for «ikke prod», slik at panelet aldri vises på et vertsnavn vi ikke kjenner.
+ * Tillatelsesliste i stedet for «ikke prod», slik at panelet aldri vises på en host vi ikke kjenner.
  *
  * - I preprod (*.dev.nav.no) vises panelet alltid.
  * - Lokalt vises det bare med `?preutfylling` i adressen, slik at forsiden ellers er lik den i produksjon når vi

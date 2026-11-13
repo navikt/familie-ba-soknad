@@ -17,6 +17,7 @@ import type { ISøknad } from '../typer/søknad';
 import { EUtenlandsoppholdÅrsak } from '../typer/utenlandsopphold';
 import { Årsak } from '../typer/utvidet';
 import {
+    erBarnIFosterhjemEllerBeredskapshjem,
     genererInitialBarnMedISøknad,
     genererInitiellAndreForelder,
     hentUid,
@@ -28,50 +29,21 @@ import { Avvik, Scenario } from './scenario';
 export interface Preutfyllingsvalg {
     scenario: Scenario;
     avvik: Avvik[];
-    /** Id-ene til barna fra folkeregisteret (søknad.søker.barn) som skal være med i søknaden. */
-    valgteBarnIder: string[];
+    /** Barna fra folkeregisteret (søknad.søker.barn) som skal være med i søknaden. */
+    barn: IBarn[];
     /** Fødselsnummer til et barn som ikke er i listen fra folkeregisteret, f.eks. et barn med adressebeskyttelse. */
     ekstraBarnIdent?: string;
     /** Landet som brukes i EØS-scenarioene. Må være et EØS-land i kodeverket. */
     eøsLand: Alpha3Code;
 }
 
-/** Hva som skal svares i søknaden. Alt som er `false`, gir svaret fra «happy case». */
-interface Svar {
-    erUtvidet: boolean;
-    søkerArbeiderIEøsLand: boolean;
-    barnaFårBarnetrygdFraEøsLand: boolean;
-    andreForelderArbeiderIEøsLand: boolean;
-    harEøsSteg: boolean;
-    deltBosted: boolean;
-    borIkkeFastMedSøker: boolean;
-    søkerErAsylsøker: boolean;
-    barnaErAsylsøkere: boolean;
-    adoptertFraUtlandet: boolean;
-    fosterbarn: boolean;
-    institusjon: boolean;
-    søkerUtenforNorge: boolean;
-    barnaUtenforNorge: boolean;
-    eøsLand: Alpha3Code;
-}
+type Valg = Pick<Preutfyllingsvalg, 'scenario' | 'avvik' | 'eøsLand'>;
 
-const utledSvar = ({ scenario, avvik, eøsLand }: Preutfyllingsvalg): Svar => ({
-    erUtvidet: scenario === Scenario.UTVIDET,
-    søkerArbeiderIEøsLand: scenario === Scenario.EØS_SØKER,
-    barnaFårBarnetrygdFraEøsLand: scenario === Scenario.EØS_BARN,
-    andreForelderArbeiderIEøsLand: scenario === Scenario.EØS_ANDRE_FORELDER,
-    harEøsSteg: [Scenario.EØS_SØKER, Scenario.EØS_BARN, Scenario.EØS_ANDRE_FORELDER].includes(scenario),
-    deltBosted: avvik.includes(Avvik.DELT_BOSTED),
-    borIkkeFastMedSøker: avvik.includes(Avvik.BOR_IKKE_FAST_MED_SØKER),
-    søkerErAsylsøker: avvik.includes(Avvik.SØKER_ER_ASYLSØKER),
-    barnaErAsylsøkere: avvik.includes(Avvik.BARNA_ER_ASYLSØKERE),
-    adoptertFraUtlandet: avvik.includes(Avvik.ADOPTERT_FRA_UTLANDET),
-    fosterbarn: avvik.includes(Avvik.FOSTERBARN),
-    institusjon: avvik.includes(Avvik.INSTITUSJON),
-    søkerUtenforNorge: avvik.includes(Avvik.SØKER_UTENFOR_NORGE),
-    barnaUtenforNorge: avvik.includes(Avvik.BARNA_UTENFOR_NORGE),
-    eøsLand,
-});
+const EØS_SCENARIOER = [Scenario.EØS_SØKER, Scenario.EØS_BARN, Scenario.EØS_ANDRE_FORELDER];
+
+export const erEøsScenario = (scenario: Scenario) => EØS_SCENARIOER.includes(scenario);
+
+const harAvvik = (valg: Valg, avvik: Avvik) => valg.avvik.includes(avvik);
 
 /**
  * Søknaden spør ikke om den andre forelderen for fosterbarn, så valg som handler om den andre forelderen kan ikke
@@ -96,6 +68,8 @@ const ID_NUMMER = '010190-1234';
 const ADRESSE_I_SØKEPERIODEN = 'Testveien 1, 0150 Oslo';
 // Et land utenfor EØS, slik at et opphold der ikke gjør søknaden til en EØS-søknad.
 const LAND_UTENFOR_EØS: Alpha3Code = 'USA';
+// En årsak som ikke utløser krav om dokumentasjon på separasjon, skilsmisse eller dødsfall (se useOmBarnet).
+const ÅRSAK_TIL_UTVIDET = Årsak.BODD_ALENE;
 
 const jaHvis = (betingelse: boolean) => (betingelse ? ESvar.JA : ESvar.NEI);
 
@@ -108,6 +82,11 @@ const erEnkeEllerGjenlevende = (søker: ISøker) =>
     søker.sivilstand.type === ESivilstand.ENKE_ELLER_ENKEMANN ||
     søker.sivilstand.type === ESivilstand.GJENLEVENDE_PARTNER;
 
+/*
+ * Periodene valideres bare i dialogene der søkeren legger dem til, ikke på oppsummeringen. Datoene er valgt slik at de
+ * er gyldige i dialogene uansett hvilken dag verktøyet brukes, men de tar ikke hensyn til når barnet er født.
+ */
+
 const lagArbeidsperiodeIUtlandet = (land: Alpha3Code): IArbeidsperiode => ({
     arbeidsperiodeAvsluttet: { id: ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet, svar: ESvar.NEI },
     arbeidsperiodeland: { id: ArbeidsperiodeSpørsmålsId.arbeidsperiodeLand, svar: land },
@@ -119,7 +98,6 @@ const lagArbeidsperiodeIUtlandet = (land: Alpha3Code): IArbeidsperiode => ({
     },
 });
 
-// Perioden starter forrige måned, slik at den ikke begynner før et nyfødt barn er født.
 const lagEøsBarnetrygdsperiode = (land: Alpha3Code): IEøsBarnetrygdsperiode => ({
     mottarEøsBarnetrygdNå: { id: BarnetrygdperiodeSpørsmålId.mottarEøsBarnetrygdNå, svar: ESvar.JA },
     barnetrygdsland: { id: BarnetrygdperiodeSpørsmålId.barnetrygdsland, svar: land },
@@ -147,29 +125,31 @@ const lagEkstraBarn = (ident: string): IBarn => ({
     adressebeskyttelse: false,
 });
 
-const lagAndreForelder = (svar: Svar): IAndreForelder => {
+const lagAndreForelder = (valg: Valg): IAndreForelder => {
     const initiell = genererInitiellAndreForelder(null, false);
+    const arbeiderIEøsLand = valg.scenario === Scenario.EØS_ANDRE_FORELDER;
 
     return {
         ...initiell,
         navn: { ...initiell.navn, svar: NAVN_PÅ_ANDRE_FORELDER },
         fnr: { ...initiell.fnr, svar: AlternativtSvarForInput.UKJENT },
         fødselsdato: { ...initiell.fødselsdato, svar: AlternativtSvarForInput.UKJENT },
-        arbeidUtlandet: { ...initiell.arbeidUtlandet, svar: jaHvis(svar.andreForelderArbeiderIEøsLand) },
-        arbeidsperioderUtland: svar.andreForelderArbeiderIEøsLand ? [lagArbeidsperiodeIUtlandet(svar.eøsLand)] : [],
+        arbeidUtlandet: { ...initiell.arbeidUtlandet, svar: jaHvis(arbeiderIEøsLand) },
+        arbeidsperioderUtland: arbeiderIEøsLand ? [lagArbeidsperiodeIUtlandet(valg.eøsLand)] : [],
         pensjonUtland: { ...initiell.pensjonUtland, svar: ESvar.NEI },
-        skriftligAvtaleOmDeltBosted: { ...initiell.skriftligAvtaleOmDeltBosted, svar: jaHvis(svar.deltBosted) },
+        skriftligAvtaleOmDeltBosted: {
+            ...initiell.skriftligAvtaleOmDeltBosted,
+            svar: jaHvis(harAvvik(valg, Avvik.DELT_BOSTED)),
+        },
         utvidet: {
             ...initiell.utvidet,
             søkerHarBoddMedAndreForelder: {
                 ...initiell.utvidet.søkerHarBoddMedAndreForelder,
-                svar: svar.erUtvidet ? ESvar.NEI : null,
+                svar: valg.scenario === Scenario.UTVIDET ? ESvar.NEI : null,
             },
         },
-        ...(svar.harEøsSteg && {
-            idNummer: svar.andreForelderArbeiderIEøsLand
-                ? [{ land: svar.eøsLand, idnummer: AlternativtSvarForInput.UKJENT }]
-                : [],
+        ...(erEøsScenario(valg.scenario) && {
+            idNummer: arbeiderIEøsLand ? [{ land: valg.eøsLand, idnummer: AlternativtSvarForInput.UKJENT }] : [],
             adresse: { ...initiell.adresse, svar: AlternativtSvarForInput.UKJENT },
             arbeidNorge: { ...initiell.arbeidNorge, svar: ESvar.NEI },
             pensjonNorge: { ...initiell.pensjonNorge, svar: ESvar.NEI },
@@ -180,36 +160,40 @@ const lagAndreForelder = (svar: Svar): IAndreForelder => {
     };
 };
 
-const lagBarnMedISøknad = (barn: IBarn, indeks: number, svar: Svar): IBarnMedISøknad => {
+const lagBarnMedISøknad = (barn: IBarn, indeks: number, valg: Valg): IBarnMedISøknad => {
     const initielt = genererInitialBarnMedISøknad(barn);
-    const borFastMedSøker = jaHvis(!svar.borIkkeFastMedSøker);
-    const oppholderSegIInstitusjon = jaHvis(svar.institusjon);
+    const erFosterbarn = harAvvik(valg, Avvik.FOSTERBARN);
+    const borIInstitusjon = harAvvik(valg, Avvik.INSTITUSJON);
+    const harVærtUtenforNorge = harAvvik(valg, Avvik.BARNA_UTENFOR_NORGE);
+    const fårBarnetrygdFraEøsLand = valg.scenario === Scenario.EØS_BARN;
+
+    const borFastMedSøker = jaHvis(!harAvvik(valg, Avvik.BOR_IKKE_FAST_MED_SØKER));
     // Spørsmålet stilles ikke for fosterbarn og barn i institusjon, se useEøsForBarn.
-    const borMedAndreForelder = svar.fosterbarn || svar.institusjon ? null : ESvar.NEI;
+    const borMedAndreForelder = erFosterbarn || borIInstitusjon ? null : ESvar.NEI;
     const spørOmOmsorgsperson = skalViseBorMedOmsorgsperson(
         borMedAndreForelder,
         borFastMedSøker,
-        oppholderSegIInstitusjon,
+        jaHvis(borIInstitusjon),
         ESvar.NEI,
-        jaHvis(svar.fosterbarn)
+        jaHvis(erFosterbarn)
     );
 
     return {
         ...initielt,
         barnErFyltUt: true,
-        triggetEøs: svar.barnaFårBarnetrygdFraEøsLand || svar.andreForelderArbeiderIEøsLand,
-        erFosterbarn: { ...initielt.erFosterbarn, svar: jaHvis(svar.fosterbarn) },
+        triggetEøs: fårBarnetrygdFraEøsLand || valg.scenario === Scenario.EØS_ANDRE_FORELDER,
+        erFosterbarn: { ...initielt.erFosterbarn, svar: jaHvis(erFosterbarn) },
         erIBeredskapshjem: { ...initielt.erIBeredskapshjem, svar: ESvar.NEI },
-        erAdoptertFraUtland: { ...initielt.erAdoptertFraUtland, svar: jaHvis(svar.adoptertFraUtlandet) },
-        erAsylsøker: { ...initielt.erAsylsøker, svar: jaHvis(svar.barnaErAsylsøkere) },
+        erAdoptertFraUtland: {
+            ...initielt.erAdoptertFraUtland,
+            svar: jaHvis(harAvvik(valg, Avvik.ADOPTERT_FRA_UTLANDET)),
+        },
+        erAsylsøker: { ...initielt.erAsylsøker, svar: jaHvis(harAvvik(valg, Avvik.BARNA_ER_ASYLSØKERE)) },
         andreForelderErDød: { ...initielt.andreForelderErDød, svar: ESvar.NEI },
         borFastMedSøker: { ...initielt.borFastMedSøker, svar: borFastMedSøker },
-        barnetrygdFraAnnetEøsland: {
-            ...initielt.barnetrygdFraAnnetEøsland,
-            svar: jaHvis(svar.barnaFårBarnetrygdFraEøsLand),
-        },
-        oppholderSegIInstitusjon: { ...initielt.oppholderSegIInstitusjon, svar: oppholderSegIInstitusjon },
-        ...(svar.institusjon && {
+        barnetrygdFraAnnetEøsland: { ...initielt.barnetrygdFraAnnetEøsland, svar: jaHvis(fårBarnetrygdFraEøsLand) },
+        oppholderSegIInstitusjon: { ...initielt.oppholderSegIInstitusjon, svar: jaHvis(borIInstitusjon) },
+        ...(borIInstitusjon && {
             institusjonsnavn: { ...initielt.institusjonsnavn, svar: 'Testinstitusjonen' },
             institusjonsadresse: { ...initielt.institusjonsadresse, svar: 'Institusjonsveien 1' },
             institusjonspostnummer: { ...initielt.institusjonspostnummer, svar: '0150' },
@@ -219,85 +203,84 @@ const lagBarnMedISøknad = (barn: IBarn, indeks: number, svar: Svar): IBarnMedIS
                 svar: AlternativtSvarForInput.UKJENT,
             },
         }),
-        boddMindreEnn12MndINorge: { ...initielt.boddMindreEnn12MndINorge, svar: jaHvis(svar.barnaUtenforNorge) },
-        ...(svar.barnaUtenforNorge && {
+        boddMindreEnn12MndINorge: { ...initielt.boddMindreEnn12MndINorge, svar: jaHvis(harVærtUtenforNorge) },
+        ...(harVærtUtenforNorge && {
             utenlandsperioder: [lagAvsluttetOppholdUtenforNorge()],
             planleggerÅBoINorge12Mnd: { ...initielt.planleggerÅBoINorge12Mnd, svar: ESvar.JA },
         }),
         // Søknaden spør ikke om den andre forelderen for fosterbarn, se genererOppdaterteBarn i OmBarnaDine.
-        andreForelder: svar.fosterbarn ? null : lagAndreForelder(svar),
+        andreForelder: erFosterbarn ? null : lagAndreForelder(valg),
         // Spørsmålet om samme forelder vises for alle barn etter det første, se useOmBarnet.
         sammeForelderSomAnnetBarnMedId: {
             ...initielt.sammeForelderSomAnnetBarnMedId,
-            svar: indeks === 0 || svar.fosterbarn ? null : AlternativtSvarForInput.ANNEN_FORELDER,
+            svar: indeks === 0 || erFosterbarn ? null : AlternativtSvarForInput.ANNEN_FORELDER,
         },
-        ...(svar.barnaFårBarnetrygdFraEøsLand && {
+        ...(fårBarnetrygdFraEøsLand && {
             pågåendeSøknadFraAnnetEøsLand: { ...initielt.pågåendeSøknadFraAnnetEøsLand, svar: ESvar.NEI },
             mottarEllerMottokEøsBarnetrygd: { ...initielt.mottarEllerMottokEøsBarnetrygd, svar: ESvar.JA },
-            eøsBarnetrygdsperioder: [lagEøsBarnetrygdsperiode(svar.eøsLand)],
-            idNummer: [{ land: svar.eøsLand, idnummer: AlternativtSvarForInput.UKJENT }],
+            eøsBarnetrygdsperioder: [lagEøsBarnetrygdsperiode(valg.eøsLand)],
+            idNummer: [{ land: valg.eøsLand, idnummer: AlternativtSvarForInput.UKJENT }],
         }),
-        ...(svar.harEøsSteg && {
-            søkersSlektsforhold: {
-                ...initielt.søkersSlektsforhold,
-                svar: svar.fosterbarn ? '' : Slektsforhold.FORELDER,
-            },
+        ...(erEøsScenario(valg.scenario) && {
+            søkersSlektsforhold: { ...initielt.søkersSlektsforhold, svar: erFosterbarn ? '' : Slektsforhold.FORELDER },
             borMedAndreForelder: { ...initielt.borMedAndreForelder, svar: borMedAndreForelder },
             borMedOmsorgsperson: { ...initielt.borMedOmsorgsperson, svar: spørOmOmsorgsperson ? ESvar.NEI : null },
             // Barnets adresse spørres det bare om for fosterbarn, se useEøsForBarn.
-            adresse: { ...initielt.adresse, svar: svar.fosterbarn ? AlternativtSvarForInput.UKJENT : '' },
+            adresse: { ...initielt.adresse, svar: erFosterbarn ? AlternativtSvarForInput.UKJENT : '' },
         }),
     };
 };
 
-const lagSøker = (søker: ISøker, svar: Svar): ISøker => {
-    const spørsmålOmAdresseVises = !!søker.adresse && !søker.adressebeskyttelse;
+const lagSøker = (søker: ISøker, valg: Valg): ISøker => {
+    const erUtvidet = valg.scenario === Scenario.UTVIDET;
+    const arbeiderIEøsLand = valg.scenario === Scenario.EØS_SØKER;
+    const harEøsSteg = erEøsScenario(valg.scenario);
+    const harVærtUtenforNorge = harAvvik(valg, Avvik.SØKER_UTENFOR_NORGE);
+    // Spørsmålet om adresse vises ikke for søkere uten registrert adresse eller med adressebeskyttelse, se useOmdeg.
+    const spørOmAdresse = !!søker.adresse && !søker.adressebeskyttelse;
 
     return {
         ...søker,
-        triggetEøs: svar.søkerArbeiderIEøsLand,
-        borPåRegistrertAdresse: {
-            ...søker.borPåRegistrertAdresse,
-            svar: spørsmålOmAdresseVises ? ESvar.JA : null,
-        },
-        værtINorgeITolvMåneder: { ...søker.værtINorgeITolvMåneder, svar: jaHvis(!svar.søkerUtenforNorge) },
-        utenlandsperioder: svar.søkerUtenforNorge ? [lagAvsluttetOppholdUtenforNorge()] : [],
+        triggetEøs: arbeiderIEøsLand,
+        borPåRegistrertAdresse: { ...søker.borPåRegistrertAdresse, svar: spørOmAdresse ? ESvar.JA : null },
+        værtINorgeITolvMåneder: { ...søker.værtINorgeITolvMåneder, svar: jaHvis(!harVærtUtenforNorge) },
+        utenlandsperioder: harVærtUtenforNorge ? [lagAvsluttetOppholdUtenforNorge()] : [],
         planleggerÅBoINorgeTolvMnd: {
             ...søker.planleggerÅBoINorgeTolvMnd,
-            svar: svar.søkerUtenforNorge ? ESvar.JA : null,
+            svar: harVærtUtenforNorge ? ESvar.JA : null,
         },
-        erAsylsøker: { ...søker.erAsylsøker, svar: jaHvis(svar.søkerErAsylsøker) },
-        arbeidIUtlandet: { ...søker.arbeidIUtlandet, svar: jaHvis(svar.søkerArbeiderIEøsLand) },
-        arbeidsperioderUtland: svar.søkerArbeiderIEøsLand ? [lagArbeidsperiodeIUtlandet(svar.eøsLand)] : [],
+        erAsylsøker: { ...søker.erAsylsøker, svar: jaHvis(harAvvik(valg, Avvik.SØKER_ER_ASYLSØKER)) },
+        arbeidIUtlandet: { ...søker.arbeidIUtlandet, svar: jaHvis(arbeiderIEøsLand) },
+        arbeidsperioderUtland: arbeiderIEøsLand ? [lagArbeidsperiodeIUtlandet(valg.eøsLand)] : [],
         mottarUtenlandspensjon: { ...søker.mottarUtenlandspensjon, svar: ESvar.NEI },
         pensjonsperioderUtland: [],
-        arbeidINorge: { ...søker.arbeidINorge, svar: svar.harEøsSteg ? ESvar.NEI : null },
+        arbeidINorge: { ...søker.arbeidINorge, svar: harEøsSteg ? ESvar.NEI : null },
         arbeidsperioderNorge: [],
-        pensjonNorge: { ...søker.pensjonNorge, svar: svar.harEøsSteg ? ESvar.NEI : null },
+        pensjonNorge: { ...søker.pensjonNorge, svar: harEøsSteg ? ESvar.NEI : null },
         pensjonsperioderNorge: [],
-        andreUtbetalinger: { ...søker.andreUtbetalinger, svar: svar.harEøsSteg ? ESvar.NEI : null },
+        andreUtbetalinger: { ...søker.andreUtbetalinger, svar: harEøsSteg ? ESvar.NEI : null },
         andreUtbetalingsperioder: [],
-        idNummer: svar.søkerArbeiderIEøsLand ? [{ land: svar.eøsLand, idnummer: ID_NUMMER }] : [],
+        idNummer: arbeiderIEøsLand ? [{ land: valg.eøsLand, idnummer: ID_NUMMER }] : [],
         adresseISøkeperiode: {
             ...søker.adresseISøkeperiode,
-            svar: svar.søkerArbeiderIEøsLand ? ADRESSE_I_SØKEPERIODEN : '',
+            svar: arbeiderIEøsLand ? ADRESSE_I_SØKEPERIODEN : '',
         },
         utvidet: {
             ...søker.utvidet,
             spørsmål: {
                 ...søker.utvidet.spørsmål,
-                årsak: { ...søker.utvidet.spørsmål.årsak, svar: svar.erUtvidet ? Årsak.SKILT : '' },
+                årsak: { ...søker.utvidet.spørsmål.årsak, svar: erUtvidet ? ÅRSAK_TIL_UTVIDET : '' },
                 separertEnkeSkilt: {
                     ...søker.utvidet.spørsmål.separertEnkeSkilt,
                     // Spørsmålet vises bare for søkere som er registrert som gift, se useDinLivssituasjon.
-                    svar: svar.erUtvidet && søker.sivilstand.type === ESivilstand.GIFT ? ESvar.NEI : null,
+                    svar: erUtvidet && søker.sivilstand.type === ESivilstand.GIFT ? ESvar.NEI : null,
                 },
                 separertEnkeSkiltUtland: { ...søker.utvidet.spørsmål.separertEnkeSkiltUtland, svar: null },
                 separertEnkeSkiltDato: { ...søker.utvidet.spørsmål.separertEnkeSkiltDato, svar: '' },
-                harSamboerNå: { ...søker.utvidet.spørsmål.harSamboerNå, svar: svar.erUtvidet ? ESvar.NEI : null },
+                harSamboerNå: { ...søker.utvidet.spørsmål.harSamboerNå, svar: erUtvidet ? ESvar.NEI : null },
                 hattAnnenSamboerForSøktPeriode: {
                     ...søker.utvidet.spørsmål.hattAnnenSamboerForSøktPeriode,
-                    svar: svar.erUtvidet ? ESvar.NEI : null,
+                    svar: erUtvidet ? ESvar.NEI : null,
                 },
             },
             nåværendeSamboer: null,
@@ -306,10 +289,14 @@ const lagSøker = (søker: ISøker, svar: Svar): ISøker => {
     };
 };
 
-/** Samme regler for vedleggskrav som stegene i søknaden bruker når søkeren går videre fra dem. */
-const lagDokumentasjon = (dokumentasjon: IDokumentasjon, barna: IBarnMedISøknad[], svar: Svar): IDokumentasjon => {
-    const alleBarnHvis = (betingelse: boolean) => (betingelse ? barna.map(barn => barn.id) : []);
-    const tom = {
+/**
+ * Vedleggskravene søknaden ville satt for de samme svarene. Reglene er kopiert fra oppdaterSøknad i useDinLivssituasjon,
+ * useOmBarnaDine og useOmBarnet, og leser svarene som er satt over. Kravene til meklingsattest og dokumentasjon på
+ * separasjon, skilsmisse eller dødsfall utløses aldri av svarene verktøyet gir.
+ */
+const lagDokumentasjon = (dokumentasjon: IDokumentasjon, søker: ISøker, barna: IBarnMedISøknad[]): IDokumentasjon => {
+    const barnDer = (gjelder: (barn: IBarnMedISøknad) => boolean) => barna.filter(gjelder).map(barn => barn.id);
+    const ingenKrav = {
         ...dokumentasjon,
         gjelderForSøker: false,
         gjelderForBarnId: [],
@@ -319,68 +306,87 @@ const lagDokumentasjon = (dokumentasjon: IDokumentasjon, barna: IBarnMedISøknad
 
     switch (dokumentasjon.dokumentasjonsbehov) {
         case Dokumentasjonsbehov.AVTALE_DELT_BOSTED:
-            return { ...tom, gjelderForBarnId: alleBarnHvis(svar.deltBosted) };
+            return {
+                ...ingenKrav,
+                gjelderForBarnId: barnDer(barn => barn.andreForelder?.skriftligAvtaleOmDeltBosted.svar === ESvar.JA),
+            };
         case Dokumentasjonsbehov.VEDTAK_OPPHOLDSTILLATELSE:
             return {
-                ...tom,
-                gjelderForSøker: svar.søkerErAsylsøker,
-                gjelderForBarnId: alleBarnHvis(svar.barnaErAsylsøkere),
+                ...ingenKrav,
+                gjelderForSøker: søker.erAsylsøker.svar === ESvar.JA,
+                gjelderForBarnId: barnDer(barn => barn.erAsylsøker.svar === ESvar.JA),
             };
         case Dokumentasjonsbehov.ADOPSJON_DATO:
-            return { ...tom, gjelderForBarnId: alleBarnHvis(svar.adoptertFraUtlandet) };
+            return { ...ingenKrav, gjelderForBarnId: barnDer(barn => barn.erAdoptertFraUtland.svar === ESvar.JA) };
         case Dokumentasjonsbehov.BEKREFTELSE_FRA_BARNEVERN:
             return {
-                ...tom,
-                gjelderForBarnId: alleBarnHvis(svar.fosterbarn),
+                ...ingenKrav,
+                gjelderForBarnId: barnDer(erBarnIFosterhjemEllerBeredskapshjem),
                 beskrivelseSanityApiNavn: BeskrivelseSanityApiNavn.bekreftelseFraBarnevernetBarnetrygd,
             };
         case Dokumentasjonsbehov.BOR_FAST_MED_SØKER:
             return {
-                ...tom,
+                ...ingenKrav,
                 // Bekreftelse kreves når barnet bor fast hos søker uten å være registrert på søkerens adresse.
-                gjelderForBarnId: svar.borIkkeFastMedSøker
-                    ? []
-                    : barna.filter(barn => !barn.borMedSøker).map(barn => barn.id),
+                gjelderForBarnId: barnDer(barn => barn.borFastMedSøker.svar === ESvar.JA && !barn.borMedSøker),
             };
         default:
-            return tom;
+            return ingenKrav;
     }
 };
 
 /**
  * Lager en ferdig utfylt søknad for den innloggede søkeren, med svar som passer til det valgte scenarioet og avvikene.
  *
- * `søknad` må være søknaden fra AppContext, slik at søkeren og barna fra folkeregisteret er med.
+ * `søknad` må være søknaden fra AppContext, slik at opplysningene om søkeren fra folkeregisteret er med.
  */
 export const byggPreutfyltSøknad = (søknad: ISøknad, valg: Preutfyllingsvalg): ISøknad => {
-    const svar = utledSvar(valg);
+    const ugyldigKombinasjon = finnUgyldigKombinasjon(valg);
+    if (ugyldigKombinasjon) {
+        throw new Error(ugyldigKombinasjon);
+    }
 
     const ekstraBarn = valg.ekstraBarnIdent ? [lagEkstraBarn(valg.ekstraBarnIdent)] : [];
-    const barna = [...søknad.søker.barn.filter(barn => valg.valgteBarnIder.includes(barn.id)), ...ekstraBarn].map(
-        (barn, indeks) => lagBarnMedISøknad(barn, indeks, svar)
-    );
-    const søker = lagSøker(søknad.søker, svar);
+    const barna = [...valg.barn, ...ekstraBarn].map((barn, indeks) => lagBarnMedISøknad(barn, indeks, valg));
+    const søker = lagSøker(søknad.søker, valg);
+
+    // Spørsmålene i «Om barna dine» gjelder barna samlet, så svarene følger av det som er svart for hvert barn.
+    const gjelderNoenAvBarna = (svaret: (barn: IBarnMedISøknad) => ESvar | null) =>
+        jaHvis(barna.some(barn => svaret(barn) === ESvar.JA));
 
     return {
         ...søknad,
-        søknadstype: svar.erUtvidet ? ESøknadstype.UTVIDET : ESøknadstype.ORDINÆR,
-        erEøs: svar.harEøsSteg,
+        søknadstype: valg.scenario === Scenario.UTVIDET ? ESøknadstype.UTVIDET : ESøknadstype.ORDINÆR,
+        erEøs: erEøsScenario(valg.scenario),
         lestOgForståttBekreftelse: true,
         søker,
         barnInkludertISøknaden: barna,
         barnRegistrertManuelt: ekstraBarn,
-        erNoenAvBarnaFosterbarn: { ...søknad.erNoenAvBarnaFosterbarn, svar: jaHvis(svar.fosterbarn) },
-        erNoenAvBarnaIBeredskapshjem: { ...søknad.erNoenAvBarnaIBeredskapshjem, svar: ESvar.NEI },
-        oppholderBarnSegIInstitusjon: { ...søknad.oppholderBarnSegIInstitusjon, svar: jaHvis(svar.institusjon) },
-        erBarnAdoptertFraUtland: { ...søknad.erBarnAdoptertFraUtland, svar: jaHvis(svar.adoptertFraUtlandet) },
-        søktAsylForBarn: { ...søknad.søktAsylForBarn, svar: jaHvis(svar.barnaErAsylsøkere) },
+        erNoenAvBarnaFosterbarn: {
+            ...søknad.erNoenAvBarnaFosterbarn,
+            svar: gjelderNoenAvBarna(barn => barn.erFosterbarn.svar),
+        },
+        erNoenAvBarnaIBeredskapshjem: {
+            ...søknad.erNoenAvBarnaIBeredskapshjem,
+            svar: gjelderNoenAvBarna(barn => barn.erIBeredskapshjem.svar),
+        },
+        oppholderBarnSegIInstitusjon: {
+            ...søknad.oppholderBarnSegIInstitusjon,
+            svar: gjelderNoenAvBarna(barn => barn.oppholderSegIInstitusjon.svar),
+        },
+        erBarnAdoptertFraUtland: {
+            ...søknad.erBarnAdoptertFraUtland,
+            svar: gjelderNoenAvBarna(barn => barn.erAdoptertFraUtland.svar),
+        },
+        søktAsylForBarn: { ...søknad.søktAsylForBarn, svar: gjelderNoenAvBarna(barn => barn.erAsylsøker.svar) },
+        // Spørsmålet er om barna har vært sammenhengende i Norge, altså det motsatte av svaret for hvert barn.
         barnOppholdtSegTolvMndSammenhengendeINorge: {
             ...søknad.barnOppholdtSegTolvMndSammenhengendeINorge,
-            svar: jaHvis(!svar.barnaUtenforNorge),
+            svar: jaHvis(!barna.some(barn => barn.boddMindreEnn12MndINorge.svar === ESvar.JA)),
         },
         mottarBarnetrygdForBarnFraAnnetEøsland: {
             ...søknad.mottarBarnetrygdForBarnFraAnnetEøsland,
-            svar: jaHvis(svar.barnaFårBarnetrygdFraEøsLand),
+            svar: gjelderNoenAvBarna(barn => barn.barnetrygdFraAnnetEøsland.svar),
         },
         // Spørsmålet vises bare for søkere som er registrert som enke, enkemann eller gjenlevende partner.
         erAvdødPartnerForelder: {
@@ -390,6 +396,6 @@ export const byggPreutfyltSøknad = (søknad: ISøknad, valg: Preutfyllingsvalg)
                     : OmBarnaDineSpørsmålId.erFolkeregAvdødEktefelleForelder,
             svar: erEnkeEllerGjenlevende(søker) ? ESvar.NEI : null,
         },
-        dokumentasjon: søknad.dokumentasjon.map(dokumentasjon => lagDokumentasjon(dokumentasjon, barna, svar)),
+        dokumentasjon: søknad.dokumentasjon.map(dokumentasjon => lagDokumentasjon(dokumentasjon, søker, barna)),
     };
 };

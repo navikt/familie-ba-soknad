@@ -7,7 +7,7 @@ export enum Scenario {
 }
 
 export const scenarioNavn: Record<Scenario, string> = {
-    [Scenario.ORDINÆR]: 'Happy case – ordinær barnetrygd uten avvik',
+    [Scenario.ORDINÆR]: 'Happy case – ordinær barnetrygd',
     [Scenario.UTVIDET]: 'Utvidet barnetrygd',
     [Scenario.EØS_SØKER]: 'EØS – søker har arbeidet i et EØS-land',
     [Scenario.EØS_BARN]: 'EØS – barna får barnetrygd fra et EØS-land',
