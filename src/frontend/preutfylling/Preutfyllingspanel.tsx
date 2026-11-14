@@ -17,7 +17,6 @@ import { formaterFnr } from '../utils/visning';
 import { byggPreutfyltSøknad, erEøsScenario, finnUgyldigKombinasjon } from './byggPreutfyltSøknad';
 import { Avvik, avvikNavn, Scenario, scenarioNavn } from './scenario';
 
-// Danmark er et EØS-land både i kodeverket i preprod og i testdataene. Mangler det, brukes det første EØS-landet.
 const FORETRUKKET_EØS_LAND: Alpha3Code = 'DNK';
 
 interface Feilmeldinger {
@@ -27,7 +26,6 @@ interface Feilmeldinger {
     ekstraBarnIdent?: string;
 }
 
-// Navn og fødselsnummer vises ikke for barn med adressebeskyttelse, slik som i steget «Velg barn».
 const barnetsEtikett = (barn: IBarn) =>
     [
         ...(barn.adressebeskyttelse ? ['Barn med adressebeskyttelse'] : [barn.navn, formaterFnr(barn.ident)]),
@@ -36,12 +34,6 @@ const barnetsEtikett = (barn: IBarn) =>
         .filter(Boolean)
         .join(', ');
 
-/**
- * Testverktøy som fyller ut hele søknaden for den innloggede testpersonen og sender testeren til oppsummeringen.
- *
- * Panelet bruker bare det AppContext, StegContext og EøsContext allerede tilbyr, på samme måte som når en mellomlagret
- * søknad gjenopprettes (se fortsettPåSøknaden i useBekreftelseOgStartSoknad).
- */
 const Preutfyllingspanel = () => {
     const { søknad, settSøknad, settSisteUtfylteStegIndex, eøsLand, systemetOK } = useAppContext();
     const { steg, settBarnForSteg } = useStegContext();
@@ -51,14 +43,12 @@ const Preutfyllingspanel = () => {
 
     const [scenario, settScenario] = useState(Scenario.ORDINÆR);
     const [avvik, settAvvik] = useState<Avvik[]>([]);
-    // Udefinert til testeren har valgt selv. Da er barnet forhåndsvalgt hvis søkeren bare har ett.
     const [valgteBarnIder, settValgteBarnIder] = useState<string[]>();
     const [ekstraBarnIdent, settEkstraBarnIdent] = useState('');
     const [feilmeldinger, settFeilmeldinger] = useState<Feilmeldinger>({});
     const [skalGåTilOppsummering, settSkalGåTilOppsummering] = useState(false);
 
-    // Indeksen til oppsummeringen avhenger av barna og EØS-svarene, så den er først riktig etter at søknaden er satt.
-    // Derfor skjer navigeringen i en effekt etter at søknaden er satt, og ikke i samme hendelse.
+    // Navigerer i en effekt, fordi indeksen til oppsummeringen først er riktig etter at søknaden er satt.
     const oppsummeringIndeks = steg.findIndex(etSteg => etSteg.route === RouteEnum.Oppsummering);
     useEffect(() => {
         if (skalGåTilOppsummering) {
@@ -74,7 +64,6 @@ const Preutfyllingspanel = () => {
 
     const barnFraFolkeregisteret = søknad.søker.barn;
     const forhåndsvalgteBarnIder = barnFraFolkeregisteret.length === 1 ? [barnFraFolkeregisteret[0].id] : [];
-    // Filtrerer på barna som finnes nå, siden id-ene byttes ut når en mellomlagret søknad gjenopprettes.
     const valgteBarn = barnFraFolkeregisteret.filter(barn =>
         (valgteBarnIder ?? forhåndsvalgteBarnIder).includes(barn.id)
     );
@@ -82,7 +71,6 @@ const Preutfyllingspanel = () => {
     const eøsLandkoder = Object.keys(hentDataFraRessurs(eøsLand) ?? {}) as Alpha3Code[];
     const landForEøsScenarioer = eøsLandkoder.includes(FORETRUKKET_EØS_LAND) ? FORETRUKKET_EØS_LAND : eøsLandkoder[0];
 
-    // Feilmeldingene gjelder valgene som ble sendt inn, så de fjernes når testeren endrer noe.
     const endre =
         <Verdi,>(sett: (verdi: Verdi) => void) =>
         (verdi: Verdi) => {
@@ -136,8 +124,6 @@ const Preutfyllingspanel = () => {
                 eøsLand: landForEøsScenarioer ?? FORETRUKKET_EØS_LAND,
             });
         } catch (feilFraByggingen) {
-            // Valgene er allerede kontrollert, så dette er en uventet feil. Feil i en hendelse fanges ikke av
-            // Feilgrense, så den vises her i stedet for at klikket ikke gjør noe.
             console.error(feilFraByggingen);
             settFeilmeldinger({ scenario: 'Klarte ikke å lage søknaden. Se konsollen for detaljer.' });
             return;

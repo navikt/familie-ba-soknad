@@ -29,11 +29,8 @@ import { Avvik, Scenario } from './scenario';
 export interface Preutfyllingsvalg {
     scenario: Scenario;
     avvik: Avvik[];
-    /** Barna fra folkeregisteret (søknad.søker.barn) som skal være med i søknaden. */
     barn: IBarn[];
-    /** Fødselsnummer til et barn som ikke er i listen fra folkeregisteret, f.eks. et barn med adressebeskyttelse. */
     ekstraBarnIdent?: string;
-    /** Landet som brukes i EØS-scenarioene. Må være et EØS-land i kodeverket. */
     eøsLand: Alpha3Code;
 }
 
@@ -45,10 +42,6 @@ export const erEøsScenario = (scenario: Scenario) => EØS_SCENARIOER.includes(s
 
 const harAvvik = (valg: Valg, avvik: Avvik) => valg.avvik.includes(avvik);
 
-/**
- * Søknaden spør ikke om den andre forelderen for fosterbarn, så valg som handler om den andre forelderen kan ikke
- * kombineres med fosterbarn. Returnerer en forklaring hvis valgene ikke passer sammen.
- */
 export const finnUgyldigKombinasjon = ({ scenario, avvik }: Pick<Preutfyllingsvalg, 'scenario' | 'avvik'>) => {
     if (!avvik.includes(Avvik.FOSTERBARN)) {
         return undefined;
@@ -66,9 +59,7 @@ const NAVN_PÅ_EKSTRA_BARN = 'Barn Lagt Til Manuelt';
 const NAVN_PÅ_ANDRE_FORELDER = 'Annen Forelder';
 const ID_NUMMER = '010190-1234';
 const ADRESSE_I_SØKEPERIODEN = 'Testveien 1, 0150 Oslo';
-// Et land utenfor EØS, slik at et opphold der ikke gjør søknaden til en EØS-søknad.
 const LAND_UTENFOR_EØS: Alpha3Code = 'USA';
-// En årsak som ikke utløser krav om dokumentasjon på separasjon, skilsmisse eller dødsfall (se useOmBarnet).
 const ÅRSAK_TIL_UTVIDET = Årsak.BODD_ALENE;
 
 const jaHvis = (betingelse: boolean) => (betingelse ? ESvar.JA : ESvar.NEI);
@@ -81,11 +72,6 @@ const førsteJanuarIFjor = () => `${new Date().getFullYear() - 1}-01-01`;
 const erEnkeEllerGjenlevende = (søker: ISøker) =>
     søker.sivilstand.type === ESivilstand.ENKE_ELLER_ENKEMANN ||
     søker.sivilstand.type === ESivilstand.GJENLEVENDE_PARTNER;
-
-/*
- * Periodene valideres bare i dialogene der søkeren legger dem til, ikke på oppsummeringen. Datoene er valgt slik at de
- * er gyldige i dialogene uansett hvilken dag verktøyet brukes, men de tar ikke hensyn til når barnet er født.
- */
 
 const lagArbeidsperiodeIUtlandet = (land: Alpha3Code): IArbeidsperiode => ({
     arbeidsperiodeAvsluttet: { id: ArbeidsperiodeSpørsmålsId.arbeidsperiodeAvsluttet, svar: ESvar.NEI },
@@ -168,7 +154,6 @@ const lagBarnMedISøknad = (barn: IBarn, indeks: number, valg: Valg): IBarnMedIS
     const fårBarnetrygdFraEøsLand = valg.scenario === Scenario.EØS_BARN;
 
     const borFastMedSøker = jaHvis(!harAvvik(valg, Avvik.BOR_IKKE_FAST_MED_SØKER));
-    // Spørsmålet stilles ikke for fosterbarn og barn i institusjon, se useEøsForBarn.
     const borMedAndreForelder = erFosterbarn || borIInstitusjon ? null : ESvar.NEI;
     const spørOmOmsorgsperson = skalViseBorMedOmsorgsperson(
         borMedAndreForelder,
@@ -208,9 +193,7 @@ const lagBarnMedISøknad = (barn: IBarn, indeks: number, valg: Valg): IBarnMedIS
             utenlandsperioder: [lagAvsluttetOppholdUtenforNorge()],
             planleggerÅBoINorge12Mnd: { ...initielt.planleggerÅBoINorge12Mnd, svar: ESvar.JA },
         }),
-        // Søknaden spør ikke om den andre forelderen for fosterbarn, se genererOppdaterteBarn i OmBarnaDine.
         andreForelder: erFosterbarn ? null : lagAndreForelder(valg),
-        // Spørsmålet om samme forelder vises for alle barn etter det første, se useOmBarnet.
         sammeForelderSomAnnetBarnMedId: {
             ...initielt.sammeForelderSomAnnetBarnMedId,
             svar: indeks === 0 || erFosterbarn ? null : AlternativtSvarForInput.ANNEN_FORELDER,
@@ -225,7 +208,6 @@ const lagBarnMedISøknad = (barn: IBarn, indeks: number, valg: Valg): IBarnMedIS
             søkersSlektsforhold: { ...initielt.søkersSlektsforhold, svar: erFosterbarn ? '' : Slektsforhold.FORELDER },
             borMedAndreForelder: { ...initielt.borMedAndreForelder, svar: borMedAndreForelder },
             borMedOmsorgsperson: { ...initielt.borMedOmsorgsperson, svar: spørOmOmsorgsperson ? ESvar.NEI : null },
-            // Barnets adresse spørres det bare om for fosterbarn, se useEøsForBarn.
             adresse: { ...initielt.adresse, svar: erFosterbarn ? AlternativtSvarForInput.UKJENT : '' },
         }),
     };
@@ -236,7 +218,6 @@ const lagSøker = (søker: ISøker, valg: Valg): ISøker => {
     const arbeiderIEøsLand = valg.scenario === Scenario.EØS_SØKER;
     const harEøsSteg = erEøsScenario(valg.scenario);
     const harVærtUtenforNorge = harAvvik(valg, Avvik.SØKER_UTENFOR_NORGE);
-    // Spørsmålet om adresse vises ikke for søkere uten registrert adresse eller med adressebeskyttelse, se useOmdeg.
     const spørOmAdresse = !!søker.adresse && !søker.adressebeskyttelse;
 
     return {
@@ -272,7 +253,6 @@ const lagSøker = (søker: ISøker, valg: Valg): ISøker => {
                 årsak: { ...søker.utvidet.spørsmål.årsak, svar: erUtvidet ? ÅRSAK_TIL_UTVIDET : '' },
                 separertEnkeSkilt: {
                     ...søker.utvidet.spørsmål.separertEnkeSkilt,
-                    // Spørsmålet vises bare for søkere som er registrert som gift, se useDinLivssituasjon.
                     svar: erUtvidet && søker.sivilstand.type === ESivilstand.GIFT ? ESvar.NEI : null,
                 },
                 separertEnkeSkiltUtland: { ...søker.utvidet.spørsmål.separertEnkeSkiltUtland, svar: null },
@@ -289,11 +269,6 @@ const lagSøker = (søker: ISøker, valg: Valg): ISøker => {
     };
 };
 
-/**
- * Vedleggskravene søknaden ville satt for de samme svarene. Reglene er kopiert fra oppdaterSøknad i
- * useDinLivssituasjon, useOmBarnaDine og useOmBarnet, og leser svarene som er satt over. Kravene til meklingsattest og
- * dokumentasjon på separasjon, skilsmisse eller dødsfall utløses aldri av svarene verktøyet gir.
- */
 const lagDokumentasjon = (dokumentasjon: IDokumentasjon, søker: ISøker, barna: IBarnMedISøknad[]): IDokumentasjon => {
     const barnDer = (gjelder: (barn: IBarnMedISøknad) => boolean) => barna.filter(gjelder).map(barn => barn.id);
     const ingenKrav = {
@@ -327,7 +302,6 @@ const lagDokumentasjon = (dokumentasjon: IDokumentasjon, søker: ISøker, barna:
         case Dokumentasjonsbehov.BOR_FAST_MED_SØKER:
             return {
                 ...ingenKrav,
-                // Bekreftelse kreves når barnet bor fast hos søker uten å være registrert på søkerens adresse.
                 gjelderForBarnId: barnDer(barn => barn.borFastMedSøker.svar === ESvar.JA && !barn.borMedSøker),
             };
         default:
@@ -335,11 +309,6 @@ const lagDokumentasjon = (dokumentasjon: IDokumentasjon, søker: ISøker, barna:
     }
 };
 
-/**
- * Lager en ferdig utfylt søknad for den innloggede søkeren, med svar som passer til det valgte scenarioet og avvikene.
- *
- * `søknad` må være søknaden fra AppContext, slik at opplysningene om søkeren fra folkeregisteret er med.
- */
 export const byggPreutfyltSøknad = (søknad: ISøknad, valg: Preutfyllingsvalg): ISøknad => {
     const ugyldigKombinasjon = finnUgyldigKombinasjon(valg);
     if (ugyldigKombinasjon) {
@@ -350,7 +319,6 @@ export const byggPreutfyltSøknad = (søknad: ISøknad, valg: Preutfyllingsvalg)
     const barna = [...valg.barn, ...ekstraBarn].map((barn, indeks) => lagBarnMedISøknad(barn, indeks, valg));
     const søker = lagSøker(søknad.søker, valg);
 
-    // Spørsmålene i «Om barna dine» gjelder barna samlet, så svarene følger av det som er svart for hvert barn.
     const gjelderNoenAvBarna = (svaret: (barn: IBarnMedISøknad) => ESvar | null) =>
         jaHvis(barna.some(barn => svaret(barn) === ESvar.JA));
 
@@ -379,7 +347,6 @@ export const byggPreutfyltSøknad = (søknad: ISøknad, valg: Preutfyllingsvalg)
             svar: gjelderNoenAvBarna(barn => barn.erAdoptertFraUtland.svar),
         },
         søktAsylForBarn: { ...søknad.søktAsylForBarn, svar: gjelderNoenAvBarna(barn => barn.erAsylsøker.svar) },
-        // Spørsmålet er om barna har vært sammenhengende i Norge, altså det motsatte av svaret for hvert barn.
         barnOppholdtSegTolvMndSammenhengendeINorge: {
             ...søknad.barnOppholdtSegTolvMndSammenhengendeINorge,
             svar: jaHvis(!barna.some(barn => barn.boddMindreEnn12MndINorge.svar === ESvar.JA)),
@@ -388,7 +355,6 @@ export const byggPreutfyltSøknad = (søknad: ISøknad, valg: Preutfyllingsvalg)
             ...søknad.mottarBarnetrygdForBarnFraAnnetEøsland,
             svar: gjelderNoenAvBarna(barn => barn.barnetrygdFraAnnetEøsland.svar),
         },
-        // Spørsmålet vises bare for søkere som er registrert som enke, enkemann eller gjenlevende partner.
         erAvdødPartnerForelder: {
             id:
                 søker.sivilstand.type === ESivilstand.GJENLEVENDE_PARTNER

@@ -9,8 +9,6 @@ import { spyOnUseApp } from '../utils/testing';
 import { byggPreutfyltSøknad, finnUgyldigKombinasjon, type Preutfyllingsvalg } from './byggPreutfyltSøknad';
 import { Avvik, Scenario } from './scenario';
 
-// Felles oppsett for testene i denne mappen. Brukes ikke av selve verktøyet.
-
 export const EØS_LAND = 'BEL';
 export const EKSTRA_BARN_IDENT = '15859040087';
 
@@ -26,7 +24,6 @@ export interface Tilfelle {
     søker?: Partial<ISøker>;
 }
 
-/** Søknaden slik den ser ut på forsiden: opplysningene fra folkeregisteret er hentet, og ingenting er besvart. */
 const søknadPåForsiden = (søker: Partial<ISøker> = {}): ISøknad => {
     const søknad = initialStateSøknad();
     const sivilstand = søker.sivilstand ?? { type: ESivilstand.GIFT };
@@ -53,7 +50,6 @@ const søknadPåForsiden = (søker: Partial<ISøker> = {}): ISøknad => {
                 ...søknad.søker.utvidet,
                 spørsmål: {
                     ...søknad.søker.utvidet.spørsmål,
-                    // AppContext velger id-en ut fra sivilstanden når søkeren hentes.
                     harSamboerNå: {
                         ...søknad.søker.utvidet.spørsmål.harSamboerNå,
                         id:
@@ -76,7 +72,6 @@ export const preutfyll = ({ valg, søker }: Pick<Tilfelle, 'valg' | 'søker'>) =
         ...valg,
     });
 
-/** Bruker søknaden i stedet for den ekte AppContext, med et kodeverk der landet i EØS-scenarioene er et EØS-land. */
 export const brukSøknad = (søknad: ISøknad) => {
     const spion = spyOnUseApp(søknad);
     spion.useAppMock.mockReturnValue({
@@ -123,24 +118,18 @@ const medAndreSøkereOgBarn = (scenario: Scenario): Tilfelle[] => [
     },
 ];
 
-/** Alle scenarioene uten avvik og med kombinasjoner av avvik. */
 export const TILFELLER_MED_KOMBINASJONER: Tilfelle[] = Object.values(Scenario).flatMap(scenario =>
     KOMBINASJONER_AV_AVVIK.filter(avvik => !finnUgyldigKombinasjon({ scenario, avvik })).map(avvik =>
         medAvvik(scenario, avvik)
     )
 );
 
-/** Sivilstanden styrer spørsmålene i utvidet barnetrygd og spørsmålet om avdød partner. */
 export const TILFELLER_MED_SIVILSTAND: Tilfelle[] = [
     ...Object.values(ESivilstand).map(type => medSivilstand(Scenario.UTVIDET, type)),
     medSivilstand(Scenario.ORDINÆR, ESivilstand.ENKE_ELLER_ENKEMANN),
     medSivilstand(Scenario.EØS_SØKER, ESivilstand.GJENLEVENDE_PARTNER),
 ];
 
-/**
- * Alle tilfellene testene kjøres for. Hvert avvik alene, sivilstandene og de andre søkerne prøves bare der de gir andre
- * svar, for å holde testene raske.
- */
 export const TILFELLER: Tilfelle[] = [
     ...TILFELLER_MED_KOMBINASJONER,
     ...ALLE_AVVIK.map(avvik => medAvvik(Scenario.ORDINÆR, [avvik])),
@@ -149,6 +138,5 @@ export const TILFELLER: Tilfelle[] = [
     ...medAndreSøkereOgBarn(Scenario.EØS_ANDRE_FORELDER),
 ];
 
-// Egen liste, slik at testene ikke bruker den samme funksjonen som de kontrollerer.
 export const erEøs = (tilfelle: Tilfelle) =>
     [Scenario.EØS_SØKER, Scenario.EØS_BARN, Scenario.EØS_ANDRE_FORELDER].includes(tilfelle.valg.scenario as Scenario);

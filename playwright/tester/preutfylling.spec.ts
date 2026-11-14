@@ -13,13 +13,6 @@ import { Avvik, avvikNavn, Scenario, scenarioNavn } from '../../src/frontend/pre
 import { expect, test } from '../fixtures';
 import { BARN, erInnsending, forventSteg, gåTilNesteSteg, oppsummeringsbolk, Steg } from '../søknad';
 
-/*
- * Reglene i verktøyet testes av enhetstestene i src/frontend/preutfylling, som kjører i CI. Testene her dekker det bare
- * et ekte bygg kan vise: at panelet lastes og skjules riktig, og at en preutfylt søknad kommer seg gjennom
- * oppsummeringen, dokumentasjonen og innsendingen i nettleseren.
- */
-
-// Lokalt vises panelet bare med ?preutfylling i adressen, se skalVisePreutfylling.
 const FORSIDE_MED_PREUTFYLLING = `${BASE_PATH}?preutfylling`;
 const PREUTFYLL = 'Preutfyll og gå til oppsummering';
 
@@ -46,7 +39,6 @@ const toBarn = personopplysning({
 });
 
 const panelet = (page: Page) => page.getByRole('region', { name: 'Testverktøy: preutfyll søknaden' });
-// Avgrenser til gruppene i panelet, siden navnet på et barn kan ligne teksten til et avvik.
 const barnet = (page: Page, navn: string) =>
     panelet(page)
         .getByRole('group', { name: 'Hvilke barn skal søknaden gjelde?' })
@@ -56,7 +48,6 @@ const avviket = (page: Page, avvik: Avvik) =>
         .getByRole('group', { name: /^Avvik/ })
         .getByRole('checkbox', { name: avvikNavn[avvik], exact: true });
 
-/** Panelet er lukket til testeren åpner det. */
 async function åpnePreutfylling(page: Page) {
     await page.goto(FORSIDE_MED_PREUTFYLLING);
     await panelet(page).getByRole('button', { expanded: false }).click();
@@ -70,7 +61,6 @@ async function preutfyll(page: Page, { scenario = Scenario.ORDINÆR, avvik = [] 
     await page.getByRole('button', { name: PREUTFYLL }).click();
 }
 
-/** Oppsummeringen validerer alle stegene, så søknaden kommer bare videre herfra hvis alle svarene er gyldige. */
 async function sendInnFraOppsummeringen(page: Page): Promise<ISøknadKontrakt> {
     await forventSteg(page, Steg.Oppsummering);
     await gåTilNesteSteg(page);
@@ -88,10 +78,8 @@ const svarFraBarnet = (søknad: ISøknadKontrakt, spørsmål: string) => søknad
 const svarFraSøker = (søknad: ISøknadKontrakt, spørsmål: string) => søknad.søker.spørsmål[spørsmål]?.verdi.nb;
 const vedleggskrav = (søknad: ISøknadKontrakt) => søknad.dokumentasjon.map(dok => dok.dokumentasjonsbehov);
 
-// Annen dokumentasjon kan alltid lastes opp, så den er med i alle søknader.
 const INGEN_VEDLEGGSKRAV = [Dokumentasjonsbehov.ANNEN_DOKUMENTASJON];
 
-// Hva som skal stå i den innsendte søknaden for hvert avvik. Typen krever en forventning når et avvik legges til.
 const FORVENTET_SVAR: Record<Avvik, (søknad: ISøknadKontrakt) => void> = {
     [Avvik.DELT_BOSTED]: søknad => {
         expect(søknad.barn[0].andreForelder?.skriftligAvtaleOmDeltBosted?.verdi.nb).toBe('JA');
@@ -132,7 +120,6 @@ test.describe('Preutfylling i testmiljø', () => {
         await page.goto(BASE_PATH);
 
         await expect(page.getByRole('button', { name: 'Start søknad' })).toBeVisible();
-        // Panelet lastes for seg, så testen venter til siden er ferdig med å hente før den ser etter det.
         await page.waitForLoadState('networkidle');
         await expect(panelet(page)).toBeHidden();
     });
@@ -260,7 +247,6 @@ test.describe('Preutfylling i testmiljø', () => {
         expect(søknad.barn.map(barn => barn.ident.verdi.nb)).toEqual([BARN_LAGT_TIL_MED_FØDSELSNUMMER]);
         expect(søknad.barn[0].registrertBostedType.verdi.nb).toBe('IKKE_FYLT_INN');
         expect(vedleggskrav(søknad)).toContain(Dokumentasjonsbehov.BOR_FAST_MED_SØKER);
-        // Spørsmålet om adresse stilles ikke til en søker med adressebeskyttelse.
         expect(svarFraSøker(søknad, 'værtINorgeITolvMåneder')).toBe('JA');
         expect(svarFraSøker(søknad, 'borPåRegistrertAdresse')).toBeUndefined();
     });

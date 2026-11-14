@@ -14,7 +14,6 @@ export const scenarioNavn: Record<Scenario, string> = {
     [Scenario.EØS_ANDRE_FORELDER]: 'EØS – den andre forelderen arbeider i et EØS-land',
 };
 
-/** Svar som avviker fra «happy case», og som kan kombineres med et hvilket som helst scenario. */
 export enum Avvik {
     DELT_BOSTED = 'DELT_BOSTED',
     BOR_IKKE_FAST_MED_SØKER = 'BOR_IKKE_FAST_MED_SØKER',

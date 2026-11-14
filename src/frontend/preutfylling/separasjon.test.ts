@@ -4,7 +4,6 @@ import { dirname, join, normalize, sep } from 'node:path';
 import { describe, expect, it } from 'vitest';
 
 const VERKTØYET = join('src', 'frontend', 'preutfylling');
-// Mapper og filer som ikke finnes lenger, hoppes over, slik at testen ikke feiler når noen rydder i repoet.
 const MAPPER_MED_KODE = ['src', 'playwright', 'mocks', 'scripts'].filter(existsSync);
 const GENERERTE_MAPPER = ['.bygg', 'resultater', 'rapport'].map(navn => join('playwright', navn));
 const KONFIGURASJON = [
@@ -18,7 +17,6 @@ const KONFIGURASJON = [
     join('src', 'frontend', 'tsconfig.json'),
     join('playwright', 'tsconfig.json'),
 ].filter(existsSync);
-// Filene som havner i hovedbundelen. De skal være små og ikke dra med seg panelet eller kode fra søknaden.
 const INNGANGEN = ['index.tsx', 'Feilgrense.tsx', 'skalVisePreutfylling.ts'];
 
 const kodefiler = (mappe: string): string[] =>
@@ -33,8 +31,6 @@ const kodefiler = (mappe: string): string[] =>
         return /\.[cm]?[jt]sx?$/.test(navn) ? [sti] : [];
     });
 
-// Stier som peker på mappen i en import, en eksport, en dynamisk import, require eller vi.mock. Tekst som bare nevner
-// mappen, for eksempel i en kommentar, regnes ikke som bruk.
 const STI_TIL_MAPPEN =
     /(?:\bfrom|\bimport|\b(?:require|mock|doMock|importActual|importMock)\s*\()\s*\(?\s*['"`]((?:[^'"`\n]*\/)?preutfylling(?:\/[^'"`\n]*)?)['"`]/g;
 
@@ -43,21 +39,18 @@ const stierTilVerktøyet = (fil: string): string[] =>
         .map(treff => treff[1])
         .filter(sti => {
             if (!sti.startsWith('.')) {
-                // Ikke en relativ sti, altså et alias eller lignende som peker på mappen.
                 return true;
             }
             const mål = normalize(join(dirname(fil), sti));
             return mål === VERKTØYET || mål.startsWith(VERKTØYET + sep);
         });
 
-// Både import og «export … from» drar koden med seg inn i hovedbundelen.
 const STATISK_IMPORT =
     /^(?:import\s[^'"]*|export\s+(?:type\s+)?(?:\*(?:\s+as\s+\w+)?|\{[^}]*\})\s*from\s*)['"]([^'"]+)['"]/gm;
 
 const statiskeImporter = (fil: string): string[] =>
     [...readFileSync(join(VERKTØYET, fil), 'utf-8').matchAll(STATISK_IMPORT)].map(treff => treff[1]);
 
-// Verktøyet skal være lett å slette. Stedene under er derfor de eneste som får bruke det, se README.md.
 describe('Preutfylling er skilt fra resten av søknaden', () => {
     it('skal bare brukes fra App.tsx og sin egen ende-til-ende-test', () => {
         const brukere = Object.fromEntries(

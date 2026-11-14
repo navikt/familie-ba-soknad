@@ -5,7 +5,6 @@ import { describe, expect, it } from 'vitest';
 
 import { skalVisePreutfylling } from './skalVisePreutfylling';
 
-/** Hostene appen er eksponert på, lest fra NAIS-konfigurasjonen, slik at testen følger med når de endres. */
 const fantIngenHoster = (fil: string) =>
     `Fant ingen ingresser i .nais/${fil}. Oppdater hosterFraNais i denne testen, se src/frontend/preutfylling/README.md.`;
 
@@ -50,7 +49,6 @@ describe('skalVisePreutfylling', () => {
         'www.nav.no',
         'nav.no',
         'familie-ba-soknad.intern.nav.no',
-        // Preprod-hosten som del av en annen host, slik at bare en host som slutter på .dev.nav.no slipper gjennom.
         'familie-ba-soknad.ansatt.dev.nav.no.eksempel.no',
         'dev.nav.no',
         'eksempel.no',

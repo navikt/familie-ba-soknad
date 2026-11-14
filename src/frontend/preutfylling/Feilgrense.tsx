@@ -8,10 +8,6 @@ interface State {
     harFeilet: boolean;
 }
 
-/**
- * Fanger feil når panelet lastes eller tegnes, slik at de ikke når feilsiden til søknaden. Feil som oppstår etter at
- * verktøyet har satt en søknad, for eksempel i et steg som får en ugyldig søknad, fanges ikke her.
- */
 export class Feilgrense extends Component<Props, State> {
     state: State = { harFeilet: false };
 

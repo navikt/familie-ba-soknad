@@ -39,14 +39,12 @@ interface Tilstand {
 const besøkteSider: string[] = [];
 let tilstand: Tilstand;
 
-/** Leser tilstanden panelet setter i søknaden, og hvilke sider søkeren sendes til. */
 const Sonde = () => {
     const { pathname, key } = useLocation();
     const { søknad, sisteUtfylteStegIndex } = useAppContext();
     const { steg, barnForSteg } = useStegContext();
     const { søkerTriggerEøs, barnSomTriggerEøs } = useEøsContext();
 
-    // Nøkkelen er ny for hver navigering, så to navigeringer til samme side registreres som to.
     // biome-ignore lint/correctness/useExhaustiveDependencies: effekten skal kjøre for hver navigering
     useEffect(() => {
         besøkteSider.push(pathname);

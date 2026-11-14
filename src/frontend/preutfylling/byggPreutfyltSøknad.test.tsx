@@ -33,7 +33,6 @@ const GÅ_VIDERE = 'FELLES.navigasjon.gaaVidereKnapp';
 const FEILOPPSUMMERING = 'FELLES.navigasjon.duMaaRetteOppFoelgende';
 const EØS_TILFELLER = TILFELLER.filter(erEøs);
 
-// Vises når en test feiler, slik at den som har endret søknaden ser hva testen vil og hva valgene er.
 const STEGET_LAGRER_NOE_ANNET =
     'Steget i søknaden lagrer noe annet enn testverktøyet for preutfylling har skrevet. Oppdater ' +
     'byggPreutfyltSøknad.ts, eller slett verktøyet hvis ingen bruker det. Se src/frontend/preutfylling/README.md.';
@@ -41,14 +40,6 @@ const SØKNADEN_GODTAS_IKKE =
     'Søknaden godtar ikke lenger det testverktøyet for preutfylling skriver. Oppdater byggPreutfyltSøknad.ts, ' +
     'eller slett verktøyet hvis ingen bruker det. Se src/frontend/preutfylling/README.md.';
 
-/**
- * Stegene i søknaden eier reglene for hvilke spørsmål som vises og hva som lagres. Testene under lar hvert steg lagre
- * den preutfylte søknaden på nytt, og krever at ingenting endrer seg. Da har verktøyet skrevet det søknaden selv ville
- * lagret for de samme svarene, også vedleggskrav. Noen skjulte spørsmål lagres uendret av steget, så svarene på dem
- * kontrolleres for seg nederst i filen.
- *
- * Feiler en test her etter en endring i søknaden, se README.md i denne mappen.
- */
 describe('Stegene i søknaden lagrer det samme som verktøyet har skrevet', () => {
     beforeEach(() => {
         silenceConsoleErrors();
@@ -148,8 +139,6 @@ describe('Søknaden godtar den preutfylte søknaden', () => {
         silenceConsoleErrors();
     });
 
-    // Oppsummeringen kjører valideringen til alle stegene, så den stopper en søknad som mangler svar. Den er tregest
-    // å teste, så den kjøres for kombinasjonene av avvik og for sivilstandene, som styrer hvilke spørsmål som vises.
     it.each([...TILFELLER_MED_KOMBINASJONER, ...TILFELLER_MED_SIVILSTAND])(
         'skal komme videre fra oppsummeringen uten feil: $navn',
         async tilfelle => {
@@ -172,7 +161,6 @@ describe('Søknaden godtar den preutfylte søknaden', () => {
         }
     );
 
-    // Innsendingen er mocket, så testen viser at søknaden lar seg gjøre om til kontrakten, ikke at mottaket godtar den.
     it.each(TILFELLER)('skal kunne gjøres om til kontrakten som sendes inn: $navn', async tilfelle => {
         const forventedeBarn = [...(tilfelle.valg.barn ?? BARN).map(barn => barn.ident)];
         if (tilfelle.valg.ekstraBarnIdent) {
@@ -192,7 +180,6 @@ describe('Søknaden godtar den preutfylte søknaden', () => {
     });
 });
 
-// Svar stegene bare tar vare på, og som testene over derfor ikke fanger.
 describe('byggPreutfyltSøknad', () => {
     it.each(Object.values(Scenario))('skal markere søknaden som bekreftet og fylt ut for %s', scenario => {
         const søknad = preutfyll({ valg: { scenario } });

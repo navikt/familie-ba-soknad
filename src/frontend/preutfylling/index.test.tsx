@@ -19,7 +19,6 @@ vi.mock('./Preutfyllingspanel', () => {
     };
 });
 
-// jsdom kjører på localhost, der panelet bare skal vises med ?preutfylling i adressen.
 describe('Preutfylling', () => {
     afterEach(() => {
         window.history.pushState({}, '', '/');
@@ -31,7 +30,6 @@ describe('Preutfylling', () => {
     it('skal verken vise eller laste panelet når det ikke skal vises', async () => {
         const { container } = render(<Preutfylling />);
 
-        // Panelet lastes asynkront, så testen venter lenge nok til at det ville ha dukket opp.
         await expect(screen.findByText('Panelet', {}, { timeout: 300 })).rejects.toThrow();
         expect(container).toBeEmptyDOMElement();
         expect(panelet.antallGangerLastet).toBe(0);
@@ -47,7 +45,6 @@ describe('Preutfylling', () => {
     });
 
     it('skal vise en melding i stedet for å la en feil i panelet gå videre til søknaden', async () => {
-        // React logger feilen som fanges.
         silenceConsoleErrors();
         panelet.skalFeile = true;
         window.history.pushState({}, '', '/?preutfylling');
