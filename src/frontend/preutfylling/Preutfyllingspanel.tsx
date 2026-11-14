@@ -136,7 +136,8 @@ const Preutfyllingspanel = () => {
                 eøsLand: landForEøsScenarioer ?? FORETRUKKET_EØS_LAND,
             });
         } catch (feilFraByggingen) {
-            // Feil i en hendelse fanges ikke av Feilgrense, så de vises her i stedet for at klikket ikke gjør noe.
+            // Valgene er allerede kontrollert, så dette er en uventet feil. Feil i en hendelse fanges ikke av
+            // Feilgrense, så den vises her i stedet for at klikket ikke gjør noe.
             console.error(feilFraByggingen);
             settFeilmeldinger({ scenario: 'Klarte ikke å lage søknaden. Se konsollen for detaljer.' });
             return;
@@ -154,7 +155,7 @@ const Preutfyllingspanel = () => {
     return (
         <Page.Block width="text" gutters>
             <Box marginBlock="space-24">
-                <ExpansionCard aria-label="Testverktøy: preutfyll søknaden" size="small" data-color="warning">
+                <ExpansionCard aria-label="Testverktøy: preutfyll søknaden" size="small" data-color="warning" lang="nb">
                     <ExpansionCard.Header>
                         <ExpansionCard.Title as="h2" size="small">
                             Testverktøy: preutfyll søknaden

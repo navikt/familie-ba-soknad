@@ -43,8 +43,9 @@ const SØKNADEN_GODTAS_IKKE =
 
 /**
  * Stegene i søknaden eier reglene for hvilke spørsmål som vises og hva som lagres. Testene under lar hvert steg lagre
- * den preutfylte søknaden på nytt, og krever at ingenting endrer seg. Da har verktøyet skrevet akkurat det søknaden selv
- * ville lagret for de samme svarene, også vedleggskrav og svar som skal være tomme fordi spørsmålet er skjult.
+ * den preutfylte søknaden på nytt, og krever at ingenting endrer seg. Da har verktøyet skrevet det søknaden selv ville
+ * lagret for de samme svarene, også vedleggskrav. Noen skjulte spørsmål lagres uendret av steget, så svarene på dem
+ * kontrolleres for seg nederst i filen.
  *
  * Feiler en test her etter en endring i søknaden, se README.md i denne mappen.
  */
@@ -199,10 +200,10 @@ describe('byggPreutfyltSøknad', () => {
         expect(søknad.lestOgForståttBekreftelse).toBe(true);
         expect(søknad.barnInkludertISøknaden.map(barn => barn.barnErFyltUt)).toEqual(BARN.map(() => true));
         expect(søknad.søknadstype).toBe(scenario === Scenario.UTVIDET ? ESøknadstype.UTVIDET : ESøknadstype.ORDINÆR);
-        expect(søknad.erEøs).toBe(erEøs({ navn: scenario, valg: { scenario } }));
+        expect(søknad.erEøs).toBe(scenario !== Scenario.ORDINÆR && scenario !== Scenario.UTVIDET);
     });
 
-    it('skal bare la søkeren utløse EØS når søkeren selv har arbeidet i et EØS-land', () => {
+    it('skal bare la søkeren utløse EØS når søkeren selv arbeider i et EØS-land', () => {
         expect(preutfyll({ valg: { scenario: Scenario.EØS_SØKER } }).søker.triggetEøs).toBe(true);
         expect(preutfyll({ valg: { scenario: Scenario.EØS_BARN } }).søker.triggetEøs).toBe(false);
         expect(preutfyll({ valg: { scenario: Scenario.EØS_ANDRE_FORELDER } }).søker.triggetEøs).toBe(false);
@@ -228,6 +229,20 @@ describe('byggPreutfyltSøknad', () => {
 
         expect(preutfyll({ valg: {} }).søker.borPåRegistrertAdresse.svar).toBe(ESvar.JA);
         expect(preutfyll({ valg: {}, søker }).søker.borPåRegistrertAdresse.svar).toBeNull();
+    });
+
+    it('skal la skjulte spørsmål stå ubesvart i en ordinær søknad uten avvik', () => {
+        const { søker, barnInkludertISøknaden, erAvdødPartnerForelder } = preutfyll({ valg: {} });
+        const [barn] = barnInkludertISøknaden;
+
+        expect(søker.utvidet.spørsmål.årsak.svar).toBe('');
+        expect(søker.utvidet.spørsmål.harSamboerNå.svar).toBeNull();
+        expect(søker.utvidet.spørsmål.hattAnnenSamboerForSøktPeriode.svar).toBeNull();
+        expect(erAvdødPartnerForelder.svar).toBeNull();
+        expect(barn.andreForelder?.utvidet.søkerHarBoddMedAndreForelder.svar).toBeNull();
+        expect(barn.pågåendeSøknadFraAnnetEøsLand.svar).toBeNull();
+        expect(barn.mottarEllerMottokEøsBarnetrygd.svar).toBeNull();
+        expect(barn.planleggerÅBoINorge12Mnd.svar).toBeNull();
     });
 
     it('skal ikke oppgi slektsforhold eller andre forelder for fosterbarn', () => {

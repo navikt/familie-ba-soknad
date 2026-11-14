@@ -290,9 +290,9 @@ const lagSøker = (søker: ISøker, valg: Valg): ISøker => {
 };
 
 /**
- * Vedleggskravene søknaden ville satt for de samme svarene. Reglene er kopiert fra oppdaterSøknad i useDinLivssituasjon,
- * useOmBarnaDine og useOmBarnet, og leser svarene som er satt over. Kravene til meklingsattest og dokumentasjon på
- * separasjon, skilsmisse eller dødsfall utløses aldri av svarene verktøyet gir.
+ * Vedleggskravene søknaden ville satt for de samme svarene. Reglene er kopiert fra oppdaterSøknad i
+ * useDinLivssituasjon, useOmBarnaDine og useOmBarnet, og leser svarene som er satt over. Kravene til meklingsattest og
+ * dokumentasjon på separasjon, skilsmisse eller dødsfall utløses aldri av svarene verktøyet gir.
  */
 const lagDokumentasjon = (dokumentasjon: IDokumentasjon, søker: ISøker, barna: IBarnMedISøknad[]): IDokumentasjon => {
     const barnDer = (gjelder: (barn: IBarnMedISøknad) => boolean) => barna.filter(gjelder).map(barn => barn.id);

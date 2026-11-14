@@ -73,7 +73,7 @@ const åpnePanelet = async (søker = lagSøker()) => {
             <Sonde />
         </TestProvidere>
     );
-    fireEvent.click(await screen.findByRole('button', { name: 'Vis mer' }));
+    fireEvent.click(await screen.findByRole('button', { expanded: false }));
 };
 
 const preutfyll = () => act(async () => fireEvent.click(screen.getByRole('button', { name: PREUTFYLL })));
@@ -100,7 +100,7 @@ describe('Preutfyllingspanel', () => {
         expect(screen.queryByRole('button', { name: PREUTFYLL })).not.toBeInTheDocument();
     });
 
-    it('skal gi EØS-steg for søkeren og hvert barn når søkeren har arbeidet i et EØS-land', async () => {
+    it('skal gi EØS-steg for søkeren og hvert barn når søkeren arbeider i et EØS-land', async () => {
         await åpnePanelet(lagSøker({ barn: TO_BARN }));
         fireEvent.change(screen.getByRole('combobox', { name: 'Scenario' }), { target: { value: Scenario.EØS_SØKER } });
         fireEvent.click(barnet('Barn En'));

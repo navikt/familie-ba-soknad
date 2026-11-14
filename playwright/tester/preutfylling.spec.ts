@@ -59,7 +59,7 @@ const avviket = (page: Page, avvik: Avvik) =>
 /** Panelet er lukket til testeren åpner det. */
 async function åpnePreutfylling(page: Page) {
     await page.goto(FORSIDE_MED_PREUTFYLLING);
-    await panelet(page).getByRole('button', { name: 'Vis mer' }).click();
+    await panelet(page).getByRole('button', { expanded: false }).click();
 }
 
 async function preutfyll(page: Page, { scenario = Scenario.ORDINÆR, avvik = [] as Avvik[] } = {}) {
@@ -142,7 +142,7 @@ test.describe('Preutfylling i testmiljø', () => {
 
         await expect(panelet(page)).toBeVisible();
         await expect(page.getByRole('button', { name: PREUTFYLL })).toBeHidden();
-        await panelet(page).getByRole('button', { name: 'Vis mer' }).click();
+        await panelet(page).getByRole('button', { expanded: false }).click();
         await expect(page.getByRole('button', { name: PREUTFYLL })).toBeVisible();
     });
 
@@ -172,7 +172,7 @@ test.describe('Preutfylling i testmiljø', () => {
         expect(vedleggskrav(søknad)).toEqual(INGEN_VEDLEGGSKRAV);
     });
 
-    test('skal sende inn en søknad der søkeren har arbeidet i et EØS-land', async ({ page }) => {
+    test('skal sende inn en søknad der søkeren arbeider i et EØS-land', async ({ page }) => {
         await åpnePreutfylling(page);
 
         await preutfyll(page, { scenario: Scenario.EØS_SØKER });

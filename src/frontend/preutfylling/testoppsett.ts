@@ -149,5 +149,6 @@ export const TILFELLER: Tilfelle[] = [
     ...medAndreSøkereOgBarn(Scenario.EØS_ANDRE_FORELDER),
 ];
 
+// Egen liste, slik at testene ikke bruker den samme funksjonen som de kontrollerer.
 export const erEøs = (tilfelle: Tilfelle) =>
     [Scenario.EØS_SØKER, Scenario.EØS_BARN, Scenario.EØS_ANDRE_FORELDER].includes(tilfelle.valg.scenario as Scenario);

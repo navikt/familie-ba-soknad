@@ -6,11 +6,17 @@ import { describe, expect, it } from 'vitest';
 import { skalVisePreutfylling } from './skalVisePreutfylling';
 
 /** Hostene appen er eksponert på, lest fra NAIS-konfigurasjonen, slik at testen følger med når de endres. */
+const fantIngenHoster = (fil: string) =>
+    `Fant ingen ingresser i .nais/${fil}. Oppdater hosterFraNais i denne testen, se src/frontend/preutfylling/README.md.`;
+
 const hosterFraNais = (fil: string): string[] => {
     const linjer = readFileSync(join('.nais', fil), 'utf-8').split('\n');
     const start = linjer.findIndex(linje => /^\s*ingresses:/.test(linje));
     const hoster: string[] = [];
     for (const linje of linjer.slice(start + 1)) {
+        if (/^\s*(#.*)?$/.test(linje)) {
+            continue;
+        }
         const treff = linje.match(/^\s*-\s*"?https?:\/\/([^/"\s]+)/);
         if (!treff) {
             break;
@@ -24,7 +30,7 @@ describe('skalVisePreutfylling', () => {
     it('skal aldri vise panelet på hostene appen har i produksjon', () => {
         const hosterIProduksjon = hosterFraNais('app-prod.yaml');
 
-        expect(hosterIProduksjon.length).toBeGreaterThan(0);
+        expect(hosterIProduksjon.length, fantIngenHoster('app-prod.yaml')).toBeGreaterThan(0);
         for (const hostname of hosterIProduksjon) {
             expect(skalVisePreutfylling({ hostname, search: '' })).toBe(false);
             expect(skalVisePreutfylling({ hostname, search: '?preutfylling' })).toBe(false);
@@ -34,7 +40,7 @@ describe('skalVisePreutfylling', () => {
     it('skal vise panelet på hostene appen har i preprod', () => {
         const hosterIPreprod = hosterFraNais('app-dev.yaml');
 
-        expect(hosterIPreprod.length).toBeGreaterThan(0);
+        expect(hosterIPreprod.length, fantIngenHoster('app-dev.yaml')).toBeGreaterThan(0);
         for (const hostname of hosterIPreprod) {
             expect(skalVisePreutfylling({ hostname, search: '' })).toBe(true);
         }

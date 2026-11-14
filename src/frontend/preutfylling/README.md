@@ -7,7 +7,7 @@ scenario, eventuelle avvik fra happy case og hvilke barn søknaden gjelder.
 
 - I preprod (`*.dev.nav.no`) ligger panelet alltid øverst på forsiden, lukket til testeren åpner det.
 - Lokalt vises det bare når siden lastes med `?preutfylling` i adressen, for eksempel
-  `/barnetrygd/soknad/?preutfylling`. Uten det er forsiden lik den i produksjon når vi utvikler og kjører tester.
+  `/barnetrygd/soknad/?preutfylling`. Uten det er forsiden uten panelet når vi utvikler og kjører tester.
 - I produksjon vises det aldri. `skalVisePreutfylling` slipper bare gjennom hostene over.
 
 Preprod og produksjon bruker det samme bygget, så koden følger med til produksjon selv om den ikke brukes der:
@@ -26,14 +26,15 @@ Preprod og produksjon bruker det samme bygget, så koden følger med til produks
 - Ende-til-ende-testen ligger i `playwright/tester/preutfylling.spec.ts`, fordi Playwright bare leter etter tester der.
 - `separasjon.test.ts` feiler hvis annen kode peker inn i mappen, hvis `App.tsx` importerer noe annet enn inngangen,
   eller hvis inngangen begynner å importere panelet eller kode fra søknaden.
-- Verktøyet endrer ingen kode i søknaden. Det leser og setter tilstand gjennom `useAppContext`, `useStegContext` og
-  `useEøsContext`, slik søknaden selv gjør når den gjenoppretter en mellomlagret søknad.
+- Verktøyet endrer ingen annen kode i søknaden. Det leser og setter tilstand gjennom `useAppContext`, `useStegContext`
+  og `useEøsContext`, slik søknaden selv gjør når den gjenoppretter en mellomlagret søknad.
 - Feiler panelet når det lastes eller tegnes, viser `Feilgrense` en melding i stedet for at feilen når søknaden.
 
 Verktøyet påvirker likevel søknaden for testpersonen som bruker det:
 
 - Den preutfylte søknaden mellomlagres og erstatter en søknad testpersonen har påbegynt. Den ligger der til testeren
-  sender inn eller velger «Start på nytt», også for andre som logger inn med samme testperson.
+  sender inn eller velger «Start på nytt», eller til mellomlagringen utløper. Det gjelder også for andre som logger inn
+  med samme testperson.
 - Gir verktøyet et steg en søknad steget ikke tåler, feiler steget til testeren velger «Start på nytt» og laster siden
   på nytt. «Start på nytt» alene nullstiller ikke EØS-stegene i søknaden.
 - I preprod har forsiden et ekstra panel med en overskrift foran innholdet. Det kan gi utslag i tester av universell
@@ -73,7 +74,11 @@ lagret. Da har du to valg:
 1. Oppdater `byggPreutfyltSøknad.ts` så svarene passer med det nye spørsmålet eller den nye regelen.
 2. Slett verktøyet hvis ingen bruker det lenger.
 
-Dette fanger ikke testene:
+Slutter testen å kompilere fordi et steg er bygget om, for eksempel fordi `oppdaterSøknad` har fått nytt navn, er det
+testen som må endres. EØS-stegene testes allerede gjennom komponenten og knappen «Gå videre». De andre stegene kan
+testes på samme måte.
+
+Dette fanger testene ikke opp:
 
 - Datoene i periodene. De valideres bare i dialogene der søkeren legger dem til.
 - Om mottaket godtar søknaden. Innsendingen er mocket.

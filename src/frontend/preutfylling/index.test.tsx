@@ -1,6 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
+import { silenceConsoleErrors } from '../utils/testing';
+
 import { Preutfylling } from './index';
 
 const panelet = vi.hoisted(() => ({ antallGangerLastet: 0, skalFeile: false }));
@@ -22,6 +24,7 @@ describe('Preutfylling', () => {
     afterEach(() => {
         window.history.pushState({}, '', '/');
         panelet.skalFeile = false;
+        vi.restoreAllMocks();
     });
 
     // Må stå først: panelet lastes bare én gang i testfilen, så etter de andre testene er det allerede lastet.
@@ -44,9 +47,8 @@ describe('Preutfylling', () => {
     });
 
     it('skal vise en melding i stedet for å la en feil i panelet gå videre til søknaden', async () => {
-        vi.spyOn(console, 'error').mockImplementation(() => {
-            // React logger feilen som fanges
-        });
+        // React logger feilen som fanges.
+        silenceConsoleErrors();
         panelet.skalFeile = true;
         window.history.pushState({}, '', '/?preutfylling');
 

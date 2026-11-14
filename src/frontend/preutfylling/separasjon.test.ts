@@ -1,10 +1,11 @@
-import { readdirSync, readFileSync, statSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { dirname, join, normalize, sep } from 'node:path';
 
 import { describe, expect, it } from 'vitest';
 
 const VERKTØYET = join('src', 'frontend', 'preutfylling');
-const MAPPER_MED_KODE = ['src', 'playwright', 'mocks', 'scripts'];
+// Mapper og filer som ikke finnes lenger, hoppes over, slik at testen ikke feiler når noen rydder i repoet.
+const MAPPER_MED_KODE = ['src', 'playwright', 'mocks', 'scripts'].filter(existsSync);
 const GENERERTE_MAPPER = ['.bygg', 'resultater', 'rapport'].map(navn => join('playwright', navn));
 const KONFIGURASJON = [
     'package.json',
@@ -16,7 +17,7 @@ const KONFIGURASJON = [
     'playwright.config.ts',
     join('src', 'frontend', 'tsconfig.json'),
     join('playwright', 'tsconfig.json'),
-];
+].filter(existsSync);
 // Filene som havner i hovedbundelen. De skal være små og ikke dra med seg panelet eller kode fra søknaden.
 const INNGANGEN = ['index.tsx', 'Feilgrense.tsx', 'skalVisePreutfylling.ts'];
 
@@ -32,11 +33,13 @@ const kodefiler = (mappe: string): string[] =>
         return /\.[cm]?[jt]sx?$/.test(navn) ? [sti] : [];
     });
 
-// Alle stier som nevner mappen, uansett om de står i en import, en dynamisk import, require eller vi.mock.
-const STI_SOM_NEVNER_MAPPEN = /['"`]([^'"`\n]*\/preutfylling(?:\/[^'"`\n]*)?)['"`]/g;
+// Stier som peker på mappen i en import, en eksport, en dynamisk import, require eller vi.mock. Tekst som bare nevner
+// mappen, for eksempel i en kommentar, regnes ikke som bruk.
+const STI_TIL_MAPPEN =
+    /(?:\bfrom|\bimport|\b(?:require|mock|doMock|importActual|importMock)\s*\()\s*\(?\s*['"`]((?:[^'"`\n]*\/)?preutfylling(?:\/[^'"`\n]*)?)['"`]/g;
 
 const stierTilVerktøyet = (fil: string): string[] =>
-    [...readFileSync(fil, 'utf-8').matchAll(STI_SOM_NEVNER_MAPPEN)]
+    [...readFileSync(fil, 'utf-8').matchAll(STI_TIL_MAPPEN)]
         .map(treff => treff[1])
         .filter(sti => {
             if (!sti.startsWith('.')) {
@@ -47,10 +50,12 @@ const stierTilVerktøyet = (fil: string): string[] =>
             return mål === VERKTØYET || mål.startsWith(VERKTØYET + sep);
         });
 
+// Både import og «export … from» drar koden med seg inn i hovedbundelen.
+const STATISK_IMPORT =
+    /^(?:import\s[^'"]*|export\s+(?:type\s+)?(?:\*(?:\s+as\s+\w+)?|\{[^}]*\})\s*from\s*)['"]([^'"]+)['"]/gm;
+
 const statiskeImporter = (fil: string): string[] =>
-    [...readFileSync(join(VERKTØYET, fil), 'utf-8').matchAll(/^import\s[^'"]*['"]([^'"]+)['"]/gm)].map(
-        treff => treff[1]
-    );
+    [...readFileSync(join(VERKTØYET, fil), 'utf-8').matchAll(STATISK_IMPORT)].map(treff => treff[1]);
 
 // Verktøyet skal være lett å slette. Stedene under er derfor de eneste som får bruke det, se README.md.
 describe('Preutfylling er skilt fra resten av søknaden', () => {
@@ -74,6 +79,9 @@ describe('Preutfylling er skilt fra resten av søknaden', () => {
     it('skal ikke være nevnt i konfigurasjonen til bygg og tester', () => {
         const nevnerVerktøyet = KONFIGURASJON.filter(fil => readFileSync(fil, 'utf-8').includes('preutfylling'));
 
+        expect(KONFIGURASJON, 'Testen fant ikke konfigurasjonen. Oppdater listen i denne testen.').toContain(
+            'package.json'
+        );
         expect(nevnerVerktøyet, 'Verktøyet skal ikke trenge egen konfigurasjon, for eksempel alias.').toEqual([]);
     });
 
@@ -88,8 +96,8 @@ describe('Preutfylling er skilt fra resten av søknaden', () => {
             'Feilgrense.tsx': ['react'],
             'skalVisePreutfylling.ts': [],
         });
-        expect(readFileSync(join(VERKTØYET, 'index.tsx'), 'utf-8')).toContain(
-            "lazy(() => import('./Preutfyllingspanel'))"
-        );
+        const inngangen = readFileSync(join(VERKTØYET, 'index.tsx'), 'utf-8');
+        expect(inngangen).toContain("lazy(() => import('./Preutfyllingspanel'))");
+        expect(inngangen.match(/\bimport\(/g), 'Inngangen skal bare laste panelet dynamisk.').toHaveLength(1);
     });
 });
