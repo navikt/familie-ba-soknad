@@ -3,10 +3,11 @@ import { lazy, Suspense } from 'react';
 import { Feilgrense } from './Feilgrense';
 import { skalVisePreutfylling } from './skalVisePreutfylling';
 
-const Preutfyllingspanel = lazy(() => import('./Preutfyllingspanel'));
+const Preutfyllingspanel = lazy(() =>
+    import('./Preutfyllingspanel').then(modul => ({ default: modul.Preutfyllingspanel }))
+);
 
-// Testverktøy som bare vises i testmiljø. Se README.md i denne mappen.
-export function Preutfylling() {
+export function PreutfyllingITestmiljø() {
     if (!skalVisePreutfylling(window.location)) {
         return null;
     }

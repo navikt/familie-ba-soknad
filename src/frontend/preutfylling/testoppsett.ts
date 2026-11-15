@@ -6,10 +6,10 @@ import type { IBarn, ISøker } from '../typer/person';
 import { type ISøknad, initialStateSøknad } from '../typer/søknad';
 import { spyOnUseApp } from '../utils/testing';
 
-import { byggPreutfyltSøknad, finnUgyldigKombinasjon, type Preutfyllingsvalg } from './byggPreutfyltSøknad';
-import { Avvik, Scenario } from './scenario';
+import { byggPreutfyltSøknad, type Preutfyllingsvalg } from './byggPreutfyltSøknad';
+import { Avvik, erEøsScenario, feilmeldingForUgyldigKombinasjon, Scenario } from './scenario';
 
-export const EØS_LAND = 'BEL';
+const EØS_LAND = 'BEL';
 export const EKSTRA_BARN_IDENT = '15859040087';
 
 export const BARN: IBarn[] = [
@@ -18,7 +18,7 @@ export const BARN: IBarn[] = [
     { id: 'barn-3', navn: 'Barn Tre', ident: '10832350121', alder: '17', borMedSøker: true, adressebeskyttelse: true },
 ];
 
-export interface Tilfelle {
+interface Testtilfelle {
     navn: string;
     valg: Partial<Preutfyllingsvalg>;
     søker?: Partial<ISøker>;
@@ -63,7 +63,7 @@ const søknadPåForsiden = (søker: Partial<ISøker> = {}): ISøknad => {
     };
 };
 
-export const preutfyll = ({ valg, søker }: Pick<Tilfelle, 'valg' | 'søker'>) =>
+export const byggSøknadFor = ({ valg, søker }: Partial<Pick<Testtilfelle, 'valg' | 'søker'>> = {}) =>
     byggPreutfyltSøknad(søknadPåForsiden(søker), {
         scenario: Scenario.ORDINÆR,
         avvik: [],
@@ -72,8 +72,9 @@ export const preutfyll = ({ valg, søker }: Pick<Tilfelle, 'valg' | 'søker'>) =
         ...valg,
     });
 
-export const brukSøknad = (søknad: ISøknad) => {
-    const spion = spyOnUseApp(søknad);
+// spyOnUseApp endrer søknaden den får, og kodeverket der gjør at ingen land regnes som EØS-land.
+export const mockAppContextMed = (søknad: ISøknad) => {
+    const spion = spyOnUseApp(structuredClone(søknad));
     spion.useAppMock.mockReturnValue({
         ...spion.useAppMock(),
         eøsLand: { status: RessursStatus.SUKSESS, data: { [EØS_LAND]: 'Belgia' } },
@@ -90,18 +91,18 @@ const KOMBINASJONER_AV_AVVIK: Avvik[][] = [
     [Avvik.FOSTERBARN, Avvik.INSTITUSJON, Avvik.BOR_IKKE_FAST_MED_SØKER],
 ];
 
-const medAvvik = (scenario: Scenario, avvik: Avvik[]): Tilfelle => ({
+const medAvvik = (scenario: Scenario, avvik: Avvik[]): Testtilfelle => ({
     navn: `${scenario} med avvik [${avvik.join(', ')}]`,
     valg: { scenario, avvik },
 });
 
-const medSivilstand = (scenario: Scenario, type: ESivilstand): Tilfelle => ({
+const medSivilstand = (scenario: Scenario, type: ESivilstand): Testtilfelle => ({
     navn: `${scenario} for en søker med sivilstand ${type}`,
     valg: { scenario },
     søker: { sivilstand: { type } },
 });
 
-const medAndreSøkereOgBarn = (scenario: Scenario): Tilfelle[] => [
+const medAndreSøkereOgBarn = (scenario: Scenario): Testtilfelle[] => [
     {
         navn: `${scenario} for en søker med adressebeskyttelse og bare et barn lagt til med fødselsnummer`,
         valg: { scenario, barn: [], ekstraBarnIdent: EKSTRA_BARN_IDENT },
@@ -118,19 +119,19 @@ const medAndreSøkereOgBarn = (scenario: Scenario): Tilfelle[] => [
     },
 ];
 
-export const TILFELLER_MED_KOMBINASJONER: Tilfelle[] = Object.values(Scenario).flatMap(scenario =>
-    KOMBINASJONER_AV_AVVIK.filter(avvik => !finnUgyldigKombinasjon({ scenario, avvik })).map(avvik =>
+export const TILFELLER_MED_KOMBINASJONER: Testtilfelle[] = Object.values(Scenario).flatMap(scenario =>
+    KOMBINASJONER_AV_AVVIK.filter(avvik => !feilmeldingForUgyldigKombinasjon({ scenario, avvik })).map(avvik =>
         medAvvik(scenario, avvik)
     )
 );
 
-export const TILFELLER_MED_SIVILSTAND: Tilfelle[] = [
+export const TILFELLER_MED_SIVILSTAND: Testtilfelle[] = [
     ...Object.values(ESivilstand).map(type => medSivilstand(Scenario.UTVIDET, type)),
     medSivilstand(Scenario.ORDINÆR, ESivilstand.ENKE_ELLER_ENKEMANN),
     medSivilstand(Scenario.EØS_SØKER, ESivilstand.GJENLEVENDE_PARTNER),
 ];
 
-export const TILFELLER: Tilfelle[] = [
+export const TILFELLER: Testtilfelle[] = [
     ...TILFELLER_MED_KOMBINASJONER,
     ...ALLE_AVVIK.map(avvik => medAvvik(Scenario.ORDINÆR, [avvik])),
     ...TILFELLER_MED_SIVILSTAND,
@@ -138,5 +139,4 @@ export const TILFELLER: Tilfelle[] = [
     ...medAndreSøkereOgBarn(Scenario.EØS_ANDRE_FORELDER),
 ];
 
-export const erEøs = (tilfelle: Tilfelle) =>
-    [Scenario.EØS_SØKER, Scenario.EØS_BARN, Scenario.EØS_ANDRE_FORELDER].includes(tilfelle.valg.scenario as Scenario);
+export const erEøs = ({ valg }: Testtilfelle) => erEøsScenario(valg.scenario ?? Scenario.ORDINÆR);

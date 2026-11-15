@@ -3,14 +3,14 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { silenceConsoleErrors } from '../utils/testing';
 
-import { Preutfylling } from './index';
+import { PreutfyllingITestmiljø } from './index';
 
 const panelet = vi.hoisted(() => ({ antallGangerLastet: 0, skalFeile: false }));
 
 vi.mock('./Preutfyllingspanel', () => {
     panelet.antallGangerLastet += 1;
     return {
-        default: () => {
+        Preutfyllingspanel: () => {
             if (panelet.skalFeile) {
                 throw new Error('Feil i panelet');
             }
@@ -19,7 +19,7 @@ vi.mock('./Preutfyllingspanel', () => {
     };
 });
 
-describe('Preutfylling', () => {
+describe('PreutfyllingITestmiljø', () => {
     afterEach(() => {
         window.history.pushState({}, '', '/');
         panelet.skalFeile = false;
@@ -28,7 +28,7 @@ describe('Preutfylling', () => {
 
     // Må stå først: panelet lastes bare én gang i testfilen, så etter de andre testene er det allerede lastet.
     it('skal verken vise eller laste panelet når det ikke skal vises', async () => {
-        const { container } = render(<Preutfylling />);
+        const { container } = render(<PreutfyllingITestmiljø />);
 
         await expect(screen.findByText('Panelet', {}, { timeout: 300 })).rejects.toThrow();
         expect(container).toBeEmptyDOMElement();
@@ -38,7 +38,7 @@ describe('Preutfylling', () => {
     it('skal laste og vise panelet når det skal vises', async () => {
         window.history.pushState({}, '', '/?preutfylling');
 
-        render(<Preutfylling />);
+        render(<PreutfyllingITestmiljø />);
 
         expect(await screen.findByText('Panelet')).toBeInTheDocument();
         expect(panelet.antallGangerLastet).toBe(1);
@@ -49,7 +49,7 @@ describe('Preutfylling', () => {
         panelet.skalFeile = true;
         window.history.pushState({}, '', '/?preutfylling');
 
-        render(<Preutfylling />);
+        render(<PreutfyllingITestmiljø />);
 
         expect(await screen.findByRole('status')).toHaveTextContent('Testverktøyet for preutfylling feilet.');
     });

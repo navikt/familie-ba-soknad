@@ -14,6 +14,10 @@ export const scenarioNavn: Record<Scenario, string> = {
     [Scenario.EØS_ANDRE_FORELDER]: 'EØS – den andre forelderen arbeider i et EØS-land',
 };
 
+const EØS_SCENARIOER = [Scenario.EØS_SØKER, Scenario.EØS_BARN, Scenario.EØS_ANDRE_FORELDER];
+
+export const erEøsScenario = (scenario: Scenario) => EØS_SCENARIOER.includes(scenario);
+
 export enum Avvik {
     DELT_BOSTED = 'DELT_BOSTED',
     BOR_IKKE_FAST_MED_SØKER = 'BOR_IKKE_FAST_MED_SØKER',
@@ -36,4 +40,23 @@ export const avvikNavn: Record<Avvik, string> = {
     [Avvik.INSTITUSJON]: 'Barna bor i institusjon',
     [Avvik.SØKER_UTENFOR_NORGE]: 'Søker har oppholdt seg utenfor Norge de siste 12 månedene',
     [Avvik.BARNA_UTENFOR_NORGE]: 'Barna har oppholdt seg utenfor Norge de siste 12 månedene',
+};
+
+export const feilmeldingForUgyldigKombinasjon = ({
+    scenario,
+    avvik,
+}: {
+    scenario: Scenario;
+    avvik: Avvik[];
+}): string | undefined => {
+    if (!avvik.includes(Avvik.FOSTERBARN)) {
+        return undefined;
+    }
+    if (scenario === Scenario.EØS_ANDRE_FORELDER) {
+        return 'Fosterbarn kan ikke kombineres med scenarioet der den andre forelderen arbeider i et EØS-land.';
+    }
+    if (avvik.includes(Avvik.DELT_BOSTED)) {
+        return 'Fosterbarn kan ikke kombineres med avtale om delt bosted.';
+    }
+    return undefined;
 };

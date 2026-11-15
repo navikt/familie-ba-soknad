@@ -24,7 +24,7 @@ import {
     skalViseBorMedOmsorgsperson,
 } from '../utils/barn';
 
-import { Avvik, Scenario } from './scenario';
+import { Avvik, erEøsScenario, feilmeldingForUgyldigKombinasjon, Scenario } from './scenario';
 
 export interface Preutfyllingsvalg {
     scenario: Scenario;
@@ -34,37 +34,18 @@ export interface Preutfyllingsvalg {
     eøsLand: Alpha3Code;
 }
 
-type Valg = Pick<Preutfyllingsvalg, 'scenario' | 'avvik' | 'eøsLand'>;
-
-const EØS_SCENARIOER = [Scenario.EØS_SØKER, Scenario.EØS_BARN, Scenario.EØS_ANDRE_FORELDER];
-
-export const erEøsScenario = (scenario: Scenario) => EØS_SCENARIOER.includes(scenario);
-
-const harAvvik = (valg: Valg, avvik: Avvik) => valg.avvik.includes(avvik);
-
-export const finnUgyldigKombinasjon = ({ scenario, avvik }: Pick<Preutfyllingsvalg, 'scenario' | 'avvik'>) => {
-    if (!avvik.includes(Avvik.FOSTERBARN)) {
-        return undefined;
-    }
-    if (scenario === Scenario.EØS_ANDRE_FORELDER) {
-        return 'Fosterbarn kan ikke kombineres med scenarioet der den andre forelderen arbeider i et EØS-land.';
-    }
-    if (avvik.includes(Avvik.DELT_BOSTED)) {
-        return 'Fosterbarn kan ikke kombineres med avtale om delt bosted.';
-    }
-    return undefined;
-};
+const harAvvik = (valg: Preutfyllingsvalg, avvik: Avvik) => valg.avvik.includes(avvik);
 
 const NAVN_PÅ_EKSTRA_BARN = 'Barn Lagt Til Manuelt';
 const NAVN_PÅ_ANDRE_FORELDER = 'Annen Forelder';
-const ID_NUMMER = '010190-1234';
+const SØKERS_ID_NUMMER = '010190-1234';
 const ADRESSE_I_SØKEPERIODEN = 'Testveien 1, 0150 Oslo';
 const LAND_UTENFOR_EØS: Alpha3Code = 'USA';
 const ÅRSAK_TIL_UTVIDET = Årsak.BODD_ALENE;
 
 const jaHvis = (betingelse: boolean) => (betingelse ? ESvar.JA : ESvar.NEI);
 
-const førsteIMåneden = (antallMånederSiden: number) =>
+const månedsstartForMånederSiden = (antallMånederSiden: number) =>
     format(startOfMonth(subMonths(new Date(), antallMånederSiden)), 'yyyy-MM-dd');
 
 const førsteJanuarIFjor = () => `${new Date().getFullYear() - 1}-01-01`;
@@ -87,7 +68,10 @@ const lagArbeidsperiodeIUtlandet = (land: Alpha3Code): IArbeidsperiode => ({
 const lagEøsBarnetrygdsperiode = (land: Alpha3Code): IEøsBarnetrygdsperiode => ({
     mottarEøsBarnetrygdNå: { id: BarnetrygdperiodeSpørsmålId.mottarEøsBarnetrygdNå, svar: ESvar.JA },
     barnetrygdsland: { id: BarnetrygdperiodeSpørsmålId.barnetrygdsland, svar: land },
-    fraDatoBarnetrygdperiode: { id: BarnetrygdperiodeSpørsmålId.fraDatoBarnetrygdperiode, svar: førsteIMåneden(1) },
+    fraDatoBarnetrygdperiode: {
+        id: BarnetrygdperiodeSpørsmålId.fraDatoBarnetrygdperiode,
+        svar: månedsstartForMånederSiden(1),
+    },
     tilDatoBarnetrygdperiode: { id: BarnetrygdperiodeSpørsmålId.tilDatoBarnetrygdperiode, svar: '' },
     månedligBeløp: { id: BarnetrygdperiodeSpørsmålId.månedligBeløp, svar: '1000' },
 });
@@ -98,8 +82,14 @@ const lagAvsluttetOppholdUtenforNorge = (): IUtenlandsperiode => ({
         svar: EUtenlandsoppholdÅrsak.HAR_OPPHOLDT_SEG_UTENFOR_NORGE,
     },
     oppholdsland: { id: UtenlandsoppholdSpørsmålId.landUtenlandsopphold, svar: LAND_UTENFOR_EØS },
-    oppholdslandFraDato: { id: UtenlandsoppholdSpørsmålId.fraDatoUtenlandsopphold, svar: førsteIMåneden(3) },
-    oppholdslandTilDato: { id: UtenlandsoppholdSpørsmålId.tilDatoUtenlandsopphold, svar: førsteIMåneden(1) },
+    oppholdslandFraDato: {
+        id: UtenlandsoppholdSpørsmålId.fraDatoUtenlandsopphold,
+        svar: månedsstartForMånederSiden(3),
+    },
+    oppholdslandTilDato: {
+        id: UtenlandsoppholdSpørsmålId.tilDatoUtenlandsopphold,
+        svar: månedsstartForMånederSiden(1),
+    },
 });
 
 const lagEkstraBarn = (ident: string): IBarn => ({
@@ -111,7 +101,7 @@ const lagEkstraBarn = (ident: string): IBarn => ({
     adressebeskyttelse: false,
 });
 
-const lagAndreForelder = (valg: Valg): IAndreForelder => {
+const lagAndreForelder = (valg: Preutfyllingsvalg): IAndreForelder => {
     const initiell = genererInitiellAndreForelder(null, false);
     const arbeiderIEøsLand = valg.scenario === Scenario.EØS_ANDRE_FORELDER;
 
@@ -146,27 +136,30 @@ const lagAndreForelder = (valg: Valg): IAndreForelder => {
     };
 };
 
-const lagBarnMedISøknad = (barn: IBarn, indeks: number, valg: Valg): IBarnMedISøknad => {
+const fyllUtBarn = (barn: IBarn, indeks: number, valg: Preutfyllingsvalg): IBarnMedISøknad => {
     const initielt = genererInitialBarnMedISøknad(barn);
     const erFosterbarn = harAvvik(valg, Avvik.FOSTERBARN);
     const borIInstitusjon = harAvvik(valg, Avvik.INSTITUSJON);
     const harVærtUtenforNorge = harAvvik(valg, Avvik.BARNA_UTENFOR_NORGE);
     const fårBarnetrygdFraEøsLand = valg.scenario === Scenario.EØS_BARN;
+    const andreForelderArbeiderIEøsLand = valg.scenario === Scenario.EØS_ANDRE_FORELDER;
+    const spørOmSammeForelderSomAnnetBarn = indeks > 0 && !erFosterbarn;
 
     const borFastMedSøker = jaHvis(!harAvvik(valg, Avvik.BOR_IKKE_FAST_MED_SØKER));
     const borMedAndreForelder = erFosterbarn || borIInstitusjon ? null : ESvar.NEI;
+    const andreForelderErDød = ESvar.NEI;
     const spørOmOmsorgsperson = skalViseBorMedOmsorgsperson(
         borMedAndreForelder,
         borFastMedSøker,
         jaHvis(borIInstitusjon),
-        ESvar.NEI,
+        andreForelderErDød,
         jaHvis(erFosterbarn)
     );
 
     return {
         ...initielt,
         barnErFyltUt: true,
-        triggetEøs: fårBarnetrygdFraEøsLand || valg.scenario === Scenario.EØS_ANDRE_FORELDER,
+        triggetEøs: fårBarnetrygdFraEøsLand || andreForelderArbeiderIEøsLand,
         erFosterbarn: { ...initielt.erFosterbarn, svar: jaHvis(erFosterbarn) },
         erIBeredskapshjem: { ...initielt.erIBeredskapshjem, svar: ESvar.NEI },
         erAdoptertFraUtland: {
@@ -174,7 +167,7 @@ const lagBarnMedISøknad = (barn: IBarn, indeks: number, valg: Valg): IBarnMedIS
             svar: jaHvis(harAvvik(valg, Avvik.ADOPTERT_FRA_UTLANDET)),
         },
         erAsylsøker: { ...initielt.erAsylsøker, svar: jaHvis(harAvvik(valg, Avvik.BARNA_ER_ASYLSØKERE)) },
-        andreForelderErDød: { ...initielt.andreForelderErDød, svar: ESvar.NEI },
+        andreForelderErDød: { ...initielt.andreForelderErDød, svar: andreForelderErDød },
         borFastMedSøker: { ...initielt.borFastMedSøker, svar: borFastMedSøker },
         barnetrygdFraAnnetEøsland: { ...initielt.barnetrygdFraAnnetEøsland, svar: jaHvis(fårBarnetrygdFraEøsLand) },
         oppholderSegIInstitusjon: { ...initielt.oppholderSegIInstitusjon, svar: jaHvis(borIInstitusjon) },
@@ -182,7 +175,10 @@ const lagBarnMedISøknad = (barn: IBarn, indeks: number, valg: Valg): IBarnMedIS
             institusjonsnavn: { ...initielt.institusjonsnavn, svar: 'Testinstitusjonen' },
             institusjonsadresse: { ...initielt.institusjonsadresse, svar: 'Institusjonsveien 1' },
             institusjonspostnummer: { ...initielt.institusjonspostnummer, svar: '0150' },
-            institusjonOppholdStartdato: { ...initielt.institusjonOppholdStartdato, svar: førsteIMåneden(1) },
+            institusjonOppholdStartdato: {
+                ...initielt.institusjonOppholdStartdato,
+                svar: månedsstartForMånederSiden(1),
+            },
             institusjonOppholdSluttdato: {
                 ...initielt.institusjonOppholdSluttdato,
                 svar: AlternativtSvarForInput.UKJENT,
@@ -196,7 +192,7 @@ const lagBarnMedISøknad = (barn: IBarn, indeks: number, valg: Valg): IBarnMedIS
         andreForelder: erFosterbarn ? null : lagAndreForelder(valg),
         sammeForelderSomAnnetBarnMedId: {
             ...initielt.sammeForelderSomAnnetBarnMedId,
-            svar: indeks === 0 || erFosterbarn ? null : AlternativtSvarForInput.ANNEN_FORELDER,
+            svar: spørOmSammeForelderSomAnnetBarn ? AlternativtSvarForInput.ANNEN_FORELDER : null,
         },
         ...(fårBarnetrygdFraEøsLand && {
             pågåendeSøknadFraAnnetEøsLand: { ...initielt.pågåendeSøknadFraAnnetEøsLand, svar: ESvar.NEI },
@@ -213,7 +209,7 @@ const lagBarnMedISøknad = (barn: IBarn, indeks: number, valg: Valg): IBarnMedIS
     };
 };
 
-const lagSøker = (søker: ISøker, valg: Valg): ISøker => {
+const fyllUtSøker = (søker: ISøker, valg: Preutfyllingsvalg): ISøker => {
     const erUtvidet = valg.scenario === Scenario.UTVIDET;
     const arbeiderIEøsLand = valg.scenario === Scenario.EØS_SØKER;
     const harEøsSteg = erEøsScenario(valg.scenario);
@@ -241,7 +237,7 @@ const lagSøker = (søker: ISøker, valg: Valg): ISøker => {
         pensjonsperioderNorge: [],
         andreUtbetalinger: { ...søker.andreUtbetalinger, svar: harEøsSteg ? ESvar.NEI : null },
         andreUtbetalingsperioder: [],
-        idNummer: arbeiderIEøsLand ? [{ land: valg.eøsLand, idnummer: ID_NUMMER }] : [],
+        idNummer: arbeiderIEøsLand ? [{ land: valg.eøsLand, idnummer: SØKERS_ID_NUMMER }] : [],
         adresseISøkeperiode: {
             ...søker.adresseISøkeperiode,
             svar: arbeiderIEøsLand ? ADRESSE_I_SØKEPERIODEN : '',
@@ -269,8 +265,8 @@ const lagSøker = (søker: ISøker, valg: Valg): ISøker => {
     };
 };
 
-const lagDokumentasjon = (dokumentasjon: IDokumentasjon, søker: ISøker, barna: IBarnMedISøknad[]): IDokumentasjon => {
-    const barnDer = (gjelder: (barn: IBarnMedISøknad) => boolean) => barna.filter(gjelder).map(barn => barn.id);
+const medVedleggskrav = (dokumentasjon: IDokumentasjon, søker: ISøker, barna: IBarnMedISøknad[]): IDokumentasjon => {
+    const idTilBarnDer = (gjelder: (barn: IBarnMedISøknad) => boolean) => barna.filter(gjelder).map(barn => barn.id);
     const ingenKrav = {
         ...dokumentasjon,
         gjelderForSøker: false,
@@ -283,26 +279,28 @@ const lagDokumentasjon = (dokumentasjon: IDokumentasjon, søker: ISøker, barna:
         case Dokumentasjonsbehov.AVTALE_DELT_BOSTED:
             return {
                 ...ingenKrav,
-                gjelderForBarnId: barnDer(barn => barn.andreForelder?.skriftligAvtaleOmDeltBosted.svar === ESvar.JA),
+                gjelderForBarnId: idTilBarnDer(
+                    barn => barn.andreForelder?.skriftligAvtaleOmDeltBosted.svar === ESvar.JA
+                ),
             };
         case Dokumentasjonsbehov.VEDTAK_OPPHOLDSTILLATELSE:
             return {
                 ...ingenKrav,
                 gjelderForSøker: søker.erAsylsøker.svar === ESvar.JA,
-                gjelderForBarnId: barnDer(barn => barn.erAsylsøker.svar === ESvar.JA),
+                gjelderForBarnId: idTilBarnDer(barn => barn.erAsylsøker.svar === ESvar.JA),
             };
         case Dokumentasjonsbehov.ADOPSJON_DATO:
-            return { ...ingenKrav, gjelderForBarnId: barnDer(barn => barn.erAdoptertFraUtland.svar === ESvar.JA) };
+            return { ...ingenKrav, gjelderForBarnId: idTilBarnDer(barn => barn.erAdoptertFraUtland.svar === ESvar.JA) };
         case Dokumentasjonsbehov.BEKREFTELSE_FRA_BARNEVERN:
             return {
                 ...ingenKrav,
-                gjelderForBarnId: barnDer(erBarnIFosterhjemEllerBeredskapshjem),
+                gjelderForBarnId: idTilBarnDer(erBarnIFosterhjemEllerBeredskapshjem),
                 beskrivelseSanityApiNavn: BeskrivelseSanityApiNavn.bekreftelseFraBarnevernetBarnetrygd,
             };
         case Dokumentasjonsbehov.BOR_FAST_MED_SØKER:
             return {
                 ...ingenKrav,
-                gjelderForBarnId: barnDer(barn => barn.borFastMedSøker.svar === ESvar.JA && !barn.borMedSøker),
+                gjelderForBarnId: idTilBarnDer(barn => barn.borFastMedSøker.svar === ESvar.JA && !barn.borMedSøker),
             };
         default:
             return ingenKrav;
@@ -310,14 +308,14 @@ const lagDokumentasjon = (dokumentasjon: IDokumentasjon, søker: ISøker, barna:
 };
 
 export const byggPreutfyltSøknad = (søknad: ISøknad, valg: Preutfyllingsvalg): ISøknad => {
-    const ugyldigKombinasjon = finnUgyldigKombinasjon(valg);
-    if (ugyldigKombinasjon) {
-        throw new Error(ugyldigKombinasjon);
+    const feilmelding = feilmeldingForUgyldigKombinasjon(valg);
+    if (feilmelding) {
+        throw new Error(feilmelding);
     }
 
     const ekstraBarn = valg.ekstraBarnIdent ? [lagEkstraBarn(valg.ekstraBarnIdent)] : [];
-    const barna = [...valg.barn, ...ekstraBarn].map((barn, indeks) => lagBarnMedISøknad(barn, indeks, valg));
-    const søker = lagSøker(søknad.søker, valg);
+    const barna = [...valg.barn, ...ekstraBarn].map((barn, indeks) => fyllUtBarn(barn, indeks, valg));
+    const søker = fyllUtSøker(søknad.søker, valg);
 
     const gjelderNoenAvBarna = (svaret: (barn: IBarnMedISøknad) => ESvar | null) =>
         jaHvis(barna.some(barn => svaret(barn) === ESvar.JA));
@@ -362,6 +360,6 @@ export const byggPreutfyltSøknad = (søknad: ISøknad, valg: Preutfyllingsvalg)
                     : OmBarnaDineSpørsmålId.erFolkeregAvdødEktefelleForelder,
             svar: erEnkeEllerGjenlevende(søker) ? ESvar.NEI : null,
         },
-        dokumentasjon: søknad.dokumentasjon.map(dokumentasjon => lagDokumentasjon(dokumentasjon, søker, barna)),
+        dokumentasjon: søknad.dokumentasjon.map(dokumentasjon => medVedleggskrav(dokumentasjon, søker, barna)),
     };
 };

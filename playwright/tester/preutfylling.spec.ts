@@ -53,7 +53,10 @@ async function åpnePreutfylling(page: Page) {
     await panelet(page).getByRole('button', { expanded: false }).click();
 }
 
-async function preutfyll(page: Page, { scenario = Scenario.ORDINÆR, avvik = [] as Avvik[] } = {}) {
+async function preutfyll(
+    page: Page,
+    { scenario = Scenario.ORDINÆR, avvik = [] }: { scenario?: Scenario; avvik?: Avvik[] } = {}
+) {
     await page.getByRole('combobox', { name: 'Scenario' }).selectOption(scenarioNavn[scenario]);
     for (const etAvvik of avvik) {
         await avviket(page, etAvvik).check();
@@ -80,7 +83,7 @@ const vedleggskrav = (søknad: ISøknadKontrakt) => søknad.dokumentasjon.map(do
 
 const INGEN_VEDLEGGSKRAV = [Dokumentasjonsbehov.ANNEN_DOKUMENTASJON];
 
-const FORVENTET_SVAR: Record<Avvik, (søknad: ISøknadKontrakt) => void> = {
+const FORVENTNINGER: Record<Avvik, (søknad: ISøknadKontrakt) => void> = {
     [Avvik.DELT_BOSTED]: søknad => {
         expect(søknad.barn[0].andreForelder?.skriftligAvtaleOmDeltBosted?.verdi.nb).toBe('JA');
         expect(vedleggskrav(søknad)).toContain(Dokumentasjonsbehov.AVTALE_DELT_BOSTED);
@@ -201,9 +204,9 @@ test.describe('Preutfylling i testmiljø', () => {
 
             const søknad = await sendInnFraOppsummeringen(page);
             for (const avvik of AVVIK_SOM_PASSER_MED_ANDRE_FORELDER) {
-                FORVENTET_SVAR[avvik](søknad);
+                FORVENTNINGER[avvik](søknad);
             }
-            expect(søknad.antallEøsSteg > 0).toBe(scenario !== Scenario.UTVIDET);
+            expect(søknad.antallEøsSteg).toBe(scenario === Scenario.UTVIDET ? 0 : 2);
         });
     }
 
@@ -216,8 +219,8 @@ test.describe('Preutfylling i testmiljø', () => {
         });
 
         const søknad = await sendInnFraOppsummeringen(page);
-        FORVENTET_SVAR[Avvik.FOSTERBARN](søknad);
-        FORVENTET_SVAR[Avvik.BOR_IKKE_FAST_MED_SØKER](søknad);
+        FORVENTNINGER[Avvik.FOSTERBARN](søknad);
+        FORVENTNINGER[Avvik.BOR_IKKE_FAST_MED_SØKER](søknad);
         expect(søknad.barn[0].harEøsSteg).toBe(true);
     });
 

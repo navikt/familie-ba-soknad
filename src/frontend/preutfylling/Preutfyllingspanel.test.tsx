@@ -1,23 +1,28 @@
-import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { byggSuksessRessurs } from '@navikt/familie-typer';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { lagBarn } from '@testutils/testdata/barnTestdata';
 import { lagSøker } from '@testutils/testdata/søkerTestdata';
-import { useEffect } from 'react';
+import { HttpResponse, http } from 'msw';
 import { useLocation } from 'react-router';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
+import { server } from '../../../mocks/node';
+import { urlMedBasePath } from '../../../mocks/utils';
 import { ESøknadstype } from '../../common/typer/kontrakt/generelle';
 import { useAppContext } from '../context/AppContext';
 import { useEøsContext } from '../context/EøsContext';
 import { useStegContext } from '../context/StegContext';
 import { TestProvidere } from '../utils/testing';
 
-import Preutfyllingspanel from './Preutfyllingspanel';
+import * as bygger from './byggPreutfyltSøknad';
+import { Preutfyllingspanel } from './Preutfyllingspanel';
 import { Avvik, avvikNavn, Scenario } from './scenario';
 import { EKSTRA_BARN_IDENT } from './testoppsett';
 
-const PREUTFYLL = 'Preutfyll og gå til oppsummering';
-const VELG_BARN = 'Velg minst ett barn, eller legg til et barn med fødselsnummer.';
-const EKSTRA_BARN = /^Legg til barn med fødselsnummer/;
+const KNAPP_PREUTFYLL = 'Preutfyll og gå til oppsummering';
+const FEIL_VELG_BARN = 'Velg minst ett barn, eller legg til et barn med fødselsnummer.';
+const FELT_FØDSELSNUMMER = /^Legg til barn med fødselsnummer/;
+const STI_OPPSUMMERING = '/oppsummering';
 
 const TO_BARN = [
     lagBarn({ ident: '12345678987', navn: 'Barn En' }),
@@ -36,21 +41,13 @@ interface Tilstand {
     antallBarnSomTriggerEøs: number;
 }
 
-const besøkteSider: string[] = [];
-let tilstand: Tilstand;
-
-const Sonde = () => {
-    const { pathname, key } = useLocation();
+function VisTilstand() {
+    const { pathname } = useLocation();
     const { søknad, sisteUtfylteStegIndex } = useAppContext();
     const { steg, barnForSteg } = useStegContext();
     const { søkerTriggerEøs, barnSomTriggerEøs } = useEøsContext();
 
-    // biome-ignore lint/correctness/useExhaustiveDependencies: effekten skal kjøre for hver navigering
-    useEffect(() => {
-        besøkteSider.push(pathname);
-    }, [key]);
-
-    tilstand = {
+    const tilstand: Tilstand = {
         side: pathname,
         steg: steg.map(etSteg => etSteg.path),
         sisteUtfylteStegIndex,
@@ -61,69 +58,84 @@ const Sonde = () => {
         søkerTriggerEøs,
         antallBarnSomTriggerEøs: barnSomTriggerEøs.length,
     };
-    return null;
-};
+
+    return <output aria-label="Tilstand">{JSON.stringify(tilstand)}</output>;
+}
+
+const tilstand = (): Tilstand => JSON.parse(screen.getByRole('status', { name: 'Tilstand' }).textContent ?? '');
 
 const åpnePanelet = async (søker = lagSøker()) => {
     render(
         <TestProvidere søker={søker}>
             <Preutfyllingspanel />
-            <Sonde />
+            <VisTilstand />
         </TestProvidere>
     );
     fireEvent.click(await screen.findByRole('button', { expanded: false }));
 };
 
-const preutfyll = () => act(async () => fireEvent.click(screen.getByRole('button', { name: PREUTFYLL })));
+const trykkPreutfyll = () => fireEvent.click(screen.getByRole('button', { name: KNAPP_PREUTFYLL }));
+const velgScenario = (scenario: Scenario) =>
+    fireEvent.change(screen.getByRole('combobox', { name: 'Scenario' }), { target: { value: scenario } });
+const skrivFødselsnummer = (ident: string) =>
+    fireEvent.change(screen.getByRole('textbox', { name: FELT_FØDSELSNUMMER }), { target: { value: ident } });
 const barnet = (navn: string) => screen.getByRole('checkbox', { name: new RegExp(`^${navn},`) });
-const eøsSteg = () => tilstand.steg.filter(sti => sti.startsWith('/eøs'));
+const forventOppsummering = async () => {
+    await waitFor(() => expect(tilstand().side).toBe(STI_OPPSUMMERING));
+    expect(tilstand().sisteUtfylteStegIndex).toBe(tilstand().steg.indexOf(STI_OPPSUMMERING));
+};
+const eøsSteg = () => tilstand().steg.filter(sti => sti.startsWith('/eøs'));
 
 describe('Preutfyllingspanel', () => {
-    beforeEach(() => {
-        besøkteSider.length = 0;
+    afterEach(() => {
+        vi.restoreAllMocks();
     });
 
-    it('skal sette en ordinær søknad og gå én gang til oppsummeringen', async () => {
-        await åpnePanelet(lagSøker());
+    it('skal sette en ordinær søknad og gå til oppsummeringen', async () => {
+        await åpnePanelet();
 
-        await preutfyll();
+        trykkPreutfyll();
 
-        await waitFor(() => expect(tilstand.side).toBe('/oppsummering'));
-        expect(besøkteSider).toEqual(['/', '/oppsummering']);
-        expect(tilstand.søknadstype).toBe(ESøknadstype.ORDINÆR);
-        expect(tilstand.barnISøknaden).toHaveLength(1);
-        expect(tilstand.antallBarnMedSteg).toBe(1);
+        await forventOppsummering();
+        expect(tilstand().søknadstype).toBe(ESøknadstype.ORDINÆR);
+        expect(tilstand().barnISøknaden).toHaveLength(1);
+        expect(tilstand().antallBarnMedSteg).toBe(1);
         expect(eøsSteg()).toEqual([]);
-        expect(tilstand.sisteUtfylteStegIndex).toBe(tilstand.steg.indexOf('/oppsummering'));
-        expect(screen.queryByRole('button', { name: PREUTFYLL })).not.toBeInTheDocument();
+    });
+
+    it('skal bare vises på forsiden', async () => {
+        await åpnePanelet();
+
+        trykkPreutfyll();
+
+        await forventOppsummering();
+        expect(screen.queryByRole('button', { name: KNAPP_PREUTFYLL })).not.toBeInTheDocument();
     });
 
     it('skal gi EØS-steg for søkeren og hvert barn når søkeren arbeider i et EØS-land', async () => {
         await åpnePanelet(lagSøker({ barn: TO_BARN }));
-        fireEvent.change(screen.getByRole('combobox', { name: 'Scenario' }), { target: { value: Scenario.EØS_SØKER } });
+        velgScenario(Scenario.EØS_SØKER);
         fireEvent.click(barnet('Barn En'));
         fireEvent.click(barnet('Barn To'));
 
-        await preutfyll();
+        trykkPreutfyll();
 
-        await waitFor(() => expect(tilstand.side).toBe('/oppsummering'));
-        expect(besøkteSider).toEqual(['/', '/oppsummering']);
-        expect(tilstand.barnISøknaden).toEqual(TO_BARN.map(barn => barn.ident));
-        expect(tilstand.erEøs).toBe(true);
-        expect(tilstand.søkerTriggerEøs).toBe(true);
+        await forventOppsummering();
+        expect(tilstand().barnISøknaden).toEqual(TO_BARN.map(barn => barn.ident));
+        expect(tilstand().erEøs).toBe(true);
+        expect(tilstand().søkerTriggerEøs).toBe(true);
         expect(eøsSteg()).toHaveLength(3);
-        expect(tilstand.sisteUtfylteStegIndex).toBe(tilstand.steg.indexOf('/oppsummering'));
     });
 
     it('skal gi EØS-steg når barna utløser EØS', async () => {
-        await åpnePanelet(lagSøker());
-        fireEvent.change(screen.getByRole('combobox', { name: 'Scenario' }), { target: { value: Scenario.EØS_BARN } });
+        await åpnePanelet();
+        velgScenario(Scenario.EØS_BARN);
 
-        await preutfyll();
+        trykkPreutfyll();
 
-        await waitFor(() => expect(tilstand.side).toBe('/oppsummering'));
-        expect(tilstand.søkerTriggerEøs).toBe(false);
-        expect(tilstand.antallBarnSomTriggerEøs).toBe(1);
+        await forventOppsummering();
+        expect(tilstand().søkerTriggerEøs).toBe(false);
+        expect(tilstand().antallBarnSomTriggerEøs).toBe(1);
         expect(eøsSteg()).toHaveLength(2);
     });
 
@@ -132,66 +144,105 @@ describe('Preutfyllingspanel', () => {
         expect(barnet('Barn En')).not.toBeChecked();
         expect(barnet('Barn To')).not.toBeChecked();
 
-        await preutfyll();
+        trykkPreutfyll();
 
-        expect(screen.getByText(VELG_BARN)).toBeInTheDocument();
-        expect(tilstand.side).toBe('/');
+        expect(await screen.findByText(FEIL_VELG_BARN)).toBeInTheDocument();
+        expect(tilstand().side).toBe('/');
+
         fireEvent.click(barnet('Barn To'));
-        expect(screen.queryByText(VELG_BARN)).not.toBeInTheDocument();
-        await preutfyll();
-        await waitFor(() => expect(tilstand.side).toBe('/oppsummering'));
-        expect(tilstand.barnISøknaden).toEqual([TO_BARN[1].ident]);
+
+        await waitFor(() => expect(screen.queryByText(FEIL_VELG_BARN)).not.toBeInTheDocument());
+        trykkPreutfyll();
+        await forventOppsummering();
+        expect(tilstand().barnISøknaden).toEqual([TO_BARN[1].ident]);
     });
 
     it('skal kunne søke bare for et barn lagt til med fødselsnummer når søkeren har ett barn', async () => {
         await åpnePanelet(lagSøker({ barn: [TO_BARN[0]] }));
         expect(barnet('Barn En')).toBeChecked();
         fireEvent.click(barnet('Barn En'));
-        fireEvent.change(screen.getByRole('textbox', { name: EKSTRA_BARN }), { target: { value: '158590 40087' } });
+        skrivFødselsnummer(EKSTRA_BARN_IDENT);
 
-        await preutfyll();
+        trykkPreutfyll();
 
-        await waitFor(() => expect(tilstand.side).toBe('/oppsummering'));
-        expect(tilstand.barnISøknaden).toEqual([EKSTRA_BARN_IDENT]);
+        await forventOppsummering();
+        expect(tilstand().barnISøknaden).toEqual([EKSTRA_BARN_IDENT]);
     });
 
-    it('skal vise feilen på feltet for fødselsnummer når søkeren ikke har barn', async () => {
+    it('skal fjerne mellomrom i fødselsnummeret', async () => {
+        await åpnePanelet();
+
+        skrivFødselsnummer('158590 40087');
+
+        expect(screen.getByRole('textbox', { name: FELT_FØDSELSNUMMER })).toHaveValue(EKSTRA_BARN_IDENT);
+    });
+
+    it('skal kreve et fødselsnummer når søkeren ikke har barn', async () => {
         await åpnePanelet(lagSøker({ barn: [] }));
 
-        await preutfyll();
+        trykkPreutfyll();
 
-        expect(screen.getByRole('textbox', { name: EKSTRA_BARN })).toHaveAccessibleDescription(
-            expect.stringContaining(VELG_BARN)
+        await waitFor(() =>
+            expect(screen.getByRole('textbox', { name: FELT_FØDSELSNUMMER })).toHaveAccessibleDescription(
+                expect.stringContaining(FEIL_VELG_BARN)
+            )
         );
-        expect(tilstand.side).toBe('/');
+        expect(tilstand().side).toBe('/');
     });
 
     it.each([
-        { ident: '12345678901', feilmelding: 'Fødselsnummeret er ikke gyldig.' },
+        { grunn: 'som ikke er gyldig', ident: '12345678901', feilmelding: 'Fødselsnummeret er ikke gyldig.' },
         {
+            grunn: 'som allerede er hentet fra folkeregisteret',
             ident: TO_BARN[0].ident,
             feilmelding: 'Barnet med dette fødselsnummeret er allerede hentet fra folkeregisteret.',
         },
-    ])('skal avvise fødselsnummeret $ident', async ({ ident, feilmelding }) => {
+    ])('skal avvise et fødselsnummer $grunn', async ({ ident, feilmelding }) => {
         await åpnePanelet(lagSøker({ barn: [TO_BARN[0]] }));
-        fireEvent.change(screen.getByRole('textbox', { name: EKSTRA_BARN }), { target: { value: ident } });
+        skrivFødselsnummer(ident);
 
-        await preutfyll();
+        trykkPreutfyll();
 
-        expect(screen.getByText(feilmelding)).toBeInTheDocument();
-        expect(tilstand.side).toBe('/');
+        expect(await screen.findByText(feilmelding)).toBeInTheDocument();
+        expect(tilstand().side).toBe('/');
     });
 
-    it('skal avvise valg som ikke kan kombineres', async () => {
-        await åpnePanelet(lagSøker());
+    it('skal avvise valg som ikke kan kombineres, til testeren endrer dem', async () => {
+        await åpnePanelet();
+        velgScenario(Scenario.EØS_ANDRE_FORELDER);
         fireEvent.click(screen.getByRole('checkbox', { name: avvikNavn[Avvik.FOSTERBARN] }));
-        fireEvent.click(screen.getByRole('checkbox', { name: avvikNavn[Avvik.DELT_BOSTED] }));
 
-        await preutfyll();
+        trykkPreutfyll();
 
-        expect(screen.getByText('Fosterbarn kan ikke kombineres med avtale om delt bosted.')).toBeInTheDocument();
-        expect(tilstand.side).toBe('/');
-        expect(tilstand.barnISøknaden).toEqual([]);
+        expect(await screen.findByText(/^Fosterbarn kan ikke kombineres med scenarioet/)).toBeInTheDocument();
+        expect(tilstand().side).toBe('/');
+        expect(tilstand().barnISøknaden).toEqual([]);
+
+        velgScenario(Scenario.EØS_SØKER);
+
+        await waitFor(() => expect(screen.queryByText(/^Fosterbarn kan ikke kombineres/)).not.toBeInTheDocument());
+    });
+
+    it('skal vise en feilmelding når søknaden ikke lar seg lage', async () => {
+        vi.spyOn(bygger, 'byggPreutfyltSøknad').mockImplementationOnce(() => {
+            throw new Error('Feil i byggingen');
+        });
+        await åpnePanelet();
+
+        trykkPreutfyll();
+
+        expect(await screen.findByText('Feil i byggingen')).toBeInTheDocument();
+        expect(tilstand().side).toBe('/');
+    });
+
+    it('skal vise en feilmelding når kodeverket ikke har EØS-landet verktøyet bruker', async () => {
+        server.use(http.get(urlMedBasePath('api/kodeverk/eos-land'), () => HttpResponse.json(byggSuksessRessurs({}))));
+        await åpnePanelet();
+
+        trykkPreutfyll();
+
+        expect(await screen.findByText('Kodeverket har ikke DNK som EØS-land.')).toBeInTheDocument();
+        expect(tilstand().side).toBe('/');
     });
 
     it('skal ikke vise navn og fødselsnummer for barn med adressebeskyttelse', async () => {

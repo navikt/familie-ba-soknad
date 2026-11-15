@@ -89,8 +89,9 @@ describe('Preutfylling er skilt fra resten av søknaden', () => {
             'Feilgrense.tsx': ['react'],
             'skalVisePreutfylling.ts': [],
         });
-        const inngangen = readFileSync(join(VERKTØYET, 'index.tsx'), 'utf-8');
-        expect(inngangen).toContain("lazy(() => import('./Preutfyllingspanel'))");
-        expect(inngangen.match(/\bimport\(/g), 'Inngangen skal bare laste panelet dynamisk.').toHaveLength(1);
+        const dynamiskeImporter = [
+            ...readFileSync(join(VERKTØYET, 'index.tsx'), 'utf-8').matchAll(/\bimport\(\s*['"]([^'"]+)['"]\s*\)/g),
+        ].map(treff => treff[1]);
+        expect(dynamiskeImporter, 'Inngangen skal bare laste panelet dynamisk.').toEqual(['./Preutfyllingspanel']);
     });
 });
