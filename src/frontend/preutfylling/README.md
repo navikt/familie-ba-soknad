@@ -14,7 +14,7 @@ scenario, eventuelle avvik fra happy case og hvilke barn søknaden gjelder.
 - `scenario.ts` har scenarioene, avvikene og regelen for hvilke valg som ikke kan kombineres.
 - `byggPreutfyltSøknad.ts` lager søknaden ut fra valgene. Den bruker ikke React.
 - `useGåTilOppsummering.ts` setter søknaden i søknadens egen tilstand og går til oppsummeringen.
-- `testoppsett.ts` har tilfellene enhetstestene kjøres for.
+- `tester/` har enhetstestene. `testoppsett.ts` der har tilfellene de kjøres for.
 
 ## Hvor panelet vises
 
@@ -37,8 +37,8 @@ Preprod og produksjon bruker det samme bygget, så koden følger med til produks
 - All koden ligger i denne mappen.
 - Søknaden bruker verktøyet ett sted: `<PreutfyllingITestmiljø />` i `src/frontend/App.tsx`.
 - Ende-til-ende-testen ligger i `playwright/tester/preutfylling.spec.ts`, fordi Playwright bare leter etter tester der.
-- `separasjon.test.ts` feiler hvis annen kode peker inn i mappen, hvis `App.tsx` importerer noe annet enn inngangen,
-  eller hvis inngangen begynner å importere panelet eller kode fra søknaden.
+- `tester/separasjon.test.ts` feiler hvis annen kode peker inn i mappen, hvis `App.tsx` importerer noe annet enn
+  inngangen, eller hvis inngangen begynner å importere panelet eller kode fra søknaden.
 - Verktøyet endrer ingen annen kode i søknaden. Det leser og setter tilstand gjennom `useAppContext`, `useStegContext`
   og `useEøsContext`, slik søknaden selv gjør når den gjenoppretter en mellomlagret søknad.
 - Feiler panelet når det lastes eller tegnes, viser `Feilgrense` en melding i stedet for at feilen når søknaden.
@@ -67,11 +67,11 @@ disse reglene:
 | Hvordan perioder ser ut                    | dialogene for arbeidsperiode, barnetrygdperiode og utenlandsopphold                                   |
 | Hva som settes når en søknad gjenopprettes | `fortsettPåSøknaden` i `useBekreftelseOgStartSoknad`                                                  |
 | Hvor oppsummeringen ligger blant stegene   | `steg` i `StegContext` (kopiert i `useGåTilOppsummering.ts`)                                          |
-| Hvilken id spørsmålet om samboer har       | `AppContext` når søkeren hentes (kopiert i `testoppsett.ts`)                                          |
+| Hvilken id spørsmålet om samboer har       | `AppContext` når søkeren hentes (kopiert i `tester/testoppsett.ts`)                                   |
 
 ## Testene
 
-Testene i mappen kjører i CI sammen med de andre enhetstestene:
+Testene ligger i `tester/` og kjører i CI sammen med de andre enhetstestene:
 
 - `byggPreutfyltSøknad.test.tsx` lar hvert steg i søknaden lagre den preutfylte søknaden på nytt og krever at ingenting
   endrer seg. Den sender også søknaden gjennom oppsummeringen og gjør den om til kontrakten.

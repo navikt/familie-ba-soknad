@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { Avvik, feilmeldingForUgyldigKombinasjon, Scenario } from './scenario';
+import { Avvik, feilmeldingForUgyldigKombinasjon, Scenario } from '../scenario';
 
 describe('feilmeldingForUgyldigKombinasjon', () => {
     it('skal godta fosterbarn sammen med valg som ikke gjelder den andre forelderen', () => {

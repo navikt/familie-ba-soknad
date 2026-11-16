@@ -3,7 +3,7 @@ import { join } from 'node:path';
 
 import { describe, expect, it } from 'vitest';
 
-import { skalVisePreutfylling } from './skalVisePreutfylling';
+import { skalVisePreutfylling } from '../skalVisePreutfylling';
 
 const fantIngenHoster = (fil: string) =>
     `Fant ingen ingresser i .nais/${fil}. Oppdater hosterFraNais i denne testen, se src/frontend/preutfylling/README.md.`;

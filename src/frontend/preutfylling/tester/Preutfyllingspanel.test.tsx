@@ -6,17 +6,17 @@ import { HttpResponse, http } from 'msw';
 import { useLocation } from 'react-router';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import { server } from '../../../mocks/node';
-import { urlMedBasePath } from '../../../mocks/utils';
-import { ESøknadstype } from '../../common/typer/kontrakt/generelle';
-import { useAppContext } from '../context/AppContext';
-import { useEøsContext } from '../context/EøsContext';
-import { useStegContext } from '../context/StegContext';
-import { TestProvidere } from '../utils/testing';
+import { server } from '../../../../mocks/node';
+import { urlMedBasePath } from '../../../../mocks/utils';
+import { ESøknadstype } from '../../../common/typer/kontrakt/generelle';
+import { useAppContext } from '../../context/AppContext';
+import { useEøsContext } from '../../context/EøsContext';
+import { useStegContext } from '../../context/StegContext';
+import { TestProvidere } from '../../utils/testing';
+import * as bygger from '../byggPreutfyltSøknad';
+import { Preutfyllingspanel } from '../Preutfyllingspanel';
+import { Avvik, avvikNavn, Scenario } from '../scenario';
 
-import * as bygger from './byggPreutfyltSøknad';
-import { Preutfyllingspanel } from './Preutfyllingspanel';
-import { Avvik, avvikNavn, Scenario } from './scenario';
 import { EKSTRA_BARN_IDENT } from './testoppsett';
 
 const KNAPP_PREUTFYLL = 'Preutfyll og gå til oppsummering';
