@@ -15,9 +15,9 @@ export const initApm = () => {
                 // Støy fra dekoratøren
                 /dekoratoren\/client/,
                 NETTVERKSFEIL_LOGGET_AV_DEKORATØREN,
-                // Støy fra nettleserutvidelser er allerede i DEFAULT_IGNORE_ERRORS
-                // DEFAULT_IGNORE_ERRORS treffer ikke «Script error.», fordi Faro matcher mot melding + navn + stack
+                // DEFAULT_IGNORE_ERRORS treffer ikke «Script error.» fordi Faro matcher mot melding + navn + stack
                 SCRIPT_ERROR_FRA_ANNET_OPPHAV,
+                // Støy fra nettleserutvidelser er allerede i DEFAULT_IGNORE_ERRORS
             ],
         });
         // Tagger alle events med app-scope
