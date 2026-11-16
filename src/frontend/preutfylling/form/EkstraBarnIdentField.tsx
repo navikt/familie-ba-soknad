@@ -3,7 +3,7 @@ import { idnr } from '@navikt/fnrvalidator';
 import type { ChangeEvent } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 
-import { useAppContext } from '../context/AppContext';
+import { useAppContext } from '../../context/AppContext';
 
 import { PreutfyllingFormFields, type PreutfyllingFormValues } from './usePreutfyllingForm';
 

@@ -1,7 +1,8 @@
 import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
 import { useController, useFormContext } from 'react-hook-form';
 
-import { Avvik, avvikNavn, feilmeldingForUgyldigKombinasjon } from './scenario';
+import { Avvik, avvikNavn, feilmeldingForUgyldigKombinasjon } from '../scenario';
+
 import { PreutfyllingFormFields, type PreutfyllingFormValues } from './usePreutfyllingForm';
 
 export function AvvikField() {

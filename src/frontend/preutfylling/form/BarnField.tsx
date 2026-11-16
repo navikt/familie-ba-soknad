@@ -1,9 +1,9 @@
 import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
 import { useController, useFormContext } from 'react-hook-form';
 
-import { useAppContext } from '../context/AppContext';
-import type { IBarn } from '../typer/person';
-import { formaterFnr } from '../utils/visning';
+import { useAppContext } from '../../context/AppContext';
+import type { IBarn } from '../../typer/person';
+import { formaterFnr } from '../../utils/visning';
 
 import { PreutfyllingFormFields, type PreutfyllingFormValues } from './usePreutfyllingForm';
 

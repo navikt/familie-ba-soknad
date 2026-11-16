@@ -1,7 +1,8 @@
 import { Select } from '@navikt/ds-react';
 import { useController, useFormContext } from 'react-hook-form';
 
-import { Scenario, scenarioNavn } from './scenario';
+import { Scenario, scenarioNavn } from '../scenario';
+
 import { PreutfyllingFormFields, type PreutfyllingFormValues } from './usePreutfyllingForm';
 
 export function ScenarioField() {

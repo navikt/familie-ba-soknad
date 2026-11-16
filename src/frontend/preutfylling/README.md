@@ -8,9 +8,9 @@ scenario, eventuelle avvik fra happy case og hvilke barn søknaden gjelder.
 - `index.tsx` er inngangen. Den laster panelet når `skalVisePreutfylling.ts` sier at det skal vises, og `Feilgrense.tsx`
   fanger feil i panelet.
 - `Preutfyllingspanel.tsx` viser panelet på forsiden.
-- `PreutfyllingForm.tsx` er skjemaet, laget med react-hook-form. `usePreutfyllingForm.ts` har skjemaet og
-  innsendingen. Hvert felt ligger i sin egen `*Field.tsx` med valideringsreglene sine. Kravet om minst ett barn ligger
-  på feltet for fødselsnummer.
+- `form/` har skjemaet, laget med react-hook-form. `PreutfyllingForm.tsx` er skjemaet, og `usePreutfyllingForm.ts` har
+  skjemaet og innsendingen. Hvert felt ligger i sin egen `*Field.tsx` med valideringsreglene sine. Kravet om minst ett
+  barn ligger på feltet for fødselsnummer.
 - `scenario.ts` har scenarioene, avvikene og regelen for hvilke valg som ikke kan kombineres.
 - `byggPreutfyltSøknad.ts` lager søknaden ut fra valgene. Den bruker ikke React.
 - `useGåTilOppsummering.ts` setter søknaden i søknadens egen tilstand og går til oppsummeringen.

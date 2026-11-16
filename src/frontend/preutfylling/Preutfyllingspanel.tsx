@@ -5,7 +5,7 @@ import { useAppContext } from '../context/AppContext';
 import { ROUTES } from '../routes';
 import { RouteEnum } from '../typer/routes';
 
-import { PreutfyllingForm } from './PreutfyllingForm';
+import { PreutfyllingForm } from './form/PreutfyllingForm';
 
 const TITTEL = 'Testverktøy: preutfyll søknaden';
 
