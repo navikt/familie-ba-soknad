@@ -8,6 +8,7 @@ import { AppProvider } from './context/AppContext';
 import { AppNavigationProvider } from './context/AppNavigationContext';
 import { EøsProvider } from './context/EøsContext';
 import { StegProvider } from './context/StegContext';
+import { PreutfyllingITestmiljø } from './preutfylling';
 
 import './index.css';
 import { AppProviders } from './AppProviders';
@@ -32,6 +33,7 @@ function App() {
                                 </GlobalAlert>
                             )}
                             <AppNavigationProvider>
+                                <PreutfyllingITestmiljø />
                                 <AppContainer />
                             </AppNavigationProvider>
                         </StegProvider>
