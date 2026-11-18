@@ -25,7 +25,7 @@ import { AlternativtSvarForInput } from '../../../typer/svar';
 import { Årsak } from '../../../typer/utvidet';
 import { nullstilteEøsFelterForBarn } from '../../../utils/barn';
 import { dagensDato } from '../../../utils/dato';
-import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
+import { fjernWhiteSpace, trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import { nullstilteEøsFelterForSøker } from '../../../utils/søker';
 import { ArbeidsperiodeSpørsmålsId } from '../../Felleskomponenter/Arbeidsperiode/spørsmål';
@@ -389,9 +389,11 @@ export const useDinLivssituasjon = (): {
                           },
                           ident: {
                               id: SamboerSpørsmålId.nåværendeSamboerFnr,
-                              svar: svarForSpørsmålMedUkjent(
-                                  skjema.felter.nåværendeSamboerFnrUkjent,
-                                  skjema.felter.nåværendeSamboerFnr
+                              svar: fjernWhiteSpace(
+                                  svarForSpørsmålMedUkjent(
+                                      skjema.felter.nåværendeSamboerFnrUkjent,
+                                      skjema.felter.nåværendeSamboerFnr
+                                  )
                               ),
                           },
                           fødselsdato: {

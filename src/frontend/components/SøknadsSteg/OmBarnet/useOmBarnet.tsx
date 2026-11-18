@@ -46,7 +46,7 @@ import {
     skalViseBorMedOmsorgsperson,
 } from '../../../utils/barn';
 import { dagensDato, erSammeDatoSomDagensDato, morgendagensDato, stringTilDate } from '../../../utils/dato';
-import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
+import { fjernWhiteSpace, trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
 import { formaterInitVerdiForInputMedUkjent, formaterVerdiForCheckbox } from '../../../utils/input';
 import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
 import { nullstilteEøsFelterForSøker } from '../../../utils/søker';
@@ -645,7 +645,7 @@ export const useOmBarnet = (
                 },
                 fnr: {
                     ...andreForelder[andreForelderDataKeySpørsmål.fnr],
-                    svar: svarForSpørsmålMedUkjent(andreForelderFnrUkjent, andreForelderFnr),
+                    svar: fjernWhiteSpace(svarForSpørsmålMedUkjent(andreForelderFnrUkjent, andreForelderFnr)),
                 },
                 fødselsdato: {
                     ...andreForelder[andreForelderDataKeySpørsmål.fødselsdato],
