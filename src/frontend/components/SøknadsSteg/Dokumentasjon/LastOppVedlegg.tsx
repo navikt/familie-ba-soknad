@@ -61,8 +61,16 @@ const LastOppVedlegg: FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon }) => 
     );
 
     const dokumentasjonsbeskrivelse =
-        dokumentasjon.beskrivelseSanityApiNavn ??
-        dokumentasjonsbehovTilBeskrivelseSanityApiNavn(dokumentasjon.dokumentasjonsbehov);
+        dokumentasjon.dokumentasjonsbehov === Dokumentasjonsbehov.ANNEN_DOKUMENTASJON
+            ? null
+            : (dokumentasjon.beskrivelseSanityApiNavn ??
+              dokumentasjonsbehovTilBeskrivelseSanityApiNavn(dokumentasjon.dokumentasjonsbehov));
+
+    const erAnnenDokumentasjon = dokumentasjon.dokumentasjonsbehov === Dokumentasjonsbehov.ANNEN_DOKUMENTASJON;
+
+    if (erAnnenDokumentasjon && dokumentasjon.opplastedeVedlegg.length === 0) {
+        return null;
+    }
 
     return (
         <FormSummary>
@@ -92,9 +100,13 @@ const LastOppVedlegg: FC<Props> = ({ dokumentasjon, oppdaterDokumentasjon }) => 
                     </Checkbox>
                 )}
 
-                {!dokumentasjon.harSendtInn && (
+                {(erAnnenDokumentasjon || !dokumentasjon.harSendtInn) && (
                     <div>
-                        <Filopplaster dokumentasjon={dokumentasjon} oppdaterDokumentasjon={oppdaterDokumentasjon} />
+                        <Filopplaster
+                            dokumentasjon={dokumentasjon}
+                            oppdaterDokumentasjon={oppdaterDokumentasjon}
+                            tillatNyOpplasting={!erAnnenDokumentasjon}
+                        />
                     </div>
                 )}
             </VStack>
