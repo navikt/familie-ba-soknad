@@ -8,7 +8,7 @@ import type { ILeggTilBarnTekstinnhold } from '../../../../typer/sanity/modaler/
 import type { ILeggTilBarnTyper } from '../../../../typer/skjema';
 import type { ESvarMedUbesvart } from '../../../../typer/svar';
 import { erBarnRegistrertFraFør, hentUid } from '../../../../utils/barn';
-import { trimWhiteSpace } from '../../../../utils/hjelpefunksjoner';
+import { fjernWhiteSpace, trimWhiteSpace } from '../../../../utils/hjelpefunksjoner';
 import { VelgBarnSpørsmålId } from '../spørsmål';
 
 export const useLeggTilBarn = (): {
@@ -86,7 +86,7 @@ export const useLeggTilBarn = (): {
         erFnrInput: true,
         skalVises: erFødt.valideringsstatus === Valideringsstatus.OK,
         customValidering: (felt: FeltState<string>) => {
-            return erBarnRegistrertFraFør(søknad, felt.verdi)
+            return erBarnRegistrertFraFør(søknad, fjernWhiteSpace(felt.verdi))
                 ? feil(felt, plainTekst(teksterForModal.sammeFoedselsnummerFeilmelding))
                 : ok(felt);
         },
@@ -115,7 +115,7 @@ export const useLeggTilBarn = (): {
                 {
                     id: hentUid(),
                     navn: fulltNavn() || plainTekst(navnIkkeBestemtTekst),
-                    ident: ident.verdi,
+                    ident: fjernWhiteSpace(ident.verdi),
                     borMedSøker: undefined,
                     alder: null,
                     adressebeskyttelse: false,
