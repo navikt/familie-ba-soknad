@@ -1,9 +1,8 @@
+import { useAppContext } from '@context/AppContext';
 import { Box, ExpansionCard, Page } from '@navikt/ds-react';
+import { RouteEnum } from '@typer/routes';
 import { useLocation } from 'react-router';
-
-import { useAppContext } from '../context/AppContext';
 import { ROUTES } from '../routes';
-import { RouteEnum } from '../typer/routes';
 
 import { PreutfyllingForm } from './form/PreutfyllingForm';
 

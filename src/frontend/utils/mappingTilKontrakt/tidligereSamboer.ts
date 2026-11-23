@@ -1,11 +1,7 @@
-import type {
-    IKontraktTidligereSamboer,
-    ISøknadsfelt,
-    TilRestLocaleRecord,
-} from '../../../common/typer/kontrakt/generelle';
-import { LocaleType } from '../../../common/typer/localeType';
-import type { ITidligereSamboer } from '../../typer/person';
-import type { ITidligereSamoboereTekstinnhold } from '../../typer/sanity/modaler/tidligereSamboere';
+import type { IKontraktTidligereSamboer, ISøknadsfelt, TilRestLocaleRecord } from '@common/typer/kontrakt/generelle';
+import { LocaleType } from '@common/typer/localeType';
+import type { ITidligereSamboer } from '@typer/person';
+import type { ITidligereSamoboereTekstinnhold } from '@typer/sanity/modaler/tidligereSamboere';
 
 import { sammeVerdiAlleSpråk, søknadsfeltHof } from './hjelpefunksjoner';
 import { samboerISøknadKontraktFormat } from './samboer';

@@ -1,12 +1,10 @@
+import type { ESøknadstype } from '@common/typer/kontrakt/generelle';
+import { useAppContext } from '@context/AppContext';
+import { useEøsContext } from '@context/EøsContext';
+import { useStegContext } from '@context/StegContext';
+import type { ISteg } from '@typer/routes';
 import { type FormEvent, useEffect, useState } from 'react';
-
 import { useNavigate } from 'react-router';
-
-import type { ESøknadstype } from '../../../../common/typer/kontrakt/generelle';
-import { useAppContext } from '../../../context/AppContext';
-import { useEøsContext } from '../../../context/EøsContext';
-import { useStegContext } from '../../../context/StegContext';
-import type { ISteg } from '../../../typer/routes';
 import { trackSøknadStartet } from '../../../umami';
 
 export enum BekreftelseStatus {

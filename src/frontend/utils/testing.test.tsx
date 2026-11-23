@@ -1,8 +1,7 @@
+import OmDeg from '@components/SøknadsSteg/OmDeg/OmDeg';
 import { render, screen } from '@testing-library/react';
+import type { ISøker } from '@typer/person';
 import { mockDeep } from 'vitest-mock-extended';
-
-import OmDeg from '../components/SøknadsSteg/OmDeg/OmDeg';
-import type { ISøker } from '../typer/person';
 import { hentSvaralternativ, spyOnUseApp, spørsmålFinnes, TestProvidere, ventPåSpørsmål } from './testing';
 
 const renderOmDeg = (søker: Partial<ISøker>) => {

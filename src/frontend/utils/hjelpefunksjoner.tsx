@@ -1,7 +1,6 @@
+import { BASE_PATH } from '@common/miljø';
 import { type ISkjema, Valideringsstatus } from '@navikt/familie-skjema';
-
-import { BASE_PATH } from '../../common/miljø';
-import type { SkjemaFeltTyper } from '../typer/skjema';
+import type { SkjemaFeltTyper } from '@typer/skjema';
 
 export const randomIntFraIntervall = (min, max) => {
     // min and max inkludert

@@ -3,17 +3,17 @@ import {
     type ISanitySpørsmålDokument,
     type LocaleRecordBlock,
     type LocaleRecordString,
-} from '../../../common/sanity';
-import type { IDinLivssituasjonTekstinnhold } from '../../components/SøknadsSteg/DinLivssituasjon/innholdTyper';
-import type { IDokumentasjonTekstinnhold } from '../../components/SøknadsSteg/Dokumentasjon/innholdTyper';
-import type { IEøsForBarnTekstinnhold } from '../../components/SøknadsSteg/EøsSteg/Barn/innholdTyper';
-import type { IEøsForSøkerTekstinnhold } from '../../components/SøknadsSteg/EøsSteg/Søker/innholdTyper';
-import type { IKvitteringTekstinnhold } from '../../components/SøknadsSteg/Kvittering/innholdTyper';
-import type { IOmBarnaTekstinnhold } from '../../components/SøknadsSteg/OmBarnaDine/innholdTyper';
-import type { IOmBarnetTekstinnhold } from '../../components/SøknadsSteg/OmBarnet/innholdTyper';
-import type { IOmDegTekstinnhold } from '../../components/SøknadsSteg/OmDeg/innholdTyper';
-import type { IOppsummeringTekstinnhold } from '../../components/SøknadsSteg/Oppsummering/innholdTyper';
-import type { IVelgBarnTekstinnhold } from '../../components/SøknadsSteg/VelgBarn/innholdTyper';
+} from '@common/sanity';
+import type { IDinLivssituasjonTekstinnhold } from '@components/SøknadsSteg/DinLivssituasjon/innholdTyper';
+import type { IDokumentasjonTekstinnhold } from '@components/SøknadsSteg/Dokumentasjon/innholdTyper';
+import type { IEøsForBarnTekstinnhold } from '@components/SøknadsSteg/EøsSteg/Barn/innholdTyper';
+import type { IEøsForSøkerTekstinnhold } from '@components/SøknadsSteg/EøsSteg/Søker/innholdTyper';
+import type { IKvitteringTekstinnhold } from '@components/SøknadsSteg/Kvittering/innholdTyper';
+import type { IOmBarnaTekstinnhold } from '@components/SøknadsSteg/OmBarnaDine/innholdTyper';
+import type { IOmBarnetTekstinnhold } from '@components/SøknadsSteg/OmBarnet/innholdTyper';
+import type { IOmDegTekstinnhold } from '@components/SøknadsSteg/OmDeg/innholdTyper';
+import type { IOppsummeringTekstinnhold } from '@components/SøknadsSteg/Oppsummering/innholdTyper';
+import type { IVelgBarnTekstinnhold } from '@components/SøknadsSteg/VelgBarn/innholdTyper';
 
 import type { IAndreUtbetalingerTekstinnhold } from './modaler/andreUtbetalinger';
 import type { IArbeidsperiodeTekstinnhold } from './modaler/arbeidsperiode';

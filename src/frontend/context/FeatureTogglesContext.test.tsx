@@ -1,5 +1,5 @@
+import { type AllFeatureToggles, defaultFeatureToggleValues } from '@common/typer/feature-toggles';
 import { renderHook } from '@testing-library/react';
-import { type AllFeatureToggles, defaultFeatureToggleValues } from '../../common/typer/feature-toggles';
 import { FeatureTogglesProvider, useFeatureToggles } from './FeatureTogglesContext';
 
 describe('FeatureTogglesContext', () => {

@@ -1,49 +1,43 @@
+import { ESanitySteg } from '@common/sanity';
+import { Slektsforhold } from '@common/typer/kontrakt/generelle';
+import { ArbeidsperiodeSpørsmålsId } from '@components/Felleskomponenter/Arbeidsperiode/spørsmål';
+import { BarnetrygdperiodeSpørsmålId } from '@components/Felleskomponenter/Barnetrygdperiode/spørsmål';
+import { PensjonsperiodeSpørsmålId } from '@components/Felleskomponenter/Pensjonsmodal/spørsmål';
+import { UtbetalingerSpørsmålId } from '@components/Felleskomponenter/UtbetalingerModal/spørsmål';
+import { idNummerKeyPrefix } from '@components/SøknadsSteg/EøsSteg/idnummerUtils';
+import { useAppContext } from '@context/AppContext';
+import useInputFelt from '@hooks/useInputFelt';
+import useInputFeltMedUkjent from '@hooks/useInputFeltMedUkjent';
+import useJaNeiSpmFelt from '@hooks/useJaNeiSpmFelt';
+import useLanddropdownFeltMedJaNeiAvhengighet from '@hooks/useLanddropdownFeltMedJaNeiAvhengighet';
+import { usePerioder } from '@hooks/usePerioder';
 import { ESvar } from '@navikt/familie-form-elements';
 import { type Felt, type FeltState, feil, type ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
-import type { Alpha3Code } from 'i18n-iso-countries';
-import { type Dispatch, type SetStateAction, useState } from 'react';
-
-import { ESanitySteg } from '../../../../../common/sanity';
-import { Slektsforhold } from '../../../../../common/typer/kontrakt/generelle';
-import { useAppContext } from '../../../../context/AppContext';
-import useInputFelt from '../../../../hooks/useInputFelt';
-import useInputFeltMedUkjent from '../../../../hooks/useInputFeltMedUkjent';
-import useJaNeiSpmFelt from '../../../../hooks/useJaNeiSpmFelt';
-import useLanddropdownFeltMedJaNeiAvhengighet from '../../../../hooks/useLanddropdownFeltMedJaNeiAvhengighet';
-import { usePerioder } from '../../../../hooks/usePerioder';
 import {
     andreForelderDataKeySpørsmål,
     barnDataKeySpørsmål,
     type IAndreForelder,
     type IBarnMedISøknad,
-} from '../../../../typer/barn';
-import type { IOmsorgsperson } from '../../../../typer/omsorgsperson';
-import type {
-    IArbeidsperiode,
-    IEøsBarnetrygdsperiode,
-    IPensjonsperiode,
-    IUtbetalingsperiode,
-} from '../../../../typer/perioder';
-import type { BarnetsId } from '../../../../typer/person';
-import { PersonType } from '../../../../typer/personType';
-import type { IArbeidsperiodeTekstinnhold } from '../../../../typer/sanity/modaler/arbeidsperiode';
-import type { IBarnetrygdsperiodeTekstinnhold } from '../../../../typer/sanity/modaler/barnetrygdperiode';
-import type { IEøsForBarnFeltTyper } from '../../../../typer/skjema';
-import { AlternativtSvarForInput } from '../../../../typer/svar';
-import { valideringAdresse } from '../../../../utils/adresse';
+} from '@typer/barn';
+import type { IOmsorgsperson } from '@typer/omsorgsperson';
+import type { IArbeidsperiode, IEøsBarnetrygdsperiode, IPensjonsperiode, IUtbetalingsperiode } from '@typer/perioder';
+import type { BarnetsId } from '@typer/person';
+import { PersonType } from '@typer/personType';
+import type { IArbeidsperiodeTekstinnhold } from '@typer/sanity/modaler/arbeidsperiode';
+import type { IBarnetrygdsperiodeTekstinnhold } from '@typer/sanity/modaler/barnetrygdperiode';
+import type { IEøsForBarnFeltTyper } from '@typer/skjema';
+import { AlternativtSvarForInput } from '@typer/svar';
+import { valideringAdresse } from '@utils/adresse';
 import {
     erBarnIFosterhjemEllerBeredskapshjem,
     skalSkjuleAndreForelderFelt,
     skalViseBorMedOmsorgsperson,
-} from '../../../../utils/barn';
-import { trimWhiteSpace } from '../../../../utils/hjelpefunksjoner';
-import { formaterVerdiForCheckbox } from '../../../../utils/input';
-import { svarForSpørsmålMedUkjent } from '../../../../utils/spørsmål';
-import { ArbeidsperiodeSpørsmålsId } from '../../../Felleskomponenter/Arbeidsperiode/spørsmål';
-import { BarnetrygdperiodeSpørsmålId } from '../../../Felleskomponenter/Barnetrygdperiode/spørsmål';
-import { PensjonsperiodeSpørsmålId } from '../../../Felleskomponenter/Pensjonsmodal/spørsmål';
-import { UtbetalingerSpørsmålId } from '../../../Felleskomponenter/UtbetalingerModal/spørsmål';
-import { idNummerKeyPrefix } from '../idnummerUtils';
+} from '@utils/barn';
+import { trimWhiteSpace } from '@utils/hjelpefunksjoner';
+import { formaterVerdiForCheckbox } from '@utils/input';
+import { svarForSpørsmålMedUkjent } from '@utils/spørsmål';
+import type { Alpha3Code } from 'i18n-iso-countries';
+import { type Dispatch, type SetStateAction, useState } from 'react';
 
 import { EøsBarnSpørsmålId } from './spørsmål';
 

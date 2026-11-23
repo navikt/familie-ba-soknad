@@ -1,14 +1,13 @@
+import type { ISøknadsfelt, TilRestLocaleRecord } from '@common/typer/kontrakt/generelle';
+import type { IPensjonsperiodeIKontraktFormat } from '@common/typer/kontrakt/kontrakt';
 import { ESvar } from '@navikt/familie-form-elements';
-
-import type { ISøknadsfelt, TilRestLocaleRecord } from '../../../common/typer/kontrakt/generelle';
-import type { IPensjonsperiodeIKontraktFormat } from '../../../common/typer/kontrakt/kontrakt';
-import type { IBarnMedISøknad } from '../../typer/barn';
-import type { IPensjonsperiode } from '../../typer/perioder';
-import { type PeriodePersonTypeMedBarnProps, PersonType } from '../../typer/personType';
-import type { IPensjonsperiodeTekstinnhold } from '../../typer/sanity/modaler/pensjonsperiode';
-import { formaterDatostringKunMåned } from '../dato';
-import { landkodeTilSpråk } from '../språk';
-import { uppercaseFørsteBokstav } from '../visning';
+import type { IBarnMedISøknad } from '@typer/barn';
+import type { IPensjonsperiode } from '@typer/perioder';
+import { type PeriodePersonTypeMedBarnProps, PersonType } from '@typer/personType';
+import type { IPensjonsperiodeTekstinnhold } from '@typer/sanity/modaler/pensjonsperiode';
+import { formaterDatostringKunMåned } from '@utils/dato';
+import { landkodeTilSpråk } from '@utils/språk';
+import { uppercaseFørsteBokstav } from '@utils/visning';
 
 import { sammeVerdiAlleSpråk, verdiCallbackAlleSpråk } from './hjelpefunksjoner';
 

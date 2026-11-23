@@ -1,11 +1,10 @@
+import { ESanitySteg } from '@common/sanity';
+import TekstBlock from '@components/Felleskomponenter/Sanity/TekstBlock';
+import useModal from '@components/Felleskomponenter/SkjemaModal/useModal';
+import Steg from '@components/Felleskomponenter/Steg/Steg';
+import { useAppContext } from '@context/AppContext';
 import { FormSummary } from '@navikt/ds-react';
 import type { FC } from 'react';
-
-import { ESanitySteg } from '../../../../common/sanity';
-import { useAppContext } from '../../../context/AppContext';
-import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
-import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
-import Steg from '../../Felleskomponenter/Steg/Steg';
 
 import Barnekort from './Barnekort/Barnekort';
 import LeggTilBarnModal from './LeggTilBarn/LeggTilBarnModal';

@@ -1,8 +1,7 @@
+import { useAppContext } from '@context/AppContext';
 import { ExclamationmarkTriangleIcon } from '@navikt/aksel-icons';
 import { Box, InfoCard } from '@navikt/ds-react';
 import type { FC, ReactNode } from 'react';
-
-import { useAppContext } from '../../context/AppContext';
 
 import TekstBlock from './Sanity/TekstBlock';
 

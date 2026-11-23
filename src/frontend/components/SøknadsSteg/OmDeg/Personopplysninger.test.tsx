@@ -1,9 +1,8 @@
+import { ESivilstand } from '@common/typer/kontrakt/generelle';
+import { SpråkProvider } from '@context/SpråkContext';
 import { render } from '@testing-library/react';
-
-import { ESivilstand } from '../../../../common/typer/kontrakt/generelle';
-import { SpråkProvider } from '../../../context/SpråkContext';
-import type { ISøker } from '../../../typer/person';
-import { CookiesProviderMedLocale, spyOnUseApp, TestProvidere } from '../../../utils/testing';
+import type { ISøker } from '@typer/person';
+import { CookiesProviderMedLocale, spyOnUseApp, TestProvidere } from '@utils/testing';
 
 import { Personopplysninger } from './Personopplysninger';
 

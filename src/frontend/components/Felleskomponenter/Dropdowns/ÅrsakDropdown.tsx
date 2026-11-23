@@ -1,9 +1,8 @@
+import { useAppContext } from '@context/AppContext';
+import { muligeÅrsaker } from '@typer/søknad';
+import type { Årsak } from '@typer/utvidet';
+import { hentÅrsak } from '@utils/språk';
 import type { FC, ReactNode } from 'react';
-
-import { useAppContext } from '../../../context/AppContext';
-import { muligeÅrsaker } from '../../../typer/søknad';
-import type { Årsak } from '../../../typer/utvidet';
-import { hentÅrsak } from '../../../utils/språk';
 
 import StyledDropdown, { type StyledDropdownProps } from './StyledDropdown';
 

@@ -1,62 +1,56 @@
+import { ESanitySteg } from '@common/sanity';
+import { Dokumentasjonsbehov } from '@common/typer/kontrakt/dokumentasjon';
+import { ESivilstand, ESøknadstype } from '@common/typer/kontrakt/generelle';
+import { ArbeidsperiodeSpørsmålsId } from '@components/Felleskomponenter/Arbeidsperiode/spørsmål';
+import { BarnetrygdperiodeSpørsmålId } from '@components/Felleskomponenter/Barnetrygdperiode/spørsmål';
+import { PensjonsperiodeSpørsmålId } from '@components/Felleskomponenter/Pensjonsmodal/spørsmål';
+import TekstBlock from '@components/Felleskomponenter/Sanity/TekstBlock';
+import { UtenlandsoppholdSpørsmålId } from '@components/Felleskomponenter/UtenlandsoppholdModal/spørsmål';
+import { idNummerLand } from '@components/SøknadsSteg/EøsSteg/idnummerUtils';
+import { useAppContext } from '@context/AppContext';
+import { useEøsContext } from '@context/EøsContext';
+import useDatovelgerFeltMedUkjentForSanity from '@hooks/useDatovelgerFeltMedUkjentForSanity';
+import useInputFelt from '@hooks/useInputFelt';
+import useInputFeltMedUkjent from '@hooks/useInputFeltMedUkjent';
+import useJaNeiSpmFelt from '@hooks/useJaNeiSpmFelt';
+import useLanddropdownFeltMedJaNeiAvhengighet from '@hooks/useLanddropdownFeltMedJaNeiAvhengighet';
+import { usePerioder } from '@hooks/usePerioder';
+import useDatovelgerFeltForSanity from '@hooks/useSendInnSkjemaTest/useDatovelgerForSanity';
 import { ESvar } from '@navikt/familie-form-elements';
 import { type FeltState, feil, type ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
-import { useEffect, useState } from 'react';
-
-import { ESanitySteg } from '../../../../common/sanity';
-import { Dokumentasjonsbehov } from '../../../../common/typer/kontrakt/dokumentasjon';
-import { ESivilstand, ESøknadstype } from '../../../../common/typer/kontrakt/generelle';
-import { useAppContext } from '../../../context/AppContext';
-import { useEøsContext } from '../../../context/EøsContext';
-import useDatovelgerFeltMedUkjentForSanity from '../../../hooks/useDatovelgerFeltMedUkjentForSanity';
-import useInputFelt from '../../../hooks/useInputFelt';
-import useInputFeltMedUkjent from '../../../hooks/useInputFeltMedUkjent';
-import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
-import useLanddropdownFeltMedJaNeiAvhengighet from '../../../hooks/useLanddropdownFeltMedJaNeiAvhengighet';
-import { usePerioder } from '../../../hooks/usePerioder';
-import useDatovelgerFeltForSanity from '../../../hooks/useSendInnSkjemaTest/useDatovelgerForSanity';
 import {
     andreForelderDataKeySpørsmål,
     barnDataKeySpørsmål,
     type IAndreForelder,
     type IBarnMedISøknad,
-} from '../../../typer/barn';
-import type { IDokumentasjon } from '../../../typer/dokumentasjon';
-import type {
-    IArbeidsperiode,
-    IEøsBarnetrygdsperiode,
-    IPensjonsperiode,
-    IUtenlandsperiode,
-} from '../../../typer/perioder';
-import type { BarnetsId, IIdNummer } from '../../../typer/person';
-import { PersonType } from '../../../typer/personType';
-import type { IArbeidsperiodeTekstinnhold } from '../../../typer/sanity/modaler/arbeidsperiode';
-import type { IBarnetrygdsperiodeTekstinnhold } from '../../../typer/sanity/modaler/barnetrygdperiode';
-import type { IPensjonsperiodeTekstinnhold } from '../../../typer/sanity/modaler/pensjonsperiode';
-import type { IUtenlandsoppholdTekstinnhold } from '../../../typer/sanity/modaler/utenlandsopphold';
-import type { IFormateringsfeilmeldingerTekstinnhold } from '../../../typer/sanity/tekstInnhold';
-import type { IOmBarnetFeltTyper } from '../../../typer/skjema';
-import { AlternativtSvarForInput } from '../../../typer/svar';
-import { Årsak } from '../../../typer/utvidet';
-import { erNorskPostnummer, valideringAdresse } from '../../../utils/adresse';
+} from '@typer/barn';
+import type { IDokumentasjon } from '@typer/dokumentasjon';
+import type { IArbeidsperiode, IEøsBarnetrygdsperiode, IPensjonsperiode, IUtenlandsperiode } from '@typer/perioder';
+import type { BarnetsId, IIdNummer } from '@typer/person';
+import { PersonType } from '@typer/personType';
+import type { IArbeidsperiodeTekstinnhold } from '@typer/sanity/modaler/arbeidsperiode';
+import type { IBarnetrygdsperiodeTekstinnhold } from '@typer/sanity/modaler/barnetrygdperiode';
+import type { IPensjonsperiodeTekstinnhold } from '@typer/sanity/modaler/pensjonsperiode';
+import type { IUtenlandsoppholdTekstinnhold } from '@typer/sanity/modaler/utenlandsopphold';
+import type { IFormateringsfeilmeldingerTekstinnhold } from '@typer/sanity/tekstInnhold';
+import type { IOmBarnetFeltTyper } from '@typer/skjema';
+import { AlternativtSvarForInput } from '@typer/svar';
+import { Årsak } from '@typer/utvidet';
+import { erNorskPostnummer, valideringAdresse } from '@utils/adresse';
 import {
     erBarnIFosterhjemEllerBeredskapshjem,
     filtrerteRelevanteIdNummerForBarn,
     genererInitiellAndreForelder,
     nullstilteEøsFelterForBarn,
     skalViseBorMedOmsorgsperson,
-} from '../../../utils/barn';
-import { dagensDato, erSammeDatoSomDagensDato, morgendagensDato, stringTilDate } from '../../../utils/dato';
-import { fjernWhiteSpace, trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
-import { formaterInitVerdiForInputMedUkjent, formaterVerdiForCheckbox } from '../../../utils/input';
-import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
-import { nullstilteEøsFelterForSøker } from '../../../utils/søker';
-import { flyttetPermanentFraNorge } from '../../../utils/utenlandsopphold';
-import { ArbeidsperiodeSpørsmålsId } from '../../Felleskomponenter/Arbeidsperiode/spørsmål';
-import { BarnetrygdperiodeSpørsmålId } from '../../Felleskomponenter/Barnetrygdperiode/spørsmål';
-import { PensjonsperiodeSpørsmålId } from '../../Felleskomponenter/Pensjonsmodal/spørsmål';
-import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
-import { UtenlandsoppholdSpørsmålId } from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
-import { idNummerLand } from '../EøsSteg/idnummerUtils';
+} from '@utils/barn';
+import { dagensDato, erSammeDatoSomDagensDato, morgendagensDato, stringTilDate } from '@utils/dato';
+import { fjernWhiteSpace, trimWhiteSpace } from '@utils/hjelpefunksjoner';
+import { formaterInitVerdiForInputMedUkjent, formaterVerdiForCheckbox } from '@utils/input';
+import { svarForSpørsmålMedUkjent } from '@utils/spørsmål';
+import { nullstilteEøsFelterForSøker } from '@utils/søker';
+import { flyttetPermanentFraNorge } from '@utils/utenlandsopphold';
+import { useEffect, useState } from 'react';
 
 import type { IOmBarnetTekstinnhold } from './innholdTyper';
 import { OmBarnetSpørsmålsId } from './spørsmål';

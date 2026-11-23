@@ -1,23 +1,22 @@
+import { ESanitySteg, Typografi } from '@common/sanity';
+import JaNeiSpm from '@components/Felleskomponenter/JaNeiSpm/JaNeiSpm';
+import KomponentGruppe from '@components/Felleskomponenter/KomponentGruppe/KomponentGruppe';
+import { LeggTilKnapp } from '@components/Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
+import PerioderContainer from '@components/Felleskomponenter/PerioderContainer';
+import TekstBlock from '@components/Felleskomponenter/Sanity/TekstBlock';
+import useModal from '@components/Felleskomponenter/SkjemaModal/useModal';
+import Steg from '@components/Felleskomponenter/Steg/Steg';
+import { UtenlandsoppholdSpørsmålId } from '@components/Felleskomponenter/UtenlandsoppholdModal/spørsmål';
+import { UtenlandsoppholdModal } from '@components/Felleskomponenter/UtenlandsoppholdModal/UtenlandsoppholdModal';
+import { UtenlandsperiodeOppsummering } from '@components/Felleskomponenter/UtenlandsoppholdModal/UtenlandsperiodeOppsummering';
+import { useAppContext } from '@context/AppContext';
 import { ExclamationmarkTriangleIcon, InformationSquareIcon } from '@navikt/aksel-icons';
 import { InfoCard } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
+import { PersonType } from '@typer/personType';
+import type { IUtenlandsoppholdTekstinnhold } from '@typer/sanity/modaler/utenlandsopphold';
+import { uppercaseFørsteBokstav } from '@utils/visning';
 import type { FC } from 'react';
-
-import { ESanitySteg, Typografi } from '../../../../common/sanity';
-import { useAppContext } from '../../../context/AppContext';
-import { PersonType } from '../../../typer/personType';
-import type { IUtenlandsoppholdTekstinnhold } from '../../../typer/sanity/modaler/utenlandsopphold';
-import { uppercaseFørsteBokstav } from '../../../utils/visning';
-import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
-import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
-import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
-import PerioderContainer from '../../Felleskomponenter/PerioderContainer';
-import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
-import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
-import Steg from '../../Felleskomponenter/Steg/Steg';
-import { UtenlandsoppholdSpørsmålId } from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
-import { UtenlandsoppholdModal } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsoppholdModal';
-import { UtenlandsperiodeOppsummering } from '../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsperiodeOppsummering';
 
 import { Personopplysninger } from './Personopplysninger';
 import { useOmdeg } from './useOmdeg';

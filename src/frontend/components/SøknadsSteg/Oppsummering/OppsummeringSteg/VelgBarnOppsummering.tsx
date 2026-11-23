@@ -1,15 +1,14 @@
+import TekstBlock from '@components/Felleskomponenter/Sanity/TekstBlock';
+import { OppsummeringFelt } from '@components/SøknadsSteg/Oppsummering/OppsummeringFelt';
+import Oppsummeringsbolk from '@components/SøknadsSteg/Oppsummering/Oppsummeringsbolk';
+import { useVelgBarn } from '@components/SøknadsSteg/VelgBarn/useVelgBarn';
+import { useAppContext } from '@context/AppContext';
 import { FormSummary } from '@navikt/ds-react';
+import { RouteEnum } from '@typer/routes';
+import { hentBostedSpråkId } from '@utils/språk';
+import { formaterFnr } from '@utils/visning';
 import type { Dispatch, FC, SetStateAction } from 'react';
-
-import { useAppContext } from '../../../../context/AppContext';
 import { ROUTES } from '../../../../routes';
-import { RouteEnum } from '../../../../typer/routes';
-import { hentBostedSpråkId } from '../../../../utils/språk';
-import { formaterFnr } from '../../../../utils/visning';
-import TekstBlock from '../../../Felleskomponenter/Sanity/TekstBlock';
-import { useVelgBarn } from '../../VelgBarn/useVelgBarn';
-import { OppsummeringFelt } from '../OppsummeringFelt';
-import Oppsummeringsbolk from '../Oppsummeringsbolk';
 
 interface Props {
     settFeilAnchors: Dispatch<SetStateAction<string[]>>;

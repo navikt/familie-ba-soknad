@@ -1,21 +1,20 @@
+import { ESanitySteg } from '@common/sanity';
+import { UtenlandsoppholdSpørsmålId } from '@components/Felleskomponenter/UtenlandsoppholdModal/spørsmål';
+import { idNummerLandMedPeriodeType, PeriodeType } from '@components/SøknadsSteg/EøsSteg/idnummerUtils';
+import { useAppContext } from '@context/AppContext';
+import { useEøsContext } from '@context/EøsContext';
+import useJaNeiSpmFelt from '@hooks/useJaNeiSpmFelt';
 import { ESvar } from '@navikt/familie-form-elements';
 import { feil, type ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
+import type { IUtenlandsperiode } from '@typer/perioder';
+import type { IIdNummer } from '@typer/person';
+import type { IUtenlandsoppholdTekstinnhold } from '@typer/sanity/modaler/utenlandsopphold';
+import type { IOmDegFeltTyper } from '@typer/skjema';
+import { AlternativtSvarForInput } from '@typer/svar';
+import { nullstilteEøsFelterForBarn } from '@utils/barn';
+import { nullstilteEøsFelterForSøker } from '@utils/søker';
+import { flyttetPermanentFraNorge } from '@utils/utenlandsopphold';
 import { useEffect, useState } from 'react';
-
-import { ESanitySteg } from '../../../../common/sanity';
-import { useAppContext } from '../../../context/AppContext';
-import { useEøsContext } from '../../../context/EøsContext';
-import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
-import type { IUtenlandsperiode } from '../../../typer/perioder';
-import type { IIdNummer } from '../../../typer/person';
-import type { IUtenlandsoppholdTekstinnhold } from '../../../typer/sanity/modaler/utenlandsopphold';
-import type { IOmDegFeltTyper } from '../../../typer/skjema';
-import { AlternativtSvarForInput } from '../../../typer/svar';
-import { nullstilteEøsFelterForBarn } from '../../../utils/barn';
-import { nullstilteEøsFelterForSøker } from '../../../utils/søker';
-import { flyttetPermanentFraNorge } from '../../../utils/utenlandsopphold';
-import { UtenlandsoppholdSpørsmålId } from '../../Felleskomponenter/UtenlandsoppholdModal/spørsmål';
-import { idNummerLandMedPeriodeType, PeriodeType } from '../EøsSteg/idnummerUtils';
 
 import type { IOmDegTekstinnhold } from './innholdTyper';
 

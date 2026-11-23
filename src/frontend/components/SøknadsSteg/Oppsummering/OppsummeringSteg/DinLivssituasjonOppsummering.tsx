@@ -1,23 +1,22 @@
+import { ESivilstand } from '@common/typer/kontrakt/generelle';
+import { ArbeidsperiodeOppsummering } from '@components/Felleskomponenter/Arbeidsperiode/ArbeidsperiodeOppsummering';
+import { PensjonsperiodeOppsummering } from '@components/Felleskomponenter/Pensjonsmodal/PensjonsperiodeOppsummering';
+import TekstBlock from '@components/Felleskomponenter/Sanity/TekstBlock';
+import { useDinLivssituasjon } from '@components/SøknadsSteg/DinLivssituasjon/useDinLivssituasjon';
+import { OppsummeringFelt } from '@components/SøknadsSteg/Oppsummering/OppsummeringFelt';
+import Oppsummeringsbolk from '@components/SøknadsSteg/Oppsummering/Oppsummeringsbolk';
+import { useAppContext } from '@context/AppContext';
 import { FormSummary } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
+import type { ISamboer, ITidligereSamboer } from '@typer/person';
+import { PersonType } from '@typer/personType';
+import { RouteEnum } from '@typer/routes';
+import { AlternativtSvarForInput } from '@typer/svar';
+import { formaterDato } from '@utils/dato';
+import { hentÅrsak } from '@utils/språk';
+import { formaterFnr } from '@utils/visning';
 import type { Dispatch, FC, SetStateAction } from 'react';
-
-import { ESivilstand } from '../../../../../common/typer/kontrakt/generelle';
-import { useAppContext } from '../../../../context/AppContext';
 import { ROUTES } from '../../../../routes';
-import type { ISamboer, ITidligereSamboer } from '../../../../typer/person';
-import { PersonType } from '../../../../typer/personType';
-import { RouteEnum } from '../../../../typer/routes';
-import { AlternativtSvarForInput } from '../../../../typer/svar';
-import { formaterDato } from '../../../../utils/dato';
-import { hentÅrsak } from '../../../../utils/språk';
-import { formaterFnr } from '../../../../utils/visning';
-import { ArbeidsperiodeOppsummering } from '../../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeOppsummering';
-import { PensjonsperiodeOppsummering } from '../../../Felleskomponenter/Pensjonsmodal/PensjonsperiodeOppsummering';
-import TekstBlock from '../../../Felleskomponenter/Sanity/TekstBlock';
-import { useDinLivssituasjon } from '../../DinLivssituasjon/useDinLivssituasjon';
-import { OppsummeringFelt } from '../OppsummeringFelt';
-import Oppsummeringsbolk from '../Oppsummeringsbolk';
 
 interface Props {
     settFeilAnchors: Dispatch<SetStateAction<string[]>>;

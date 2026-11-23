@@ -1,13 +1,6 @@
 import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
+import { hentSpørsmål, hentSvaralternativ, silenceConsoleErrors, spyOnUseApp, TestProvidere } from '@utils/testing';
 import { vi } from 'vitest';
-
-import {
-    hentSpørsmål,
-    hentSvaralternativ,
-    silenceConsoleErrors,
-    spyOnUseApp,
-    TestProvidere,
-} from '../../../../utils/testing';
 
 import LeggTilBarnModal from './LeggTilBarnModal';
 

@@ -1,27 +1,26 @@
+import { ESanitySteg } from '@common/sanity';
+import Datovelger from '@components/Felleskomponenter/Datovelger/Datovelger';
+import { LandDropdown } from '@components/Felleskomponenter/Dropdowns/LandDropdown';
+import StyledDropdown from '@components/Felleskomponenter/Dropdowns/StyledDropdown';
+import TekstBlock from '@components/Felleskomponenter/Sanity/TekstBlock';
+import { SkjemaCheckbox } from '@components/Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
+import { SkjemaFeiloppsummering } from '@components/Felleskomponenter/SkjemaFeiloppsummering/SkjemaFeiloppsummering';
+import SkjemaModal from '@components/Felleskomponenter/SkjemaModal/SkjemaModal';
+import { useAppContext } from '@context/AppContext';
 import { ESvar } from '@navikt/familie-form-elements';
-import type { FC } from 'react';
-
-import { ESanitySteg } from '../../../../common/sanity';
-import { useAppContext } from '../../../context/AppContext';
-import type { IBarnMedISøknad } from '../../../typer/barn';
-import type { IUtenlandsperiode } from '../../../typer/perioder';
-import type { IUtenlandsoppholdTekstinnhold } from '../../../typer/sanity/modaler/utenlandsopphold';
-import { EUtenlandsoppholdÅrsak } from '../../../typer/utenlandsopphold';
-import { visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
-import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
+import type { IBarnMedISøknad } from '@typer/barn';
+import type { IUtenlandsperiode } from '@typer/perioder';
+import type { IUtenlandsoppholdTekstinnhold } from '@typer/sanity/modaler/utenlandsopphold';
+import { EUtenlandsoppholdÅrsak } from '@typer/utenlandsopphold';
+import { visFeiloppsummering } from '@utils/hjelpefunksjoner';
+import { svarForSpørsmålMedUkjent } from '@utils/spørsmål';
 import {
     harTilhørendeFomFelt,
     hentMaxAvgrensningPåFraDato,
     hentMaxAvgrensningPåTilDato,
     hentMinAvgrensningPåTilDato,
-} from '../../../utils/utenlandsopphold';
-import Datovelger from '../Datovelger/Datovelger';
-import { LandDropdown } from '../Dropdowns/LandDropdown';
-import StyledDropdown from '../Dropdowns/StyledDropdown';
-import TekstBlock from '../Sanity/TekstBlock';
-import { SkjemaCheckbox } from '../SkjemaCheckbox/SkjemaCheckbox';
-import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeiloppsummering';
-import SkjemaModal from '../SkjemaModal/SkjemaModal';
+} from '@utils/utenlandsopphold';
+import type { FC } from 'react';
 
 import { UtenlandsoppholdSpørsmålId } from './spørsmål';
 import { type IUseUtenlandsoppholdSkjemaParams, useUtenlandsoppholdSkjema } from './useUtenlandsoppholdSkjema';

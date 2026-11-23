@@ -1,6 +1,6 @@
 import { apiClient } from '@api/client/apiClient';
+import miljø from '@common/miljø';
 import { describe, expect, test, vi } from 'vitest';
-import miljø from '../../common/miljø';
 import { verifiserInnloggetBruker } from './verifiserInnloggetBruker';
 
 vi.mock('@api/client/apiClient', () => ({
@@ -9,7 +9,7 @@ vi.mock('@api/client/apiClient', () => ({
     },
 }));
 
-vi.mock('../../common/miljø', () => ({
+vi.mock('@common/miljø', () => ({
     default: vi.fn(),
 }));
 

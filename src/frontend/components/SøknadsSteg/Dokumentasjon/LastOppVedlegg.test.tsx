@@ -1,13 +1,12 @@
+import { Dokumentasjonsbehov } from '@common/typer/kontrakt/dokumentasjon';
 import { fireEvent, render, screen } from '@testing-library/react';
+import { BeskrivelseSanityApiNavn, type IDokumentasjon, type IVedlegg } from '@typer/dokumentasjon';
+import type { IBarn } from '@typer/person';
+import { initialStateSøknad } from '@typer/søknad';
+import { genererInitialBarnMedISøknad } from '@utils/barn';
+import { spyOnUseApp, TestProvidere } from '@utils/testing';
 import { useState } from 'react';
 import { vi } from 'vitest';
-
-import { Dokumentasjonsbehov } from '../../../../common/typer/kontrakt/dokumentasjon';
-import { BeskrivelseSanityApiNavn, type IDokumentasjon, type IVedlegg } from '../../../typer/dokumentasjon';
-import type { IBarn } from '../../../typer/person';
-import { initialStateSøknad } from '../../../typer/søknad';
-import { genererInitialBarnMedISøknad } from '../../../utils/barn';
-import { spyOnUseApp, TestProvidere } from '../../../utils/testing';
 
 import LastOppVedlegg from './LastOppVedlegg';
 

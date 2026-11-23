@@ -1,10 +1,10 @@
+import { ESanityFlettefeltverdi, ESanitySteg, type FlettefeltVerdier } from '@common/sanity';
+import type { LocaleType } from '@common/typer/localeType';
+import { useAppContext } from '@context/AppContext';
+import { useSanityTekster } from '@context/SanityContext';
 import { useLocale } from '@hooks/useLocale';
+import { plainTekstHof } from '@utils/sanity';
 import { getName } from 'i18n-iso-countries';
-import { ESanityFlettefeltverdi, ESanitySteg, type FlettefeltVerdier } from '../../common/sanity';
-import type { LocaleType } from '../../common/typer/localeType';
-import { useAppContext } from '../context/AppContext';
-import { useSanityTekster } from '../context/SanityContext';
-import { plainTekstHof } from '../utils/sanity';
 
 type TranslateFlettefelt = (
     sanityFlettefelt: ESanityFlettefeltverdi,

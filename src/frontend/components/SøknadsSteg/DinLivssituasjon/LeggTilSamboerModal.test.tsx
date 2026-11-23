@@ -1,10 +1,9 @@
+import { ESøknadstype } from '@common/typer/kontrakt/generelle';
 import { render, screen, within } from '@testing-library/react';
+import type { ISøknad } from '@typer/søknad';
+import { hentSvaralternativ, spyOnUseApp, TestProvidere, ventPåSpørsmål } from '@utils/testing';
 import { act } from 'react';
 import { mockDeep } from 'vitest-mock-extended';
-
-import { ESøknadstype } from '../../../../common/typer/kontrakt/generelle';
-import type { ISøknad } from '../../../typer/søknad';
-import { hentSvaralternativ, spyOnUseApp, TestProvidere, ventPåSpørsmål } from '../../../utils/testing';
 
 import DinLivssituasjon from './DinLivssituasjon';
 import { DinLivssituasjonSpørsmålId } from './spørsmål';

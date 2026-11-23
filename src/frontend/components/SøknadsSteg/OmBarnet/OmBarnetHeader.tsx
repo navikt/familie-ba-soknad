@@ -1,11 +1,10 @@
+import { ESanitySteg, Typografi } from '@common/sanity';
+import TekstBlock from '@components/Felleskomponenter/Sanity/TekstBlock';
+import { TilfeldigBarnIkon } from '@components/Felleskomponenter/TilfeldigBarnIkon/TilfeldigBarnIkon';
+import { useAppContext } from '@context/AppContext';
 import { Box, VStack } from '@navikt/ds-react';
+import type { IBarnMedISøknad } from '@typer/barn';
 import type { FC } from 'react';
-
-import { ESanitySteg, Typografi } from '../../../../common/sanity';
-import { useAppContext } from '../../../context/AppContext';
-import type { IBarnMedISøknad } from '../../../typer/barn';
-import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
-import { TilfeldigBarnIkon } from '../../Felleskomponenter/TilfeldigBarnIkon/TilfeldigBarnIkon';
 
 import styles from './OmBarnetHeader.module.css';
 

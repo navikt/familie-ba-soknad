@@ -1,8 +1,7 @@
+import type { ISODateString } from '@common/typer/ISODateString';
+import type { Slektsforhold } from '@common/typer/kontrakt/generelle';
 import type { ESvar } from '@navikt/familie-form-elements';
 import type { Alpha3Code } from 'i18n-iso-countries';
-
-import type { ISODateString } from '../../common/typer/ISODateString';
-import type { Slektsforhold } from '../../common/typer/kontrakt/generelle';
 
 import type { barnDataKeySpørsmål } from './barn';
 import type {

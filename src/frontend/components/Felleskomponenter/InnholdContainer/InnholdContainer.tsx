@@ -1,8 +1,6 @@
+import { useAppContext } from '@context/AppContext';
 import { Box, Heading, VStack } from '@navikt/ds-react';
-
 import type { FC, ReactNode } from 'react';
-
-import { useAppContext } from '../../../context/AppContext';
 
 const InnholdContainer: FC<{ className?: string; children?: ReactNode }> = ({ children, className }) => {
     const { tekster, plainTekst } = useAppContext();

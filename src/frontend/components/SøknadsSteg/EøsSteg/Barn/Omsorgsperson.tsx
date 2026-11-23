@@ -1,28 +1,22 @@
+import { Arbeidsperiode } from '@components/Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
+import { Barnetrygdperiode } from '@components/Felleskomponenter/Barnetrygdperiode/Barnetrygdperiode';
+import { LandDropdown } from '@components/Felleskomponenter/Dropdowns/LandDropdown';
+import SlektsforholdDropdown from '@components/Felleskomponenter/Dropdowns/SlektsforholdDropdown';
+import JaNeiSpm from '@components/Felleskomponenter/JaNeiSpm/JaNeiSpm';
+import { Pensjonsperiode } from '@components/Felleskomponenter/Pensjonsmodal/Pensjonsperiode';
+import TekstBlock from '@components/Felleskomponenter/Sanity/TekstBlock';
+import { SkjemaCheckbox } from '@components/Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
+import { SkjemaFeltInput } from '@components/Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
+import SkjemaFieldset from '@components/Felleskomponenter/SkjemaFieldset';
+import { Utbetalingsperiode } from '@components/Felleskomponenter/UtbetalingerModal/Utbetalingsperiode';
+import { useAppContext } from '@context/AppContext';
 import { ESvar } from '@navikt/familie-form-elements';
 import type { ISkjema } from '@navikt/familie-skjema';
+import type { IBarnMedISøknad } from '@typer/barn';
+import type { IArbeidsperiode, IEøsBarnetrygdsperiode, IPensjonsperiode, IUtbetalingsperiode } from '@typer/perioder';
+import { PersonType } from '@typer/personType';
+import type { IEøsForBarnFeltTyper } from '@typer/skjema';
 import type { FC } from 'react';
-
-import { useAppContext } from '../../../../context/AppContext';
-import type { IBarnMedISøknad } from '../../../../typer/barn';
-import type {
-    IArbeidsperiode,
-    IEøsBarnetrygdsperiode,
-    IPensjonsperiode,
-    IUtbetalingsperiode,
-} from '../../../../typer/perioder';
-import { PersonType } from '../../../../typer/personType';
-import type { IEøsForBarnFeltTyper } from '../../../../typer/skjema';
-import { Arbeidsperiode } from '../../../Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
-import { Barnetrygdperiode } from '../../../Felleskomponenter/Barnetrygdperiode/Barnetrygdperiode';
-import { LandDropdown } from '../../../Felleskomponenter/Dropdowns/LandDropdown';
-import SlektsforholdDropdown from '../../../Felleskomponenter/Dropdowns/SlektsforholdDropdown';
-import JaNeiSpm from '../../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
-import { Pensjonsperiode } from '../../../Felleskomponenter/Pensjonsmodal/Pensjonsperiode';
-import TekstBlock from '../../../Felleskomponenter/Sanity/TekstBlock';
-import { SkjemaCheckbox } from '../../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
-import { SkjemaFeltInput } from '../../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
-import SkjemaFieldset from '../../../Felleskomponenter/SkjemaFieldset';
-import { Utbetalingsperiode } from '../../../Felleskomponenter/UtbetalingerModal/Utbetalingsperiode';
 
 interface OmsorgspersonProps {
     skjema: ISkjema<IEøsForBarnFeltTyper, string>;

@@ -1,6 +1,6 @@
-import { ESanitySteg, type ISanitySpørsmålDokument } from '../../../../common/sanity';
-import { PersonType } from '../../../typer/personType';
-import type { ITekstinnhold } from '../../../typer/sanity/tekstInnhold';
+import { ESanitySteg, type ISanitySpørsmålDokument } from '@common/sanity';
+import { PersonType } from '@typer/personType';
+import type { ITekstinnhold } from '@typer/sanity/tekstInnhold';
 
 export const barnetrygdSpørsmålDokument = (
     personType: Exclude<PersonType, PersonType.Barn>,

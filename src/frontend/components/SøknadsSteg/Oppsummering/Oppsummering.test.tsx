@@ -1,15 +1,13 @@
+import { ESøknadstype } from '@common/typer/kontrakt/generelle';
+import { OmBarnaDineSpørsmålId } from '@components/SøknadsSteg/OmBarnaDine/spørsmål';
+import { OmBarnetSpørsmålsId } from '@components/SøknadsSteg/OmBarnet/spørsmål';
+import { OmDegSpørsmålId } from '@components/SøknadsSteg/OmDeg/spørsmål';
 import { ESvar } from '@navikt/familie-form-elements';
-
 import { render, screen, waitFor } from '@testing-library/react';
+import type { ISøknad } from '@typer/søknad';
+import { LesUtLocation, mekkGyldigSøknad, spyOnUseApp, TestProvidere } from '@utils/testing';
 import { act } from 'react';
 import { mockDeep } from 'vitest-mock-extended';
-
-import { ESøknadstype } from '../../../../common/typer/kontrakt/generelle';
-import type { ISøknad } from '../../../typer/søknad';
-import { LesUtLocation, mekkGyldigSøknad, spyOnUseApp, TestProvidere } from '../../../utils/testing';
-import { OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
-import { OmBarnetSpørsmålsId } from '../OmBarnet/spørsmål';
-import { OmDegSpørsmålId } from '../OmDeg/spørsmål';
 
 import Oppsummering from './Oppsummering';
 

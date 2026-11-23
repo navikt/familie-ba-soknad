@@ -1,10 +1,9 @@
+import type { PlainTekst } from '@common/sanity';
+import type { IAdresse } from '@common/typer/kontrakt/generelle';
+import type { IOmDegTekstinnhold } from '@components/SøknadsSteg/OmDeg/innholdTyper';
 import { BodyShort } from '@navikt/ds-react';
 import { type FeltState, feil, ok } from '@navikt/familie-skjema';
-
-import type { PlainTekst } from '../../common/sanity';
-import type { IAdresse } from '../../common/typer/kontrakt/generelle';
-import type { IOmDegTekstinnhold } from '../components/SøknadsSteg/OmDeg/innholdTyper';
-import type { ISøker } from '../typer/person';
+import type { ISøker } from '@typer/person';
 
 import { trimWhiteSpace } from './hjelpefunksjoner';
 import { uppercaseFørsteBokstav } from './visning';

@@ -1,24 +1,23 @@
+import { ESanitySteg } from '@common/sanity';
+import { useAppContext } from '@context/AppContext';
+import useDatovelgerFeltMedUkjentForSanity from '@hooks/useDatovelgerFeltMedUkjentForSanity';
+import useLanddropdownFelt from '@hooks/useLanddropdownFelt';
+import useDatovelgerFeltForSanity from '@hooks/useSendInnSkjemaTest/useDatovelgerForSanity';
 import { ESvar } from '@navikt/familie-form-elements';
 import { type FeltState, feil, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
-import { useEffect } from 'react';
-
-import { ESanitySteg } from '../../../../common/sanity';
-import { useAppContext } from '../../../context/AppContext';
-import useDatovelgerFeltMedUkjentForSanity from '../../../hooks/useDatovelgerFeltMedUkjentForSanity';
-import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
-import useDatovelgerFeltForSanity from '../../../hooks/useSendInnSkjemaTest/useDatovelgerForSanity';
-import type { IBarnMedISøknad } from '../../../typer/barn';
-import type { PersonType } from '../../../typer/personType';
-import type { IUtenlandsoppholdTekstinnhold } from '../../../typer/sanity/modaler/utenlandsopphold';
-import type { IUtenlandsoppholdFeltTyper } from '../../../typer/skjema';
-import { EUtenlandsoppholdÅrsak } from '../../../typer/utenlandsopphold';
-import { dagenEtterDato, stringTilDate } from '../../../utils/dato';
+import type { IBarnMedISøknad } from '@typer/barn';
+import type { PersonType } from '@typer/personType';
+import type { IUtenlandsoppholdTekstinnhold } from '@typer/sanity/modaler/utenlandsopphold';
+import type { IUtenlandsoppholdFeltTyper } from '@typer/skjema';
+import { EUtenlandsoppholdÅrsak } from '@typer/utenlandsopphold';
+import { dagenEtterDato, stringTilDate } from '@utils/dato';
 import {
     harTilhørendeFomFelt,
     hentMaxAvgrensningPåFraDato,
     hentMaxAvgrensningPåTilDato,
     hentMinAvgrensningPåTilDato,
-} from '../../../utils/utenlandsopphold';
+} from '@utils/utenlandsopphold';
+import { useEffect } from 'react';
 
 import { UtenlandsoppholdSpørsmålId } from './spørsmål';
 import { hentFraDatoFeilmelding, hentLandFeilmelding } from './utenlandsoppholdSpråkUtils';

@@ -1,13 +1,12 @@
+import { ESanitySteg, Typografi } from '@common/sanity';
+import { Dokumentasjonsbehov } from '@common/typer/kontrakt/dokumentasjon';
+import JaNeiSpm from '@components/Felleskomponenter/JaNeiSpm/JaNeiSpm';
+import TekstBlock from '@components/Felleskomponenter/Sanity/TekstBlock';
+import Steg from '@components/Felleskomponenter/Steg/Steg';
+import { useAppContext } from '@context/AppContext';
 import { ESvar } from '@navikt/familie-form-elements';
+import { barnDataKeySpørsmål } from '@typer/barn';
 import type { FC } from 'react';
-
-import { ESanitySteg, Typografi } from '../../../../common/sanity';
-import { Dokumentasjonsbehov } from '../../../../common/typer/kontrakt/dokumentasjon';
-import { useAppContext } from '../../../context/AppContext';
-import { barnDataKeySpørsmål } from '../../../typer/barn';
-import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
-import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
-import Steg from '../../Felleskomponenter/Steg/Steg';
 
 import HvilkeBarnCheckboxGruppe from './HvilkeBarnCheckboxGruppe';
 import { useOmBarnaDine } from './useOmBarnaDine';

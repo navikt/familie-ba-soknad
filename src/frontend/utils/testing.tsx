@@ -1,47 +1,47 @@
+import type { ESanityFlettefeltverdi } from '@common/sanity';
+import { ESivilstand, ESøknadstype, Slektsforhold } from '@common/typer/kontrakt/generelle';
+import { LocaleType } from '@common/typer/localeType';
+import { UtenlandsoppholdSpørsmålId } from '@components/Felleskomponenter/UtenlandsoppholdModal/spørsmål';
+import {
+    DinLivssituasjonSpørsmålId,
+    SamboerSpørsmålId,
+    TidligereSamboerSpørsmålId,
+} from '@components/SøknadsSteg/DinLivssituasjon/spørsmål';
+import { EøsBarnSpørsmålId } from '@components/SøknadsSteg/EøsSteg/Barn/spørsmål';
+import { OmBarnaDineSpørsmålId } from '@components/SøknadsSteg/OmBarnaDine/spørsmål';
+import { OmBarnetSpørsmålsId } from '@components/SøknadsSteg/OmBarnet/spørsmål';
+import { OmDegSpørsmålId } from '@components/SøknadsSteg/OmDeg/spørsmål';
+import * as appContext from '@context/AppContext';
+import { AppProvider } from '@context/AppContext';
+import { AppNavigationProvider } from '@context/AppNavigationContext';
+import * as eøsContext from '@context/EøsContext';
+import { EøsProvider } from '@context/EøsContext';
+import { FeatureTogglesProvider } from '@context/FeatureTogglesContext';
+import { LastRessurserProvider } from '@context/LastRessurserContext';
+import { SanityProvider } from '@context/SanityContext';
+import { SpråkProvider } from '@context/SpråkContext';
+import { StegProvider } from '@context/StegContext';
+import { SøkerProvider } from '@context/SøkerContext';
 import { ESvar } from '@navikt/familie-form-elements';
 import { HttpProvider } from '@navikt/familie-http';
 import { type Ressurs, RessursStatus } from '@navikt/familie-typer';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { within } from '@testing-library/react';
 import { lagSøker } from '@testutils/testdata/søkerTestdata';
+import { andreForelderDataKeySpørsmål, barnDataKeySpørsmål } from '@typer/barn';
+import type { IKvittering } from '@typer/kvittering';
+import type { IUtenlandsperiode } from '@typer/perioder';
+import type { ISøker, ISøkerRespons } from '@typer/person';
+import { AlternativtSvarForInput } from '@typer/svar';
+import { type ISøknad, initialStateSøknad } from '@typer/søknad';
+import { EUtenlandsoppholdÅrsak } from '@typer/utenlandsopphold';
+import { Årsak } from '@typer/utvidet';
 import type { FC, PropsWithChildren, ReactNode } from 'react';
 import { Cookies, CookiesProvider } from 'react-cookie';
 import { MemoryRouter, useLocation } from 'react-router';
 import { vi } from 'vitest';
 import { mockDeep } from 'vitest-mock-extended';
 import { mockTekstInnhold } from '../../../mocks/testdata/sanity/sanity';
-import type { ESanityFlettefeltverdi } from '../../common/sanity';
-import { ESivilstand, ESøknadstype, Slektsforhold } from '../../common/typer/kontrakt/generelle';
-import { LocaleType } from '../../common/typer/localeType';
-import { UtenlandsoppholdSpørsmålId } from '../components/Felleskomponenter/UtenlandsoppholdModal/spørsmål';
-import {
-    DinLivssituasjonSpørsmålId,
-    SamboerSpørsmålId,
-    TidligereSamboerSpørsmålId,
-} from '../components/SøknadsSteg/DinLivssituasjon/spørsmål';
-import { EøsBarnSpørsmålId } from '../components/SøknadsSteg/EøsSteg/Barn/spørsmål';
-import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
-import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnet/spørsmål';
-import { OmDegSpørsmålId } from '../components/SøknadsSteg/OmDeg/spørsmål';
-import * as appContext from '../context/AppContext';
-import { AppProvider } from '../context/AppContext';
-import { AppNavigationProvider } from '../context/AppNavigationContext';
-import * as eøsContext from '../context/EøsContext';
-import { EøsProvider } from '../context/EøsContext';
-import { FeatureTogglesProvider } from '../context/FeatureTogglesContext';
-import { LastRessurserProvider } from '../context/LastRessurserContext';
-import { SanityProvider } from '../context/SanityContext';
-import { SpråkProvider } from '../context/SpråkContext';
-import { StegProvider } from '../context/StegContext';
-import { SøkerProvider } from '../context/SøkerContext';
-import { andreForelderDataKeySpørsmål, barnDataKeySpørsmål } from '../typer/barn';
-import type { IKvittering } from '../typer/kvittering';
-import type { IUtenlandsperiode } from '../typer/perioder';
-import type { ISøker, ISøkerRespons } from '../typer/person';
-import { AlternativtSvarForInput } from '../typer/svar';
-import { type ISøknad, initialStateSøknad } from '../typer/søknad';
-import { EUtenlandsoppholdÅrsak } from '../typer/utenlandsopphold';
-import { Årsak } from '../typer/utvidet';
 import { genererInitialBarnMedISøknad } from './barn';
 import { plainTekstHof } from './sanity';
 

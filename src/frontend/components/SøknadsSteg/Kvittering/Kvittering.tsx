@@ -1,22 +1,20 @@
+import { Typografi } from '@common/sanity';
+import { Dokumentasjonsbehov } from '@common/typer/kontrakt/dokumentasjon';
+import { ESøknadstype } from '@common/typer/kontrakt/generelle';
+import { BlokkerTilbakeKnappModal } from '@components/Felleskomponenter/BlokkerTilbakeKnappModal/BlokkerTilbakeKnappModal';
+import TekstBlock from '@components/Felleskomponenter/Sanity/TekstBlock';
+import Steg from '@components/Felleskomponenter/Steg/Steg';
+import Kontoinformasjon from '@components/Kontoinformasjon/Kontoinformasjon';
+import { useAppContext } from '@context/AppContext';
+import { useStegContext } from '@context/StegContext';
+import { useUxSignals } from '@hooks/useUxSignals';
 import { CheckmarkCircleIcon, ExclamationmarkTriangleIcon } from '@navikt/aksel-icons';
 import { InfoCard, VStack } from '@navikt/ds-react';
 import { RessursStatus } from '@navikt/familie-typer';
+import { RouteEnum } from '@typer/routes';
+import { erDokumentasjonRelevant } from '@utils/dokumentasjon';
 import { format } from 'date-fns';
-
 import { type FC, useEffect, useRef, useState } from 'react';
-
-import { Typografi } from '../../../../common/sanity';
-import { Dokumentasjonsbehov } from '../../../../common/typer/kontrakt/dokumentasjon';
-import { ESøknadstype } from '../../../../common/typer/kontrakt/generelle';
-import { useAppContext } from '../../../context/AppContext';
-import { useStegContext } from '../../../context/StegContext';
-import { useUxSignals } from '../../../hooks/useUxSignals';
-import { RouteEnum } from '../../../typer/routes';
-import { erDokumentasjonRelevant } from '../../../utils/dokumentasjon';
-import { BlokkerTilbakeKnappModal } from '../../Felleskomponenter/BlokkerTilbakeKnappModal/BlokkerTilbakeKnappModal';
-import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
-import Steg from '../../Felleskomponenter/Steg/Steg';
-import Kontoinformasjon from '../../Kontoinformasjon/Kontoinformasjon';
 
 const Kvittering: FC = () => {
     const {
