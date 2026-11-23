@@ -1,17 +1,16 @@
+import { type LocaleRecordBlock, Typografi } from '@common/sanity';
+import { Dokumentasjonsbehov } from '@common/typer/kontrakt/dokumentasjon';
+import TekstBlock from '@components/Felleskomponenter/Sanity/TekstBlock';
+import { useAppContext } from '@context/AppContext';
 import { Checkbox, FormSummary, VStack } from '@navikt/ds-react';
-import type { ChangeEvent, FC } from 'react';
-
-import { type LocaleRecordBlock, Typografi } from '../../../../common/sanity';
-import { Dokumentasjonsbehov } from '../../../../common/typer/kontrakt/dokumentasjon';
-import { useAppContext } from '../../../context/AppContext';
 import {
     dokumentasjonsbehovTilBeskrivelseSanityApiNavn,
     dokumentasjonsbehovTilTittelSanityApiNavn,
     type IDokumentasjon,
     type IVedlegg,
-} from '../../../typer/dokumentasjon';
-import { slåSammen } from '../../../utils/slåSammen';
-import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
+} from '@typer/dokumentasjon';
+import { slåSammen } from '@utils/slåSammen';
+import type { ChangeEvent, FC } from 'react';
 
 import Filopplaster from './filopplaster/Filopplaster';
 import { useFilopplaster } from './filopplaster/useFilopplaster';
