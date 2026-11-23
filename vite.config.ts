@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
@@ -10,10 +10,7 @@ export default defineConfig({
     base: process.env.CDN_BASE_URL || BASE_PATH,
     plugins: [react()],
     resolve: {
-        alias: {
-            '@api': path.resolve(__dirname, 'src/frontend/_api'),
-            '@hooks': path.resolve(__dirname, 'src/frontend/hooks'),
-        },
+        tsconfigPaths: true,
     },
     server: {
         // Tillat at vite dev-serveren leser filer utenfor src/frontend (f.eks. src/common)
