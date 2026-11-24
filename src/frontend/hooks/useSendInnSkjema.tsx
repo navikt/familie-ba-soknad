@@ -1,15 +1,14 @@
+import miljø from '@common/miljø';
+import { erModellMismatchResponsRessurs } from '@common/modellversjon';
+import type { ISøknadKontrakt } from '@common/typer/kontrakt/kontrakt';
+import { useAppContext } from '@context/AppContext';
+import { useSpråkContext } from '@context/SpråkContext';
 import { captureException } from '@nais/apm';
 import { RessursStatus } from '@navikt/familie-typer';
+import { dataISøknadKontraktFormat } from '@utils/mappingTilKontrakt/søknad';
+import { sendInn } from '@utils/sendInnSkjema';
 import type { AxiosError } from 'axios';
-
-import miljø from '../../common/miljø';
-import { erModellMismatchResponsRessurs } from '../../common/modellversjon';
-import type { ISøknadKontrakt } from '../../common/typer/kontrakt/kontrakt';
-import { useAppContext } from '../context/AppContext';
-import { useSpråkContext } from '../context/SpråkContext';
 import { trackSøknadSendt } from '../umami';
-import { dataISøknadKontraktFormat } from '../utils/mappingTilKontrakt/søknad';
-import { sendInn } from '../utils/sendInnSkjema';
 
 export const useSendInnSkjema = (): {
     sendInnSkjema: () => Promise<[boolean, ISøknadKontrakt]>;

@@ -1,20 +1,19 @@
+import { Typografi } from '@common/sanity';
+import JaNeiSpm from '@components/Felleskomponenter/JaNeiSpm/JaNeiSpm';
+import KomponentGruppe from '@components/Felleskomponenter/KomponentGruppe/KomponentGruppe';
+import TekstBlock from '@components/Felleskomponenter/Sanity/TekstBlock';
+import { SkjemaCheckbox } from '@components/Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
+import { SkjemaFeiloppsummering } from '@components/Felleskomponenter/SkjemaFeiloppsummering/SkjemaFeiloppsummering';
+import { SkjemaFeltInput } from '@components/Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
+import SkjemaModal from '@components/Felleskomponenter/SkjemaModal/SkjemaModal';
+import { SøkerMåBrukePDF } from '@components/Felleskomponenter/SøkerMåBrukePDF';
+import { useAppContext } from '@context/AppContext';
 import { Fieldset, InlineMessage } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import { Valideringsstatus } from '@navikt/familie-skjema';
+import type { ILeggTilBarnTekstinnhold } from '@typer/sanity/modaler/leggTilBarn';
+import { visFeiloppsummering } from '@utils/hjelpefunksjoner';
 import type { FC } from 'react';
-
-import { Typografi } from '../../../../../common/sanity';
-import { useAppContext } from '../../../../context/AppContext';
-import type { ILeggTilBarnTekstinnhold } from '../../../../typer/sanity/modaler/leggTilBarn';
-import { visFeiloppsummering } from '../../../../utils/hjelpefunksjoner';
-import JaNeiSpm from '../../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
-import KomponentGruppe from '../../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
-import TekstBlock from '../../../Felleskomponenter/Sanity/TekstBlock';
-import { SkjemaCheckbox } from '../../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
-import { SkjemaFeiloppsummering } from '../../../Felleskomponenter/SkjemaFeiloppsummering/SkjemaFeiloppsummering';
-import { SkjemaFeltInput } from '../../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
-import SkjemaModal from '../../../Felleskomponenter/SkjemaModal/SkjemaModal';
-import { SøkerMåBrukePDF } from '../../../Felleskomponenter/SøkerMåBrukePDF';
 
 import { useLeggTilBarn } from './useLeggTilBarn';
 

@@ -1,11 +1,10 @@
+import { OmBarnaDineSpørsmålId } from '@components/SøknadsSteg/OmBarnaDine/spørsmål';
 import { ESvar } from '@navikt/familie-form-elements';
 import { act, render, screen, within } from '@testing-library/react';
+import { barnDataKeySpørsmål, type IBarnMedISøknad } from '@typer/barn';
+import type { IBarn, IBarnRespons } from '@typer/person';
+import { silenceConsoleErrors, spyOnUseApp, TestProvidere } from '@utils/testing';
 import { useNavigate } from 'react-router';
-
-import { barnDataKeySpørsmål, type IBarnMedISøknad } from '../../../typer/barn';
-import type { IBarn, IBarnRespons } from '../../../typer/person';
-import { silenceConsoleErrors, spyOnUseApp, TestProvidere } from '../../../utils/testing';
-import { OmBarnaDineSpørsmålId } from '../../SøknadsSteg/OmBarnaDine/spørsmål';
 
 import { BlokkerTilbakeKnappModal } from './BlokkerTilbakeKnappModal';
 

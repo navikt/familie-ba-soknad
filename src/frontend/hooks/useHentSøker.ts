@@ -1,7 +1,7 @@
 import type { ApiFeil } from '@api/client/apiClient';
 import { hentSøker } from '@api/hentSøker';
 import { type UseQueryOptions, useQuery } from '@tanstack/react-query';
-import type { ISøkerRespons } from '../typer/person';
+import type { ISøkerRespons } from '@typer/person';
 import { MetaKey } from './meta/metaKey';
 
 type Options = Omit<

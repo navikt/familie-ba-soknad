@@ -1,16 +1,15 @@
+import TekstBlock from '@components/Felleskomponenter/Sanity/TekstBlock';
+import { OmBarnaDineSpørsmålId } from '@components/SøknadsSteg/OmBarnaDine/spørsmål';
+import { useOmBarnaDine } from '@components/SøknadsSteg/OmBarnaDine/useOmBarnaDine';
+import { avdødPartnerForelderSpørsmålDokument } from '@components/SøknadsSteg/OmBarnaDine/utils';
+import { OppsummeringFelt } from '@components/SøknadsSteg/Oppsummering/OppsummeringFelt';
+import Oppsummeringsbolk from '@components/SøknadsSteg/Oppsummering/Oppsummeringsbolk';
+import { useAppContext } from '@context/AppContext';
 import { ESvar } from '@navikt/familie-form-elements';
+import { barnDataKeySpørsmål } from '@typer/barn';
+import { RouteEnum } from '@typer/routes';
 import type { Dispatch, FC, SetStateAction } from 'react';
-
-import { useAppContext } from '../../../../context/AppContext';
 import { ROUTES } from '../../../../routes';
-import { barnDataKeySpørsmål } from '../../../../typer/barn';
-import { RouteEnum } from '../../../../typer/routes';
-import TekstBlock from '../../../Felleskomponenter/Sanity/TekstBlock';
-import { OmBarnaDineSpørsmålId } from '../../OmBarnaDine/spørsmål';
-import { useOmBarnaDine } from '../../OmBarnaDine/useOmBarnaDine';
-import { avdødPartnerForelderSpørsmålDokument } from '../../OmBarnaDine/utils';
-import { OppsummeringFelt } from '../OppsummeringFelt';
-import Oppsummeringsbolk from '../Oppsummeringsbolk';
 
 interface Props {
     settFeilAnchors: Dispatch<SetStateAction<string[]>>;

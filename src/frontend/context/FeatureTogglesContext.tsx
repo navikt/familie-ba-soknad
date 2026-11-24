@@ -1,5 +1,5 @@
+import { type AllFeatureToggles, defaultFeatureToggleValues } from '@common/typer/feature-toggles';
 import { createContext, type PropsWithChildren, useContext } from 'react';
-import { type AllFeatureToggles, defaultFeatureToggleValues } from '../../common/typer/feature-toggles';
 
 export interface FeatureTogglesContext {
     toggles: AllFeatureToggles;

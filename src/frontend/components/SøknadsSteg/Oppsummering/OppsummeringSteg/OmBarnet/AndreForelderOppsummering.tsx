@@ -1,22 +1,21 @@
+import { ArbeidsperiodeOppsummering } from '@components/Felleskomponenter/Arbeidsperiode/ArbeidsperiodeOppsummering';
+import { PensjonsperiodeOppsummering } from '@components/Felleskomponenter/Pensjonsmodal/PensjonsperiodeOppsummering';
+import TekstBlock from '@components/Felleskomponenter/Sanity/TekstBlock';
+import { OppsummeringFelt } from '@components/SøknadsSteg/Oppsummering/OppsummeringFelt';
+import { useAppContext } from '@context/AppContext';
 import { BodyShort, FormSummary } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
-import type { FC } from 'react';
-
-import { useAppContext } from '../../../../../context/AppContext';
 import {
     andreForelderDataKeySpørsmål,
     barnDataKeySpørsmål,
     type IAndreForelder,
     type IBarnMedISøknad,
-} from '../../../../../typer/barn';
-import { PersonType } from '../../../../../typer/personType';
-import { AlternativtSvarForInput } from '../../../../../typer/svar';
-import { formaterDato } from '../../../../../utils/dato';
-import { formaterDatoMedUkjent } from '../../../../../utils/visning';
-import { ArbeidsperiodeOppsummering } from '../../../../Felleskomponenter/Arbeidsperiode/ArbeidsperiodeOppsummering';
-import { PensjonsperiodeOppsummering } from '../../../../Felleskomponenter/Pensjonsmodal/PensjonsperiodeOppsummering';
-import TekstBlock from '../../../../Felleskomponenter/Sanity/TekstBlock';
-import { OppsummeringFelt } from '../../OppsummeringFelt';
+} from '@typer/barn';
+import { PersonType } from '@typer/personType';
+import { AlternativtSvarForInput } from '@typer/svar';
+import { formaterDato } from '@utils/dato';
+import { formaterDatoMedUkjent } from '@utils/visning';
+import type { FC } from 'react';
 
 const AndreForelderOppsummering: FC<{
     barn: IBarnMedISøknad;

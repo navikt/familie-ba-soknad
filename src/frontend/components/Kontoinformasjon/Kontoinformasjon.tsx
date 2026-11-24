@@ -1,11 +1,10 @@
+import { ESanitySteg, Typografi } from '@common/sanity';
+import TekstBlock from '@components/Felleskomponenter/Sanity/TekstBlock';
+import { useAppContext } from '@context/AppContext';
 import { ExclamationmarkTriangleIcon } from '@navikt/aksel-icons';
 import { Heading, InfoCard, Label, Loader, VStack } from '@navikt/ds-react';
 import { RessursStatus } from '@navikt/familie-typer';
 import type { FC } from 'react';
-
-import { ESanitySteg, Typografi } from '../../../common/sanity';
-import { useAppContext } from '../../context/AppContext';
-import TekstBlock from '../Felleskomponenter/Sanity/TekstBlock';
 
 const Kontoinformasjon: FC = () => {
     const { kontoinformasjon, tekster, plainTekst } = useAppContext();

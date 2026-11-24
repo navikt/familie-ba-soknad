@@ -1,6 +1,5 @@
+import type { ISODateString } from '@common/typer/ISODateString';
 import type { ESvar } from '@navikt/familie-form-elements';
-
-import type { ISODateString } from '../../common/typer/ISODateString';
 
 export type ESvarMedUbesvart = ESvar | null;
 

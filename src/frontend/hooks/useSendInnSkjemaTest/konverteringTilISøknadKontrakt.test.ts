@@ -1,10 +1,9 @@
+import type { ISøknadKontrakt } from '@common/typer/kontrakt/kontrakt';
+import { useSendInnSkjema } from '@hooks/useSendInnSkjema';
 import { ESvar } from '@navikt/familie-form-elements';
 import { renderHook } from '@testing-library/react';
-
-import type { ISøknadKontrakt } from '../../../common/typer/kontrakt/kontrakt';
-import { silenceConsoleErrors, spyOnUseApp, TestProvidereForSanity } from '../../utils/testing';
-import { erGyldigISøknadKontrakt } from '../../utils/typeguards';
-import { useSendInnSkjema } from '../useSendInnSkjema';
+import { silenceConsoleErrors, spyOnUseApp, TestProvidereForSanity } from '@utils/testing';
+import { erGyldigISøknadKontrakt } from '@utils/typeguards';
 
 import { testdata1 } from './test-data/testdata1';
 import { testdata2 } from './test-data/testdata2';

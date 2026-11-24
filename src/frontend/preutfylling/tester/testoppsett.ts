@@ -1,10 +1,9 @@
+import { ESivilstand } from '@common/typer/kontrakt/generelle';
+import { DinLivssituasjonSpørsmålId } from '@components/SøknadsSteg/DinLivssituasjon/spørsmål';
 import { RessursStatus } from '@navikt/familie-typer';
-
-import { ESivilstand } from '../../../common/typer/kontrakt/generelle';
-import { DinLivssituasjonSpørsmålId } from '../../components/SøknadsSteg/DinLivssituasjon/spørsmål';
-import type { IBarn, ISøker } from '../../typer/person';
-import { type ISøknad, initialStateSøknad } from '../../typer/søknad';
-import { spyOnUseApp } from '../../utils/testing';
+import type { IBarn, ISøker } from '@typer/person';
+import { type ISøknad, initialStateSøknad } from '@typer/søknad';
+import { spyOnUseApp } from '@utils/testing';
 import { byggPreutfyltSøknad, type Preutfyllingsvalg } from '../byggPreutfyltSøknad';
 import { Avvik, erEøsScenario, feilmeldingForUgyldigKombinasjon, Scenario } from '../scenario';
 

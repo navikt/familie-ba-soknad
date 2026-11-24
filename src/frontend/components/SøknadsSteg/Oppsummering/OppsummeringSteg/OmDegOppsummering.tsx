@@ -1,21 +1,20 @@
+import TekstBlock from '@components/Felleskomponenter/Sanity/TekstBlock';
+import { UtenlandsperiodeOppsummering } from '@components/Felleskomponenter/UtenlandsoppholdModal/UtenlandsperiodeOppsummering';
+import { useOmdeg } from '@components/SøknadsSteg/OmDeg/useOmdeg';
+import { OppsummeringFelt } from '@components/SøknadsSteg/Oppsummering/OppsummeringFelt';
+import Oppsummeringsbolk from '@components/SøknadsSteg/Oppsummering/Oppsummeringsbolk';
+import { useAppContext } from '@context/AppContext';
+import { useSpråkContext } from '@context/SpråkContext';
 import { ESvar } from '@navikt/familie-form-elements';
+import { PersonType } from '@typer/personType';
+import { RouteEnum } from '@typer/routes';
+import { genererAdresseVisning } from '@utils/adresse';
+import { landkodeTilSpråk } from '@utils/språk';
+import { jaNeiSvarTilSpråkId } from '@utils/spørsmål';
+import { formaterFnr } from '@utils/visning';
 import type { Alpha3Code } from 'i18n-iso-countries';
 import type { Dispatch, FC, SetStateAction } from 'react';
-
-import { useAppContext } from '../../../../context/AppContext';
-import { useSpråkContext } from '../../../../context/SpråkContext';
 import { ROUTES } from '../../../../routes';
-import { PersonType } from '../../../../typer/personType';
-import { RouteEnum } from '../../../../typer/routes';
-import { genererAdresseVisning } from '../../../../utils/adresse';
-import { landkodeTilSpråk } from '../../../../utils/språk';
-import { jaNeiSvarTilSpråkId } from '../../../../utils/spørsmål';
-import { formaterFnr } from '../../../../utils/visning';
-import TekstBlock from '../../../Felleskomponenter/Sanity/TekstBlock';
-import { UtenlandsperiodeOppsummering } from '../../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsperiodeOppsummering';
-import { useOmdeg } from '../../OmDeg/useOmdeg';
-import { OppsummeringFelt } from '../OppsummeringFelt';
-import Oppsummeringsbolk from '../Oppsummeringsbolk';
 
 interface Props {
     settFeilAnchors: Dispatch<SetStateAction<string[]>>;

@@ -1,7 +1,6 @@
+import type { Slektsforhold } from '@common/typer/kontrakt/generelle';
 import type { ESvar } from '@navikt/familie-form-elements';
 import type { Alpha3Code } from 'i18n-iso-countries';
-
-import type { Slektsforhold } from '../../common/typer/kontrakt/generelle';
 
 import type { IArbeidsperiode, IEøsBarnetrygdsperiode, IPensjonsperiode, IUtbetalingsperiode } from './perioder';
 import type { ISøknadSpørsmål } from './spørsmål';

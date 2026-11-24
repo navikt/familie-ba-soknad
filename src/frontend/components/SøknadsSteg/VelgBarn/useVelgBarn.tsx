@@ -1,14 +1,13 @@
+import { ESanitySteg } from '@common/sanity';
+import { useAppContext } from '@context/AppContext';
+import { useEøsContext } from '@context/EøsContext';
+import { useStegContext } from '@context/StegContext';
 import { feil, type ISkjema, ok, useFelt, useSkjema } from '@navikt/familie-skjema';
+import type { IBarnMedISøknad } from '@typer/barn';
+import type { BarnetsId, IBarn } from '@typer/person';
+import type { IVelgBarnFeltTyper } from '@typer/skjema';
+import { genererInitialBarnMedISøknad } from '@utils/barn';
 import { useEffect, useState } from 'react';
-
-import { ESanitySteg } from '../../../../common/sanity';
-import { useAppContext } from '../../../context/AppContext';
-import { useEøsContext } from '../../../context/EøsContext';
-import { useStegContext } from '../../../context/StegContext';
-import type { IBarnMedISøknad } from '../../../typer/barn';
-import type { BarnetsId, IBarn } from '../../../typer/person';
-import type { IVelgBarnFeltTyper } from '../../../typer/skjema';
-import { genererInitialBarnMedISøknad } from '../../../utils/barn';
 
 import type { IVelgBarnTekstinnhold } from './innholdTyper';
 import { VelgBarnSpørsmålId } from './spørsmål';

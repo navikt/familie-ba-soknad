@@ -1,12 +1,11 @@
+import { OmBarnaDineSpørsmålId } from '@components/SøknadsSteg/OmBarnaDine/spørsmål';
 import { ESvar } from '@navikt/familie-form-elements';
 import { renderHook } from '@testing-library/react';
+import { andreForelderDataKeySpørsmål, barnDataKeySpørsmål, type IBarnMedISøknad } from '@typer/barn';
+import type { IBarn } from '@typer/person';
+import { genererInitialBarnMedISøknad, genererInitiellAndreForelder } from '@utils/barn';
+import { spyOnUseApp, TestProvidere } from '@utils/testing';
 import type { DeepPartial } from 'ts-essentials';
-
-import { andreForelderDataKeySpørsmål, barnDataKeySpørsmål, type IBarnMedISøknad } from '../../../typer/barn';
-import type { IBarn } from '../../../typer/person';
-import { genererInitialBarnMedISøknad, genererInitiellAndreForelder } from '../../../utils/barn';
-import { spyOnUseApp, TestProvidere } from '../../../utils/testing';
-import { OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
 
 import { OmBarnetSpørsmålsId } from './spørsmål';
 import { useOmBarnet } from './useOmBarnet';

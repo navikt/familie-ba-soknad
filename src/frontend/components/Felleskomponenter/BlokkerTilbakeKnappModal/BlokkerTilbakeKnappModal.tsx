@@ -1,11 +1,10 @@
+import { Typografi } from '@common/sanity';
+import ModalContent from '@components/Felleskomponenter/ModalContent';
+import TekstBlock from '@components/Felleskomponenter/Sanity/TekstBlock';
+import { useAppContext } from '@context/AppContext';
+import { useAppNavigationContext } from '@context/AppNavigationContext';
 import { Box, Button, Modal } from '@navikt/ds-react';
-
-import { Typografi } from '../../../../common/sanity';
-import { useAppContext } from '../../../context/AppContext';
-import { useAppNavigationContext } from '../../../context/AppNavigationContext';
-import type { IBlokkerTilbakeknappTekstinnhold } from '../../../typer/sanity/modaler/blokkerTilbakeknapp';
-import ModalContent from '../ModalContent';
-import TekstBlock from '../Sanity/TekstBlock';
+import type { IBlokkerTilbakeknappTekstinnhold } from '@typer/sanity/modaler/blokkerTilbakeknapp';
 
 export function BlokkerTilbakeKnappModal() {
     const { visBlokkerTilbakeKnappModal, settVisBlokkerTilbakeKnappModal } = useAppNavigationContext();

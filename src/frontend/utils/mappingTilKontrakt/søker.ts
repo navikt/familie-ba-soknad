@@ -2,12 +2,12 @@ import {
     fjernNullVerdierFraSpørsmål,
     type SpørsmålMapMedNullVerdier,
     type TilRestLocaleRecord,
-} from '../../../common/typer/kontrakt/generelle';
-import type { ISøknadKontraktSøker } from '../../../common/typer/kontrakt/kontrakt';
-import { PersonType } from '../../typer/personType';
-import type { ITekstinnhold } from '../../typer/sanity/tekstInnhold';
-import type { ISøknad } from '../../typer/søknad';
-import { hentÅrsak, landkodeTilSpråk } from '../språk';
+} from '@common/typer/kontrakt/generelle';
+import type { ISøknadKontraktSøker } from '@common/typer/kontrakt/kontrakt';
+import { PersonType } from '@typer/personType';
+import type { ITekstinnhold } from '@typer/sanity/tekstInnhold';
+import type { ISøknad } from '@typer/søknad';
+import { hentÅrsak, landkodeTilSpråk } from '@utils/språk';
 
 import { tilIAndreUtbetalingsperioderIKontraktFormat } from './andreUtbetalingsperioder';
 import { tilIArbeidsperiodeIKontraktFormat } from './arbeidsperioder';

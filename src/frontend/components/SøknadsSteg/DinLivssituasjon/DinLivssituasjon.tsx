@@ -1,18 +1,17 @@
+import { ESanitySteg } from '@common/sanity';
+import { Dokumentasjonsbehov } from '@common/typer/kontrakt/dokumentasjon';
+import { ESivilstand } from '@common/typer/kontrakt/generelle';
+import { Arbeidsperiode } from '@components/Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
+import Datovelger from '@components/Felleskomponenter/Datovelger/Datovelger';
+import ÅrsakDropdown from '@components/Felleskomponenter/Dropdowns/ÅrsakDropdown';
+import JaNeiSpm from '@components/Felleskomponenter/JaNeiSpm/JaNeiSpm';
+import { Pensjonsperiode } from '@components/Felleskomponenter/Pensjonsmodal/Pensjonsperiode';
+import TekstBlock from '@components/Felleskomponenter/Sanity/TekstBlock';
+import Steg from '@components/Felleskomponenter/Steg/Steg';
+import { useAppContext } from '@context/AppContext';
 import { ESvar } from '@navikt/familie-form-elements';
+import { PersonType } from '@typer/personType';
 import type { FC } from 'react';
-
-import { ESanitySteg } from '../../../../common/sanity';
-import { Dokumentasjonsbehov } from '../../../../common/typer/kontrakt/dokumentasjon';
-import { ESivilstand } from '../../../../common/typer/kontrakt/generelle';
-import { useAppContext } from '../../../context/AppContext';
-import { PersonType } from '../../../typer/personType';
-import { Arbeidsperiode } from '../../Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
-import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
-import ÅrsakDropdown from '../../Felleskomponenter/Dropdowns/ÅrsakDropdown';
-import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
-import { Pensjonsperiode } from '../../Felleskomponenter/Pensjonsmodal/Pensjonsperiode';
-import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
-import Steg from '../../Felleskomponenter/Steg/Steg';
 
 import SamboerSkjema from './SamboerSkjema';
 import TidligereSamboere from './TidligereSamboere';

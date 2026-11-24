@@ -1,22 +1,21 @@
-import { ESvar } from '@navikt/familie-form-elements';
-
 import {
     ESanitySivilstandApiKey,
     type LocaleRecordBlock,
     type LocaleRecordString,
     type PlainTekst,
-} from '../../../common/sanity';
-import { ESivilstand, type TilRestLocaleRecord } from '../../../common/typer/kontrakt/generelle';
-import type { ISøknadKontrakt } from '../../../common/typer/kontrakt/kontrakt';
-import type { LocaleType } from '../../../common/typer/localeType';
-import { avdødPartnerForelderSpørsmålDokument } from '../../components/SøknadsSteg/OmBarnaDine/utils';
-import type { IBarnMedISøknad } from '../../typer/barn';
-import type { ISøker } from '../../typer/person';
-import type { ITekstinnhold } from '../../typer/sanity/tekstInnhold';
-import type { ISøknad } from '../../typer/søknad';
-import { erDokumentasjonRelevant } from '../dokumentasjon';
-import { sivilstandTilSanitySivilstandApiKey } from '../språk';
-import { jaNeiSvarTilSpråkId } from '../spørsmål';
+} from '@common/sanity';
+import { ESivilstand, type TilRestLocaleRecord } from '@common/typer/kontrakt/generelle';
+import type { ISøknadKontrakt } from '@common/typer/kontrakt/kontrakt';
+import type { LocaleType } from '@common/typer/localeType';
+import { avdødPartnerForelderSpørsmålDokument } from '@components/SøknadsSteg/OmBarnaDine/utils';
+import { ESvar } from '@navikt/familie-form-elements';
+import type { IBarnMedISøknad } from '@typer/barn';
+import type { ISøker } from '@typer/person';
+import type { ITekstinnhold } from '@typer/sanity/tekstInnhold';
+import type { ISøknad } from '@typer/søknad';
+import { erDokumentasjonRelevant } from '@utils/dokumentasjon';
+import { sivilstandTilSanitySivilstandApiKey } from '@utils/språk';
+import { jaNeiSvarTilSpråkId } from '@utils/spørsmål';
 
 import { barnISøknadsFormat } from './barn';
 import { dokumentasjonISøknadFormat } from './dokumentasjon';

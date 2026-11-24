@@ -1,3 +1,5 @@
+import miljø from '@common/miljø';
+import { useAppContext } from '@context/AppContext';
 import { BodyShort, Heading, Loader } from '@navikt/ds-react';
 import {
     byggFeiletRessurs,
@@ -6,11 +8,7 @@ import {
     type Ressurs,
     RessursStatus,
 } from '@navikt/familie-typer';
-
 import { type FC, useEffect, useState } from 'react';
-
-import miljø from '../../../common/miljø';
-import { useAppContext } from '../../context/AppContext';
 
 const Helse: FC = () => {
     const { axiosRequest } = useAppContext();

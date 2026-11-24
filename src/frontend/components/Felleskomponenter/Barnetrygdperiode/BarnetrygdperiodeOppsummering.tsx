@@ -1,17 +1,16 @@
+import PeriodeOppsummering from '@components/Felleskomponenter/PeriodeOppsummering/PeriodeOppsummering';
+import TekstBlock from '@components/Felleskomponenter/Sanity/TekstBlock';
+import { OppsummeringFelt } from '@components/SøknadsSteg/Oppsummering/OppsummeringFelt';
+import { useAppContext } from '@context/AppContext';
+import { useSpråkContext } from '@context/SpråkContext';
 import { ESvar } from '@navikt/familie-form-elements';
+import type { IEøsBarnetrygdsperiode } from '@typer/perioder';
+import { PersonType } from '@typer/personType';
+import type { IBarnetrygdsperiodeTekstinnhold } from '@typer/sanity/modaler/barnetrygdperiode';
+import { formaterDatostringKunMåned } from '@utils/dato';
+import { landkodeTilSpråk } from '@utils/språk';
+import { uppercaseFørsteBokstav } from '@utils/visning';
 import type { FC } from 'react';
-
-import { useAppContext } from '../../../context/AppContext';
-import { useSpråkContext } from '../../../context/SpråkContext';
-import type { IEøsBarnetrygdsperiode } from '../../../typer/perioder';
-import { PersonType } from '../../../typer/personType';
-import type { IBarnetrygdsperiodeTekstinnhold } from '../../../typer/sanity/modaler/barnetrygdperiode';
-import { formaterDatostringKunMåned } from '../../../utils/dato';
-import { landkodeTilSpråk } from '../../../utils/språk';
-import { uppercaseFørsteBokstav } from '../../../utils/visning';
-import { OppsummeringFelt } from '../../SøknadsSteg/Oppsummering/OppsummeringFelt';
-import PeriodeOppsummering from '../PeriodeOppsummering/PeriodeOppsummering';
-import TekstBlock from '../Sanity/TekstBlock';
 
 interface BarnetrygdperiodeProps {
     barnetrygdsperiode: IEøsBarnetrygdsperiode;

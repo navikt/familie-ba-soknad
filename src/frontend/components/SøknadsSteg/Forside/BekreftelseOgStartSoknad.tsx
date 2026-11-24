@@ -1,11 +1,11 @@
+import { ESanitySteg, Typografi } from '@common/sanity';
+import { ESøknadstype } from '@common/typer/kontrakt/generelle';
+import TekstBlock from '@components/Felleskomponenter/Sanity/TekstBlock';
+import { useSanityTekster } from '@context/SanityContext';
 import { useTranslate } from '@hooks/useTranslate';
 import { ArrowRightIcon } from '@navikt/aksel-icons';
 import { Button, Checkbox, ErrorMessage, InfoCard, Radio, RadioGroup, VStack } from '@navikt/ds-react';
 import type { FC } from 'react';
-import { ESanitySteg, Typografi } from '../../../../common/sanity';
-import { ESøknadstype } from '../../../../common/typer/kontrakt/generelle';
-import { useSanityTekster } from '../../../context/SanityContext';
-import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
 import { BekreftelseStatus, useBekreftelseOgStartSoknad } from './useBekreftelseOgStartSoknad';
 
 const BekreftelseOgStartSoknad: FC = () => {

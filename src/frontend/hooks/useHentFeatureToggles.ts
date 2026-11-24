@@ -1,9 +1,9 @@
 import type { ApiFeil } from '@api/client/apiClient';
 import { hentFeatureToggles } from '@api/hentFeatureToggles';
+import { type AllFeatureToggles, defaultFeatureToggleValues } from '@common/typer/feature-toggles';
 import { MetaKey } from '@hooks/meta/metaKey';
 import { type UseQueryOptions, useQuery } from '@tanstack/react-query';
-import { type AllFeatureToggles, defaultFeatureToggleValues } from '../../common/typer/feature-toggles';
-import { logger, tilLoggFeil } from '../utils/logger';
+import { logger, tilLoggFeil } from '@utils/logger';
 
 type Options = Omit<
     UseQueryOptions<AllFeatureToggles, ApiFeil, AllFeatureToggles>,

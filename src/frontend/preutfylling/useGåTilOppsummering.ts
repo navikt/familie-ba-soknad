@@ -1,11 +1,10 @@
+import { useAppContext } from '@context/AppContext';
+import { useEøsContext } from '@context/EøsContext';
+import { useStegContext } from '@context/StegContext';
+import { RouteEnum } from '@typer/routes';
+import type { ISøknad } from '@typer/søknad';
 import { useNavigate } from 'react-router';
-
-import { useAppContext } from '../context/AppContext';
-import { useEøsContext } from '../context/EøsContext';
-import { useStegContext } from '../context/StegContext';
 import { ROUTES } from '../routes';
-import { RouteEnum } from '../typer/routes';
-import type { ISøknad } from '../typer/søknad';
 
 // Stegene i StegContext er ikke oppdatert før neste rendring, derfor regnes indeksen ut her.
 const finnStegindeksForOppsummering = ({ søker, barnInkludertISøknaden }: ISøknad): number => {

@@ -1,17 +1,16 @@
+import { ESanitySteg, Typografi } from '@common/sanity';
+import { Dokumentasjonsbehov } from '@common/typer/kontrakt/dokumentasjon';
+import Datovelger from '@components/Felleskomponenter/Datovelger/Datovelger';
+import JaNeiSpm from '@components/Felleskomponenter/JaNeiSpm/JaNeiSpm';
+import TekstBlock from '@components/Felleskomponenter/Sanity/TekstBlock';
+import { SkjemaCheckbox } from '@components/Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
+import Steg from '@components/Felleskomponenter/Steg/Steg';
+import { useAppContext } from '@context/AppContext';
 import { ReadMore } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
+import type { BarnetsId } from '@typer/person';
+import { erBarnIFosterhjemEllerBeredskapshjem } from '@utils/barn';
 import type { FC } from 'react';
-
-import { ESanitySteg, Typografi } from '../../../../common/sanity';
-import { Dokumentasjonsbehov } from '../../../../common/typer/kontrakt/dokumentasjon';
-import { useAppContext } from '../../../context/AppContext';
-import type { BarnetsId } from '../../../typer/person';
-import { erBarnIFosterhjemEllerBeredskapshjem } from '../../../utils/barn';
-import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
-import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
-import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
-import { SkjemaCheckbox } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
-import Steg from '../../Felleskomponenter/Steg/Steg';
 
 import AndreForelder from './AndreForelder';
 import { OmBarnetHeader } from './OmBarnetHeader';

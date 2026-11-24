@@ -1,21 +1,20 @@
+import JaNeiSpm from '@components/Felleskomponenter/JaNeiSpm/JaNeiSpm';
+import KomponentGruppe from '@components/Felleskomponenter/KomponentGruppe/KomponentGruppe';
+import { LeggTilKnapp } from '@components/Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
+import PerioderContainer from '@components/Felleskomponenter/PerioderContainer';
+import TekstBlock from '@components/Felleskomponenter/Sanity/TekstBlock';
+import useModal from '@components/Felleskomponenter/SkjemaModal/useModal';
+import { useAppContext } from '@context/AppContext';
 import { ESvar } from '@navikt/familie-form-elements';
 import type { Felt, ISkjema } from '@navikt/familie-skjema';
+import type { IBarnMedISøknad } from '@typer/barn';
+import type { IEøsBarnetrygdsperiode } from '@typer/perioder';
+import { type PeriodePersonTypeProps, PersonType } from '@typer/personType';
+import type { IBarnetrygdsperiodeTekstinnhold } from '@typer/sanity/modaler/barnetrygdperiode';
+import type { IEøsForBarnFeltTyper, IOmBarnetFeltTyper } from '@typer/skjema';
+import { genererPeriodeId } from '@utils/perioder';
+import { uppercaseFørsteBokstav } from '@utils/visning';
 import type { FC } from 'react';
-
-import { useAppContext } from '../../../context/AppContext';
-import type { IBarnMedISøknad } from '../../../typer/barn';
-import type { IEøsBarnetrygdsperiode } from '../../../typer/perioder';
-import { type PeriodePersonTypeProps, PersonType } from '../../../typer/personType';
-import type { IBarnetrygdsperiodeTekstinnhold } from '../../../typer/sanity/modaler/barnetrygdperiode';
-import type { IEøsForBarnFeltTyper, IOmBarnetFeltTyper } from '../../../typer/skjema';
-import { genererPeriodeId } from '../../../utils/perioder';
-import { uppercaseFørsteBokstav } from '../../../utils/visning';
-import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
-import KomponentGruppe from '../KomponentGruppe/KomponentGruppe';
-import { LeggTilKnapp } from '../LeggTilKnapp/LeggTilKnapp';
-import PerioderContainer from '../PerioderContainer';
-import TekstBlock from '../Sanity/TekstBlock';
-import useModal from '../SkjemaModal/useModal';
 
 import { BarnetrygdperiodeModal } from './BarnetrygdperiodeModal';
 import { BarnetrygdsperiodeOppsummering } from './BarnetrygdperiodeOppsummering';

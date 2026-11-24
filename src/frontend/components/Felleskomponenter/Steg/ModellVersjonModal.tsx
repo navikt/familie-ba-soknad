@@ -1,11 +1,10 @@
+import { Typografi } from '@common/sanity';
+import ModalContent from '@components/Felleskomponenter/ModalContent';
+import TekstBlock from '@components/Felleskomponenter/Sanity/TekstBlock';
+import { useAppContext } from '@context/AppContext';
 import { XMarkOctagonFillIcon } from '@navikt/aksel-icons';
 import { Button, Modal } from '@navikt/ds-react';
 import type { FC } from 'react';
-
-import { Typografi } from '../../../../common/sanity';
-import { useAppContext } from '../../../context/AppContext';
-import ModalContent from '../ModalContent';
-import TekstBlock from '../Sanity/TekstBlock';
 
 const ModellVersjonModal: FC<{ erÅpen: boolean }> = ({ erÅpen }) => {
     const { tekster, plainTekst } = useAppContext();

@@ -1,15 +1,13 @@
+import { IdNummer } from '@components/SøknadsSteg/EøsSteg/IdNummer';
+import { idNummerLandMedPeriodeType, type PeriodeType } from '@components/SøknadsSteg/EøsSteg/idnummerUtils';
+import { useAppContext } from '@context/AppContext';
+import { useEøsContext } from '@context/EøsContext';
 import type { Felt, ISkjema } from '@navikt/familie-skjema';
+import { barnDataKeySpørsmål, type IBarnMedISøknad } from '@typer/barn';
+import type { IEøsForBarnFeltTyper } from '@typer/skjema';
+import { skalSpørreOmIdNummerForPågåendeSøknadEøsLand } from '@utils/barn';
 import type { Alpha3Code } from 'i18n-iso-countries';
-
 import type { Dispatch, FC, SetStateAction } from 'react';
-
-import { useAppContext } from '../../../../context/AppContext';
-import { useEøsContext } from '../../../../context/EøsContext';
-import { barnDataKeySpørsmål, type IBarnMedISøknad } from '../../../../typer/barn';
-import type { IEøsForBarnFeltTyper } from '../../../../typer/skjema';
-import { skalSpørreOmIdNummerForPågåendeSøknadEøsLand } from '../../../../utils/barn';
-import { IdNummer } from '../IdNummer';
-import { idNummerLandMedPeriodeType, type PeriodeType } from '../idnummerUtils';
 
 const IdNummerForBarn: FC<{
     landAlphaCode: Alpha3Code | '';

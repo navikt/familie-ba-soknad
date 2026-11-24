@@ -1,6 +1,6 @@
-import type { ISanitySpørsmålDokument } from '../../../../common/sanity';
-import { PersonType } from '../../../typer/personType';
-import type { ITekstinnhold } from '../../../typer/sanity/tekstInnhold';
+import type { ISanitySpørsmålDokument } from '@common/sanity';
+import { PersonType } from '@typer/personType';
+import type { ITekstinnhold } from '@typer/sanity/tekstInnhold';
 
 export const arbeidsperiodeSpørsmålDokument = (
     gjelderUtlandet: boolean,

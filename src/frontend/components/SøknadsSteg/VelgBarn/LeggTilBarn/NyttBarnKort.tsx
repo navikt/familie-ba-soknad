@@ -1,7 +1,6 @@
+import { useAppContext } from '@context/AppContext';
 import { BodyShort, Box, Button } from '@navikt/ds-react';
 import type { FC } from 'react';
-
-import { useAppContext } from '../../../../context/AppContext';
 
 export const NyttBarnKort: FC<{ onLeggTilBarn: () => void }> = ({ onLeggTilBarn }) => {
     const { tekster, plainTekst } = useAppContext();

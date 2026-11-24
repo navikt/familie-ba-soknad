@@ -1,21 +1,20 @@
+import { LandDropdown } from '@components/Felleskomponenter/Dropdowns/LandDropdown';
+import JaNeiSpm from '@components/Felleskomponenter/JaNeiSpm/JaNeiSpm';
+import { DagIMåneden, MånedÅrVelger } from '@components/Felleskomponenter/MånedÅrVelger/MånedÅrVelger';
+import TekstBlock from '@components/Felleskomponenter/Sanity/TekstBlock';
+import { SkjemaFeiloppsummering } from '@components/Felleskomponenter/SkjemaFeiloppsummering/SkjemaFeiloppsummering';
+import { SkjemaFeltInput } from '@components/Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
+import SkjemaModal from '@components/Felleskomponenter/SkjemaModal/SkjemaModal';
+import { useAppContext } from '@context/AppContext';
 import { InlineMessage } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
+import type { IEøsBarnetrygdsperiode } from '@typer/perioder';
+import { PersonType } from '@typer/personType';
+import type { IBarnetrygdsperiodeTekstinnhold } from '@typer/sanity/modaler/barnetrygdperiode';
+import { dagensDato, gårsdagensDato, sisteDagDenneMåneden } from '@utils/dato';
+import { trimWhiteSpace, visFeiloppsummering } from '@utils/hjelpefunksjoner';
+import { minTilDatoForPeriode } from '@utils/perioder';
 import type { FC } from 'react';
-
-import { useAppContext } from '../../../context/AppContext';
-import type { IEøsBarnetrygdsperiode } from '../../../typer/perioder';
-import { PersonType } from '../../../typer/personType';
-import type { IBarnetrygdsperiodeTekstinnhold } from '../../../typer/sanity/modaler/barnetrygdperiode';
-import { dagensDato, gårsdagensDato, sisteDagDenneMåneden } from '../../../utils/dato';
-import { trimWhiteSpace, visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
-import { minTilDatoForPeriode } from '../../../utils/perioder';
-import { LandDropdown } from '../Dropdowns/LandDropdown';
-import JaNeiSpm from '../JaNeiSpm/JaNeiSpm';
-import { DagIMåneden, MånedÅrVelger } from '../MånedÅrVelger/MånedÅrVelger';
-import TekstBlock from '../Sanity/TekstBlock';
-import { SkjemaFeiloppsummering } from '../SkjemaFeiloppsummering/SkjemaFeiloppsummering';
-import { SkjemaFeltInput } from '../SkjemaFeltInput/SkjemaFeltInput';
-import SkjemaModal from '../SkjemaModal/SkjemaModal';
 
 import { BarnetrygdperiodeSpørsmålId } from './spørsmål';
 import { type IUsePensjonsperiodeSkjemaParams, useBarnetrygdperiodeSkjema } from './useBarnetrygdperiodeSkjema';

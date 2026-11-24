@@ -1,15 +1,14 @@
+import TekstBlock from '@components/Felleskomponenter/Sanity/TekstBlock';
+import { OppsummeringFelt } from '@components/SøknadsSteg/Oppsummering/OppsummeringFelt';
+import { useAppContext } from '@context/AppContext';
 import { TrashFillIcon } from '@navikt/aksel-icons';
 import { Button, FormSummary } from '@navikt/ds-react';
+import type { ITidligereSamboer } from '@typer/person';
+import type { ITidligereSamoboereTekstinnhold } from '@typer/sanity/modaler/tidligereSamboere';
+import { AlternativtSvarForInput } from '@typer/svar';
+import { formaterDato } from '@utils/dato';
+import { formaterFnr } from '@utils/visning';
 import type { FC } from 'react';
-
-import { useAppContext } from '../../../context/AppContext';
-import type { ITidligereSamboer } from '../../../typer/person';
-import type { ITidligereSamoboereTekstinnhold } from '../../../typer/sanity/modaler/tidligereSamboere';
-import { AlternativtSvarForInput } from '../../../typer/svar';
-import { formaterDato } from '../../../utils/dato';
-import { formaterFnr } from '../../../utils/visning';
-import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
-import { OppsummeringFelt } from '../Oppsummering/OppsummeringFelt';
 
 const SamboerOpplysninger: FC<{
     samboer: ITidligereSamboer;

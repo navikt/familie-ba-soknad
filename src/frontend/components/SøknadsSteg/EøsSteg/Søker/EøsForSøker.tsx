@@ -1,13 +1,13 @@
+import { ESanitySteg } from '@common/sanity';
+import { Arbeidsperiode } from '@components/Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
+import { Pensjonsperiode } from '@components/Felleskomponenter/Pensjonsmodal/Pensjonsperiode';
+import TekstBlock from '@components/Felleskomponenter/Sanity/TekstBlock';
+import { SkjemaFeltInput } from '@components/Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
+import Steg from '@components/Felleskomponenter/Steg/Steg';
+import { Utbetalingsperiode } from '@components/Felleskomponenter/UtbetalingerModal/Utbetalingsperiode';
+import { useAppContext } from '@context/AppContext';
+import { PersonType } from '@typer/personType';
 import type { FC } from 'react';
-import { ESanitySteg } from '../../../../../common/sanity';
-import { useAppContext } from '../../../../context/AppContext';
-import { PersonType } from '../../../../typer/personType';
-import { Arbeidsperiode } from '../../../Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
-import { Pensjonsperiode } from '../../../Felleskomponenter/Pensjonsmodal/Pensjonsperiode';
-import TekstBlock from '../../../Felleskomponenter/Sanity/TekstBlock';
-import { SkjemaFeltInput } from '../../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
-import Steg from '../../../Felleskomponenter/Steg/Steg';
-import { Utbetalingsperiode } from '../../../Felleskomponenter/UtbetalingerModal/Utbetalingsperiode';
 
 import IdNummerForSøker from './IdNummerForSøker';
 import { useEøsForSøker } from './useEøsForSøker';

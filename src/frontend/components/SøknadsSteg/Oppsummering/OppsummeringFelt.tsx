@@ -1,9 +1,7 @@
+import { useAppContext } from '@context/AppContext';
 import { FormSummary } from '@navikt/ds-react';
-
+import { formaterSøknadsvar } from '@utils/språk';
 import type { FC, ReactNode } from 'react';
-
-import { useAppContext } from '../../../context/AppContext';
-import { formaterSøknadsvar } from '../../../utils/språk';
 
 interface IOppsummeringsFeltProps {
     tittel?: ReactNode;
