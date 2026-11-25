@@ -1,17 +1,16 @@
+import type { ISODateString } from '@common/typer/ISODateString';
+import Datovelger from '@components/Felleskomponenter/Datovelger/Datovelger';
+import TekstBlock from '@components/Felleskomponenter/Sanity/TekstBlock';
+import { SkjemaCheckbox } from '@components/Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
+import { SkjemaFeltInput } from '@components/Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
+import { useAppContext } from '@context/AppContext';
 import { ESvar } from '@navikt/familie-form-elements';
 import type { Felt, ISkjema } from '@navikt/familie-skjema';
+import type { ITidligereSamoboereTekstinnhold } from '@typer/sanity/modaler/tidligereSamboere';
+import type { IDinLivssituasjonFeltTyper, ITidligereSamboerFeltTyper } from '@typer/skjema';
+import type { DatoMedUkjent } from '@typer/svar';
+import { dagensDato, gårsdagensDato } from '@utils/dato';
 import type { FC } from 'react';
-
-import type { ISODateString } from '../../../../common/typer/ISODateString';
-import { useAppContext } from '../../../context/AppContext';
-import type { ITidligereSamoboereTekstinnhold } from '../../../typer/sanity/modaler/tidligereSamboere';
-import type { IDinLivssituasjonFeltTyper, ITidligereSamboerFeltTyper } from '../../../typer/skjema';
-import type { DatoMedUkjent } from '../../../typer/svar';
-import { dagensDato, gårsdagensDato } from '../../../utils/dato';
-import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
-import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
-import { SkjemaCheckbox } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
-import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
 
 const SamboerSkjema: FC<{
     skjema: ISkjema<IDinLivssituasjonFeltTyper | ITidligereSamboerFeltTyper, string>;

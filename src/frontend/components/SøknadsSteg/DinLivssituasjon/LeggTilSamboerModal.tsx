@@ -1,12 +1,12 @@
+import TekstBlock from '@components/Felleskomponenter/Sanity/TekstBlock';
+import { SkjemaFeiloppsummering } from '@components/Felleskomponenter/SkjemaFeiloppsummering/SkjemaFeiloppsummering';
+import SkjemaModal from '@components/Felleskomponenter/SkjemaModal/SkjemaModal';
+import { useAppContext } from '@context/AppContext';
+import type { ITidligereSamboer } from '@typer/person';
+import type { ITidligereSamoboereTekstinnhold } from '@typer/sanity/modaler/tidligereSamboere';
+import { fjernWhiteSpace, trimWhiteSpace, visFeiloppsummering } from '@utils/hjelpefunksjoner';
+import { svarForSpørsmålMedUkjent } from '@utils/spørsmål';
 import type { FC } from 'react';
-import { useAppContext } from '../../../context/AppContext';
-import type { ITidligereSamboer } from '../../../typer/person';
-import type { ITidligereSamoboereTekstinnhold } from '../../../typer/sanity/modaler/tidligereSamboere';
-import { trimWhiteSpace, visFeiloppsummering } from '../../../utils/hjelpefunksjoner';
-import { svarForSpørsmålMedUkjent } from '../../../utils/spørsmål';
-import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
-import { SkjemaFeiloppsummering } from '../../Felleskomponenter/SkjemaFeiloppsummering/SkjemaFeiloppsummering';
-import SkjemaModal from '../../Felleskomponenter/SkjemaModal/SkjemaModal';
 
 import SamboerSkjema from './SamboerSkjema';
 import { TidligereSamboerSpørsmålId } from './spørsmål';
@@ -36,9 +36,8 @@ const LeggTilSamboerModal: FC<Props> = ({ leggTilTidligereSamboer, lukkModal, er
             },
             ident: {
                 id: TidligereSamboerSpørsmålId.tidligereSamboerFnr,
-                svar: svarForSpørsmålMedUkjent(
-                    skjema.felter.tidligereSamboerFnrUkjent,
-                    skjema.felter.tidligereSamboerFnr
+                svar: fjernWhiteSpace(
+                    svarForSpørsmålMedUkjent(skjema.felter.tidligereSamboerFnrUkjent, skjema.felter.tidligereSamboerFnr)
                 ),
             },
             fødselsdato: {

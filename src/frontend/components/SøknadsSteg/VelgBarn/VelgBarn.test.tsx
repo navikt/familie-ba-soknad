@@ -1,14 +1,11 @@
+import { ESøknadstype } from '@common/typer/kontrakt/generelle';
+import { OmBarnaDineSpørsmålId } from '@components/SøknadsSteg/OmBarnaDine/spørsmål';
 import { ESvar } from '@navikt/familie-form-elements';
 import * as fnrvalidator from '@navikt/fnrvalidator';
 import { act, fireEvent, render, screen, within } from '@testing-library/react';
-import type { DeepPartial } from 'ts-essentials';
-import { vi } from 'vitest';
-import { mockDeep } from 'vitest-mock-extended';
-
-import { ESøknadstype } from '../../../../common/typer/kontrakt/generelle';
-import { barnDataKeySpørsmål, type IBarnMedISøknad } from '../../../typer/barn';
-import type { IBarnRespons } from '../../../typer/person';
-import type { ISøknad } from '../../../typer/søknad';
+import { barnDataKeySpørsmål, type IBarnMedISøknad } from '@typer/barn';
+import type { IBarnRespons } from '@typer/person';
+import type { ISøknad } from '@typer/søknad';
 import {
     hentSpørsmål,
     hentSvaralternativ,
@@ -16,8 +13,10 @@ import {
     silenceConsoleErrors,
     spyOnUseApp,
     TestProvidere,
-} from '../../../utils/testing';
-import { OmBarnaDineSpørsmålId } from '../OmBarnaDine/spørsmål';
+} from '@utils/testing';
+import type { DeepPartial } from 'ts-essentials';
+import { vi } from 'vitest';
+import { mockDeep } from 'vitest-mock-extended';
 
 import VelgBarn from './VelgBarn';
 

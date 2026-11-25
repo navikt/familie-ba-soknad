@@ -1,14 +1,12 @@
+import { ESanitySteg } from '@common/sanity';
+import TekstBlock from '@components/Felleskomponenter/Sanity/TekstBlock';
+import Steg from '@components/Felleskomponenter/Steg/Steg';
+import { useAppContext } from '@context/AppContext';
+import { useEøsContext } from '@context/EøsContext';
 import { VStack } from '@navikt/ds-react';
-
+import type { IBarnMedISøknad } from '@typer/barn';
 import { type FC, useState } from 'react';
 import { useNavigate } from 'react-router';
-
-import { ESanitySteg } from '../../../../common/sanity';
-import { useAppContext } from '../../../context/AppContext';
-import { useEøsContext } from '../../../context/EøsContext';
-import type { IBarnMedISøknad } from '../../../typer/barn';
-import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
-import Steg from '../../Felleskomponenter/Steg/Steg';
 
 import DinLivssituasjonOppsummering from './OppsummeringSteg/DinLivssituasjonOppsummering';
 import EøsBarnOppsummering from './OppsummeringSteg/Eøs/EøsBarnOppsummering';

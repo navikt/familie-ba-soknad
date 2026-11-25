@@ -1,7 +1,6 @@
+import type { ISODateString } from '@common/typer/ISODateString';
 import type { ESvar } from '@navikt/familie-form-elements';
 import type { Alpha3Code } from 'i18n-iso-countries';
-
-import type { ISODateString } from '../../common/typer/ISODateString';
 
 import type { ISøknadSpørsmål } from './spørsmål';
 import type { DatoMedUkjent } from './svar';

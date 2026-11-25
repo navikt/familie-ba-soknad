@@ -1,21 +1,20 @@
+import { ESivilstand, ESøknadstype, Slektsforhold } from '@common/typer/kontrakt/generelle';
+import { useDinLivssituasjon } from '@components/SøknadsSteg/DinLivssituasjon/useDinLivssituasjon';
+import EøsForBarn from '@components/SøknadsSteg/EøsSteg/Barn/EøsForBarn';
+import EøsForSøker from '@components/SøknadsSteg/EøsSteg/Søker/EøsForSøker';
+import { useOmBarnaDine } from '@components/SøknadsSteg/OmBarnaDine/useOmBarnaDine';
+import { useOmBarnet } from '@components/SøknadsSteg/OmBarnet/useOmBarnet';
+import { useOmdeg } from '@components/SøknadsSteg/OmDeg/useOmdeg';
+import Oppsummering from '@components/SøknadsSteg/Oppsummering/Oppsummering';
+import { useVelgBarn } from '@components/SøknadsSteg/VelgBarn/useVelgBarn';
+import { useSendInnSkjema } from '@hooks/useSendInnSkjema';
 import { ESvar } from '@navikt/familie-form-elements';
 import { act, render, renderHook, screen, waitFor } from '@testing-library/react';
+import type { IBarnMedISøknad } from '@typer/barn';
+import { AlternativtSvarForInput } from '@typer/svar';
+import type { ISøknad } from '@typer/søknad';
+import { LesUtLocation, silenceConsoleErrors, TestProvidere, TestProvidereForSanity } from '@utils/testing';
 import { beforeEach, describe, expect, it, type Mock } from 'vitest';
-
-import { ESivilstand, ESøknadstype, Slektsforhold } from '../../../common/typer/kontrakt/generelle';
-import { useDinLivssituasjon } from '../../components/SøknadsSteg/DinLivssituasjon/useDinLivssituasjon';
-import EøsForBarn from '../../components/SøknadsSteg/EøsSteg/Barn/EøsForBarn';
-import EøsForSøker from '../../components/SøknadsSteg/EøsSteg/Søker/EøsForSøker';
-import { useOmBarnaDine } from '../../components/SøknadsSteg/OmBarnaDine/useOmBarnaDine';
-import { useOmBarnet } from '../../components/SøknadsSteg/OmBarnet/useOmBarnet';
-import { useOmdeg } from '../../components/SøknadsSteg/OmDeg/useOmdeg';
-import Oppsummering from '../../components/SøknadsSteg/Oppsummering/Oppsummering';
-import { useVelgBarn } from '../../components/SøknadsSteg/VelgBarn/useVelgBarn';
-import { useSendInnSkjema } from '../../hooks/useSendInnSkjema';
-import type { IBarnMedISøknad } from '../../typer/barn';
-import { AlternativtSvarForInput } from '../../typer/svar';
-import type { ISøknad } from '../../typer/søknad';
-import { LesUtLocation, silenceConsoleErrors, TestProvidere, TestProvidereForSanity } from '../../utils/testing';
 import { Avvik, Scenario } from '../scenario';
 
 import {

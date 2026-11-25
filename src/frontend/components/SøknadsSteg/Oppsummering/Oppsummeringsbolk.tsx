@@ -1,6 +1,15 @@
+import { BASE_PATH } from '@common/miljø';
+import type { FlettefeltVerdier, LocaleRecordBlock, LocaleRecordString } from '@common/sanity';
+import { unslash } from '@common/unslash';
+import { SkjemaFeiloppsummering } from '@components/Felleskomponenter/SkjemaFeiloppsummering/SkjemaFeiloppsummering';
+import { useAppContext } from '@context/AppContext';
+import { useStegContext } from '@context/StegContext';
 import { FormSummary } from '@navikt/ds-react';
 import type { ISkjema } from '@navikt/familie-skjema';
-
+import type { IBarnMedISøknad } from '@typer/barn';
+import type { ISteg } from '@typer/routes';
+import type { SkjemaFeltTyper } from '@typer/skjema';
+import { uppercaseFørsteBokstav } from '@utils/visning';
 import {
     type Dispatch,
     type FC,
@@ -11,17 +20,6 @@ import {
     useState,
 } from 'react';
 import { useNavigate } from 'react-router';
-
-import { BASE_PATH } from '../../../../common/miljø';
-import type { FlettefeltVerdier, LocaleRecordBlock, LocaleRecordString } from '../../../../common/sanity';
-import { unslash } from '../../../../common/unslash';
-import { useAppContext } from '../../../context/AppContext';
-import { useStegContext } from '../../../context/StegContext';
-import type { IBarnMedISøknad } from '../../../typer/barn';
-import type { ISteg } from '../../../typer/routes';
-import type { SkjemaFeltTyper } from '../../../typer/skjema';
-import { uppercaseFørsteBokstav } from '../../../utils/visning';
-import { SkjemaFeiloppsummering } from '../../Felleskomponenter/SkjemaFeiloppsummering/SkjemaFeiloppsummering';
 
 interface IHookReturn {
     valideringErOk: () => boolean;

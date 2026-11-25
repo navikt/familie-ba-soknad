@@ -1,22 +1,20 @@
+import { ESanitySteg, Typografi } from '@common/sanity';
+import { Dokumentasjonsbehov } from '@common/typer/kontrakt/dokumentasjon';
+import PictureScanningGuide from '@components/Felleskomponenter/PictureScanningGuide/PictureScanningGuide';
+import TekstBlock from '@components/Felleskomponenter/Sanity/TekstBlock';
+import Steg from '@components/Felleskomponenter/Steg/Steg';
+import { VedleggOppsummering } from '@components/Felleskomponenter/VedleggOppsummering/VedleggOppsummering';
+import { hentVedleggOppsummering } from '@components/Felleskomponenter/VedleggOppsummering/vedleggOppsummering.domene';
+import { useAppContext } from '@context/AppContext';
+import useFørsteRender from '@hooks/useFørsteRender';
+import { useSendInnSkjema } from '@hooks/useSendInnSkjema';
 import { ExclamationmarkTriangleIcon, XMarkOctagonIcon } from '@navikt/aksel-icons';
 import { BodyShort, Heading, InfoCard, VStack } from '@navikt/ds-react';
 import { RessursStatus } from '@navikt/familie-typer';
+import type { IDokumentasjon, IVedlegg } from '@typer/dokumentasjon';
+import { hentRelevateDokumentasjoner } from '@utils/dokumentasjon';
 import { add, isBefore } from 'date-fns';
-
 import { type FC, useState } from 'react';
-
-import { ESanitySteg, Typografi } from '../../../../common/sanity';
-import { Dokumentasjonsbehov } from '../../../../common/typer/kontrakt/dokumentasjon';
-import { useAppContext } from '../../../context/AppContext';
-import useFørsteRender from '../../../hooks/useFørsteRender';
-import { useSendInnSkjema } from '../../../hooks/useSendInnSkjema';
-import type { IDokumentasjon, IVedlegg } from '../../../typer/dokumentasjon';
-import { hentRelevateDokumentasjoner } from '../../../utils/dokumentasjon';
-import PictureScanningGuide from '../../Felleskomponenter/PictureScanningGuide/PictureScanningGuide';
-import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
-import Steg from '../../Felleskomponenter/Steg/Steg';
-import { VedleggOppsummering } from '../../Felleskomponenter/VedleggOppsummering/VedleggOppsummering';
-import { hentVedleggOppsummering } from '../../Felleskomponenter/VedleggOppsummering/vedleggOppsummering.domene';
 
 import LastOppVedlegg from './LastOppVedlegg';
 
@@ -130,15 +128,11 @@ const Dokumentasjon: FC = () => {
                         </div>
                     </>
                 ) : (
-                    <>
-                        <div>
-                            <Heading level="3" size="small" spacing>
-                                {plainTekst(stegTekster.ingenVedleggskravTittel)}
-                            </Heading>
-                            <TekstBlock block={stegTekster.ingenVedleggskrav} typografi={Typografi.BodyLong} />
-                        </div>
-                        <PictureScanningGuide />
-                    </>
+                    <div>
+                        <Heading level="3" size="small" spacing>
+                            {plainTekst(stegTekster.ingenVedleggskravTittel)}
+                        </Heading>
+                    </div>
                 )}
                 {relevateDokumentasjoner.map((dokumentasjon, index) => (
                     <LastOppVedlegg

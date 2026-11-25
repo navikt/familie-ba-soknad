@@ -1,22 +1,19 @@
+import type { ISanitySpørsmålDokument } from '@common/sanity';
+import TekstBlock from '@components/Felleskomponenter/Sanity/TekstBlock';
+import { SkjemaCheckbox } from '@components/Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
+import { SkjemaFeltInput } from '@components/Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
+import { OppsummeringFelt } from '@components/SøknadsSteg/Oppsummering/OppsummeringFelt';
+import { useAppContext } from '@context/AppContext';
+import useInputFeltMedUkjent from '@hooks/useInputFeltMedUkjent';
 import { ESvar } from '@navikt/familie-form-elements';
 import { type Felt, type FeltState, feil, type ISkjema, ok, useFelt } from '@navikt/familie-skjema';
-
+import type { IBarnMedISøknad } from '@typer/barn';
+import type { IEøsForBarnFeltTyper, IEøsForSøkerFeltTyper } from '@typer/skjema';
+import { AlternativtSvarForInput } from '@typer/svar';
+import { trimWhiteSpace } from '@utils/hjelpefunksjoner';
 import type { Alpha3Code } from 'i18n-iso-countries';
-
 import { type Dispatch, type FC, type SetStateAction, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-
-import type { ISanitySpørsmålDokument } from '../../../../common/sanity';
-import { useAppContext } from '../../../context/AppContext';
-import useInputFeltMedUkjent from '../../../hooks/useInputFeltMedUkjent';
-import type { IBarnMedISøknad } from '../../../typer/barn';
-import type { IEøsForBarnFeltTyper, IEøsForSøkerFeltTyper } from '../../../typer/skjema';
-import { AlternativtSvarForInput } from '../../../typer/svar';
-import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
-import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
-import { SkjemaCheckbox } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
-import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
-import { OppsummeringFelt } from '../Oppsummering/OppsummeringFelt';
 
 import { idNummerKeyPrefix, PeriodeType } from './idnummerUtils';
 

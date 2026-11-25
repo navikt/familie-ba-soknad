@@ -1,6 +1,6 @@
 import { apiClient } from '@api/client/apiClient';
+import miljø from '@common/miljø';
 import axios, { type AxiosError } from 'axios';
-import miljø from '../../common/miljø';
 import { routerBasePath } from './hjelpefunksjoner';
 
 /**

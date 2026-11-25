@@ -1,13 +1,11 @@
+import KomponentGruppe from '@components/Felleskomponenter/KomponentGruppe/KomponentGruppe';
+import { useAppContext } from '@context/AppContext';
 import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import type { Felt } from '@navikt/familie-skjema';
-
+import type { barnDataKeySpørsmål } from '@typer/barn';
+import type { BarnetsId } from '@typer/person';
 import { type FC, type ReactNode, useEffect, useState } from 'react';
-
-import { useAppContext } from '../../../context/AppContext';
-import type { barnDataKeySpørsmål } from '../../../typer/barn';
-import type { BarnetsId } from '../../../typer/person';
-import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
 
 interface Props {
     legendTekst: ReactNode;

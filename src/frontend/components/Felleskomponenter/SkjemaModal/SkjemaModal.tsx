@@ -1,10 +1,8 @@
+import type { FlettefeltVerdier, LocaleRecordBlock } from '@common/sanity';
+import ModalContent from '@components/Felleskomponenter/ModalContent';
+import { useAppContext } from '@context/AppContext';
 import { BodyShort, Button, Modal, VStack } from '@navikt/ds-react';
-
 import type { FC, ReactNode } from 'react';
-
-import type { FlettefeltVerdier, LocaleRecordBlock } from '../../../../common/sanity';
-import { useAppContext } from '../../../context/AppContext';
-import ModalContent from '../ModalContent';
 
 const SkjemaModal: FC<{
     erÅpen: boolean;

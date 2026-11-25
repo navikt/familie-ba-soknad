@@ -1,13 +1,12 @@
+import { ESanitySteg } from '@common/sanity';
+import TekstBlock from '@components/Felleskomponenter/Sanity/TekstBlock';
+import { useAppContext } from '@context/AppContext';
 import { TrashFillIcon } from '@navikt/aksel-icons';
 import { Button, Checkbox, FormSummary } from '@navikt/ds-react';
+import type { IBarn } from '@typer/person';
+import { hentBostedSpråkId } from '@utils/språk';
+import { formaterFnr, uppercaseFørsteBokstav } from '@utils/visning';
 import type { FC } from 'react';
-
-import { ESanitySteg } from '../../../../../common/sanity';
-import { useAppContext } from '../../../../context/AppContext';
-import type { IBarn } from '../../../../typer/person';
-import { hentBostedSpråkId } from '../../../../utils/språk';
-import { formaterFnr, uppercaseFørsteBokstav } from '../../../../utils/visning';
-import TekstBlock from '../../../Felleskomponenter/Sanity/TekstBlock';
 
 interface IBarnekortProps {
     velgBarnCallback: (barn: IBarn, barnMedISøknad: boolean) => void;

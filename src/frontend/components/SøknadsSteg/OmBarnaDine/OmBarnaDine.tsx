@@ -1,8 +1,6 @@
+import { useAppContext } from '@context/AppContext';
 import { useEffect } from 'react';
-
 import { useNavigate } from 'react-router';
-
-import { useAppContext } from '../../../context/AppContext';
 
 import OmBarnaDineSkjema from './OmBarnaDineSkjema';
 

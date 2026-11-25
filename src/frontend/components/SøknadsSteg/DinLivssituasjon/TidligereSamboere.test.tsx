@@ -1,10 +1,9 @@
+import { ESivilstand, ESøknadstype } from '@common/typer/kontrakt/generelle';
 import { ESvar } from '@navikt/familie-form-elements';
 import { render, screen } from '@testing-library/react';
+import type { ISøknad } from '@typer/søknad';
+import { spyOnUseApp, TestProvidere } from '@utils/testing';
 import { mockDeep } from 'vitest-mock-extended';
-
-import { ESivilstand, ESøknadstype } from '../../../../common/typer/kontrakt/generelle';
-import type { ISøknad } from '../../../typer/søknad';
-import { spyOnUseApp, TestProvidere } from '../../../utils/testing';
 
 import DinLivssituasjon from './DinLivssituasjon';
 import { DinLivssituasjonSpørsmålId, TidligereSamboerSpørsmålId } from './spørsmål';

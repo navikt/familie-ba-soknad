@@ -1,15 +1,14 @@
+import { ESanitySteg, type LocaleRecordBlock } from '@common/sanity';
+import { VelgBarnSpørsmålId } from '@components/SøknadsSteg/VelgBarn/spørsmål';
+import { useAppContext } from '@context/AppContext';
+import useInputFeltMedUkjent from '@hooks/useInputFeltMedUkjent';
 import { ESvar } from '@navikt/familie-form-elements';
 import { type FeltState, feil, type ISkjema, ok, useFelt, useSkjema, Valideringsstatus } from '@navikt/familie-skjema';
-
-import { ESanitySteg, type LocaleRecordBlock } from '../../../../../common/sanity';
-import { useAppContext } from '../../../../context/AppContext';
-import useInputFeltMedUkjent from '../../../../hooks/useInputFeltMedUkjent';
-import type { ILeggTilBarnTekstinnhold } from '../../../../typer/sanity/modaler/leggTilBarn';
-import type { ILeggTilBarnTyper } from '../../../../typer/skjema';
-import type { ESvarMedUbesvart } from '../../../../typer/svar';
-import { erBarnRegistrertFraFør, hentUid } from '../../../../utils/barn';
-import { trimWhiteSpace } from '../../../../utils/hjelpefunksjoner';
-import { VelgBarnSpørsmålId } from '../spørsmål';
+import type { ILeggTilBarnTekstinnhold } from '@typer/sanity/modaler/leggTilBarn';
+import type { ILeggTilBarnTyper } from '@typer/skjema';
+import type { ESvarMedUbesvart } from '@typer/svar';
+import { erBarnRegistrertFraFør, hentUid } from '@utils/barn';
+import { fjernWhiteSpace, trimWhiteSpace } from '@utils/hjelpefunksjoner';
 
 export const useLeggTilBarn = (): {
     skjema: ISkjema<ILeggTilBarnTyper, string>;
@@ -86,7 +85,7 @@ export const useLeggTilBarn = (): {
         erFnrInput: true,
         skalVises: erFødt.valideringsstatus === Valideringsstatus.OK,
         customValidering: (felt: FeltState<string>) => {
-            return erBarnRegistrertFraFør(søknad, felt.verdi)
+            return erBarnRegistrertFraFør(søknad, fjernWhiteSpace(felt.verdi))
                 ? feil(felt, plainTekst(teksterForModal.sammeFoedselsnummerFeilmelding))
                 : ok(felt);
         },
@@ -115,7 +114,7 @@ export const useLeggTilBarn = (): {
                 {
                     id: hentUid(),
                     navn: fulltNavn() || plainTekst(navnIkkeBestemtTekst),
-                    ident: ident.verdi,
+                    ident: fjernWhiteSpace(ident.verdi),
                     borMedSøker: undefined,
                     alder: null,
                     adressebeskyttelse: false,

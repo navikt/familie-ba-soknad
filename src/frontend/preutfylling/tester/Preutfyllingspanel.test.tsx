@@ -1,18 +1,17 @@
+import { ESøknadstype } from '@common/typer/kontrakt/generelle';
+import { useAppContext } from '@context/AppContext';
+import { useEøsContext } from '@context/EøsContext';
+import { useStegContext } from '@context/StegContext';
 import { byggSuksessRessurs } from '@navikt/familie-typer';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { lagBarn } from '@testutils/testdata/barnTestdata';
 import { lagSøker } from '@testutils/testdata/søkerTestdata';
+import { TestProvidere } from '@utils/testing';
 import { HttpResponse, http } from 'msw';
 import { useLocation } from 'react-router';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-
 import { server } from '../../../../mocks/node';
 import { urlMedBasePath } from '../../../../mocks/utils';
-import { ESøknadstype } from '../../../common/typer/kontrakt/generelle';
-import { useAppContext } from '../../context/AppContext';
-import { useEøsContext } from '../../context/EøsContext';
-import { useStegContext } from '../../context/StegContext';
-import { TestProvidere } from '../../utils/testing';
 import * as bygger from '../byggPreutfyltSøknad';
 import { Preutfyllingspanel } from '../Preutfyllingspanel';
 import { Avvik, avvikNavn, Scenario } from '../scenario';

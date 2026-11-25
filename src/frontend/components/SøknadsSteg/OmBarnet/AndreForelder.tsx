@@ -1,23 +1,22 @@
+import { Arbeidsperiode } from '@components/Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
+import Datovelger from '@components/Felleskomponenter/Datovelger/Datovelger';
+import { Pensjonsperiode } from '@components/Felleskomponenter/Pensjonsmodal/Pensjonsperiode';
+import TekstBlock from '@components/Felleskomponenter/Sanity/TekstBlock';
+import { SkjemaCheckbox } from '@components/Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
+import { SkjemaFeltInput } from '@components/Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
+import SkjemaFieldset from '@components/Felleskomponenter/SkjemaFieldset';
+import AndreForelderOppsummering from '@components/SøknadsSteg/Oppsummering/OppsummeringSteg/OmBarnet/AndreForelderOppsummering';
+import { useAppContext } from '@context/AppContext';
 import { FormSummary } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import type { ISkjema } from '@navikt/familie-skjema';
+import type { IBarnMedISøknad } from '@typer/barn';
+import type { IArbeidsperiode, IPensjonsperiode } from '@typer/perioder';
+import { PersonType } from '@typer/personType';
+import type { IOmBarnetFeltTyper } from '@typer/skjema';
+import { AlternativtSvarForInput } from '@typer/svar';
+import { dagensDato } from '@utils/dato';
 import type { FC } from 'react';
-
-import { useAppContext } from '../../../context/AppContext';
-import type { IBarnMedISøknad } from '../../../typer/barn';
-import type { IArbeidsperiode, IPensjonsperiode } from '../../../typer/perioder';
-import { PersonType } from '../../../typer/personType';
-import type { IOmBarnetFeltTyper } from '../../../typer/skjema';
-import { AlternativtSvarForInput } from '../../../typer/svar';
-import { dagensDato } from '../../../utils/dato';
-import { Arbeidsperiode } from '../../Felleskomponenter/Arbeidsperiode/Arbeidsperiode';
-import Datovelger from '../../Felleskomponenter/Datovelger/Datovelger';
-import { Pensjonsperiode } from '../../Felleskomponenter/Pensjonsmodal/Pensjonsperiode';
-import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
-import { SkjemaCheckbox } from '../../Felleskomponenter/SkjemaCheckbox/SkjemaCheckbox';
-import { SkjemaFeltInput } from '../../Felleskomponenter/SkjemaFeltInput/SkjemaFeltInput';
-import SkjemaFieldset from '../../Felleskomponenter/SkjemaFieldset';
-import AndreForelderOppsummering from '../Oppsummering/OppsummeringSteg/OmBarnet/AndreForelderOppsummering';
 
 import SammeSomAnnetBarnRadio from './SammeSomAnnetBarnRadio';
 

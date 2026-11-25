@@ -1,10 +1,10 @@
-import type { ArbeidsperiodeSpørsmålsId } from '../components/Felleskomponenter/Arbeidsperiode/spørsmål';
-import type { BarnetrygdperiodeSpørsmålId } from '../components/Felleskomponenter/Barnetrygdperiode/spørsmål';
-import type { PensjonsperiodeSpørsmålId } from '../components/Felleskomponenter/Pensjonsmodal/spørsmål';
-import type { UtbetalingerSpørsmålId } from '../components/Felleskomponenter/UtbetalingerModal/spørsmål';
-import type { DinLivssituasjonSpørsmålId } from '../components/SøknadsSteg/DinLivssituasjon/spørsmål';
-import type { BarnetsId } from '../typer/person';
-import { PersonType } from '../typer/personType';
+import type { ArbeidsperiodeSpørsmålsId } from '@components/Felleskomponenter/Arbeidsperiode/spørsmål';
+import type { BarnetrygdperiodeSpørsmålId } from '@components/Felleskomponenter/Barnetrygdperiode/spørsmål';
+import type { PensjonsperiodeSpørsmålId } from '@components/Felleskomponenter/Pensjonsmodal/spørsmål';
+import type { UtbetalingerSpørsmålId } from '@components/Felleskomponenter/UtbetalingerModal/spørsmål';
+import type { DinLivssituasjonSpørsmålId } from '@components/SøknadsSteg/DinLivssituasjon/spørsmål';
+import type { BarnetsId } from '@typer/person';
+import { PersonType } from '@typer/personType';
 
 import {
     dagenEtterDato,

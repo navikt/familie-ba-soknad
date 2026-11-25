@@ -1,11 +1,10 @@
+import type { LocaleRecordBlock } from '@common/sanity';
+import type { ISODateString } from '@common/typer/ISODateString';
+import { useAppContext } from '@context/AppContext';
 import { ESvar } from '@navikt/familie-form-elements';
 import { type Avhengigheter, type Felt, type FeltState, ok, useFelt } from '@navikt/familie-skjema';
+import { validerDatoForSanity } from '@utils/dato';
 import { useEffect } from 'react';
-
-import type { LocaleRecordBlock } from '../../common/sanity';
-import type { ISODateString } from '../../common/typer/ISODateString';
-import { useAppContext } from '../context/AppContext';
-import { validerDatoForSanity } from '../utils/dato';
 
 const useDatovelgerFeltMedUkjentForSanity = ({
     feltId,

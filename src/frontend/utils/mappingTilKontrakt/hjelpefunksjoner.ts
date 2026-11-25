@@ -1,10 +1,9 @@
+import type { FlettefeltVerdier, LocaleRecordBlock, LocaleRecordString } from '@common/sanity';
+import type { ISøknadsfelt, TilRestLocaleRecord } from '@common/typer/kontrakt/generelle';
+import { LocaleType } from '@common/typer/localeType';
 import type { ESvar } from '@navikt/familie-form-elements';
-
-import type { FlettefeltVerdier, LocaleRecordBlock, LocaleRecordString } from '../../../common/sanity';
-import type { ISøknadsfelt, TilRestLocaleRecord } from '../../../common/typer/kontrakt/generelle';
-import { LocaleType } from '../../../common/typer/localeType';
-import type { IBarnMedISøknad } from '../../typer/barn';
-import { AlternativtSvarForInput } from '../../typer/svar';
+import type { IBarnMedISøknad } from '@typer/barn';
+import { AlternativtSvarForInput } from '@typer/svar';
 
 export const søknadsfeltHof =
     (tilRestLocaleRecord: TilRestLocaleRecord) =>

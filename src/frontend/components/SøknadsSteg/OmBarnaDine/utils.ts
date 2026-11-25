@@ -1,18 +1,17 @@
+import { EøsBarnSpørsmålId } from '@components/SøknadsSteg/EøsSteg/Barn/spørsmål';
 import { ESvar } from '@navikt/familie-form-elements';
 import type { Felt, ISkjema } from '@navikt/familie-skjema';
-import type { Alpha3Code } from 'i18n-iso-countries';
-
-import { barnDataKeySpørsmål, type IBarnMedISøknad } from '../../../typer/barn';
-import type { IOmsorgsperson } from '../../../typer/omsorgsperson';
-import type { IOmBarnaDineFeltTyper } from '../../../typer/skjema';
-import type { ISøknad } from '../../../typer/søknad';
+import { barnDataKeySpørsmål, type IBarnMedISøknad } from '@typer/barn';
+import type { IOmsorgsperson } from '@typer/omsorgsperson';
+import type { IOmBarnaDineFeltTyper } from '@typer/skjema';
+import type { ISøknad } from '@typer/søknad';
 import {
     filtrerteRelevanteIdNummerForBarn,
     genererInitiellAndreForelder,
     nullstilteEøsFelterForBarn,
     skalViseBorMedOmsorgsperson,
-} from '../../../utils/barn';
-import { EøsBarnSpørsmålId } from '../EøsSteg/Barn/spørsmål';
+} from '@utils/barn';
+import type { Alpha3Code } from 'i18n-iso-countries';
 
 import type { IOmBarnaTekstinnhold } from './innholdTyper';
 import { OmBarnaDineSpørsmålId } from './spørsmål';

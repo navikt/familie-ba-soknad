@@ -1,16 +1,15 @@
+import type { PlainTekst } from '@common/sanity';
+import { EøsBarnSpørsmålId } from '@components/SøknadsSteg/EøsSteg/Barn/spørsmål';
+import { idNummerLandMedPeriodeType } from '@components/SøknadsSteg/EøsSteg/idnummerUtils';
+import { OmBarnaDineSpørsmålId } from '@components/SøknadsSteg/OmBarnaDine/spørsmål';
+import { OmBarnetSpørsmålsId } from '@components/SøknadsSteg/OmBarnet/spørsmål';
 import { ESvar } from '@navikt/familie-form-elements';
+import { barnDataKeySpørsmål, type IAndreForelder, type IBarnMedISøknad } from '@typer/barn';
+import type { IEøsBarnetrygdsperiode, IUtenlandsperiode } from '@typer/perioder';
+import type { IBarn, IBarnRespons, IIdNummer } from '@typer/person';
+import type { IFrittståendeOrdTekstinnhold } from '@typer/sanity/tekstInnhold';
+import type { ISøknad } from '@typer/søknad';
 import type { Alpha3Code } from 'i18n-iso-countries';
-
-import type { PlainTekst } from '../../common/sanity';
-import { EøsBarnSpørsmålId } from '../components/SøknadsSteg/EøsSteg/Barn/spørsmål';
-import { idNummerLandMedPeriodeType } from '../components/SøknadsSteg/EøsSteg/idnummerUtils';
-import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
-import { OmBarnetSpørsmålsId } from '../components/SøknadsSteg/OmBarnet/spørsmål';
-import { barnDataKeySpørsmål, type IAndreForelder, type IBarnMedISøknad } from '../typer/barn';
-import type { IEøsBarnetrygdsperiode, IUtenlandsperiode } from '../typer/perioder';
-import type { IBarn, IBarnRespons, IIdNummer } from '../typer/person';
-import type { IFrittståendeOrdTekstinnhold } from '../typer/sanity/tekstInnhold';
-import type { ISøknad } from '../typer/søknad';
 
 import { formaterFnr } from './visning';
 

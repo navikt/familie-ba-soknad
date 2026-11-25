@@ -1,10 +1,8 @@
+import useFørsteRender from '@hooks/useFørsteRender';
 import { Checkbox, ErrorMessage } from '@navikt/ds-react';
 import { ESvar } from '@navikt/familie-form-elements';
 import type { Felt } from '@navikt/familie-skjema';
-
 import type { FC, ReactNode } from 'react';
-
-import useFørsteRender from '../../../hooks/useFørsteRender';
 
 interface SkjemaCheckboxProps {
     felt: Felt<ESvar>;

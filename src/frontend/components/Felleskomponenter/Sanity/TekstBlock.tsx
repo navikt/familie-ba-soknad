@@ -1,9 +1,9 @@
+import { type FlettefeltVerdier, type LocaleRecordBlock, Typografi } from '@common/sanity';
+import { useSpråkContext } from '@context/SpråkContext';
 import { useTranslateFlettefelt } from '@hooks/useTranslateFlettefelt';
 import { BodyLong, BodyShort, Detail, Heading, Ingress, Label } from '@navikt/ds-react';
 import { PortableText } from '@portabletext/react';
 import type { CSSProperties, ReactNode } from 'react';
-import { type FlettefeltVerdier, type LocaleRecordBlock, Typografi } from '../../../../common/sanity';
-import { useSpråkContext } from '../../../context/SpråkContext';
 import styles from './TekstBlock.module.css';
 
 interface Props {

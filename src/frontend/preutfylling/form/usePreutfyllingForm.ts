@@ -1,8 +1,7 @@
+import { useAppContext } from '@context/AppContext';
+import { useEøsContext } from '@context/EøsContext';
 import type { Alpha3Code } from 'i18n-iso-countries';
 import { useForm } from 'react-hook-form';
-
-import { useAppContext } from '../../context/AppContext';
-import { useEøsContext } from '../../context/EøsContext';
 import { byggPreutfyltSøknad } from '../byggPreutfyltSøknad';
 import { type Avvik, Scenario } from '../scenario';
 import { useGåTilOppsummering } from '../useGåTilOppsummering';

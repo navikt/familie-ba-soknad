@@ -1,17 +1,16 @@
+import TekstBlock from '@components/Felleskomponenter/Sanity/TekstBlock';
+import { useAppContext } from '@context/AppContext';
+import useJaNeiSpmFelt from '@hooks/useJaNeiSpmFelt';
+import useLanddropdownFelt from '@hooks/useLanddropdownFelt';
+import useDatovelgerFeltForSanity from '@hooks/useSendInnSkjemaTest/useDatovelgerForSanity';
 import { ESvar } from '@navikt/familie-form-elements';
 import { type FeltState, feil, ok, useFelt, useSkjema, Valideringsstatus } from '@navikt/familie-skjema';
-
-import { useAppContext } from '../../../context/AppContext';
-import useJaNeiSpmFelt from '../../../hooks/useJaNeiSpmFelt';
-import useLanddropdownFelt from '../../../hooks/useLanddropdownFelt';
-import useDatovelgerFeltForSanity from '../../../hooks/useSendInnSkjemaTest/useDatovelgerForSanity';
-import type { IBarnMedISøknad } from '../../../typer/barn';
-import { PersonType } from '../../../typer/personType';
-import type { IBarnetrygdsperiodeTekstinnhold } from '../../../typer/sanity/modaler/barnetrygdperiode';
-import type { IBarnetrygdperioderFeltTyper } from '../../../typer/skjema';
-import { dagenEtterDato, dagensDato, gårsdagensDato, sisteDagDenneMåneden, stringTilDate } from '../../../utils/dato';
-import { trimWhiteSpace } from '../../../utils/hjelpefunksjoner';
-import TekstBlock from '../Sanity/TekstBlock';
+import type { IBarnMedISøknad } from '@typer/barn';
+import { PersonType } from '@typer/personType';
+import type { IBarnetrygdsperiodeTekstinnhold } from '@typer/sanity/modaler/barnetrygdperiode';
+import type { IBarnetrygdperioderFeltTyper } from '@typer/skjema';
+import { dagenEtterDato, dagensDato, gårsdagensDato, sisteDagDenneMåneden, stringTilDate } from '@utils/dato';
+import { trimWhiteSpace } from '@utils/hjelpefunksjoner';
 
 import { BarnetrygdperiodeSpørsmålId } from './spørsmål';
 

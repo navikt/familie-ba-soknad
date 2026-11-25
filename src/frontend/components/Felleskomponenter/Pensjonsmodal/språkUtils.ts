@@ -1,6 +1,6 @@
-import { ESanitySteg, type ISanitySpørsmålDokument } from '../../../../common/sanity';
-import { PersonType } from '../../../typer/personType';
-import type { ITekstinnhold } from '../../../typer/sanity/tekstInnhold';
+import { ESanitySteg, type ISanitySpørsmålDokument } from '@common/sanity';
+import { PersonType } from '@typer/personType';
+import type { ITekstinnhold } from '@typer/sanity/tekstInnhold';
 
 export const pensjonSpørsmålDokument = (
     gjelderUtlandet: boolean,

@@ -1,7 +1,6 @@
 import { render, screen } from '@testing-library/react';
+import { silenceConsoleErrors } from '@utils/testing';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-
-import { silenceConsoleErrors } from '../../utils/testing';
 import { PreutfyllingITestmiljø } from '../index';
 
 const panelet = vi.hoisted(() => ({ antallGangerLastet: 0, skalFeile: false }));

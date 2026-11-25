@@ -1,28 +1,27 @@
+import { Dokumentasjonsbehov } from '@common/typer/kontrakt/dokumentasjon';
+import { ESivilstand, ESøknadstype, Slektsforhold } from '@common/typer/kontrakt/generelle';
+import { ArbeidsperiodeSpørsmålsId } from '@components/Felleskomponenter/Arbeidsperiode/spørsmål';
+import { BarnetrygdperiodeSpørsmålId } from '@components/Felleskomponenter/Barnetrygdperiode/spørsmål';
+import { UtenlandsoppholdSpørsmålId } from '@components/Felleskomponenter/UtenlandsoppholdModal/spørsmål';
+import { OmBarnaDineSpørsmålId } from '@components/SøknadsSteg/OmBarnaDine/spørsmål';
 import { ESvar } from '@navikt/familie-form-elements';
-import { format, startOfMonth, subMonths } from 'date-fns';
-import type { Alpha3Code } from 'i18n-iso-countries';
-
-import { Dokumentasjonsbehov } from '../../common/typer/kontrakt/dokumentasjon';
-import { ESivilstand, ESøknadstype, Slektsforhold } from '../../common/typer/kontrakt/generelle';
-import { ArbeidsperiodeSpørsmålsId } from '../components/Felleskomponenter/Arbeidsperiode/spørsmål';
-import { BarnetrygdperiodeSpørsmålId } from '../components/Felleskomponenter/Barnetrygdperiode/spørsmål';
-import { UtenlandsoppholdSpørsmålId } from '../components/Felleskomponenter/UtenlandsoppholdModal/spørsmål';
-import { OmBarnaDineSpørsmålId } from '../components/SøknadsSteg/OmBarnaDine/spørsmål';
-import type { IAndreForelder, IBarnMedISøknad } from '../typer/barn';
-import { BeskrivelseSanityApiNavn, type IDokumentasjon } from '../typer/dokumentasjon';
-import type { IArbeidsperiode, IEøsBarnetrygdsperiode, IUtenlandsperiode } from '../typer/perioder';
-import type { IBarn, ISøker } from '../typer/person';
-import { AlternativtSvarForInput } from '../typer/svar';
-import type { ISøknad } from '../typer/søknad';
-import { EUtenlandsoppholdÅrsak } from '../typer/utenlandsopphold';
-import { Årsak } from '../typer/utvidet';
+import type { IAndreForelder, IBarnMedISøknad } from '@typer/barn';
+import { BeskrivelseSanityApiNavn, type IDokumentasjon } from '@typer/dokumentasjon';
+import type { IArbeidsperiode, IEøsBarnetrygdsperiode, IUtenlandsperiode } from '@typer/perioder';
+import type { IBarn, ISøker } from '@typer/person';
+import { AlternativtSvarForInput } from '@typer/svar';
+import type { ISøknad } from '@typer/søknad';
+import { EUtenlandsoppholdÅrsak } from '@typer/utenlandsopphold';
+import { Årsak } from '@typer/utvidet';
 import {
     erBarnIFosterhjemEllerBeredskapshjem,
     genererInitialBarnMedISøknad,
     genererInitiellAndreForelder,
     hentUid,
     skalViseBorMedOmsorgsperson,
-} from '../utils/barn';
+} from '@utils/barn';
+import { format, startOfMonth, subMonths } from 'date-fns';
+import type { Alpha3Code } from 'i18n-iso-countries';
 
 import { Avvik, erEøsScenario, feilmeldingForUgyldigKombinasjon, Scenario } from './scenario';
 

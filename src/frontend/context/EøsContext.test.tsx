@@ -1,13 +1,12 @@
+import { ESivilstand } from '@common/typer/kontrakt/generelle';
 import { renderHook, waitFor } from '@testing-library/react';
 import { lagSøker } from '@testutils/testdata/søkerTestdata';
-
-import { ESivilstand } from '../../common/typer/kontrakt/generelle';
 import {
     mekkGyldigSøker,
     mekkGyldigUtenlandsoppholdEøs,
     mekkGyldigUtenlandsoppholdIkkeEøs,
     TestProvidere,
-} from '../utils/testing';
+} from '@utils/testing';
 
 import { EøsProvider, useEøsContext } from './EøsContext';
 

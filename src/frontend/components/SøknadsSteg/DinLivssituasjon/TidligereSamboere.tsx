@@ -1,20 +1,19 @@
+import JaNeiSpm from '@components/Felleskomponenter/JaNeiSpm/JaNeiSpm';
+import KomponentGruppe from '@components/Felleskomponenter/KomponentGruppe/KomponentGruppe';
+import { LeggTilKnapp } from '@components/Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
+import PerioderContainer from '@components/Felleskomponenter/PerioderContainer';
+import TekstBlock from '@components/Felleskomponenter/Sanity/TekstBlock';
+import useModal from '@components/Felleskomponenter/SkjemaModal/useModal';
+import { useAppContext } from '@context/AppContext';
 import { ESvar } from '@navikt/familie-form-elements';
 import type { Felt, ISkjema } from '@navikt/familie-skjema';
+import type { ITidligereSamboer } from '@typer/person';
+import { PersonType } from '@typer/personType';
+import type { ITidligereSamoboereTekstinnhold } from '@typer/sanity/modaler/tidligereSamboere';
+import type { IDinLivssituasjonFeltTyper } from '@typer/skjema';
+import { genererPeriodeId } from '@utils/perioder';
+import { uppercaseFørsteBokstav } from '@utils/visning';
 import type { FC } from 'react';
-
-import { useAppContext } from '../../../context/AppContext';
-import type { ITidligereSamboer } from '../../../typer/person';
-import { PersonType } from '../../../typer/personType';
-import type { ITidligereSamoboereTekstinnhold } from '../../../typer/sanity/modaler/tidligereSamboere';
-import type { IDinLivssituasjonFeltTyper } from '../../../typer/skjema';
-import { genererPeriodeId } from '../../../utils/perioder';
-import { uppercaseFørsteBokstav } from '../../../utils/visning';
-import JaNeiSpm from '../../Felleskomponenter/JaNeiSpm/JaNeiSpm';
-import KomponentGruppe from '../../Felleskomponenter/KomponentGruppe/KomponentGruppe';
-import { LeggTilKnapp } from '../../Felleskomponenter/LeggTilKnapp/LeggTilKnapp';
-import PerioderContainer from '../../Felleskomponenter/PerioderContainer';
-import TekstBlock from '../../Felleskomponenter/Sanity/TekstBlock';
-import useModal from '../../Felleskomponenter/SkjemaModal/useModal';
 
 import type { IDinLivssituasjonTekstinnhold } from './innholdTyper';
 import LeggTilSamboerModal from './LeggTilSamboerModal';

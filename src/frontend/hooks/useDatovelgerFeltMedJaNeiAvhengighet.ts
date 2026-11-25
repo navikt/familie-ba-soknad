@@ -1,12 +1,11 @@
+import type { LocaleRecordBlock } from '@common/sanity';
+import type { ISODateString } from '@common/typer/ISODateString';
+import { useAppContext } from '@context/AppContext';
 import type { ESvar } from '@navikt/familie-form-elements';
 import { type Felt, useFelt } from '@navikt/familie-skjema';
+import type { ISøknadSpørsmål } from '@typer/spørsmål';
+import { validerDato } from '@utils/dato';
 import { useEffect } from 'react';
-
-import type { LocaleRecordBlock } from '../../common/sanity';
-import type { ISODateString } from '../../common/typer/ISODateString';
-import { useAppContext } from '../context/AppContext';
-import type { ISøknadSpørsmål } from '../typer/spørsmål';
-import { validerDato } from '../utils/dato';
 
 const useDatovelgerFeltMedJaNeiAvhengighet = ({
     søknadsfelt,

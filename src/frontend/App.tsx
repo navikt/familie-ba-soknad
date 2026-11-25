@@ -1,13 +1,11 @@
+import { BASE_PATH } from '@common/miljø';
+import { AppProvider } from '@context/AppContext';
+import { AppNavigationProvider } from '@context/AppNavigationContext';
+import { EøsProvider } from '@context/EøsContext';
+import { StegProvider } from '@context/StegContext';
 import { GlobalAlert } from '@navikt/ds-react';
 import { BrowserRouter as Router } from 'react-router';
-
-import { BASE_PATH } from '../common/miljø';
-
 import AppContainer from './AppContainer';
-import { AppProvider } from './context/AppContext';
-import { AppNavigationProvider } from './context/AppNavigationContext';
-import { EøsProvider } from './context/EøsContext';
-import { StegProvider } from './context/StegContext';
 import { PreutfyllingITestmiljø } from './preutfylling';
 
 import './index.css';

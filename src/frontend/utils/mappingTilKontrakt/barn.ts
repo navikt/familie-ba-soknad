@@ -3,13 +3,13 @@ import {
     fjernNullVerdierFraSpørsmål,
     type SpørsmålMapMedNullVerdier,
     type TilRestLocaleRecord,
-} from '../../../common/typer/kontrakt/generelle';
-import type { ISøknadIKontraktBarn } from '../../../common/typer/kontrakt/kontrakt';
-import type { IBarnMedISøknad } from '../../typer/barn';
-import { PersonType } from '../../typer/personType';
-import type { ITekstinnhold } from '../../typer/sanity/tekstInnhold';
-import type { ISøknad } from '../../typer/søknad';
-import { landkodeTilSpråk } from '../språk';
+} from '@common/typer/kontrakt/generelle';
+import type { ISøknadIKontraktBarn } from '@common/typer/kontrakt/kontrakt';
+import type { IBarnMedISøknad } from '@typer/barn';
+import { PersonType } from '@typer/personType';
+import type { ITekstinnhold } from '@typer/sanity/tekstInnhold';
+import type { ISøknad } from '@typer/søknad';
+import { landkodeTilSpråk } from '@utils/språk';
 
 import { andreForelderTilISøknadsfelt } from './andreForelder';
 import { tilIEøsBarnetrygsperiodeIKontraktFormat } from './eøsBarnetrygdsperiode';

@@ -1,11 +1,10 @@
+import { ESivilstand, ESøknadstype } from '@common/typer/kontrakt/generelle';
 import { ESvar } from '@navikt/familie-form-elements';
 import { act, render, screen } from '@testing-library/react';
+import { AlternativtSvarForInput } from '@typer/svar';
+import type { ISøknad } from '@typer/søknad';
+import { spyOnUseApp, TestProvidereMedEkteTekster } from '@utils/testing';
 import { mockDeep } from 'vitest-mock-extended';
-
-import { ESivilstand, ESøknadstype } from '../../../../common/typer/kontrakt/generelle';
-import { AlternativtSvarForInput } from '../../../typer/svar';
-import type { ISøknad } from '../../../typer/søknad';
-import { spyOnUseApp, TestProvidereMedEkteTekster } from '../../../utils/testing';
 
 import DinLivssituasjon from './DinLivssituasjon';
 import { getAllNåværendeSamboerFields } from './NåværendeSamboerTestUtils';

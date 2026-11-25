@@ -1,20 +1,19 @@
+import { BarnetrygdsperiodeOppsummering } from '@components/Felleskomponenter/Barnetrygdperiode/BarnetrygdperiodeOppsummering';
+import TekstBlock from '@components/Felleskomponenter/Sanity/TekstBlock';
+import { UtenlandsperiodeOppsummering } from '@components/Felleskomponenter/UtenlandsoppholdModal/UtenlandsperiodeOppsummering';
+import { useOmBarnet } from '@components/SøknadsSteg/OmBarnet/useOmBarnet';
+import { OppsummeringFelt } from '@components/SøknadsSteg/Oppsummering/OppsummeringFelt';
+import Oppsummeringsbolk from '@components/SøknadsSteg/Oppsummering/Oppsummeringsbolk';
+import { useAppContext } from '@context/AppContext';
+import { useSpråkContext } from '@context/SpråkContext';
+import { useStegContext } from '@context/StegContext';
 import { ESvar } from '@navikt/familie-form-elements';
+import { andreForelderDataKeySpørsmål, barnDataKeySpørsmål, type IBarnMedISøknad } from '@typer/barn';
+import { PersonType } from '@typer/personType';
+import { formaterDato } from '@utils/dato';
+import { landkodeTilSpråk } from '@utils/språk';
+import { formaterDatoMedUkjent } from '@utils/visning';
 import type { Dispatch, FC, SetStateAction } from 'react';
-
-import { useAppContext } from '../../../../../context/AppContext';
-import { useSpråkContext } from '../../../../../context/SpråkContext';
-import { useStegContext } from '../../../../../context/StegContext';
-import { andreForelderDataKeySpørsmål, barnDataKeySpørsmål, type IBarnMedISøknad } from '../../../../../typer/barn';
-import { PersonType } from '../../../../../typer/personType';
-import { formaterDato } from '../../../../../utils/dato';
-import { landkodeTilSpråk } from '../../../../../utils/språk';
-import { formaterDatoMedUkjent } from '../../../../../utils/visning';
-import { BarnetrygdsperiodeOppsummering } from '../../../../Felleskomponenter/Barnetrygdperiode/BarnetrygdperiodeOppsummering';
-import TekstBlock from '../../../../Felleskomponenter/Sanity/TekstBlock';
-import { UtenlandsperiodeOppsummering } from '../../../../Felleskomponenter/UtenlandsoppholdModal/UtenlandsperiodeOppsummering';
-import { useOmBarnet } from '../../../OmBarnet/useOmBarnet';
-import { OppsummeringFelt } from '../../OppsummeringFelt';
-import Oppsummeringsbolk from '../../Oppsummeringsbolk';
 
 import AndreForelderOppsummering from './AndreForelderOppsummering';
 

@@ -1,14 +1,13 @@
+import { useAppContext } from '@context/AppContext';
+import useDatovelgerFeltMedUkjentForSanity from '@hooks/useDatovelgerFeltMedUkjentForSanity';
+import useInputFelt from '@hooks/useInputFelt';
+import useInputFeltMedUkjent from '@hooks/useInputFeltMedUkjent';
+import useDatovelgerFeltForSanity from '@hooks/useSendInnSkjemaTest/useDatovelgerForSanity';
 import { ESvar } from '@navikt/familie-form-elements';
 import { type ISkjema, useFelt, useSkjema } from '@navikt/familie-skjema';
-
-import { useAppContext } from '../../../context/AppContext';
-import useDatovelgerFeltMedUkjentForSanity from '../../../hooks/useDatovelgerFeltMedUkjentForSanity';
-import useInputFelt from '../../../hooks/useInputFelt';
-import useInputFeltMedUkjent from '../../../hooks/useInputFeltMedUkjent';
-import useDatovelgerFeltForSanity from '../../../hooks/useSendInnSkjemaTest/useDatovelgerForSanity';
-import type { ITidligereSamoboereTekstinnhold } from '../../../typer/sanity/modaler/tidligereSamboere';
-import type { ITidligereSamboerFeltTyper } from '../../../typer/skjema';
-import { dagenEtterDato, dagensDato, gårsdagensDato, stringTilDate } from '../../../utils/dato';
+import type { ITidligereSamoboereTekstinnhold } from '@typer/sanity/modaler/tidligereSamboere';
+import type { ITidligereSamboerFeltTyper } from '@typer/skjema';
+import { dagenEtterDato, dagensDato, gårsdagensDato, stringTilDate } from '@utils/dato';
 
 import { TidligereSamboerSpørsmålId } from './spørsmål';
 

@@ -1,10 +1,10 @@
-import type { TilRestLocaleRecord } from '../../../common/typer/kontrakt/generelle';
-import type { IOmsorgspersonIKontraktFormat } from '../../../common/typer/kontrakt/kontrakt';
-import type { IBarnMedISøknad } from '../../typer/barn';
-import type { IOmsorgsperson } from '../../typer/omsorgsperson';
-import { PersonType } from '../../typer/personType';
-import type { ITekstinnhold } from '../../typer/sanity/tekstInnhold';
-import { landkodeTilSpråk } from '../språk';
+import type { TilRestLocaleRecord } from '@common/typer/kontrakt/generelle';
+import type { IOmsorgspersonIKontraktFormat } from '@common/typer/kontrakt/kontrakt';
+import type { IBarnMedISøknad } from '@typer/barn';
+import type { IOmsorgsperson } from '@typer/omsorgsperson';
+import { PersonType } from '@typer/personType';
+import type { ITekstinnhold } from '@typer/sanity/tekstInnhold';
+import { landkodeTilSpråk } from '@utils/språk';
 
 import { tilIAndreUtbetalingsperioderIKontraktFormat } from './andreUtbetalingsperioder';
 import { tilIArbeidsperiodeIKontraktFormat } from './arbeidsperioder';
