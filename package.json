@@ -80,7 +80,7 @@
     "react": "19.3.1",
     "react-cookie": "8.1.2",
     "react-dom": "19.3.1",
-    "react-hook-form": "7.89.0",
+    "react-hook-form": "7.92.0",
     "react-router": "8.5.1",
     "styled-components": "6.6.0",
     "unleash-client": "6.12.2",
